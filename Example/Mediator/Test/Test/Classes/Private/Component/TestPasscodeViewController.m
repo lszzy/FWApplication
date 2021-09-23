@@ -192,7 +192,7 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
     
     if (@available(iOS 12.0, *)) {
         _boxInputView.textContentType = UITextContentTypeOneTimeCode;
-    }else if (@available(iOS 10.0, *)) {
+    } else {
         _boxInputView.textContentType = @"one-time-code";
     }
     

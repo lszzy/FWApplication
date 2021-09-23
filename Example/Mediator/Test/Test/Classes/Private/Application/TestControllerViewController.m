@@ -46,7 +46,6 @@
 
 - (void)renderInit
 {
-    self.automaticallyAdjustsScrollViewInsets = NO;
     self.fwNavigationBarStyle = FWNavigationBarStyleDefault;
 }
 

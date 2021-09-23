@@ -6,6 +6,7 @@
 //
 
 @import FWApplication;
+@import FWFramework;
 @import Mediator;
 
 NS_ASSUME_NONNULL_BEGIN

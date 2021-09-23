@@ -153,15 +153,15 @@
 
 - (void)webViewFinishLoad
 {
-    if (self.fwIsDataLoaded) return;
-    self.fwIsDataLoaded = YES;
+    if (self.fwIsLoaded) return;
+    self.fwIsLoaded = YES;
     
     [self fwSetRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
 }
 
 - (void)webViewFailLoad:(NSError *)error
 {
-    if (self.fwIsDataLoaded) return;
+    if (self.fwIsLoaded) return;
     
     [self fwSetRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     

@@ -250,10 +250,8 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onLargeTitle
 {
-    if (@available(iOS 11.0, *)) {
-        self.fwNavigationBar.prefersLargeTitles = !self.fwNavigationBar.prefersLargeTitles;
-        [self refreshBarFrame];
-    }
+    self.fwNavigationBar.prefersLargeTitles = !self.fwNavigationBar.prefersLargeTitles;
+    [self refreshBarFrame];
 }
 
 - (void)onTabBar

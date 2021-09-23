@@ -20,7 +20,6 @@
 {
     self = [super init];
     if (self) {
-        self.automaticallyAdjustsScrollViewInsets = NO;
         self.fwExtendedLayoutEdge = UIRectEdgeTop;
     }
     return self;

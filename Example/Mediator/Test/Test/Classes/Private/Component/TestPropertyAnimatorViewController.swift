@@ -9,7 +9,6 @@
 import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
-@available(iOS 11.0, *)
 @objcMembers class TestPropertyAnimatorViewController: TestViewController {
     // MARK: - State
 

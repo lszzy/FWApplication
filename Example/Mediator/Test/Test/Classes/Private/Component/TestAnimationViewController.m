@@ -169,14 +169,12 @@ FWDefLazyProperty(UIView *, animationView, {
 
 - (void)renderModel
 {
-    if (@available(iOS 11.0, *)) {
-        FWWeakifySelf();
-        [self fwSetRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
-            FWStrongifySelf();
-            UIViewController *viewController = [NSClassFromString(@"Test.TestPropertyAnimatorViewController") new];
-            [self.navigationController pushViewController:viewController animated:true];
-        }];
-    }
+    FWWeakifySelf();
+    [self fwSetRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        UIViewController *viewController = [NSClassFromString(@"Test.TestPropertyAnimatorViewController") new];
+        [self.navigationController pushViewController:viewController animated:true];
+    }];
 }
 
 #pragma mark - Action

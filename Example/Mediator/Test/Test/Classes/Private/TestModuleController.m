@@ -35,7 +35,7 @@
         _searchBar.placeholder = @"Search";
         _searchBar.delegate = self;
         _searchBar.showsCancelButton = YES;
-        [_searchBar.fwCancelButton setTitle:[FWApplicationBundle localizedString:@"取消"] forState:UIControlStateNormal];
+        [_searchBar.fwCancelButton setTitle:[FWAppBundle localizedString:@"取消"] forState:UIControlStateNormal];
         _searchBar.fwForceCancelButtonEnabled = YES;
         _searchBar.fwBackgroundColor = [Theme barColor];
         _searchBar.fwTextFieldBackgroundColor = [Theme tableColor];
@@ -177,9 +177,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (@available(iOS 11.0, *)) {
-        self.fwNavigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    }
+    self.fwNavigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     self.fwNavigationView.scrollView = self.tableView;
     self.fwBarTitle = [self titleView];
 }

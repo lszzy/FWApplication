@@ -8,6 +8,7 @@
  */
 
 #import <FWApplication/FWApplication.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 

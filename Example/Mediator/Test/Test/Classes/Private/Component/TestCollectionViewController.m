@@ -50,10 +50,7 @@ static NSString * const kTestCollectionFooterViewID = @"kTestCollectionFooterVie
     layout.itemSize = CGSizeMake((FWScreenWidth - 30) / 2.f, 100);
     layout.minimumLineSpacing = 10;
     layout.minimumInteritemSpacing = 10;
-    // 设置悬浮
-    if (@available(iOS 9.0, *)) {
-        layout.sectionHeadersPinToVisibleBounds = YES;
-    }
+    layout.sectionHeadersPinToVisibleBounds = YES;
     return layout;
 }
 

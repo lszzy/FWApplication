@@ -115,8 +115,8 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if !fwIsDataLoaded {
-            fwIsDataLoaded = true
+        if !fwIsLoaded {
+            fwIsLoaded = true
             self.player.playFromBeginning()
         }
     }

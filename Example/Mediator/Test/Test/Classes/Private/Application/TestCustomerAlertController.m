@@ -68,10 +68,7 @@
 
     CGFloat imageViewW = self.bounds.size.width/2-20;
     CGFloat imageViewH = self.bounds.size.height;
-    CGFloat imageViewY = 0;
-    if (@available(iOS 11.0, *)) {
-        imageViewY = self.safeAreaInsets.top;
-    }
+    CGFloat imageViewY = self.safeAreaInsets.top;
     UIImageView *lastImageView;
     for (int i = 0; i < self.imageViews.count; i++) {
         UIImageView *imageView = self.imageViews[i];
@@ -1575,10 +1572,7 @@ static NSTimeInterval kDelay = 0.0618; // 按钮接着上一个按钮的延时�
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat bottom = 0;
-    if (@available(iOS 11.0, *)) {
-        bottom = self.safeAreaInsets.bottom;
-    }
+    CGFloat bottom = self.safeAreaInsets.bottom;
     
     CGFloat superWidth = self.frame.size.width;
     CGFloat superHeight = self.frame.size.height;
@@ -1956,12 +1950,8 @@ static NSTimeInterval kDelay = 0.0618; // 按钮接着上一个按钮的延时�
     [alertController addAction:action6];
     [alertController addAction:action7];
     
-    if (@available(iOS 11.0, *)) {
-        [alertController setCustomSpacing:6.0 afterAction:action2]; // 设置第2个action之后的间隙
-    }
-    if (@available(iOS 11.0, *)) {
-        [alertController setCustomSpacing:6.0 afterAction:action4];  // 设置第4个action之后的间隙
-    }
+    [alertController setCustomSpacing:6.0 afterAction:action2]; // 设置第2个action之后的间隙
+    [alertController setCustomSpacing:6.0 afterAction:action4];  // 设置第4个action之后的间隙
    
     [self presentViewController:alertController animated:YES completion:nil];
 }
