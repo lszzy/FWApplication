@@ -101,9 +101,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 创建一个UUID字符串，示例："D1178E50-2A4D-4F1F-9BD3-F6AAB00E06B1"。也可调用NSUUID.UUID.UUIDString
 @property (class, nonatomic, copy, readonly) NSString *fwUUIDString;
 
-// 格式化文件大小为".0K/.1M/.1G"
-+ (NSString *)fwSizeString:(NSUInteger)aFileSize;
-
 @end
 
 NS_ASSUME_NONNULL_END

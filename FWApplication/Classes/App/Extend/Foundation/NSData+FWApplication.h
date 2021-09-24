@@ -16,18 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface NSData (FWApplication)
 
-/// 使用NSKeyedArchiver压缩对象
-+ (nullable NSData *)fwArchiveObject:(id)object;
-
-/// 使用NSKeyedUnarchiver解压数据
-- (nullable id)fwUnarchiveObject;
-
-/// 保存对象归档
-+ (void)fwArchiveObject:(id)object toFile:(NSString *)path;
-
-/// 读取对象归档
-+ (nullable id)fwUnarchiveObjectWithFile:(NSString *)path;
-
 #pragma mark - Encrypt
 
 /// 利用AES加密数据

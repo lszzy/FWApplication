@@ -48,51 +48,9 @@
 
 #pragma mark - Convert
 
-+ (NSDate *)fwDateWithString:(NSString *)string
-{
-    return [self fwDateWithString:string format:@"yyyy-MM-dd HH:mm:ss"];
-}
-
-+ (NSDate *)fwDateWithString:(NSString *)string format:(NSString *)format
-{
-    return [self fwDateWithString:string format:format timeZone:nil];
-}
-
-+ (NSDate *)fwDateWithString:(NSString *)string format:(NSString *)format timeZone:(NSTimeZone *)timeZone
-{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = format;
-    if (timeZone) {
-        formatter.timeZone = timeZone;
-    }
-    NSDate *date = [formatter dateFromString:string];
-    return date;
-}
-
 + (NSDate *)fwDateWithTimestamp:(NSTimeInterval)timestamp
 {
     return [[NSDate alloc] initWithTimeIntervalSince1970:timestamp];
-}
-
-- (NSString *)fwStringValue
-{
-    return [self fwStringWithFormat:@"yyyy-MM-dd HH:mm:ss"];
-}
-
-- (NSString *)fwStringWithFormat:(NSString *)format
-{
-    return [self fwStringWithFormat:format timeZone:nil];
-}
-
-- (NSString *)fwStringWithFormat:(NSString *)format timeZone:(NSTimeZone *)timeZone
-{
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = format;
-    if (timeZone) {
-        formatter.timeZone = timeZone;
-    }
-    NSString *string = [formatter stringFromDate:self];
-    return string;
 }
 
 - (NSString *)fwStringSinceDate:(NSDate *)date
@@ -195,24 +153,6 @@
 }
 
 #pragma mark - Format
-
-+ (NSString *)fwFormatDuration:(NSTimeInterval)duration hasHour:(BOOL)hasHour
-{
-    long long seconds = (long long)duration;
-    if (hasHour) {
-        long long minute = seconds / 60;
-        long long hour   = minute / 60;
-        
-        seconds -= minute * 60;
-        minute -= hour * 60;
-        
-        return [NSString stringWithFormat:@"%02d:%02d:%02d", (int)hour, (int)minute, (int)seconds];
-    } else {
-        long long minute = seconds / 60;
-        long long second = seconds % 60;
-        return [NSString stringWithFormat:@"%02ld:%02ld", (long)minute, (long)second];
-    }
-}
 
 + (NSTimeInterval)fwFormatTimestamp:(NSTimeInterval)timestamp
 {

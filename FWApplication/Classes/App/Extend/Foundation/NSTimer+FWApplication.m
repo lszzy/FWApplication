@@ -11,24 +11,6 @@
 
 @implementation NSTimer (FWApplication)
 
-- (void)fwPauseTimer
-{
-    if (![self isValid]) {
-        return;
-    }
-    
-    [self setFireDate:[NSDate distantFuture]];
-}
-
-- (void)fwResumeTimer
-{
-    if (![self isValid]) {
-        return;
-    }
-    
-    [self setFireDate:[NSDate date]];
-}
-
 - (void)fwResumeTimerAfterDelay:(NSTimeInterval)delay
 {
     if (![self isValid]) {

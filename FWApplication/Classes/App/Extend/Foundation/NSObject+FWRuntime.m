@@ -12,26 +12,6 @@
 
 @implementation NSObject (FWRuntime)
 
-- (id)fwPerformSuperSelector:(SEL)aSelector
-{
-    struct objc_super mySuper;
-    mySuper.receiver = self;
-    mySuper.super_class = class_getSuperclass(object_getClass(self));
-    
-    id (*objc_superAllocTyped)(struct objc_super *, SEL) = (void *)&objc_msgSendSuper;
-    return (*objc_superAllocTyped)(&mySuper, aSelector);
-}
-
-- (id)fwPerformSuperSelector:(SEL)aSelector withObject:(id)object
-{
-    struct objc_super mySuper;
-    mySuper.receiver = self;
-    mySuper.super_class = class_getSuperclass(object_getClass(self));
-    
-    id (*objc_superAllocTyped)(struct objc_super *, SEL, ...) = (void *)&objc_msgSendSuper;
-    return (*objc_superAllocTyped)(&mySuper, aSelector, object);
-}
-
 - (BOOL)fwHasOverrideMethod:(SEL)selector ofSuperclass:(Class)superclass
 {
     return [NSObject fwHasOverrideMethod:selector forClass:self.class ofSuperclass:superclass];

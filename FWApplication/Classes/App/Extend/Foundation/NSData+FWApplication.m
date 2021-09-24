@@ -13,40 +13,6 @@
 
 @implementation NSData (FWApplication)
 
-+ (NSData *)fwArchiveObject:(id)object
-{
-    NSData *data = nil;
-    @try {
-        data = [NSKeyedArchiver archivedDataWithRootObject:object];
-    } @catch (NSException *exception) { }
-    return data;
-}
-
-- (id)fwUnarchiveObject
-{
-    id object = nil;
-    @try {
-        object = [NSKeyedUnarchiver unarchiveObjectWithData:self];
-    } @catch (NSException *exception) { }
-    return object;
-}
-
-+ (void)fwArchiveObject:(id)object toFile:(NSString *)path
-{
-    @try {
-        [NSKeyedArchiver archiveRootObject:object toFile:path];
-    } @catch (NSException *exception) { }
-}
-
-+ (id)fwUnarchiveObjectWithFile:(NSString *)path
-{
-    id object = nil;
-    @try {
-        object = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    } @catch (NSException *exception) { }
-    return object;
-}
-
 #pragma mark - Encrypt
 
 - (NSData *)fwAESEncryptWithKey:(NSString *)key andIV:(NSData *)iv

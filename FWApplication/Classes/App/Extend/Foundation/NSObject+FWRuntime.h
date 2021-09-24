@@ -356,23 +356,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSObject (FWRuntime)
 
 /*!
- @brief 对super发送消息
- 
- @param aSelector 要执行的方法，需返回id类型
- @return id 方法执行后返回的值
- */
-- (nullable id)fwPerformSuperSelector:(SEL)aSelector;
-
-/*!
- @brief 对super发送消息，可传递参数
- 
- @param aSelector 要执行的方法，需返回id类型
- @param object 传递的方法参数
- @return id 方法执行后返回的值
- */
-- (nullable id)fwPerformSuperSelector:(SEL)aSelector withObject:(nullable id)object;
-
-/*!
  @brief 判断当前类是否有重写某个父类的指定方法
  
  @param selector 要判断的方法

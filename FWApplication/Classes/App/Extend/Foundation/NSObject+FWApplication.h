@@ -107,17 +107,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface NSObject (FWApplication)
 
-#pragma mark - Lock
-
-/// 创建信号量锁(支持任意对象)，初始值1，可选调用
-- (void)fwLockCreate;
-
-/// 执行加锁(支持任意对象)，等待信号量，自动创建信号量
-- (void)fwLock;
-
-/// 执行解锁(支持任意对象)，发送信号量，自动创建信号量
-- (void)fwUnlock;
-
 #pragma mark - Archive
 
 /**

@@ -8,41 +8,8 @@
  */
 
 #import "NSObject+FWApplication.h"
-#import <objc/runtime.h>
 
 @implementation NSObject (FWApplication)
-
-#pragma mark - Lock
-
-- (void)fwLockCreate
-{
-    [self fwLockSemaphore];
-}
-
-- (void)fwLock
-{
-    dispatch_semaphore_wait([self fwLockSemaphore], DISPATCH_TIME_FOREVER);
-}
-
-- (void)fwUnlock
-{
-    dispatch_semaphore_signal([self fwLockSemaphore]);
-}
-
-- (dispatch_semaphore_t)fwLockSemaphore
-{
-    dispatch_semaphore_t semaphore = objc_getAssociatedObject(self, _cmd);
-    if (!semaphore) {
-        @synchronized (self) {
-            semaphore = objc_getAssociatedObject(self, _cmd);
-            if (!semaphore) {
-                semaphore = dispatch_semaphore_create(1);
-                objc_setAssociatedObject(self, _cmd, semaphore, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            }
-        }
-    }
-    return semaphore;
-}
 
 #pragma mark - Archive
 

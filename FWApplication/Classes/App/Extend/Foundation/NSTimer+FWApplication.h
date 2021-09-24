@@ -17,16 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSTimer (FWApplication)
 
 /*!
- @brief 暂停NSTimer
- */
-- (void)fwPauseTimer;
-
-/*!
- @brief 开始NSTimer
- */
-- (void)fwResumeTimer;
-
-/*!
  @brief 延迟几秒后开始NSTimer
  
  @param delay 延迟秒数

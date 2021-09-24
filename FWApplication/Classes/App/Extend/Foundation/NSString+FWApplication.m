@@ -191,26 +191,4 @@
     return (__bridge_transfer NSString *)string;
 }
 
-+ (NSString *)fwSizeString:(NSUInteger)aFileSize
-{
-    NSString *sizeStr;
-    if (aFileSize <= 0) {
-        sizeStr = @"0K";
-    } else {
-        double fileSize = aFileSize / 1024.f;
-        if (fileSize >= 1024.f) {
-            fileSize = fileSize / 1024.f;
-            if (fileSize >= 1024.f) {
-                fileSize = fileSize / 1024.f;
-                sizeStr = [NSString stringWithFormat:@"%0.1fG", fileSize];
-            } else {
-                sizeStr = [NSString stringWithFormat:@"%0.1fM", fileSize];
-            }
-        } else {
-            sizeStr = [NSString stringWithFormat:@"%dK", (int)ceil(fileSize)];
-        }
-    }
-    return sizeStr;
-}
-
 @end

@@ -28,36 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Convert
 
 /**
- *  从字符串初始化日期，默认当前时区
- *
- *  @param string 格式：yyyy-MM-dd HH:mm:ss
- *
- *  @return NSDate
- */
-+ (nullable NSDate *)fwDateWithString:(NSString *)string;
-
-/**
- *  从字符串初始化日期，默认当前时区
- *
- *  @param string 字符串
- *  @param format 自定义格式
- *
- *  @return NSDate
- */
-+ (nullable NSDate *)fwDateWithString:(NSString *)string format:(nullable NSString *)format;
-
-/**
- *  从字符串初始化日期，指定时区
- *
- *  @param string 字符串
- *  @param format 自定义格式
- *  @param timeZone 时区
- *
- *  @return NSDate
- */
-+ (nullable NSDate *)fwDateWithString:(NSString *)string format:(nullable NSString *)format timeZone:(nullable NSTimeZone *)timeZone;
-
-/**
  *  从时间戳初始化日期
  *
  *  @param timestamp 时间戳
@@ -65,32 +35,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  @return NSDate
  */
 + (NSDate *)fwDateWithTimestamp:(NSTimeInterval)timestamp;
-
-/**
- *  转化为字符串，默认当前时区
- *
- *  @return 格式：yyyy-MM-dd HH:mm:ss
- */
-@property (nonatomic, copy, readonly) NSString *fwStringValue;
-
-/**
- *  转化为字符串，默认当前时区
- *
- *  @param format 自定义格式
- *
- *  @return 字符串
- */
-- (NSString *)fwStringWithFormat:(nullable NSString *)format;
-
-/**
- *  转化为字符串，指定时区
- *
- *  @param format 自定义格式
- *  @param timeZone 时区
- *
- *  @return 字符串
- */
-- (NSString *)fwStringWithFormat:(nullable NSString *)format timeZone:(nullable NSTimeZone *)timeZone;
 
 /**
  *  计算两个时间差，并格式化为友好的时间字符串(类似微博)
@@ -139,9 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (double)fwSecondsFrom:(NSDate *)date;
 
 #pragma mark - Format
-
-// 格式化时长，格式"00:00"或"00:00:00"
-+ (NSString *)fwFormatDuration:(NSTimeInterval)duration hasHour:(BOOL)hasHour;
 
 // 格式化16位、13位时间戳为秒
 + (NSTimeInterval)fwFormatTimestamp:(NSTimeInterval)timestamp;
