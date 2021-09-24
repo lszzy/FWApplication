@@ -52,17 +52,11 @@ NS_ASSUME_NONNULL_BEGIN
 // 打开外部浏览器，支持NSString|NSURL
 + (void)fwOpenSafari:(id)url;
 
-// 打开应用设置
-+ (void)fwOpenAppSettings;
-
 // 打开应用内评价，10.3+生效，一年内最多3次
 + (void)fwRequestAppReview;
 
 // 打开AppStore评论页
 + (void)fwOpenAppReview:(NSString *)appId;
-
-// 打开系统分享
-+ (void)fwOpenActivityItems:(NSArray *)activityItems excludedTypes:(nullable NSArray<UIActivityType> *)excludedTypes;
 
 // 发送邮件
 + (void)fwSendEmail:(NSString *)email;

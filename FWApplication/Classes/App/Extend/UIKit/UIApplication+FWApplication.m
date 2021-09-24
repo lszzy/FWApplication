@@ -97,11 +97,6 @@
     [self fwOpenURL:url];
 }
 
-+ (void)fwOpenAppSettings
-{
-    [self fwOpenURL:UIApplicationOpenSettingsURLString];
-}
-
 + (void)fwRequestAppReview
 {
     if ([SKStoreReviewController respondsToSelector:@selector(requestReview)]) {
@@ -114,27 +109,20 @@
     [self fwOpenURL:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@?action=write-review", appId]];
 }
 
-+ (void)fwOpenActivityItems:(NSArray *)activityItems excludedTypes:(NSArray<UIActivityType> *)excludedTypes
-{
-    UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-    activityController.excludedActivityTypes = excludedTypes;
-    [[UIWindow fwMainWindow] fwPresentViewController:activityController animated:YES completion:nil];
-}
-
 + (void)fwSendEmail:(NSString *)email
 {
-    [self fwOpenURL:[NSString stringWithFormat:@"mailto:%@", email]];
+    [self fwOpenURL:[NSString stringWithFormat:@"mailto://%@", email]];
 }
 
 + (void)fwSendSms:(NSString *)phone
 {
-    [self fwOpenURL:[NSString stringWithFormat:@"sms:%@", phone]];
+    [self fwOpenURL:[NSString stringWithFormat:@"sms://%@", phone]];
 }
 
 + (void)fwMakeCall:(NSString *)phone
 {
     // tel:为直接拨打电话
-    [self fwOpenURL:[NSString stringWithFormat:@"telprompt:%@", phone]];
+    [self fwOpenURL:[NSString stringWithFormat:@"telprompt://%@", phone]];
 }
 
 + (AVPlayerViewController *)fwPlayVideo:(id)video

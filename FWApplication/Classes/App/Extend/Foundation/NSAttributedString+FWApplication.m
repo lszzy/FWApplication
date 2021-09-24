@@ -134,19 +134,4 @@
             fontWeight, fontStyle, font.pointSize];
 }
 
-#pragma mark - Size
-
-- (CGSize)fwSize
-{
-    return [self fwSizeWithDrawSize:CGSizeMake(MAXFLOAT, MAXFLOAT)];
-}
-
-- (CGSize)fwSizeWithDrawSize:(CGSize)drawSize
-{
-    CGSize size = [self boundingRectWithSize:drawSize
-                                     options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
-                                     context:nil].size;
-    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)), MIN(drawSize.height, ceilf(size.height)));
-}
-
 @end

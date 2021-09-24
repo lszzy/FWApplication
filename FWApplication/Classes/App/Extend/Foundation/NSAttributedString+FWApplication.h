@@ -42,14 +42,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取系统字体对应CSS字符串(family|style|weight|size)
 + (NSString *)fwCSSStringWithFont:(UIFont *)font;
 
-#pragma mark - Size
-
-/// 计算所占尺寸，需设置Font等
-@property (nonatomic, assign, readonly) CGSize fwSize;
-
-/// 计算在指定绘制区域内所占尺寸，需设置Font等
-- (CGSize)fwSizeWithDrawSize:(CGSize)drawSize;
-
 @end
 
 NS_ASSUME_NONNULL_END
