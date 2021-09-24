@@ -8,8 +8,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVFoundation.h>
-#import <AVKit/AVKit.h>
 #import <AudioToolbox/AudioToolbox.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -48,30 +46,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, assign, readonly) BOOL fwIsTestflight;
 
 #pragma mark - URL
-
-// 打开外部浏览器，支持NSString|NSURL
-+ (void)fwOpenSafari:(id)url;
-
-// 打开应用内评价，10.3+生效，一年内最多3次
-+ (void)fwRequestAppReview;
-
-// 打开AppStore评论页
-+ (void)fwOpenAppReview:(NSString *)appId;
-
-// 发送邮件
-+ (void)fwSendEmail:(NSString *)email;
-
-// 发送短信
-+ (void)fwSendSms:(NSString *)phone;
-
-// 打电话
-+ (void)fwMakeCall:(NSString *)phone;
-
-// 播放视频文件，支持AVPlayerItem|NSURL|NSString
-+ (nullable AVPlayerViewController *)fwPlayVideo:(id)video;
-
-// 播放音频文件
-+ (nullable AVAudioPlayer *)fwPlaySound:(NSString *)file;
 
 // 播放内置声音文件
 + (SystemSoundID)fwPlayAlert:(NSString *)file;

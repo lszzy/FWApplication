@@ -8,10 +8,7 @@
  */
 
 #import "UIApplication+FWApplication.h"
-#import "FWEncode.h"
-#import "FWNavigation.h"
-#import "FWToolkit.h"
-#import <StoreKit/StoreKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 #pragma mark - UIApplication+FWApplication
 
@@ -91,81 +88,6 @@
 }
 
 #pragma mark - URL
-
-+ (void)fwOpenSafari:(id)url
-{
-    [self fwOpenURL:url];
-}
-
-+ (void)fwRequestAppReview
-{
-    if ([SKStoreReviewController respondsToSelector:@selector(requestReview)]) {
-        [SKStoreReviewController requestReview];
-    }
-}
-
-+ (void)fwOpenAppReview:(NSString *)appId
-{
-    [self fwOpenURL:[NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@?action=write-review", appId]];
-}
-
-+ (void)fwSendEmail:(NSString *)email
-{
-    [self fwOpenURL:[NSString stringWithFormat:@"mailto://%@", email]];
-}
-
-+ (void)fwSendSms:(NSString *)phone
-{
-    [self fwOpenURL:[NSString stringWithFormat:@"sms://%@", phone]];
-}
-
-+ (void)fwMakeCall:(NSString *)phone
-{
-    // tel:为直接拨打电话
-    [self fwOpenURL:[NSString stringWithFormat:@"telprompt://%@", phone]];
-}
-
-+ (AVPlayerViewController *)fwPlayVideo:(id)video
-{
-    AVPlayer *player = nil;
-    if ([video isKindOfClass:[AVPlayerItem class]]) {
-        player = [AVPlayer playerWithPlayerItem:(AVPlayerItem *)video];
-    } else if ([video isKindOfClass:[NSURL class]]) {
-        player = [AVPlayer playerWithURL:(NSURL *)video];
-    } else if ([video isKindOfClass:[NSString class]]) {
-        NSURL *videoURL = [NSURL fwURLWithString:(NSString *)video];
-        if (videoURL) player = [AVPlayer playerWithURL:videoURL];
-    }
-    if (!player) return nil;
-    
-    AVPlayerViewController *viewController = [[AVPlayerViewController alloc] init];
-    viewController.player = player;
-    return viewController;
-}
-
-+ (AVAudioPlayer *)fwPlaySound:(NSString *)file
-{
-    // 设置播放模式
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
-    
-    // 获取文件URL，支持绝对和相对路径
-    NSURL *soundUrl = nil;
-    if ([file isAbsolutePath]) {
-        soundUrl = [NSURL fileURLWithPath:file];
-    } else {
-        soundUrl = [[NSBundle mainBundle] URLForResource:file withExtension:nil];
-    }
-    
-    // 初始化播放器和音频
-    AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:NULL];
-    if (![audioPlayer prepareToPlay]) {
-        return nil;
-    }
-    
-    // 自动播放
-    [audioPlayer play];
-    return audioPlayer;
-}
 
 + (SystemSoundID)fwPlayAlert:(NSString *)file
 {

@@ -153,15 +153,6 @@
     }
 }
 
-#pragma mark - Shadow
-
-- (void)fwSetShadowColor:(UIColor *)color
-                  offset:(CGSize)offset
-                  radius:(CGFloat)radius
-{
-    [self.layer fwSetShadowColor:color offset:offset radius:radius];
-}
-
 #pragma mark - Bezier
 
 - (void)fwDrawBezierPath:(UIBezierPath *)bezierPath

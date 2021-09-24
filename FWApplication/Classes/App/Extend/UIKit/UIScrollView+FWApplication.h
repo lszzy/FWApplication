@@ -31,36 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 // contentOffset.y
 @property (nonatomic, assign) CGFloat fwContentOffsetY;
 
-#pragma mark - Page
-
-// 总页数，自动识别翻页方向
-@property (nonatomic, assign, readonly) NSInteger fwTotalPage;
-
-// 当前页数，不支持动画，自动识别翻页方向
-@property (nonatomic, assign) NSInteger fwCurrentPage;
-
-// 设置当前页数，支持动画，自动识别翻页方向
-- (void)fwSetCurrentPage:(NSInteger)page animated:(BOOL)animated;
-
-// 是否是最后一页，自动识别翻页方向
-@property (nonatomic, assign, readonly) BOOL fwIsLastPage;
-
 #pragma mark - Scroll
 
 /// UIScrollView真正的inset，iOS11+使用adjustedContentInset，iOS11以下使用contentInset
 @property (nonatomic, assign, readonly) UIEdgeInsets fwContentInset;
-
-// 判断当前的scrollView内容是否足够水平滚动
-@property (nonatomic, assign, readonly) BOOL fwCanScrollHorizontal;
-
-// 判断当前的scrollView内容是否足够纵向滚动
-@property (nonatomic, assign, readonly) BOOL fwCanScrollVertical;
-
-// 是否已滚动到指定边
-- (BOOL)fwIsScrollToEdge:(UIRectEdge)edge;
-
-// 获取当前的scrollView滚动到指定边时的contentOffset(包含contentInset)
-- (CGPoint)fwContentOffsetOfEdge:(UIRectEdge)edge;
 
 /// 当前滚动方向，如果多个方向滚动，取绝对值较大的一方，失败返回0
 @property (nonatomic, assign, readonly) UISwipeGestureRecognizerDirection fwScrollDirection;

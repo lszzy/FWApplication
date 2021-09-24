@@ -108,11 +108,6 @@
     return [UIColor colorWithHue:h saturation:s brightness:b * ratio alpha:a];
 }
 
-- (UIColor *)fwColorWithAlpha:(CGFloat)alpha
-{
-    return [self colorWithAlphaComponent:alpha];
-}
-
 #pragma mark - Gradient
 
 + (UIColor *)fwGradientColorWithSize:(CGSize)size

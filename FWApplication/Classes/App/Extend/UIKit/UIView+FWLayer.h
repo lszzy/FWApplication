@@ -88,13 +88,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)fwSetBlurEffect:(UIBlurEffectStyle)style;
 
-#pragma mark - Shadow
-
-// 设置阴影颜色、偏移和半径
-- (void)fwSetShadowColor:(nullable UIColor *)color
-                  offset:(CGSize)offset
-                  radius:(CGFloat)radius;
-
 #pragma mark - Bezier
 
 /*!

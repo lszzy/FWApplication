@@ -38,9 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 当前颜色修改亮度比率的颜色
 - (UIColor *)fwBrightnessColor:(CGFloat)ratio;
 
-// 返回颜色对应透明度的新颜色
-- (UIColor *)fwColorWithAlpha:(CGFloat)alpha;
-
 #pragma mark - Gradient
 
 /*!
