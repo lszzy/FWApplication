@@ -309,23 +309,6 @@
 
 @end
 
-#pragma mark - UIPageControl+FWPageControl
-
-@implementation UIPageControl (FWPageControl)
-
-- (void)fwSetSize:(CGSize)size
-{
-    CGFloat height = self.bounds.size.height;
-    if (height <= 0) {
-        height = [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].height;
-        if (height <= 0) height = 10;
-    }
-    CGFloat scale = size.height / height;
-    self.transform = CGAffineTransformMakeScale(scale, scale);
-}
-
-@end
-
 #pragma mark - FWDotView
 
 @implementation FWDotView

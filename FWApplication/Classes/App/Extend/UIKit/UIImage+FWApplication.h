@@ -89,14 +89,6 @@ NS_ASSUME_NONNULL_BEGIN
                                    startPoint:(CGPoint)startPoint
                                      endPoint:(CGPoint)endPoint;
 
-#pragma mark - Blend
-
-// 设置图片渲染模式为原始，始终显示原色，不显示tintColor。默认自动根据上下文
-@property (nonatomic, readonly) UIImage *fwImageWithRenderOriginal;
-
-// 设置图片渲染模式为模板，始终显示tintColor，不显示原色。默认自动根据上下文
-@property (nonatomic, readonly) UIImage *fwImageWithRenderTemplate;
-
 #pragma mark - Effect
 
 // 倒影图片

@@ -101,15 +101,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - UIPageControl+FWPageControl
-
-@interface UIPageControl (FWPageControl)
-
-/// 自定义圆点大小，默认{10, 10}
-- (void)fwSetSize:(CGSize)size;
-
-@end
-
 #pragma mark - FWDotView
 
 @protocol FWDotViewProtocol <NSObject>

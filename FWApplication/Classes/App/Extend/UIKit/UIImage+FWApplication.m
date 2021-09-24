@@ -330,18 +330,6 @@
     return image;
 }
 
-#pragma mark - Blend
-
-- (UIImage *)fwImageWithRenderOriginal
-{
-    return [self imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-}
-
-- (UIImage *)fwImageWithRenderTemplate
-{
-    return [self imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-}
-
 #pragma mark - Effect
 
 - (UIImage *)fwImageWithReflectScale:(CGFloat)scale
