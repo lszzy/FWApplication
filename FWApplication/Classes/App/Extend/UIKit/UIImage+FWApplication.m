@@ -196,11 +196,6 @@
     }
 }
 
-- (CGSize)fwPixelSize
-{
-    return CGSizeMake(self.size.width * self.scale, self.size.height * self.scale);
-}
-
 #pragma mark - Icon
 
 + (UIImage *)fwImageWithAppIcon
@@ -347,174 +342,6 @@
     return [self imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
-#pragma mark - Resize
-
-- (UIImage *)fwImageWithScaleSize:(CGSize)size
-{
-    if (size.width <= 0 || size.height <= 0) return nil;
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (UIImage *)fwImageWithScaleSize:(CGSize)size contentMode:(UIViewContentMode)contentMode
-{
-    if (size.width <= 0 || size.height <= 0) return nil;
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    [self fwDrawInRect:CGRectMake(0, 0, size.width, size.height) withContentMode:contentMode clipsToBounds:NO];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (void)fwDrawInRect:(CGRect)rect withContentMode:(UIViewContentMode)contentMode clipsToBounds:(BOOL)clipsToBounds
-{
-    CGRect drawRect = [self fwInnerRectWithContentMode:contentMode rect:rect size:self.size];
-    if (drawRect.size.width == 0 || drawRect.size.height == 0) return;
-    if (clipsToBounds) {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        if (context) {
-            CGContextSaveGState(context);
-            CGContextAddRect(context, rect);
-            CGContextClip(context);
-            [self drawInRect:drawRect];
-            CGContextRestoreGState(context);
-        }
-    } else {
-        [self drawInRect:drawRect];
-    }
-}
-
-- (CGRect)fwInnerRectWithContentMode:(UIViewContentMode)mode rect:(CGRect)rect size:(CGSize)size
-{
-    rect = CGRectStandardize(rect);
-    size.width = size.width < 0 ? -size.width : size.width;
-    size.height = size.height < 0 ? -size.height : size.height;
-    CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
-    switch (mode) {
-        case UIViewContentModeScaleAspectFit:
-        case UIViewContentModeScaleAspectFill: {
-            if (rect.size.width < 0.01 || rect.size.height < 0.01 ||
-                size.width < 0.01 || size.height < 0.01) {
-                rect.origin = center;
-                rect.size = CGSizeZero;
-            } else {
-                CGFloat scale;
-                if (mode == UIViewContentModeScaleAspectFit) {
-                    if (size.width / size.height < rect.size.width / rect.size.height) {
-                        scale = rect.size.height / size.height;
-                    } else {
-                        scale = rect.size.width / size.width;
-                    }
-                } else {
-                    if (size.width / size.height < rect.size.width / rect.size.height) {
-                        scale = rect.size.width / size.width;
-                    } else {
-                        scale = rect.size.height / size.height;
-                    }
-                }
-                size.width *= scale;
-                size.height *= scale;
-                rect.size = size;
-                rect.origin = CGPointMake(center.x - size.width * 0.5, center.y - size.height * 0.5);
-            }
-        } break;
-        case UIViewContentModeCenter: {
-            rect.size = size;
-            rect.origin = CGPointMake(center.x - size.width * 0.5, center.y - size.height * 0.5);
-        } break;
-        case UIViewContentModeTop: {
-            rect.origin.x = center.x - size.width * 0.5;
-            rect.size = size;
-        } break;
-        case UIViewContentModeBottom: {
-            rect.origin.x = center.x - size.width * 0.5;
-            rect.origin.y += rect.size.height - size.height;
-            rect.size = size;
-        } break;
-        case UIViewContentModeLeft: {
-            rect.origin.y = center.y - size.height * 0.5;
-            rect.size = size;
-        } break;
-        case UIViewContentModeRight: {
-            rect.origin.y = center.y - size.height * 0.5;
-            rect.origin.x += rect.size.width - size.width;
-            rect.size = size;
-        } break;
-        case UIViewContentModeTopLeft: {
-            rect.size = size;
-        } break;
-        case UIViewContentModeTopRight: {
-            rect.origin.x += rect.size.width - size.width;
-            rect.size = size;
-        } break;
-        case UIViewContentModeBottomLeft: {
-            rect.origin.y += rect.size.height - size.height;
-            rect.size = size;
-        } break;
-        case UIViewContentModeBottomRight: {
-            rect.origin.x += rect.size.width - size.width;
-            rect.origin.y += rect.size.height - size.height;
-            rect.size = size;
-        } break;
-        case UIViewContentModeScaleToFill:
-        case UIViewContentModeRedraw:
-        default: {
-            rect = rect;
-        }
-    }
-    return rect;
-}
-
-- (UIImage *)fwImageWithCropRect:(CGRect)rect
-{
-    rect.origin.x *= self.scale;
-    rect.origin.y *= self.scale;
-    rect.size.width *= self.scale;
-    rect.size.height *= self.scale;
-    if (rect.size.width <= 0 || rect.size.height <= 0) return nil;
-    CGImageRef imageRef = CGImageCreateWithImageInRect(self.CGImage, rect);
-    UIImage *image = [UIImage imageWithCGImage:imageRef scale:self.scale orientation:self.imageOrientation];
-    CGImageRelease(imageRef);
-    return image;
-}
-
-- (UIImage *)fwImageWithInsets:(UIEdgeInsets)insets color:(UIColor *)color
-{
-    CGSize size = self.size;
-    size.width -= insets.left + insets.right;
-    size.height -= insets.top + insets.bottom;
-    if (size.width <= 0 || size.height <= 0) return nil;
-    CGRect rect = CGRectMake(-insets.left, -insets.top, self.size.width, self.size.height);
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    if (color) {
-        CGContextSetFillColorWithColor(context, color.CGColor);
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddRect(path, NULL, CGRectMake(0, 0, size.width, size.height));
-        CGPathAddRect(path, NULL, rect);
-        CGContextAddPath(context, path);
-        CGContextEOFillPath(context);
-        CGPathRelease(path);
-    }
-    [self drawInRect:rect];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (UIImage *)fwImageWithCapInsets:(UIEdgeInsets)insets
-{
-    return [self resizableImageWithCapInsets:insets];
-}
-
-- (UIImage *)fwImageWithCapInsets:(UIEdgeInsets)insets resizingMode:(UIImageResizingMode)resizingMode
-{
-    return [self resizableImageWithCapInsets:insets resizingMode:resizingMode];
-}
-
 #pragma mark - Effect
 
 - (UIImage *)fwImageWithReflectScale:(CGFloat)scale
@@ -603,49 +430,6 @@
     return image;
 }
 
-- (UIImage *)fwImageWithCornerRadius:(CGFloat)radius
-{
-    // 创建上下文
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // 剪切图片
-    CGContextBeginPath(context);
-    CGContextMoveToPoint(context, 0.0f, radius);
-    CGContextAddLineToPoint(context, 0.0f, self.size.height - radius);
-    CGContextAddArc(context, radius, self.size.height - radius, radius, M_PI, M_PI / 2.0f, 1);
-    CGContextAddLineToPoint(context, self.size.width - radius, self.size.height);
-    CGContextAddArc(context, self.size.width - radius, self.size.height - radius, radius, M_PI / 2.0f, 0.0f, 1);
-    CGContextAddLineToPoint(context, self.size.width, radius);
-    CGContextAddArc(context, self.size.width - radius, radius, radius, 0.0f, -M_PI / 2.0f, 1);
-    CGContextAddLineToPoint(context, radius, 0.0f);
-    CGContextAddArc(context, radius, radius, radius, -M_PI / 2.0f, M_PI, 1);
-    CGContextClip(context);
-    
-    // 绘制图片
-    [self drawAtPoint:CGPointZero];
-    
-    // 获取图片
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (UIImage *)fwImageWithMaskImage:(UIImage *)maskImage
-{
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // 应用mask
-    CGContextClipToMask(context, CGRectMake(0.0f, 0.0f, self.size.width, self.size.height), maskImage.CGImage);
-    // 绘制图片
-    [self drawAtPoint:CGPointZero];
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
 - (UIImage *)fwMaskImage
 {
     // 获取尺寸
@@ -674,23 +458,6 @@
     free(data);
     
     return mask;
-}
-
-- (UIImage *)fwImageWithMergeImage:(UIImage *)mergeImage
-{
-    CGImageRef firstImageRef = self.CGImage;
-    CGFloat firstWidth = CGImageGetWidth(firstImageRef);
-    CGFloat firstHeight = CGImageGetHeight(firstImageRef);
-    CGImageRef secondImageRef = mergeImage.CGImage;
-    CGFloat secondWidth = CGImageGetWidth(secondImageRef);
-    CGFloat secondHeight = CGImageGetHeight(secondImageRef);
-    CGSize mergedSize = CGSizeMake(MAX(firstWidth, secondWidth), MAX(firstHeight, secondHeight));
-    UIGraphicsBeginImageContextWithOptions(mergedSize, NO, 0);
-    [self drawInRect:CGRectMake(0, 0, firstWidth, firstHeight)];
-    [mergeImage drawInRect:CGRectMake(0, 0, secondWidth, secondHeight)];
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
 }
 
 - (UIImage *)fwImageWithBlurRadius:(CGFloat)blurRadius saturationDelta:(CGFloat)saturationDelta tintColor:(UIColor *)tintColor maskImage:(UIImage *)maskImage
@@ -799,47 +566,6 @@
     UIImage *outputImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return outputImage;
-}
-
-#pragma mark - Rotate
-
-- (UIImage *)fwImageWithRotateDegree:(CGFloat)degree
-{
-    return [self fwImageWithRotateDegree:degree fitSize:YES];
-}
-
-- (UIImage *)fwImageWithRotateDegree:(CGFloat)degree fitSize:(BOOL)fitSize
-{
-    CGFloat radians = degree * M_PI / 180.0;
-    size_t width = (size_t)CGImageGetWidth(self.CGImage);
-    size_t height = (size_t)CGImageGetHeight(self.CGImage);
-    CGRect newRect = CGRectApplyAffineTransform(CGRectMake(0., 0., width, height),
-                                                fitSize ? CGAffineTransformMakeRotation(radians) : CGAffineTransformIdentity);
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(NULL,
-                                                 (size_t)newRect.size.width,
-                                                 (size_t)newRect.size.height,
-                                                 8,
-                                                 (size_t)newRect.size.width * 4,
-                                                 colorSpace,
-                                                 kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
-    CGColorSpaceRelease(colorSpace);
-    if (!context) return nil;
-    
-    CGContextSetShouldAntialias(context, true);
-    CGContextSetAllowsAntialiasing(context, true);
-    CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
-    
-    CGContextTranslateCTM(context, +(newRect.size.width * 0.5), +(newRect.size.height * 0.5));
-    CGContextRotateCTM(context, radians);
-    
-    CGContextDrawImage(context, CGRectMake(-(width * 0.5), -(height * 0.5), width, height), self.CGImage);
-    CGImageRef imgRef = CGBitmapContextCreateImage(context);
-    UIImage *img = [UIImage imageWithCGImage:imgRef scale:self.scale orientation:self.imageOrientation];
-    CGImageRelease(imgRef);
-    CGContextRelease(context);
-    return img;
 }
 
 #pragma mark - Alpha

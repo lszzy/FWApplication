@@ -50,9 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// UIScrollView真正的inset，iOS11+使用adjustedContentInset，iOS11以下使用contentInset
 @property (nonatomic, assign, readonly) UIEdgeInsets fwContentInset;
 
-/// 判断当前scrollView内容是否足够滚动
-@property (nonatomic, assign, readonly) BOOL fwCanScroll;
-
 // 判断当前的scrollView内容是否足够水平滚动
 @property (nonatomic, assign, readonly) BOOL fwCanScrollHorizontal;
 
@@ -61,9 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 是否已滚动到指定边
 - (BOOL)fwIsScrollToEdge:(UIRectEdge)edge;
-
-/// 当前scrollView滚动到指定边
-- (void)fwScrollToEdge:(UIRectEdge)edge animated:(BOOL)animated;
 
 // 获取当前的scrollView滚动到指定边时的contentOffset(包含contentInset)
 - (CGPoint)fwContentOffsetOfEdge:(UIRectEdge)edge;

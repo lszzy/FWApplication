@@ -16,28 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface UISwitch (FWApplication)
 
-/// 自定义尺寸大小，默认{51,31}
-- (void)fwSetSize:(CGSize)size;
-
 /*!
  @brief 切换开关状态
  */
 - (void)fwToggle:(BOOL)animated;
-
-@end
-
-#pragma mark - UISlider+FWApplication
-
-/*!
- @brief UISlider+FWApplication
- */
-@interface UISlider (FWApplication)
-
-/// 中间圆球的大小，默认zero
-@property (nonatomic, assign) CGSize fwThumbSize UI_APPEARANCE_SELECTOR;
-
-/// 中间圆球的颜色，默认nil
-@property (nonatomic, strong, nullable) UIColor *fwThumbColor UI_APPEARANCE_SELECTOR;
 
 @end
 

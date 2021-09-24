@@ -36,9 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取图片的平均颜色
 @property (nonatomic, readonly) UIColor *fwAverageColor;
 
-// 获取当前图片的像素大小，多倍图会放大到一倍
-@property (nonatomic, assign, readonly) CGSize fwPixelSize;
-
 #pragma mark - Icon
 
 // 获取AppIcon图片
@@ -100,29 +97,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 设置图片渲染模式为模板，始终显示tintColor，不显示原色。默认自动根据上下文
 @property (nonatomic, readonly) UIImage *fwImageWithRenderTemplate;
 
-#pragma mark - Resize
-
-// 缩放图片到指定大小
-- (nullable UIImage *)fwImageWithScaleSize:(CGSize)size;
-
-// 缩放图片到指定大小，指定模式
-- (nullable UIImage *)fwImageWithScaleSize:(CGSize)size contentMode:(UIViewContentMode)contentMode;
-
-// 按指定模式绘制图片
-- (void)fwDrawInRect:(CGRect)rect withContentMode:(UIViewContentMode)contentMode clipsToBounds:(BOOL)clipsToBounds;
-
-// 裁剪指定区域图片
-- (nullable UIImage *)fwImageWithCropRect:(CGRect)rect;
-
-// 指定颜色填充图片边缘
-- (nullable UIImage *)fwImageWithInsets:(UIEdgeInsets)insets color:(nullable UIColor *)color;
-
-// 拉伸图片(平铺模式)，指定端盖区域（不拉伸区域）
-- (UIImage *)fwImageWithCapInsets:(UIEdgeInsets)insets;
-
-// 拉伸图片(指定模式)，指定端盖区域（不拉伸区域）。Tile为平铺模式，Stretch为拉伸模式
-- (UIImage *)fwImageWithCapInsets:(UIEdgeInsets)insets resizingMode:(UIImageResizingMode)resizingMode;
-
 #pragma mark - Effect
 
 // 倒影图片
@@ -134,28 +108,11 @@ NS_ASSUME_NONNULL_BEGIN
 // 阴影图片
 - (nullable UIImage *)fwImageWithShadowColor:(UIColor *)color offset:(CGSize)offset blur:(CGFloat)blur;
 
-// 圆角图片
-- (nullable UIImage *)fwImageWithCornerRadius:(CGFloat)radius;
-
-// 装饰图片
-- (nullable UIImage *)fwImageWithMaskImage:(UIImage *)maskImage;
-
 // 获取装饰图片
 @property (nonatomic, readonly) UIImage *fwMaskImage;
 
-// 合并图片
-- (nullable UIImage *)fwImageWithMergeImage:(UIImage *)mergeImage;
-
 // 高斯模糊图片，默认模糊半径为10，饱和度为1
 - (nullable UIImage *)fwImageWithBlurRadius:(CGFloat)blurRadius saturationDelta:(CGFloat)saturationDelta tintColor:(nullable UIColor *)tintColor maskImage:(nullable UIImage *)maskImage;
-
-#pragma mark - Rotate
-
-// 按角度常数(0~360)转动图片，默认图片尺寸适应内容
-- (nullable UIImage *)fwImageWithRotateDegree:(CGFloat)degree;
-
-// 按角度常数(0~360)转动图片，指定图片尺寸是否延伸来适应内容，否则图片尺寸不变，内容被裁剪
-- (nullable UIImage *)fwImageWithRotateDegree:(CGFloat)degree fitSize:(BOOL)fitSize;
 
 #pragma mark - Alpha
 

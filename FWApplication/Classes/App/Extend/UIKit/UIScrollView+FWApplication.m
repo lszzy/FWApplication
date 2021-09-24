@@ -123,11 +123,6 @@
     return self.adjustedContentInset;
 }
 
-- (BOOL)fwCanScroll
-{
-    return [self fwCanScrollVertical] || [self fwCanScrollHorizontal];
-}
-
 - (BOOL)fwCanScrollHorizontal
 {
     if (self.bounds.size.width <= 0) {
@@ -161,12 +156,6 @@
         default:
             return NO;
     }
-}
-
-- (void)fwScrollToEdge:(UIRectEdge)edge animated:(BOOL)animated
-{
-    CGPoint contentOffset = [self fwContentOffsetOfEdge:edge];
-    [self setContentOffset:contentOffset animated:animated];
 }
 
 - (CGPoint)fwContentOffsetOfEdge:(UIRectEdge)edge
