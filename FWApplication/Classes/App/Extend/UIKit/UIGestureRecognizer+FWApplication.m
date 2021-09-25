@@ -9,6 +9,7 @@
 
 #import "UIGestureRecognizer+FWApplication.h"
 #import "UIScrollView+FWApplication.h"
+#import "FWUIKit.h"
 
 #pragma mark - UIGestureRecognizer+FWApplication
 

@@ -10,6 +10,7 @@
 #import "FWBannerView.h"
 #import "FWPageControl.h"
 #import "FWImage.h"
+#import "FWUIKit.h"
 #import "UIView+FWStatistical.h"
 
 #pragma mark - FWBannerViewFlowLayout
@@ -654,7 +655,7 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
             pageControl.pageIndicatorTintColor = self.pageDotColor;
             pageControl.userInteractionEnabled = NO;
             pageControl.currentPage = indexOnPageControl;
-            [pageControl fwSetSize:self.pageControlDotSize];
+            pageControl.fwPreferredSize = self.pageControlDotSize;
             [self addSubview:pageControl];
             _pageControl = pageControl;
         }

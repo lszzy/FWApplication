@@ -8,7 +8,7 @@
  */
 
 #import "UIImage+FWApplication.h"
-#import "FWImage.h"
+#import "FWToolkit.h"
 #import "UIBezierPath+FWApplication.h"
 #import <CoreText/CoreText.h>
 #import <Accelerate/Accelerate.h>

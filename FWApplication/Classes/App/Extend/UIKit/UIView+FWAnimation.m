@@ -7,6 +7,7 @@
 //
 
 #import "UIView+FWAnimation.h"
+#import "FWUIKit.h"
 #import <objc/runtime.h>
 
 #pragma mark - UIView+FWAnimation

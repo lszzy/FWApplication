@@ -492,7 +492,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)onOpenUrl
 {
-    [UIApplication fwOpenSafari:@"http://kvm.wuyong.site/test.php"];
+    [UIApplication fwOpenURL:@"http://kvm.wuyong.site/test.php"];
 }
 
 - (void)onOpenSafari

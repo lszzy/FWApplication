@@ -9,7 +9,7 @@
 
 #import "UIView+FWApplication.h"
 #import "FWSwizzle.h"
-#import "FWImage.h"
+#import "FWToolkit.h"
 #import <objc/runtime.h>
 
 @implementation UIView (FWApplication)

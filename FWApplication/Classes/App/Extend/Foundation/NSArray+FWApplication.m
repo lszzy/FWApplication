@@ -10,6 +10,7 @@
 #import "NSArray+FWApplication.h"
 #import "NSDictionary+FWApplication.h"
 #import "FWEncode.h"
+#import "FWFoundation.h"
 
 @implementation NSArray (FWApplication)
 

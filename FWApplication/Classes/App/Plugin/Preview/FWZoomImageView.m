@@ -11,8 +11,8 @@
 #import "FWAutoLayout.h"
 #import "FWAdaptive.h"
 #import "FWEncode.h"
-#import "FWToolkit.h"
 #import "FWImage.h"
+#import "FWToolkit.h"
 #import "UIView+FWApplication.h"
 #import "UISwitch+FWApplication.h"
 #import "FWViewPlugin.h"
@@ -31,7 +31,7 @@
 
 + (UIImage *)largePlayImage {
     CGSize size = CGSizeMake(60, 60);
-    return [UIImage fwImageWithBlock:^(CGContextRef contextRef) {
+    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
         UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
         CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
         CGContextSetFillColorWithColor(contextRef, [UIColor colorWithRed:0 green:0 blue:0 alpha:.25].CGColor);
@@ -47,22 +47,22 @@
         UIOffset offset = UIOffsetMake(size.width / 2 - triangleLength * tan(M_PI / 6) / 2, size.width / 2 - triangleLength / 2);
         [triangle applyTransform:CGAffineTransformMakeTranslation(offset.horizontal, offset.vertical)];
         [triangle fill];
-    } size:size];
+    }];
 }
 
 + (UIImage *)smallPlayImage {
     CGSize size = CGSizeMake(17, 17);
-    return [UIImage fwImageWithBlock:^(CGContextRef contextRef) {
+    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
         UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
         CGContextSetFillColorWithColor(contextRef, color.CGColor);
         UIBezierPath *path = [self trianglePathWithLength:size.width];
         [path fill];
-    } size:size];
+    }];
 }
 
 + (UIImage *)closeImage {
     CGSize size = CGSizeMake(16, 16);
-    return [UIImage fwImageWithBlock:^(CGContextRef contextRef) {
+    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
         UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
         CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
         CGFloat lineWidth = 2;
@@ -76,12 +76,12 @@
         [path setLineWidth:lineWidth];
         [path setLineCapStyle:kCGLineCapRound];
         [path stroke];
-    } size:size];
+    }];
 }
 
 + (UIImage *)pauseImage {
     CGSize size = CGSizeMake(12, 18);
-    return [UIImage fwImageWithBlock:^(CGContextRef contextRef) {
+    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
         UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
         CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
         CGFloat lineWidth = 2;
@@ -92,7 +92,7 @@
         [path addLineToPoint:CGPointMake(size.width - lineWidth / 2, size.height)];
         [path setLineWidth:lineWidth];
         [path stroke];
-    } size:size];
+    }];
 }
 
 + (UIBezierPath *)trianglePathWithLength:(CGFloat)length {

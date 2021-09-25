@@ -21,6 +21,5 @@
 #import "NSString+FWApplication.h"
 #import "NSTimer+FWApplication.h"
 #import "NSURL+FWApplication.h"
-#import "NSUserDefaults+FWApplication.h"
 
 #endif /* Foundation_FWApplication_h */

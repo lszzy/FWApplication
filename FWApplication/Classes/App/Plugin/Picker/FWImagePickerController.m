@@ -655,9 +655,9 @@ static NSString * const kContentTypeOfLastAlbumKeyPrefix = @"FWContentTypeOfLast
     self.topToolBarView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), FWTopBarHeight);
     CGFloat topToolbarPaddingTop = UIScreen.fwSafeAreaInsets.top;
     CGFloat topToolbarContentHeight = CGRectGetHeight(self.topToolBarView.bounds) - topToolbarPaddingTop;
-    self.backButton.fwOrigin = CGPointMake(16 + self.view.fwSafeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
+    self.backButton.fwOrigin = CGPointMake(16 + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
     if (!self.checkboxButton.hidden) {
-        self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - 10 - self.view.fwSafeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
+        self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - 10 - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
     }
 }
 
@@ -1024,7 +1024,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (!CGSizeEqualToSize(self.collectionView.frame.size, self.view.bounds.size)) {
         self.collectionView.frame = self.view.bounds;
     }
-    UIEdgeInsets contentInset = UIEdgeInsetsMake(FWTopBarHeight, self.collectionView.fwSafeAreaInsets.left, MAX(operationToolBarViewHeight, self.collectionView.fwSafeAreaInsets.bottom), self.collectionView.fwSafeAreaInsets.right);
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(FWTopBarHeight, self.collectionView.safeAreaInsets.left, MAX(operationToolBarViewHeight, self.collectionView.safeAreaInsets.bottom), self.collectionView.safeAreaInsets.right);
     if (!UIEdgeInsetsEqualToEdgeInsets(self.collectionView.contentInset, contentInset)) {
         self.collectionView.contentInset = contentInset;
         self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(contentInset.top, 0, contentInset.bottom, 0);

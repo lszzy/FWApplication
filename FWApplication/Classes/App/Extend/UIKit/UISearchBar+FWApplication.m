@@ -11,7 +11,7 @@
 #import "FWSwizzle.h"
 #import "FWMessage.h"
 #import "FWAdaptive.h"
-#import "FWImage.h"
+#import "FWToolkit.h"
 #import <objc/runtime.h>
 
 @implementation UISearchBar (FWApplication)

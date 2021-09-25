@@ -9,6 +9,7 @@
 
 #import "NSDictionary+FWApplication.h"
 #import "NSArray+FWApplication.h"
+#import "FWFoundation.h"
 
 @implementation NSDictionary (FWApplication)
 
