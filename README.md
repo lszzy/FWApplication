@@ -5,7 +5,9 @@
 [![Pod License](https://img.shields.io/cocoapods/l/FWApplication.svg?style=flat)](https://github.com/lszzy/FWApplication/blob/master/LICENSE)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/lszzy/FWApplication)
 
-# [中文](README_CN.md)s
+# [FWFramework](https://github.com/lszzy/FWFramework)
+
+# [中文](README_CN.md)
 
 ## Tutorial
 iOS application framework, convenient for iOS development, compatible with OC and Swift.
