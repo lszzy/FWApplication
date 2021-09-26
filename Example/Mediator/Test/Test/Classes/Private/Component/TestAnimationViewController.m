@@ -22,7 +22,7 @@
     self = [super initWithFrame:CGRectZero];
     if (self) {
         self.transitionType = transitionType;
-        if (self.transitionType > 5) {
+        if (self.transitionType > 8) {
             self.backgroundColor = [UIColor clearColor];
         } else {
             self.backgroundColor = [UIColor fwColorWithHex:0x000000 alpha:0.5];
@@ -31,7 +31,7 @@
         self.bottomView = [UIView new];
         self.bottomView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.bottomView];
-        if (self.transitionType == 3 || self.transitionType == 6) {
+        if (self.transitionType == 6 || self.transitionType == 9) {
             self.bottomView.fwLayoutChain.left().right().bottom().height(FWScreenHeight / 2);
         } else {
             self.bottomView.fwLayoutChain.center().width(300).height(200);
@@ -40,14 +40,14 @@
         FWWeakifySelf();
         [self fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
             FWStrongifySelf();
-            if (self.transitionType > 5) {
+            if (self.transitionType > 8) {
                 [self.fwViewController dismissViewControllerAnimated:YES completion:nil];
                 return;
             }
             
-            if (self.transitionType == 3) {
+            if (self.transitionType == 6) {
                 [self fwSetPresentTransition:FWAnimatedTransitionTypeDismiss contentView:self.bottomView completion:nil];
-            } else if (self.transitionType == 4) {
+            } else if (self.transitionType == 7) {
                 [self fwSetAlertTransition:FWAnimatedTransitionTypeDismiss completion:nil];
             } else {
                 [self fwSetFadeTransition:FWAnimatedTransitionTypeDismiss completion:nil];
@@ -59,11 +59,11 @@
 
 - (void)showInViewController:(UIViewController *)viewController
 {
-    if (self.transitionType > 5) {
+    if (self.transitionType > 8) {
         UIViewController *wrappedController = [self fwWrappedTransitionController:YES];
-        if (self.transitionType == 6) {
+        if (self.transitionType == 9) {
             [wrappedController fwSetPresentTransition:nil];
-        } else if (self.transitionType == 7) {
+        } else if (self.transitionType == 10) {
             [wrappedController fwSetAlertTransition:nil];
         } else {
             [wrappedController fwSetFadeTransition:nil];
@@ -73,9 +73,9 @@
     }
     
     [self fwTransitionToController:viewController pinEdges:YES];
-    if (self.transitionType == 3) {
+    if (self.transitionType == 6) {
         [self fwSetPresentTransition:FWAnimatedTransitionTypePresent contentView:self.bottomView completion:nil];
-    } else if (self.transitionType == 4) {
+    } else if (self.transitionType == 7) {
         [self fwSetAlertTransition:FWAnimatedTransitionTypePresent completion:nil];
     } else {
         [self fwSetFadeTransition:FWAnimatedTransitionTypePresent completion:nil];
@@ -96,21 +96,35 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.fwNavigationBarHidden = YES;
     self.view.backgroundColor = [UIColor clearColor];
     FWWeakifySelf();
     [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self fwCloseViewControllerAnimated:YES];
     }];
     
     self.bottomView = [UIView new];
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [self.fwView addSubview:self.bottomView];
-    if (self.transitionType == 0) {
+    if (self.transitionType == 0 || self.transitionType == 3) {
         self.bottomView.fwLayoutChain.left().right().bottom().height(FWScreenHeight / 2);
     } else {
         self.bottomView.fwLayoutChain.center().width(300).height(200);
     }
+    
+    UIButton *button = [UIButton new];
+    [button setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
+    NSString *buttonTitle = self.navigationController ? @"支持push" : @"不支持push";
+    [button setTitle:buttonTitle forState:UIControlStateNormal];
+    [self.bottomView addSubview:button];
+    [button fwAddTouchBlock:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        TestAnimationChildController *animationController = [TestAnimationChildController new];
+        animationController.transitionType = self.transitionType;
+        [self.navigationController pushViewController:animationController animated:YES];
+    }];
+    button.fwLayoutChain.center();
 }
 
 - (void)showInViewController:(UIViewController *)viewController
@@ -123,6 +137,19 @@
         [self fwSetFadeTransition:nil];
     }
     [viewController presentViewController:self animated:YES completion:nil];
+}
+
+- (void)showInNavigationController:(UIViewController *)viewController
+{
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self];
+    if (self.transitionType == 3) {
+        [nav fwSetPresentTransition:nil];
+    } else if (self.transitionType == 4) {
+        [nav fwSetAlertTransition:nil];
+    } else {
+        [nav fwSetFadeTransition:nil];
+    }
+    [viewController presentViewController:nav animated:YES completion:nil];
 }
 
 @end
@@ -182,12 +209,16 @@ FWDefLazyProperty(UIView *, animationView, {
 - (void)onPresent
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"VC present", @"VC alert", @"VC fade", @"view present", @"view alert", @"view fade", @"wrapped present", @"wrapped alert", @"wrapped fade"] actionBlock:^(NSInteger index) {
+    [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"VC present", @"VC alert", @"VC fade", @"nav present", @"nav alert", @"nav fade", @"view present", @"view alert", @"view fade", @"wrapped present", @"wrapped alert", @"wrapped fade"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index < 3) {
             TestAnimationChildController *animationController = [TestAnimationChildController new];
             animationController.transitionType = index;
             [animationController showInViewController:self];
+        } else if (index < 6) {
+            TestAnimationChildController *animationController = [TestAnimationChildController new];
+            animationController.transitionType = index;
+            [animationController showInNavigationController:self];
         } else {
             TestAnimationView *animationView = [[TestAnimationView alloc] initWithTransitionType:index];
             [animationView showInViewController:self];
