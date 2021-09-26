@@ -65,7 +65,7 @@
     attr.fwLayoutChain.leftWithInset(20).rightWithInset(20).topToBottomOfViewWithOffset(view, 20);
     
     [self.attributedLabel setText:@"我是非常长的文本，要多长有多长，我会自动截断，再附加视图，不信你看嘛，我是显示不下了的文本，我是更多文本，我是更多更多的文本，我又要换行了"];
-    UILabel *collapseLabel = [UILabel fwLabelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
+    UILabel *collapseLabel = [UILabel fwLabelWithText:@"点击收起" font:FWFontRegular(16) textColor:UIColor.blueColor];
     collapseLabel.textAlignment = NSTextAlignmentCenter;
     collapseLabel.frame = CGRectMake(0, 0, self.buttonWidth, ceil(FWFontRegular(16).lineHeight));
     collapseLabel.userInteractionEnabled = YES;
@@ -78,7 +78,7 @@
     }];
     [self.attributedLabel appendView:collapseLabel];
     
-    UILabel *expandLabel = [UILabel fwLabelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:moreText];
+    UILabel *expandLabel = [UILabel fwLabelWithText:moreText font:FWFontRegular(16) textColor:UIColor.blueColor];
     expandLabel.textAlignment = NSTextAlignmentCenter;
     expandLabel.frame = CGRectMake(0, 0, self.buttonWidth, lineHeight);
     expandLabel.userInteractionEnabled = YES;

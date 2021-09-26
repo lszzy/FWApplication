@@ -58,7 +58,7 @@
     FWNavigationView *navigationView = self.fwNavigationView;
     navigationView.bottomView.backgroundColor = UIColor.brownColor;
     navigationView.bottomHidden = YES;
-    UILabel *titleLabel = [UILabel fwLabelWithFont:FWFontBold(18) textColor:UIColor.whiteColor text:@"FWNavigationView"];
+    UILabel *titleLabel = [UILabel fwLabelWithText:@"FWNavigationView" font:FWFontBold(18) textColor:UIColor.whiteColor];
     [navigationView.bottomView addSubview:titleLabel];
     titleLabel.fwLayoutChain.leftWithInset(15).bottomWithInset(15);
 }

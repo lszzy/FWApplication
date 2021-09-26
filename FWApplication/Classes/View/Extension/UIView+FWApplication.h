@@ -59,32 +59,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 添加到父视图，nil时为从父视图移除
 - (void)fwMoveToSuperview:(nullable UIView *)view;
 
-#pragma mark - Border
-
-/**
- * 绘制四边边框
- *
- * @param color 边框颜色
- * @param width 边框宽度
- */
-- (void)fwSetBorderColor:(nullable UIColor *)color width:(CGFloat)width;
-
-/**
- * 绘制四边边框和四角圆角
- *
- * @param color  边框颜色
- * @param width  边框宽度
- * @param radius 圆角半径
- */
-- (void)fwSetBorderColor:(nullable UIColor *)color width:(CGFloat)width cornerRadius:(CGFloat)radius;
-
-/**
- * 绘制四角圆角
- *
- * @param radius 圆角半径
- */
-- (void)fwSetCornerRadius:(CGFloat)radius;
-
 #pragma mark - Snapshot
 
 // 图片截图

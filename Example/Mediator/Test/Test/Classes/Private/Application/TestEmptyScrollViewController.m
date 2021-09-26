@@ -55,7 +55,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 100)];
     view.backgroundColor = Theme.cellColor;
     
-    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
+    UILabel *label = [UILabel fwLabelWithText:@"我是Section头视图" font:[UIFont fwFontOfSize:15] textColor:Theme.textColor];
     [view addSubview:label];
     label.fwLayoutChain.leftWithInset(15).centerY();
     return view;

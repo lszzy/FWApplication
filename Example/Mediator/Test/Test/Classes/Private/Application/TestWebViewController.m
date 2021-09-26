@@ -8,7 +8,7 @@
 
 #import "TestWebViewController.h"
 
-@interface TestWebViewController ()
+@interface TestWebViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, assign) BOOL gobackDisabled;
 
@@ -67,6 +67,7 @@
 - (void)renderWebView
 {
     self.fwView.backgroundColor = [Theme tableColor];
+    self.webView.scrollView.delegate = self;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     self.webView.scrollView.showsHorizontalScrollIndicator = NO;
 }
@@ -82,7 +83,7 @@
     [self.webView fwObserveProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         backItem.enabled = webView.canGoBack;
-        [self reloadToolbar];
+        [self reloadToolbar:NO];
     }];
     
     UIBarButtonItem *forwardItem = [UIBarButtonItem fwBarItemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
@@ -93,16 +94,12 @@
     [self.webView fwObserveProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         forwardItem.enabled = webView.canGoForward;
-        [self reloadToolbar];
+        [self reloadToolbar:NO];
     }];
     
     [self.webView fwObserveProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
-        [self reloadToolbar];
-    }];
-    [self.webView fwObserveProperty:@"scrollView.contentOffset" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
-        FWStrongifySelf();
-        if (webView.scrollView.isDragging) [self reloadToolbar];
+        [self reloadToolbar:NO];
     }];
     
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -110,29 +107,39 @@
     spaceItem.width = 79;
     self.toolbarItems = @[flexibleItem, backItem, spaceItem, forwardItem, flexibleItem];
     
+    self.navigationController.toolbar.fwShadowImage = [UIImage fwImageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
     self.navigationController.toolbar.fwBackgroundColor = Theme.barColor;
     self.navigationController.toolbar.fwForegroundColor = Theme.textColor;
 }
 
-- (void)reloadToolbar
+- (void)reloadToolbar:(BOOL)animated
 {
-    if (self.webView.canGoBack || [self.webView canGoForward]) {
-        if (self.webView.scrollView.isDragging && self.webView.scrollView.fwCanScroll) {
-            UISwipeGestureRecognizerDirection scrollDirection = self.webView.scrollView.fwScrollDirection;
-            if (scrollDirection == UISwipeGestureRecognizerDirectionUp) {
-                if (!self.navigationController.toolbarHidden) {
-                    [self.navigationController setToolbarHidden:YES animated:YES];
-                }
-            } else if (scrollDirection == UISwipeGestureRecognizerDirectionDown) {
-                if (self.navigationController.toolbarHidden) {
-                    [self.navigationController setToolbarHidden:NO animated:YES];
-                }
-            }
-        } else {
-            self.navigationController.toolbarHidden = NO;
+    if (self.webView.canGoBack || self.webView.canGoForward) {
+        if (self.fwToolBarHidden) {
+            [self.navigationController setToolbarHidden:NO animated:animated];
         }
     } else {
-        self.navigationController.toolbarHidden = YES;
+        if (!self.fwToolBarHidden) {
+            [self.navigationController setToolbarHidden:YES animated:animated];
+        }
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (!scrollView.isDragging) return;
+    
+    BOOL canScroll = scrollView.contentSize.height + scrollView.fwContentInset.top + scrollView.fwContentInset.bottom > CGRectGetHeight(scrollView.bounds) - FWToolBarHeight;
+    if (!canScroll) {
+        [self reloadToolbar:NO];
+        return;
+    }
+    
+    CGPoint transition = [scrollView.panGestureRecognizer translationInView:scrollView.panGestureRecognizer.view];
+    if (transition.y > 10.0f) {
+        [self reloadToolbar:YES];
+    } else if (transition.y < -10.0f) {
+        [self.navigationController setToolbarHidden:YES animated:YES];
     }
 }
 

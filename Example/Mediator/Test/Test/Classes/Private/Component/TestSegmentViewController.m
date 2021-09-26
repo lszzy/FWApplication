@@ -72,7 +72,7 @@
     [activityView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:imageView withOffset:10];
     [activityView fwSetDimensionsToSize:activitySize];
     
-    UILabel *textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:nil];
+    UILabel *textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     textLabel.numberOfLines = 0;
     textLabel.textAlignment = NSTextAlignmentCenter;
     [self.fwView addSubview:textLabel];
@@ -139,7 +139,7 @@
         [self.tagCollectionView addTag:tagName withConfig:self.textTagConfig];
     }
     
-    FWMarqueeLabel *marqueeLabel = [FWMarqueeLabel fwLabelWithFont:FWFontRegular(16) textColor:[Theme textColor] text:@"FWMarqueeLabel 会在添加到界面上后，并且文字超过 label 宽度时自动滚动"];
+    FWMarqueeLabel *marqueeLabel = [FWMarqueeLabel fwLabelWithText:@"FWMarqueeLabel 会在添加到界面上后，并且文字超过 label 宽度时自动滚动" font:FWFontRegular(16) textColor:[Theme textColor]];
     [self.fwView addSubview:marqueeLabel];
     [marqueeLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:10];
     [marqueeLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:10];

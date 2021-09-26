@@ -13,31 +13,31 @@
 
 - (void)renderView
 {
-    UIButton *button = [UIButton fwButtonWithFont:[UIFont fwFontOfSize:15] titleColor:[Theme textColor] title:@"Button重复点击"];
+    UIButton *button = [UIButton fwButtonWithTitle:@"Button重复点击" font:[UIFont fwFontOfSize:15] titleColor:[Theme textColor]];
     button.frame = CGRectMake(25, 20, 150, 50);
     [button fwAddTouchTarget:self action:@selector(onClick1:)];
     [self.fwView addSubview:button];
     
-    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"View重复点击"];
+    UILabel *label = [UILabel fwLabelWithText:@"View重复点击" font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     label.textAlignment = NSTextAlignmentCenter;
     label.userInteractionEnabled = YES;
     label.frame = CGRectMake(200, 20, 150, 50);
     [label fwAddTapGestureWithTarget:self action:@selector(onClick2:)];
     [self.fwView addSubview:label];
     
-    button = [UIButton fwButtonWithFont:[UIFont fwFontOfSize:15] titleColor:[Theme textColor] title:@"Button不可重复点击"];
+    button = [UIButton fwButtonWithTitle:@"Button不可重复点击" font:[UIFont fwFontOfSize:15] titleColor:[Theme textColor]];
     button.frame = CGRectMake(25, 90, 150, 50);
     [button fwAddTouchTarget:self action:@selector(onClick3:)];
     [self.fwView addSubview:button];
     
-    label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"View不可重复点击"];
+    label = [UILabel fwLabelWithText:@"View不可重复点击" font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     label.textAlignment = NSTextAlignmentCenter;
     label.userInteractionEnabled = YES;
     label.frame = CGRectMake(200, 90, 150, 50);
     [label fwAddTapGestureWithTarget:self action:@selector(onClick4:)];
     [self.fwView addSubview:label];
     
-    button = [UIButton fwButtonWithFont:[UIFont fwFontOfSize:15] titleColor:[Theme textColor] title:@"Button1秒内不可重复点击"];
+    button = [UIButton fwButtonWithTitle:@"Button1秒内不可重复点击" font:[UIFont fwFontOfSize:15] titleColor:[Theme textColor]];
     button.fwTouchEventInterval = 1;
     button.frame = CGRectMake(25, 160, 200, 50);
     [button fwAddTouchTarget:self action:@selector(onClick5:)];

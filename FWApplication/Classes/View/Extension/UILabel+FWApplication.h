@@ -18,12 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface UILabel (FWApplication)
 
-// 快速设置标签，不设置传nil即可
-- (void)fwSetFont:(nullable UIFont *)font textColor:(nullable UIColor *)textColor text:(nullable NSString *)text;
-
-// 快速创建标签，不初始化传nil即可
-+ (instancetype)fwLabelWithFont:(nullable UIFont *)font textColor:(nullable UIColor *)textColor text:(nullable NSString *)text;
-
 #pragma mark - Size
 
 // 计算当前文本所占尺寸，需frame或者宽度布局完整

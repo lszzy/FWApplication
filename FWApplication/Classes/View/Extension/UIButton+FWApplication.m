@@ -8,50 +8,8 @@
  */
 
 #import "UIButton+FWApplication.h"
-#import "FWSwizzle.h"
-#import <objc/runtime.h>
 
 @implementation UIButton (FWApplication)
-
-- (void)fwSetImageEdge:(UIRectEdge)edge spacing:(CGFloat)spacing
-{
-    CGFloat imageWith = self.imageView.image.size.width;
-    CGFloat imageHeight = self.imageView.image.size.height;
-    CGSize labelSize = [self.titleLabel.text sizeWithAttributes:[NSDictionary dictionaryWithObjectsAndKeys:self.titleLabel.font, NSFontAttributeName, nil]];
-    CGFloat labelWidth = labelSize.width;
-    CGFloat labelHeight = labelSize.height;
-    
-    // image中心移动的x距离
-    CGFloat imageOffsetX = (imageWith + labelWidth) / 2 - imageWith / 2;
-    // image中心移动的y距离
-    CGFloat imageOffsetY = imageHeight / 2 + spacing / 2;
-    // label中心移动的x距离
-    CGFloat labelOffsetX = (imageWith + labelWidth / 2) - (imageWith + labelWidth) / 2;
-    // label中心移动的y距离
-    CGFloat labelOffsetY = labelHeight / 2 + spacing / 2;
-    
-    switch (edge) {
-        case UIRectEdgeLeft:
-            self.imageEdgeInsets = UIEdgeInsetsMake(0, -spacing / 2, 0, spacing / 2);
-            self.titleEdgeInsets = UIEdgeInsetsMake(0, spacing / 2, 0, -spacing / 2);
-            break;
-        case UIRectEdgeRight:
-            self.imageEdgeInsets = UIEdgeInsetsMake(0, labelWidth + spacing / 2, 0, -(labelWidth + spacing / 2));
-            self.titleEdgeInsets = UIEdgeInsetsMake(0, -(imageHeight + spacing / 2), 0, imageHeight + spacing / 2);
-            break;
-        case UIRectEdgeTop:
-            self.imageEdgeInsets = UIEdgeInsetsMake(-imageOffsetY, imageOffsetX, imageOffsetY, -imageOffsetX);
-            self.titleEdgeInsets = UIEdgeInsetsMake(labelOffsetY, -labelOffsetX, -labelOffsetY, labelOffsetX);
-            break;
-        case UIRectEdgeBottom:
-            self.imageEdgeInsets = UIEdgeInsetsMake(imageOffsetY, imageOffsetX, -imageOffsetY, -imageOffsetX);
-            self.titleEdgeInsets = UIEdgeInsetsMake(-labelOffsetY, -labelOffsetX, labelOffsetY, labelOffsetX);
-            break;
-        default:
-            break;
-    }
-    
-}
 
 - (void)fwSetBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state
 {
@@ -100,38 +58,6 @@
         }
     });
     dispatch_resume(_timer);
-}
-
-- (void)fwSetFont:(UIFont *)font titleColor:(UIColor *)titleColor title:(NSString *)title
-{
-    if (font) {
-        self.titleLabel.font = font;
-    }
-    if (titleColor) {
-        [self setTitleColor:titleColor forState:UIControlStateNormal];
-    }
-    if (title) {
-        [self setTitle:title forState:UIControlStateNormal];
-    }
-}
-
-- (void)fwSetImage:(UIImage *)image
-{
-    [self setImage:image forState:UIControlStateNormal];
-}
-
-+ (instancetype)fwButtonWithFont:(UIFont *)font titleColor:(UIColor *)titleColor title:(NSString *)title
-{
-    UIButton *button = [self buttonWithType:UIButtonTypeCustom];
-    [button fwSetFont:font titleColor:titleColor title:title];
-    return button;
-}
-
-+ (instancetype)fwButtonWithImage:(UIImage *)image
-{
-    UIButton *button = [self buttonWithType:UIButtonTypeCustom];
-    [button fwSetImage:image];
-    return button;
 }
 
 @end

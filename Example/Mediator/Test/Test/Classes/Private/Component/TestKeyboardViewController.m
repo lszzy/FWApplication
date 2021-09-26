@@ -105,7 +105,7 @@ FWPropertyAssign(BOOL, canScroll);
     inputView.fwKeyboardSpacing = 80;
     textView.fwReturnResponder = inputView;
     inputView.fwDelegate = self;
-    [inputView fwAddToolbar:UIBarStyleDefault title:nil block:nil];
+    [inputView fwAddToolbar:UIBarStyleDefault title:@"Done" block:nil];
     [self.contentView addSubview:inputView];
     [inputView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
     [inputView fwAlignAxisToSuperview:NSLayoutAttributeCenterX];

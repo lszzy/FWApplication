@@ -30,7 +30,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:nil];
+        _textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_textLabel];
         [_textLabel fwPinEdgesToSuperview];
@@ -204,7 +204,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     UIView *view = [UIView new];
     view.backgroundColor = [Theme cellColor];
     
-    UILabel *headerLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:[NSString stringWithFormat:@"Header%@", @(section)]];
+    UILabel *headerLabel = [UILabel fwLabelWithText:[NSString stringWithFormat:@"Header%@", @(section)] font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     headerLabel.frame = CGRectMake(0, 0, FWScreenWidth, ItemViewHeight);
     [view addSubview:headerLabel];
     return view;
@@ -361,7 +361,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     [self.view addSubview:cartView];
     [cartView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
     [cartView fwSetDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
-    UILabel *cartLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[UIColor blackColor] text:@"我是购物车"];
+    UILabel *cartLabel = [UILabel fwLabelWithText:@"我是购物车" font:[UIFont fwFontOfSize:15] textColor:[UIColor blackColor]];
     cartLabel.textAlignment = NSTextAlignmentCenter;
     cartLabel.frame = CGRectMake(0, 0, FWScreenWidth, CartViewHeight);
     [cartView addSubview:cartLabel];

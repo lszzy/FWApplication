@@ -19,7 +19,7 @@
 
 - (void)renderView
 {
-    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:nil];
+    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     _label = label;
     label.backgroundColor = [Theme cellColor];
     label.numberOfLines = 0;

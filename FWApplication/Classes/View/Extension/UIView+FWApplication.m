@@ -142,29 +142,6 @@
     }
 }
 
-#pragma mark - Border
-
-- (void)fwSetBorderColor:(UIColor *)color width:(CGFloat)width
-{
-    self.layer.borderColor = color.CGColor;
-    self.layer.borderWidth = width;
-}
-
-- (void)fwSetBorderColor:(UIColor *)color width:(CGFloat)width cornerRadius:(CGFloat)radius
-{
-    [self fwSetBorderColor:color width:width];
-    [self fwSetCornerRadius:radius];
-}
-
-- (void)fwSetCornerRadius:(CGFloat)radius
-{
-    self.layer.cornerRadius = radius;
-    // 设置图层上的子图层，超过该图层的部分需要裁剪，默认开启
-    self.layer.masksToBounds = YES;
-    // 设置视图上的子视图，超过该视图的部分需要裁剪
-    // self.clipsToBounds = YES;
-}
-
 #pragma mark - Snapshot
 
 - (UIImage *)fwSnapshotImage

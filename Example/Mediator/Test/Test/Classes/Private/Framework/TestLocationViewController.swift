@@ -10,7 +10,7 @@ import FWApplication
 
 @objcMembers class TestLocationViewController: TestViewController {
     lazy var startButton: UIButton = {
-        let view = UIButton.fwButton(with: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor, title: "Start")
+        let view = UIButton.fwButton(withTitle: "Start", font: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 20, y: 50, width: 60, height: 50)
         view.fwAddTouch { (sender) in
             FWLocationManager.sharedInstance.startUpdateLocation()
@@ -19,7 +19,7 @@ import FWApplication
     }()
     
     lazy var stopButton: UIButton = {
-        let view = UIButton.fwButton(with: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor, title: "Stop")
+        let view = UIButton.fwButton(withTitle: "Stop", font: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 100, y: 50, width: 60, height: 50)
         view.fwAddTouch { (sender) in
             FWLocationManager.sharedInstance.stopUpdateLocation()
@@ -28,7 +28,7 @@ import FWApplication
     }()
     
     lazy var configButton: UIButton = {
-        let view = UIButton.fwButton(with: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor, title: "Once")
+        let view = UIButton.fwButton(withTitle: "Once", font: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 180, y: 50, width: 60, height: 50)
         view.fwAddTouch { (sender) in
             FWLocationManager.sharedInstance.stopWhenCompleted = !FWLocationManager.sharedInstance.stopWhenCompleted
@@ -37,7 +37,7 @@ import FWApplication
     }()
     
     lazy var resultLabel: UILabel = {
-        let view = UILabel.fwLabel(with: UIFont.fwFont(ofSize: 15), textColor: Theme.textColor, text: "")
+        let view = UILabel.fwLabel(with: UIFont.fwFont(ofSize: 15), textColor: Theme.textColor)
         view.numberOfLines = 0
         view.frame = CGRect(x: 20, y: 100, width: FWScreenWidth - 40, height: 450)
         return view
