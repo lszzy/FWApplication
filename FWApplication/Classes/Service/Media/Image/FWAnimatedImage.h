@@ -8,7 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "FWImage.h"
+#import "FWImagePlugin.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

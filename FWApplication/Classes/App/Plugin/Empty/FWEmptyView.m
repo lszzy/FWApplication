@@ -8,7 +8,6 @@
  */
 
 #import "FWEmptyView.h"
-#import "UIView+FWApplication.h"
 #import "FWViewPlugin.h"
 #import "FWToolkit.h"
 #import <objc/runtime.h>

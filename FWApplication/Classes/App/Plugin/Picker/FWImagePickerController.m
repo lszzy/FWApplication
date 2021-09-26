@@ -11,15 +11,14 @@
 #import "FWAdaptive.h"
 #import "FWToolkit.h"
 #import "FWBlock.h"
-#import "FWImage.h"
 #import "FWEmptyPlugin.h"
 #import "FWToastPlugin.h"
 #import "FWAlertPlugin.h"
 #import "FWNavigationView.h"
 #import "FWViewPlugin.h"
+#import "FWImagePlugin.h"
 #import "FWSwizzle.h"
 #import "FWAppBundle.h"
-#import "UIView+FWApplication.h"
 
 #pragma mark - FWImageAlbumTableCell
 

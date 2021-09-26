@@ -8,6 +8,8 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "UIKit+FWApplication.h"
+#import "FWAttributedLabel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -11,6 +11,7 @@
 #import "FWIndicatorView.h"
 #import "FWProgressView.h"
 #import "FWAlertControllerImpl.h"
+#import "FWImagePluginImpl.h"
 #import "FWEmptyPluginImpl.h"
 #import "FWRefreshPluginImpl.h"
 #import "FWToastPluginImpl.h"

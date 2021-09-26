@@ -34,6 +34,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'Model' do |ss|
     ss.source_files = 'FWApplication/Classes/Model/**/*.{h,m,swift}'
+    ss.dependency 'FWApplication/App'
   end
 
   s.subspec 'View' do |ss|

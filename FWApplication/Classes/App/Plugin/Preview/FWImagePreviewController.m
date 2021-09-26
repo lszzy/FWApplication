@@ -8,7 +8,6 @@
  */
 
 #import "FWImagePreviewController.h"
-#import "UIView+FWApplication.h"
 #import "FWAdaptive.h"
 #import "FWToolkit.h"
 
