@@ -279,8 +279,8 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.fwPresentationDidDismiss = ^{
         [UIWindow.fwMainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fwDismissBlock = ^{
-        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwDismissBlock"];
+    viewController.fwCompletionHandler = ^(id  _Nullable result) {
+        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
     [self presentViewController:viewController animated:YES completion:nil];
@@ -300,8 +300,8 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.fwPresentationDidDismiss = ^{
         [UIWindow.fwMainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fwDismissBlock = ^{
-        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwDismissBlock"];
+    viewController.fwCompletionHandler = ^(id  _Nullable result) {
+        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
     viewController.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -316,8 +316,8 @@ FWPropertyAssign(BOOL, hideToast);
     navController.fwPresentationDidDismiss = ^{
         [UIWindow.fwMainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    navController.fwDismissBlock = ^{
-        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwDismissBlock"];
+    navController.fwCompletionHandler = ^(id  _Nullable result) {
+        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -341,8 +341,8 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.fwPresentationDidDismiss = ^{
         [UIWindow.fwMainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fwDismissBlock = ^{
-        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwDismissBlock"];
+    viewController.fwCompletionHandler = ^(id  _Nullable result) {
+        [UIWindow.fwMainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:viewController animated:YES completion:nil];
 }
@@ -350,7 +350,7 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)onDismiss
 {
     FWWeakifySelf();
-    [self fwDismissAnimated:YES completion:^{
+    [self dismissViewControllerAnimated:YES completion:^{
         FWStrongifySelf();
         NSLog(@"self: %@", self);
     }];

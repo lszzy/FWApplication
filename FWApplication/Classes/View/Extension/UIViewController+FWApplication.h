@@ -27,18 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)fwDefaultModalPresentationStyle:(UIModalPresentationStyle)style;
 
-/*!
- @brief 设置手工dismiss完成回调block，优先级presented大于self，viewController大于navigationController，需调用fwDismissAnimated:手工触发
- @discussion 仅当控制器自身被dismiss时才会触发，如果有presented控制器，会触发presented控制器的对应block。iOS13默认present手势下拉dismiss时不会触发
- */
-@property (nullable, nonatomic, copy) void (^fwDismissBlock)(void);
-
-/*!
- @brief 手工调用dismiss，自动判断并调用fwDismissBlock
- @discussion 无法通过交换dismissViewControllerAnimated:completion:自动调用，因为iOS13默认present手势下拉开始时也会触发该方法导致重复调用
- */
-- (void)fwDismissAnimated:(BOOL)animated completion:(nullable void(^)(void))completion;
-
 #pragma mark - Child
 
 /// 获取当前显示的子控制器，解决不能触发viewWillAppear等的bug

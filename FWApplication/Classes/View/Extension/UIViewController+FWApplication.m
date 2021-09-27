@@ -46,30 +46,6 @@ static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresenta
     }
 }
 
-- (void (^)(void))fwDismissBlock
-{
-    return objc_getAssociatedObject(self, @selector(fwDismissBlock));
-}
-
-- (void)setFwDismissBlock:(void (^)(void))fwDismissBlock
-{
-    objc_setAssociatedObject(self, @selector(fwDismissBlock), fwDismissBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (void)fwDismissAnimated:(BOOL)animated completion:(void (^)(void))completion
-{
-    UIViewController *viewController = self.presentedViewController ?: self;
-    void (^dismissBlock)(void) = viewController.fwDismissBlock ?: viewController.navigationController.fwDismissBlock;
-    if (dismissBlock) {
-        [self dismissViewControllerAnimated:animated completion:^{
-            if (completion) completion();
-            if (dismissBlock) dismissBlock();
-        }];
-    } else {
-        [self dismissViewControllerAnimated:animated completion:completion];
-    }
-}
-
 #pragma mark - Child
 
 - (UIViewController *)fwChildViewController
