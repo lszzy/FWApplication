@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWImagePlugin
 
-/// 本地图片解码选项，默认兼容SDWebImage
+/// 本地图片解码编码选项，默认兼容SDWebImage
 typedef NSString * FWImageCoderOptions NS_TYPED_ENUM;
 
 /// 网络图片加载选项，默认兼容SDWebImage
@@ -60,6 +60,9 @@ typedef NS_OPTIONS(NSUInteger, FWWebImageOptions) {
 /// image本地解码插件方法，默认使用系统方法
 - (nullable UIImage *)fwImageDecode:(NSData *)data scale:(CGFloat)scale options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
 
+/// image本地编码插件方法，默认使用系统方法
+- (nullable NSData *)fwImageEncode:(UIImage *)image options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
+
 @end
 
 #pragma mark - UIImage+FWImagePlugin
@@ -92,6 +95,12 @@ FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name);
 
 /// 从图片数据解码创建UIImage，指定scale，支持动图。支持设置图片解码选项
 + (nullable UIImage *)fwImageWithData:(nullable NSData *)data scale:(CGFloat)scale options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
+
+/// 从UIImage编码创建图片数据，支持动图
++ (nullable NSData *)fwDataWithImage:(nullable UIImage *)image;
+
+/// 从UIImage编码创建图片数据，支持动图。支持设置图片编码选项
++ (nullable NSData *)fwDataWithImage:(nullable UIImage *)image options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
 
 /// 下载网络图片并返回下载凭据
 + (nullable id)fwDownloadImage:(nullable id)url

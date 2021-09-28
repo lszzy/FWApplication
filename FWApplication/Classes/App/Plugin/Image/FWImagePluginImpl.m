@@ -50,6 +50,15 @@
     return [[SDImageCodersManager sharedManager] decodedImageWithData:data options:[coderOptions copy]];
 }
 
+- (NSData *)fwImageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+{
+    SDImageCoderMutableOptions *coderOptions = [[NSMutableDictionary alloc] init];
+    coderOptions[SDImageCoderEncodeCompressionQuality] = @(1);
+    coderOptions[SDImageCoderEncodeFirstFrameOnly] = @(NO);
+    if (options) [coderOptions addEntriesFromDictionary:options];
+    return [[SDImageCodersManager sharedManager] encodedDataWithImage:image format:SDImageFormatUndefined options:[coderOptions copy]];
+}
+
 - (NSURL *)fwImageURL:(UIImageView *)imageView
 {
     return imageView.sd_imageURL;

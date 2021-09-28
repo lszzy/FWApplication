@@ -110,6 +110,9 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 /// 解析图片数据到Image，可指定scale
 - (nullable UIImage *)decodedImageWithData:(nullable NSData *)data scale:(CGFloat)scale options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
 
+/// 编码UIImage到图片数据
+- (nullable NSData *)encodedDataWithImage:(nullable UIImage *)image options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
+
 @end
 
 NS_ASSUME_NONNULL_END

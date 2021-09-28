@@ -797,6 +797,11 @@
     return [[FWImageCoder sharedInstance] decodedImageWithData:data scale:scale options:options];
 }
 
+- (NSData *)fwImageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+{
+    return [[FWImageCoder sharedInstance] encodedDataWithImage:image options:options];
+}
+
 - (NSURL *)fwImageURL:(UIImageView *)imageView
 {
     return [[FWImageDownloader sharedDownloader] imageURLForObject:imageView];

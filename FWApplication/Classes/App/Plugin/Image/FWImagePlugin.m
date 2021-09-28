@@ -9,6 +9,7 @@
 
 #import "FWImagePlugin.h"
 #import "FWPlugin.h"
+#import "FWToolkit.h"
 #import <objc/runtime.h>
 
 #pragma mark - UIImage+FWImagePlugin
@@ -127,6 +128,27 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     }
     
     return [UIImage imageWithData:data scale:scale];
+}
+
++ (NSData *)fwDataWithImage:(UIImage *)image
+{
+    return [self fwDataWithImage:image options:nil];
+}
+
++ (NSData *)fwDataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+{
+    if (!image) return nil;
+    
+    id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
+    if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwImageEncode:options:)]) {
+        return [imagePlugin fwImageEncode:image options:options];
+    }
+    
+    if (image.fwHasAlpha) {
+        return UIImagePNGRepresentation(image);
+    } else {
+        return UIImageJPEGRepresentation(image, 1);
+    }
 }
 
 + (id)fwDownloadImage:(id)url

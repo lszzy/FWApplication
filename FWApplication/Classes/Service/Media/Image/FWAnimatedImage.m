@@ -405,6 +405,11 @@ static SEL FWImageWithCGSVGDocumentSEL = NULL;
     return animatedImage;
 }
 
+- (NSData *)encodedDataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+{
+    return nil;
+}
+
 - (BOOL)isAnimated:(FWImageFormat)format
 {
     BOOL isAnimated = NO;
