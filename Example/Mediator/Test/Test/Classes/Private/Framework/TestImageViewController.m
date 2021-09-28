@@ -139,7 +139,8 @@
     if (!fileName.fwIsFormatUrl) {
         UIImage *image = [TestBundle imageNamed:fileName];
         [cell.systemView fwSetImageWithURL:nil placeholderImage:image];
-        [cell.animatedView fwSetImageWithURL:nil placeholderImage:image];
+        UIImage *decodeImage = [UIImage fwImageWithData:[UIImage fwDataWithImage:image]];
+        [cell.animatedView fwSetImageWithURL:nil placeholderImage:decodeImage];
     } else {
         NSString *url = fileName;
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
