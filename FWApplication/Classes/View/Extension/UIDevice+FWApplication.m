@@ -131,7 +131,7 @@ static NSString *fwStaticDeviceUUID = nil;
 + (NSString *)fwCarrierName
 {
     CTCarrier *carrier = [[CTTelephonyNetworkInfo new] subscriberCellularProvider];
-    return carrier.isoCountryCode ? carrier.carrierName : nil;
+    return carrier.carrierName;
 }
 
 @end
