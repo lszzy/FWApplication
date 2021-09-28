@@ -62,6 +62,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (readonly, nonatomic, assign, getter = isReachableViaWiFi) BOOL reachableViaWiFi;
 
+/**
+ The current radio access technology.
+ */
+@property (readonly, nonatomic, strong, nullable) NSString *radioAccessTechnology;
+
 ///---------------------
 /// @name Initialization
 ///---------------------

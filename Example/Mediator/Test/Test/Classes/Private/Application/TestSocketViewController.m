@@ -21,6 +21,7 @@
 
 @interface TestSocketViewController () <FWAsyncSocketDelegate>
 
+@property (nonatomic, strong) UILabel *networkLabel;
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UILabel *label2;
 
@@ -30,8 +31,23 @@
     FWAsyncSocket *asyncSocket;
 }
 
++ (void)load
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [FWNetworkReachabilityManager.sharedManager startMonitoring];
+    });
+}
+
 - (void)renderView
 {
+    self.networkLabel = [[UILabel alloc] init];
+    self.networkLabel.numberOfLines = 0;
+    self.networkLabel.textAlignment = NSTextAlignmentCenter;
+    [self.fwView addSubview:self.networkLabel];
+    [self.networkLabel fwAlignCenterToSuperviewWithOffset:CGPointMake(0, -100)];
+    [self.networkLabel fwPinEdgesToSuperviewHorizontal];
+    
     self.label = [[UILabel alloc] init];
     self.label.numberOfLines = 0;
     self.label.textAlignment = NSTextAlignmentCenter;
@@ -51,6 +67,7 @@
 {
     [super viewDidLoad];
     
+    [self showNetworkInfo];
     [self testOAuth2];
 }
 
@@ -110,6 +127,22 @@
     
     FWLogInfo(@"socket:%p disconnect", asyncSocket);
     [asyncSocket disconnect];
+}
+
+#pragma mark Network
+
+- (void)showNetworkInfo
+{
+    NSMutableString *info = [[NSMutableString alloc] init];
+    FWNetworkReachabilityStatus status = FWNetworkReachabilityManager.sharedManager.networkReachabilityStatus;
+    if (status == FWNetworkReachabilityStatusReachableViaWiFi) {
+        [info appendString:@"WiFi "];
+    } else if (status == FWNetworkReachabilityStatusReachableViaWWAN) {
+        [info appendString:@"WWAN "];
+    }
+    NSString *tech = FWNetworkReachabilityManager.sharedManager.radioAccessTechnology;
+    [info appendString:FWSafeString([tech stringByReplacingOccurrencesOfString:@"CTRadioAccessTechnology" withString:@""])];
+    self.networkLabel.text = info;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

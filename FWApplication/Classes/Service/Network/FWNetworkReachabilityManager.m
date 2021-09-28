@@ -21,6 +21,7 @@
 
 #import "FWNetworkReachabilityManager.h"
 
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <netinet/in.h>
 #import <netinet6/in6.h>
 #import <arpa/inet.h>
@@ -110,6 +111,7 @@ static void FWNetworkReachabilityReleaseCallback(const void *info) {
 @property (readonly, nonatomic, assign) SCNetworkReachabilityRef networkReachability;
 @property (readwrite, nonatomic, assign) FWNetworkReachabilityStatus networkReachabilityStatus;
 @property (readwrite, nonatomic, copy) FWNetworkReachabilityStatusBlock networkReachabilityStatusBlock;
+@property (readwrite, nonatomic, strong) CTTelephonyNetworkInfo *networkInfo;
 @end
 
 @implementation FWNetworkReachabilityManager
@@ -199,6 +201,13 @@ static void FWNetworkReachabilityReleaseCallback(const void *info) {
 
 - (BOOL)isReachableViaWiFi {
     return self.networkReachabilityStatus == FWNetworkReachabilityStatusReachableViaWiFi;
+}
+
+- (NSString *)radioAccessTechnology {
+    if (!self.networkInfo) {
+        self.networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    }
+    return self.networkInfo.currentRadioAccessTechnology;
 }
 
 #pragma mark -
