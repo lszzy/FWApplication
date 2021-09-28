@@ -56,6 +56,9 @@
     coderOptions[SDImageCoderEncodeCompressionQuality] = @(1);
     coderOptions[SDImageCoderEncodeFirstFrameOnly] = @(NO);
     if (options) [coderOptions addEntriesFromDictionary:options];
+    
+    NSData *imageData = [[SDImageCodersManager sharedManager] encodedDataWithImage:image format:image.sd_imageFormat options:[coderOptions copy]];
+    if (imageData || image.sd_imageFormat == SDImageFormatUndefined) return imageData;
     return [[SDImageCodersManager sharedManager] encodedDataWithImage:image format:SDImageFormatUndefined options:[coderOptions copy]];
 }
 

@@ -137,11 +137,19 @@
     NSString *fileName = [self.tableData objectAtIndex:indexPath.row];
     cell.nameLabel.text = [fileName lastPathComponent];
     if (!fileName.fwIsFormatUrl) {
-        UIImage *image = [TestBundle imageNamed:fileName];
-        [cell.systemView fwSetImageWithURL:nil placeholderImage:image];
-        UIImage *decodeImage = [UIImage fwImageWithData:[UIImage fwDataWithImage:image]];
-        [cell.animatedView fwSetImageWithURL:nil placeholderImage:decodeImage];
+        cell.fwTempObject = fileName;
+        FWDispatchGlobal(^{
+            UIImage *image = [TestBundle imageNamed:fileName];
+            UIImage *decodeImage = [UIImage fwImageWithData:[UIImage fwDataWithImage:image]];
+            FWDispatchMain(^{
+                if ([cell.fwTempObject isEqualToString:fileName]) {
+                    [cell.systemView fwSetImageWithURL:nil placeholderImage:image];
+                    [cell.animatedView fwSetImageWithURL:nil placeholderImage:decodeImage];
+                }
+            });
+        });
     } else {
+        cell.fwTempObject = nil;
         NSString *url = fileName;
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
             url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fwCurrentTime)];
