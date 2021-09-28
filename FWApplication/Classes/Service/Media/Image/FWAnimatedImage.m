@@ -338,7 +338,9 @@
 typedef struct CF_BRIDGED_TYPE(id) CGSVGDocument *CGSVGDocumentRef;
 static void (*FWCGSVGDocumentRelease)(CGSVGDocumentRef);
 static CGSVGDocumentRef (*FWCGSVGDocumentCreateFromData)(CFDataRef data, CFDictionaryRef options);
+static void (*FWCGSVGDocumentWriteToData)(CGSVGDocumentRef document, CFDataRef data, CFDictionaryRef options);
 static SEL FWImageWithCGSVGDocumentSEL = NULL;
+static SEL FWCGSVGDocumentSEL = NULL;
 
 @implementation FWImageCoder
 
@@ -357,7 +359,9 @@ static SEL FWImageWithCGSVGDocumentSEL = NULL;
     if (@available(iOS 13.0, *)) {
         FWCGSVGDocumentRelease = dlsym(RTLD_DEFAULT, [self base64DecodedString:@"Q0dTVkdEb2N1bWVudFJlbGVhc2U="].UTF8String);
         FWCGSVGDocumentCreateFromData = dlsym(RTLD_DEFAULT, [self base64DecodedString:@"Q0dTVkdEb2N1bWVudENyZWF0ZUZyb21EYXRh"].UTF8String);
+        FWCGSVGDocumentWriteToData = dlsym(RTLD_DEFAULT, [self base64DecodedString:@"Q0dTVkdEb2N1bWVudFdyaXRlVG9EYXRh"].UTF8String);
         FWImageWithCGSVGDocumentSEL = NSSelectorFromString([self base64DecodedString:@"X2ltYWdlV2l0aENHU1ZHRG9jdW1lbnQ6"]);
+        FWCGSVGDocumentSEL = NSSelectorFromString([self base64DecodedString:@"X0NHU1ZHRG9jdW1lbnQ="]);
     }
 }
 
@@ -380,7 +384,9 @@ static SEL FWImageWithCGSVGDocumentSEL = NULL;
     FWImageFormat format = [NSData fwImageFormatForImageData:data];
     if (format == FWImageFormatSVG) {
         if (@available(iOS 13.0, *)) {
-            animatedImage = [self createImageWithData:data scale:scale];
+            if ([UIImage respondsToSelector:FWImageWithCGSVGDocumentSEL]) {
+                animatedImage = [self createSVGImageWithData:data scale:scale];
+            }
         }
     } else if (![self isAnimated:format] || count <= 1) {
         animatedImage = [self createFrameAtIndex:0 source:source scale:scale];
@@ -407,7 +413,23 @@ static SEL FWImageWithCGSVGDocumentSEL = NULL;
 
 - (NSData *)encodedDataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
-    return nil;
+    if (!image) return nil;
+    
+    NSData *imageData;
+    FWImageFormat format = image.fwImageFormat;
+    if (format == FWImageFormatSVG) {
+        if (@available(iOS 13.0, *)) {
+            if ([UIImage respondsToSelector:FWImageWithCGSVGDocumentSEL]) {
+                imageData = [self createSVGDataWithImage:image];
+            }
+        }
+    } else if (![self isAnimated:format]) {
+        
+    } else {
+        
+    }
+    
+    return imageData;
 }
 
 - (BOOL)isAnimated:(FWImageFormat)format
@@ -627,7 +649,7 @@ static SEL FWImageWithCGSVGDocumentSEL = NULL;
     return image;
 }
 
-- (UIImage *)createImageWithData:(NSData *)data scale:(CGFloat)scale
+- (UIImage *)createSVGImageWithData:(NSData *)data scale:(CGFloat)scale
 {
     CGSVGDocumentRef document = FWCGSVGDocumentCreateFromData((__bridge CFDataRef)data, NULL);
     if (!document) return nil;
@@ -635,6 +657,17 @@ static SEL FWImageWithCGSVGDocumentSEL = NULL;
     UIImage *image = ((UIImage *(*)(id,SEL,CGSVGDocumentRef))[UIImage.class methodForSelector:FWImageWithCGSVGDocumentSEL])(UIImage.class, FWImageWithCGSVGDocumentSEL, document);
     FWCGSVGDocumentRelease(document);
     return image;
+}
+
+- (NSData *)createSVGDataWithImage:(UIImage *)image
+{
+    NSMutableData *data = [NSMutableData data];
+    CGSVGDocumentRef document = NULL;
+    document = ((CGSVGDocumentRef (*)(id,SEL))[image methodForSelector:FWCGSVGDocumentSEL])(image, FWCGSVGDocumentSEL);
+    if (!document) return nil;
+    
+    FWCGSVGDocumentWriteToData(document, (__bridge CFDataRef)data, NULL);
+    return [data copy];
 }
 
 @end
