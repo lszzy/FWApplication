@@ -128,10 +128,53 @@ static NSString *fwStaticDeviceUUID = nil;
 #endif
 }
 
++ (CTTelephonyNetworkInfo *)fwNetworkInfo
+{
+    static CTTelephonyNetworkInfo *networkInfo = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+    });
+    return networkInfo;
+}
+
 + (NSString *)fwCarrierName
 {
-    CTCarrier *carrier = [[CTTelephonyNetworkInfo new] subscriberCellularProvider];
-    return carrier.carrierName;
+    return [self fwNetworkInfo].subscriberCellularProvider.carrierName;
+}
+
++ (NSString *)fwNetworkType
+{
+    NSString *networkType = nil;
+    NSString *accessTechnology = [self fwNetworkInfo].currentRadioAccessTechnology;
+    if (!accessTechnology) return networkType;
+    
+    NSArray *types2G = @[CTRadioAccessTechnologyGPRS,
+                         CTRadioAccessTechnologyEdge,
+                         CTRadioAccessTechnologyCDMA1x];
+    NSArray *types3G = @[CTRadioAccessTechnologyWCDMA,
+                         CTRadioAccessTechnologyHSDPA,
+                         CTRadioAccessTechnologyHSUPA,
+                         CTRadioAccessTechnologyCDMAEVDORev0,
+                         CTRadioAccessTechnologyCDMAEVDORevA,
+                         CTRadioAccessTechnologyCDMAEVDORevB,
+                         CTRadioAccessTechnologyeHRPD];
+    NSArray *types4G = @[CTRadioAccessTechnologyLTE];
+    NSArray *types5G = nil;
+    if (@available(iOS 14.1, *)) {
+        types5G = @[CTRadioAccessTechnologyNRNSA, CTRadioAccessTechnologyNR];
+    }
+    
+    if ([types5G containsObject:accessTechnology]) {
+        networkType = @"5G";
+    } else if ([types4G containsObject:accessTechnology]) {
+        networkType = @"4G";
+    } else if ([types3G containsObject:accessTechnology]) {
+        networkType = @"3G";
+    } else if ([types2G containsObject:accessTechnology]) {
+        networkType = @"2G";
+    }
+    return networkType;
 }
 
 @end

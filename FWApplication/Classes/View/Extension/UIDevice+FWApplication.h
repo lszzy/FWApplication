@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 手机运营商名称
 @property (class, nonatomic, copy, readonly, nullable) NSString *fwCarrierName;
 
+// 手机蜂窝网络类型，仅区分2G|3G|4G|5G
+@property (class, nonatomic, copy, readonly, nullable) NSString *fwNetworkType;
+
 @end
 
 NS_ASSUME_NONNULL_END
