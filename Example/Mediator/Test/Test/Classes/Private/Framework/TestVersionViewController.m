@@ -51,7 +51,7 @@
     }];
     
     // 版本更新
-    [FWVersionManager sharedInstance].appId = @"1439986536";
+    [FWVersionManager sharedInstance].appId = @"414478124";
     [FWVersionManager sharedInstance].countryCode = @"cn";
     [[FWVersionManager sharedInstance] checkVersion:0 completion:^() {
         FWStrongifySelf();
@@ -63,7 +63,7 @@
             BOOL isForce = NO;
             if (isForce) {
                 // 强制更新
-                NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"EASI", [FWVersionManager sharedInstance].latestVersion];
+                NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"微信", [FWVersionManager sharedInstance].latestVersion];
                 [self fwShowAlertWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"更新" actions:nil actionBlock:nil cancelBlock:^{
                     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apps.apple.com/app/id%@", [FWVersionManager sharedInstance].appId]];
                     [UIApplication fwOpenURL:url completionHandler:^(BOOL success) {
@@ -74,7 +74,7 @@
                 } priority:FWAlertPrioritySuper];
             } else {
                 // 非强制更新
-                NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"EASI", [FWVersionManager sharedInstance].latestVersion];
+                NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"微信", [FWVersionManager sharedInstance].latestVersion];
                 [self fwShowConfirmWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"取消" confirm:@"更新" confirmBlock:^{
                     [[FWVersionManager sharedInstance] openAppStore];
                 } cancelBlock:nil priority:FWAlertPriorityHigh];
