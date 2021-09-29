@@ -415,14 +415,12 @@ static SEL FWCGSVGDocumentSEL = NULL;
     return animatedImage;
 }
 
-- (NSData *)encodedDataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+- (NSData *)encodedDataWithImage:(UIImage *)image format:(FWImageFormat)format options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     if (!image) return nil;
-    FWImageFormat format = image.fwImageFormat;
     if (format == FWImageFormatUndefined) {
         format = image.fwHasAlpha ? FWImageFormatPNG : FWImageFormatJPEG;
     }
-    
     if (format == FWImageFormatSVG) {
         if (@available(iOS 13.0, *)) {
             if ([UIImage respondsToSelector:FWImageWithCGSVGDocumentSEL]) {
@@ -434,70 +432,45 @@ static SEL FWCGSVGDocumentSEL = NULL;
                 }
             }
         }
-    } else if (![self isAnimated:format forDecode:NO]) {
-        CGImageRef imageRef = image.CGImage;
-        if (!imageRef) return nil;
-        
-        NSMutableData *imageData = [NSMutableData data];
-        CFStringRef imageUTType = [NSData fwUTTypeFromImageFormat:format];
-        
-        CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, 1, NULL);
-        if (!imageDestination) return nil;
-        
-        NSMutableDictionary *properties = [NSMutableDictionary dictionary];
-        CGImagePropertyOrientation exifOrientation = [self exifOrientation:image.imageOrientation];
-        properties[(__bridge NSString *)kCGImagePropertyOrientation] = @(exifOrientation);
-        properties[(__bridge NSString *)kCGImageDestinationLossyCompressionQuality] = @(1);
-        properties[(__bridge NSString *)kCGImageDestinationEmbedThumbnail] = @(NO);
-
-        CGImageDestinationAddImage(imageDestination, imageRef, (__bridge CFDictionaryRef)properties);
-        if (CGImageDestinationFinalize(imageDestination) == NO) {
-            imageData = nil;
-        }
-        
-        CFRelease(imageDestination);
-        return [imageData copy];
-    } else {
-        CGImageRef imageRef = image.CGImage;
-        if (!imageRef) return nil;
-        
-        NSMutableData *imageData = [NSMutableData data];
-        CFStringRef imageUTType = [NSData fwUTTypeFromImageFormat:format];
-        NSArray<FWImageFrame *> *frames = [FWImageFrame framesFromAnimatedImage:image];
-        
-        CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, frames.count ?: 1, NULL);
-        if (!imageDestination) return nil;
-        
-        NSMutableDictionary *properties = [NSMutableDictionary dictionary];
-        properties[(__bridge NSString *)kCGImageDestinationLossyCompressionQuality] = @(1);
-        properties[(__bridge NSString *)kCGImageDestinationEmbedThumbnail] = @(NO);
-        
-        if (frames.count <= 1) {
-            CGImageDestinationAddImage(imageDestination, imageRef, (__bridge CFDictionaryRef)properties);
-        } else {
-            NSUInteger loopCount = image.fwImageLoopCount;
-            NSDictionary *containerProperties = @{
-                [self dictionaryProperty:format]: @{[self loopCountProperty:format] : @(loopCount)}
-            };
-            CGImageDestinationSetProperties(imageDestination, (__bridge CFDictionaryRef)containerProperties);
-            
-            for (size_t i = 0; i < frames.count; i++) {
-                FWImageFrame *frame = frames[i];
-                NSTimeInterval frameDuration = frame.duration;
-                CGImageRef frameImageRef = frame.image.CGImage;
-                properties[[self dictionaryProperty:format]] = @{[self delayTimeProperty:format] : @(frameDuration)};
-                CGImageDestinationAddImage(imageDestination, frameImageRef, (__bridge CFDictionaryRef)properties);
-            }
-        }
-        if (CGImageDestinationFinalize(imageDestination) == NO) {
-            imageData = nil;
-        }
-        
-        CFRelease(imageDestination);
-        return [imageData copy];
+        return nil;
     }
     
-    return nil;
+    CGImageRef imageRef = image.CGImage;
+    if (!imageRef) return nil;
+    
+    NSMutableData *imageData = [NSMutableData data];
+    CFStringRef imageUTType = [NSData fwUTTypeFromImageFormat:format];
+    BOOL isAnimated = [self isAnimated:format forDecode:NO];
+    NSArray<FWImageFrame *> *frames = isAnimated ? [FWImageFrame framesFromAnimatedImage:image] : nil;
+    size_t count = frames.count > 0 ? frames.count : 1;
+    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, count, NULL);
+    if (!imageDestination) return nil;
+    
+    NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+    properties[(__bridge NSString *)kCGImageDestinationLossyCompressionQuality] = @(1);
+    properties[(__bridge NSString *)kCGImageDestinationEmbedThumbnail] = @(NO);
+
+    if (!isAnimated || count <= 1) {
+        properties[(__bridge NSString *)kCGImagePropertyOrientation] = @([self exifOrientation:image.imageOrientation]);
+        
+        CGImageDestinationAddImage(imageDestination, imageRef, (__bridge CFDictionaryRef)properties);
+    } else {
+        NSDictionary *containerProperties = @{
+            [self dictionaryProperty:format]: @{[self loopCountProperty:format] : @(image.fwImageLoopCount)}
+        };
+        CGImageDestinationSetProperties(imageDestination, (__bridge CFDictionaryRef)containerProperties);
+        
+        for (size_t i = 0; i < count; i++) {
+            FWImageFrame *frame = frames[i];
+            CGImageRef frameImageRef = frame.image.CGImage;
+            properties[[self dictionaryProperty:format]] = @{[self delayTimeProperty:format] : @(frame.duration)};
+            CGImageDestinationAddImage(imageDestination, frameImageRef, (__bridge CFDictionaryRef)properties);
+        }
+    }
+    
+    if (CGImageDestinationFinalize(imageDestination) == NO) imageData = nil;
+    CFRelease(imageDestination);
+    return [imageData copy];
 }
 
 - (BOOL)isAnimated:(FWImageFormat)format forDecode:(BOOL)forDecode

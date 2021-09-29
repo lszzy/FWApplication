@@ -799,7 +799,10 @@
 
 - (NSData *)fwImageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
-    return [[FWImageCoder sharedInstance] encodedDataWithImage:image options:options];
+    FWImageFormat imageFormat = image.fwImageFormat;
+    NSData *imageData = [FWImageCoder.sharedInstance encodedDataWithImage:image format:imageFormat options:options];
+    if (imageData || imageFormat == FWImageFormatUndefined) return imageData;
+    return [FWImageCoder.sharedInstance encodedDataWithImage:image format:FWImageFormatUndefined options:options];
 }
 
 - (NSURL *)fwImageURL:(UIImageView *)imageView
