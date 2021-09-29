@@ -12,7 +12,4 @@ target "Example" do
   pod 'Core', :path => 'Mediator/Core/'
   pod 'User', :path => 'Mediator/User/'
   pod 'Test', :path => 'Mediator/Test/'
-  
-  pod 'SDWebImageWebPCoder'
-  pod 'SDWebImageSVGKitPlugin'
 end

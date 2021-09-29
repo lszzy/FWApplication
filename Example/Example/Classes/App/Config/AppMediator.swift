@@ -7,9 +7,6 @@
 //
 
 import Foundation
-import SDWebImage
-import SDWebImageWebPCoder
-import SDWebImageSVGKitPlugin
 #if DEBUG
 import FWDebug
 #endif
@@ -39,9 +36,6 @@ class AppModule: NSObject, AppService {
             return false
         }
         #endif
-        
-        SDImageCodersManager.shared.addCoder(SDImageWebPCoder.shared)
-        SDImageCodersManager.shared.addCoder(SDImageSVGKCoder.shared)
         
         DispatchQueue.main.async {
             FWThemeManager.sharedInstance.overrideWindow = true
