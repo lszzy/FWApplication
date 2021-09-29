@@ -8,6 +8,7 @@
  */
 
 #import "FWAnimatedImage.h"
+#import "FWToolkit.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
 #import <dlfcn.h>
@@ -375,7 +376,6 @@ static SEL FWCGSVGDocumentSEL = NULL;
 - (UIImage *)decodedImageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     if (data.length < 1) return nil;
-    
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
     if (!source) return nil;
     
@@ -385,10 +385,14 @@ static SEL FWCGSVGDocumentSEL = NULL;
     if (format == FWImageFormatSVG) {
         if (@available(iOS 13.0, *)) {
             if ([UIImage respondsToSelector:FWImageWithCGSVGDocumentSEL]) {
-                animatedImage = [self createSVGImageWithData:data scale:scale];
+                CGSVGDocumentRef document = FWCGSVGDocumentCreateFromData((__bridge CFDataRef)data, NULL);
+                if (document) {
+                    animatedImage = ((UIImage *(*)(id,SEL,CGSVGDocumentRef))[UIImage.class methodForSelector:FWImageWithCGSVGDocumentSEL])(UIImage.class, FWImageWithCGSVGDocumentSEL, document);
+                    FWCGSVGDocumentRelease(document);
+                }
             }
         }
-    } else if (![self isAnimated:format] || count <= 1) {
+    } else if (![self isAnimated:format forDecode:YES] || count <= 1) {
         animatedImage = [self createFrameAtIndex:0 source:source scale:scale];
     } else {
         NSMutableArray *frames = [NSMutableArray array];
@@ -405,34 +409,98 @@ static SEL FWCGSVGDocumentSEL = NULL;
         animatedImage = [FWImageFrame animatedImageWithFrames:frames];
         animatedImage.fwImageLoopCount = loopCount;
     }
+    
     animatedImage.fwImageFormat = format;
     CFRelease(source);
-    
     return animatedImage;
 }
 
 - (NSData *)encodedDataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     if (!image) return nil;
-    
-    NSData *imageData;
     FWImageFormat format = image.fwImageFormat;
+    if (format == FWImageFormatUndefined) {
+        format = image.fwHasAlpha ? FWImageFormatPNG : FWImageFormatJPEG;
+    }
+    
     if (format == FWImageFormatSVG) {
         if (@available(iOS 13.0, *)) {
             if ([UIImage respondsToSelector:FWImageWithCGSVGDocumentSEL]) {
-                imageData = [self createSVGDataWithImage:image];
+                NSMutableData *data = [NSMutableData data];
+                CGSVGDocumentRef document = ((CGSVGDocumentRef (*)(id,SEL))[image methodForSelector:FWCGSVGDocumentSEL])(image, FWCGSVGDocumentSEL);
+                if (document) {
+                    FWCGSVGDocumentWriteToData(document, (__bridge CFDataRef)data, NULL);
+                    return [data copy];
+                }
             }
         }
-    } else if (![self isAnimated:format]) {
+    } else if (![self isAnimated:format forDecode:NO]) {
+        CGImageRef imageRef = image.CGImage;
+        if (!imageRef) return nil;
         
+        NSMutableData *imageData = [NSMutableData data];
+        CFStringRef imageUTType = [NSData fwUTTypeFromImageFormat:format];
+        
+        CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, 1, NULL);
+        if (!imageDestination) return nil;
+        
+        NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+        CGImagePropertyOrientation exifOrientation = [self exifOrientation:image.imageOrientation];
+        properties[(__bridge NSString *)kCGImagePropertyOrientation] = @(exifOrientation);
+        properties[(__bridge NSString *)kCGImageDestinationLossyCompressionQuality] = @(1);
+        properties[(__bridge NSString *)kCGImageDestinationEmbedThumbnail] = @(NO);
+
+        CGImageDestinationAddImage(imageDestination, imageRef, (__bridge CFDictionaryRef)properties);
+        if (CGImageDestinationFinalize(imageDestination) == NO) {
+            imageData = nil;
+        }
+        
+        CFRelease(imageDestination);
+        return [imageData copy];
     } else {
+        CGImageRef imageRef = image.CGImage;
+        if (!imageRef) return nil;
         
+        NSMutableData *imageData = [NSMutableData data];
+        CFStringRef imageUTType = [NSData fwUTTypeFromImageFormat:format];
+        NSArray<FWImageFrame *> *frames = [FWImageFrame framesFromAnimatedImage:image];
+        
+        CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)imageData, imageUTType, frames.count ?: 1, NULL);
+        if (!imageDestination) return nil;
+        
+        NSMutableDictionary *properties = [NSMutableDictionary dictionary];
+        properties[(__bridge NSString *)kCGImageDestinationLossyCompressionQuality] = @(1);
+        properties[(__bridge NSString *)kCGImageDestinationEmbedThumbnail] = @(NO);
+        
+        if (frames.count <= 1) {
+            CGImageDestinationAddImage(imageDestination, imageRef, (__bridge CFDictionaryRef)properties);
+        } else {
+            NSUInteger loopCount = image.fwImageLoopCount;
+            NSDictionary *containerProperties = @{
+                [self dictionaryProperty:format]: @{[self loopCountProperty:format] : @(loopCount)}
+            };
+            CGImageDestinationSetProperties(imageDestination, (__bridge CFDictionaryRef)containerProperties);
+            
+            for (size_t i = 0; i < frames.count; i++) {
+                FWImageFrame *frame = frames[i];
+                NSTimeInterval frameDuration = frame.duration;
+                CGImageRef frameImageRef = frame.image.CGImage;
+                properties[[self dictionaryProperty:format]] = @{[self delayTimeProperty:format] : @(frameDuration)};
+                CGImageDestinationAddImage(imageDestination, frameImageRef, (__bridge CFDictionaryRef)properties);
+            }
+        }
+        if (CGImageDestinationFinalize(imageDestination) == NO) {
+            imageData = nil;
+        }
+        
+        CFRelease(imageDestination);
+        return [imageData copy];
     }
     
-    return imageData;
+    return nil;
 }
 
-- (BOOL)isAnimated:(FWImageFormat)format
+- (BOOL)isAnimated:(FWImageFormat)format forDecode:(BOOL)forDecode
 {
     BOOL isAnimated = NO;
     switch (format) {
@@ -459,16 +527,54 @@ static SEL FWCGSVGDocumentSEL = NULL;
     }
     
     static dispatch_once_t onceToken;
-    static NSSet *imageUTTypeSet;
+    static NSSet *decodeUTTypeSet;
+    static NSSet *encodeUTTypeSet;
     dispatch_once(&onceToken, ^{
-        NSArray *imageUTTypes = (__bridge_transfer NSArray *)CGImageSourceCopyTypeIdentifiers();
-        imageUTTypeSet = [NSSet setWithArray:imageUTTypes];
+        NSArray *decodeUTTypes = (__bridge_transfer NSArray *)CGImageSourceCopyTypeIdentifiers();
+        decodeUTTypeSet = [NSSet setWithArray:decodeUTTypes];
+        NSArray *encodeUTTypes = (__bridge_transfer NSArray *)CGImageDestinationCopyTypeIdentifiers();
+        encodeUTTypeSet = [NSSet setWithArray:encodeUTTypes];
     });
     CFStringRef imageUTType = [NSData fwUTTypeFromImageFormat:format];
+    NSSet *imageUTTypeSet = forDecode ? decodeUTTypeSet : encodeUTTypeSet;
     if ([imageUTTypeSet containsObject:(__bridge NSString *)(imageUTType)]) {
         return YES;
     }
     return NO;
+}
+
+- (CGImagePropertyOrientation)exifOrientation:(UIImageOrientation)imageOrientation
+{
+    CGImagePropertyOrientation exifOrientation = kCGImagePropertyOrientationUp;
+    switch (imageOrientation) {
+        case UIImageOrientationUp:
+            exifOrientation = kCGImagePropertyOrientationUp;
+            break;
+        case UIImageOrientationDown:
+            exifOrientation = kCGImagePropertyOrientationDown;
+            break;
+        case UIImageOrientationLeft:
+            exifOrientation = kCGImagePropertyOrientationLeft;
+            break;
+        case UIImageOrientationRight:
+            exifOrientation = kCGImagePropertyOrientationRight;
+            break;
+        case UIImageOrientationUpMirrored:
+            exifOrientation = kCGImagePropertyOrientationUpMirrored;
+            break;
+        case UIImageOrientationDownMirrored:
+            exifOrientation = kCGImagePropertyOrientationDownMirrored;
+            break;
+        case UIImageOrientationLeftMirrored:
+            exifOrientation = kCGImagePropertyOrientationLeftMirrored;
+            break;
+        case UIImageOrientationRightMirrored:
+            exifOrientation = kCGImagePropertyOrientationRightMirrored;
+            break;
+        default:
+            break;
+    }
+    return exifOrientation;
 }
 
 - (NSString *)dictionaryProperty:(FWImageFormat)format
@@ -647,27 +753,6 @@ static SEL FWCGSVGDocumentSEL = NULL;
     UIImage *image = [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
     CGImageRelease(imageRef);
     return image;
-}
-
-- (UIImage *)createSVGImageWithData:(NSData *)data scale:(CGFloat)scale
-{
-    CGSVGDocumentRef document = FWCGSVGDocumentCreateFromData((__bridge CFDataRef)data, NULL);
-    if (!document) return nil;
-    
-    UIImage *image = ((UIImage *(*)(id,SEL,CGSVGDocumentRef))[UIImage.class methodForSelector:FWImageWithCGSVGDocumentSEL])(UIImage.class, FWImageWithCGSVGDocumentSEL, document);
-    FWCGSVGDocumentRelease(document);
-    return image;
-}
-
-- (NSData *)createSVGDataWithImage:(UIImage *)image
-{
-    NSMutableData *data = [NSMutableData data];
-    CGSVGDocumentRef document = NULL;
-    document = ((CGSVGDocumentRef (*)(id,SEL))[image methodForSelector:FWCGSVGDocumentSEL])(image, FWCGSVGDocumentSEL);
-    if (!document) return nil;
-    
-    FWCGSVGDocumentWriteToData(document, (__bridge CFDataRef)data, NULL);
-    return [data copy];
 }
 
 @end
