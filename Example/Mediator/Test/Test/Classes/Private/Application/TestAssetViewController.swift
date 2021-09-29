@@ -112,7 +112,7 @@ import FWApplication
             
             let album = albums[indexPath.row]
             cell.textLabel?.text = album.name()
-            cell.imageView?.image = album.posterImage(with: CGSize(width: 88, height: 88))
+            cell.imageView?.image = album.posterImage(with: CGSize(width: 88, height: 88))?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
             cell.detailTextLabel?.text = "\(album.numberOfAssets())"
         }
         
