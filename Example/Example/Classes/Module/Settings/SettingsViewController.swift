@@ -9,6 +9,7 @@
 import Foundation
 #if DEBUG
 import FWDebug
+import FWFramework
 #endif
 
 class SettingsViewController: UIViewController, FWTableViewController {
@@ -185,11 +186,13 @@ extension SettingsViewController {
             var language = FWLocalizedString("systemTitle")
             if let localized = Bundle.fwLocalizedLanguage, localized.count > 0 {
                 language = localized.hasPrefix("zh") ? "中文" : "English"
+            } else {
+                language = language.appending("(\(FWSafeString(Bundle.fwSystemLanguage)))")
             }
             cell.detailTextLabel?.text = language
         } else if "onTheme" == action {
             let mode = FWThemeManager.sharedInstance.mode
-            let theme = mode == .system ? FWLocalizedString("systemTitle") : (mode == .dark ? FWLocalizedString("themeDark") : FWLocalizedString("themeLight"))
+            let theme = mode == .system ? FWLocalizedString("systemTitle").appending(FWThemeManager.sharedInstance.style == .dark ? "(\(FWLocalizedString("themeDark")))" : "(\(FWLocalizedString("themeLight")))") : (mode == .dark ? FWLocalizedString("themeDark") : FWLocalizedString("themeLight"))
             cell.detailTextLabel?.text = theme
         } else if "onRoot" == action {
             var root: String?
