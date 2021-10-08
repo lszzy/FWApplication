@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'App' do |ss|
-    ss.resource_bundles = { 'FWApplication' => ['FWApplication/Assets/**/*.*'] }
+    # ss.resource_bundles = { 'FWApplication' => ['FWApplication/Assets/**/*.*'] }
     ss.source_files = 'FWApplication/Classes/App/**/*.{h,m,swift}'
     ss.dependency 'FWFramework'
   end

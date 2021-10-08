@@ -145,7 +145,7 @@
     [self.view addSubview:self.tableView];
     
     if (!self.title) self.title = @"照片";
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:[FWAppBundle localizedString:@"取消"] target:self action:@selector(cancelItemClicked:)];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(cancelItemClicked:)];
     
     if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotAuthorized) {
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowDenied:)]) {

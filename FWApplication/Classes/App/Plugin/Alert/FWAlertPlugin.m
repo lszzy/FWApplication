@@ -86,7 +86,7 @@
                       priority:(FWAlertPriority)priority
 {
     if (!confirm) {
-        confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : [FWAppBundle localizedString:@"确定"];
+        confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
     }
     
     [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
@@ -155,7 +155,7 @@
                      priority:(FWAlertPriority)priority
 {
     if (!confirm) {
-        confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : [FWAppBundle localizedString:@"确定"];
+        confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
     }
     
     [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
@@ -226,9 +226,9 @@
     // 处理取消按钮，Sheet时默认取消，Alert多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
         if (style == UIAlertControllerStyleActionSheet || actions.count > 0) {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : [FWAppBundle localizedString:@"取消"];
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
         } else {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : [FWAppBundle localizedString:@"关闭"];
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
         }
     }
     
