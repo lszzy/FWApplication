@@ -130,6 +130,11 @@
     AudioServicesDisposeSystemSoundID(soundId);
 }
 
++ (void)fwPlayVibrate
+{
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+}
+
 + (void)fwReadText:(NSString *)text
 {
     AVSpeechUtterance *speechUtterance = [[AVSpeechUtterance alloc] initWithString:text];

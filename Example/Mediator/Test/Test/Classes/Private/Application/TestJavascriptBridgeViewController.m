@@ -61,8 +61,7 @@
 {
     [self renderButtons:self.webView];
     
-    NSURL *htmlUrl = [TestBundle.bundle URLForResource:@"JavascriptBridge" withExtension:@"html"];
-    self.requestUrl = htmlUrl.absoluteString;
+    self.requestUrl = [TestBundle resourceURL:@"JavascriptBridge.html"].absoluteString;
 }
 
 - (void)renderButtons:(WKWebView*)webView {

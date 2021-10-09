@@ -53,6 +53,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 停止播放内置声音文件
 + (void)fwStopAlert:(SystemSoundID)soundId;
 
+// 播放内置震动
++ (void)fwPlayVibrate;
+
 // 中文语音朗读文字
 + (void)fwReadText:(NSString *)text;
 

@@ -113,7 +113,7 @@
     self.scanManager.scanResultBlock = ^(NSString *result) {
         FWStrongifySelf();
         if (result) {
-            [UIApplication fwPlayAlert:[TestBundle.bundle pathForResource:@"QrcodeSound" ofType:@"caf"]];
+            [UIApplication fwPlayAlert:[TestBundle resourcePath:@"QrcodeSound.caf"]];
             [self stopScanManager];
             
             [self onScanResult:result];
