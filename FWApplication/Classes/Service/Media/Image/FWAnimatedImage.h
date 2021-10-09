@@ -70,6 +70,12 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 /// UTType转化为图片格式，未知格式返回FWImageFormatUndefined
 + (FWImageFormat)fwImageFormatFromUTType:(nonnull CFStringRef)uttype;
 
+/// 图片格式转化为mimeType，未知格式返回application/octet-stream
++ (NSString *)fwMimeTypeFromImageFormat:(FWImageFormat)format;
+
+/// 文件后缀转化为mimeType，未知后缀返回application/octet-stream
++ (NSString *)fwMimeTypeFromExtension:(NSString *)extension;
+
 @end
 
 #pragma mark - FWImageFrame

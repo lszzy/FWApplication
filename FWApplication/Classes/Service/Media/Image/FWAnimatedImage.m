@@ -215,6 +215,52 @@
     return imageFormat;
 }
 
++ (NSString *)fwMimeTypeFromImageFormat:(FWImageFormat)format
+{
+    NSString *mimeType;
+    switch (format) {
+        case FWImageFormatJPEG:
+            mimeType = @"image/jpeg";
+            break;
+        case FWImageFormatPNG:
+            mimeType = @"image/png";
+            break;
+        case FWImageFormatGIF:
+            mimeType = @"image/gif";
+            break;
+        case FWImageFormatTIFF:
+            mimeType = @"image/tiff";
+            break;
+        case FWImageFormatWebP:
+            mimeType = @"image/webp";
+            break;
+        case FWImageFormatHEIC:
+            mimeType = @"image/heic";
+            break;
+        case FWImageFormatHEIF:
+            mimeType = @"image/heif";
+            break;
+        case FWImageFormatPDF:
+            mimeType = @"application/pdf";
+            break;
+        case FWImageFormatSVG:
+            mimeType = @"image/svg+xml";
+            break;
+        default:
+            mimeType = @"application/octet-stream";
+            break;
+    }
+    return mimeType;
+}
+
++ (NSString *)fwMimeTypeFromExtension:(NSString *)extension
+{
+    NSString *UTI = (__bridge_transfer NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)extension, NULL);
+    NSString *mimeType = (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)UTI, kUTTagClassMIMEType);
+    if (!mimeType) mimeType = @"application/octet-stream";
+    return mimeType;
+}
+
 @end
 
 #pragma mark - FWImageFrame
