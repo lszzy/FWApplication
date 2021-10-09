@@ -31,39 +31,39 @@
     dispatch_once(&onceToken, ^{
         strings = @{
             @"zh-Hans": @{
-                @"完成": @"完成",
-                @"关闭": @"关闭",
-                @"确定": @"确定",
-                @"取消": @"取消",
-                @"原有": @"原有",
+                @"fwDone": @"完成",
+                @"fwClose": @"关闭",
+                @"fwConfirm": @"确定",
+                @"fwCancel": @"取消",
+                @"fwOriginal": @"原有",
             },
             @"zh-Hant": @{
-                @"完成": @"完成",
-                @"关闭": @"關閉",
-                @"确定": @"確定",
-                @"取消": @"取消",
-                @"原有": @"原有",
+                @"fwDone": @"完成",
+                @"fwClose": @"關閉",
+                @"fwConfirm": @"確定",
+                @"fwCancel": @"取消",
+                @"fwOriginal": @"原有",
             },
             @"en": @{
-                @"完成": @"Done",
-                @"关闭": @"OK",
-                @"确定": @"Yes",
-                @"取消": @"Cancel",
-                @"原有": @"Original",
+                @"fwDone": @"Done",
+                @"fwClose": @"OK",
+                @"fwConfirm": @"Yes",
+                @"fwCancel": @"Cancel",
+                @"fwOriginal": @"Original",
             },
             @"ja": @{
-                @"完成": @"完了",
-                @"关闭": @"閉める",
-                @"确定": @"確認",
-                @"取消": @"戻る",
-                @"原有": @"オリジナル",
+                @"fwDone": @"完了",
+                @"fwClose": @"閉める",
+                @"fwConfirm": @"確認",
+                @"fwCancel": @"戻る",
+                @"fwOriginal": @"オリジナル",
             },
             @"ms": @{
-                @"完成": @"Selesai",
-                @"关闭": @"OK",
-                @"确定": @"Ya",
-                @"取消": @"Batal",
-                @"原有": @"Asal",
+                @"fwDone": @"Selesai",
+                @"fwClose": @"OK",
+                @"fwConfirm": @"Ya",
+                @"fwCancel": @"Batal",
+                @"fwOriginal": @"Asal",
             },
         };
     });
@@ -76,27 +76,27 @@
 
 + (NSString *)cancelButton
 {
-    return [self localizedString:@"取消"];
+    return [self localizedString:@"fwCancel"];
 }
 
 + (NSString *)confirmButton
 {
-    return [self localizedString:@"确定"];
+    return [self localizedString:@"fwConfirm"];
 }
 
 + (NSString *)doneButton
 {
-    return [self localizedString:@"完成"];
+    return [self localizedString:@"fwDone"];
 }
 
 + (NSString *)closeButton
 {
-    return [self localizedString:@"关闭"];
+    return [self localizedString:@"fwClose"];
 }
 
 + (NSString *)originalButton
 {
-    return [self localizedString:@"原有"];
+    return [self localizedString:@"fwOriginal"];
 }
 
 @end
