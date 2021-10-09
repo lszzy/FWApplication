@@ -256,7 +256,6 @@ import UIKit
         let tableView = UITableView(frame: .zero, style: style)
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
-        tableView.contentInsetAdjustmentBehavior = .never
         tableView.tableFooterView = UIView(frame: .zero)
         return tableView
     }

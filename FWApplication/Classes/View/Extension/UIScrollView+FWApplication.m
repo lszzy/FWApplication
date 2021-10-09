@@ -31,7 +31,6 @@
     UIScrollView *scrollView = [[self alloc] init];
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.showsHorizontalScrollIndicator = NO;
-    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     return scrollView;
 }
 

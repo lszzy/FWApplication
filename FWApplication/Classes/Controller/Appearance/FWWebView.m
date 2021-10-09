@@ -224,7 +224,6 @@ static WKProcessPool *fwStaticProcessPool = nil;
     self.navigationDelegate = self.delegateProxy;
     self.UIDelegate = self.delegateProxy;
     self.allowsBackForwardNavigationGestures = YES;
-    self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectZero];
     self.progressView.trackTintColor = [UIColor clearColor];

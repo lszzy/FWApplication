@@ -253,7 +253,6 @@ import UIKit
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.contentInsetAdjustmentBehavior = .never
         return collectionView
     }
     

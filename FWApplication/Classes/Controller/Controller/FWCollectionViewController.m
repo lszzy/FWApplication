@@ -68,7 +68,6 @@
         collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:viewLayout];
         collectionView.showsVerticalScrollIndicator = NO;
         collectionView.showsHorizontalScrollIndicator = NO;
-        collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         objc_setAssociatedObject(self, _cmd, collectionView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return collectionView;

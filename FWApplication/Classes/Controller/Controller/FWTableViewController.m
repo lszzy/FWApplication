@@ -68,7 +68,6 @@
         tableView = [[UITableView alloc] initWithFrame:CGRectZero style:tableStyle];
         tableView.showsVerticalScrollIndicator = NO;
         tableView.showsHorizontalScrollIndicator = NO;
-        tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         objc_setAssociatedObject(self, _cmd, tableView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
