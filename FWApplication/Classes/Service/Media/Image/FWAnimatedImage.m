@@ -261,6 +261,15 @@
     return mimeType;
 }
 
++ (NSString *)fwBase64StringForImageData:(NSData *)data
+{
+    if (data.length < 1) return nil;
+    NSString *base64String = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    NSString *mimeType = [NSData fwMimeTypeFromImageFormat:[NSData fwImageFormatForImageData:data]];
+    NSString *base64Prefix = [NSString stringWithFormat:@"data:%@;base64,", mimeType];
+    return [base64Prefix stringByAppendingString:base64String];
+}
+
 @end
 
 #pragma mark - FWImageFrame

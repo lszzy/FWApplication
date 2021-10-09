@@ -76,6 +76,9 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 /// 文件后缀转化为mimeType，未知后缀返回application/octet-stream
 + (NSString *)fwMimeTypeFromExtension:(NSString *)extension;
 
+/// 图片数据编码为base64字符串，可直接用于H5显示等，字符串格式：data:image/png;base64,数据
++ (nullable NSString *)fwBase64StringForImageData:(nullable NSData *)data;
+
 @end
 
 #pragma mark - FWImageFrame
