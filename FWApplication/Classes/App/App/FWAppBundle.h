@@ -18,15 +18,30 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FWAppBundle : FWModuleBundle
 
-/// 多语言，取消
+#pragma mark - Image
+
+/// 图片，导航栏返回，fwNavBack
+@property (class, nonatomic, strong, readonly, nullable) UIImage *navBackImage;
+/// 图片，导航栏关闭，fwNavClose
+@property (class, nonatomic, strong, readonly, nullable) UIImage *navCloseImage;
+/// 图片，视频播放大图，fwVideoPlay
+@property (class, nonatomic, strong, readonly, nullable) UIImage *videoPlayImage;
+/// 图片，视频暂停，fwVideoPause
+@property (class, nonatomic, strong, readonly, nullable) UIImage *videoPauseImage;
+/// 图片，视频开始，fwVideoStart
+@property (class, nonatomic, strong, readonly, nullable) UIImage *videoStartImage;
+
+#pragma mark - String
+
+/// 多语言，取消，fwCancel
 @property (class, nonatomic, copy, readonly) NSString *cancelButton;
-/// 多语言，确定
+/// 多语言，确定，fwConfirm
 @property (class, nonatomic, copy, readonly) NSString *confirmButton;
-/// 多语言，关闭
+/// 多语言，关闭，fwClose
 @property (class, nonatomic, copy, readonly) NSString *closeButton;
-/// 多语言，完成
+/// 多语言，完成，fwDone
 @property (class, nonatomic, copy, readonly) NSString *doneButton;
-/// 多语言，原有
+/// 多语言，原有，fwOriginal
 @property (class, nonatomic, copy, readonly) NSString *originalButton;
 
 @end

@@ -22,14 +22,104 @@
     return bundle;
 }
 
-+ (NSDictionary<NSString *,NSString *> *)localizedStrings:(NSString *)table
++ (UIImage *)imageNamed:(NSString *)name
 {
-    if (table) return nil;
+    UIImage *image = [super imageNamed:name];
+    if (image) return image;
     
-    static NSDictionary *strings = nil;
+    if ([name isEqualToString:@"fwNavBack"]) {
+        CGSize size = CGSizeMake(12, 20);
+        return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            CGFloat lineWidth = 2;
+            CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
+            UIBezierPath *path = [UIBezierPath bezierPath];
+            [path moveToPoint:CGPointMake(size.width - lineWidth / 2, lineWidth / 2)];
+            [path addLineToPoint:CGPointMake(0 + lineWidth / 2, size.height / 2.0)];
+            [path addLineToPoint:CGPointMake(size.width - lineWidth / 2, size.height - lineWidth / 2)];
+            [path setLineWidth:lineWidth];
+            [path stroke];
+        }];
+    } else if ([name isEqualToString:@"fwNavClose"]) {
+        CGSize size = CGSizeMake(16, 16);
+        return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            CGFloat lineWidth = 2;
+            CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
+            UIBezierPath *path = [UIBezierPath bezierPath];
+            [path moveToPoint:CGPointMake(0, 0)];
+            [path addLineToPoint:CGPointMake(size.width, size.height)];
+            [path closePath];
+            [path moveToPoint:CGPointMake(size.width, 0)];
+            [path addLineToPoint:CGPointMake(0, size.height)];
+            [path closePath];
+            [path setLineWidth:lineWidth];
+            [path setLineCapStyle:kCGLineCapRound];
+            [path stroke];
+        }];
+    } else if ([name isEqualToString:@"fwVideoPlay"]) {
+        CGSize size = CGSizeMake(60, 60);
+        return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            CGFloat lineWidth = 1;
+            CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
+            CGContextSetFillColorWithColor(contextRef, [UIColor colorWithRed:0 green:0 blue:0 alpha:.25].CGColor);
+            UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(lineWidth / 2, lineWidth / 2, size.width - lineWidth, size.width - lineWidth)];
+            [circle setLineWidth:lineWidth];
+            [circle stroke];
+            [circle fill];
+            
+            CGContextSetFillColorWithColor(contextRef, color.CGColor);
+            CGFloat triangleLength = size.width / 2.5;
+            UIBezierPath *triangle = [UIBezierPath bezierPath];
+            [triangle moveToPoint:CGPointZero];
+            [triangle addLineToPoint:CGPointMake(triangleLength * cos(M_PI / 6), triangleLength / 2)];
+            [triangle addLineToPoint:CGPointMake(0, triangleLength)];
+            [triangle closePath];
+            UIOffset offset = UIOffsetMake(size.width / 2 - triangleLength * tan(M_PI / 6) / 2, size.width / 2 - triangleLength / 2);
+            [triangle applyTransform:CGAffineTransformMakeTranslation(offset.horizontal, offset.vertical)];
+            [triangle fill];
+        }];
+    } else if ([name isEqualToString:@"fwVideoPause"]) {
+        CGSize size = CGSizeMake(12, 18);
+        return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            CGFloat lineWidth = 2;
+            CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
+            UIBezierPath *path = [UIBezierPath bezierPath];
+            [path moveToPoint:CGPointMake(lineWidth / 2, 0)];
+            [path addLineToPoint:CGPointMake(lineWidth / 2, size.height)];
+            [path moveToPoint:CGPointMake(size.width - lineWidth / 2, 0)];
+            [path addLineToPoint:CGPointMake(size.width - lineWidth / 2, size.height)];
+            [path setLineWidth:lineWidth];
+            [path stroke];
+        }];
+    } else if ([name isEqualToString:@"fwVideoStart"]) {
+        CGSize size = CGSizeMake(17, 17);
+        return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            CGContextSetFillColorWithColor(contextRef, color.CGColor);
+            UIBezierPath *path = [UIBezierPath bezierPath];
+            [path moveToPoint:CGPointZero];
+            [path addLineToPoint:CGPointMake(size.width * cos(M_PI / 6), size.width / 2)];
+            [path addLineToPoint:CGPointMake(0, size.width)];
+            [path closePath];
+            [path fill];
+        }];
+    }
+    return nil;
+}
+
++ (NSString *)localizedString:(NSString *)key table:(NSString *)table
+{
+    if (table) return [super localizedString:key table:table];
+    NSString *localized = [[self bundle] localizedStringForKey:key value:@" " table:table];
+    if (![localized isEqualToString:@" "]) return localized;
+    
+    static NSDictionary *localizedStrings = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        strings = @{
+        localizedStrings = @{
             @"zh-Hans": @{
                 @"fwDone": @"完成",
                 @"fwClose": @"关闭",
@@ -69,10 +159,38 @@
     });
     
     NSString *language = [NSBundle fwCurrentLanguage];
-    return strings[language] ?: strings[@"en"];
+    NSDictionary *strings = localizedStrings[language] ?: localizedStrings[@"en"];
+    return strings[key] ?: key;
 }
 
-#pragma mark - Public
+#pragma mark - Image
+
++ (UIImage *)navBackImage
+{
+    return [self imageNamed:@"fwNavBack"];
+}
+
++ (UIImage *)navCloseImage
+{
+    return [self imageNamed:@"fwNavClose"];
+}
+
++ (UIImage *)videoPlayImage
+{
+    return [self imageNamed:@"fwVideoPlay"];
+}
+
++ (UIImage *)videoPauseImage
+{
+    return [self imageNamed:@"fwVideoPause"];
+}
+
++ (UIImage *)videoStartImage
+{
+    return [self imageNamed:@"fwVideoStart"];
+}
+
+#pragma mark - String
 
 + (NSString *)cancelButton
 {

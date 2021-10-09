@@ -8,6 +8,7 @@
  */
 
 #import "FWZoomImageView.h"
+#import "FWAppBundle.h"
 #import "FWAutoLayout.h"
 #import "FWAdaptive.h"
 #import "FWEncode.h"
@@ -25,81 +26,6 @@
 
 + (Class)layerClass {
     return [AVPlayerLayer class];
-}
-
-+ (UIImage *)largePlayImage {
-    CGSize size = CGSizeMake(60, 60);
-    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-        UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
-        CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
-        CGContextSetFillColorWithColor(contextRef, [UIColor colorWithRed:0 green:0 blue:0 alpha:.25].CGColor);
-        CGFloat circleLineWidth = 1;
-        UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(circleLineWidth / 2, circleLineWidth / 2, size.width - circleLineWidth, size.width - circleLineWidth)];
-        [circle setLineWidth:circleLineWidth];
-        [circle stroke];
-        [circle fill];
-        
-        CGContextSetFillColorWithColor(contextRef, color.CGColor);
-        CGFloat triangleLength = size.width / 2.5;
-        UIBezierPath *triangle = [self trianglePathWithLength:triangleLength];
-        UIOffset offset = UIOffsetMake(size.width / 2 - triangleLength * tan(M_PI / 6) / 2, size.width / 2 - triangleLength / 2);
-        [triangle applyTransform:CGAffineTransformMakeTranslation(offset.horizontal, offset.vertical)];
-        [triangle fill];
-    }];
-}
-
-+ (UIImage *)smallPlayImage {
-    CGSize size = CGSizeMake(17, 17);
-    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-        UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
-        CGContextSetFillColorWithColor(contextRef, color.CGColor);
-        UIBezierPath *path = [self trianglePathWithLength:size.width];
-        [path fill];
-    }];
-}
-
-+ (UIImage *)closeImage {
-    CGSize size = CGSizeMake(16, 16);
-    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-        UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
-        CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
-        CGFloat lineWidth = 2;
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(0, 0)];
-        [path addLineToPoint:CGPointMake(size.width, size.height)];
-        [path closePath];
-        [path moveToPoint:CGPointMake(size.width, 0)];
-        [path addLineToPoint:CGPointMake(0, size.height)];
-        [path closePath];
-        [path setLineWidth:lineWidth];
-        [path setLineCapStyle:kCGLineCapRound];
-        [path stroke];
-    }];
-}
-
-+ (UIImage *)pauseImage {
-    CGSize size = CGSizeMake(12, 18);
-    return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-        UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
-        CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
-        CGFloat lineWidth = 2;
-        UIBezierPath *path = [UIBezierPath bezierPath];
-        [path moveToPoint:CGPointMake(lineWidth / 2, 0)];
-        [path addLineToPoint:CGPointMake(lineWidth / 2, size.height)];
-        [path moveToPoint:CGPointMake(size.width - lineWidth / 2, 0)];
-        [path addLineToPoint:CGPointMake(size.width - lineWidth / 2, size.height)];
-        [path setLineWidth:lineWidth];
-        [path stroke];
-    }];
-}
-
-+ (UIBezierPath *)trianglePathWithLength:(CGFloat)length {
-    UIBezierPath *path = [UIBezierPath bezierPath];
-    [path moveToPoint:CGPointZero];
-    [path addLineToPoint:CGPointMake(length * cos(M_PI / 6), length / 2)];
-    [path addLineToPoint:CGPointMake(0, length)];
-    [path closePath];
-    return path;
 }
 
 @end
@@ -137,8 +63,8 @@
 + (void)setDefaultAppearance {
     FWZoomImageView *appearance = [FWZoomImageView appearance];
     appearance.videoToolbarMargins = UIEdgeInsetsMake(0, 16, 16, 8);
-    appearance.videoPlayButtonImage = [FWZoomImageVideoPlayerView largePlayImage];
-    appearance.videoCloseButtonImage = [FWZoomImageVideoPlayerView closeImage];
+    appearance.videoPlayButtonImage = [FWAppBundle videoPlayImage];
+    appearance.videoCloseButtonImage = [FWAppBundle navCloseImage];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -991,8 +917,8 @@
 
 + (void)setDefaultAppearance {
     FWZoomImageVideoToolbar *appearance = [FWZoomImageVideoToolbar appearance];
-    appearance.playButtonImage = [FWZoomImageVideoPlayerView smallPlayImage];
-    appearance.pauseButtonImage = [FWZoomImageVideoPlayerView pauseImage];
+    appearance.playButtonImage = [FWAppBundle videoStartImage];
+    appearance.pauseButtonImage = [FWAppBundle videoPauseImage];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
