@@ -9,6 +9,19 @@
 @import FWApplication;
 @import Core;
 
+@interface TestModuleExpandedView : UIView
+
+@end
+
+@implementation TestModuleExpandedView
+
+- (CGSize)intrinsicContentSize
+{
+    return UILayoutFittingExpandedSize;
+}
+
+@end
+
 @interface TestModuleController () <FWTableViewController, UISearchBarDelegate>
 
 @property (nonatomic, assign) BOOL isSearch;
@@ -55,9 +68,8 @@
 
 - (UIView *)titleView
 {
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWNavigationBarHeight)];
+    UIView *titleView = [[TestModuleExpandedView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWNavigationBarHeight)];
     [titleView fwSetDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
-    titleView.fwIntrinsicContentSize = UILayoutFittingExpandedSize;
     titleView.backgroundColor = [UIColor clearColor];
     [titleView addSubview:self.searchBar];
     [self.searchBar fwPinEdgesToSuperview];

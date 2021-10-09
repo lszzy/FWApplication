@@ -33,9 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Size
 
-// 自定义估算尺寸，设置CGSizeZero为清空自定义设置
-@property (nonatomic, assign) CGSize fwIntrinsicContentSize;
-
 // 设置自动计算适合高度的frame，需实现sizeThatFits:方法
 @property (nonatomic, assign) CGRect fwFitFrame;
 

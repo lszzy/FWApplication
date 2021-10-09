@@ -9,26 +9,10 @@
 
 #import "UIView+FWApplication.h"
 #import "UIBezierPath+FWApplication.h"
-#import "FWSwizzle.h"
 #import "FWToolkit.h"
 #import <objc/runtime.h>
 
 @implementation UIView (FWApplication)
-
-+ (void)load
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        FWSwizzleClass(UIView, @selector(intrinsicContentSize), FWSwizzleReturn(CGSize), FWSwizzleArgs(), FWSwizzleCode({
-            NSValue *value = objc_getAssociatedObject(selfObject, @selector(fwIntrinsicContentSize));
-            if (value) {
-                return [value CGSizeValue];
-            } else {
-                return FWSwizzleOriginal();
-            }
-        }));
-    });
-}
 
 #pragma mark - Transform
 
@@ -53,20 +37,6 @@
 }
 
 #pragma mark - Size
-
-- (CGSize)fwIntrinsicContentSize
-{
-    return self.intrinsicContentSize;
-}
-
-- (void)setFwIntrinsicContentSize:(CGSize)size
-{
-    if (CGSizeEqualToSize(size, CGSizeZero)) {
-        objc_setAssociatedObject(self, @selector(fwIntrinsicContentSize), nil, OBJC_ASSOCIATION_ASSIGN);
-    } else {
-        objc_setAssociatedObject(self, @selector(fwIntrinsicContentSize), [NSValue valueWithCGSize:size], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-}
 
 - (CGRect)fwFitFrame
 {
