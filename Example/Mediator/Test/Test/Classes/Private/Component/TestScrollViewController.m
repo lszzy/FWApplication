@@ -16,12 +16,6 @@
 
 @implementation TestScrollViewController
 
-- (void)renderInit
-{
-    // 如果tableView占不满控制器，设置如下即可
-    // self.automaticallyAdjustsScrollViewInsets = NO;
-}
-
 - (UITableViewStyle)renderTableStyle
 {
     return UITableViewStyleGrouped;

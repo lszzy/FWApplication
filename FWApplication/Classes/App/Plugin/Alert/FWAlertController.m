@@ -1583,11 +1583,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     [super viewDidLoad];
     
     [self configureHeaderView];
-    
     self.needDialogBlur = _needDialogBlur;
-    
-    self.automaticallyAdjustsScrollViewInsets = NO;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
