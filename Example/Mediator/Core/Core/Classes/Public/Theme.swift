@@ -72,11 +72,11 @@ import FWApplication
         UIToolbar.fwAppearanceEnabled = Theme.isBarAppearance
         let defaultAppearance = FWNavigationBarAppearance()
         defaultAppearance.foregroundColor = Theme.textColor
-        defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fwColor(withAlpha: 0.8) : Theme.barColor
+        defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fwColor(withAlpha: 0.5) : Theme.barColor
         defaultAppearance.isTranslucent = Theme.isBarTranslucent
         let whiteAppearance = FWNavigationBarAppearance()
         whiteAppearance.foregroundColor = .black
-        whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fwColor(withAlpha: 0.8) : .white
+        whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fwColor(withAlpha: 0.5) : .white
         whiteAppearance.isTranslucent = Theme.isBarTranslucent
         let transparentAppearance = FWNavigationBarAppearance()
         transparentAppearance.foregroundColor = Theme.textColor
