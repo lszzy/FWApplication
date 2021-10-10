@@ -66,7 +66,7 @@
 
 - (void)renderWebView
 {
-    self.edgesForExtendedLayout = UIRectEdgeBottom;
+    self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
     self.fwView.backgroundColor = [Theme tableColor];
     self.webView.scrollView.delegate = self;
