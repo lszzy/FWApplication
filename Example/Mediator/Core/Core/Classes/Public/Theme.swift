@@ -23,6 +23,9 @@ import FWApplication
     @FWUserDefaultAnnotation("isBarAppearance", defaultValue: UINavigationBar.fwAppearanceEnabled)
     public static var isBarAppearance: Bool
     
+    @FWUserDefaultAnnotation("isExtendedBottom", defaultValue: true)
+    public static var isExtendedBottom: Bool
+    
     public static var backgroundColor: UIColor {
         UIColor.fwThemeLight(.white, dark: .black)
     }
@@ -93,7 +96,7 @@ extension Theme {
         
         // 控制器样式设置
         FWViewControllerManager.sharedInstance.hookInit = { viewController in
-            viewController.edgesForExtendedLayout = .bottom
+            viewController.edgesForExtendedLayout = Theme.isExtendedBottom ? .bottom : []
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
             viewController.fwNavigationViewEnabled = Theme.isNavBarCustom
@@ -111,17 +114,17 @@ extension Theme {
         }
         
         FWViewControllerManager.sharedInstance.hookScrollViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
+            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
         }
         FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
+            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
             viewController.tableView.backgroundColor = Theme.tableColor
         }
         FWViewControllerManager.sharedInstance.hookCollectionViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
+            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
         }
         FWViewControllerManager.sharedInstance.hookWebViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
+            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
         }
     }
     

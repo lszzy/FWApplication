@@ -145,7 +145,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onOption() {
-        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isNavBarCustom ? FWLocalizedString("navBarSystem") : FWLocalizedString("navBarCustom"), Theme.isNavStyleCustom ? FWLocalizedString("navStyleDefault") : FWLocalizedString("navStyleCustom"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? "导航栏不透明" : "导航栏半透明", Theme.isBarAppearance ? "禁用导航栏Appearance" : "启用导航栏Appearance"]) { (index) in
+        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isNavBarCustom ? FWLocalizedString("navBarSystem") : FWLocalizedString("navBarCustom"), Theme.isNavStyleCustom ? FWLocalizedString("navStyleDefault") : FWLocalizedString("navStyleCustom"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? "导航栏不透明" : "导航栏半透明", Theme.isBarAppearance ? "禁用导航栏Appearance" : "启用导航栏Appearance", Theme.isExtendedBottom ? "控制器底部不延伸" : "控制器底部延伸"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
@@ -160,6 +160,8 @@ class SettingsViewController: UIViewController, FWTableViewController {
             case 5:
                 Theme.isBarAppearance = !Theme.isBarAppearance
                 Theme.themeChanged()
+            case 6:
+                Theme.isExtendedBottom = !Theme.isExtendedBottom
             default:
                 break
             }
