@@ -26,6 +26,9 @@ import FWApplication
     @FWUserDefaultAnnotation("isExtendedBottom", defaultValue: true)
     public static var isExtendedBottom: Bool
     
+    @FWUserDefaultAnnotation("isInsetNever", defaultValue: false)
+    public static var isInsetNever: Bool
+    
     public static var backgroundColor: UIColor {
         UIColor.fwThemeLight(.white, dark: .black)
     }
@@ -115,16 +118,20 @@ extension Theme {
         
         FWViewControllerManager.sharedInstance.hookScrollViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
+            viewController.scrollView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
         }
         FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
+            viewController.tableView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
             viewController.tableView.backgroundColor = Theme.tableColor
         }
         FWViewControllerManager.sharedInstance.hookCollectionViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
+            viewController.collectionView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
         }
         FWViewControllerManager.sharedInstance.hookWebViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
+            viewController.webView.scrollView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
         }
     }
     
