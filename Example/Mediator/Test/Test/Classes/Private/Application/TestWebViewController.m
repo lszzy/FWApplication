@@ -66,6 +66,8 @@
 
 - (void)renderWebView
 {
+    self.edgesForExtendedLayout = UIRectEdgeBottom;
+    self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
     self.fwView.backgroundColor = [Theme tableColor];
     self.webView.scrollView.delegate = self;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
@@ -129,8 +131,7 @@
 {
     if (!scrollView.isDragging) return;
     
-    BOOL canScroll = scrollView.contentSize.height + scrollView.fwContentInset.top + scrollView.fwContentInset.bottom > CGRectGetHeight(scrollView.bounds) - FWToolBarHeight;
-    if (!canScroll) {
+    if (!scrollView.fwCanScroll) {
         [self reloadToolbar:NO];
         return;
     }
