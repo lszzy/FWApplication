@@ -21,7 +21,7 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault     = 0;
 static const FWNavigationBarStyle FWNavigationBarStyleHidden      = -1;
 /// 透明样式，全透明
 static const FWNavigationBarStyle FWNavigationBarStyleTransparent = 1;
-/// 磨砂样式，半透明，需edgesForExtendedLayout为Top|All，contentInsetAdjustmentBehavior为Automatic|Always
+/// 磨砂样式，半透明，需edgesForExtendedLayout为Top|All
 static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 
 /// 导航栏样式配置

@@ -112,20 +112,16 @@ extension Theme {
         
         FWViewControllerManager.sharedInstance.hookScrollViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
-            viewController.scrollView.contentInsetAdjustmentBehavior = Theme.isBarTranslucent ? .automatic : .never
         }
         FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
-            viewController.tableView.contentInsetAdjustmentBehavior = Theme.isBarTranslucent ? .automatic : .never
             viewController.tableView.backgroundColor = Theme.tableColor
         }
         FWViewControllerManager.sharedInstance.hookCollectionViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
-            viewController.collectionView.contentInsetAdjustmentBehavior = Theme.isBarTranslucent ? .automatic : .never
         }
         FWViewControllerManager.sharedInstance.hookWebViewController = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
-            viewController.webView.scrollView.contentInsetAdjustmentBehavior = Theme.isBarTranslucent ? .automatic : .never
         }
     }
     
