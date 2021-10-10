@@ -159,7 +159,6 @@ class SettingsViewController: UIViewController, FWTableViewController {
                 Theme.isBarTranslucent = !Theme.isBarTranslucent
             case 5:
                 Theme.isBarAppearance = !Theme.isBarAppearance
-                Theme.themeChanged()
             case 6:
                 Theme.isExtendedBottom = !Theme.isExtendedBottom
             case 7:
@@ -167,6 +166,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
             default:
                 break
             }
+            Theme.themeChanged()
             UITabBarController.refreshController()
         }
     }
