@@ -839,7 +839,7 @@
 
 #pragma mark - Effect
 
-- (void)fwSetBlurEffect:(UIBlurEffectStyle)style
+- (UIVisualEffectView *)fwSetBlurEffect:(UIBlurEffectStyle)style
 {
     // 移除旧毛玻璃视图
     for (UIView *subview in self.subviews) {
@@ -854,7 +854,9 @@
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
         [self addSubview:effectView];
         [effectView fwPinEdgesToSuperview];
+        return effectView;
     }
+    return nil;
 }
 
 #pragma mark - Bezier

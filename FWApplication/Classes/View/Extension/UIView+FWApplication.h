@@ -413,11 +413,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Effect
 
 /**
- *  设置毛玻璃效果，使用UIVisualEffectView
+ *  设置毛玻璃效果，使用UIVisualEffectView。内容需要添加到UIVisualEffectView.contentView
  *
  *  @param style 毛玻璃效果样式
  */
-- (void)fwSetBlurEffect:(UIBlurEffectStyle)style;
+- (nullable UIVisualEffectView *)fwSetBlurEffect:(UIBlurEffectStyle)style;
 
 #pragma mark - Bezier
 
