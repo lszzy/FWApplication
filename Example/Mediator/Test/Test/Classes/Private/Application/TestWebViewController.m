@@ -54,8 +54,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 底部延伸时设置scrollView边距自适应，无需处理frame
+    self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
+    if (Theme.isExtendedBottom) {
+        self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
+    // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame
+    } else {
+        self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeTop : UIRectEdgeNone;
+    }
+    
     [self renderToolbar];
     [self loadRequestUrl];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    if (Theme.isExtendedBottom || !self.fwIsLoaded) return;
+    
+    // 顶部延伸时，不需要减顶部栏高度
+    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fwTopBarHeight;
+    self.view.fwHeight = FWScreenHeight - topHeight - self.fwBottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -66,8 +86,6 @@
 
 - (void)renderWebView
 {
-    self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
-    self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
     self.fwView.backgroundColor = [Theme tableColor];
     self.webView.scrollView.delegate = self;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
@@ -129,12 +147,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!scrollView.isDragging) return;
-    
-    if (!scrollView.fwCanScroll) {
-        [self reloadToolbar:NO];
-        return;
-    }
+    if (!scrollView.isDragging || !scrollView.fwCanScrollVertical) return;
     
     CGPoint transition = [scrollView.panGestureRecognizer translationInView:scrollView.panGestureRecognizer.view];
     if (transition.y > 10.0f) {

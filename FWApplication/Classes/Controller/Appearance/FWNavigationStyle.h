@@ -93,6 +93,9 @@ static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 /// 当前工具栏布局高度，隐藏时为0，推荐使用
 @property (nonatomic, assign, readonly) CGFloat fwToolBarHeight;
 
+/// 当前底部栏布局高度，包含标签栏和工具栏，隐藏时为0，推荐使用
+@property (nonatomic, assign, readonly) CGFloat fwBottomBarHeight;
+
 #pragma mark - Item
 
 /// 快捷设置导航栏标题文字或视图
@@ -267,7 +270,7 @@ static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 /// 工具栏内容视图，iOS11+才存在，显示item等
 @property (nonatomic, readonly, nullable) UIView *fwContentView;
 
-/// 工具栏背景视图，显示背景色和背景图片等
+/// 工具栏背景视图，显示背景色和背景图片等。如果标签栏同时显示，背景视图高度也会包含标签栏高度
 @property (nonatomic, readonly, nullable) UIView *fwBackgroundView;
 
 /// 自定义工具栏位置，调用后才生效，会自动设置delegate。Bottom时背景自动向下延伸，TopAttached时背景自动向上延伸

@@ -325,7 +325,17 @@
 - (CGFloat)fwToolBarHeight
 {
     if (!self.navigationController || self.navigationController.toolbarHidden) return 0.0;
-    return self.navigationController.toolbar.frame.size.height + [UIScreen fwSafeAreaInsets].bottom;
+    // 如果未同时显示标签栏，高度需要加上安全区域高度
+    CGFloat height = self.navigationController.toolbar.frame.size.height;
+    if (!self.tabBarController || self.tabBarController.tabBar.hidden) {
+        height += [UIScreen fwSafeAreaInsets].bottom;
+    }
+    return height;
+}
+
+- (CGFloat)fwBottomBarHeight
+{
+    return [self fwTabBarHeight] + [self fwToolBarHeight];
 }
 
 #pragma mark - Item
