@@ -68,9 +68,9 @@
     
     self.originImageCheckboxButton = [[UIButton alloc] init];
     self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.originImageCheckboxButton setImage:[UIImage fwImageWithColor:[UIColor redColor] size:CGSizeMake(20, 20)] forState:UIControlStateNormal];
-    [self.originImageCheckboxButton setImage:[UIImage fwImageWithColor:[UIColor brownColor] size:CGSizeMake(20, 20)] forState:UIControlStateSelected];
-    [self.originImageCheckboxButton setImage:[UIImage fwImageWithColor:[UIColor brownColor] size:CGSizeMake(20, 20)] forState:UIControlStateSelected|UIControlStateHighlighted];
+    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckImage forState:UIControlStateNormal];
+    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected];
+    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
     [self.originImageCheckboxButton setTitle:@"原图" forState:UIControlStateNormal];
     [self.originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
     [self.originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
@@ -236,10 +236,7 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
     }
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:albumController];
-    
-    // 获取最近发送图片时使用过的相簿，如果有则直接进入该相簿
-    [albumController pickLastAlbumGroup];
-    
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
@@ -277,9 +274,6 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 #pragma mark - <QMUIImagePickerViewControllerDelegate>
 
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    // 储存最近选择了图片的相册，方便下次直接进入该相册
-    [FWImagePickerHelper updateLastestAlbumWithAssetsGroup:imagePickerController.assetsGroup ablumContentType:kAlbumContentType userIdentify:nil];
-    
     [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
 
@@ -323,7 +317,6 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
         if (selectedCount > 0) {
             customImagePickerPreviewViewController.imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
             customImagePickerPreviewViewController.imageCountLabel.hidden = NO;
-            [FWImagePickerHelper springAnimationOfImageSelectedCountChangeWithCountLabel:customImagePickerPreviewViewController.imageCountLabel];
         } else {
             customImagePickerPreviewViewController.imageCountLabel.hidden = YES;
         }
@@ -333,9 +326,6 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 #pragma mark - <QDMultipleImagePickerPreviewViewControllerDelegate>
 
 - (void)imagePickerPreviewController:(QDMultipleImagePickerPreviewViewController *)imagePickerPreviewController sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    // 储存最近选择了图片的相册，方便下次直接进入该相册
-    [FWImagePickerHelper updateLastestAlbumWithAssetsGroup:imagePickerPreviewController.assetsGroup ablumContentType:kAlbumContentType userIdentify:nil];
-    
     [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
 

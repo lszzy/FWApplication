@@ -30,6 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, strong, readonly, nullable) UIImage *videoPauseImage;
 /// 图片，视频开始，fwVideoStart
 @property (class, nonatomic, strong, readonly, nullable) UIImage *videoStartImage;
+/// 图片，相册多选，fwPickerCheck
+@property (class, nonatomic, strong, readonly, nullable) UIImage *pickerCheckImage;
+/// 图片，相册选中，fwPickerChecked
+@property (class, nonatomic, strong, readonly, nullable) UIImage *pickerCheckedImage;
 
 #pragma mark - String
 

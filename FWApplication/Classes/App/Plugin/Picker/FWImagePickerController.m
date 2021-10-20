@@ -226,8 +226,7 @@
     [self.navigationController pushViewController:self.imagePickerController animated:animated];
 }
 
-- (void)pickLastAlbumGroup {
-    FWAssetGroup *assetsGroup = [FWImagePickerHelper assetsGroupOfLastPickerAlbumWithUserIdentify:nil];
+- (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup {
     [self pickAlbumsGroup:assetsGroup animated:NO];
 }
 
@@ -276,9 +275,7 @@
 
 @interface FWImagePickerCollectionCell ()
 
-@property(nonatomic, strong, readwrite) UIImageView *favoriteImageView;
 @property(nonatomic, strong, readwrite) UIButton *checkboxButton;
-@property(nonatomic, strong, readwrite) CAGradientLayer *bottomShadowLayer;
 
 @end
 
@@ -289,10 +286,8 @@
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [FWImagePickerCollectionCell appearance].favoriteImage = [UIImage fwImageWithColor:[UIColor blueColor] size:CGSizeMake(20, 20)];
-        [FWImagePickerCollectionCell appearance].favoriteImageMargins = UIEdgeInsetsMake(6, 6, 6, 6);
-        [FWImagePickerCollectionCell appearance].checkboxImage = [UIImage fwImageWithColor:[UIColor redColor] size:CGSizeMake(20, 20)];
-        [FWImagePickerCollectionCell appearance].checkboxCheckedImage = [UIImage fwImageWithColor:[UIColor brownColor] size:CGSizeMake(20, 20)];
+        [FWImagePickerCollectionCell appearance].checkboxImage = FWAppBundle.pickerCheckImage;
+        [FWImagePickerCollectionCell appearance].checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
         [FWImagePickerCollectionCell appearance].checkboxButtonMargins = UIEdgeInsetsMake(6, 6, 6, 6);
         [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
         [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
@@ -313,16 +308,6 @@
     self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.contentImageView.clipsToBounds = YES;
     [self.contentView addSubview:self.contentImageView];
-    
-    self.bottomShadowLayer = [CAGradientLayer layer];
-    self.bottomShadowLayer.colors = @[(id)[UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor, (id)[UIColor colorWithRed:0 green:0 blue:0 alpha:.6].CGColor];
-    self.bottomShadowLayer.hidden = YES;
-    [self.contentView.layer addSublayer:self.bottomShadowLayer];
-    [self setNeedsLayout];
-    
-    self.favoriteImageView = [[UIImageView alloc] init];
-    self.favoriteImageView.hidden = YES;
-    [self.contentView addSubview:self.favoriteImageView];
     
     self.checkboxButton = [[UIButton alloc] init];
     self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
@@ -352,10 +337,6 @@
         self.videoDurationLabel.hidden = YES;
     }
     
-    self.favoriteImageView.hidden = !asset.phAsset.favorite;
-    
-    self.bottomShadowLayer.hidden = !((self.videoDurationLabel && !self.videoDurationLabel.hidden) || !self.favoriteImageView.hidden);
-    
     [self setNeedsLayout];
 }
 
@@ -366,31 +347,10 @@
         self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.checkboxButtonMargins.right - CGRectGetWidth(self.checkboxButton.bounds), self.checkboxButtonMargins.top);
     }
     
-    CGFloat bottomShadowLayerHeight = 0;
-    
-    if (!self.favoriteImageView.hidden) {
-        self.favoriteImageView.fwOrigin = CGPointMake(self.favoriteImageMargins.left, CGRectGetHeight(self.contentView.bounds) - self.favoriteImageMargins.bottom - CGRectGetHeight(self.favoriteImageView.frame));
-        bottomShadowLayerHeight = CGRectGetHeight(self.favoriteImageView.frame) + (self.favoriteImageMargins.top + self.favoriteImageMargins.bottom);
-    }
-    
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
         self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
-        bottomShadowLayerHeight = MAX(bottomShadowLayerHeight, CGRectGetHeight(self.videoDurationLabel.frame) + (self.videoDurationLabelMargins.top + self.videoDurationLabelMargins.bottom));
     }
-    
-    if (!self.bottomShadowLayer.hidden) {
-        self.bottomShadowLayer.frame = CGRectMake(0, CGRectGetHeight(self.contentView.bounds) - bottomShadowLayerHeight, CGRectGetWidth(self.contentView.bounds), bottomShadowLayerHeight);
-    }
-}
-
-- (void)setFavoriteImage:(UIImage *)favoriteImage {
-    if (![self.favoriteImage isEqual:favoriteImage]) {
-        self.favoriteImageView.image = favoriteImage;
-        [self.favoriteImageView sizeToFit];
-        [self setNeedsLayout];
-    }
-    _favoriteImage = favoriteImage;
 }
 
 - (void)setCheckboxImage:(UIImage *)checkboxImage {
@@ -434,10 +394,6 @@
     _checked = checked;
     if (_selectable) {
         self.checkboxButton.selected = checked;
-        [FWImagePickerHelper removeSpringAnimationOfImageCheckedWithCheckboxButton:self.checkboxButton];
-        if (checked) {
-            [FWImagePickerHelper springAnimationOfImageCheckedWithCheckboxButton:self.checkboxButton];
-        }
     }
 }
 
@@ -469,75 +425,7 @@
 
 #pragma mark - FWImagePickerHelper
 
-static NSString * const kLastAlbumKeyPrefix = @"FWLastestAlbumKeyWith";
-static NSString * const kContentTypeOfLastAlbumKeyPrefix = @"FWContentTypeOfLastestAlbumKeyWith";
-
 @implementation FWImagePickerHelper
-
-+ (void)springAnimationOfImageSelectedCountChangeWithCountLabel:(UILabel *)label {
-    [self actionSpringAnimationForView:label];
-}
-
-+ (void)springAnimationOfImageCheckedWithCheckboxButton:(UIButton *)button {
-    [self actionSpringAnimationForView:button];
-}
-
-+ (void)actionSpringAnimationForView:(UIView *)view {
-    NSTimeInterval duration = 0.6;
-    CAKeyframeAnimation *springAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-    springAnimation.values = @[@.85, @1.15, @.9, @1.0,];
-    springAnimation.keyTimes = @[@(0.0 / duration), @(0.15 / duration) , @(0.3 / duration), @(0.45 / duration),];
-    springAnimation.duration = duration;
-    [view.layer addAnimation:springAnimation forKey:@"imagePickerActionSpring"];
-}
-
-+ (void)removeSpringAnimationOfImageCheckedWithCheckboxButton:(UIButton *)button {
-    [button.layer removeAnimationForKey:@"imagePickerActionSpring"];
-}
-
-+ (FWAssetGroup *)assetsGroupOfLastPickerAlbumWithUserIdentify:(NSString *)userIdentify {
-    // 获取 NSUserDefaults，里面储存了所有 updateLastestAlbumWithAssetsGroup 的结果
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    // 使用特定的前缀和可以标记不同用户的字符串拼接成 key，用于获取当前用户最近调用 updateLastestAlbumWithAssetsGroup 储存的相册以及对于的 FWAlbumContentType 值
-    NSString *lastAlbumKey = [NSString stringWithFormat:@"%@%@", kLastAlbumKeyPrefix, userIdentify];
-    NSString *contentTypeOflastAlbumKey = [NSString stringWithFormat:@"%@%@", kContentTypeOfLastAlbumKeyPrefix, userIdentify];
-    
-    __block FWAssetGroup *assetsGroup;
-    
-    FWAlbumContentType albumContentType = (FWAlbumContentType)[userDefaults integerForKey:contentTypeOflastAlbumKey];
-    
-    NSString *groupIdentifier = [userDefaults valueForKey:lastAlbumKey];
-    /**
-     *  如果获取到的 PHAssetCollection localIdentifier 不为空，则获取该 URL 对应的相册。
-     *  在 FW 2.0.0 及较早的版本中，FW 兼容 AssetsLibrary 的使用，
-     *  因此原来储存的 groupIdentifier 实际上可能会是一个 NSURL 而不是我们需要的 NSString，
-     *  所以这里还需要判断一下实际拿到的数据的类型是否为 NSString，如果是才继续进行。
-     */
-    if (groupIdentifier && [groupIdentifier isKindOfClass:[NSString class]]) {
-        PHFetchResult *phFetchResult = [PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[groupIdentifier] options:nil];
-        if (phFetchResult.count > 0) {
-            // 创建一个 PHFetchOptions，用于对内容类型进行控制
-            PHFetchOptions *phFetchOptions;
-            // 旧版本中没有存储 albumContentType，因此为了防止 crash，这里做一下判断
-            if (albumContentType) {
-                phFetchOptions = [PHPhotoLibrary createFetchOptionsWithAlbumContentType:albumContentType];
-            }
-            PHAssetCollection *phAssetCollection = [phFetchResult firstObject];
-            assetsGroup = [[FWAssetGroup alloc] initWithPHCollection:phAssetCollection fetchAssetsOptions:phFetchOptions];
-        }
-    }
-    return assetsGroup;
-}
-
-+ (void)updateLastestAlbumWithAssetsGroup:(FWAssetGroup *)assetsGroup ablumContentType:(FWAlbumContentType)albumContentType userIdentify:(NSString *)userIdentify {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    // 使用特定的前缀和可以标记不同用户的字符串拼接成 key，用于为当前用户储存相册对应的 FWAssetGroup 与 FWAlbumContentType
-    NSString *lastAlbumKey = [NSString stringWithFormat:@"%@%@", kLastAlbumKeyPrefix, userIdentify];
-    NSString *contentTypeOflastAlbumKey = [NSString stringWithFormat:@"%@%@", kContentTypeOfLastAlbumKeyPrefix, userIdentify];
-    [userDefaults setValue:assetsGroup.phAssetCollection.localIdentifier forKey:lastAlbumKey];
-    [userDefaults setInteger:albumContentType forKey:contentTypeOflastAlbumKey];
-    [userDefaults synchronize];
-}
 
 + (BOOL)imageAssetsDownloaded:(NSMutableArray<FWAsset *> *)imagesAssetArray {
     for (FWAsset *asset in imagesAssetArray) {
@@ -621,8 +509,8 @@ static NSString * const kContentTypeOfLastAlbumKeyPrefix = @"FWContentTypeOfLast
     [self.topToolBarView addSubview:self.backButton];
     
     _checkboxButton = [[UIButton alloc] init];
-    UIImage *checkboxImage = [UIImage fwImageWithColor:[UIColor redColor] size:CGSizeMake(20, 20)];
-    UIImage *checkedCheckboxImage = [UIImage fwImageWithColor:[UIColor brownColor] size:CGSizeMake(20, 20)];
+    UIImage *checkboxImage = FWAppBundle.pickerCheckImage;
+    UIImage *checkedCheckboxImage = FWAppBundle.pickerCheckedImage;
     [self.checkboxButton setImage:checkboxImage forState:UIControlStateNormal];
     [self.checkboxButton setImage:checkedCheckboxImage forState:UIControlStateSelected];
     [self.checkboxButton setImage:[self.checkboxButton imageForState:UIControlStateSelected] forState:UIControlStateSelected|UIControlStateHighlighted];
@@ -751,8 +639,6 @@ static NSString * const kContentTypeOfLastAlbumKeyPrefix = @"FWContentTypeOfLast
 }
 
 - (void)handleCheckButtonClick:(UIButton *)button {
-    [FWImagePickerHelper removeSpringAnimationOfImageCheckedWithCheckboxButton:button];
-    
     if (button.selected) {
         if ([self.delegate respondsToSelector:@selector(imagePickerPreviewController:willUncheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self willUncheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -783,7 +669,6 @@ static NSString * const kContentTypeOfLastAlbumKeyPrefix = @"FWContentTypeOfLast
         }
         
         button.selected = YES;
-        [FWImagePickerHelper springAnimationOfImageCheckedWithCheckboxButton:button];
         FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray addObject:imageAsset];
         
@@ -1261,7 +1146,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     FWImagePickerCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     [cell renderWithAsset:imageAsset referenceSize:[self referenceImageSize]];
     
-    cell.fwTempObject = indexPath;
+    cell.checkboxButton.tag = indexPath.item;
     [cell.checkboxButton addTarget:self action:@selector(handleCheckBoxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectable = self.allowsMultipleSelection;
     if (cell.selectable) {
@@ -1325,7 +1210,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 }
 
 - (void)handleCheckBoxButtonClick:(UIButton *)checkboxButton {
-    NSIndexPath *indexPath = checkboxButton.fwTempObject;
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:checkboxButton.tag inSection:0];
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:shouldCheckImageAtIndex:)] && ![self.imagePickerControllerDelegate imagePickerController:self shouldCheckImageAtIndex:indexPath.item]) {
         return;
     }
@@ -1387,7 +1272,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.sendButton.enabled = YES;
         self.imageCountLabel.text = [NSString stringWithFormat:@"%@", @(selectedImageCount)];
         self.imageCountLabel.hidden = NO;
-        [FWImagePickerHelper springAnimationOfImageSelectedCountChangeWithCountLabel:self.imageCountLabel];
     } else {
         self.previewButton.enabled = NO;
         self.sendButton.enabled = NO;

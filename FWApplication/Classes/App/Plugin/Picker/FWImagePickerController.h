@@ -81,7 +81,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册列表事件代理
 @property(nullable, nonatomic, weak) id<FWImageAlbumControllerDelegate> albumControllerDelegate;
 
-/// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认57
+/// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
 @property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 
 /// 相册展示内容的类型，可以控制只展示照片、视频或音频的其中一种，也可以同时展示所有类型的资源，默认展示所有类型的资源。
@@ -90,8 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 加载相册列表时会出现 loading，若需要自定义 loading 的形式，可将该属性置为 NO，默认为 YES
 @property(nonatomic, assign) BOOL showsDefaultLoading;
 
-/// 在 FWImageAlbumController 被放到 UINavigationController 里之后，可通过调用这个方法，来尝试直接进入上一次选中的相册列表
-- (void)pickLastAlbumGroup;
+/// 直接进入指定相册
+- (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup;
 
 @end
 
@@ -101,12 +101,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  图片选择空间里的九宫格 cell，支持显示 checkbox、饼状进度条及重试按钮（iCloud 图片需要）
  */
 @interface FWImagePickerCollectionCell : UICollectionViewCell
-
-/// 收藏的资源的心形图片
-@property(nonatomic, strong) UIImage *favoriteImage UI_APPEARANCE_SELECTOR;
-
-/// 收藏的资源的心形图片的上下左右间距，相对于 cell 左下角零点而言，也即如果 left 越大则越往右，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
-@property(nonatomic, assign) UIEdgeInsets favoriteImageMargins UI_APPEARANCE_SELECTOR;
 
 /// checkbox 未被选中时显示的图片
 @property(nonatomic, strong) UIImage *checkboxImage UI_APPEARANCE_SELECTOR;
@@ -127,10 +121,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
 
 @property(nonatomic, strong, readonly) UIImageView *contentImageView;
-@property(nonatomic, strong, readonly) UIImageView *favoriteImageView;
 @property(nonatomic, strong, readonly) UIButton *checkboxButton;
 @property(nonatomic, strong, readonly) UILabel *videoDurationLabel;
-@property(nonatomic, strong, readonly) CAGradientLayer *bottomShadowLayer;// 当出现收藏或者视频时长文字时就会显示遮罩，遮罩高度为 favoriteImage 和 videoDurationLabel 中最高者的高度
 
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 @property(nonatomic, assign, getter=isChecked) BOOL checked;
@@ -147,49 +139,6 @@ NS_ASSUME_NONNULL_BEGIN
  *  配合 FWImagePickerController 使用的工具类
  */
 @interface FWImagePickerHelper : NSObject
-
-/**
- *  选中图片数量改变时，展示图片数量的 Label 的动画，动画过程如下：
- *  Label 背景色改为透明，同时产生一个与背景颜色和形状、大小都相同的图形置于 Label 底下，做先缩小再放大的 spring 动画
- *  动画结束后移除该图形，并恢复 Label 的背景色
- *
- *  @warning iOS6 下降级处理不调用动画效果
- *
- *  @param label 需要做动画的 UILabel
- */
-+ (void)springAnimationOfImageSelectedCountChangeWithCountLabel:(UILabel *)label;
-
-/**
- *  图片 checkBox 被选中时的动画
- *  @warning iOS6 下降级处理不调用动画效果
- *
- *  @param button 需要做动画的 checkbox 按钮
- */
-+ (void)springAnimationOfImageCheckedWithCheckboxButton:(UIButton *)button;
-
-/**
- * 搭配<i>springAnimationOfImageCheckedWithCheckboxButton:</i>一起使用，添加animation之前建议先remove
- */
-+ (void)removeSpringAnimationOfImageCheckedWithCheckboxButton:(UIButton *)button;
-
-
-/**
- *  获取最近一次调用 updateLastAlbumWithAssetsGroup 方法调用时储存的 FWAssetGroup 对象
- *
- *  @param userIdentify 用户标识，由于每个用户可能需要分开储存一个最近调用过的 FWAssetGroup，因此增加一个标识区分用户。
- *  一个常见的应用场景是选择图片时保存图片所在相册的对应的 FWAssetGroup，并使用用户的 user id 作为区分不同用户的标识，
- *  当用户再次选择图片时可以根据已经保存的 FWAssetGroup 直接进入上次使用过的相册。
- */
-+ (FWAssetGroup *)assetsGroupOfLastPickerAlbumWithUserIdentify:(nullable NSString *)userIdentify;
-
-/**
- *  储存一个 FWAssetGroup，从而储存一个对应的相册，与 assetsGroupOfLatestPickerAlbumWithUserIdentify 方法对应使用
- *
- *  @param assetsGroup   要被储存的 FWAssetGroup
- *  @param albumContentType 相册的内容类型
- *  @param userIdentify 用户标识，由于每个用户可能需要分开储存一个最近调用过的 FWAssetGroup，因此增加一个标识区分用户
- */
-+ (void)updateLastestAlbumWithAssetsGroup:(FWAssetGroup *)assetsGroup ablumContentType:(FWAlbumContentType)albumContentType userIdentify:(nullable NSString *)userIdentify;
 
 /**
  * 检测一组资源是否全部下载成功，如果有资源仍未从 iCloud 中下载成功，则返回 NO
