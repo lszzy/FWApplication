@@ -169,7 +169,7 @@ API_AVAILABLE(ios(14.0))
 /// 编辑单张图片时是否启用自定义裁剪控制器，默认NO，使用系统方式
 @property (nonatomic, assign) BOOL cropControllerEnabled;
 
-/// 图片选取自定义句柄，show方法自动调用
+/// 图片选取全局自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(__kindof UIViewController *pickerController);
 
 /// 自定义裁剪控制器句柄，启用自定义裁剪后生效

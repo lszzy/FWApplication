@@ -404,10 +404,8 @@
         return;
     }
     
-    if (self.customBlock) {
-        self.customBlock(pickerController);
-    }
-    
+    if (self.customBlock) self.customBlock(pickerController);
+    if (customBlock) customBlock(pickerController);
     [viewController presentViewController:pickerController animated:YES completion:nil];
 }
 
@@ -450,10 +448,8 @@
         return;
     }
     
-    if (self.customBlock) {
-        self.customBlock(pickerController);
-    }
-    
+    if (self.customBlock) self.customBlock(pickerController);
+    if (customBlock) customBlock(pickerController);
     [viewController presentViewController:pickerController animated:YES completion:nil];
 }
 

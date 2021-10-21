@@ -31,17 +31,24 @@
              renderBlock:(void (^)(__kindof UIView * _Nonnull, NSInteger))renderBlock
              customBlock:(void (^)(id _Nonnull))customBlock
 {
-    FWImagePreviewController *previewController = [[FWImagePreviewController alloc] init];
-    previewController.showsPageLabel = YES;
-    previewController.dismissingWhenTappedImage = YES;
-    previewController.dismissingWhenTappedVideo = YES;
-    previewController.presentingStyle = FWImagePreviewTransitioningStyleZoom;
+    FWImagePreviewController *previewController;
+    if (self.previewControllerBlock) {
+        previewController = self.previewControllerBlock();
+    } else {
+        previewController = [[FWImagePreviewController alloc] init];
+        previewController.showsPageLabel = YES;
+        previewController.dismissingWhenTappedImage = YES;
+        previewController.dismissingWhenTappedVideo = YES;
+        previewController.presentingStyle = FWImagePreviewTransitioningStyleZoom;
+    }
+    
     previewController.sourceImageView = sourceView;
     previewController.imagePreviewView.placeholderImage = placeholderImage;
     previewController.imagePreviewView.imageURLs = imageURLs;
     previewController.imagePreviewView.currentImageIndex = currentIndex;
     previewController.imagePreviewView.renderZoomImageView = renderBlock;
     
+    if (self.customBlock) self.customBlock(previewController);
     if (customBlock) customBlock(previewController);
     [viewController presentViewController:previewController animated:YES completion:nil];
 }
