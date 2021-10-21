@@ -183,15 +183,12 @@
 @end
 
 #define MaxSelectedImageCount 9
-#define NormalImagePickingTag 1045
-#define ModifiedImagePickingTag 1046
-#define MultipleImagePickingTag 1047
-
-static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
+#define SingleImagePickingTag 1045
+#define MultipleImagePickingTag 1046
+#define OnlyImagePickingTag 1047
+#define OnlyVideoPickingTag 1048
 
 @interface TestImagePickerViewController () <FWTableViewController, FWImageAlbumControllerDelegate, FWImagePickerControllerDelegate, QDMultipleImagePickerPreviewViewControllerDelegate>
-
-@property(nonatomic, strong) UIImage *selectedAvatarImage;
 
 @end
 
@@ -199,40 +196,45 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 
 - (void)renderData {
     [self.tableData addObjectsFromArray:@[
+        @"选择单张图片",
         @"选择多张图片",
-        @"调整界面",
-        @"测试",
+        @"多选仅图片",
+        @"多选仅视频",
     ]];
 }
 
-- (void)authorizationPresentAlbumViewControllerWithTitle:(NSString *)title {
+- (void)authorizationPresentAlbumViewControllerWithIndex:(NSInteger)index {
     if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotDetermined) {
         [FWAssetManager requestAuthorization:^(FWAssetAuthorizationStatus status) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentAlbumViewControllerWithTitle:title];
+                [self presentAlbumViewControllerWithIndex:index];
             });
         }];
     } else {
-        [self presentAlbumViewControllerWithTitle:title];
+        [self presentAlbumViewControllerWithIndex:index];
     }
 }
 
-- (void)presentAlbumViewControllerWithTitle:(NSString *)title {
-    
+- (void)presentAlbumViewControllerWithIndex:(NSInteger)index {
     // 创建一个 QMUIAlbumViewController 实例用于呈现相簿列表
     FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
     albumController.fwNavigationBarStyle = FWNavigationBarStyleDefault;
     albumController.fwBackBarItem = FWIcon.backImage;
     albumController.albumControllerDelegate = self;
-    albumController.contentType = kAlbumContentType;
-    albumController.title = title;
-    if ([title isEqualToString:@"选择多张图片"]) {
+    albumController.title = [self.tableData fwObjectAtIndex:index];
+    if (index == 0) {
+        albumController.view.tag = SingleImagePickingTag;
+        albumController.contentType = FWAlbumContentTypeAll;
+    } else if (index == 1) {
         albumController.view.tag = MultipleImagePickingTag;
-    } else if ([title isEqualToString:@"调整界面"]) {
-        albumController.view.tag = ModifiedImagePickingTag;
         albumController.albumTableViewCellHeight = 70;
+        albumController.contentType = FWAlbumContentTypeAll;
+    } else if (index == 2) {
+        albumController.view.tag = OnlyImagePickingTag;
+        albumController.contentType = FWAlbumContentTypeOnlyPhoto;
     } else {
-        albumController.view.tag = NormalImagePickingTag;
+        albumController.view.tag = OnlyVideoPickingTag;
+        albumController.contentType = FWAlbumContentTypeOnlyVideo;
     }
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:albumController];
@@ -255,8 +257,7 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    NSString *title = [self.tableData objectAtIndex:indexPath.row];
-    [self authorizationPresentAlbumViewControllerWithTitle:title];
+    [self authorizationPresentAlbumViewControllerWithIndex:indexPath.row];
 }
 
 #pragma mark - <QMUIAlbumViewControllerDelegate>
@@ -266,8 +267,11 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerController.view.tag = albumController.view.tag;
-    if (albumController.view.tag == ModifiedImagePickingTag) {
+    if (albumController.view.tag == MultipleImagePickingTag) {
         imagePickerController.minimumImageWidth = 65;
+    }
+    if (albumController.view.tag == SingleImagePickingTag) {
+        imagePickerController.allowsMultipleSelection = NO;
     }
     return imagePickerController;
 }
@@ -279,23 +283,20 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 }
 
 - (FWImagePickerPreviewController *)imagePickerPreviewControllerForImagePickerController:(FWImagePickerController *)imagePickerController {
-    if (imagePickerController.view.tag == MultipleImagePickingTag) {
+    if (imagePickerController.view.tag == MultipleImagePickingTag ||
+        imagePickerController.view.tag == OnlyImagePickingTag ||
+        imagePickerController.view.tag == OnlyVideoPickingTag) {
         QDMultipleImagePickerPreviewViewController *imagePickerPreviewController = [[QDMultipleImagePickerPreviewViewController alloc] init];
         imagePickerPreviewController.delegate = self;
         imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
         imagePickerPreviewController.assetsGroup = imagePickerController.assetsGroup;
         imagePickerPreviewController.view.tag = imagePickerController.view.tag;
         return imagePickerPreviewController;
-    } else if (imagePickerController.view.tag == ModifiedImagePickingTag) {
-        FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
-        imagePickerPreviewController.delegate = self;
-        imagePickerPreviewController.view.tag = imagePickerController.view.tag;
-        imagePickerPreviewController.toolBarBackgroundColor = FWColorRgb(66, 66, 66);
-        return imagePickerPreviewController;
     } else {
         FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
         imagePickerPreviewController.delegate = self;
         imagePickerPreviewController.view.tag = imagePickerController.view.tag;
+        imagePickerPreviewController.toolBarBackgroundColor = FWColorRgb(66, 66, 66);
         return imagePickerPreviewController;
     }
 }
@@ -332,25 +333,9 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 
 #pragma mark - 业务方法
 
-- (void)startLoading {
-    [self fwShowLoading];
-}
-
-- (void)startLoadingWithText:(NSString *)text {
-    [self fwShowLoadingWithText:text];
-}
-
-- (void)stopLoading {
-    [self fwHideLoading];
-}
-
 - (void)showTipLabelWithText:(NSString *)text {
-    [self stopLoading];
+    [self fwHideLoading];
     [self fwShowMessageWithText:text];
-}
-
-- (void)hideTipLabel {
-    [self fwHideMessage];
 }
 
 - (void)sendImageWithImagesAssetArrayIfDownloadStatusSucceed:(NSMutableArray<FWAsset *> *)imagesAssetArray {
@@ -359,7 +344,7 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
         for (FWAsset *imageAsset in imagesAssetArray) {
             [imageURLs fwAddObject:[imageAsset originImage]];
         }
-        [self stopLoading];
+        [self fwHideLoading];
         [self fwShowImagePreviewWithImageURLs:imageURLs currentIndex:0 sourceView:nil];
         
         /*
@@ -378,7 +363,7 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
     for (FWAsset *asset in imagesAssetArray) {
         [FWImagePickerController requestImageAssetIfNeeded:asset completion:^(FWAssetDownloadStatus downloadStatus, NSError *error) {
             if (downloadStatus == FWAssetDownloadStatusDownloading) {
-                [weakSelf startLoadingWithText:@"从 iCloud 加载中"];
+                [weakSelf fwShowLoadingWithText:@"从 iCloud 加载中"];
             } else if (downloadStatus == FWAssetDownloadStatusSucceed) {
                 [weakSelf sendImageWithImagesAssetArrayIfDownloadStatusSucceed:imagesAssetArray];
             } else {
@@ -386,13 +371,6 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
             }
         }];
     }
-}
-
-- (void)setAvatarWithAvatarImage:(UIImage *)avatarImage {
-    [self stopLoading];
-    self.selectedAvatarImage = avatarImage;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
 }
 
 @end
