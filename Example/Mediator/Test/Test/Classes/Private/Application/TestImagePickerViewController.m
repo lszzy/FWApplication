@@ -254,6 +254,7 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSString *title = [self.tableData objectAtIndex:indexPath.row];
     [self authorizationPresentAlbumViewControllerWithTitle:title];
 }
@@ -353,12 +354,21 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
 }
 
 - (void)sendImageWithImagesAssetArrayIfDownloadStatusSucceed:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    if ([FWImagePickerHelper imageAssetsDownloaded:imagesAssetArray]) {
+    if ([FWImagePickerController imageAssetsDownloaded:imagesAssetArray]) {
+        NSMutableArray *imageURLs = [NSMutableArray array];
+        for (FWAsset *imageAsset in imagesAssetArray) {
+            [imageURLs fwAddObject:[imageAsset originImage]];
+        }
+        [self stopLoading];
+        [self fwShowImagePreviewWithImageURLs:imageURLs currentIndex:0 sourceView:nil];
+        
+        /*
         // 所有资源从 iCloud 下载成功，模拟发送图片到服务器
         // 显示发送中
         [self showTipLabelWithText:@"发送中"];
         // 使用 delay 模拟网络请求时长
         [self performSelector:@selector(showTipLabelWithText:) withObject:[NSString stringWithFormat:@"成功发送%@个资源", @([imagesAssetArray count])] afterDelay:1.5];
+         */
     }
 }
 
@@ -366,7 +376,7 @@ static FWAlbumContentType const kAlbumContentType = FWAlbumContentTypeAll;
     __weak __typeof(self)weakSelf = self;
     
     for (FWAsset *asset in imagesAssetArray) {
-        [FWImagePickerHelper requestImageAssetIfNeeded:asset completion:^(FWAssetDownloadStatus downloadStatus, NSError *error) {
+        [FWImagePickerController requestImageAssetIfNeeded:asset completion:^(FWAssetDownloadStatus downloadStatus, NSError *error) {
             if (downloadStatus == FWAssetDownloadStatusDownloading) {
                 [weakSelf startLoadingWithText:@"从 iCloud 加载中"];
             } else if (downloadStatus == FWAssetDownloadStatusSucceed) {

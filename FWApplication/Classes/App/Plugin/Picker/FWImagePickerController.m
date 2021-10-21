@@ -423,59 +423,6 @@
 
 @end
 
-#pragma mark - FWImagePickerHelper
-
-@implementation FWImagePickerHelper
-
-+ (BOOL)imageAssetsDownloaded:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    for (FWAsset *asset in imagesAssetArray) {
-        if (asset.downloadStatus != FWAssetDownloadStatusSucceed) {
-            return NO;
-        }
-    }
-    return YES;
-}
-
-+ (void)requestImageAssetIfNeeded:(FWAsset *)asset completion: (void (^)(FWAssetDownloadStatus downloadStatus, NSError *error))completion {
-    if (asset.downloadStatus != FWAssetDownloadStatusSucceed) {
-        
-        // 资源加载中
-        if (completion) {
-            completion(FWAssetDownloadStatusDownloading, nil);
-        }
-
-        [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
-            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-            
-            if (downloadSucceed) {
-                // 资源资源已经在本地或下载成功
-                [asset updateDownloadStatusWithDownloadResult:YES];
-                
-                if (completion) {
-                    completion(FWAssetDownloadStatusSucceed, nil);
-                }
-                
-            } else if ([info objectForKey:PHImageErrorKey]) {
-                // 下载错误
-                [asset updateDownloadStatusWithDownloadResult:NO];
-                
-                if (completion) {
-                    completion(FWAssetDownloadStatusFailed, [info objectForKey:PHImageErrorKey]);
-                }
-            }
-        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-            asset.downloadProgress = progress;
-        }];
-    } else {
-        // 资源资源已经在本地或下载成功
-        if (completion) {
-            completion(FWAssetDownloadStatusSucceed, nil);
-        }
-    }
-}
-
-@end
-
 #pragma mark - FWImagePickerPreviewController
 
 @implementation FWImagePickerPreviewController {
@@ -1183,11 +1130,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 #pragma mark - 按钮点击回调
 
 - (void)handleSendButtonClick:(id)sender {
-    if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
-        [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
-    }
-    [self.selectedImageAssetArray removeAllObjects];
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissViewControllerAnimated:YES completion:^() {
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+            [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
+        }
+        [self.selectedImageAssetArray removeAllObjects];
+    }];
 }
 
 - (void)handlePreviewButtonClick:(id)sender {
@@ -1325,6 +1273,53 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             }
         });
     }];
+}
+
++ (BOOL)imageAssetsDownloaded:(NSMutableArray<FWAsset *> *)imagesAssetArray {
+    for (FWAsset *asset in imagesAssetArray) {
+        if (asset.downloadStatus != FWAssetDownloadStatusSucceed) {
+            return NO;
+        }
+    }
+    return YES;
+}
+
++ (void)requestImageAssetIfNeeded:(FWAsset *)asset completion: (void (^)(FWAssetDownloadStatus downloadStatus, NSError *error))completion {
+    if (asset.downloadStatus != FWAssetDownloadStatusSucceed) {
+        
+        // 资源加载中
+        if (completion) {
+            completion(FWAssetDownloadStatusDownloading, nil);
+        }
+
+        [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
+            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+            
+            if (downloadSucceed) {
+                // 资源资源已经在本地或下载成功
+                [asset updateDownloadStatusWithDownloadResult:YES];
+                
+                if (completion) {
+                    completion(FWAssetDownloadStatusSucceed, nil);
+                }
+                
+            } else if ([info objectForKey:PHImageErrorKey]) {
+                // 下载错误
+                [asset updateDownloadStatusWithDownloadResult:NO];
+                
+                if (completion) {
+                    completion(FWAssetDownloadStatusFailed, [info objectForKey:PHImageErrorKey]);
+                }
+            }
+        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+            asset.downloadProgress = progress;
+        }];
+    } else {
+        // 资源资源已经在本地或下载成功
+        if (completion) {
+            completion(FWAssetDownloadStatusSucceed, nil);
+        }
+    }
 }
 
 @end
