@@ -8,187 +8,13 @@
 
 #import "TestImagePickerViewController.h"
 
-@class QDMultipleImagePickerPreviewViewController;
-
-@protocol QDMultipleImagePickerPreviewViewControllerDelegate <FWImagePickerPreviewControllerDelegate>
-
-@required
-- (void)imagePickerPreviewController:(QDMultipleImagePickerPreviewViewController *)imagePickerPreviewController sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray;
-
-@end
-
-@interface QDMultipleImagePickerPreviewViewController : FWImagePickerPreviewController
-
-@property(nonatomic, weak) id<QDMultipleImagePickerPreviewViewControllerDelegate> delegate;
-@property(nonatomic, strong) UILabel *imageCountLabel;
-@property(nonatomic, strong) FWAssetGroup *assetsGroup;
-@property(nonatomic, assign) BOOL shouldUseOriginImage;
-
-@end
-
-#define ImageCountLabelSize CGSizeMake(18, 18)
-
-@interface QDMultipleImagePickerPreviewViewController ()
-
-@property(nonatomic, strong) UIButton *sendButton;
-@property(nonatomic, strong) UIButton *originImageCheckboxButton;
-@property(nonatomic, strong) UIView *bottomToolBarView;
-
-@end
-
-@implementation QDMultipleImagePickerPreviewViewController
-
-@dynamic delegate;
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    self.bottomToolBarView = [[UIView alloc] init];
-    self.bottomToolBarView.backgroundColor = self.toolBarBackgroundColor;
-    [self.view addSubview:self.bottomToolBarView];
-    
-    self.sendButton = [[UIButton alloc] init];
-    self.sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    [self.sendButton setTitle:@"发送" forState:UIControlStateNormal];
-    self.sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.sendButton sizeToFit];
-    [self.sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomToolBarView addSubview:self.sendButton];
-    
-    _imageCountLabel = [[UILabel alloc] init];
-    _imageCountLabel.backgroundColor = self.toolBarTintColor;
-    _imageCountLabel.textColor = UIColor.redColor;
-    _imageCountLabel.font = [UIFont systemFontOfSize:12];
-    _imageCountLabel.textAlignment = NSTextAlignmentCenter;
-    _imageCountLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _imageCountLabel.layer.masksToBounds = YES;
-    _imageCountLabel.layer.cornerRadius = ImageCountLabelSize.width / 2;
-    _imageCountLabel.hidden = YES;
-    [self.bottomToolBarView addSubview:_imageCountLabel];
-    
-    self.originImageCheckboxButton = [[UIButton alloc] init];
-    self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckImage forState:UIControlStateNormal];
-    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected];
-    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
-    [self.originImageCheckboxButton setTitle:@"原图" forState:UIControlStateNormal];
-    [self.originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
-    [self.originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
-    [self.originImageCheckboxButton sizeToFit];
-    self.originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
-    [self.originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomToolBarView addSubview:self.originImageCheckboxButton];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
-    if ([self.selectedImageAssetArray count] > 0) {
-        NSUInteger selectedCount = [self.selectedImageAssetArray count];
-        _imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
-        _imageCountLabel.hidden = NO;
-    } else {
-        _imageCountLabel.hidden = YES;
-    }
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    CGFloat bottomToolBarPaddingHorizontal = 12.0f;
-    CGFloat bottomToolBarContentHeight = 44;
-    CGFloat bottomToolBarHeight = bottomToolBarContentHeight + self.view.safeAreaInsets.bottom;
-    self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
-    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - bottomToolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
-    _imageCountLabel.frame = CGRectMake(CGRectGetMinX(self.sendButton.frame) - 5 - ImageCountLabelSize.width, CGRectGetMinY(self.sendButton.frame) + (CGRectGetHeight(self.sendButton.frame) - ImageCountLabelSize.height) / 2.0, ImageCountLabelSize.width, ImageCountLabelSize.height);
-    self.originImageCheckboxButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
-}
-
-- (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
-    [super setToolBarTintColor:toolBarTintColor];
-    self.bottomToolBarView.tintColor = toolBarTintColor;
-    _imageCountLabel.backgroundColor = toolBarTintColor;
-    _imageCountLabel.textColor = [UIColor redColor];
-}
-
-- (void)singleTouchInZoomingImageView:(FWZoomImageView *)zoomImageView location:(CGPoint)location {
-    [super singleTouchInZoomingImageView:zoomImageView location:location];
-    self.bottomToolBarView.hidden = !self.bottomToolBarView.hidden;
-}
-
-- (void)zoomImageView:(FWZoomImageView *)imageView didHideVideoToolbar:(BOOL)didHide {
-    [super zoomImageView:imageView didHideVideoToolbar:didHide];
-    self.bottomToolBarView.hidden = didHide;
-}
-
-- (void)handleSendButtonClick:(id)sender {
-    [self.navigationController dismissViewControllerAnimated:YES completion:^(void) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:sendImageWithImagesAssetArray:)]) {
-            if (self.selectedImageAssetArray.count == 0) {
-                // 如果没选中任何一张，则点击发送按钮直接发送当前这张大图
-                FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
-                [self.selectedImageAssetArray addObject:currentAsset];
-            }
-            [self.delegate imagePickerPreviewController:self sendImageWithImagesAssetArray:self.selectedImageAssetArray];
-        }
-    }];
-}
-
-- (void)handleOriginImageCheckboxButtonClick:(UIButton *)button {
-    if (button.selected) {
-        button.selected = NO;
-        [button setTitle:@"原图" forState:UIControlStateNormal];
-        [button sizeToFit];
-        [self.bottomToolBarView setNeedsLayout];
-    } else {
-        button.selected = YES;
-        [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
-        if (!self.checkboxButton.selected) {
-            [self.checkboxButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-        }
-
-    }
-    self.shouldUseOriginImage = button.selected;
-}
-
-- (void)updateOriginImageCheckboxButtonWithIndex:(NSInteger)index {
-    FWAsset *asset = self.imagesAssetArray[index];
-    if (asset.assetType == FWAssetTypeAudio || asset.assetType == FWAssetTypeVideo) {
-        self.originImageCheckboxButton.hidden = YES;
-    } else {
-        self.originImageCheckboxButton.hidden = NO;
-        if (self.originImageCheckboxButton.selected) {
-            [asset assetSize:^(long long size) {
-                [self.originImageCheckboxButton setTitle:[NSString stringWithFormat:@"原图(%@)", [NSString fwSizeString:size]] forState:UIControlStateNormal];
-                [self.originImageCheckboxButton sizeToFit];
-                [self.bottomToolBarView setNeedsLayout];
-            }];
-        }
-    }
-}
-
-#pragma mark - <FWImagePreviewViewDelegate>
-
-- (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView renderZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
-    [super imagePreviewView:imagePreviewView renderZoomImageView:zoomImageView atIndex:index];
-    UIEdgeInsets insets = zoomImageView.videoToolbarMargins;
-    insets.bottom = [FWZoomImageView appearance].videoToolbarMargins.bottom + CGRectGetHeight(self.bottomToolBarView.frame) - imagePreviewView.safeAreaInsets.bottom;
-    zoomImageView.videoToolbarMargins = insets;// videToolbarMargins 是利用 UIAppearance 赋值的，也即意味着要在 addSubview 之后才会被赋值，而在 renderZoomImageView 里，zoomImageView 可能尚未被添加到 view 层级里，所以无法通过 zoomImageView.videoToolbarMargins 获取到原来的值，因此只能通过 [FWZoomImageView appearance] 的方式获取
-}
-
-- (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView willScrollHalfToIndex:(NSInteger)index {
-    [super imagePreviewView:imagePreviewView willScrollHalfToIndex:index];
-    [self updateOriginImageCheckboxButtonWithIndex:index];
-}
-
-@end
-
 #define MaxSelectedImageCount 9
 #define SingleImagePickingTag 1045
 #define MultipleImagePickingTag 1046
 #define OnlyImagePickingTag 1047
 #define OnlyVideoPickingTag 1048
 
-@interface TestImagePickerViewController () <FWTableViewController, FWImageAlbumControllerDelegate, FWImagePickerControllerDelegate, QDMultipleImagePickerPreviewViewControllerDelegate>
+@interface TestImagePickerViewController () <FWTableViewController, FWImageAlbumControllerDelegate, FWImagePickerControllerDelegate, FWImagePickerPreviewControllerDelegate>
 
 @end
 
@@ -286,10 +112,9 @@
     if (imagePickerController.view.tag == MultipleImagePickingTag ||
         imagePickerController.view.tag == OnlyImagePickingTag ||
         imagePickerController.view.tag == OnlyVideoPickingTag) {
-        QDMultipleImagePickerPreviewViewController *imagePickerPreviewController = [[QDMultipleImagePickerPreviewViewController alloc] init];
+        FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
         imagePickerPreviewController.delegate = self;
         imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
-        imagePickerPreviewController.assetsGroup = imagePickerController.assetsGroup;
         imagePickerPreviewController.view.tag = imagePickerController.view.tag;
         return imagePickerPreviewController;
     } else {
@@ -313,21 +138,20 @@
 
 // 更新选中的图片数量
 - (void)updateImageCountLabelForPreviewView:(FWImagePickerPreviewController *)imagePickerPreviewController {
-    if (imagePickerPreviewController.view.tag == MultipleImagePickingTag) {
-        QDMultipleImagePickerPreviewViewController *customImagePickerPreviewViewController = (QDMultipleImagePickerPreviewViewController *)imagePickerPreviewController;
+    if (imagePickerPreviewController.view.tag == MultipleImagePickingTag ||
+        imagePickerPreviewController.view.tag == OnlyImagePickingTag ||
+        imagePickerPreviewController.view.tag == OnlyVideoPickingTag) {
         NSUInteger selectedCount = [imagePickerPreviewController.selectedImageAssetArray count];
         if (selectedCount > 0) {
-            customImagePickerPreviewViewController.imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
-            customImagePickerPreviewViewController.imageCountLabel.hidden = NO;
+            imagePickerPreviewController.imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
+            imagePickerPreviewController.imageCountLabel.hidden = NO;
         } else {
-            customImagePickerPreviewViewController.imageCountLabel.hidden = YES;
+            imagePickerPreviewController.imageCountLabel.hidden = YES;
         }
     }
 }
 
-#pragma mark - <QDMultipleImagePickerPreviewViewControllerDelegate>
-
-- (void)imagePickerPreviewController:(QDMultipleImagePickerPreviewViewController *)imagePickerPreviewController sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
+- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(nonnull NSMutableArray<FWAsset *> *)imagesAssetArray {
     [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
 

@@ -144,6 +144,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
+/// 完成选中图片回调
+- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray;
 /// 取消选择图片后被调用
 - (void)imagePickerPreviewControllerDidCancel:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 即将选中图片
@@ -168,6 +170,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIView *topToolBarView;
 @property(nullable, nonatomic, strong, readonly) FWNavigationButton *backButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *checkboxButton;
+
+@property(nullable, nonatomic, strong, readonly) UIView *bottomToolBarView;
+@property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
+@property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
+@property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
+@property(nonatomic, assign) BOOL shouldUseOriginImage;
 
 /// 由于组件需要通过本地图片的 FWAsset 对象读取图片的详细信息，因此这里的需要传入的是包含一个或多个 FWAsset 对象的数组
 @property(nullable, nonatomic, strong) NSMutableArray<FWAsset *> *imagesAssetArray;
