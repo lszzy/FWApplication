@@ -8,6 +8,7 @@
  */
 
 #import "FWImagePickerController.h"
+#import "FWImageCropController.h"
 #import "FWAdaptive.h"
 #import "FWToolkit.h"
 #import "FWBlock.h"
@@ -470,6 +471,15 @@
     self.bottomToolBarView.backgroundColor = self.toolBarBackgroundColor;
     [self.view addSubview:self.bottomToolBarView];
     
+    _editButton = [[UIButton alloc] init];
+    self.editButton.hidden = !self.showsEditButton;
+    self.editButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+    [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
+    self.editButton.titleLabel.font = [UIFont systemFontOfSize:16];
+    [self.editButton sizeToFit];
+    [self.editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomToolBarView addSubview:self.editButton];
+    
     _sendButton = [[UIButton alloc] init];
     self.sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
     [self.sendButton setTitle:@"发送" forState:UIControlStateNormal];
@@ -546,7 +556,13 @@
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
     self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - bottomToolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
     _imageCountLabel.frame = CGRectMake(CGRectGetMinX(self.sendButton.frame) - 5 - imageCountLabelSize.width, CGRectGetMinY(self.sendButton.frame) + (CGRectGetHeight(self.sendButton.frame) - imageCountLabelSize.height) / 2.0, imageCountLabelSize.width, imageCountLabelSize.height);
-    self.originImageCheckboxButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+    
+    self.editButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
+    if (self.showsEditButton) {
+        self.originImageCheckboxButton.fwOrigin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+    } else {
+        self.originImageCheckboxButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+    }
 }
 
 - (BOOL)preferredNavigationBarHidden {
@@ -569,6 +585,11 @@
     self.bottomToolBarView.tintColor = toolBarTintColor;
     _imageCountLabel.backgroundColor = toolBarTintColor;
     _imageCountLabel.textColor = [UIColor redColor];
+}
+
+- (void)setShowsEditButton:(BOOL)showsEditButton {
+    _showsEditButton = showsEditButton;
+    self.editButton.hidden = !showsEditButton;
 }
 
 - (void)setDownloadStatus:(FWAssetDownloadStatus)downloadStatus {
@@ -691,6 +712,35 @@
     }
 }
 
+- (void)handleEditButtonClick:(id)sender {
+    FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
+    UIImage *image;
+    if (currentAsset.requestObject && [currentAsset.requestObject isKindOfClass:[UIImage class]]) {
+        image = (UIImage *)currentAsset.requestObject;
+    } else {
+        image = self.shouldUseOriginImage ? currentAsset.originImage : currentAsset.previewImage;
+    }
+    if (!image) return;
+    
+    FWImageCropController *cropController;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageCropControllerForPreviewController:image:)]) {
+        cropController = [self.delegate imageCropControllerForPreviewController:self image:image];
+    } else {
+        cropController = [[FWImageCropController alloc] initWithImage:image];
+    }
+    __weak __typeof__(self) self_weak_ = self;
+    cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
+        __typeof__(self) self = self_weak_;
+        currentAsset.requestObject = image;
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    };
+    cropController.onDidFinishCancelled = ^(BOOL isFinished) {
+        __typeof__(self) self = self_weak_;
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    };
+    [self presentViewController:cropController animated:NO completion:nil];
+}
+
 - (void)handleSendButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^(void) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
@@ -725,6 +775,9 @@
     FWAsset *asset = self.imagesAssetArray[index];
     if (asset.assetType == FWAssetTypeAudio || asset.assetType == FWAssetTypeVideo) {
         self.originImageCheckboxButton.hidden = YES;
+        if (self.showsEditButton) {
+            self.editButton.hidden = YES;
+        }
     } else {
         self.originImageCheckboxButton.hidden = NO;
         if (self.originImageCheckboxButton.selected) {
@@ -734,7 +787,14 @@
                 [self.bottomToolBarView setNeedsLayout];
             }];
         }
+        if (self.showsEditButton) {
+            self.editButton.hidden = NO;
+        }
     }
+}
+
+- (void)updateSelectedCollectionView {
+    
 }
 
 #pragma mark - Request Image
@@ -745,6 +805,11 @@
     // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
+    if (imageAsset.requestObject && [imageAsset.requestObject isKindOfClass:[UIImage class]]) {
+        imageView.image = (UIImage *)imageAsset.requestObject;
+        return;
+    }
+    
     // 获取资源图片的预览图，这是一张适合当前设备屏幕大小的图片，最终展示时把图片交给组件控制最终展示出来的大小。
     // 系统相册本质上也是这么处理的，因此无论是系统相册，还是这个系列组件，由始至终都没有显示照片原图，
     // 这也是系统相册能加载这么快的原因。

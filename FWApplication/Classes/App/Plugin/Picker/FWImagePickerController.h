@@ -136,6 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImagePickerPreviewController
 
 @class FWNavigationButton;
+@class FWImageCropController;
 @class FWImagePickerController;
 @class FWImagePreviewController;
 @class FWImagePickerPreviewController;
@@ -156,6 +157,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willUncheckImageAtIndex:(NSInteger)index;
 /// 已经取消选中图片
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didUncheckImageAtIndex:(NSInteger)index;
+/// 自定义图片裁剪控制器，启用编辑时生效，未实现时使用默认配置
+- (FWImageCropController *)imageCropControllerForPreviewController:(FWImagePickerPreviewController *)previewController image:(UIImage *)image;
 
 @end
 
@@ -173,9 +176,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nullable, nonatomic, strong, readonly) UIView *bottomToolBarView;
 @property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
+@property(nullable, nonatomic, strong, readonly) UIButton *editButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
 @property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
 @property(nonatomic, assign) BOOL shouldUseOriginImage;
+@property(nonatomic, assign) BOOL showsEditButton;
 
 /// 由于组件需要通过本地图片的 FWAsset 对象读取图片的详细信息，因此这里的需要传入的是包含一个或多个 FWAsset 对象的数组
 @property(nullable, nonatomic, strong) NSMutableArray<FWAsset *> *imagesAssetArray;

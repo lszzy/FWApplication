@@ -112,6 +112,7 @@
         FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
         imagePickerPreviewController.delegate = self;
         imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
+        imagePickerPreviewController.showsEditButton = YES;
         imagePickerPreviewController.view.tag = imagePickerController.view.tag;
         return imagePickerPreviewController;
     } else {
@@ -163,7 +164,7 @@
     if ([FWImagePickerController imageAssetsDownloaded:imagesAssetArray]) {
         NSMutableArray *imageURLs = [NSMutableArray array];
         for (FWAsset *imageAsset in imagesAssetArray) {
-            [imageURLs fwAddObject:[imageAsset originImage]];
+            [imageURLs fwAddObject:imageAsset.requestObject ?: [imageAsset originImage]];
         }
         [self fwHideLoading];
         [self fwShowImagePreviewWithImageURLs:imageURLs currentIndex:0 sourceView:nil];
