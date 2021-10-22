@@ -162,6 +162,8 @@ extern const CGFloat FWImagePreviewCornerRadiusAutomaticDimension;
 /// 页数标签需要更新，子类可重写
 - (void)updatePageLabel;
 
+/// 处理单击关闭事件，子类可重写
+- (void)dismissingWhenTapped:(FWZoomImageView *)zoomImageView;
 /// 触发拖动手势或dismiss时切换子视图显示或隐藏，子类可重写
 - (void)dismissingGestureChanged:(BOOL)isHidden;
 

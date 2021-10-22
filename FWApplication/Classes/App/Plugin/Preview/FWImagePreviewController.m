@@ -47,7 +47,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 @property(nonatomic, assign) BOOL isChangingCollectionViewBounds;
 @property(nonatomic, assign) BOOL isChangingIndexWhenScrolling;
 @property(nonatomic, assign) CGFloat previousIndexWhenScrolling;
-@property(nonatomic, weak) id<FWImagePreviewViewDelegate> controllerDelegate;
+@property(nonatomic, weak) FWImagePreviewController *previewController;
 
 @end
 
@@ -113,9 +113,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)setCurrentImageIndex:(NSInteger)currentImageIndex animated:(BOOL)animated {
     _currentImageIndex = currentImageIndex;
     _isChangingIndexWhenScrolling = NO;
-    if ([self.controllerDelegate respondsToSelector:@selector(imagePreviewView:willScrollHalfToIndex:)]) {
-        [self.controllerDelegate imagePreviewView:self willScrollHalfToIndex:currentImageIndex];
-    }
+    [self.previewController updatePageLabel];
     
     [self.collectionView reloadData];
     if (currentImageIndex < [self.collectionView numberOfItemsInSection:0]) {
@@ -258,9 +256,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             // 不调用 setter，避免又走一次 scrollToItem
             _currentImageIndex = index;
             _isChangingIndexWhenScrolling = YES;
-            if ([self.controllerDelegate respondsToSelector:@selector(imagePreviewView:willScrollHalfToIndex:)]) {
-                [self.controllerDelegate imagePreviewView:self willScrollHalfToIndex:index];
-            }
+            [self.previewController updatePageLabel];
             
             if ([self.delegate respondsToSelector:@selector(imagePreviewView:willScrollHalfToIndex:)]) {
                 [self.delegate imagePreviewView:self willScrollHalfToIndex:index];
@@ -289,9 +285,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 #pragma mark - <FWZoomImageViewDelegate>
 
 - (void)singleTouchInZoomingImageView:(FWZoomImageView *)imageView location:(CGPoint)location {
-    if ([self.controllerDelegate respondsToSelector:_cmd]) {
-        [self.controllerDelegate singleTouchInZoomingImageView:imageView location:location];
-    }
+    [self.previewController dismissingWhenTapped:imageView];
     if ([self.delegate respondsToSelector:_cmd]) {
         [self.delegate singleTouchInZoomingImageView:imageView location:location];
     }
@@ -328,7 +322,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 
-@interface FWImagePreviewController () <FWImagePreviewViewDelegate>
+@interface FWImagePreviewController ()
 
 @property(nonatomic, strong) UIPanGestureRecognizer *dismissingGesture;
 @property(nonatomic, assign) CGPoint gestureBeganLocation;
@@ -377,7 +371,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 - (FWImagePreviewView *)imagePreviewView {
     if (!_imagePreviewView) {
         _imagePreviewView = [[FWImagePreviewView alloc] initWithFrame:self.isViewLoaded ? self.view.bounds : CGRectZero];
-        _imagePreviewView.controllerDelegate = self;
+        _imagePreviewView.previewController = self;
     }
     return _imagePreviewView;
 }
@@ -588,6 +582,20 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
     self.view.backgroundColor = self.backgroundColor;
 }
 
+- (void)dismissingWhenTapped:(FWZoomImageView *)zoomImageView {
+    if (!self.fwIsPresented) return;
+    
+    BOOL shouldDismiss = NO;
+    if (zoomImageView.videoPlayerItem) {
+        if (self.dismissingWhenTappedVideo) shouldDismiss = YES;
+    } else {
+        if (self.dismissingWhenTappedImage) shouldDismiss = YES;
+    }
+    if (shouldDismiss) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 - (void)dismissingGestureChanged:(BOOL)isHidden {
     FWZoomImageView *zoomImageView = self.imagePreviewView.currentZoomImageView;
     if (zoomImageView.videoPlayerItem) {
@@ -605,26 +613,6 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 {
     [self dismissingGestureChanged:YES];
     [super dismissViewControllerAnimated:animated completion:completion];
-}
-
-#pragma mark - FWImagePreviewViewDelegate
-
-- (void)singleTouchInZoomingImageView:(FWZoomImageView *)zoomImageView location:(CGPoint)location {
-    if (!self.fwIsPresented) return;
-    
-    BOOL shouldDismiss = NO;
-    if (zoomImageView.videoPlayerItem) {
-        if (self.dismissingWhenTappedVideo) shouldDismiss = YES;
-    } else {
-        if (self.dismissingWhenTappedImage) shouldDismiss = YES;
-    }
-    if (shouldDismiss) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
-- (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView willScrollHalfToIndex:(NSInteger)index {
-    [self updatePageLabel];
 }
 
 #pragma mark - <UIViewControllerTransitioningDelegate>

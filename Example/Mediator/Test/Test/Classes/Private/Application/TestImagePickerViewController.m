@@ -93,9 +93,6 @@
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerController.view.tag = albumController.view.tag;
-    if (albumController.view.tag == MultipleImagePickingTag) {
-        imagePickerController.minimumImageWidth = 65;
-    }
     if (albumController.view.tag == SingleImagePickingTag) {
         imagePickerController.allowsMultipleSelection = NO;
     }
