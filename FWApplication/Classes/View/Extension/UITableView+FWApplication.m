@@ -13,6 +13,15 @@
 
 @implementation UITableView (FWApplication)
 
++ (void)fwResetTableStyle
+{
+#if __IPHONE_15_0
+    if (@available(iOS 15.0, *)) {
+        UITableView.appearance.sectionHeaderTopPadding = 0;
+    }
+#endif
+}
+
 - (void)fwResetGroupedStyle
 {
     self.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];

@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 // UITableView分类(Plain有悬停，Group无悬停)
 @interface UITableView (FWApplication)
 
+/// 全局清空TableView默认多余边距
++ (void)fwResetTableStyle;
+
 /// 清空Grouped样式默认多余边距，注意CGFLOAT_MIN才会生效，0不会生效
 - (void)fwResetGroupedStyle;
 
