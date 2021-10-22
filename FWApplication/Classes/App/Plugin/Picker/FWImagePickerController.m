@@ -930,20 +930,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     // 由于被选中的图片 selectedImageAssetArray 是 property，所以可以由外部改变，
     // 因此 viewWillAppear 时检查一下图片被选中的情况，并刷新 collectionView
     if (self.allowsMultipleSelection) {
-        // 只有允许多选，即底部工具栏显示时，需要重新设置底部工具栏的元素
-        NSInteger selectedImageCount = [self.selectedImageAssetArray count];
-        if (selectedImageCount > 0) {
-            // 如果有图片被选择，则预览按钮和发送按钮可点击，并刷新当前被选中的图片数量
-            self.previewButton.enabled = YES;
-            self.sendButton.enabled = YES;
-            self.imageCountLabel.text = [NSString stringWithFormat:@"%@", @(selectedImageCount)];
-            self.imageCountLabel.hidden = NO;
-        } else {
-            // 如果没有任何图片被选择，则预览和发送按钮不可点击，并且隐藏显示图片数量的 Label
-            self.previewButton.enabled = NO;
-            self.sendButton.enabled = NO;
-            self.imageCountLabel.hidden = YES;
-        }
+        [self updateImageCountAndCheckLimited];
     }
     [self.collectionView reloadData];
 }
@@ -1126,7 +1113,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _sendButton.enabled = NO;
         _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        [_sendButton setTitleColor:[UIColor colorWithRed:124/255.f green:124/255.f blue:124/255.f alpha:1.0] forState:UIControlStateNormal];
+        [_sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_sendButton setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
         [_sendButton setTitle:@"发送" forState:UIControlStateNormal];
         _sendButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
@@ -1158,7 +1145,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _imageCountLabel = [[UILabel alloc] init];
         _imageCountLabel.userInteractionEnabled = NO;// 不要影响 sendButton 的事件
         _imageCountLabel.backgroundColor = UIColor.clearColor;
-        _imageCountLabel.textColor = UIColor.whiteColor;
+        _imageCountLabel.textColor = UIColor.blackColor;
         _imageCountLabel.font = [UIFont systemFontOfSize:12];
         _imageCountLabel.textAlignment = NSTextAlignmentCenter;
         _imageCountLabel.lineBreakMode = NSLineBreakByCharWrapping;
