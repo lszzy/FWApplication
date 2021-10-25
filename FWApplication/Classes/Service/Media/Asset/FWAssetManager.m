@@ -176,6 +176,41 @@ static NSString * const kAssetInfoSize = @"size";
     }
 }
 
+- (NSInteger)requestVideoURLWithOutputURL:(NSURL *)outputURL completion:(void (^)(NSURL * _Nullable, NSDictionary<NSString *,id> * _Nullable))completion withProgressHandler:(PHAssetVideoProgressHandler)phProgressHandler {
+    if ([[PHCachingImageManager class] instancesRespondToSelector:@selector(requestExportSessionForVideo:options:exportPreset:resultHandler:)]) {
+        PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
+        videoRequestOptions.networkAccessAllowed = YES; // 允许访问网络
+        videoRequestOptions.progressHandler = phProgressHandler;
+        return [[[FWAssetManager sharedInstance] phCachingImageManager] requestExportSessionForVideo:_phAsset options:videoRequestOptions exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+            if (!exportSession) {
+                if (completion) {
+                    completion(nil, info);
+                }
+                return;
+            }
+            
+            exportSession.outputURL = outputURL;
+            exportSession.outputFileType = AVFileTypeMPEG4;
+            [exportSession exportAsynchronouslyWithCompletionHandler:^{
+                if (exportSession.status == AVAssetExportSessionStatusCompleted) {
+                    if (completion) {
+                        completion(outputURL, info);
+                    }
+                } else {
+                    if (completion) {
+                        completion(nil, info);
+                    }
+                }
+            }];
+        }];
+    } else {
+        if (completion) {
+            completion(nil, nil);
+        }
+        return 0;
+    }
+}
+
 - (void)requestImageData:(void (^)(NSData *imageData, NSDictionary<NSString *, id> *info, BOOL isGIF, BOOL isHEIC))completion {
     if (self.assetType != FWAssetTypeImage) {
         if (completion) {
