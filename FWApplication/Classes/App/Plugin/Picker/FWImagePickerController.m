@@ -21,6 +21,7 @@
 #import "FWImagePlugin.h"
 #import "FWSwizzle.h"
 #import "FWAppBundle.h"
+#import <objc/runtime.h>
 
 #pragma mark - FWImageAlbumTableCell
 
@@ -427,6 +428,44 @@
 
 #pragma mark - FWImagePickerPreviewController
 
+@interface FWAsset (FWImagePickerPreviewController)
+
+@property(nonatomic, strong) UIImage *croppedImage;
+@property(nonatomic, assign) CGRect croppedRect;
+@property(nonatomic, assign) NSInteger croppedAngle;
+
+@end
+
+@implementation FWAsset (FWImagePickerPreviewController)
+
+- (UIImage *)croppedImage {
+    return objc_getAssociatedObject(self, @selector(croppedImage));
+}
+
+- (void)setCroppedImage:(UIImage *)croppedImage {
+    objc_setAssociatedObject(self, @selector(croppedImage), croppedImage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGRect)croppedRect {
+    NSValue *value = objc_getAssociatedObject(self, @selector(croppedRect));
+    return [value CGRectValue];
+}
+
+- (void)setCroppedRect:(CGRect)croppedRect {
+    objc_setAssociatedObject(self, @selector(croppedRect), [NSValue valueWithCGRect:croppedRect], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSInteger)croppedAngle {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(croppedAngle));
+    return [value integerValue];
+}
+
+- (void)setCroppedAngle:(NSInteger)croppedAngle {
+    objc_setAssociatedObject(self, @selector(croppedAngle), @(croppedAngle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+
 @implementation FWImagePickerPreviewController {
     BOOL _singleCheckMode;
 }
@@ -715,12 +754,7 @@
 
 - (void)handleEditButtonClick:(id)sender {
     FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
-    UIImage *image;
-    if (currentAsset.editedImage) {
-        image = currentAsset.editedImage;
-    } else {
-        image = self.shouldUseOriginImage ? currentAsset.originImage : currentAsset.previewImage;
-    }
+    UIImage *image = self.shouldUseOriginImage ? currentAsset.originImage : currentAsset.previewImage;
     if (!image) return;
     
     FWImageCropController *cropController;
@@ -729,10 +763,16 @@
     } else {
         cropController = [[FWImageCropController alloc] initWithImage:image];
     }
+    if (currentAsset.croppedImage) {
+        cropController.imageCropFrame = currentAsset.croppedRect;
+        cropController.angle = currentAsset.croppedAngle;
+    }
     __weak __typeof__(self) self_weak_ = self;
     cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
         __typeof__(self) self = self_weak_;
-        currentAsset.editedImage = image;
+        currentAsset.croppedImage = image;
+        currentAsset.croppedRect = cropRect;
+        currentAsset.croppedAngle = angle;
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     };
     cropController.onDidFinishCancelled = ^(BOOL isFinished) {
@@ -806,8 +846,8 @@
     // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
-    if (imageAsset.editedImage) {
-        imageView.image = imageAsset.editedImage;
+    if (imageAsset.croppedImage) {
+        imageView.image = imageAsset.croppedImage;
         return;
     }
     
@@ -1469,9 +1509,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 });
             } withProgressHandler:nil];
         } else if (asset.assetType == FWAssetTypeImage) {
-            if (asset.editedImage) {
+            if (asset.croppedImage) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [objects addObject:asset.editedImage];
+                    [objects addObject:asset.croppedImage];
                     [results addObject:@{}];
                     
                     finishCount += 1;
