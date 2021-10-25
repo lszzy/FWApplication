@@ -160,39 +160,14 @@
     [self fwShowMessageWithText:text];
 }
 
-- (void)sendImageWithImagesAssetArrayIfDownloadStatusSucceed:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    if ([FWImagePickerController imageAssetsDownloaded:imagesAssetArray]) {
-        NSMutableArray *imageURLs = [NSMutableArray array];
-        for (FWAsset *imageAsset in imagesAssetArray) {
-            [imageURLs fwAddObject:imageAsset.editedImage ?: [imageAsset originImage]];
-        }
-        [self fwHideLoading];
-        [self fwShowImagePreviewWithImageURLs:imageURLs currentIndex:0 sourceView:nil];
-        
-        /*
-        // 所有资源从 iCloud 下载成功，模拟发送图片到服务器
-        // 显示发送中
-        [self showTipLabelWithText:@"发送中"];
-        // 使用 delay 模拟网络请求时长
-        [self performSelector:@selector(showTipLabelWithText:) withObject:[NSString stringWithFormat:@"成功发送%@个资源", @([imagesAssetArray count])] afterDelay:1.5];
-         */
-    }
-}
-
 - (void)sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    __weak __typeof(self)weakSelf = self;
-    
-    for (FWAsset *asset in imagesAssetArray) {
-        [FWImagePickerController requestImageAssetIfNeeded:asset completion:^(FWAssetDownloadStatus downloadStatus, NSError *error) {
-            if (downloadStatus == FWAssetDownloadStatusDownloading) {
-                [weakSelf fwShowLoadingWithText:@"从 iCloud 加载中"];
-            } else if (downloadStatus == FWAssetDownloadStatusSucceed) {
-                [weakSelf sendImageWithImagesAssetArrayIfDownloadStatusSucceed:imagesAssetArray];
-            } else {
-                [weakSelf showTipLabelWithText:@"iCloud 下载错误，请重新选图"];
-            }
-        }];
-    }
+    [self fwShowLoading];
+    FWWeakifySelf();
+    [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:0 completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+        FWStrongifySelf();
+        [self fwHideLoading];
+        [self fwShowImagePreviewWithImageURLs:objects currentIndex:0 sourceView:nil];
+    }];
 }
 
 @end

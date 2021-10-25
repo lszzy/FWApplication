@@ -54,7 +54,6 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
 @property(nonatomic, assign) double downloadProgress; // 从 iCloud 下载资源大图的进度
 @property(nonatomic, assign) NSInteger requestID; // 从 iCloud 请求获得资源的大图的请求 ID
 @property(nonatomic, copy, readonly) NSString *identifier;// Asset 的标识，每个 FWAsset 的 identifier 都不同。只要两个 FWAsset 的 identifier 相同则认为它们是同一个 asset
-@property(nonatomic, strong, nullable) id requestObject; // 请求结果对象缓存，默认nil
 @property(nonatomic, strong, nullable) UIImage *editedImage; // 编辑过的图像，默认nil
 
 /// Asset 的原图（包含系统相册“编辑”功能处理后的效果）

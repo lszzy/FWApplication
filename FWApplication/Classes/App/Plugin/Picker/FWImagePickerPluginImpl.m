@@ -125,7 +125,7 @@
         [result.itemProvider loadFileRepresentationForTypeIdentifier:(NSString *)kUTTypeMovie completionHandler:^(NSURL * _Nullable url, NSError * _Nullable error) {
             NSURL *fileURL = nil;
             if (url) {
-                NSString *filePath = [PHPickerViewController fwPickerControllerVideoCachePath];
+                NSString *filePath = [PHPhotoLibrary fwPickerControllerVideoCachePath];
                 [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
                 filePath = [[filePath stringByAppendingPathComponent:[url.absoluteString fwMd5Encode]] stringByAppendingPathExtension:url.pathExtension];
                 fileURL = [NSURL fileURLWithPath:filePath];
@@ -247,12 +247,6 @@
 
 @implementation PHPickerViewController (FWImagePickerPluginImpl)
 
-+ (NSString *)fwPickerControllerVideoCachePath
-{
-    NSString *videoPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"FWImagePicker"];
-    return videoPath;
-}
-
 + (instancetype)fwPickerControllerWithSelectionLimit:(NSInteger)selectionLimit
                                           completion:(nonnull void (^)(NSArray<UIImage *> * _Nonnull, NSArray<PHPickerResult *> * _Nonnull, BOOL))completion
 {
@@ -330,6 +324,12 @@
 #pragma mark - PHPhotoLibrary+FWImagePickerPluginImpl
 
 @implementation PHPhotoLibrary (FWImagePickerPluginImpl)
+
++ (NSString *)fwPickerControllerVideoCachePath
+{
+    NSString *videoPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"FWImagePicker"];
+    return videoPath;
+}
 
 + (__kindof UIViewController *)fwPickerControllerWithSelectionLimit:(NSInteger)selectionLimit
                                                       allowsEditing:(BOOL)allowsEditing

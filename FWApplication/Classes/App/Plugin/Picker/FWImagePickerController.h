@@ -335,18 +335,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL shouldShowDefaultLoadingView;
 
 /**
- * 检测一组资源是否全部下载成功，如果有资源仍未从 iCloud 中下载成功，则返回 NO
+ * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源
  *
- * 可以用于选择图片后，业务需要自行处理 iCloud 下载的场景。
+ * 下载完成后，主线程回调资源对象和结果信息，根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
-+ (BOOL)imageAssetsDownloaded:(NSMutableArray<FWAsset *> *)imagesAssetArray;
-
-/**
- * 检测资源是否已经在本地，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源，并通过多次调用 block 返回请求结果
- *
- * 可以用于选择图片后，业务需要自行处理 iCloud 下载的场景。
- */
-+ (void)requestImageAssetIfNeeded:(FWAsset *)asset completion: (void (^)(FWAssetDownloadStatus downloadStatus, NSError *error))completion;
++ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
 
 @end
 

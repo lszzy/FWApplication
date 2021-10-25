@@ -8,6 +8,7 @@
  */
 
 #import "FWImagePickerController.h"
+#import "FWImagePickerPluginImpl.h"
 #import "FWImageCropController.h"
 #import "FWAdaptive.h"
 #import "FWToolkit.h"
@@ -1439,49 +1440,98 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }];
 }
 
-+ (BOOL)imageAssetsDownloaded:(NSMutableArray<FWAsset *> *)imagesAssetArray {
++ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
+{
+    if (!completion) return;
+    NSMutableArray *objects = [NSMutableArray array];
+    NSMutableArray *results = [NSMutableArray array];
+    NSInteger totalCount = imagesAssetArray.count;
+    __block NSInteger finishCount = 0;
+    BOOL checkLivePhoto = (filterType & FWImagePickerFilterTypeLivePhoto) || filterType < 1;
+    BOOL checkVideo = (filterType & FWImagePickerFilterTypeVideo) || filterType < 1;
     for (FWAsset *asset in imagesAssetArray) {
-        if (asset.downloadStatus != FWAssetDownloadStatusSucceed) {
-            return NO;
-        }
-    }
-    return YES;
-}
-
-+ (void)requestImageAssetIfNeeded:(FWAsset *)asset completion: (void (^)(FWAssetDownloadStatus downloadStatus, NSError *error))completion {
-    if (asset.downloadStatus != FWAssetDownloadStatusSucceed) {
-        
-        // 资源加载中
-        if (completion) {
-            completion(FWAssetDownloadStatusDownloading, nil);
-        }
-
-        [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
-            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-            
-            if (downloadSucceed) {
-                // 资源资源已经在本地或下载成功
-                [asset updateDownloadStatusWithDownloadResult:YES];
-                
-                if (completion) {
-                    completion(FWAssetDownloadStatusSucceed, nil);
-                }
-                
-            } else if ([info objectForKey:PHImageErrorKey]) {
-                // 下载错误
-                [asset updateDownloadStatusWithDownloadResult:NO];
-                
-                if (completion) {
-                    completion(FWAssetDownloadStatusFailed, [info objectForKey:PHImageErrorKey]);
-                }
+        if (checkVideo && asset.assetType == FWAssetTypeVideo) {
+            NSString *filePath = [PHPhotoLibrary fwPickerControllerVideoCachePath];
+            [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
+            filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fwMd5Encode]] stringByAppendingPathExtension:@"mp4"];
+            NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+            [asset requestVideoURLWithOutputURL:fileURL completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (videoURL) {
+                        [objects addObject:videoURL];
+                        [results addObject:info ?: @{}];
+                    }
+                    
+                    finishCount += 1;
+                    if (finishCount == totalCount) {
+                        completion(objects.copy, results.copy);
+                    }
+                });
+            } withProgressHandler:nil];
+        } else if (asset.assetType == FWAssetTypeImage) {
+            if (checkLivePhoto && asset.assetSubType == FWAssetSubTypeLivePhoto) {
+                [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue]);
+                        if (downloadSucceed) {
+                            if (livePhoto) {
+                                [objects addObject:livePhoto];
+                                [results addObject:info ?: @{}];
+                            }
+                            
+                            finishCount += 1;
+                            if (finishCount == totalCount) {
+                                completion(objects.copy, results.copy);
+                            }
+                        } else if ([info objectForKey:PHLivePhotoInfoErrorKey] ) {
+                            finishCount += 1;
+                            if (finishCount == totalCount) {
+                                completion(objects.copy, results.copy);
+                            }
+                        }
+                    });
+                } withProgressHandler:nil];
+            } else if (asset.assetSubType == FWAssetSubTypeGIF) {
+                [asset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        UIImage *resultImage = imageData ? [UIImage fwImageWithData:imageData] : nil;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (resultImage) {
+                                [objects addObject:resultImage];
+                                [results addObject:info ?: @{}];
+                            }
+                            
+                            finishCount += 1;
+                            if (finishCount == totalCount) {
+                                completion(objects.copy, results.copy);
+                            }
+                        });
+                    });
+                }];
+            } else {
+                [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+                        
+                        if (downloadSucceed) {
+                            if (result) {
+                                [objects addObject:result];
+                                [results addObject:info ?: @{}];
+                            }
+                            
+                            finishCount += 1;
+                            if (finishCount == totalCount) {
+                                completion(objects.copy, results.copy);
+                            }
+                        } else if ([info objectForKey:PHImageErrorKey]) {
+                            finishCount += 1;
+                            if (finishCount == totalCount) {
+                                completion(objects.copy, results.copy);
+                            }
+                        }
+                    });
+                } withProgressHandler:nil];
             }
-        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-            asset.downloadProgress = progress;
-        }];
-    } else {
-        // 资源资源已经在本地或下载成功
-        if (completion) {
-            completion(FWAssetDownloadStatusSucceed, nil);
         }
     }
 }
