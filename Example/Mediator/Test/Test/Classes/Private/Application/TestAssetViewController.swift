@@ -81,7 +81,7 @@ import FWApplication
             
             let photo = photos[indexPath.row]
             cell.fwTempObject = photo.identifier
-            photo.requestThumbnailImage(with: CGSize(width: 88, height: 88)) { image, info in
+            photo.requestThumbnailImage(with: CGSize(width: 88, height: 88)) { image, info, finished in
                 if cell.fwTempObject.fwAsString == photo.identifier {
                     cell.imageView?.image = image?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
                 } else {
@@ -137,7 +137,7 @@ import FWApplication
                         }
                     } else if photo.assetSubType == .livePhoto {
                         zoomImageView.progress = 0.01
-                        photo.requestLivePhoto { livePhoto, info in
+                        photo.requestLivePhoto { livePhoto, info, finished in
                             zoomImageView.progress = 1
                             zoomImageView.livePhoto = livePhoto
                         } withProgressHandler: { progress, error, stop, info in
@@ -157,7 +157,7 @@ import FWApplication
                         }
                     } else {
                         zoomImageView.progress = 0.01
-                        photo.requestPreviewImage { image, info in
+                        photo.requestPreviewImage { image, info, finished in
                             zoomImageView.progress = 1
                             zoomImageView.image = image
                         } withProgressHandler: { progress, error, stop, info in
@@ -172,7 +172,7 @@ import FWApplication
                             photoView.urlString = UIImage.fwImage(with:data)
                         }
                     } else if photo.assetSubType == .livePhoto {
-                        photo.requestLivePhoto { livePhoto, info in
+                        photo.requestLivePhoto { livePhoto, info, finished in
                             photoView.urlString = livePhoto
                         } withProgressHandler: { progress, error, stop, info in
                             DispatchQueue.main.async {
@@ -189,7 +189,7 @@ import FWApplication
                         }
                     } else {
                         photoView.progress = 0.01
-                        photo.requestPreviewImage { image, info in
+                        photo.requestPreviewImage { image, info, finished in
                             photoView.progress = 1
                             photoView.urlString = image
                         } withProgressHandler: { progress, error, stop, info in

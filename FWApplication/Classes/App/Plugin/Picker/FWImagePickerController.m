@@ -321,7 +321,7 @@
     self.assetIdentifier = asset.identifier;
     
     // 异步请求资源对应的缩略图
-    [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info) {
+    [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
         if ([self.assetIdentifier isEqualToString:asset.identifier]) {
             self.contentImageView.image = result;
         } else {
@@ -860,7 +860,7 @@
         if (imageAsset.assetSubType == FWAssetSubTypeLivePhoto) {
             isLivePhoto = YES;
             imageView.tag = -1;
-            imageAsset.requestID = [imageAsset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info) {
+            imageAsset.requestID = [imageAsset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
                 // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
                 // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -872,13 +872,12 @@
                         // 这时需要把图片放大到跟屏幕一样大，避免后面加载大图后图片的显示会有跳动
                         imageView.livePhoto = livePhoto;
                     }
-                    BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue] && ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-                    if (downloadSucceed) {
+                    if (finished && livePhoto) {
                         // 资源资源已经在本地或下载成功
                         [imageAsset updateDownloadStatusWithDownloadResult:YES];
                         self.downloadStatus = FWAssetDownloadStatusSucceed;
                         imageView.progress = 1;
-                    } else if ([info objectForKey:PHLivePhotoInfoErrorKey] ) {
+                    } else if (finished) {
                         // 下载错误
                         [imageAsset updateDownloadStatusWithDownloadResult:NO];
                         self.downloadStatus = FWAssetDownloadStatusFailed;
@@ -904,7 +903,7 @@
             // TODO
             CGFloat minimumImageWidth = 75;
             imageView.image = [imageAsset thumbnailWithSize:CGSizeMake(minimumImageWidth, minimumImageWidth)];
-            imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^void(UIImage *result, NSDictionary *info) {
+            imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^void(UIImage *result, NSDictionary *info, BOOL finished) {
                 // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
                 // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -914,13 +913,12 @@
                     if (!loadICloudImageFault && (isNewRequest || isCurrentRequest)) {
                         imageView.image = result;
                     }
-                    BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-                    if (downloadSucceed) {
+                    if (finished && result) {
                         // 资源资源已经在本地或下载成功
                         [imageAsset updateDownloadStatusWithDownloadResult:YES];
                         self.downloadStatus = FWAssetDownloadStatusSucceed;
                         imageView.progress = 1;
-                    } else if ([info objectForKey:PHImageErrorKey] ) {
+                    } else if (finished) {
                         // 下载错误
                         [imageAsset updateDownloadStatusWithDownloadResult:NO];
                         self.downloadStatus = FWAssetDownloadStatusFailed;
@@ -1398,16 +1396,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     // 发出请求获取大图，如果图片在 iCloud，则会发出网络请求下载图片。这里同时保存请求 id，供取消请求使用
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:indexPath.item];
     FWImagePickerCollectionCell *cell = (FWImagePickerCollectionCell *)[_collectionView cellForItemAtIndexPath:indexPath];
-    imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary *info) {
-        
-        BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-        
-        if (downloadSucceed) {
+    imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary *info, BOOL finished) {
+        if (finished && result) {
             // 资源资源已经在本地或下载成功
             [imageAsset updateDownloadStatusWithDownloadResult:YES];
             cell.downloadStatus = FWAssetDownloadStatusSucceed;
             
-        } else if ([info objectForKey:PHImageErrorKey] ) {
+        } else if (finished) {
             // 下载错误
             [imageAsset updateDownloadStatusWithDownloadResult:NO];
             cell.downloadStatus = FWAssetDownloadStatusFailed;
@@ -1488,20 +1483,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             }
             
             if (checkLivePhoto && asset.assetSubType == FWAssetSubTypeLivePhoto) {
-                [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info) {
+                [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue] && ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-                        if (downloadSucceed) {
+                        if (finished) {
                             if (livePhoto) {
                                 [objects addObject:livePhoto];
                                 [results addObject:info ?: @{}];
                             }
                             
-                            finishCount += 1;
-                            if (finishCount == totalCount) {
-                                completion(objects.copy, results.copy);
-                            }
-                        } else if ([info objectForKey:PHLivePhotoInfoErrorKey] ) {
                             finishCount += 1;
                             if (finishCount == totalCount) {
                                 completion(objects.copy, results.copy);
@@ -1528,21 +1517,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 }];
             } else {
                 if (useOrigin) {
-                    [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
+                    [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-                            
-                            if (downloadSucceed) {
+                            if (finished) {
                                 if (result) {
                                     [objects addObject:result];
                                     [results addObject:info ?: @{}];
                                 }
                                 
-                                finishCount += 1;
-                                if (finishCount == totalCount) {
-                                    completion(objects.copy, results.copy);
-                                }
-                            } else if ([info objectForKey:PHImageErrorKey]) {
                                 finishCount += 1;
                                 if (finishCount == totalCount) {
                                     completion(objects.copy, results.copy);
@@ -1551,21 +1533,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                         });
                     } withProgressHandler:nil];
                 } else {
-                    [asset requestPreviewImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
+                    [asset requestPreviewImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-                            
-                            if (downloadSucceed) {
+                            if (finished) {
                                 if (result) {
                                     [objects addObject:result];
                                     [results addObject:info ?: @{}];
                                 }
                                 
-                                finishCount += 1;
-                                if (finishCount == totalCount) {
-                                    completion(objects.copy, results.copy);
-                                }
-                            } else if ([info objectForKey:PHImageErrorKey]) {
                                 finishCount += 1;
                                 if (finishCount == totalCount) {
                                     completion(objects.copy, results.copy);

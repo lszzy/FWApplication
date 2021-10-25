@@ -80,6 +80,7 @@ static NSString * const kAssetInfoSize = @"size";
     PHImageRequestOptions *phImageRequestOptions = [[PHImageRequestOptions alloc] init];
     phImageRequestOptions.networkAccessAllowed = YES;
     phImageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
+    phImageRequestOptions.synchronous = YES;
         // 在 PHImageManager 中，targetSize 等 size 都是使用 px 作为单位，因此需要对targetSize 中对传入的 Size 进行处理，宽高各自乘以 ScreenScale，从而得到正确的图片
     [[[FWAssetManager sharedInstance] phCachingImageManager] requestImageForAsset:_phAsset
                                                                           targetSize:CGSizeMake(size.width * UIScreen.mainScreen.scale, size.height * UIScreen.mainScreen.scale)
@@ -106,53 +107,59 @@ static NSString * const kAssetInfoSize = @"size";
     return resultImage;
 }
 
-- (NSInteger)requestOriginImageWithCompletion:(void (^)(UIImage *result, NSDictionary<NSString *, id> *info))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler {
+- (NSInteger)requestOriginImageWithCompletion:(void (^)(UIImage *result, NSDictionary<NSString *, id> *info, BOOL finished))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler {
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
     imageRequestOptions.networkAccessAllowed = YES; // 允许访问网络
     imageRequestOptions.progressHandler = phProgressHandler;
     return [[[FWAssetManager sharedInstance] phCachingImageManager] requestImageDataForAsset:_phAsset options:imageRequestOptions resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
         if (completion) {
-            completion([UIImage imageWithData:imageData], info);
+            completion([UIImage imageWithData:imageData], info, YES);
         }
     }];
 }
 
-- (NSInteger)requestThumbnailImageWithSize:(CGSize)size completion:(void (^)(UIImage *result, NSDictionary<NSString *, id> *info))completion {
+- (NSInteger)requestThumbnailImageWithSize:(CGSize)size completion:(void (^)(UIImage *result, NSDictionary<NSString *, id> *info, BOOL finished))completion {
     PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
     imageRequestOptions.resizeMode = PHImageRequestOptionsResizeModeFast;
     imageRequestOptions.networkAccessAllowed = YES;
     // 在 PHImageManager 中，targetSize 等 size 都是使用 px 作为单位，因此需要对targetSize 中对传入的 Size 进行处理，宽高各自乘以 ScreenScale，从而得到正确的图片
     return [[[FWAssetManager sharedInstance] phCachingImageManager] requestImageForAsset:_phAsset targetSize:CGSizeMake(size.width * UIScreen.mainScreen.scale, size.height * UIScreen.mainScreen.scale) contentMode:PHImageContentModeAspectFill options:imageRequestOptions resultHandler:^(UIImage *result, NSDictionary *info) {
-          if (completion) {
-              completion(result, info);
-          }
-    }];
-}
-
-- (NSInteger)requestPreviewImageWithCompletion:(void (^)(UIImage *result, NSDictionary<NSString *, id> *info))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler {
-    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
-    imageRequestOptions.networkAccessAllowed = YES; // 允许访问网络
-    imageRequestOptions.progressHandler = phProgressHandler;
-    return [[[FWAssetManager sharedInstance] phCachingImageManager] requestImageForAsset:_phAsset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:imageRequestOptions resultHandler:^(UIImage *result, NSDictionary *info) {
+        BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+        BOOL downloadFailed = [info objectForKey:PHImageErrorKey] != nil;
         if (completion) {
-            completion(result, info);
+            completion(result, info, downloadSucceed || downloadFailed);
         }
     }];
 }
 
-- (NSInteger)requestLivePhotoWithCompletion:(void (^)(PHLivePhoto *livePhoto, NSDictionary<NSString *, id> *info))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler {
+- (NSInteger)requestPreviewImageWithCompletion:(void (^)(UIImage *result, NSDictionary<NSString *, id> *info, BOOL finished))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler {
+    PHImageRequestOptions *imageRequestOptions = [[PHImageRequestOptions alloc] init];
+    imageRequestOptions.networkAccessAllowed = YES; // 允许访问网络
+    imageRequestOptions.progressHandler = phProgressHandler;
+    return [[[FWAssetManager sharedInstance] phCachingImageManager] requestImageForAsset:_phAsset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:imageRequestOptions resultHandler:^(UIImage *result, NSDictionary *info) {
+        BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+        BOOL downloadFailed = [info objectForKey:PHImageErrorKey] != nil;
+        if (completion) {
+            completion(result, info, downloadSucceed || downloadFailed);
+        }
+    }];
+}
+
+- (NSInteger)requestLivePhotoWithCompletion:(void (^)(PHLivePhoto *livePhoto, NSDictionary<NSString *, id> *info, BOOL finished))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler {
     if ([[PHCachingImageManager class] instancesRespondToSelector:@selector(requestLivePhotoForAsset:targetSize:contentMode:options:resultHandler:)]) {
         PHLivePhotoRequestOptions *livePhotoRequestOptions = [[PHLivePhotoRequestOptions alloc] init];
         livePhotoRequestOptions.networkAccessAllowed = YES; // 允许访问网络
         livePhotoRequestOptions.progressHandler = phProgressHandler;
         return [[[FWAssetManager sharedInstance] phCachingImageManager] requestLivePhotoForAsset:_phAsset targetSize:UIScreen.mainScreen.bounds.size contentMode:PHImageContentModeDefault options:livePhotoRequestOptions resultHandler:^(PHLivePhoto * _Nullable livePhoto, NSDictionary * _Nullable info) {
+            BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue] && ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+            BOOL downloadFailed = [info objectForKey:PHLivePhotoInfoErrorKey] || [info objectForKey:PHImageErrorKey];
             if (completion) {
-                completion(livePhoto, info);
+                completion(livePhoto, info, downloadSucceed || downloadFailed);
             }
         }];
     } else {
         if (completion) {
-            completion(nil, nil);
+            completion(nil, nil, NO);
         }
         return 0;
     }

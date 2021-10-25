@@ -85,7 +85,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *
  *  @return 返回请求图片的请求 id
  */
-- (NSInteger)requestOriginImageWithCompletion:(nullable void (^)(UIImage * _Nullable result, NSDictionary<NSString *, id> * _Nullable info))completion withProgressHandler:(nullable PHAssetImageProgressHandler)phProgressHandler;
+- (NSInteger)requestOriginImageWithCompletion:(nullable void (^)(UIImage * _Nullable result, NSDictionary<NSString *, id> * _Nullable info, BOOL finished))completion withProgressHandler:(nullable PHAssetImageProgressHandler)phProgressHandler;
 
 /**
  *  异步请求 Asset 的缩略图，不会产生网络请求
@@ -96,7 +96,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *
  *  @return 返回请求图片的请求 id
  */
-- (NSInteger)requestThumbnailImageWithSize:(CGSize)size completion:(nullable void (^)(UIImage * _Nullable result, NSDictionary<NSString *, id> * _Nullable info))completion;
+- (NSInteger)requestThumbnailImageWithSize:(CGSize)size completion:(nullable void (^)(UIImage * _Nullable result, NSDictionary<NSString *, id> * _Nullable info, BOOL finished))completion;
 
 /**
  *  异步请求 Asset 的预览图，可能会有网络请求
@@ -107,7 +107,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *
  *  @return 返回请求图片的请求 id
  */
-- (NSInteger)requestPreviewImageWithCompletion:(nullable void (^)(UIImage * _Nullable result, NSDictionary<NSString *, id> * _Nullable info))completion withProgressHandler:(nullable PHAssetImageProgressHandler)phProgressHandler;
+- (NSInteger)requestPreviewImageWithCompletion:(nullable void (^)(UIImage * _Nullable result, NSDictionary<NSString *, id> * _Nullable info, BOOL finished))completion withProgressHandler:(nullable PHAssetImageProgressHandler)phProgressHandler;
 
 /**
  *  异步请求 Live Photo，可能会有网络请求
@@ -119,7 +119,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *
  *  @return 返回请求图片的请求 id
  */
-- (NSInteger)requestLivePhotoWithCompletion:(nullable void (^)(PHLivePhoto * _Nullable livePhoto, NSDictionary<NSString *, id> * _Nullable info))completion withProgressHandler:(nullable PHAssetImageProgressHandler)phProgressHandler;
+- (NSInteger)requestLivePhotoWithCompletion:(nullable void (^)(PHLivePhoto * _Nullable livePhoto, NSDictionary<NSString *, id> * _Nullable info, BOOL finished))completion withProgressHandler:(nullable PHAssetImageProgressHandler)phProgressHandler;
 
 /**
  *  异步请求 AVPlayerItem，可能会有网络请求
