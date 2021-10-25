@@ -716,8 +716,8 @@
 - (void)handleEditButtonClick:(id)sender {
     FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
     UIImage *image;
-    if (currentAsset.editedImage && [currentAsset.editedImage isKindOfClass:[UIImage class]]) {
-        image = (UIImage *)currentAsset.editedImage;
+    if (currentAsset.editedImage) {
+        image = currentAsset.editedImage;
     } else {
         image = self.shouldUseOriginImage ? currentAsset.originImage : currentAsset.previewImage;
     }
@@ -806,8 +806,8 @@
     // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
-    if (imageAsset.editedImage && [imageAsset.editedImage isKindOfClass:[UIImage class]]) {
-        imageView.image = (UIImage *)imageAsset.editedImage;
+    if (imageAsset.editedImage) {
+        imageView.image = imageAsset.editedImage;
         return;
     }
     
@@ -1443,6 +1443,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 + (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
 {
     if (!completion) return;
+    if (imagesAssetArray.count < 1) {
+        completion(@[], @[]);
+        return;
+    }
+    
     NSMutableArray *objects = [NSMutableArray array];
     NSMutableArray *results = [NSMutableArray array];
     NSInteger totalCount = imagesAssetArray.count;
@@ -1469,6 +1474,19 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 });
             } withProgressHandler:nil];
         } else if (asset.assetType == FWAssetTypeImage) {
+            if (asset.editedImage) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [objects addObject:asset.editedImage];
+                    [results addObject:@{}];
+                    
+                    finishCount += 1;
+                    if (finishCount == totalCount) {
+                        completion(objects.copy, results.copy);
+                    }
+                });
+                return;
+            }
+            
             if (checkLivePhoto && asset.assetSubType == FWAssetSubTypeLivePhoto) {
                 [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info) {
                     dispatch_async(dispatch_get_main_queue(), ^{
