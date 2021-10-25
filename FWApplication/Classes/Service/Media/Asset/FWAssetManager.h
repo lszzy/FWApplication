@@ -135,12 +135,13 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *  异步请求 视频文件URL，可能会有网络请求
  *
  *  @param outputURL 视频输出文件URL路径，如果路径已存在会导出失败
+ *  @param exportPreset 导出视频选项配置
  *  @param completion 完成请求后调用的 block，参数中包含了请求的 文件URL 以及相关信息，若 assetType 不是 FWAssetTypeVideo 则为 nil
  *  @param phProgressHandler 处理请求进度的 handler，不在主线程上执行，在 block 中修改 UI 时注意需要手工放到主线程处理。
  *
  *  @return 返回请求 视频文件URL 的请求 id
  */
-- (NSInteger)requestVideoURLWithOutputURL:(NSURL *)outputURL completion:(nullable void (^)(NSURL * _Nullable videoURL, NSDictionary<NSString *, id> * _Nullable info))completion withProgressHandler:(nullable PHAssetVideoProgressHandler)phProgressHandler;
+- (NSInteger)requestVideoURLWithOutputURL:(NSURL *)outputURL exportPreset:(NSString *)exportPreset completion:(nullable void (^)(NSURL * _Nullable videoURL, NSDictionary<NSString *, id> * _Nullable info))completion withProgressHandler:(nullable PHAssetVideoProgressHandler)phProgressHandler;
 
 /**
  *  异步请求图片的 Data

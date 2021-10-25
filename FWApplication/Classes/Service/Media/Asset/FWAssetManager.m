@@ -176,12 +176,12 @@ static NSString * const kAssetInfoSize = @"size";
     }
 }
 
-- (NSInteger)requestVideoURLWithOutputURL:(NSURL *)outputURL completion:(void (^)(NSURL * _Nullable, NSDictionary<NSString *,id> * _Nullable))completion withProgressHandler:(PHAssetVideoProgressHandler)phProgressHandler {
+- (NSInteger)requestVideoURLWithOutputURL:(NSURL *)outputURL exportPreset:(NSString *)exportPreset completion:(void (^)(NSURL * _Nullable, NSDictionary<NSString *,id> * _Nullable))completion withProgressHandler:(PHAssetVideoProgressHandler)phProgressHandler {
     if ([[PHCachingImageManager class] instancesRespondToSelector:@selector(requestExportSessionForVideo:options:exportPreset:resultHandler:)]) {
         PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
         videoRequestOptions.networkAccessAllowed = YES; // 允许访问网络
         videoRequestOptions.progressHandler = phProgressHandler;
-        return [[[FWAssetManager sharedInstance] phCachingImageManager] requestExportSessionForVideo:_phAsset options:videoRequestOptions exportPreset:AVAssetExportPresetHighestQuality resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
+        return [[[FWAssetManager sharedInstance] phCachingImageManager] requestExportSessionForVideo:_phAsset options:videoRequestOptions exportPreset:exportPreset resultHandler:^(AVAssetExportSession * _Nullable exportSession, NSDictionary * _Nullable info) {
             if (!exportSession) {
                 if (completion) {
                     completion(nil, info);

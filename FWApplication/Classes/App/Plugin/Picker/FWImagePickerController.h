@@ -339,7 +339,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * 下载完成后，主线程回调资源对象和结果信息，根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
-+ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
++ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType useOrigin:(BOOL)useOrigin completion:(void (^)(NSArray *objects, NSArray *results))completion;
 
 @end
 

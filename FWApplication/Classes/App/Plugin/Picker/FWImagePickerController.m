@@ -872,7 +872,7 @@
                         // 这时需要把图片放大到跟屏幕一样大，避免后面加载大图后图片的显示会有跳动
                         imageView.livePhoto = livePhoto;
                     }
-                    BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue]);
+                    BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue] && ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                     if (downloadSucceed) {
                         // 资源资源已经在本地或下载成功
                         [imageAsset updateDownloadStatusWithDownloadResult:YES];
@@ -1278,7 +1278,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if (!self.allowsMultipleSelection) {
             // 单选的情况下
             [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:@[imageAsset].mutableCopy
-                                                                        selectedImageAssetArray:nil
+                                                                        selectedImageAssetArray:self.selectedImageAssetArray
                                                                               currentImageIndex:0
                                                                                 singleCheckMode:YES];
         } else {
@@ -1306,7 +1306,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)handlePreviewButtonClick:(id)sender {
     [self initPreviewViewControllerIfNeeded];
     // 手工更新图片预览界面
-    [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:[self.selectedImageAssetArray copy]
+    [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:[self.selectedImageAssetArray mutableCopy]
                                                                 selectedImageAssetArray:self.selectedImageAssetArray
                                                                       currentImageIndex:0
                                                                         singleCheckMode:NO];
@@ -1440,7 +1440,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }];
 }
 
-+ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
++ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType useOrigin:(BOOL)useOrigin completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
 {
     if (!completion) return;
     if (imagesAssetArray.count < 1) {
@@ -1460,7 +1460,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
             filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fwMd5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-            [asset requestVideoURLWithOutputURL:fileURL completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
+            [asset requestVideoURLWithOutputURL:fileURL exportPreset:useOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (videoURL) {
                         [objects addObject:videoURL];
@@ -1490,7 +1490,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             if (checkLivePhoto && asset.assetSubType == FWAssetSubTypeLivePhoto) {
                 [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue]);
+                        BOOL downloadSucceed = (livePhoto && !info) || (![[info objectForKey:PHLivePhotoInfoCancelledKey] boolValue] && ![info objectForKey:PHLivePhotoInfoErrorKey] && ![[info objectForKey:PHLivePhotoInfoIsDegradedKey] boolValue] && ![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                         if (downloadSucceed) {
                             if (livePhoto) {
                                 [objects addObject:livePhoto];
@@ -1527,28 +1527,53 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     });
                 }];
             } else {
-                [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
-                        
-                        if (downloadSucceed) {
-                            if (result) {
-                                [objects addObject:result];
-                                [results addObject:info ?: @{}];
-                            }
+                if (useOrigin) {
+                    [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
                             
-                            finishCount += 1;
-                            if (finishCount == totalCount) {
-                                completion(objects.copy, results.copy);
+                            if (downloadSucceed) {
+                                if (result) {
+                                    [objects addObject:result];
+                                    [results addObject:info ?: @{}];
+                                }
+                                
+                                finishCount += 1;
+                                if (finishCount == totalCount) {
+                                    completion(objects.copy, results.copy);
+                                }
+                            } else if ([info objectForKey:PHImageErrorKey]) {
+                                finishCount += 1;
+                                if (finishCount == totalCount) {
+                                    completion(objects.copy, results.copy);
+                                }
                             }
-                        } else if ([info objectForKey:PHImageErrorKey]) {
-                            finishCount += 1;
-                            if (finishCount == totalCount) {
-                                completion(objects.copy, results.copy);
+                        });
+                    } withProgressHandler:nil];
+                } else {
+                    [asset requestPreviewImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            BOOL downloadSucceed = (result && !info) || (![[info objectForKey:PHImageCancelledKey] boolValue] && ![info objectForKey:PHImageErrorKey] && ![[info objectForKey:PHImageResultIsDegradedKey] boolValue]);
+                            
+                            if (downloadSucceed) {
+                                if (result) {
+                                    [objects addObject:result];
+                                    [results addObject:info ?: @{}];
+                                }
+                                
+                                finishCount += 1;
+                                if (finishCount == totalCount) {
+                                    completion(objects.copy, results.copy);
+                                }
+                            } else if ([info objectForKey:PHImageErrorKey]) {
+                                finishCount += 1;
+                                if (finishCount == totalCount) {
+                                    completion(objects.copy, results.copy);
+                                }
                             }
-                        }
-                    });
-                } withProgressHandler:nil];
+                        });
+                    } withProgressHandler:nil];
+                }
             }
         }
     }

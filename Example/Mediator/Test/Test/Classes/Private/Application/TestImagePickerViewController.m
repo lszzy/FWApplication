@@ -102,7 +102,7 @@
 #pragma mark - <QMUIImagePickerViewControllerDelegate>
 
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    [self sendImageWithImagesAssetArray:imagesAssetArray];
+    [self sendImageWithImagesAssetArray:imagesAssetArray useOriginImage:NO];
 }
 
 - (FWImagePickerPreviewController *)imagePickerPreviewControllerForImagePickerController:(FWImagePickerController *)imagePickerController {
@@ -150,7 +150,7 @@
 }
 
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(nonnull NSMutableArray<FWAsset *> *)imagesAssetArray {
-    [self sendImageWithImagesAssetArray:imagesAssetArray];
+    [self sendImageWithImagesAssetArray:imagesAssetArray useOriginImage:imagePickerPreviewController.shouldUseOriginImage];
 }
 
 #pragma mark - 业务方法
@@ -160,13 +160,15 @@
     [self fwShowMessageWithText:text];
 }
 
-- (void)sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
+- (void)sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray useOriginImage:(BOOL)useOriginImage {
     [self fwShowLoading];
     FWWeakifySelf();
-    [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:0 completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+    [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:0 useOrigin:useOriginImage completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
         FWStrongifySelf();
         [self fwHideLoading];
-        [self fwShowImagePreviewWithImageURLs:objects currentIndex:0 sourceView:nil];
+        if (objects.count > 0) {
+            [self fwShowImagePreviewWithImageURLs:objects currentIndex:0 sourceView:nil];
+        }
     }];
 }
 
