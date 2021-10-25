@@ -164,7 +164,7 @@
     if ([FWImagePickerController imageAssetsDownloaded:imagesAssetArray]) {
         NSMutableArray *imageURLs = [NSMutableArray array];
         for (FWAsset *imageAsset in imagesAssetArray) {
-            [imageURLs fwAddObject:imageAsset.requestObject ?: [imageAsset originImage]];
+            [imageURLs fwAddObject:imageAsset.editedImage ?: [imageAsset originImage]];
         }
         [self fwHideLoading];
         [self fwShowImagePreviewWithImageURLs:imageURLs currentIndex:0 sourceView:nil];

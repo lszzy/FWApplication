@@ -715,8 +715,8 @@
 - (void)handleEditButtonClick:(id)sender {
     FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
     UIImage *image;
-    if (currentAsset.requestObject && [currentAsset.requestObject isKindOfClass:[UIImage class]]) {
-        image = (UIImage *)currentAsset.requestObject;
+    if (currentAsset.editedImage && [currentAsset.editedImage isKindOfClass:[UIImage class]]) {
+        image = (UIImage *)currentAsset.editedImage;
     } else {
         image = self.shouldUseOriginImage ? currentAsset.originImage : currentAsset.previewImage;
     }
@@ -731,7 +731,7 @@
     __weak __typeof__(self) self_weak_ = self;
     cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
         __typeof__(self) self = self_weak_;
-        currentAsset.requestObject = image;
+        currentAsset.editedImage = image;
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     };
     cropController.onDidFinishCancelled = ^(BOOL isFinished) {
@@ -805,8 +805,8 @@
     // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
-    if (imageAsset.requestObject && [imageAsset.requestObject isKindOfClass:[UIImage class]]) {
-        imageView.image = (UIImage *)imageAsset.requestObject;
+    if (imageAsset.editedImage && [imageAsset.editedImage isKindOfClass:[UIImage class]]) {
+        imageView.image = (UIImage *)imageAsset.editedImage;
         return;
     }
     
@@ -890,7 +890,7 @@
         
         if (isLivePhoto) {
         } else if (imageAsset.assetSubType == FWAssetSubTypeGIF) {
-            [imageAsset requestImageData:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
+            [imageAsset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     UIImage *resultImage = [UIImage fwImageWithData:imageData];
                     dispatch_async(dispatch_get_main_queue(), ^{

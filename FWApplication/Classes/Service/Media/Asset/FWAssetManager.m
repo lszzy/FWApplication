@@ -211,7 +211,7 @@ static NSString * const kAssetInfoSize = @"size";
     }
 }
 
-- (void)requestImageData:(void (^)(NSData *imageData, NSDictionary<NSString *, id> *info, BOOL isGIF, BOOL isHEIC))completion {
+- (void)requestImageDataWithCompletion:(void (^)(NSData *imageData, NSDictionary<NSString *, id> *info, BOOL isGIF, BOOL isHEIC))completion {
     if (self.assetType != FWAssetTypeImage) {
         if (completion) {
             completion(nil, nil, NO, NO);

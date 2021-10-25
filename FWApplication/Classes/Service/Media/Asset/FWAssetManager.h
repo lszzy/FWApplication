@@ -55,6 +55,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
 @property(nonatomic, assign) NSInteger requestID; // 从 iCloud 请求获得资源的大图的请求 ID
 @property(nonatomic, copy, readonly) NSString *identifier;// Asset 的标识，每个 FWAsset 的 identifier 都不同。只要两个 FWAsset 的 identifier 相同则认为它们是同一个 asset
 @property(nonatomic, strong, nullable) id requestObject; // 请求结果对象缓存，默认nil
+@property(nonatomic, strong, nullable) UIImage *editedImage; // 编辑过的图像，默认nil
 
 /// Asset 的原图（包含系统相册“编辑”功能处理后的效果）
 - (nullable UIImage *)originImage;
@@ -147,7 +148,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *
  *  @param completion 完成请求后调用的 block，参数中包含了请求的图片 Data（若 assetType 不是 FWAssetTypeImage 或 FWAssetTypeLivePhoto 则为 nil），该图片是否为 GIF 的判断值，以及该图片的文件格式是否为 HEIC
  */
-- (void)requestImageData:(nullable void (^)(NSData * _Nullable imageData, NSDictionary<NSString *, id> * _Nullable info, BOOL isGIF, BOOL isHEIC))completion;
+- (void)requestImageDataWithCompletion:(nullable void (^)(NSData * _Nullable imageData, NSDictionary<NSString *, id> * _Nullable info, BOOL isGIF, BOOL isHEIC))completion;
 
 /**
  * 获取图片的 UIImageOrientation 值，仅 assetType 为 FWAssetTypeImage 或 FWAssetTypeLivePhoto 时有效
