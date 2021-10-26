@@ -47,6 +47,7 @@
     albumController.fwNavigationBarStyle = FWNavigationBarStyleDefault;
     albumController.fwBackBarItem = FWIcon.backImage;
     albumController.albumControllerDelegate = self;
+    albumController.pickDefaultAlbumGroup = YES;
     albumController.title = [self.tableData fwObjectAtIndex:index];
     if (index == 0) {
         albumController.view.tag = SingleImagePickingTag;

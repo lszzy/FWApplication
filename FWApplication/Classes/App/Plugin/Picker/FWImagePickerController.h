@@ -94,6 +94,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 加载相册列表时会出现 loading，若需要自定义 loading 的形式，可将该属性置为 NO，默认为 YES
 @property(nonatomic, assign) BOOL showsDefaultLoading;
 
+/// 是否直接进入第一个相册列表
+@property(nonatomic, assign) BOOL pickDefaultAlbumGroup;
+
 @end
 
 #pragma mark - FWImagePickerCollectionCell
@@ -168,8 +171,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nullable, nonatomic, weak) id<FWImagePickerPreviewControllerDelegate> delegate;
 
-@property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor UI_APPEARANCE_SELECTOR;
-@property(nullable, nonatomic, strong) UIColor *toolBarTintColor UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
+@property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
 @property(nullable, nonatomic, strong, readonly) UIView *topToolBarView;
 @property(nullable, nonatomic, strong, readonly) FWNavigationButton *backButton;
@@ -291,6 +294,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FWImagePickerController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, FWImagePickerPreviewControllerDelegate>
 
 @property(nullable, nonatomic, weak) id<FWImagePickerControllerDelegate> imagePickerControllerDelegate;
+
+@property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
+@property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
 /*
  * 图片的最小尺寸，布局时如果有剩余空间，会将空间分配给图片大小，所以最终显示出来的大小不一定等于minimumImageWidth。默认是75。

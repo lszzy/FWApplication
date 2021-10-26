@@ -200,6 +200,9 @@
 
 - (void)refreshAlbumGroups {
     if ([self.albumsArray count] > 0) {
+        if (self.pickDefaultAlbumGroup) {
+            [self pickAlbumsGroup:self.albumsArray.firstObject animated:NO];
+        }
         [self.tableView reloadData];
         
         if (self.showsDefaultLoading) {
@@ -214,6 +217,25 @@
         } else {
             [self fwShowEmptyViewWithText:@"空照片"];
         }
+    }
+}
+
+- (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup animated:(BOOL)animated {
+    if (!assetsGroup) return;
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
+        self.imagePickerController = [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
+    } else {
+        if (!self.imagePickerController) {
+            if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
+                self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+            } else {
+                self.imagePickerController = [[FWImagePickerController alloc] init];
+            }
+        }
+        
+        [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
+        self.imagePickerController.title = [assetsGroup name];
+        [self.navigationController pushViewController:self.imagePickerController animated:animated];
     }
 }
 
@@ -244,22 +266,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    FWAssetGroup *assetsGroup = self.albumsArray[indexPath.row];
-    if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
-        self.imagePickerController = [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
-    } else {
-        if (!self.imagePickerController) {
-            if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
-                self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
-            } else {
-                self.imagePickerController = [[FWImagePickerController alloc] init];
-            }
-        }
-        
-        [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
-        self.imagePickerController.title = [assetsGroup name];
-        [self.navigationController pushViewController:self.imagePickerController animated:YES];
-    }
+    [self pickAlbumsGroup:self.albumsArray[indexPath.row] animated:YES];
 }
 
 - (void)cancelItemClicked:(id)sender {
@@ -1053,6 +1060,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)didInitialize {
     self.minimumImageWidth = 75;
+    self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
+    self.toolBarTintColor = UIColor.whiteColor;
 
     _allowsMultipleSelection = YES;
     _maximumSelectImageCount = 9;
@@ -1248,7 +1257,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (UIView *)operationToolBarView {
     if (!_operationToolBarView) {
         _operationToolBarView = [[UIView alloc] init];
-        _operationToolBarView.backgroundColor = UIColor.whiteColor;
+        _operationToolBarView.backgroundColor = self.toolBarBackgroundColor;
         
         [_operationToolBarView addSubview:self.sendButton];
         [_operationToolBarView addSubview:self.previewButton];
@@ -1264,10 +1273,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _sendButton.enabled = NO;
         _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        [_sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_sendButton setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
+        [_sendButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_sendButton setTitle:@"完成" forState:UIControlStateNormal];
         _sendButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
+        _sendButton.fwDisabledAlpha = 0.3;
+        _sendButton.fwHighlightedAlpha = 0.5;
         [_sendButton sizeToFit];
         [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -1280,10 +1290,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _previewButton = [[UIButton alloc] init];
         _previewButton.enabled = NO;
         _previewButton.titleLabel.font = self.sendButton.titleLabel.font;
-        [_previewButton setTitleColor:[self.sendButton titleColorForState:UIControlStateNormal] forState:UIControlStateNormal];
-        [_previewButton setTitleColor:[self.sendButton titleColorForState:UIControlStateDisabled] forState:UIControlStateDisabled];
+        [_previewButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_previewButton setTitle:@"预览" forState:UIControlStateNormal];
         _previewButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
+        _previewButton.fwDisabledAlpha = 0.3;
+        _previewButton.fwHighlightedAlpha = 0.5;
         [_previewButton sizeToFit];
         [_previewButton addTarget:self action:@selector(handlePreviewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -1295,12 +1306,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (!_imageCountLabel) {
         _imageCountLabel = [[UILabel alloc] init];
         _imageCountLabel.userInteractionEnabled = NO;// 不要影响 sendButton 的事件
-        _imageCountLabel.backgroundColor = UIColor.clearColor;
-        _imageCountLabel.textColor = UIColor.blackColor;
+        _imageCountLabel.backgroundColor = self.toolBarTintColor;
+        _imageCountLabel.textColor = UIColor.redColor;
         _imageCountLabel.font = [UIFont systemFontOfSize:12];
         _imageCountLabel.textAlignment = NSTextAlignmentCenter;
         _imageCountLabel.lineBreakMode = NSLineBreakByCharWrapping;
         _imageCountLabel.layer.masksToBounds = YES;
+        _imageCountLabel.layer.cornerRadius = 18.0 / 2;
         _imageCountLabel.hidden = YES;
     }
     return _imageCountLabel;
@@ -1534,13 +1546,32 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         return;
     }
     
-    NSMutableArray *objects = [NSMutableArray array];
-    NSMutableArray *results = [NSMutableArray array];
+    NSMutableArray<NSArray *> *results = [NSMutableArray array];
     NSInteger totalCount = imagesAssetArray.count;
     __block NSInteger finishCount = 0;
+    void (^completionHandler)(NSInteger index, id _Nullable object, NSDictionary * _Nullable info) = ^(NSInteger index, id _Nullable object, NSDictionary * _Nullable info){
+        if (object) {
+            [results addObject:[NSArray arrayWithObjects:@(index), object, info ?: @{}, nil]];
+        }
+        
+        finishCount += 1;
+        if (finishCount == totalCount) {
+            [results sortUsingComparator:^NSComparisonResult(NSArray *arr1, NSArray *arr2) {
+                return [arr1.firstObject compare:arr2.firstObject];
+            }];
+            NSMutableArray *objects = [NSMutableArray array];
+            NSMutableArray *infos = [NSMutableArray array];
+            for (NSArray *result in results) {
+                [objects addObject:[result objectAtIndex:1]];
+                [infos addObject:[result objectAtIndex:2]];
+            }
+            completion(objects.copy, infos.copy);
+        }
+    };
+    
     BOOL checkLivePhoto = (filterType & FWImagePickerFilterTypeLivePhoto) || filterType < 1;
     BOOL checkVideo = (filterType & FWImagePickerFilterTypeVideo) || filterType < 1;
-    for (FWAsset *asset in imagesAssetArray) {
+    [imagesAssetArray enumerateObjectsUsingBlock:^(FWAsset *asset, NSUInteger index, BOOL *stop) {
         if (checkVideo && asset.assetType == FWAssetTypeVideo) {
             NSString *filePath = [PHPhotoLibrary fwPickerControllerVideoCachePath];
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -1548,27 +1579,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             [asset requestVideoURLWithOutputURL:fileURL exportPreset:asset.useOriginImage ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (videoURL) {
-                        [objects addObject:videoURL];
-                        [results addObject:info ?: @{}];
-                    }
-                    
-                    finishCount += 1;
-                    if (finishCount == totalCount) {
-                        completion(objects.copy, results.copy);
-                    }
+                    completionHandler(index, videoURL, info);
                 });
             } withProgressHandler:nil];
         } else if (asset.assetType == FWAssetTypeImage) {
             if (asset.croppedImage) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [objects addObject:asset.croppedImage];
-                    [results addObject:@{}];
-                    
-                    finishCount += 1;
-                    if (finishCount == totalCount) {
-                        completion(objects.copy, results.copy);
-                    }
+                    completionHandler(index, asset.croppedImage, nil);
                 });
                 return;
             }
@@ -1577,15 +1594,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (finished) {
-                            if (livePhoto) {
-                                [objects addObject:livePhoto];
-                                [results addObject:info ?: @{}];
-                            }
-                            
-                            finishCount += 1;
-                            if (finishCount == totalCount) {
-                                completion(objects.copy, results.copy);
-                            }
+                            completionHandler(index, livePhoto, info);
                         }
                     });
                 } withProgressHandler:nil];
@@ -1594,15 +1603,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         UIImage *resultImage = imageData ? [UIImage fwImageWithData:imageData] : nil;
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            if (resultImage) {
-                                [objects addObject:resultImage];
-                                [results addObject:info ?: @{}];
-                            }
-                            
-                            finishCount += 1;
-                            if (finishCount == totalCount) {
-                                completion(objects.copy, results.copy);
-                            }
+                            completionHandler(index, resultImage, info);
                         });
                     });
                 }];
@@ -1611,15 +1612,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (finished) {
-                                if (result) {
-                                    [objects addObject:result];
-                                    [results addObject:info ?: @{}];
-                                }
-                                
-                                finishCount += 1;
-                                if (finishCount == totalCount) {
-                                    completion(objects.copy, results.copy);
-                                }
+                                completionHandler(index, result, info);
                             }
                         });
                     } withProgressHandler:nil];
@@ -1627,22 +1620,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     [asset requestPreviewImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (finished) {
-                                if (result) {
-                                    [objects addObject:result];
-                                    [results addObject:info ?: @{}];
-                                }
-                                
-                                finishCount += 1;
-                                if (finishCount == totalCount) {
-                                    completion(objects.copy, results.copy);
-                                }
+                                completionHandler(index, result, info);
                             }
                         });
                     } withProgressHandler:nil];
                 }
             }
         }
-    }
+    }];
 }
 
 @end
