@@ -217,22 +217,6 @@
     }
 }
 
-- (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup animated:(BOOL)animated {
-    if (!assetsGroup) return;
-    
-    if (!self.imagePickerController) {
-        self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
-    }
-    
-    [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
-    self.imagePickerController.title = [assetsGroup name];
-    [self.navigationController pushViewController:self.imagePickerController animated:animated];
-}
-
-- (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup {
-    [self pickAlbumsGroup:assetsGroup animated:NO];
-}
-
 #pragma mark - <UITableViewDelegate,UITableViewDataSource>
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -260,7 +244,22 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self pickAlbumsGroup:self.albumsArray[indexPath.row] animated:YES];
+    FWAssetGroup *assetsGroup = self.albumsArray[indexPath.row];
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
+        self.imagePickerController = [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
+    } else {
+        if (!self.imagePickerController) {
+            if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
+                self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+            } else {
+                self.imagePickerController = [[FWImagePickerController alloc] init];
+            }
+        }
+        
+        [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
+        self.imagePickerController.title = [assetsGroup name];
+        [self.navigationController pushViewController:self.imagePickerController animated:YES];
+    }
 }
 
 - (void)cancelItemClicked:(id)sender {
@@ -433,6 +432,7 @@
 @property(nonatomic, strong) UIImage *croppedImage;
 @property(nonatomic, assign) CGRect croppedRect;
 @property(nonatomic, assign) NSInteger croppedAngle;
+@property(nonatomic, assign) BOOL useOriginImage;
 
 @end
 
@@ -464,6 +464,14 @@
     objc_setAssociatedObject(self, @selector(croppedAngle), @(croppedAngle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (BOOL)useOriginImage {
+    return [objc_getAssociatedObject(self, @selector(useOriginImage)) boolValue];
+}
+
+- (void)setUseOriginImage:(BOOL)useOriginImage {
+    objc_setAssociatedObject(self, @selector(useOriginImage), @(useOriginImage), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 @end
 
 @implementation FWImagePickerPreviewController {
@@ -472,7 +480,8 @@
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        self.maximumSelectImageCount = INT_MAX;
+        _showsEditButton = YES;
+        self.maximumSelectImageCount = 9;
         self.minimumSelectImageCount = 0;
         
         self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
@@ -522,7 +531,7 @@
     
     _sendButton = [[UIButton alloc] init];
     self.sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    [self.sendButton setTitle:@"发送" forState:UIControlStateNormal];
+    [self.sendButton setTitle:@"完成" forState:UIControlStateNormal];
     self.sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.sendButton sizeToFit];
     [self.sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -540,6 +549,7 @@
     [self.bottomToolBarView addSubview:_imageCountLabel];
     
     _originImageCheckboxButton = [[UIButton alloc] init];
+    self.originImageCheckboxButton.hidden = !self.showsOriginImageCheckboxButton;
     self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckImage forState:UIControlStateNormal];
     [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected];
@@ -630,6 +640,11 @@
 - (void)setShowsEditButton:(BOOL)showsEditButton {
     _showsEditButton = showsEditButton;
     self.editButton.hidden = !showsEditButton;
+}
+
+- (void)setShowsOriginImageCheckboxButton:(BOOL)showsOriginImageCheckboxButton {
+    _showsOriginImageCheckboxButton = showsOriginImageCheckboxButton;
+    self.originImageCheckboxButton.hidden = !showsOriginImageCheckboxButton;
 }
 
 - (void)setDownloadStatus:(FWAssetDownloadStatus)downloadStatus {
@@ -753,33 +768,44 @@
 }
 
 - (void)handleEditButtonClick:(id)sender {
-    FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
-    UIImage *image = self.shouldUseOriginImage ? currentAsset.originImage : currentAsset.previewImage;
-    if (!image) return;
-    
-    FWImageCropController *cropController;
-    if (self.delegate && [self.delegate respondsToSelector:@selector(imageCropControllerForPreviewController:image:)]) {
-        cropController = [self.delegate imageCropControllerForPreviewController:self image:image];
-    } else {
-        cropController = [[FWImageCropController alloc] initWithImage:image];
-    }
-    if (currentAsset.croppedImage) {
-        cropController.imageCropFrame = currentAsset.croppedRect;
-        cropController.angle = currentAsset.croppedAngle;
-    }
-    __weak __typeof__(self) self_weak_ = self;
-    cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
-        __typeof__(self) self = self_weak_;
-        currentAsset.croppedImage = image;
-        currentAsset.croppedRect = cropRect;
-        currentAsset.croppedAngle = angle;
-        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-    };
-    cropController.onDidFinishCancelled = ^(BOOL isFinished) {
-        __typeof__(self) self = self_weak_;
-        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
-    };
-    [self presentViewController:cropController animated:NO completion:nil];
+    FWZoomImageView *imageView = [self.imagePreviewView currentZoomImageView];
+    FWAsset *imageAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
+    [imageAsset requestOriginImageWithCompletion:^(UIImage * _Nullable result, NSDictionary<NSString *,id> * _Nullable info, BOOL finished) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (finished && result) {
+                // 资源资源已经在本地或下载成功
+                [imageAsset updateDownloadStatusWithDownloadResult:YES];
+                self.downloadStatus = FWAssetDownloadStatusSucceed;
+                imageView.progress = 1;
+                
+                [self beginEditImageAsset:imageAsset image:result];
+            } else if (finished) {
+                // 下载错误
+                [imageAsset updateDownloadStatusWithDownloadResult:NO];
+                self.downloadStatus = FWAssetDownloadStatusFailed;
+                imageView.progress = 0;
+            }
+        });
+    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        imageAsset.downloadProgress = progress;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.downloadStatus != FWAssetDownloadStatusDownloading) {
+                self.downloadStatus = FWAssetDownloadStatusDownloading;
+                imageView.progress = 0;
+            }
+            // 拉取资源的初期，会有一段时间没有进度，猜测是发出网络请求以及与 iCloud 建立连接的耗时，这时预先给个 0.02 的进度值，看上去好看些
+            float targetProgress = fmax(0.02, progress);
+            if (targetProgress < imageView.progress) {
+                imageView.progress = targetProgress;
+            } else {
+                imageView.progress = fmax(0.02, progress);
+            }
+            if (error) {
+                self.downloadStatus = FWAssetDownloadStatusFailed;
+                imageView.progress = 0;
+            }
+        });
+    }];
 }
 
 - (void)handleSendButtonClick:(id)sender {
@@ -790,6 +816,10 @@
                 FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
                 [self.selectedImageAssetArray addObject:currentAsset];
             }
+            BOOL useOriginImage = self.shouldUseOriginImage;
+            [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.useOriginImage = useOriginImage;
+            }];
             [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
         }
     }];
@@ -807,7 +837,6 @@
         if (!self.checkboxButton.selected) {
             [self.checkboxButton sendActionsForControlEvents:UIControlEventTouchUpInside];
         }
-
     }
     self.shouldUseOriginImage = button.selected;
 }
@@ -820,18 +849,39 @@
             self.editButton.hidden = YES;
         }
     } else {
-        self.originImageCheckboxButton.hidden = NO;
-        if (self.originImageCheckboxButton.selected) {
-            [asset assetSize:^(long long size) {
-                [self.originImageCheckboxButton setTitle:[NSString stringWithFormat:@"原图(%@)", [NSString fwSizeString:size]] forState:UIControlStateNormal];
-                [self.originImageCheckboxButton sizeToFit];
-                [self.bottomToolBarView setNeedsLayout];
-            }];
+        if (self.showsOriginImageCheckboxButton) {
+            self.originImageCheckboxButton.hidden = NO;
         }
         if (self.showsEditButton) {
             self.editButton.hidden = NO;
         }
     }
+}
+
+- (void)beginEditImageAsset:(FWAsset *)imageAsset image:(UIImage *)image {
+    FWImageCropController *cropController;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imageCropControllerForPreviewController:image:)]) {
+        cropController = [self.delegate imageCropControllerForPreviewController:self image:image];
+    } else {
+        cropController = [[FWImageCropController alloc] initWithImage:image];
+    }
+    if (imageAsset.croppedImage) {
+        cropController.imageCropFrame = imageAsset.croppedRect;
+        cropController.angle = imageAsset.croppedAngle;
+    }
+    __weak __typeof__(self) self_weak_ = self;
+    cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
+        __typeof__(self) self = self_weak_;
+        imageAsset.croppedImage = image;
+        imageAsset.croppedRect = cropRect;
+        imageAsset.croppedAngle = angle;
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    };
+    cropController.onDidFinishCancelled = ^(BOOL isFinished) {
+        __typeof__(self) self = self_weak_;
+        [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
+    };
+    [self presentViewController:cropController animated:NO completion:nil];
 }
 
 - (void)updateSelectedCollectionView {
@@ -940,9 +990,6 @@
             }];
         } else {
             imageView.tag = -1;
-            // TODO
-            CGFloat minimumImageWidth = 75;
-            imageView.image = [imageAsset thumbnailWithSize:CGSizeMake(minimumImageWidth, minimumImageWidth)];
             imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^void(UIImage *result, NSDictionary *info, BOOL finished) {
                 // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
                 // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
@@ -1008,7 +1055,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     self.minimumImageWidth = 75;
 
     _allowsMultipleSelection = YES;
-    _maximumSelectImageCount = INT_MAX;
+    _maximumSelectImageCount = 9;
     _minimumSelectImageCount = 0;
     _shouldShowDefaultLoadingView = YES;
 }
@@ -1219,7 +1266,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_sendButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_sendButton setTitleColor:UIColor.grayColor forState:UIControlStateDisabled];
-        [_sendButton setTitle:@"发送" forState:UIControlStateNormal];
+        [_sendButton setTitle:@"完成" forState:UIControlStateNormal];
         _sendButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
         [_sendButton sizeToFit];
         [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -1335,6 +1382,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)handleSendButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^() {
         if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+            BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
+            [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                obj.useOriginImage = useOriginImage;
+            }];
             [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
         }
         [self.selectedImageAssetArray removeAllObjects];
@@ -1475,7 +1526,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }];
 }
 
-+ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType useOrigin:(BOOL)useOrigin completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
++ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
 {
     if (!completion) return;
     if (imagesAssetArray.count < 1) {
@@ -1495,7 +1546,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
             filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fwMd5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-            [asset requestVideoURLWithOutputURL:fileURL exportPreset:useOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
+            [asset requestVideoURLWithOutputURL:fileURL exportPreset:asset.useOriginImage ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (videoURL) {
                         [objects addObject:videoURL];
@@ -1556,7 +1607,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     });
                 }];
             } else {
-                if (useOrigin) {
+                if (asset.useOriginImage) {
                     [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (finished) {

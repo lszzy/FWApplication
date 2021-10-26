@@ -102,26 +102,16 @@
 #pragma mark - <QMUIImagePickerViewControllerDelegate>
 
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
-    [self sendImageWithImagesAssetArray:imagesAssetArray useOriginImage:NO];
+    [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
 
 - (FWImagePickerPreviewController *)imagePickerPreviewControllerForImagePickerController:(FWImagePickerController *)imagePickerController {
-    if (imagePickerController.view.tag == MultipleImagePickingTag ||
-        imagePickerController.view.tag == OnlyImagePickingTag ||
-        imagePickerController.view.tag == OnlyVideoPickingTag) {
-        FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
-        imagePickerPreviewController.delegate = self;
-        imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
-        imagePickerPreviewController.showsEditButton = YES;
-        imagePickerPreviewController.view.tag = imagePickerController.view.tag;
-        return imagePickerPreviewController;
-    } else {
-        FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
-        imagePickerPreviewController.delegate = self;
-        imagePickerPreviewController.view.tag = imagePickerController.view.tag;
-        imagePickerPreviewController.toolBarBackgroundColor = FWColorRgb(66, 66, 66);
-        return imagePickerPreviewController;
-    }
+    FWImagePickerPreviewController *imagePickerPreviewController = [[FWImagePickerPreviewController alloc] init];
+    imagePickerPreviewController.delegate = self;
+    imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
+    imagePickerPreviewController.showsOriginImageCheckboxButton = YES;
+    imagePickerPreviewController.view.tag = imagePickerController.view.tag;
+    return imagePickerPreviewController;
 }
 
 #pragma mark - <QMUIImagePickerPreviewViewControllerDelegate>
@@ -150,7 +140,7 @@
 }
 
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(nonnull NSMutableArray<FWAsset *> *)imagesAssetArray {
-    [self sendImageWithImagesAssetArray:imagesAssetArray useOriginImage:imagePickerPreviewController.shouldUseOriginImage];
+    [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
 
 #pragma mark - 业务方法
@@ -160,10 +150,10 @@
     [self fwShowMessageWithText:text];
 }
 
-- (void)sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray useOriginImage:(BOOL)useOriginImage {
+- (void)sendImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
     [self fwShowLoading];
     FWWeakifySelf();
-    [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:0 useOrigin:useOriginImage completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+    [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:0 completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
         FWStrongifySelf();
         [self fwHideLoading];
         if (objects.count > 0) {

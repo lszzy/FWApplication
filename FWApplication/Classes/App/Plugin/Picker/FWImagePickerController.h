@@ -22,11 +22,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册列表事件代理
 @protocol FWImageAlbumControllerDelegate <NSObject>
 
-@required
-/// 点击相簿里某一行时，需要给一个 FWImagePickerController 对象用于展示九宫格图片列表
+@optional
+
+/// 点击相簿里某一行时被调用，使用默认方式打开FWImagePickerController 展示九宫格图片列表，二选一实现
 - (FWImagePickerController *)imagePickerControllerForAlbumController:(FWImageAlbumController *)albumController;
 
-@optional
+/// 点击相簿里某一行时被调用，使用自定义方式打开FWImagePickerController展示九宫格图片列表，二选一实现
+- (FWImagePickerController * _Nullable)albumController:(FWImageAlbumController *)albumController didSelectAssetsGroup:(FWAssetGroup *)assetsGroup;
+
 /// 取消查看相册列表后被调用
 - (void)albumControllerDidCancel:(FWImageAlbumController *)albumController;
 
@@ -90,9 +93,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 加载相册列表时会出现 loading，若需要自定义 loading 的形式，可将该属性置为 NO，默认为 YES
 @property(nonatomic, assign) BOOL showsDefaultLoading;
-
-/// 直接进入指定相册
-- (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup;
 
 @end
 
@@ -181,6 +181,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
 @property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
 @property(nonatomic, assign) BOOL shouldUseOriginImage;
+@property(nonatomic, assign) BOOL showsOriginImageCheckboxButton;
+/// 是否显示编辑按钮，默认YES
 @property(nonatomic, assign) BOOL showsEditButton;
 
 /// 由于组件需要通过本地图片的 FWAsset 对象读取图片的详细信息，因此这里的需要传入的是包含一个或多个 FWAsset 对象的数组
@@ -189,7 +191,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign) FWAssetDownloadStatus downloadStatus;
 
-/// 最多可以选择的图片数，默认为无穷大
+/// 最多可以选择的图片数，默认为9
 @property(nonatomic, assign) NSUInteger maximumSelectImageCount;
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
@@ -294,7 +296,7 @@ NS_ASSUME_NONNULL_BEGIN
  * 图片的最小尺寸，布局时如果有剩余空间，会将空间分配给图片大小，所以最终显示出来的大小不一定等于minimumImageWidth。默认是75。
  * @warning collectionViewLayout 和 collectionView 可能有设置 sectionInsets 和 contentInsets，所以设置几行不可以简单的通过 screenWdith / columnCount 来获得
  */
-@property(nonatomic, assign) CGFloat minimumImageWidth UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) CGFloat minimumImageWidth;
 
 @property(nullable, nonatomic, strong, readonly) UICollectionViewFlowLayout *collectionViewLayout;
 @property(nullable, nonatomic, strong, readonly) UICollectionView *collectionView;
@@ -316,7 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否允许图片多选，默认为 YES。如果为 NO，则不显示 checkbox 和底部工具栏。
 @property(nonatomic, assign) BOOL allowsMultipleSelection;
 
-/// 最多可以选择的图片数，默认为无符号整形数的最大值，相当于没有限制
+/// 最多可以选择的图片数，默认为9
 @property(nonatomic, assign) NSUInteger maximumSelectImageCount;
 
 /// 最少需要选择的图片数，默认为 0
@@ -339,7 +341,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * 下载完成后，主线程回调资源对象和结果信息，根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
-+ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType useOrigin:(BOOL)useOrigin completion:(void (^)(NSArray *objects, NSArray *results))completion;
++ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
 
 @end
 
