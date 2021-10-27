@@ -128,6 +128,7 @@
     imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerPreviewController.showsOriginImageCheckboxButton = YES;
     imagePickerPreviewController.showsImageCountLabel = imagePickerController.view.tag != OnlyImagePickingTag;
+    imagePickerPreviewController.showsEditCollectionView = imagePickerController.view.tag != OnlyImagePickingTag;
     imagePickerPreviewController.view.tag = imagePickerController.view.tag;
     return imagePickerPreviewController;
 }

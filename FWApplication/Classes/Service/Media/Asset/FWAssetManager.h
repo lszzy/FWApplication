@@ -65,7 +65,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *
  *  @return Asset 的缩略图
  */
-- (nullable UIImage *)thumbnailWithSize:(CGSize)size;
+- (nullable UIImage *)thumbnailImageWithSize:(CGSize)size;
 
 /**
  *  Asset 的预览图

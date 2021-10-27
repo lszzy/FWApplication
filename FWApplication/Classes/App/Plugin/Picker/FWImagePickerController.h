@@ -132,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-@interface FWImagePickerPreviewController : FWImagePreviewController <FWImagePreviewViewDelegate>
+@interface FWImagePickerPreviewController : FWImagePreviewController <UICollectionViewDataSource, UICollectionViewDelegate, FWImagePreviewViewDelegate>
 
 @property(nullable, nonatomic, weak) id<FWImagePickerPreviewControllerDelegate> delegate;
 
@@ -157,6 +157,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL showsOriginImageCheckboxButton;
 /// 是否显示编辑按钮，默认YES
 @property(nonatomic, assign) BOOL showsEditButton;
+
+/// 是否显示编辑collectionView，默认YES，仅多选生效
+@property(nonatomic, assign) BOOL showsEditCollectionView;
+@property(nullable, nonatomic, strong, readonly) UICollectionViewFlowLayout *editCollectionViewLayout;
+@property(nullable, nonatomic, strong, readonly) UICollectionView *editCollectionView;
+/// 编辑collectionView高度，默认80
+@property(nonatomic, assign) CGFloat editCollectionViewHeight;
 
 /// 由于组件需要通过本地图片的 FWAsset 对象读取图片的详细信息，因此这里的需要传入的是包含一个或多个 FWAsset 对象的数组
 @property(nullable, nonatomic, strong) NSMutableArray<FWAsset *> *imagesAssetArray;
@@ -185,6 +192,23 @@ NS_ASSUME_NONNULL_BEGIN
                                  selectedImageAssetArray:(NSMutableArray<FWAsset *> * _Nullable)selectedImageAssetArray
                                        currentImageIndex:(NSInteger)currentImageIndex
                                          singleCheckMode:(BOOL)singleCheckMode;
+
+@end
+
+@interface FWImagePickerPreviewCollectionCell : UICollectionViewCell
+
+// 缩略图视图
+@property(nonatomic, strong, readonly) UIImageView *imageView;
+// 缩略图的大小，默认(60,60)
+@property(nonatomic, assign) CGSize thumbnailImageSize UI_APPEARANCE_SELECTOR;
+// 选中边框颜色
+@property(nullable, nonatomic, strong) UIColor *selectedBorderColor UI_APPEARANCE_SELECTOR;
+// 选中边框宽度
+@property(nonatomic, assign) CGFloat selectedBorderWidth UI_APPEARANCE_SELECTOR;
+// 当前这个 cell 正在展示的 FWAsset 的 identifier
+@property(nonatomic, copy, nullable) NSString *assetIdentifier;
+
+- (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize;
 
 @end
 

@@ -75,7 +75,7 @@ static NSString * const kAssetInfoSize = @"size";
     return resultImage;
 }
 
-- (UIImage *)thumbnailWithSize:(CGSize)size {
+- (UIImage *)thumbnailImageWithSize:(CGSize)size {
     __block UIImage *resultImage;
     PHImageRequestOptions *phImageRequestOptions = [[PHImageRequestOptions alloc] init];
     phImageRequestOptions.networkAccessAllowed = YES;

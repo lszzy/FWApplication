@@ -281,6 +281,63 @@
 
 @end
 
+#pragma mark - FWImagePickerPreviewCollectionCell
+
+@implementation FWImagePickerPreviewCollectionCell
+
++ (void)initialize {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [FWImagePickerPreviewCollectionCell appearance].thumbnailImageSize = CGSizeMake(60, 60);
+        [FWImagePickerPreviewCollectionCell appearance].selectedBorderColor = [UIColor greenColor];
+        [FWImagePickerPreviewCollectionCell appearance].selectedBorderWidth = 2;
+    });
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self didInitialize];
+    }
+    return self;
+}
+
+- (void)didInitialize {
+    self.thumbnailImageSize = [FWImagePickerPreviewCollectionCell appearance].thumbnailImageSize;
+    _imageView = [[UIImageView alloc] init];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.imageView.clipsToBounds = YES;
+    [self.contentView addSubview:self.imageView];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGFloat imageEdgeTop = (CGRectGetHeight(self.contentView.bounds) - self.thumbnailImageSize.height) / 2.0;
+    CGFloat imageEdgeLeft = (CGRectGetWidth(self.contentView.bounds) - self.thumbnailImageSize.width) / 2.0;
+    self.imageView.frame = CGRectMake(imageEdgeLeft, imageEdgeTop, self.thumbnailImageSize.width, self.thumbnailImageSize.height);
+}
+
+- (void)setSelectedBorderColor:(UIColor *)selectedBorderColor {
+    _selectedBorderColor = selectedBorderColor;
+}
+
+- (void)setSelectedBorderWidth:(CGFloat)selectedBorderWidth {
+    _selectedBorderWidth = selectedBorderWidth;
+}
+
+- (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize {
+    self.assetIdentifier = asset.identifier;
+    [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
+        if ([self.assetIdentifier isEqualToString:asset.identifier]) {
+            self.imageView.image = result;
+        } else {
+            self.imageView.image = nil;
+        }
+    }];
+}
+
+@end
+
 #pragma mark - FWImagePickerPreviewController
 
 @interface FWAsset (FWImagePickerPreviewController)
@@ -343,6 +400,8 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         _showsEditButton = YES;
+        _showsEditCollectionView = YES;
+        self.editCollectionViewHeight = 80;
         self.maximumSelectImageCount = 9;
         self.minimumSelectImageCount = 0;
         
@@ -384,6 +443,7 @@
     _bottomToolBarView = [[UIView alloc] init];
     self.bottomToolBarView.backgroundColor = self.toolBarBackgroundColor;
     [self.view addSubview:self.bottomToolBarView];
+    [self.view addSubview:self.editCollectionView];
     
     _editButton = [[UIButton alloc] init];
     self.editButton.hidden = !self.showsEditButton;
@@ -472,6 +532,8 @@
     } else {
         self.originImageCheckboxButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     }
+    
+    self.editCollectionView.frame = CGRectMake(0, CGRectGetMinY(self.bottomToolBarView.frame) - self.editCollectionViewHeight, CGRectGetWidth(self.view.bounds), self.editCollectionViewHeight);
 }
 
 - (BOOL)preferredNavigationBarHidden {
@@ -480,6 +542,33 @@
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
+}
+
+#pragma mark - Getters & Setters
+
+@synthesize editCollectionViewLayout = _editCollectionViewLayout;
+- (UICollectionViewFlowLayout *)editCollectionViewLayout {
+    if (!_editCollectionViewLayout) {
+        _editCollectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
+        _editCollectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 12, 10, 12);
+        _editCollectionViewLayout.minimumLineSpacing = _editCollectionViewLayout.sectionInset.bottom;
+        _editCollectionViewLayout.minimumInteritemSpacing = _editCollectionViewLayout.sectionInset.left;
+    }
+    return _editCollectionViewLayout;
+}
+
+@synthesize editCollectionView = _editCollectionView;
+- (UICollectionView *)editCollectionView {
+    if (!_editCollectionView) {
+        _editCollectionView = [[UICollectionView alloc] initWithFrame:self.isViewLoaded ? self.view.bounds : CGRectZero collectionViewLayout:self.editCollectionViewLayout];
+        _editCollectionView.backgroundColor = self.toolBarBackgroundColor;
+        _editCollectionView.delegate = self;
+        _editCollectionView.dataSource = self;
+        _editCollectionView.showsHorizontalScrollIndicator = NO;
+        [_editCollectionView registerClass:[FWImagePickerPreviewCollectionCell class] forCellWithReuseIdentifier:@"cell"];
+        _editCollectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+    return _editCollectionView;
 }
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
@@ -566,11 +655,38 @@
 - (void)singleTouchInZoomingImageView:(FWZoomImageView *)zoomImageView location:(CGPoint)location {
     self.topToolBarView.hidden = !self.topToolBarView.hidden;
     self.bottomToolBarView.hidden = !self.bottomToolBarView.hidden;
+    self.editCollectionView.hidden = !self.editCollectionView.hidden;
 }
 
 - (void)zoomImageView:(FWZoomImageView *)imageView didHideVideoToolbar:(BOOL)didHide {
     self.topToolBarView.hidden = didHide;
     self.bottomToolBarView.hidden = didHide;
+    self.editCollectionView.hidden = didHide;
+}
+
+#pragma mark - <UICollectionViewDelegate, UICollectionViewDataSource>
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 1;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.selectedImageAssetArray count];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(60, 60);
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    FWAsset *imageAsset = [self.selectedImageAssetArray objectAtIndex:indexPath.item];
+    FWImagePickerPreviewCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
+    [cell renderWithAsset:imageAsset referenceSize:CGSizeMake(60, 60)];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 #pragma mark - 按钮点击回调
