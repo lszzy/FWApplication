@@ -1609,6 +1609,18 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.sendButton.enabled = NO;
         self.imageCountLabel.hidden = YES;
     }
+    
+    [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset *imageAsset, NSUInteger idx, BOOL *stop) {
+        NSInteger imageIndex = [self.imagesAssetArray indexOfObject:imageAsset];
+        if (imageIndex == NSNotFound) return;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:imageIndex inSection:0];
+        
+        FWImagePickerCollectionCell *cell = (FWImagePickerCollectionCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+        if (cell.selectable) {
+            cell.checked = YES;
+            cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
+        }
+    }];
 }
 
 #pragma mark - Request Image
