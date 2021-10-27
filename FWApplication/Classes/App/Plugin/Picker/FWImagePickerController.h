@@ -24,17 +24,16 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol FWImageAlbumControllerDelegate <NSObject>
 
 @optional
-
-/// 点击相簿里某一行时被调用，使用默认方式打开FWImagePickerController 展示九宫格图片列表，二选一实现
+/// 需提供FWImagePickerController 用于展示九宫格图片列表
 - (FWImagePickerController *)imagePickerControllerForAlbumController:(FWImageAlbumController *)albumController;
 
-/// 点击相簿里某一行时被调用，使用自定义方式打开FWImagePickerController展示九宫格图片列表，二选一实现
-- (FWImagePickerController * _Nullable)albumController:(FWImageAlbumController *)albumController didSelectAssetsGroup:(FWAssetGroup *)assetsGroup;
+/// 点击相簿里某一行时被调用，未实现时默认打开imagePickerController
+- (void)albumController:(FWImageAlbumController *)albumController didSelectAssetsGroup:(FWAssetGroup *)assetsGroup;
 
 /// 自定义相册列表cell展示，cellForRow自动调用
 - (void)albumController:(FWImageAlbumController *)albumController customCell:(FWImageAlbumTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
-/// 取消查看相册列表后被调用
+/// 取消查看相册列表后被调用，未实现时自动转发给当前imagePickerController
 - (void)albumControllerDidCancel:(FWImageAlbumController *)albumController;
 
 /// 即将需要显示 Loading 时调用，可自定义Loading效果
@@ -98,9 +97,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册展示内容的类型，可以控制只展示照片、视频或音频的其中一种，也可以同时展示所有类型的资源，默认展示所有类型的资源。
 @property(nonatomic, assign) FWAlbumContentType contentType;
 
-/// 加载相册列表时会出现 loading，若需要自定义 loading 的形式，可将该属性置为 NO，默认为 YES
-@property(nonatomic, assign) BOOL showsDefaultLoading;
-
 /// 是否直接进入第一个相册列表
 @property(nonatomic, assign) BOOL pickDefaultAlbumGroup;
 
@@ -118,10 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 
-/// 完成选中图片回调
+/// 完成选中图片回调，未实现时自动转发给当前imagePickerController
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray;
-/// 取消选择图片后被调用
-- (void)imagePickerPreviewControllerDidCancel:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 即将选中图片
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willCheckImageAtIndex:(NSInteger)index;
 /// 已经选中图片
@@ -130,6 +124,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willUncheckImageAtIndex:(NSInteger)index;
 /// 已经取消选中图片
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didUncheckImageAtIndex:(NSInteger)index;
+/// 图片预览界面关闭返回时被调用
+- (void)imagePickerPreviewControllerDidCancel:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 自定义图片裁剪控制器，启用编辑时生效，未实现时使用默认配置
 - (FWImageCropController *)imageCropControllerForPreviewController:(FWImagePickerPreviewController *)previewController image:(UIImage *)image;
 
@@ -156,6 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) UIImage *originImageCheckboxImage;
 @property(nonatomic, strong) UIImage *originImageCheckboxCheckedImage;
 @property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
+@property(nonatomic, assign) BOOL showsImageCountLabel;
 @property(nonatomic, assign) BOOL shouldUseOriginImage;
 @property(nonatomic, assign) BOOL showsOriginImageCheckboxButton;
 /// 是否显示编辑按钮，默认YES
@@ -220,6 +217,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray;
 
 /**
+ *  取消选择图片后被调用
+ */
+- (void)imagePickerControllerDidCancel:(FWImagePickerController *)imagePickerController;
+
+/**
  *  cell 被点击时调用（先调用这个接口，然后才去走预览大图的逻辑），注意这并非指选中 checkbox 事件
  *
  *  @param imagePickerController        对应的 FWImagePickerController
@@ -245,11 +247,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 自定义图片九宫格cell展示，cellForRow自动调用
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-
-/**
- *  取消选择图片后被调用
- */
-- (void)imagePickerControllerDidCancel:(FWImagePickerController *)imagePickerController;
 
 /**
  *  即将需要显示 Loading 时调用
@@ -288,6 +285,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIButton *previewButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
 @property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
+@property(nonatomic, assign) BOOL showsImageCountLabel;
 
 /// 也可以直接传入 FWAssetGroup，然后读取其中的 FWAsset 并储存到 imagesAssetArray 中，传入后会赋值到 FWAssetGroup，并自动刷新 UI 展示
 - (void)refreshWithAssetsGroup:(FWAssetGroup * _Nullable)assetsGroup;

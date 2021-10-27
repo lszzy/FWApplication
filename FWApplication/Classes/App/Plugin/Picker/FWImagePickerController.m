@@ -123,7 +123,6 @@
 
 - (void)didInitialize {
     _albumsArray = [[NSMutableArray alloc] init];
-    _showsDefaultLoading = YES;
     _albumTableViewCellHeight = 88;
 }
 
@@ -156,9 +155,6 @@
             [self fwShowEmptyViewWithText:tipText];
         }
     } else {
-        if (self.showsDefaultLoading) {
-            [self fwShowLoading];
-        }
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
             [self.albumControllerDelegate albumControllerWillStartLoading:self];
         }
@@ -201,9 +197,6 @@
         }
         [self.tableView reloadData];
         
-        if (self.showsDefaultLoading) {
-            [self fwHideLoading];
-        }
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillFinishLoading:)]) {
             [self.albumControllerDelegate albumControllerWillFinishLoading:self];
         }
@@ -218,20 +211,22 @@
 
 - (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup animated:(BOOL)animated {
     if (!assetsGroup) return;
+    
+    [self initImagePickerControllerIfNeeded];
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
-        self.imagePickerController = [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
-    } else {
-        if (!self.imagePickerController) {
-            if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
-                self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
-            } else {
-                self.imagePickerController = [[FWImagePickerController alloc] init];
-            }
-        }
-        
+        [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
+    } else if (self.imagePickerController) {
         [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
         self.imagePickerController.title = [assetsGroup name];
         [self.navigationController pushViewController:self.imagePickerController animated:animated];
+    }
+}
+
+- (void)initImagePickerControllerIfNeeded {
+    if (!self.imagePickerController) {
+        if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
+            self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+        }
     }
 }
 
@@ -274,6 +269,11 @@
     [self dismissViewControllerAnimated:YES completion:^(void) {
         if (self.albumControllerDelegate && [self.albumControllerDelegate respondsToSelector:@selector(albumControllerDidCancel:)]) {
             [self.albumControllerDelegate albumControllerDidCancel:self];
+        } else {
+            [self initImagePickerControllerIfNeeded];
+            if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
+                [self.imagePickerController.imagePickerControllerDelegate imagePickerControllerDidCancel:self.imagePickerController];
+            }
         }
         [self.imagePickerController.selectedImageAssetArray removeAllObjects];
     }];
@@ -327,6 +327,12 @@
 - (void)setUseOriginImage:(BOOL)useOriginImage {
     objc_setAssociatedObject(self, @selector(useOriginImage), @(useOriginImage), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
+@end
+
+@interface FWImagePickerPreviewController ()
+
+@property(nonatomic, weak) FWImagePickerController *imagePickerController;
 
 @end
 
@@ -430,13 +436,7 @@
     }
     
     [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
-    if ([self.selectedImageAssetArray count] > 0) {
-        NSUInteger selectedCount = [self.selectedImageAssetArray count];
-        _imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
-        _imageCountLabel.hidden = NO;
-    } else {
-        _imageCountLabel.hidden = YES;
-    }
+    [self updateImageCountLabel];
     
     // TODO：导航栏样式
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -593,6 +593,7 @@
         button.selected = NO;
         FWAsset *imageAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray removeObject:imageAsset];
+        [self updateImageCountLabel];
         
         if ([self.delegate respondsToSelector:@selector(imagePickerPreviewController:didUncheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self didUncheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -617,6 +618,7 @@
         button.selected = YES;
         FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray addObject:imageAsset];
+        [self updateImageCountLabel];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didCheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self didCheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -667,18 +669,22 @@
 
 - (void)handleSendButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^(void) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
-            if (self.selectedImageAssetArray.count == 0) {
-                // 如果没选中任何一张，则点击发送按钮直接发送当前这张大图
-                FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
-                [self.selectedImageAssetArray addObject:currentAsset];
-            }
-            BOOL useOriginImage = self.shouldUseOriginImage;
-            [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                obj.useOriginImage = useOriginImage;
-            }];
-            [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
+        if (self.selectedImageAssetArray.count == 0) {
+            // 如果没选中任何一张，则点击发送按钮直接发送当前这张大图
+            FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
+            [self.selectedImageAssetArray addObject:currentAsset];
         }
+        BOOL useOriginImage = self.shouldUseOriginImage;
+        [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.useOriginImage = useOriginImage;
+        }];
+        
+        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
+            [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
+        } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+            [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
+        }
+        [self.imagePickerController.selectedImageAssetArray removeAllObjects];
     }];
 }
 
@@ -739,6 +745,16 @@
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     };
     [self presentViewController:cropController animated:NO completion:nil];
+}
+
+- (void)updateImageCountLabel {
+    NSUInteger selectedCount = [self.selectedImageAssetArray count];
+    if (selectedCount > 0) {
+        _imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
+        _imageCountLabel.hidden = !self.showsImageCountLabel;
+    } else {
+        _imageCountLabel.hidden = YES;
+    }
 }
 
 - (void)updateSelectedCollectionView {
@@ -1272,6 +1288,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)initPreviewViewControllerIfNeeded {
     if (!self.imagePickerPreviewController) {
         self.imagePickerPreviewController = [self.imagePickerControllerDelegate imagePickerPreviewControllerForImagePickerController:self];
+        self.imagePickerPreviewController.imagePickerController = self;
         self.imagePickerPreviewController.maximumSelectImageCount = self.maximumSelectImageCount;
         self.imagePickerPreviewController.minimumSelectImageCount = self.minimumSelectImageCount;
     }
@@ -1493,11 +1510,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)handleSendButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^() {
+        BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
+        [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            obj.useOriginImage = useOriginImage;
+        }];
+        
         if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
-            BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
-            [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                obj.useOriginImage = useOriginImage;
-            }];
             [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray];
         }
         [self.selectedImageAssetArray removeAllObjects];
@@ -1540,13 +1558,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [self.selectedImageAssetArray removeObject:imageAsset];
         cell.checked = NO;
         cell.checkedIndex = NSNotFound;
+        // 根据选择图片数控制预览和发送按钮的 enable，以及修改已选中的图片数
+        [self updateImageCountAndCheckLimited];
         
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didUncheckImageAtIndex:)]) {
             [self.imagePickerControllerDelegate imagePickerController:self didUncheckImageAtIndex:indexPath.item];
         }
-        
-        // 根据选择图片数控制预览和发送按钮的 enable，以及修改已选中的图片数
-        [self updateImageCountAndCheckLimited];
     } else {
         // 选中该资源
         if ([self.selectedImageAssetArray count] >= _maximumSelectImageCount) {
@@ -1568,13 +1585,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [self.selectedImageAssetArray addObject:imageAsset];
         cell.checked = YES;
         cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
+        // 根据选择图片数控制预览和发送按钮的 enable，以及修改已选中的图片数
+        [self updateImageCountAndCheckLimited];
         
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didCheckImageAtIndex:)]) {
             [self.imagePickerControllerDelegate imagePickerController:self didCheckImageAtIndex:indexPath.item];
         }
-        
-        // 根据选择图片数控制预览和发送按钮的 enable，以及修改已选中的图片数
-        [self updateImageCountAndCheckLimited];
         
         // 发出请求获取大图，如果图片在 iCloud，则会发出网络请求下载图片。这里同时保存请求 id，供取消请求使用
         [self requestImageWithIndexPath:indexPath];
@@ -1587,7 +1603,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.previewButton.enabled = YES;
         self.sendButton.enabled = YES;
         self.imageCountLabel.text = [NSString stringWithFormat:@"%@", @(selectedImageCount)];
-        self.imageCountLabel.hidden = NO;
+        self.imageCountLabel.hidden = !self.showsImageCountLabel;
     } else {
         self.previewButton.enabled = NO;
         self.sendButton.enabled = NO;

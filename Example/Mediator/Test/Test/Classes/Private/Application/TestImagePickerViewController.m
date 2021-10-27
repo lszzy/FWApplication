@@ -99,6 +99,7 @@
     FWImagePickerController *imagePickerController = [[FWImagePickerController alloc] init];
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
+    imagePickerController.showsImageCountLabel = albumController.view.tag != OnlyImagePickingTag;
     imagePickerController.view.tag = albumController.view.tag;
     if (albumController.view.tag == SingleImagePickingTag) {
         imagePickerController.allowsMultipleSelection = NO;
@@ -113,6 +114,10 @@
 
 #pragma mark - <QMUIImagePickerViewControllerDelegate>
 
+- (void)imagePickerControllerDidCancel:(FWImagePickerController *)imagePickerController {
+    [self fwShowMessageWithText:@"图片选择已取消"];
+}
+
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
     [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
@@ -122,41 +127,13 @@
     imagePickerPreviewController.delegate = self;
     imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerPreviewController.showsOriginImageCheckboxButton = YES;
+    imagePickerPreviewController.showsImageCountLabel = imagePickerController.view.tag != OnlyImagePickingTag;
     imagePickerPreviewController.view.tag = imagePickerController.view.tag;
     return imagePickerPreviewController;
 }
 
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     cell.showsCheckedIndexLabel = imagePickerController.view.tag != OnlyImagePickingTag;
-}
-
-#pragma mark - <QMUIImagePickerPreviewViewControllerDelegate>
-
-- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didCheckImageAtIndex:(NSInteger)index {
-    [self updateImageCountLabelForPreviewView:imagePickerPreviewController];
-}
-
-- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didUncheckImageAtIndex:(NSInteger)index {
-    [self updateImageCountLabelForPreviewView:imagePickerPreviewController];
-}
-
-// 更新选中的图片数量
-- (void)updateImageCountLabelForPreviewView:(FWImagePickerPreviewController *)imagePickerPreviewController {
-    if (imagePickerPreviewController.view.tag == MultipleImagePickingTag ||
-        imagePickerPreviewController.view.tag == OnlyImagePickingTag ||
-        imagePickerPreviewController.view.tag == OnlyVideoPickingTag) {
-        NSUInteger selectedCount = [imagePickerPreviewController.selectedImageAssetArray count];
-        if (selectedCount > 0) {
-            imagePickerPreviewController.imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
-            imagePickerPreviewController.imageCountLabel.hidden = NO;
-        } else {
-            imagePickerPreviewController.imageCountLabel.hidden = YES;
-        }
-    }
-}
-
-- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(nonnull NSMutableArray<FWAsset *> *)imagesAssetArray {
-    [self sendImageWithImagesAssetArray:imagesAssetArray];
 }
 
 #pragma mark - 业务方法
