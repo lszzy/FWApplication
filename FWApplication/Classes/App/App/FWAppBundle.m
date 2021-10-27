@@ -9,8 +9,6 @@
 
 #import "FWAppBundle.h"
 
-static NSMutableDictionary *fwStaticNameImages = nil;
-
 @implementation FWAppBundle
 
 + (NSBundle *)bundle
@@ -27,8 +25,6 @@ static NSMutableDictionary *fwStaticNameImages = nil;
 + (UIImage *)imageNamed:(NSString *)name
 {
     UIImage *image = [super imageNamed:name];
-    if (image) return image;
-    image = [[self nameImages] objectForKey:name];
     if (image) return image;
     
     if ([name isEqualToString:@"fwNavBack"]) {
@@ -150,25 +146,6 @@ static NSMutableDictionary *fwStaticNameImages = nil;
         }];
     }
     return nil;
-}
-
-+ (void)setImage:(UIImage *)image forName:(NSString *)name
-{
-    if (image) {
-        [[self nameImages] setObject:image forKey:name];
-    } else {
-        [[self nameImages] removeObjectForKey:name];
-    }
-}
-
-+ (NSMutableDictionary *)nameImages
-{
-    static NSMutableDictionary *nameImages = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        nameImages = [[NSMutableDictionary alloc] init];
-    });
-    return nameImages;
 }
 
 + (NSString *)localizedString:(NSString *)key table:(NSString *)table

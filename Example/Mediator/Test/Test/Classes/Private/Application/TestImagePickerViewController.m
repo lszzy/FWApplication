@@ -127,9 +127,7 @@
 }
 
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    cell.showsCheckedIndexLabel = YES;
-    cell.checkedIndexLabelBackgroundColor = [UIColor fwColorWithHex:0xFF8800];
-    [cell.checkedIndexLabel fwSetBorderColor:[UIColor whiteColor] width:0.5];
+    cell.showsCheckedIndexLabel = imagePickerController.view.tag != OnlyImagePickingTag;
 }
 
 #pragma mark - <QMUIImagePickerPreviewViewControllerDelegate>

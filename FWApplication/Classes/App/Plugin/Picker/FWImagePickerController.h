@@ -146,11 +146,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIView *topToolBarView;
 @property(nullable, nonatomic, strong, readonly) FWNavigationButton *backButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *checkboxButton;
+@property(nonatomic, strong) UIImage *checkboxImage;
+@property(nonatomic, strong) UIImage *checkboxCheckedImage;
 
 @property(nullable, nonatomic, strong, readonly) UIView *bottomToolBarView;
 @property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *editButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
+@property(nonatomic, strong) UIImage *originImageCheckboxImage;
+@property(nonatomic, strong) UIImage *originImageCheckboxCheckedImage;
 @property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
 @property(nonatomic, assign) BOOL shouldUseOriginImage;
 @property(nonatomic, assign) BOOL showsOriginImageCheckboxButton;

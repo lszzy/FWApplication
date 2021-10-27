@@ -20,9 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Image
 
-/// 自定义当前模块图片
-+ (void)setImage:(nullable UIImage *)image forName:(NSString *)name;
-
 /// 图片，导航栏返回，fwNavBack
 @property (class, nonatomic, strong, readonly, nullable) UIImage *navBackImage;
 /// 图片，导航栏关闭，fwNavClose

@@ -342,6 +342,11 @@
         
         self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
         self.toolBarTintColor = UIColor.whiteColor;
+        
+        _checkboxImage = FWAppBundle.pickerCheckImage;
+        _checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
+        _originImageCheckboxImage = FWAppBundle.pickerCheckImage;
+        _originImageCheckboxCheckedImage = FWAppBundle.pickerCheckedImage;
     }
     return self;
 }
@@ -362,11 +367,9 @@
     [self.topToolBarView addSubview:self.backButton];
     
     _checkboxButton = [[UIButton alloc] init];
-    UIImage *checkboxImage = FWAppBundle.pickerCheckImage;
-    UIImage *checkedCheckboxImage = FWAppBundle.pickerCheckedImage;
-    [self.checkboxButton setImage:checkboxImage forState:UIControlStateNormal];
-    [self.checkboxButton setImage:checkedCheckboxImage forState:UIControlStateSelected];
-    [self.checkboxButton setImage:[self.checkboxButton imageForState:UIControlStateSelected] forState:UIControlStateSelected|UIControlStateHighlighted];
+    [self.checkboxButton setImage:self.checkboxImage forState:UIControlStateNormal];
+    [self.checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected];
+    [self.checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
     [self.checkboxButton sizeToFit];
     [self.checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
@@ -407,9 +410,9 @@
     _originImageCheckboxButton = [[UIButton alloc] init];
     self.originImageCheckboxButton.hidden = !self.showsOriginImageCheckboxButton;
     self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:14];
-    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckImage forState:UIControlStateNormal];
-    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected];
-    [self.originImageCheckboxButton setImage:FWAppBundle.pickerCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
+    [self.originImageCheckboxButton setImage:self.originImageCheckboxImage forState:UIControlStateNormal];
+    [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected];
+    [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
     [self.originImageCheckboxButton setTitle:@"原图" forState:UIControlStateNormal];
     [self.originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
     [self.originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
@@ -899,10 +902,10 @@
         [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
         [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
         [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = UIColor.whiteColor;
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = UIColor.redColor;
         [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
         [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.75];
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
     });
 }
 
@@ -1174,7 +1177,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:@"取消" target:self action:@selector(handleCancelPickerImage:)];
     
-    self.view.backgroundColor = UIColor.whiteColor;
     [self.view addSubview:self.collectionView];
     if (self.allowsMultipleSelection) {
         [self.view addSubview:self.operationToolBarView];
@@ -1341,7 +1343,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _collectionView.dataSource = self;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.alwaysBounceHorizontal = NO;
-        _collectionView.backgroundColor = UIColor.clearColor;
         [_collectionView registerClass:[FWImagePickerCollectionCell class] forCellWithReuseIdentifier:kVideoCellIdentifier];
         [_collectionView registerClass:[FWImagePickerCollectionCell class] forCellWithReuseIdentifier:kImageOrUnknownCellIdentifier];
         _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
