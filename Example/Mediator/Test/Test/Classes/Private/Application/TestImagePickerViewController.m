@@ -42,8 +42,15 @@
 }
 
 - (void)presentAlbumViewControllerWithIndex:(NSInteger)index {
+    FWImageAlbumTableCell *appearance = [FWImageAlbumTableCell appearance];
+    appearance.albumImageSize = 56;
+    appearance.albumNameFont = [UIFont systemFontOfSize:17];
+    appearance.albumNameInsets = UIEdgeInsetsMake(0, 12, 0, 8);
+    appearance.albumAssetsNumberFont = [UIFont systemFontOfSize:12];
+    
     // 创建一个 QMUIAlbumViewController 实例用于呈现相簿列表
     FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
+    albumController.albumTableViewCellHeight = 68;
     albumController.fwNavigationBarStyle = FWNavigationBarStyleDefault;
     albumController.fwBackBarItem = FWIcon.backImage;
     albumController.albumControllerDelegate = self;
@@ -54,7 +61,6 @@
         albumController.contentType = FWAlbumContentTypeAll;
     } else if (index == 1) {
         albumController.view.tag = MultipleImagePickingTag;
-        albumController.albumTableViewCellHeight = 70;
         albumController.contentType = FWAlbumContentTypeAll;
     } else if (index == 2) {
         albumController.view.tag = OnlyImagePickingTag;
@@ -100,6 +106,11 @@
     return imagePickerController;
 }
 
+- (void)albumController:(FWImageAlbumController *)albumController customCell:(FWImageAlbumTableCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    FWAssetGroup *assetsGroup = albumController.albumsArray[indexPath.row];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", @(assetsGroup.numberOfAssets)];
+}
+
 #pragma mark - <QMUIImagePickerViewControllerDelegate>
 
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray {
@@ -113,6 +124,12 @@
     imagePickerPreviewController.showsOriginImageCheckboxButton = YES;
     imagePickerPreviewController.view.tag = imagePickerController.view.tag;
     return imagePickerPreviewController;
+}
+
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    cell.showsCheckedIndexLabel = YES;
+    cell.checkedIndexLabelBackgroundColor = [UIColor fwColorWithHex:0xFF8800];
+    [cell.checkedIndexLabel fwSetBorderColor:[UIColor whiteColor] width:0.5];
 }
 
 #pragma mark - <QMUIImagePickerPreviewViewControllerDelegate>

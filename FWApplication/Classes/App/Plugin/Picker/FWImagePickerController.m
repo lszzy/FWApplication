@@ -48,16 +48,12 @@
 }
 
 - (void)didInitializeWithStyle:(UITableViewCellStyle)style {
+    self.albumImageSize = [FWImageAlbumTableCell appearance].albumImageSize;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
     self.imageView.layer.borderWidth = [UIScreen fwPixelOne];
     self.imageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.1].CGColor;
-}
-
-- (void)updateCellAppearance:(NSIndexPath *)indexPath {
-    self.textLabel.font = self.albumNameFont;
-    self.detailTextLabel.font = self.albumAssetsNumberFont;
 }
 
 - (void)layoutSubviews {
@@ -257,10 +253,15 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     FWAssetGroup *assetsGroup = self.albumsArray[indexPath.row];
-    cell.imageView.image = [assetsGroup posterImageWithSize:CGSizeMake(self.albumTableViewCellHeight, self.albumTableViewCellHeight)];
+    cell.imageView.image = [assetsGroup posterImageWithSize:CGSizeMake(cell.albumImageSize, cell.albumImageSize)] ?: self.defaultPosterImage;
+    cell.textLabel.font = cell.albumNameFont;
     cell.textLabel.text = [assetsGroup name];
+    cell.detailTextLabel.font = cell.albumAssetsNumberFont;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"· %@", @(assetsGroup.numberOfAssets)];
-    [cell updateCellAppearance:indexPath];
+    
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:customCell:atIndexPath:)]) {
+        [self.albumControllerDelegate albumController:self customCell:cell atIndexPath:indexPath];
+    }
     return cell;
 }
 
@@ -276,158 +277,6 @@
         }
         [self.imagePickerController.selectedImageAssetArray removeAllObjects];
     }];
-}
-
-@end
-
-#pragma mark - FWImagePickerCollectionCell
-
-@interface FWImagePickerCollectionCell ()
-
-@property(nonatomic, strong, readwrite) UIButton *checkboxButton;
-
-@end
-
-@implementation FWImagePickerCollectionCell
-
-@synthesize videoDurationLabel = _videoDurationLabel;
-
-+ (void)initialize {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [FWImagePickerCollectionCell appearance].checkboxImage = FWAppBundle.pickerCheckImage;
-        [FWImagePickerCollectionCell appearance].checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
-        [FWImagePickerCollectionCell appearance].checkboxButtonMargins = UIEdgeInsetsMake(6, 6, 6, 6);
-        [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
-        [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
-        [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
-    });
-}
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self initImagePickerCollectionViewCellUI];
-    }
-    return self;
-}
-
-- (void)initImagePickerCollectionViewCellUI {
-    _contentImageView = [[UIImageView alloc] init];
-    self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.contentImageView.clipsToBounds = YES;
-    [self.contentView addSubview:self.contentImageView];
-    
-    self.checkboxButton = [[UIButton alloc] init];
-    self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    self.checkboxButton.hidden = YES;
-    [self.contentView addSubview:self.checkboxButton];
-}
-
-- (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize {
-    self.assetIdentifier = asset.identifier;
-    
-    // 异步请求资源对应的缩略图
-    [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
-        if ([self.assetIdentifier isEqualToString:asset.identifier]) {
-            self.contentImageView.image = result;
-        } else {
-            self.contentImageView.image = nil;
-        }
-    }];
-    
-    if (asset.assetType == FWAssetTypeVideo) {
-        [self initVideoDurationLabelIfNeeded];
-        NSUInteger min = floor(asset.duration / 60);
-        NSUInteger sec = floor(asset.duration - min * 60);
-        self.videoDurationLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", (long)min, (long)sec];
-        self.videoDurationLabel.hidden = NO;
-    } else {
-        self.videoDurationLabel.hidden = YES;
-    }
-    
-    [self setNeedsLayout];
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.contentImageView.frame = self.contentView.bounds;
-    if (_selectable) {
-        self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.checkboxButtonMargins.right - CGRectGetWidth(self.checkboxButton.bounds), self.checkboxButtonMargins.top);
-    }
-    
-    if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
-        [self.videoDurationLabel sizeToFit];
-        self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
-    }
-}
-
-- (void)setCheckboxImage:(UIImage *)checkboxImage {
-    if (![self.checkboxImage isEqual:checkboxImage]) {
-        [self.checkboxButton setImage:checkboxImage forState:UIControlStateNormal];
-        [self.checkboxButton sizeToFit];
-        [self setNeedsLayout];
-    }
-    _checkboxImage = checkboxImage;
-}
-
-- (void)setCheckboxCheckedImage:(UIImage *)checkboxCheckedImage {
-    if (![self.checkboxCheckedImage isEqual:checkboxCheckedImage]) {
-        [self.checkboxButton setImage:checkboxCheckedImage forState:UIControlStateSelected];
-        [self.checkboxButton setImage:checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
-        [self.checkboxButton sizeToFit];
-        [self setNeedsLayout];
-    }
-    _checkboxCheckedImage = checkboxCheckedImage;
-}
-
-- (void)setVideoDurationLabelFont:(UIFont *)videoDurationLabelFont {
-    if (![self.videoDurationLabelFont isEqual:videoDurationLabelFont]) {
-        _videoDurationLabel.font = videoDurationLabelFont;
-        _videoDurationLabel.text = @"测";
-        [_videoDurationLabel sizeToFit];
-        _videoDurationLabel.text = nil;
-        [self setNeedsLayout];
-    }
-    _videoDurationLabelFont = videoDurationLabelFont;
-}
-
-- (void)setVideoDurationLabelTextColor:(UIColor *)videoDurationLabelTextColor {
-    if (![self.videoDurationLabelTextColor isEqual:videoDurationLabelTextColor]) {
-        _videoDurationLabel.textColor = videoDurationLabelTextColor;
-    }
-    _videoDurationLabelTextColor = videoDurationLabelTextColor;
-}
-
-- (void)setChecked:(BOOL)checked {
-    _checked = checked;
-    if (_selectable) {
-        self.checkboxButton.selected = checked;
-    }
-}
-
-- (void)setSelectable:(BOOL)editing {
-    _selectable = editing;
-    if (self.downloadStatus == FWAssetDownloadStatusSucceed) {
-        self.checkboxButton.hidden = !_selectable;
-    }
-}
-
-- (void)setDownloadStatus:(FWAssetDownloadStatus)downloadStatus {
-    _downloadStatus = downloadStatus;
-    if (_selectable) {
-        self.checkboxButton.hidden = !_selectable;
-    }
-}
-
-- (void)initVideoDurationLabelIfNeeded {
-    if (!self.videoDurationLabel) {
-        _videoDurationLabel = [[UILabel alloc] init];
-        _videoDurationLabel.font = self.videoDurationLabelFont;
-        _videoDurationLabel.textColor = self.videoDurationLabelTextColor;
-        [self.contentView addSubview:_videoDurationLabel];
-        [self setNeedsLayout];
-    }
 }
 
 @end
@@ -1027,6 +876,253 @@
 
 @end
 
+#pragma mark - FWImagePickerCollectionCell
+
+@interface FWImagePickerCollectionCell ()
+
+@property(nonatomic, strong, readwrite) UIButton *checkboxButton;
+@property(nonatomic, strong, readwrite) UILabel *checkedIndexLabel;
+
+@end
+
+@implementation FWImagePickerCollectionCell
+
+@synthesize videoDurationLabel = _videoDurationLabel;
+
++ (void)initialize {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [FWImagePickerCollectionCell appearance].checkboxImage = FWAppBundle.pickerCheckImage;
+        [FWImagePickerCollectionCell appearance].checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
+        [FWImagePickerCollectionCell appearance].checkboxButtonMargins = UIEdgeInsetsMake(6, 6, 6, 6);
+        [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
+        [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
+        [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = UIColor.whiteColor;
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.75];
+    });
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        _checkedIndex = NSNotFound;
+        [self initImagePickerCollectionViewCellUI];
+    }
+    return self;
+}
+
+- (void)initImagePickerCollectionViewCellUI {
+    _contentImageView = [[UIImageView alloc] init];
+    self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.contentImageView.clipsToBounds = YES;
+    [self.contentView addSubview:self.contentImageView];
+    
+    self.checkboxButton = [[UIButton alloc] init];
+    self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+    self.checkboxButton.hidden = YES;
+    [self.contentView addSubview:self.checkboxButton];
+}
+
+- (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize {
+    self.assetIdentifier = asset.identifier;
+    
+    // 异步请求资源对应的缩略图
+    [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
+        if ([self.assetIdentifier isEqualToString:asset.identifier]) {
+            self.contentImageView.image = result;
+        } else {
+            self.contentImageView.image = nil;
+        }
+    }];
+    
+    if (self.showsCheckedIndexLabel) {
+        [self initCheckedIndexLabelIfNeeded];
+    } else {
+        self.checkedIndexLabel.hidden = YES;
+    }
+    
+    if (asset.assetType == FWAssetTypeVideo) {
+        [self initVideoDurationLabelIfNeeded];
+        NSUInteger min = floor(asset.duration / 60);
+        NSUInteger sec = floor(asset.duration - min * 60);
+        self.videoDurationLabel.text = [NSString stringWithFormat:@"%02ld:%02ld", (long)min, (long)sec];
+        self.videoDurationLabel.hidden = NO;
+    } else {
+        self.videoDurationLabel.hidden = YES;
+    }
+    
+    [self setNeedsLayout];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.contentImageView.frame = self.contentView.bounds;
+    if (_selectable) {
+        // 经测试checkboxButton图片视图未完全占满UIButton，导致无法对齐，修复之
+        CGSize checkboxButtonSize = self.checkboxButton.imageView.bounds.size;
+        if (CGSizeEqualToSize(checkboxButtonSize, CGSizeZero)) {
+            checkboxButtonSize = self.checkboxButton.bounds.size;
+        }
+        self.checkboxButton.frame = CGRectMake(CGRectGetWidth(self.contentView.bounds) - self.checkboxButtonMargins.right - checkboxButtonSize.width, self.checkboxButtonMargins.top, checkboxButtonSize.width, checkboxButtonSize.height);
+    }
+    
+    if (self.checkedIndexLabel) {
+        self.checkedIndexLabel.layer.cornerRadius = self.checkedIndexLabelSize.width / 2.0;
+        self.checkedIndexLabel.frame = CGRectMake(CGRectGetWidth(self.contentView.bounds) - self.checkedIndexLabelMargins.right - self.checkedIndexLabelSize.width, self.checkedIndexLabelMargins.top, self.checkedIndexLabelSize.width, self.checkedIndexLabelSize.height);
+    }
+    
+    if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
+        [self.videoDurationLabel sizeToFit];
+        self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+    }
+}
+
+- (void)setCheckboxImage:(UIImage *)checkboxImage {
+    if (![self.checkboxImage isEqual:checkboxImage]) {
+        [self.checkboxButton setImage:checkboxImage forState:UIControlStateNormal];
+        [self.checkboxButton sizeToFit];
+        [self setNeedsLayout];
+    }
+    _checkboxImage = checkboxImage;
+}
+
+- (void)setCheckboxCheckedImage:(UIImage *)checkboxCheckedImage {
+    if (![self.checkboxCheckedImage isEqual:checkboxCheckedImage]) {
+        [self.checkboxButton setImage:checkboxCheckedImage forState:UIControlStateSelected];
+        [self.checkboxButton setImage:checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
+        [self.checkboxButton sizeToFit];
+        [self setNeedsLayout];
+    }
+    _checkboxCheckedImage = checkboxCheckedImage;
+}
+
+- (void)setVideoDurationLabelFont:(UIFont *)videoDurationLabelFont {
+    if (![self.videoDurationLabelFont isEqual:videoDurationLabelFont]) {
+        _videoDurationLabel.font = videoDurationLabelFont;
+        _videoDurationLabel.text = @"测";
+        [_videoDurationLabel sizeToFit];
+        _videoDurationLabel.text = nil;
+        [self setNeedsLayout];
+    }
+    _videoDurationLabelFont = videoDurationLabelFont;
+}
+
+- (void)setVideoDurationLabelTextColor:(UIColor *)videoDurationLabelTextColor {
+    if (![self.videoDurationLabelTextColor isEqual:videoDurationLabelTextColor]) {
+        _videoDurationLabel.textColor = videoDurationLabelTextColor;
+    }
+    _videoDurationLabelTextColor = videoDurationLabelTextColor;
+}
+
+- (void)setCheckedIndexLabelFont:(UIFont *)checkedIndexLabelFont {
+    _checkedIndexLabelFont = checkedIndexLabelFont;
+    self.checkedIndexLabel.font = checkedIndexLabelFont;
+}
+
+- (void)setCheckedIndexLabelTextColor:(UIColor *)checkedIndexLabelTextColor {
+    _checkedIndexLabelTextColor = checkedIndexLabelTextColor;
+    self.checkedIndexLabel.textColor = checkedIndexLabelTextColor;
+}
+
+- (void)setCheckedIndexLabelSize:(CGSize)checkedIndexLabelSize {
+    _checkedIndexLabelSize = checkedIndexLabelSize;
+    [self setNeedsLayout];
+}
+
+- (void)setCheckedIndexLabelMargins:(UIEdgeInsets)checkedIndexLabelMargins {
+    _checkedIndexLabelMargins = checkedIndexLabelMargins;
+    [self setNeedsLayout];
+}
+
+- (void)setCheckedIndexLabelBackgroundColor:(UIColor *)checkedIndexLabelBackgroundColor {
+    _checkedIndexLabelBackgroundColor = checkedIndexLabelBackgroundColor;
+    self.checkedIndexLabel.backgroundColor = checkedIndexLabelBackgroundColor;
+}
+
+- (void)setShowsCheckedIndexLabel:(BOOL)showsCheckedIndexLabel {
+    _showsCheckedIndexLabel = showsCheckedIndexLabel;
+    if (showsCheckedIndexLabel) {
+        [self initCheckedIndexLabelIfNeeded];
+    } else {
+        self.checkedIndexLabel.hidden = YES;
+    }
+}
+
+- (void)setChecked:(BOOL)checked {
+    _checked = checked;
+    if (_selectable) {
+        self.checkboxButton.selected = checked;
+        [self updateCheckedIndexLabel];
+    }
+}
+
+- (void)setCheckedIndex:(NSInteger)checkedIndex {
+    _checkedIndex = checkedIndex;
+    if (_selectable) {
+        if (checkedIndex != NSNotFound && checkedIndex >= 0) {
+            self.checkedIndexLabel.text = [NSString stringWithFormat:@"%@", @(checkedIndex + 1)];
+        } else {
+            self.checkedIndexLabel.text = nil;
+        }
+        [self updateCheckedIndexLabel];
+    }
+}
+
+- (void)setSelectable:(BOOL)editing {
+    _selectable = editing;
+    if (self.downloadStatus == FWAssetDownloadStatusSucceed) {
+        self.checkboxButton.hidden = !_selectable;
+        [self updateCheckedIndexLabel];
+    }
+}
+
+- (void)setDownloadStatus:(FWAssetDownloadStatus)downloadStatus {
+    _downloadStatus = downloadStatus;
+    if (_selectable) {
+        self.checkboxButton.hidden = !_selectable;
+        [self updateCheckedIndexLabel];
+    }
+}
+
+- (void)updateCheckedIndexLabel {
+    if (self.showsCheckedIndexLabel && self.selectable && self.checked
+        && self.checkedIndex != NSNotFound && self.checkedIndex >= 0) {
+        self.checkedIndexLabel.hidden = NO;
+    } else {
+        self.checkedIndexLabel.hidden = YES;
+    }
+}
+
+- (void)initVideoDurationLabelIfNeeded {
+    if (!self.videoDurationLabel) {
+        _videoDurationLabel = [[UILabel alloc] init];
+        _videoDurationLabel.font = self.videoDurationLabelFont;
+        _videoDurationLabel.textColor = self.videoDurationLabelTextColor;
+        [self.contentView addSubview:_videoDurationLabel];
+        [self setNeedsLayout];
+    }
+}
+
+- (void)initCheckedIndexLabelIfNeeded {
+    if (!self.checkedIndexLabel) {
+        _checkedIndexLabel = [[UILabel alloc] init];
+        _checkedIndexLabel.textAlignment = NSTextAlignmentCenter;
+        _checkedIndexLabel.font = self.checkedIndexLabelFont;
+        _checkedIndexLabel.textColor = self.checkedIndexLabelTextColor;
+        _checkedIndexLabel.backgroundColor = self.checkedIndexLabelBackgroundColor;
+        _checkedIndexLabel.hidden = YES;
+        _checkedIndexLabel.clipsToBounds = YES;
+        [self.contentView addSubview:_checkedIndexLabel];
+        [self setNeedsLayout];
+    }
+}
+
+@end
+
 #pragma mark - FWImagePickerController
 
 static NSString * const kVideoCellIdentifier = @"video";
@@ -1361,6 +1457,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (cell.selectable) {
         // 如果该图片的 FWAsset 被包含在已选择图片的数组中，则控制该图片被选中
         cell.checked = [self.selectedImageAssetArray containsObject:imageAsset];
+        cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
+    }
+    
+    if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:customCell:atIndexPath:)]) {
+        [self.imagePickerControllerDelegate imagePickerController:self customCell:cell atIndexPath:indexPath];
     }
     return cell;
 }
@@ -1437,8 +1538,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [self.imagePickerControllerDelegate imagePickerController:self willUncheckImageAtIndex:indexPath.item];
         }
         
-        cell.checked = NO;
         [self.selectedImageAssetArray removeObject:imageAsset];
+        cell.checked = NO;
+        cell.checkedIndex = NSNotFound;
         
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didUncheckImageAtIndex:)]) {
             [self.imagePickerControllerDelegate imagePickerController:self didUncheckImageAtIndex:indexPath.item];
@@ -1464,8 +1566,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [self.imagePickerControllerDelegate imagePickerController:self willCheckImageAtIndex:indexPath.item];
         }
         
-        cell.checked = YES;
         [self.selectedImageAssetArray addObject:imageAsset];
+        cell.checked = YES;
+        cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
         
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didCheckImageAtIndex:)]) {
             [self.imagePickerControllerDelegate imagePickerController:self didCheckImageAtIndex:indexPath.item];

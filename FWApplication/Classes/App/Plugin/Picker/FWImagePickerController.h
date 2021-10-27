@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWImageAlbumController
 
+@class FWImageAlbumTableCell;
 @class FWImagePickerController;
 @class FWImageAlbumController;
 
@@ -29,6 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 点击相簿里某一行时被调用，使用自定义方式打开FWImagePickerController展示九宫格图片列表，二选一实现
 - (FWImagePickerController * _Nullable)albumController:(FWImageAlbumController *)albumController didSelectAssetsGroup:(FWAssetGroup *)assetsGroup;
+
+/// 自定义相册列表cell展示，cellForRow自动调用
+- (void)albumController:(FWImageAlbumController *)albumController customCell:(FWImageAlbumTableCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 /// 取消查看相册列表后被调用
 - (void)albumControllerDidCancel:(FWImageAlbumController *)albumController;
@@ -88,6 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
 @property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 
+/// 相册列表默认封面图，默认nil
+@property(nullable, nonatomic, strong) UIImage *defaultPosterImage;
+
 /// 相册展示内容的类型，可以控制只展示照片、视频或音频的其中一种，也可以同时展示所有类型的资源，默认展示所有类型的资源。
 @property(nonatomic, assign) FWAlbumContentType contentType;
 
@@ -96,44 +103,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 是否直接进入第一个相册列表
 @property(nonatomic, assign) BOOL pickDefaultAlbumGroup;
-
-@end
-
-#pragma mark - FWImagePickerCollectionCell
-
-/**
- *  图片选择空间里的九宫格 cell，支持显示 checkbox、饼状进度条及重试按钮（iCloud 图片需要）
- */
-@interface FWImagePickerCollectionCell : UICollectionViewCell
-
-/// checkbox 未被选中时显示的图片
-@property(nonatomic, strong) UIImage *checkboxImage UI_APPEARANCE_SELECTOR;
-
-/// checkbox 被选中时显示的图片
-@property(nonatomic, strong) UIImage *checkboxCheckedImage UI_APPEARANCE_SELECTOR;
-
-/// checkbox 的 margin，定位从每个 cell（即每张图片）的最右边开始计算
-@property(nonatomic, assign) UIEdgeInsets checkboxButtonMargins UI_APPEARANCE_SELECTOR;
-
-/// videoDurationLabel 的字号
-@property(nonatomic, strong) UIFont *videoDurationLabelFont UI_APPEARANCE_SELECTOR;
-
-/// videoDurationLabel 的字体颜色
-@property(nonatomic, strong) UIColor *videoDurationLabelTextColor UI_APPEARANCE_SELECTOR;
-
-/// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
-@property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
-
-@property(nonatomic, strong, readonly) UIImageView *contentImageView;
-@property(nonatomic, strong, readonly) UIButton *checkboxButton;
-@property(nonatomic, strong, readonly) UILabel *videoDurationLabel;
-
-@property(nonatomic, assign, getter=isSelectable) BOOL selectable;
-@property(nonatomic, assign, getter=isChecked) BOOL checked;
-@property(nonatomic, assign) FWAssetDownloadStatus downloadStatus; // Cell 中对应资源的下载状态，这个值的变动会相应地调整 UI 表现
-@property(nonatomic, copy, nullable) NSString *assetIdentifier;// 当前这个 cell 正在展示的 FWAsset 的 identifier
-
-- (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize;
 
 @end
 
@@ -220,6 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWImagePickerController
 
+@class FWImagePickerCollectionCell;
 @class FWImagePickerController;
 
 @protocol FWImagePickerControllerDelegate <NSObject>
@@ -268,6 +238,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 取消了 checkbox 选中之后调用
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didUncheckImageAtIndex:(NSInteger)index;
+
+/// 自定义图片九宫格cell展示，cellForRow自动调用
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 /**
  *  取消选择图片后被调用
@@ -348,6 +321,55 @@ NS_ASSUME_NONNULL_BEGIN
  * 下载完成后，主线程回调资源对象和结果信息，根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
 + (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
+
+@end
+
+#pragma mark - FWImagePickerCollectionCell
+
+/**
+ *  图片选择空间里的九宫格 cell，支持显示 checkbox、饼状进度条及重试按钮（iCloud 图片需要）
+ */
+@interface FWImagePickerCollectionCell : UICollectionViewCell
+
+/// checkbox 未被选中时显示的图片
+@property(nonatomic, strong) UIImage *checkboxImage UI_APPEARANCE_SELECTOR;
+/// checkbox 被选中时显示的图片
+@property(nonatomic, strong) UIImage *checkboxCheckedImage UI_APPEARANCE_SELECTOR;
+/// checkbox 的 margin，定位从每个 cell（即每张图片）的最右边开始计算
+@property(nonatomic, assign) UIEdgeInsets checkboxButtonMargins UI_APPEARANCE_SELECTOR;
+
+/// videoDurationLabel 的字号
+@property(nonatomic, strong) UIFont *videoDurationLabelFont UI_APPEARANCE_SELECTOR;
+/// videoDurationLabel 的字体颜色
+@property(nonatomic, strong) UIColor *videoDurationLabelTextColor UI_APPEARANCE_SELECTOR;
+/// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
+@property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
+
+/// checkedIndexLabel 的字号
+@property(nonatomic, strong) UIFont *checkedIndexLabelFont UI_APPEARANCE_SELECTOR;
+/// checkedIndexLabel 的字体颜色
+@property(nonatomic, strong) UIColor *checkedIndexLabelTextColor UI_APPEARANCE_SELECTOR;
+/// checkedIndexLabel 的尺寸
+@property(nonatomic, assign) CGSize checkedIndexLabelSize UI_APPEARANCE_SELECTOR;
+/// checkedIndexLabel 的 margin，定位从每个 cell（即每张图片）的最右边开始计算
+@property(nonatomic, assign) UIEdgeInsets checkedIndexLabelMargins UI_APPEARANCE_SELECTOR;
+/// checkedIndexLabel 的背景色
+@property(nonatomic, strong) UIColor *checkedIndexLabelBackgroundColor UI_APPEARANCE_SELECTOR;
+/// 是否显示checkedIndexLabel，大小和checkboxButton保持一致
+@property(nonatomic, assign) BOOL showsCheckedIndexLabel UI_APPEARANCE_SELECTOR;
+
+@property(nonatomic, strong, readonly) UIImageView *contentImageView;
+@property(nonatomic, strong, readonly) UIButton *checkboxButton;
+@property(nonatomic, strong, readonly) UILabel *videoDurationLabel;
+@property(nonatomic, strong, readonly) UILabel *checkedIndexLabel;
+
+@property(nonatomic, assign, getter=isSelectable) BOOL selectable;
+@property(nonatomic, assign, getter=isChecked) BOOL checked;
+@property(nonatomic, assign) NSInteger checkedIndex;
+@property(nonatomic, assign) FWAssetDownloadStatus downloadStatus; // Cell 中对应资源的下载状态，这个值的变动会相应地调整 UI 表现
+@property(nonatomic, copy, nullable) NSString *assetIdentifier;// 当前这个 cell 正在展示的 FWAsset 的 identifier
+
+- (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize;
 
 @end
 
