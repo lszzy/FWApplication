@@ -1322,8 +1322,8 @@ static const CGFloat kFWImageCropOverLayerCornerWidth = 20.0f;
     [_doneTextButton setTitle: _doneTextButtonTitle ?
         _doneTextButtonTitle : FWAppBundle.doneButton
                      forState:UIControlStateNormal];
-    [_doneTextButton setTitleColor:[UIColor colorWithRed:1.0f green:0.8f blue:0.0f alpha:1.0f] forState:UIControlStateNormal];
-    [_doneTextButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
+    [_doneTextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_doneTextButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
     [_doneTextButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [_doneTextButton sizeToFit];
     [self addSubview:_doneTextButton];
@@ -1339,7 +1339,8 @@ static const CGFloat kFWImageCropOverLayerCornerWidth = 20.0f;
     [_cancelTextButton setTitle: _cancelTextButtonTitle ?
         _cancelTextButtonTitle : FWAppBundle.cancelButton
                        forState:UIControlStateNormal];
-    [_cancelTextButton.titleLabel setFont:[UIFont systemFontOfSize:17.0f]];
+    [_cancelTextButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_cancelTextButton.titleLabel setFont:[UIFont systemFontOfSize:16.0f]];
     [_cancelTextButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [_cancelTextButton sizeToFit];
     [self addSubview:_cancelTextButton];
@@ -2027,18 +2028,9 @@ typedef NS_ENUM(NSInteger, FWImageCropViewOverlayEdge) {
     self.overlayView.userInteractionEnabled = NO;
     [self addSubview:self.overlayView];
     
-    //Translucency View
-    if (NSClassFromString(@"UIVisualEffectView")) {
-        self.translucencyEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
-        self.translucencyView = [[UIVisualEffectView alloc] initWithEffect:self.translucencyEffect];
-        self.translucencyView.frame = self.bounds;
-    }
-    else {
-        UIToolbar *toolbar = [[UIToolbar alloc] init];
-        toolbar.barStyle = UIBarStyleBlack;
-        self.translucencyView = toolbar;
-        self.translucencyView.frame = CGRectInset(self.bounds, -1.0f, -1.0f);
-    }
+    self.translucencyEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    self.translucencyView = [[UIVisualEffectView alloc] initWithEffect:self.translucencyEffect];
+    self.translucencyView.frame = self.bounds;
     self.translucencyView.hidden = self.translucencyAlwaysHidden;
     self.translucencyView.userInteractionEnabled = NO;
     self.translucencyView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

@@ -345,8 +345,8 @@
         
         _checkboxImage = FWAppBundle.pickerCheckImage;
         _checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
-        _originImageCheckboxImage = FWAppBundle.pickerCheckImage;
-        _originImageCheckboxCheckedImage = FWAppBundle.pickerCheckedImage;
+        _originImageCheckboxImage = [FWAppBundle.pickerCheckImage fwImageWithScaleSize:CGSizeMake(18, 18)];
+        _originImageCheckboxCheckedImage = [FWAppBundle.pickerCheckedImage fwImageWithScaleSize:CGSizeMake(18, 18)];
     }
     return self;
 }
@@ -409,7 +409,7 @@
     
     _originImageCheckboxButton = [[UIButton alloc] init];
     self.originImageCheckboxButton.hidden = !self.showsOriginImageCheckboxButton;
-    self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.originImageCheckboxButton setImage:self.originImageCheckboxImage forState:UIControlStateNormal];
     [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected];
     [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
@@ -492,8 +492,6 @@
     _toolBarTintColor = toolBarTintColor;
     self.topToolBarView.tintColor = toolBarTintColor;
     self.bottomToolBarView.tintColor = toolBarTintColor;
-    _imageCountLabel.backgroundColor = toolBarTintColor;
-    _imageCountLabel.textColor = [UIColor redColor];
 }
 
 - (void)setShowsEditButton:(BOOL)showsEditButton {
@@ -902,7 +900,7 @@
         [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
         [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
         [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = UIColor.redColor;
+        [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = [UIColor blackColor];
         [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
         [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
         [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
@@ -1386,7 +1384,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (!_previewButton) {
         _previewButton = [[UIButton alloc] init];
         _previewButton.enabled = NO;
-        _previewButton.titleLabel.font = self.sendButton.titleLabel.font;
+        _previewButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_previewButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_previewButton setTitle:@"预览" forState:UIControlStateNormal];
         _previewButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);

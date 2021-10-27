@@ -61,8 +61,9 @@
         CGSize size = CGSizeMake(60, 60);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.25];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
-            CGContextSetFillColorWithColor(contextRef, [UIColor colorWithRed:0 green:0 blue:0 alpha:.25].CGColor);
+            CGContextSetFillColorWithColor(contextRef, fillColor.CGColor);
             CGFloat lineWidth = 1;
             UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(lineWidth / 2, lineWidth / 2, size.width - lineWidth, size.width - lineWidth)];
             [circle setLineWidth:lineWidth];
@@ -109,10 +110,11 @@
     } else if ([name isEqualToString:@"fwPickerCheck"]) {
         CGSize size = CGSizeMake(20, 20);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+            UIColor *fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.25];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
-            CGContextSetFillColorWithColor(contextRef, [UIColor colorWithRed:0 green:0 blue:0 alpha:.25].CGColor);
-            CGFloat lineWidth = 1;
+            CGContextSetFillColorWithColor(contextRef, fillColor.CGColor);
+            CGFloat lineWidth = 2;
             UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(lineWidth / 2, lineWidth / 2, size.width - lineWidth, size.width - lineWidth)];
             [circle setLineWidth:lineWidth];
             [circle stroke];
@@ -121,17 +123,16 @@
     } else if ([name isEqualToString:@"fwPickerChecked"]) {
         CGSize size = CGSizeMake(20, 20);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
+            UIColor *fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
-            CGContextSetFillColorWithColor(contextRef, [UIColor colorWithRed:0 green:0 blue:0 alpha:.75].CGColor);
-            CGFloat lineWidth = 1;
-            UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(lineWidth / 2, lineWidth / 2, size.width - lineWidth, size.width - lineWidth)];
-            [circle setLineWidth:lineWidth];
-            [circle stroke];
+            CGContextSetFillColorWithColor(contextRef, fillColor.CGColor);
+            UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, size.width, size.width)];
             [circle fill];
             
             CGSize checkSize = CGSizeMake(9, 7);
             CGPoint checkOrigin = CGPointMake((size.width - checkSize.width) / 2.0, (size.height - checkSize.height) / 2.0);
+            CGFloat lineWidth = 1;
             CGFloat lineAngle = M_PI_4;
             UIBezierPath *path = [UIBezierPath bezierPath];
             [path moveToPoint:CGPointMake(checkOrigin.x, checkOrigin.y + checkSize.height / 2)];
