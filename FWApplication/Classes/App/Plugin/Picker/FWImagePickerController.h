@@ -187,27 +187,39 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param selectedImageAssetArray 包含所有需要展示的图片中已经被选中的图片的数组
  *  @param currentImageIndex       当前展示的图片在 imageAssetArray 的索引
  *  @param singleCheckMode         是否为单选模式，如果是单选模式，则不显示 checkbox
+ *  @param previewMode         是否是预览模式，如果是预览模式，图片取消选中时editCollectionView会置灰而不是隐藏
  */
 - (void)updateImagePickerPreviewViewWithImagesAssetArray:(NSMutableArray<FWAsset *> * _Nullable)imageAssetArray
                                  selectedImageAssetArray:(NSMutableArray<FWAsset *> * _Nullable)selectedImageAssetArray
                                        currentImageIndex:(NSInteger)currentImageIndex
-                                         singleCheckMode:(BOOL)singleCheckMode;
+                                         singleCheckMode:(BOOL)singleCheckMode
+                                             previewMode:(BOOL)previewMode;
 
 @end
 
 @interface FWImagePickerPreviewCollectionCell : UICollectionViewCell
 
-// 缩略图视图
+/// 缩略图视图
 @property(nonatomic, strong, readonly) UIImageView *imageView;
-// 缩略图的大小，默认(60,60)
+/// 缩略图的大小，默认(60,60)
 @property(nonatomic, assign) CGSize thumbnailImageSize UI_APPEARANCE_SELECTOR;
-// 选中边框颜色
-@property(nullable, nonatomic, strong) UIColor *selectedBorderColor UI_APPEARANCE_SELECTOR;
-// 选中边框宽度
-@property(nonatomic, assign) CGFloat selectedBorderWidth UI_APPEARANCE_SELECTOR;
-// 当前这个 cell 正在展示的 FWAsset 的 identifier
-@property(nonatomic, copy, nullable) NSString *assetIdentifier;
+/// 选中边框颜色
+@property(nullable, nonatomic, strong) UIColor *checkedBorderColor UI_APPEARANCE_SELECTOR;
+/// 选中边框宽度
+@property(nonatomic, assign) CGFloat checkedBorderWidth UI_APPEARANCE_SELECTOR;
+/// 当前是否选中
+@property(nonatomic, assign) BOOL checked;
 
+@property(nonatomic, strong, readonly) UILabel *videoDurationLabel;
+/// videoDurationLabel 的字号
+@property(nonatomic, strong) UIFont *videoDurationLabelFont UI_APPEARANCE_SELECTOR;
+/// videoDurationLabel 的字体颜色
+@property(nonatomic, strong) UIColor *videoDurationLabelTextColor UI_APPEARANCE_SELECTOR;
+/// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
+@property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
+
+/// 当前这个 cell 正在展示的 FWAsset 的 identifier
+@property(nonatomic, copy, nullable) NSString *assetIdentifier;
 - (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize;
 
 @end
