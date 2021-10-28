@@ -406,8 +406,6 @@
         [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
             if ([self.assetIdentifier isEqualToString:asset.identifier]) {
                 self.imageView.image = result;
-            } else {
-                self.imageView.image = nil;
             }
         }];
     }
@@ -1145,13 +1143,9 @@
 
 - (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize {
     self.assetIdentifier = asset.identifier;
-    
-    // 异步请求资源对应的缩略图
     [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
         if ([self.assetIdentifier isEqualToString:asset.identifier]) {
             self.contentImageView.image = result;
-        } else {
-            self.contentImageView.image = nil;
         }
     }];
     
