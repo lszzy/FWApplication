@@ -335,13 +335,15 @@
 @implementation FWImagePickerPreviewCollectionCell
 
 @synthesize videoDurationLabel = _videoDurationLabel;
+@synthesize maskView = _maskView;
 
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [FWImagePickerPreviewCollectionCell appearance].thumbnailImageSize = CGSizeMake(60, 60);
         [FWImagePickerPreviewCollectionCell appearance].checkedBorderColor = [UIColor whiteColor];
-        [FWImagePickerPreviewCollectionCell appearance].checkedBorderWidth = 2;
+        [FWImagePickerPreviewCollectionCell appearance].checkedBorderWidth = 3;
+        [FWImagePickerPreviewCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
         [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
         [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
         [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
@@ -362,6 +364,9 @@
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
     [self.contentView addSubview:self.imageView];
+    
+    _maskView = [[UIView alloc] init];
+    [self.contentView addSubview:self.maskView];
 }
 
 - (void)layoutSubviews {
@@ -370,6 +375,7 @@
     CGFloat imageEdgeTop = (CGRectGetHeight(self.contentView.bounds) - self.thumbnailImageSize.height) / 2.0;
     CGFloat imageEdgeLeft = (CGRectGetWidth(self.contentView.bounds) - self.thumbnailImageSize.width) / 2.0;
     self.imageView.frame = CGRectMake(imageEdgeLeft, imageEdgeTop, self.thumbnailImageSize.width, self.thumbnailImageSize.height);
+    self.maskView.frame = self.imageView.frame;
     
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
@@ -380,11 +386,20 @@
 - (void)setChecked:(BOOL)checked {
     _checked = checked;
     if (checked) {
-        self.imageView.layer.borderWidth = self.checkedBorderWidth;
-        self.imageView.layer.borderColor = self.checkedBorderColor.CGColor;
+        self.maskView.layer.borderWidth = self.checkedBorderWidth;
+        self.maskView.layer.borderColor = self.checkedBorderColor.CGColor;
     } else {
-        self.imageView.layer.borderWidth = 0;
-        self.imageView.layer.borderColor = nil;
+        self.maskView.layer.borderWidth = 0;
+        self.maskView.layer.borderColor = nil;
+    }
+}
+
+- (void)setDisabled:(BOOL)disabled {
+    _disabled = disabled;
+    if (disabled) {
+        self.maskView.backgroundColor = self.disabledMaskColor;
+    } else {
+        self.maskView.backgroundColor = nil;
     }
 }
 
@@ -393,7 +408,7 @@
         _videoDurationLabel = [[UILabel alloc] init];
         _videoDurationLabel.font = self.videoDurationLabelFont;
         _videoDurationLabel.textColor = self.videoDurationLabelTextColor;
-        [self.contentView addSubview:_videoDurationLabel];
+        [self.contentView insertSubview:_videoDurationLabel belowSubview:self.maskView];
         [self setNeedsLayout];
     }
 }
@@ -430,13 +445,13 @@
 @interface FWImagePickerPreviewController ()
 
 @property(nonatomic, weak) FWImagePickerController *imagePickerController;
+@property(nonatomic, assign) NSInteger editCheckedIndex;
 
 @end
 
 @implementation FWImagePickerPreviewController {
     BOOL _singleCheckMode;
     BOOL _previewMode;
-    NSInteger _editCheckedIndex;
 }
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
@@ -539,7 +554,7 @@
     }
     
     [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
-    [self updateImageCountLabelAndCollectionView];
+    [self updateImageCountLabelAndCollectionView:NO];
     
     // TODO：导航栏样式
     [self.navigationController setNavigationBarHidden:YES animated:NO];
@@ -732,14 +747,15 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(60, 60);
+    return [FWImagePickerPreviewCollectionCell appearance].thumbnailImageSize;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FWAsset *imageAsset = [self.editImageAssetArray objectAtIndex:indexPath.item];
     FWImagePickerPreviewCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    [cell renderWithAsset:imageAsset referenceSize:CGSizeMake(60, 60)];
+    [cell renderWithAsset:imageAsset referenceSize:cell.thumbnailImageSize];
     cell.checked = indexPath.item == _editCheckedIndex;
+    cell.disabled = ![self.selectedImageAssetArray containsObject:imageAsset];
     return cell;
 }
 
@@ -773,7 +789,7 @@
         button.selected = NO;
         FWAsset *imageAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray removeObject:imageAsset];
-        [self updateImageCountLabelAndCollectionView];
+        [self updateImageCountLabelAndCollectionView:YES];
         
         if ([self.delegate respondsToSelector:@selector(imagePickerPreviewController:didUncheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self didUncheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -798,7 +814,7 @@
         button.selected = YES;
         FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray addObject:imageAsset];
-        [self updateImageCountLabelAndCollectionView];
+        [self updateImageCountLabelAndCollectionView:YES];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didCheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self didCheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -927,7 +943,7 @@
     [self presentViewController:cropController animated:NO completion:nil];
 }
 
-- (void)updateImageCountLabelAndCollectionView {
+- (void)updateImageCountLabelAndCollectionView:(BOOL)animated {
     NSUInteger selectedCount = [self.selectedImageAssetArray count];
     if (selectedCount > 0) {
         _imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
@@ -940,6 +956,13 @@
     _editCheckedIndex = [self.editImageAssetArray indexOfObject:currentAsset];
     self.editCollectionView.hidden = self.editImageAssetArray.count < 1;
     [self.editCollectionView reloadData];
+    if (_editCheckedIndex != NSNotFound) {
+        [self.editCollectionView performBatchUpdates:^{} completion:^(BOOL finished) {
+            if ([self.editCollectionView numberOfItemsInSection:0] > self.editCheckedIndex) {
+                [self.editCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.editCheckedIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+            }
+        }];
+    }
 }
 
 - (void)updateCollectionViewCheckedIndex:(NSInteger)index {
@@ -953,7 +976,9 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_editCheckedIndex inSection:0];
         FWImagePickerPreviewCollectionCell *cell = (FWImagePickerPreviewCollectionCell *)[self.editCollectionView cellForItemAtIndexPath:indexPath];
         cell.checked = YES;
-        [self.editCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        if ([self.editCollectionView numberOfItemsInSection:0] > _editCheckedIndex) {
+            [self.editCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        }
     }
 }
 
@@ -1100,6 +1125,7 @@
 
 @implementation FWImagePickerCollectionCell
 
+@synthesize maskView = _maskView;
 @synthesize videoDurationLabel = _videoDurationLabel;
 
 + (void)initialize {
@@ -1108,6 +1134,8 @@
         [FWImagePickerCollectionCell appearance].checkboxImage = FWAppBundle.pickerCheckImage;
         [FWImagePickerCollectionCell appearance].checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
         [FWImagePickerCollectionCell appearance].checkboxButtonMargins = UIEdgeInsetsMake(6, 6, 6, 6);
+        [FWImagePickerCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+        [FWImagePickerCollectionCell appearance].checkedMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
         [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
         [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
         [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
@@ -1134,6 +1162,9 @@
     self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.contentImageView.clipsToBounds = YES;
     [self.contentView addSubview:self.contentImageView];
+    
+    _maskView = [[UIView alloc] init];
+    [self.contentView addSubview:self.maskView];
     
     self.checkboxButton = [[UIButton alloc] init];
     self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
@@ -1171,6 +1202,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.contentImageView.frame = self.contentView.bounds;
+    self.maskView.frame = self.contentImageView.frame;
+    
     if (_selectable) {
         // 经测试checkboxButton图片视图未完全占满UIButton，导致无法对齐，修复之
         CGSize checkboxButtonSize = self.checkboxButton.imageView.bounds.size;
@@ -1262,10 +1295,23 @@
     }
 }
 
+- (void)setDisabled:(BOOL)disabled {
+    _disabled = disabled;
+    if (_selectable) {
+        if (disabled) {
+            [self.contentView insertSubview:self.checkboxButton belowSubview:self.maskView];
+        } else {
+            [self.contentView insertSubview:self.checkboxButton aboveSubview:self.maskView];
+        }
+        [self updateMaskView];
+    }
+}
+
 - (void)setChecked:(BOOL)checked {
     _checked = checked;
     if (_selectable) {
         self.checkboxButton.selected = checked;
+        [self updateMaskView];
         [self updateCheckedIndexLabel];
     }
 }
@@ -1307,12 +1353,22 @@
     }
 }
 
+- (void)updateMaskView {
+    if (self.checked) {
+        self.maskView.backgroundColor = self.checkedMaskColor;
+    } else if (self.disabled) {
+        self.maskView.backgroundColor = self.disabledMaskColor;
+    } else {
+        self.maskView.backgroundColor = nil;
+    }
+}
+
 - (void)initVideoDurationLabelIfNeeded {
     if (!self.videoDurationLabel) {
         _videoDurationLabel = [[UILabel alloc] init];
         _videoDurationLabel.font = self.videoDurationLabelFont;
         _videoDurationLabel.textColor = self.videoDurationLabelTextColor;
-        [self.contentView addSubview:_videoDurationLabel];
+        [self.contentView insertSubview:_videoDurationLabel belowSubview:self.maskView];
         [self setNeedsLayout];
     }
 }
@@ -1395,9 +1451,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     // 由于被选中的图片 selectedImageAssetArray 是 property，所以可以由外部改变，
     // 因此 viewWillAppear 时检查一下图片被选中的情况，并刷新 collectionView
     if (self.allowsMultipleSelection) {
-        [self updateImageCountAndCheckLimited];
+        [self updateImageCountAndCheckLimited:YES];
+    } else {
+        [self.collectionView reloadData];
     }
-    [self.collectionView reloadData];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -1668,6 +1725,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         // 如果该图片的 FWAsset 被包含在已选择图片的数组中，则控制该图片被选中
         cell.checked = [self.selectedImageAssetArray containsObject:imageAsset];
         cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
+        cell.disabled = !cell.checked && [self.selectedImageAssetArray count] >= self.maximumSelectImageCount;
     }
     
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:customCell:atIndexPath:)]) {
@@ -1753,10 +1811,15 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         }
         
         [self.selectedImageAssetArray removeObject:imageAsset];
-        cell.checked = NO;
-        cell.checkedIndex = NSNotFound;
         // 根据选择图片数控制预览和发送按钮的 enable，以及修改已选中的图片数
-        [self updateImageCountAndCheckLimited];
+        if ([self.selectedImageAssetArray count] >= _maximumSelectImageCount - 1) {
+            [self updateImageCountAndCheckLimited:YES];
+        } else {
+            cell.checked = NO;
+            cell.checkedIndex = NSNotFound;
+            cell.disabled = !cell.checked && [self.selectedImageAssetArray count] >= self.maximumSelectImageCount;
+            [self updateImageCountAndCheckLimited:NO];
+        }
         
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didUncheckImageAtIndex:)]) {
             [self.imagePickerControllerDelegate imagePickerController:self didUncheckImageAtIndex:indexPath.item];
@@ -1780,10 +1843,15 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         }
         
         [self.selectedImageAssetArray addObject:imageAsset];
-        cell.checked = YES;
-        cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
         // 根据选择图片数控制预览和发送按钮的 enable，以及修改已选中的图片数
-        [self updateImageCountAndCheckLimited];
+        if ([self.selectedImageAssetArray count] >= _maximumSelectImageCount) {
+            [self updateImageCountAndCheckLimited:YES];
+        } else {
+            cell.checked = YES;
+            cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
+            cell.disabled = !cell.checked && [self.selectedImageAssetArray count] >= self.maximumSelectImageCount;
+            [self updateImageCountAndCheckLimited:NO];
+        }
         
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didCheckImageAtIndex:)]) {
             [self.imagePickerControllerDelegate imagePickerController:self didCheckImageAtIndex:indexPath.item];
@@ -1794,7 +1862,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
-- (void)updateImageCountAndCheckLimited {
+- (void)updateImageCountAndCheckLimited:(BOOL)reloadData {
     NSInteger selectedImageCount = [self.selectedImageAssetArray count];
     if (selectedImageCount > 0 && selectedImageCount >= _minimumSelectImageCount) {
         self.previewButton.enabled = YES;
@@ -1807,17 +1875,22 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.imageCountLabel.hidden = YES;
     }
     
-    [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset *imageAsset, NSUInteger idx, BOOL *stop) {
-        NSInteger imageIndex = [self.imagesAssetArray indexOfObject:imageAsset];
-        if (imageIndex == NSNotFound) return;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:imageIndex inSection:0];
-        
-        FWImagePickerCollectionCell *cell = (FWImagePickerCollectionCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-        if (cell.selectable) {
-            cell.checked = YES;
-            cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
-        }
-    }];
+    if (reloadData) {
+        [self.collectionView reloadData];
+    } else {
+        [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset *imageAsset, NSUInteger idx, BOOL *stop) {
+            NSInteger imageIndex = [self.imagesAssetArray indexOfObject:imageAsset];
+            if (imageIndex == NSNotFound) return;
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:imageIndex inSection:0];
+            
+            FWImagePickerCollectionCell *cell = (FWImagePickerCollectionCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+            if (cell.selectable) {
+                cell.checked = YES;
+                cell.checkedIndex = [self.selectedImageAssetArray indexOfObject:imageAsset];
+                cell.disabled = !cell.checked && [self.selectedImageAssetArray count] >= self.maximumSelectImageCount;
+            }
+        }];
+    }
 }
 
 #pragma mark - Request Image

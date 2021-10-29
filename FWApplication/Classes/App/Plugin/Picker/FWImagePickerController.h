@@ -203,12 +203,18 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, readonly) UIImageView *imageView;
 /// 缩略图的大小，默认(60,60)
 @property(nonatomic, assign) CGSize thumbnailImageSize UI_APPEARANCE_SELECTOR;
-/// 选中边框颜色
+/// 选中边框颜色，默认白色
 @property(nullable, nonatomic, strong) UIColor *checkedBorderColor UI_APPEARANCE_SELECTOR;
-/// 选中边框宽度
+/// 选中边框宽度，默认3
 @property(nonatomic, assign) CGFloat checkedBorderWidth UI_APPEARANCE_SELECTOR;
+/// 禁用时蒙层颜色
+@property(nonatomic, strong, nullable) UIColor *disabledMaskColor UI_APPEARANCE_SELECTOR;
+/// 蒙层视图
+@property(nonatomic, strong, readonly) UIView *maskView;
 /// 当前是否选中
 @property(nonatomic, assign) BOOL checked;
+/// 当前是否禁用，默认NO
+@property(nonatomic, assign) BOOL disabled;
 
 @property(nonatomic, strong, readonly) UILabel *videoDurationLabel;
 /// videoDurationLabel 的字号
@@ -376,6 +382,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// checkbox 的 margin，定位从每个 cell（即每张图片）的最右边开始计算
 @property(nonatomic, assign) UIEdgeInsets checkboxButtonMargins UI_APPEARANCE_SELECTOR;
 
+/// 禁用时蒙层颜色
+@property(nonatomic, strong, nullable) UIColor *disabledMaskColor UI_APPEARANCE_SELECTOR;
+/// 选中时蒙层颜色
+@property(nonatomic, strong, nullable) UIColor *checkedMaskColor UI_APPEARANCE_SELECTOR;
+/// 蒙层视图
+@property(nonatomic, strong, readonly) UIView *maskView;
+
 /// videoDurationLabel 的字号
 @property(nonatomic, strong) UIFont *videoDurationLabelFont UI_APPEARANCE_SELECTOR;
 /// videoDurationLabel 的字体颜色
@@ -403,6 +416,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, assign, getter=isSelectable) BOOL selectable;
 @property(nonatomic, assign, getter=isChecked) BOOL checked;
+@property(nonatomic, assign) BOOL disabled;
 @property(nonatomic, assign) NSInteger checkedIndex;
 @property(nonatomic, assign) FWAssetDownloadStatus downloadStatus; // Cell 中对应资源的下载状态，这个值的变动会相应地调整 UI 表现
 @property(nonatomic, copy, nullable) NSString *assetIdentifier;// 当前这个 cell 正在展示的 FWAsset 的 identifier
