@@ -290,15 +290,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  即将需要显示 Loading 时调用
- *
- *  @see shouldShowDefaultLoadingView
  */
 - (void)imagePickerControllerWillStartLoading:(FWImagePickerController *)imagePickerController;
 
 /**
  *  即将需要隐藏 Loading 时调用
- *
- *  @see shouldShowDefaultLoadingView
  */
 - (void)imagePickerControllerDidFinishLoading:(FWImagePickerController *)imagePickerController;
 
@@ -347,12 +343,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
-
-/**
- *  加载相册列表时会出现 loading，若需要自定义 loading 的形式，可将该属性置为 NO，默认为 YES。
- *  @see imagePickerControllerWillStartLoading: & imagePickerControllerDidFinishLoading:
- */
-@property(nonatomic, assign) BOOL shouldShowDefaultLoadingView;
 
 /**
  * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源

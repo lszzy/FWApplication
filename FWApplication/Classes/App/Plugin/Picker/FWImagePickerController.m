@@ -621,6 +621,7 @@
     if (!_editCollectionView) {
         _editCollectionView = [[UICollectionView alloc] initWithFrame:self.isViewLoaded ? self.view.bounds : CGRectZero collectionViewLayout:self.editCollectionViewLayout];
         _editCollectionView.backgroundColor = self.toolBarBackgroundColor;
+        _editCollectionView.hidden = YES;
         _editCollectionView.delegate = self;
         _editCollectionView.dataSource = self;
         _editCollectionView.showsHorizontalScrollIndicator = NO;
@@ -727,13 +728,17 @@
 - (void)singleTouchInZoomingImageView:(FWZoomImageView *)zoomImageView location:(CGPoint)location {
     self.topToolBarView.hidden = !self.topToolBarView.hidden;
     self.bottomToolBarView.hidden = !self.bottomToolBarView.hidden;
-    self.editCollectionView.hidden = !self.editCollectionView.hidden;
+    if (!_singleCheckMode && self.showsEditCollectionView) {
+        self.editCollectionView.hidden = !self.editCollectionView.hidden;
+    }
 }
 
 - (void)zoomImageView:(FWZoomImageView *)imageView didHideVideoToolbar:(BOOL)didHide {
     self.topToolBarView.hidden = didHide;
     self.bottomToolBarView.hidden = didHide;
-    self.editCollectionView.hidden = didHide;
+    if (!_singleCheckMode && self.showsEditCollectionView) {
+        self.editCollectionView.hidden = didHide;
+    }
 }
 
 #pragma mark - <UICollectionViewDelegate, UICollectionViewDataSource>
@@ -949,16 +954,20 @@
         _imageCountLabel.hidden = YES;
     }
     
-    FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
-    _editCheckedIndex = [self.editImageAssetArray indexOfObject:currentAsset];
-    self.editCollectionView.hidden = self.editImageAssetArray.count < 1;
-    [self.editCollectionView reloadData];
-    if (_editCheckedIndex != NSNotFound) {
-        [self.editCollectionView performBatchUpdates:^{} completion:^(BOOL finished) {
-            if ([self.editCollectionView numberOfItemsInSection:0] > self.editCheckedIndex) {
-                [self.editCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.editCheckedIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-            }
-        }];
+    if (_singleCheckMode || !self.showsEditCollectionView) {
+        self.editCollectionView.hidden = YES;
+    } else {
+        FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
+        _editCheckedIndex = [self.editImageAssetArray indexOfObject:currentAsset];
+        self.editCollectionView.hidden = self.editImageAssetArray.count < 1;
+        [self.editCollectionView reloadData];
+        if (_editCheckedIndex != NSNotFound) {
+            [self.editCollectionView performBatchUpdates:^{} completion:^(BOOL finished) {
+                if ([self.editCollectionView numberOfItemsInSection:0] > self.editCheckedIndex) {
+                    [self.editCollectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.editCheckedIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+                }
+            }];
+        }
     }
 }
 
@@ -1425,7 +1434,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _allowsMultipleSelection = YES;
     _maximumSelectImageCount = 9;
     _minimumSelectImageCount = 0;
-    _shouldShowDefaultLoadingView = YES;
 }
 
 - (void)dealloc {
@@ -1502,9 +1510,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
     }
-    if (self.shouldShowDefaultLoadingView) {
-        [self fwShowLoading];
-    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [assetsGroup enumerateAssetsWithOptions:albumSortType usingBlock:^(FWAsset *resultAsset) {
             // 这里需要对 UI 进行操作，因此放回主线程处理
@@ -1519,9 +1524,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     [self.collectionView performBatchUpdates:^{
                     } completion:^(BOOL finished) {
                         [self scrollToInitialPositionIfNeeded];
-                        if (self.shouldShowDefaultLoadingView) {
-                          [self fwHideLoading];
-                        }
                         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                             [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
                         }
