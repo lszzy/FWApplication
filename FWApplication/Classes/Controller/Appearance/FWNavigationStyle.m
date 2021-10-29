@@ -113,12 +113,17 @@
     return [objc_getAssociatedObject(self, @selector(fwNavigationBarHidden)) boolValue];
 }
 
-- (void)setFwNavigationBarHidden:(BOOL)fwNavigationBarHidden
+- (void)setFwNavigationBarHidden:(BOOL)hidden
 {
-    objc_setAssociatedObject(self, @selector(fwNavigationBarHidden), @(fwNavigationBarHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self fwSetNavigationBarHidden:hidden animated:NO];
+}
+
+- (void)fwSetNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated
+{
+    objc_setAssociatedObject(self, @selector(fwNavigationBarHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     if (self.isViewLoaded && self.view.window) {
-        [self fwUpdateNavigationBarStyle:NO];
+        [self fwUpdateNavigationBarStyle:animated];
     }
 }
 
@@ -229,9 +234,12 @@
 
 - (void)setFwToolBarHidden:(BOOL)fwToolBarHidden
 {
-    // 动态切换工具栏显示隐藏，切换动画不突兀，立即生效
-    // [self.navigationController setToolbarHidden:hidden animated:animated];
     self.navigationController.toolbarHidden = fwToolBarHidden;
+}
+
+- (void)fwSetToolBarHidden:(BOOL)hidden animated:(BOOL)animated
+{
+    [self.navigationController setToolbarHidden:hidden animated:animated];
 }
 
 - (UIRectEdge)fwExtendedLayoutEdge
