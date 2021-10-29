@@ -796,14 +796,11 @@
         }
     } else {
         if ([self.selectedImageAssetArray count] >= self.maximumSelectImageCount) {
-            if (!self.alertTitleWhenExceedMaxSelectImageCount) {
-                self.alertTitleWhenExceedMaxSelectImageCount = [NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
+                [self.delegate imagePickerPreviewControllerWillShowExceed:self];
+            } else {
+                [self fwShowAlertWithTitle:[NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)] message:nil cancel:@"我知道了" cancelBlock:nil];
             }
-            if (!self.alertButtonTitleWhenExceedMaxSelectImageCount) {
-                self.alertButtonTitleWhenExceedMaxSelectImageCount = [NSString stringWithFormat:@"我知道了"];
-            }
-            
-            [self fwShowAlertWithTitle:self.alertTitleWhenExceedMaxSelectImageCount message:nil cancel:self.alertButtonTitleWhenExceedMaxSelectImageCount cancelBlock:nil];
             return;
         }
         
@@ -1736,6 +1733,16 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     FWAsset *imageAsset = self.imagesAssetArray[indexPath.item];
+    if (![self.selectedImageAssetArray containsObject:imageAsset] &&
+        [self.selectedImageAssetArray count] >= _maximumSelectImageCount) {
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
+            [self.imagePickerControllerDelegate imagePickerControllerWillShowExceed:self];
+        } else {
+            [self fwShowAlertWithTitle:[NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)] message:nil cancel:@"我知道了" cancelBlock:nil];
+        }
+        return;
+    }
+    
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didSelectImageWithImagesAsset:afterImagePickerPreviewControllerUpdate:)]) {
         [self.imagePickerControllerDelegate imagePickerController:self didSelectImageWithImagesAsset:imageAsset afterImagePickerPreviewControllerUpdate:self.imagePickerPreviewController];
     }
@@ -1827,14 +1834,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     } else {
         // 选中该资源
         if ([self.selectedImageAssetArray count] >= _maximumSelectImageCount) {
-            if (!_alertTitleWhenExceedMaxSelectImageCount) {
-                _alertTitleWhenExceedMaxSelectImageCount = [NSString stringWithFormat:@"你最多只能选择%@张图片", @(_maximumSelectImageCount)];
+            if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
+                [self.imagePickerControllerDelegate imagePickerControllerWillShowExceed:self];
+            } else {
+                [self fwShowAlertWithTitle:[NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)] message:nil cancel:@"我知道了" cancelBlock:nil];
             }
-            if (!_alertButtonTitleWhenExceedMaxSelectImageCount) {
-                _alertButtonTitleWhenExceedMaxSelectImageCount = [NSString stringWithFormat:@"我知道了"];
-            }
-            
-            [self fwShowAlertWithTitle:_alertTitleWhenExceedMaxSelectImageCount message:nil cancel:_alertButtonTitleWhenExceedMaxSelectImageCount cancelBlock:nil];
             return;
         }
         

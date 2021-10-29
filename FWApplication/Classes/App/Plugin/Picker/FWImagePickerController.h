@@ -124,6 +124,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willUncheckImageAtIndex:(NSInteger)index;
 /// 已经取消选中图片
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didUncheckImageAtIndex:(NSInteger)index;
+/// 已经选中数量超过最大选择数量时被调用，默认弹窗提示
+- (void)imagePickerPreviewControllerWillShowExceed:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 图片预览界面关闭返回时被调用
 - (void)imagePickerPreviewControllerDidCancel:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 自定义图片裁剪控制器，启用编辑时生效，未实现时使用默认配置
@@ -175,10 +177,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) NSUInteger maximumSelectImageCount;
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
-/// 选择图片超出最大图片限制时 alertView 的标题
-@property(nullable, nonatomic, copy) NSString *alertTitleWhenExceedMaxSelectImageCount;
-/// 选择图片超出最大图片限制时 alertView 的标题
-@property(nullable, nonatomic, copy) NSString *alertButtonTitleWhenExceedMaxSelectImageCount;
 
 /**
  *  更新数据并刷新 UI，手工调用
@@ -304,6 +302,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)imagePickerControllerDidFinishLoading:(FWImagePickerController *)imagePickerController;
 
+/// 已经选中数量超过最大选择数量时被调用，默认弹窗提示
+- (void)imagePickerControllerWillShowExceed:(FWImagePickerController *)imagePickerController;
+
 @end
 
 
@@ -346,12 +347,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
-
-/// 选择图片超出最大图片限制时 alertView 的标题
-@property(nullable, nonatomic, copy) NSString *alertTitleWhenExceedMaxSelectImageCount;
-
-/// 选择图片超出最大图片限制时 alertView 底部按钮的标题
-@property(nullable, nonatomic, copy) NSString *alertButtonTitleWhenExceedMaxSelectImageCount;
 
 /**
  *  加载相册列表时会出现 loading，若需要自定义 loading 的形式，可将该属性置为 NO，默认为 YES。
