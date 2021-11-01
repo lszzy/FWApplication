@@ -109,6 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWImagePickerController;
 @class FWImagePreviewController;
 @class FWImagePickerPreviewController;
+@class FWImagePickerPreviewCollectionCell;
 
 @protocol FWImagePickerPreviewControllerDelegate <NSObject>
 
@@ -130,6 +131,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewControllerDidCancel:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 自定义图片裁剪控制器，启用编辑时生效，未实现时使用默认配置
 - (FWImageCropController *)imageCropControllerForPreviewController:(FWImagePickerPreviewController *)previewController image:(UIImage *)image;
+/// 自定义编辑cell展示，cellForRow自动调用
+- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController customCell:(FWImagePickerPreviewCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -164,8 +167,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL showsEditCollectionView;
 @property(nullable, nonatomic, strong, readonly) UICollectionViewFlowLayout *editCollectionViewLayout;
 @property(nullable, nonatomic, strong, readonly) UICollectionView *editCollectionView;
-/// 编辑collectionView高度，默认80
+/// 编辑collectionView总高度，默认80
 @property(nonatomic, assign) CGFloat editCollectionViewHeight;
+/// 编辑collectionCell大小，默认(60, 60)
+@property(nonatomic, assign) CGSize editCollectionCellSize;
 
 /// 由于组件需要通过本地图片的 FWAsset 对象读取图片的详细信息，因此这里的需要传入的是包含一个或多个 FWAsset 对象的数组
 @property(nullable, nonatomic, strong) NSMutableArray<FWAsset *> *imagesAssetArray;
@@ -199,8 +204,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 缩略图视图
 @property(nonatomic, strong, readonly) UIImageView *imageView;
-/// 缩略图的大小，默认(60,60)
-@property(nonatomic, assign) CGSize thumbnailImageSize UI_APPEARANCE_SELECTOR;
+/// imageView内边距，默认zero占满
+@property(nonatomic, assign) UIEdgeInsets imageViewInsets UI_APPEARANCE_SELECTOR;
 /// 选中边框颜色，默认白色
 @property(nullable, nonatomic, strong) UIColor *checkedBorderColor UI_APPEARANCE_SELECTOR;
 /// 选中边框宽度，默认3

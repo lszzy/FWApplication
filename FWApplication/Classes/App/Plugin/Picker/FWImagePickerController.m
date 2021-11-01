@@ -340,7 +340,7 @@
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [FWImagePickerPreviewCollectionCell appearance].thumbnailImageSize = CGSizeMake(60, 60);
+        [FWImagePickerPreviewCollectionCell appearance].imageViewInsets = UIEdgeInsetsZero;
         [FWImagePickerPreviewCollectionCell appearance].checkedBorderColor = [UIColor whiteColor];
         [FWImagePickerPreviewCollectionCell appearance].checkedBorderWidth = 3;
         [FWImagePickerPreviewCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
@@ -372,10 +372,8 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat imageEdgeTop = (CGRectGetHeight(self.contentView.bounds) - self.thumbnailImageSize.height) / 2.0;
-    CGFloat imageEdgeLeft = (CGRectGetWidth(self.contentView.bounds) - self.thumbnailImageSize.width) / 2.0;
-    self.imageView.frame = CGRectMake(imageEdgeLeft, imageEdgeTop, self.thumbnailImageSize.width, self.thumbnailImageSize.height);
-    self.maskView.frame = self.imageView.frame;
+    self.imageView.frame = CGRectMake(self.imageViewInsets.left, self.imageViewInsets.top, CGRectGetWidth(self.contentView.bounds) - self.imageViewInsets.left - self.imageViewInsets.right, CGRectGetHeight(self.contentView.bounds) - self.imageViewInsets.top - self.imageViewInsets.bottom);
+    self.maskView.frame = self.contentView.bounds;
     
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
@@ -460,6 +458,7 @@
         _showsEditCollectionView = YES;
         _editCheckedIndex = NSNotFound;
         self.editCollectionViewHeight = 80;
+        self.editCollectionCellSize = CGSizeMake(60, 60);
         self.maximumSelectImageCount = 9;
         self.minimumSelectImageCount = 0;
         
@@ -729,7 +728,7 @@
     self.topToolBarView.hidden = !self.topToolBarView.hidden;
     self.bottomToolBarView.hidden = !self.bottomToolBarView.hidden;
     if (!_singleCheckMode && self.showsEditCollectionView) {
-        self.editCollectionView.hidden = !self.editCollectionView.hidden;
+        self.editCollectionView.hidden = !self.editCollectionView.hidden || self.editImageAssetArray.count < 1;
     }
 }
 
@@ -737,7 +736,7 @@
     self.topToolBarView.hidden = didHide;
     self.bottomToolBarView.hidden = didHide;
     if (!_singleCheckMode && self.showsEditCollectionView) {
-        self.editCollectionView.hidden = didHide;
+        self.editCollectionView.hidden = didHide || self.editImageAssetArray.count < 1;
     }
 }
 
@@ -752,15 +751,20 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [FWImagePickerPreviewCollectionCell appearance].thumbnailImageSize;
+    return self.editCollectionCellSize;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FWAsset *imageAsset = [self.editImageAssetArray objectAtIndex:indexPath.item];
     FWImagePickerPreviewCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    [cell renderWithAsset:imageAsset referenceSize:cell.thumbnailImageSize];
+    CGSize referenceSize = CGSizeMake(self.editCollectionCellSize.width - cell.imageViewInsets.left - cell.imageViewInsets.right, self.editCollectionCellSize.height - cell.imageViewInsets.top - cell.imageViewInsets.bottom);
+    [cell renderWithAsset:imageAsset referenceSize:referenceSize];
     cell.checked = indexPath.item == _editCheckedIndex;
     cell.disabled = ![self.selectedImageAssetArray containsObject:imageAsset];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:customCell:atIndexPath:)]) {
+        [self.delegate imagePickerPreviewController:self customCell:cell atIndexPath:indexPath];
+    }
     return cell;
 }
 
@@ -947,16 +951,14 @@
 
 - (void)updateImageCountLabelAndCollectionView:(BOOL)animated {
     NSUInteger selectedCount = [self.selectedImageAssetArray count];
-    if (selectedCount > 0) {
+    if (selectedCount > 0 && !_singleCheckMode) {
         _imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
         _imageCountLabel.hidden = !self.showsImageCountLabel;
     } else {
         _imageCountLabel.hidden = YES;
     }
     
-    if (_singleCheckMode || !self.showsEditCollectionView) {
-        self.editCollectionView.hidden = YES;
-    } else {
+    if (!_singleCheckMode && self.showsEditCollectionView) {
         FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
         _editCheckedIndex = [self.editImageAssetArray indexOfObject:currentAsset];
         self.editCollectionView.hidden = self.editImageAssetArray.count < 1;
@@ -968,6 +970,8 @@
                 }
             }];
         }
+    } else {
+        self.editCollectionView.hidden = YES;
     }
 }
 

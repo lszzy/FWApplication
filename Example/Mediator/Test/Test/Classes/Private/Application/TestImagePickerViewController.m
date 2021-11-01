@@ -42,12 +42,6 @@
 }
 
 - (void)presentAlbumViewControllerWithIndex:(NSInteger)index {
-    FWImageAlbumTableCell *appearance = [FWImageAlbumTableCell appearance];
-    appearance.albumImageSize = 56;
-    appearance.albumNameFont = [UIFont systemFontOfSize:17];
-    appearance.albumNameInsets = UIEdgeInsetsMake(0, 12, 0, 8);
-    appearance.albumAssetsNumberFont = [UIFont systemFontOfSize:12];
-    
     // 创建一个 QMUIAlbumViewController 实例用于呈现相簿列表
     FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
     albumController.albumTableViewCellHeight = 68;
@@ -109,6 +103,10 @@
 
 - (void)albumController:(FWImageAlbumController *)albumController customCell:(FWImageAlbumTableCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     FWAssetGroup *assetsGroup = albumController.albumsArray[indexPath.row];
+    cell.albumImageSize = 56;
+    cell.albumNameFont = [UIFont systemFontOfSize:17];
+    cell.albumNameInsets = UIEdgeInsetsMake(0, 12, 0, 8);
+    cell.albumAssetsNumberFont = [UIFont systemFontOfSize:12];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", @(assetsGroup.numberOfAssets)];
 }
 
