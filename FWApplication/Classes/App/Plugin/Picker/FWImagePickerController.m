@@ -1582,12 +1582,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     // result 为 nil，即遍历相片或视频完毕
                     self.isImagesAssetLoaded = YES;
                     self.hasScrollToInitialPosition = NO;
-                    self.collectionView.hidden = YES;
                     [self.collectionView reloadData];
                     [self.collectionView performBatchUpdates:^{
                     } completion:^(BOOL finished) {
                         [self scrollToInitialPositionIfNeeded];
-                        self.collectionView.hidden = NO;
                         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                             [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
                         }
