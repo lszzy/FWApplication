@@ -91,6 +91,8 @@
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerController.showsImageCountLabel = albumController.view.tag != OnlyImagePickingTag;
+    imagePickerController.titleView.userInteractionEnabled = YES;
+    imagePickerController.titleView.accessoryImage = [self accessoryImage];
     imagePickerController.view.tag = albumController.view.tag;
     if (albumController.view.tag == SingleImagePickingTag) {
         imagePickerController.allowsMultipleSelection = NO;
@@ -132,7 +134,17 @@
     cell.showsCheckedIndexLabel = imagePickerController.view.tag != OnlyImagePickingTag;
 }
 
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController didTouchTitleView:(BOOL)isActive {
+    
+}
+
 #pragma mark - 业务方法
+
+- (UIImage *)accessoryImage {
+    UIBezierPath *bezierPath = [UIBezierPath fwShapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
+    UIImage *accessoryImage = [[bezierPath fwShapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    return accessoryImage;
+}
 
 - (void)showTipLabelWithText:(NSString *)text {
     [self fwHideLoading];

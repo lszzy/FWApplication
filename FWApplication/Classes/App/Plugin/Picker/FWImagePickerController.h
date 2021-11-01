@@ -239,6 +239,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class FWImagePickerCollectionCell;
 @class FWImagePickerController;
+@class FWNavigationTitleView;
 
 @protocol FWImagePickerControllerDelegate <NSObject>
 
@@ -295,6 +296,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义图片九宫格cell展示，cellForRow自动调用
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
+/// 标题视图被点击时调用，isActive表示titleView是否激活
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController didTouchTitleView:(BOOL)isActive;
+
 /**
  *  即将需要显示 Loading 时调用
  */
@@ -317,6 +321,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
+
+/// 当前titleView，默认不可点击，开启点击后会触发相应delegate方法
+@property(nonatomic, strong, readonly) FWNavigationTitleView *titleView;
 
 /*
  * 图片的最小尺寸，布局时如果有剩余空间，会将空间分配给图片大小，所以最终显示出来的大小不一定等于minimumImageWidth。默认是75。

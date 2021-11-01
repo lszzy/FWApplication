@@ -17,6 +17,7 @@
 #import "FWEmptyPlugin.h"
 #import "FWToastPlugin.h"
 #import "FWAlertPlugin.h"
+#import "FWNavigationView.h"
 #import "FWNavigationStyle.h"
 #import "FWViewPlugin.h"
 #import "FWImagePlugin.h"
@@ -1443,7 +1444,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 #pragma mark - FWImagePickerController
 
-@interface FWImagePickerController ()
+@interface FWImagePickerController () <FWNavigationTitleViewDelegate>
 
 @property(nonatomic, strong) FWImagePickerPreviewController *imagePickerPreviewController;
 @property(nonatomic, assign) BOOL isImagesAssetLoaded;
@@ -1481,6 +1482,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
     self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
     
+    FWNavigationTitleView *titleView = [[FWNavigationTitleView alloc] init];
+    _titleView = titleView;
+    titleView.delegate = self;
+    self.navigationItem.titleView = titleView;
     self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(handleCancelPickerImage:)];
 }
 
@@ -1820,6 +1825,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                                                                                     previewMode:NO];
         }
         [self.navigationController pushViewController:self.imagePickerPreviewController animated:YES];
+    }
+}
+
+#pragma mark - FWNavigationTitleViewDelegate
+
+- (void)didTouchTitleView:(FWNavigationTitleView *)titleView isActive:(BOOL)isActive {
+    if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didTouchTitleView:)]) {
+        [self.imagePickerControllerDelegate imagePickerController:self didTouchTitleView:isActive];
     }
 }
 
