@@ -105,7 +105,8 @@
 
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSMutableArray<FWAssetGroup *> *albumsArray;
-@property(nonatomic, strong) FWImagePickerController *imagePickerController;
+@property(nonatomic, assign) BOOL isAlbumsArrayLoaded;
+@property(nonatomic, weak) FWImagePickerController *imagePickerController;
 
 @end
 
@@ -181,25 +182,37 @@
             [self.albumControllerDelegate albumControllerWillStartLoading:self];
         }
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[FWAssetManager sharedInstance] enumerateAllAlbumsWithAlbumContentType:self.contentType usingBlock:^(FWAssetGroup *resultAssetsGroup) {
-                if (resultAssetsGroup) {
-                    [self.albumsArray addObject:resultAssetsGroup];
-                } else {
-                    // 意味着遍历完所有的相簿了
-                    [self sortAlbumArray];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self refreshAlbumGroups];
-                    });
-                }
-            }];
-        });
+        [self loadAlbumsArray:^{
+            [self refreshAlbumGroups];
+        }];
     }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.fwBackBarItem = FWAppBundle.navBackImage;
+}
+
+- (void)loadAlbumsArray:(void (NS_NOESCAPE ^)(void))completion {
+    if (self.isAlbumsArrayLoaded) {
+        if (completion) completion();
+        return;
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[FWAssetManager sharedInstance] enumerateAllAlbumsWithAlbumContentType:self.contentType usingBlock:^(FWAssetGroup *resultAssetsGroup) {
+            if (resultAssetsGroup) {
+                [self.albumsArray addObject:resultAssetsGroup];
+            } else {
+                // 意味着遍历完所有的相簿了
+                [self sortAlbumArray];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.isAlbumsArrayLoaded = YES;
+                    if (completion) completion();
+                });
+            }
+        }];
+    });
 }
 
 - (void)sortAlbumArray {
@@ -218,15 +231,15 @@
 }
 
 - (void)refreshAlbumGroups {
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillFinishLoading:)]) {
+        [self.albumControllerDelegate albumControllerWillFinishLoading:self];
+    }
+    
     if ([self.albumsArray count] > 0) {
         if (self.pickDefaultAlbumGroup) {
             [self pickAlbumsGroup:self.albumsArray.firstObject animated:NO];
         }
         [self.tableView reloadData];
-        
-        if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillFinishLoading:)]) {
-            [self.albumControllerDelegate albumControllerWillFinishLoading:self];
-        }
     } else {
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowEmpty:)]) {
             [self.albumControllerDelegate albumControllerWillShowEmpty:self];
@@ -243,16 +256,27 @@
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
         [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
     } else if (self.imagePickerController) {
-        [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
-        self.imagePickerController.title = [assetsGroup name];
-        [self.navigationController pushViewController:self.imagePickerController animated:animated];
+        if (self.navigationController) {
+            self.imagePickerController.title = [assetsGroup name];
+            [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
+            [self.navigationController pushViewController:self.imagePickerController animated:animated];
+        } else {
+            [self dismissViewControllerAnimated:animated completion:^{
+                self.imagePickerController.title = [assetsGroup name];
+                [self.imagePickerController.titleView setActive:NO animated:animated];
+                [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
+            }];
+        }
     }
 }
 
 - (void)initImagePickerControllerIfNeeded {
     if (!self.imagePickerController) {
         if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
-            self.imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+            // 此处需要强引用imagePickerController，防止weak属性释放imagePickerController
+            FWImagePickerController *imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+            objc_setAssociatedObject(self, @selector(imagePickerController), imagePickerController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            self.imagePickerController = imagePickerController;
         }
     }
 }
@@ -1447,6 +1471,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 @interface FWImagePickerController () <FWNavigationTitleViewDelegate>
 
 @property(nonatomic, strong) FWImagePickerPreviewController *imagePickerPreviewController;
+@property(nonatomic, strong) FWImageAlbumController *albumController;
 @property(nonatomic, assign) BOOL isImagesAssetLoaded;
 @property(nonatomic, assign) BOOL hasScrollToInitialPosition;
 @property(nonatomic, assign) BOOL canScrollToInitialPosition;// 要等数据加载完才允许滚动
@@ -1602,6 +1627,15 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.imagePickerPreviewController.imagePickerController = self;
         self.imagePickerPreviewController.maximumSelectImageCount = self.maximumSelectImageCount;
         self.imagePickerPreviewController.minimumSelectImageCount = self.minimumSelectImageCount;
+    }
+}
+
+- (void)initAlbumControllerIfNeeded {
+    if (!self.albumController) {
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
+            self.albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
+            self.albumController.imagePickerController = self;
+        }
     }
 }
 
@@ -1829,8 +1863,21 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 #pragma mark - FWNavigationTitleViewDelegate
 
 - (void)didTouchTitleView:(FWNavigationTitleView *)titleView isActive:(BOOL)isActive {
-    if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didTouchTitleView:)]) {
-        [self.imagePickerControllerDelegate imagePickerController:self didTouchTitleView:isActive];
+    if (isActive) {
+        [self initAlbumControllerIfNeeded];
+        if (!self.albumController) return;
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willPresentAlbumController:)]) {
+            [self.imagePickerControllerDelegate imagePickerController:self willPresentAlbumController:self.albumController];
+        } else {
+            [self presentViewController:self.albumController animated:YES completion:nil];
+        }
+    } else {
+        if (!self.albumController) return;
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willDismissAlbumController:)]) {
+            [self.imagePickerControllerDelegate imagePickerController:self willDismissAlbumController:self.albumController];
+        } else {
+            [self.albumController dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 

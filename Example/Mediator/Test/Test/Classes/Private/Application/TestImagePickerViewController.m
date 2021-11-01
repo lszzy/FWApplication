@@ -87,12 +87,7 @@
 #pragma mark - <QMUIAlbumViewControllerDelegate>
 
 - (FWImagePickerController *)imagePickerControllerForAlbumController:(FWImageAlbumController *)albumController {
-    if (albumController.view.tag < 1) {
-        return nil;
-    }
-    
     FWImagePickerController *imagePickerController = [[FWImagePickerController alloc] init];
-    [albumController fwSetPropertyWeak:imagePickerController forName:@"imagePickerController"];
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerController.showsImageCountLabel = albumController.view.tag != OnlyImagePickingTag;
@@ -103,25 +98,6 @@
         imagePickerController.allowsMultipleSelection = NO;
     }
     return imagePickerController;
-}
-
-- (void)albumController:(FWImageAlbumController *)albumController didSelectAssetsGroup:(FWAssetGroup *)assetsGroup {
-    FWImagePickerController *imagePickerController = [albumController fwPropertyForName:@"imagePickerController"];
-    if (!imagePickerController) return;
-    
-    if (albumController.view.tag < 1) {
-        [albumController dismissViewControllerAnimated:YES completion:^{
-            imagePickerController.title = [assetsGroup name];
-            imagePickerController.titleView.active = NO;
-            [imagePickerController refreshWithAssetsGroup:assetsGroup];
-        }];
-        return;
-    }
-    
-    BOOL animated = imagePickerController.assetsGroup ? YES : NO;
-    [imagePickerController refreshWithAssetsGroup:assetsGroup];
-    imagePickerController.title = [assetsGroup name];
-    [albumController.navigationController pushViewController:imagePickerController animated:animated];
 }
 
 - (void)albumController:(FWImageAlbumController *)albumController customCell:(FWImageAlbumTableCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -158,25 +134,21 @@
     cell.showsCheckedIndexLabel = imagePickerController.view.tag != OnlyImagePickingTag;
 }
 
-- (void)imagePickerController:(FWImagePickerController *)imagePickerController didTouchTitleView:(BOOL)isActive {
-    if (isActive) {
-        FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
-        [albumController fwSetPropertyWeak:imagePickerController forName:@"imagePickerController"];
-        albumController.albumTableViewCellHeight = 68;
-        albumController.albumControllerDelegate = self;
-        if (imagePickerController.view.tag == SingleImagePickingTag) {
-            albumController.contentType = FWAlbumContentTypeAll;
-        } else if (imagePickerController.view.tag == MultipleImagePickingTag) {
-            albumController.contentType = FWAlbumContentTypeAll;
-        } else if (imagePickerController.view.tag == OnlyImagePickingTag) {
-            albumController.contentType = FWAlbumContentTypeOnlyPhoto;
-        } else {
-            albumController.contentType = FWAlbumContentTypeOnlyVideo;
-        }
-        [imagePickerController presentViewController:albumController animated:YES completion:nil];
+- (FWImageAlbumController *)albumControllerForImagePickerController:(FWImagePickerController *)imagePickerController {
+    FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
+    albumController.albumTableViewCellHeight = 68;
+    albumController.albumControllerDelegate = self;
+    if (imagePickerController.view.tag == SingleImagePickingTag) {
+        albumController.contentType = FWAlbumContentTypeAll;
+    } else if (imagePickerController.view.tag == MultipleImagePickingTag) {
+        albumController.contentType = FWAlbumContentTypeAll;
+    } else if (imagePickerController.view.tag == OnlyImagePickingTag) {
+        albumController.contentType = FWAlbumContentTypeOnlyPhoto;
     } else {
-        [imagePickerController dismissViewControllerAnimated:YES completion:nil];
+        albumController.contentType = FWAlbumContentTypeOnlyVideo;
     }
+    albumController.modalPresentationStyle = UIModalPresentationFullScreen;
+    return albumController;
 }
 
 #pragma mark - 业务方法

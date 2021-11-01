@@ -1144,17 +1144,22 @@
 }
 
 - (void)setActive:(BOOL)active {
+    [self setActive:active animated:NO];
+}
+
+- (void)setActive:(BOOL)active animated:(BOOL)animated {
+    if (_active == active) return;
     _active = active;
     if ([self.delegate respondsToSelector:@selector(didChangedActive:forTitleView:)]) {
         [self.delegate didChangedActive:active forTitleView:self];
     }
     if (self.accessoryImage != nil) {
         if (active) {
-            [UIView animateWithDuration:.25f delay:0 options:(8<<16) animations:^(void){
+            [UIView animateWithDuration:animated ? .25f : 0 delay:0 options:(8<<16) animations:^(void){
                 self.accessoryImageView.transform = CGAffineTransformMakeRotation((M_PI * (-180) / 180.0));
             } completion:^(BOOL finished) {}];
         } else {
-            [UIView animateWithDuration:.25f delay:0 options:(8<<16) animations:^(void){
+            [UIView animateWithDuration:animated ? .25f : 0 delay:0 options:(8<<16) animations:^(void){
                 self.accessoryImageView.transform = CGAffineTransformMakeRotation((M_PI * (0.1) / 180.0));
             } completion:^(BOOL finished) {}];
         }
@@ -1448,7 +1453,7 @@
     if ([self.delegate respondsToSelector:@selector(didTouchTitleView:isActive:)]) {
         [self.delegate didTouchTitleView:self isActive:active];
     }
-    self.active = active;
+    [self setActive:active animated:YES];
     [self refreshLayout];
 }
 

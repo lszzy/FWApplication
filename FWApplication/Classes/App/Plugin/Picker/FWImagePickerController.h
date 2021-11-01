@@ -103,6 +103,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否直接进入第一个相册列表
 @property(nonatomic, assign) BOOL pickDefaultAlbumGroup;
 
+/// 加载相册列表，完成时回调
+- (void)loadAlbumsArray:(void (NS_NOESCAPE ^)(void))completion;
+
 @end
 
 #pragma mark - FWImagePickerPreviewController
@@ -296,8 +299,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义图片九宫格cell展示，cellForRow自动调用
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
-/// 标题视图被点击时调用，isActive表示titleView是否激活
-- (void)imagePickerController:(FWImagePickerController *)imagePickerController didTouchTitleView:(BOOL)isActive;
+/// 标题视图被点击时调用，返回弹出的相册列表控制器
+- (FWImageAlbumController *)albumControllerForImagePickerController:(FWImagePickerController *)imagePickerController;
+
+/// 即将弹出相册列表控制器时调用，未实现时直接present
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController willPresentAlbumController:(FWImageAlbumController *)albumController;
+
+/// 即将关闭相册列表控制器时调用，未实现时直接dismiss
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController willDismissAlbumController:(FWImageAlbumController *)albumController;
 
 /**
  *  即将需要显示 Loading 时调用

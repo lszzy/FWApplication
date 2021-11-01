@@ -238,6 +238,9 @@ typedef NS_ENUM(NSInteger, FWNavigationTitleViewStyle) {
 /// 标题栏是否是激活状态，主要针对accessoryImage生效
 @property(nonatomic, assign, getter=isActive) BOOL active;
 
+/// 动画方式设置标题栏是否激活，主要针对accessoryImage生效
+- (void)setActive:(BOOL)active animated:(BOOL)animated;
+
 /// 标题栏最大显示宽度
 @property(nonatomic, assign) CGFloat maximumWidth UI_APPEARANCE_SELECTOR;
 
