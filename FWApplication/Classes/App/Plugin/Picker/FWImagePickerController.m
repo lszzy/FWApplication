@@ -1418,7 +1418,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 @interface FWImagePickerController ()
 
 @property(nonatomic, strong) FWImagePickerPreviewController *imagePickerPreviewController;
-@property(nonatomic, assign) BOOL isImagesAssetLoaded;// 这个属性的作用描述：https://github.com/Tencent/FW_iOS/issues/219
+@property(nonatomic, assign) BOOL isImagesAssetLoaded;
 @property(nonatomic, assign) BOOL hasScrollToInitialPosition;
 @property(nonatomic, assign) BOOL canScrollToInitialPosition;// 要等数据加载完才允许滚动
 @end
@@ -1497,7 +1497,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     UIEdgeInsets contentInset = UIEdgeInsetsMake(FWTopBarHeight, self.collectionView.safeAreaInsets.left, MAX(operationToolBarViewHeight, self.collectionView.safeAreaInsets.bottom), self.collectionView.safeAreaInsets.right);
     if (!UIEdgeInsetsEqualToEdgeInsets(self.collectionView.contentInset, contentInset)) {
         self.collectionView.contentInset = contentInset;
-        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(contentInset.top, 0, contentInset.bottom, 0);
         // 放在这里是因为有时候会先走完 refreshWithAssetsGroup 里的 completion 再走到这里，此时前者不会导致 scollToInitialPosition 的滚动，所以在这里再调用一次保证一定会滚
         [self scrollToInitialPositionIfNeeded];
     }
@@ -1532,11 +1531,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     [self.imagesAssetArray addObject:resultAsset];
                 } else {
                     // result 为 nil，即遍历相片或视频完毕
-                    self.isImagesAssetLoaded = YES;// 这个属性的作用描述： https://github.com/Tencent/FW_iOS/issues/219
+                    self.isImagesAssetLoaded = YES;
+                    self.hasScrollToInitialPosition = NO;
+                    self.collectionView.hidden = YES;
                     [self.collectionView reloadData];
                     [self.collectionView performBatchUpdates:^{
                     } completion:^(BOOL finished) {
                         [self scrollToInitialPositionIfNeeded];
+                        self.collectionView.hidden = NO;
                         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                             [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
                         }
@@ -1577,25 +1579,19 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 }
 
 - (void)scrollToInitialPositionIfNeeded {
-    BOOL isVisible = YES;
-    if (_collectionView.hidden || _collectionView.alpha <= 0.01) {
-        isVisible = NO;
-    }
-    if (_collectionView.window) {
-        isVisible = YES;
-    }
-    if (isVisible && self.isImagesAssetLoaded && !self.hasScrollToInitialPosition) {
+    if (self.isImagesAssetLoaded && !self.hasScrollToInitialPosition) {
+        NSInteger itemsCount = [self.collectionView numberOfItemsInSection:0];
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(albumSortTypeForImagePickerController:)] && [self.imagePickerControllerDelegate albumSortTypeForImagePickerController:self] == FWAlbumSortTypeReverse) {
-            [_collectionView setContentOffset:CGPointMake(_collectionView.contentOffset.x, -_collectionView.adjustedContentInset.top) animated:NO];
+            if (itemsCount > 0) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+            }
         } else {
-            [_collectionView setContentOffset:CGPointMake(_collectionView.contentOffset.x, _collectionView.contentSize.height - _collectionView.bounds.size.height + _collectionView.adjustedContentInset.bottom) animated:NO];
+            if (itemsCount > 0) {
+                [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:itemsCount - 1 inSection:0] atScrollPosition:UICollectionViewScrollPositionBottom animated:NO];
+            }
         }
         self.hasScrollToInitialPosition = YES;
     }
-}
-
-- (void)willPopInNavigationControllerWithAnimated:(BOOL)animated {
-    self.hasScrollToInitialPosition = NO;
 }
 
 #pragma mark - Getters & Setters
