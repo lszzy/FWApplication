@@ -704,6 +704,10 @@
     }
 }
 
+- (BOOL)imagePreviewView:(FWImagePreviewView *)imagePreviewView shouldResetZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
+    return NO;
+}
+
 - (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView renderZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
     [self requestImageForZoomImageView:zoomImageView withIndex:index];
     
@@ -994,15 +998,20 @@
 
 #pragma mark - Request Image
 
-- (void)requestImageForZoomImageView:(FWZoomImageView *)zoomImageView withIndex:(NSInteger)index {
-    FWZoomImageView *imageView = zoomImageView ? : [self.imagePreviewView zoomImageViewAtIndex:index];
+- (void)requestImageForZoomImageView:(FWZoomImageView *)imageView withIndex:(NSInteger)index {
     // 如果是走 PhotoKit 的逻辑，那么这个 block 会被多次调用，并且第一次调用时返回的图片是一张小图，
     // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
     if (imageAsset.croppedImage) {
+        [imageView resetContent];
         imageView.image = imageAsset.croppedImage;
         return;
+    }
+    
+    if (!imageView.reusedIdentifier || ![imageView.reusedIdentifier isEqual:imageAsset.identifier]) {
+        [imageView resetContent];
+        imageView.reusedIdentifier = imageAsset.identifier;
     }
     
     // 获取资源图片的预览图，这是一张适合当前设备屏幕大小的图片，最终展示时把图片交给组件控制最终展示出来的大小。

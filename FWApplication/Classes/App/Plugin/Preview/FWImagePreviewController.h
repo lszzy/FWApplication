@@ -30,7 +30,10 @@ typedef NS_ENUM (NSUInteger, FWImagePreviewMediaType) {
 
 - (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView renderZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index;
 
-// 返回要展示的媒体资源的类型（图片、live photo、视频），如果不实现此方法，则 FWImagePreviewView 将无法选择最合适的 cell 来复用从而略微增大系统开销
+/// 是否重置指定index的zoomImageView，未实现时默认YES
+- (BOOL)imagePreviewView:(FWImagePreviewView *)imagePreviewView shouldResetZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index;
+
+/// 返回要展示的媒体资源的类型（图片、live photo、视频），如果不实现此方法，则 FWImagePreviewView 将无法选择最合适的 cell 来复用从而略微增大系统开销
 - (FWImagePreviewMediaType)imagePreviewView:(FWImagePreviewView *)imagePreviewView assetTypeAtIndex:(NSInteger)index;
 
 /**
