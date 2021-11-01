@@ -104,7 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWImagePickerPreviewController
 
-@class FWNavigationButton;
 @class FWImageCropController;
 @class FWImagePickerController;
 @class FWImagePreviewController;
@@ -145,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
 @property(nullable, nonatomic, strong, readonly) UIView *topToolBarView;
-@property(nullable, nonatomic, strong, readonly) FWNavigationButton *backButton;
+@property(nullable, nonatomic, strong, readonly) UIButton *backButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *checkboxButton;
 @property(nonatomic, strong) UIImage *checkboxImage;
 @property(nonatomic, strong) UIImage *checkboxCheckedImage;

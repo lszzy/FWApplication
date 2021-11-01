@@ -17,7 +17,7 @@
 #import "FWEmptyPlugin.h"
 #import "FWToastPlugin.h"
 #import "FWAlertPlugin.h"
-#import "FWNavigationView.h"
+#import "FWNavigationStyle.h"
 #import "FWViewPlugin.h"
 #import "FWImagePlugin.h"
 #import "FWSwizzle.h"
@@ -483,7 +483,9 @@
     self.topToolBarView.tintColor = self.toolBarTintColor;
     [self.view addSubview:self.topToolBarView];
     
-    _backButton = [[FWNavigationButton alloc] initWithTitle:@"返回"];
+    _backButton = [[UIButton alloc] init];
+    [self.backButton setImage:FWAppBundle.navBackImage forState:UIControlStateNormal];
+    [self.backButton sizeToFit];
     [self.backButton addTarget:self action:@selector(handleCancelPreviewImage:) forControlEvents:UIControlEventTouchUpInside];
     self.backButton.fwTouchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
     [self.topToolBarView addSubview:self.backButton];
