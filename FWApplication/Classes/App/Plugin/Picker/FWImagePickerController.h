@@ -79,6 +79,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FWImageAlbumController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
+@property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
+@property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
+
 /// 相册只读列表视图
 @property (nonatomic, strong, readonly) UITableView *tableView;
 

@@ -45,8 +45,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, copy, readonly) NSString *closeButton;
 /// 多语言，完成，fwDone
 @property (class, nonatomic, copy, readonly) NSString *doneButton;
-/// 多语言，原有，fwOriginal
+/// 多语言，编辑，fwEdit
+@property (class, nonatomic, copy, readonly) NSString *editButton;
+/// 多语言，预览，fwPreview
+@property (class, nonatomic, copy, readonly) NSString *previewButton;
+/// 多语言，原图，fwOriginal
 @property (class, nonatomic, copy, readonly) NSString *originalButton;
+/// 多语言，相册，fwAlbum
+@property (class, nonatomic, copy, readonly) NSString *albumButton;
 
 @end
 

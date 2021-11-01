@@ -164,14 +164,20 @@
                 @"fwClose": @"关闭",
                 @"fwConfirm": @"确定",
                 @"fwCancel": @"取消",
-                @"fwOriginal": @"原有",
+                @"fwOriginal": @"原图",
+                @"fwEdit": @"编辑",
+                @"fwPreview": @"预览",
+                @"fwAlbum": @"相册",
             },
             @"zh-Hant": @{
                 @"fwDone": @"完成",
                 @"fwClose": @"關閉",
                 @"fwConfirm": @"確定",
                 @"fwCancel": @"取消",
-                @"fwOriginal": @"原有",
+                @"fwOriginal": @"原圖",
+                @"fwEdit": @"編輯",
+                @"fwPreview": @"預覽",
+                @"fwAlbum": @"相冊",
             },
             @"en": @{
                 @"fwDone": @"Done",
@@ -179,13 +185,19 @@
                 @"fwConfirm": @"Yes",
                 @"fwCancel": @"Cancel",
                 @"fwOriginal": @"Original",
+                @"fwEdit": @"Edit",
+                @"fwPreview": @"Preview",
+                @"fwAlbum": @"Album",
             },
             @"ja": @{
                 @"fwDone": @"完了",
                 @"fwClose": @"閉める",
                 @"fwConfirm": @"確認",
                 @"fwCancel": @"戻る",
-                @"fwOriginal": @"オリジナル",
+                @"fwOriginal": @"原図",
+                @"fwEdit": @"編集",
+                @"fwPreview": @"プレビュー",
+                @"fwAlbum": @"アルバム",
             },
             @"ms": @{
                 @"fwDone": @"Selesai",
@@ -193,6 +205,9 @@
                 @"fwConfirm": @"Ya",
                 @"fwCancel": @"Batal",
                 @"fwOriginal": @"Asal",
+                @"fwEdit": @"Edit",
+                @"fwPreview": @"Pratonton",
+                @"fwAlbum": @"Imej",
             },
         };
     });
@@ -261,9 +276,24 @@
     return [self localizedString:@"fwClose"];
 }
 
++ (NSString *)editButton
+{
+    return [self localizedString:@"fwEdit"];
+}
+
++ (NSString *)previewButton
+{
+    return [self localizedString:@"fwPreview"];
+}
+
 + (NSString *)originalButton
 {
     return [self localizedString:@"fwOriginal"];
+}
+
++ (NSString *)albumButton
+{
+    return [self localizedString:@"fwAlbum"];
 }
 
 @end

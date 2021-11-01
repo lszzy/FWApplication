@@ -126,6 +126,15 @@
 - (void)didInitialize {
     _albumsArray = [[NSMutableArray alloc] init];
     _albumTableViewCellHeight = 88;
+    _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
+    _toolBarTintColor = UIColor.whiteColor;
+    
+    self.fwStatusBarStyle = UIStatusBarStyleLightContent;
+    self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
+    self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
+    self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(cancelItemClicked:)];
 }
 
 - (UITableView *)tableView {
@@ -140,12 +149,20 @@
     return _tableView;
 }
 
+- (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
+    _toolBarBackgroundColor = toolBarBackgroundColor;
+    self.fwNavigationBarAppearance.backgroundColor = toolBarBackgroundColor;
+}
+
+- (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
+    _toolBarTintColor = toolBarTintColor;
+    self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (!self.title) self.title = FWAppBundle.albumButton;
     [self.view addSubview:self.tableView];
-    
-    if (!self.title) self.title = @"照片";
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(cancelItemClicked:)];
     
     if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotAuthorized) {
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowDenied:)]) {
@@ -464,6 +481,7 @@
         
         self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
         self.toolBarTintColor = UIColor.whiteColor;
+        self.fwNavigationBarHidden = YES;
         
         _checkboxImage = FWAppBundle.pickerCheckImage;
         _checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
@@ -507,7 +525,7 @@
     _editButton = [[UIButton alloc] init];
     self.editButton.hidden = !self.showsEditButton;
     self.editButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    [self.editButton setTitle:@"编辑" forState:UIControlStateNormal];
+    [self.editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
     self.editButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.editButton sizeToFit];
     [self.editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -515,7 +533,7 @@
     
     _sendButton = [[UIButton alloc] init];
     self.sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    [self.sendButton setTitle:@"完成" forState:UIControlStateNormal];
+    [self.sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
     self.sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.sendButton sizeToFit];
     [self.sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -538,7 +556,7 @@
     [self.originImageCheckboxButton setImage:self.originImageCheckboxImage forState:UIControlStateNormal];
     [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected];
     [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
-    [self.originImageCheckboxButton setTitle:@"原图" forState:UIControlStateNormal];
+    [self.originImageCheckboxButton setTitle:FWAppBundle.originalButton forState:UIControlStateNormal];
     [self.originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
     [self.originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
     [self.originImageCheckboxButton sizeToFit];
@@ -556,15 +574,6 @@
     
     [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
     [self updateImageCountLabelAndCollectionView:NO];
-    
-    // TODO：导航栏样式
-    [self.navigationController setNavigationBarHidden:YES animated:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -899,7 +908,7 @@
 - (void)handleOriginImageCheckboxButtonClick:(UIButton *)button {
     if (button.selected) {
         button.selected = NO;
-        [button setTitle:@"原图" forState:UIControlStateNormal];
+        [button setTitle:FWAppBundle.originalButton forState:UIControlStateNormal];
         [button sizeToFit];
         [self.bottomToolBarView setNeedsLayout];
     } else {
@@ -1443,22 +1452,33 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)didInitialize {
     self.minimumImageWidth = 75;
-    self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
-    self.toolBarTintColor = UIColor.whiteColor;
+    _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
+    _toolBarTintColor = UIColor.whiteColor;
 
     _allowsMultipleSelection = YES;
     _maximumSelectImageCount = 9;
     _minimumSelectImageCount = 0;
+    
+    self.fwStatusBarStyle = UIStatusBarStyleLightContent;
+    self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
+    self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
+    self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
+    
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(handleCancelPickerImage:)];
 }
 
-- (void)dealloc {
-    _collectionView.dataSource = nil;
-    _collectionView.delegate = nil;
+- (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
+    _toolBarBackgroundColor = toolBarBackgroundColor;
+    self.fwNavigationBarAppearance.backgroundColor = toolBarBackgroundColor;
+}
+
+- (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
+    _toolBarTintColor = toolBarTintColor;
+    self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:@"取消" target:self action:@selector(handleCancelPickerImage:)];
     
     [self.view addSubview:self.collectionView];
     if (self.allowsMultipleSelection) {
@@ -1502,6 +1522,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         // 放在这里是因为有时候会先走完 refreshWithAssetsGroup 里的 completion 再走到这里，此时前者不会导致 scollToInitialPosition 的滚动，所以在这里再调用一次保证一定会滚
         [self scrollToInitialPositionIfNeeded];
     }
+}
+
+- (void)dealloc {
+    _collectionView.dataSource = nil;
+    _collectionView.delegate = nil;
 }
 
 - (void)refreshWithAssetsGroup:(FWAssetGroup *)assetsGroup {
@@ -1647,7 +1672,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_sendButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
-        [_sendButton setTitle:@"完成" forState:UIControlStateNormal];
+        [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
         _sendButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
         _sendButton.fwDisabledAlpha = 0.3;
         _sendButton.fwHighlightedAlpha = 0.5;
@@ -1664,7 +1689,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _previewButton.enabled = NO;
         _previewButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_previewButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
-        [_previewButton setTitle:@"预览" forState:UIControlStateNormal];
+        [_previewButton setTitle:FWAppBundle.previewButton forState:UIControlStateNormal];
         _previewButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
         _previewButton.fwDisabledAlpha = 0.3;
         _previewButton.fwHighlightedAlpha = 0.5;
