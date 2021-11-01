@@ -35,9 +35,9 @@
         [FWImageAlbumTableCell appearance].albumImageMarginLeft = 16;
         [FWImageAlbumTableCell appearance].albumNameInsets = UIEdgeInsetsMake(0, 14, 0, 3);
         [FWImageAlbumTableCell appearance].albumNameFont = [UIFont systemFontOfSize:17];
-        [FWImageAlbumTableCell appearance].albumNameColor = nil;
+        [FWImageAlbumTableCell appearance].albumNameColor = UIColor.whiteColor;
         [FWImageAlbumTableCell appearance].albumAssetsNumberFont = [UIFont systemFontOfSize:17];
-        [FWImageAlbumTableCell appearance].albumAssetsNumberColor = nil;
+        [FWImageAlbumTableCell appearance].albumAssetsNumberColor = UIColor.whiteColor;
     });
 }
 
@@ -52,6 +52,7 @@
     [self fwApplyAppearance];
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
     self.imageView.layer.borderWidth = [UIScreen fwPixelOne];
@@ -126,7 +127,7 @@
 - (void)didInitialize {
     _albumsArray = [[NSMutableArray alloc] init];
     _albumTableViewCellHeight = 88;
-    _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
+    _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
     _toolBarTintColor = UIColor.whiteColor;
     
     self.fwStatusBarStyle = UIStatusBarStyleLightContent;
@@ -145,6 +146,7 @@
         _tableView.showsHorizontalScrollIndicator = NO;
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.backgroundColor = UIColor.blackColor;
     }
     return _tableView;
 }
@@ -192,6 +194,11 @@
             }];
         });
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.fwBackBarItem = FWAppBundle.navBackImage;
 }
 
 - (void)sortAlbumArray {
@@ -479,7 +486,7 @@
         self.maximumSelectImageCount = 9;
         self.minimumSelectImageCount = 0;
         
-        self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
+        self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
         self.toolBarTintColor = UIColor.whiteColor;
         self.fwNavigationBarHidden = YES;
         
@@ -506,6 +513,8 @@
     [self.backButton sizeToFit];
     [self.backButton addTarget:self action:@selector(handleCancelPreviewImage:) forControlEvents:UIControlEventTouchUpInside];
     self.backButton.fwTouchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
+    self.backButton.fwDisabledAlpha = 0.3;
+    self.backButton.fwHighlightedAlpha = 0.5;
     [self.topToolBarView addSubview:self.backButton];
     
     _checkboxButton = [[UIButton alloc] init];
@@ -515,6 +524,8 @@
     [self.checkboxButton sizeToFit];
     [self.checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+    self.checkboxButton.fwDisabledAlpha = 0.3;
+    self.checkboxButton.fwHighlightedAlpha = 0.5;
     [self.topToolBarView addSubview:self.checkboxButton];
     
     _bottomToolBarView = [[UIView alloc] init];
@@ -528,6 +539,8 @@
     [self.editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
     self.editButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.editButton sizeToFit];
+    self.editButton.fwDisabledAlpha = 0.3;
+    self.editButton.fwHighlightedAlpha = 0.5;
     [self.editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomToolBarView addSubview:self.editButton];
     
@@ -536,6 +549,8 @@
     [self.sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
     self.sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
     [self.sendButton sizeToFit];
+    self.sendButton.fwDisabledAlpha = 0.3;
+    self.sendButton.fwHighlightedAlpha = 0.5;
     [self.sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomToolBarView addSubview:self.sendButton];
     
@@ -561,6 +576,8 @@
     [self.originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
     [self.originImageCheckboxButton sizeToFit];
     self.originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
+    self.originImageCheckboxButton.fwDisabledAlpha = 0.3;
+    self.originImageCheckboxButton.fwHighlightedAlpha = 0.5;
     [self.originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomToolBarView addSubview:self.originImageCheckboxButton];
 }
@@ -1452,7 +1469,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)didInitialize {
     self.minimumImageWidth = 75;
-    _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:.9f];
+    _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
     _toolBarTintColor = UIColor.whiteColor;
 
     _allowsMultipleSelection = YES;
@@ -1647,6 +1664,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [_collectionView registerClass:[FWImagePickerCollectionCell class] forCellWithReuseIdentifier:kVideoCellIdentifier];
         [_collectionView registerClass:[FWImagePickerCollectionCell class] forCellWithReuseIdentifier:kImageOrUnknownCellIdentifier];
         _collectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        _collectionView.backgroundColor = UIColor.blackColor;
     }
     return _collectionView;
 }

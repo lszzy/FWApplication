@@ -30,7 +30,7 @@
     if ([name isEqualToString:@"fwNavBack"]) {
         CGSize size = CGSizeMake(12, 20);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGFloat lineWidth = 2;
             UIBezierPath *path = [UIBezierPath bezierPath];
@@ -43,7 +43,7 @@
     } else if ([name isEqualToString:@"fwNavClose"]) {
         CGSize size = CGSizeMake(16, 16);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGFloat lineWidth = 2;
             UIBezierPath *path = [UIBezierPath bezierPath];
@@ -60,7 +60,7 @@
     } else if ([name isEqualToString:@"fwVideoPlay"]) {
         CGSize size = CGSizeMake(60, 60);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             UIColor *fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.25];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGContextSetFillColorWithColor(contextRef, fillColor.CGColor);
@@ -84,7 +84,7 @@
     } else if ([name isEqualToString:@"fwVideoPause"]) {
         CGSize size = CGSizeMake(12, 18);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGFloat lineWidth = 2;
             UIBezierPath *path = [UIBezierPath bezierPath];
@@ -98,7 +98,7 @@
     } else if ([name isEqualToString:@"fwVideoStart"]) {
         CGSize size = CGSizeMake(17, 17);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:.75];
+            UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetFillColorWithColor(contextRef, color.CGColor);
             UIBezierPath *path = [UIBezierPath bezierPath];
             [path moveToPoint:CGPointZero];
