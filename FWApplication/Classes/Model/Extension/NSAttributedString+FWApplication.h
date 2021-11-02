@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 // 设置行间距倍数，需指定font生效，优先级低，默认0，示例：行间距为0.5倍实际高度
 @property (nonatomic, assign) CGFloat lineSpacingMultiplier;
 
-// Appearance单例，统一设置样式
+// Appearance，统一设置样式
 + (instancetype)appearance;
 
 // 转换为属性字典

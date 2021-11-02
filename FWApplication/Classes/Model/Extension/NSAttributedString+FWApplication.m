@@ -8,12 +8,11 @@
  */
 
 #import "NSAttributedString+FWApplication.h"
+#import "FWAppearance.h"
 #import "FWToolkit.h"
 #import "FWTheme.h"
 
 #pragma mark - FWAttributedOption
-
-static FWAttributedOption *appearance = nil;
 
 @interface FWAttributedOption ()
 
@@ -23,52 +22,16 @@ static FWAttributedOption *appearance = nil;
 
 #pragma mark - Lifecycle
 
-+ (void)initialize
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self appearance];
-    });
-}
-
 + (instancetype)appearance
 {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        appearance = [[self alloc] init];
-    });
-    return appearance;
+    return [FWAppearance appearanceForClass:[self class]];
 }
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        if (appearance) {
-            self.font = appearance.font;
-            self.paragraphStyle = [appearance.paragraphStyle mutableCopy];
-            self.foregroundColor = appearance.foregroundColor;
-            self.backgroundColor = appearance.backgroundColor;
-            self.ligature = appearance.ligature;
-            self.kern = appearance.kern;
-            self.strikethroughStyle = appearance.strikethroughStyle;
-            self.strikethroughColor = appearance.strikethroughColor;
-            self.underlineStyle = appearance.underlineStyle;
-            self.underlineColor = appearance.underlineColor;
-            self.strokeWidth = appearance.strokeWidth;
-            self.strokeColor = appearance.strokeColor;
-            self.shadow = [appearance.shadow copy];
-            self.textEffect = appearance.textEffect;
-            self.baselineOffset = appearance.baselineOffset;
-            self.obliqueness = appearance.obliqueness;
-            self.expansion = appearance.expansion;
-            self.writingDirection = appearance.writingDirection;
-            self.verticalGlyphForm = appearance.verticalGlyphForm;
-            self.link = appearance.link;
-            self.attachment = appearance.attachment;
-            self.lineHeightMultiplier = appearance.lineHeightMultiplier;
-            self.lineSpacingMultiplier = appearance.lineSpacingMultiplier;
-        }
+        [self fwApplyAppearance];
     }
     return self;
 }

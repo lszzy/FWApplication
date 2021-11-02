@@ -37,7 +37,7 @@ import FWApplication
         view.addSubview(audioImage)
         view.addSubview(audioLabel)
         audioImage.fwLayoutChain.centerX().size(CGSize(width: 100, height: 100))
-            .centerYToView(view, withOffset: -58)
+            .centerYToView(view as Any, withOffset: -58)
         audioLabel.fwLayoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: view, withOffset: 8)
         
         audioPlayer.delegate = self
