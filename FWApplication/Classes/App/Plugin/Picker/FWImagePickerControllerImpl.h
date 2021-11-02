@@ -20,8 +20,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 单例模式
 @property (class, nonatomic, readonly) FWImagePickerControllerImpl *sharedInstance;
 
+/// 自定义相册列表控制器句柄，默认nil时使用自带控制器
+@property (nonatomic, copy, nullable) __kindof FWImageAlbumController * (^albumControllerBlock)(void);
+
+/// 自定义图片预览控制器句柄，默认nil时使用自带控制器
+@property (nonatomic, copy, nullable) __kindof FWImagePickerPreviewController * (^previewControllerBlock)(void);
+
 /// 自定义图片选取控制器句柄，默认nil时使用自带控制器
 @property (nonatomic, copy, nullable) __kindof FWImagePickerController * (^pickerControllerBlock)(void);
+
+/// 自定义图片裁剪控制器句柄，默认nil时使用自带控制器
+@property (nonatomic, copy, nullable) FWImageCropController * _Nullable (^cropControllerBlock)(UIImage *image);
 
 /// 图片选取全局自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(FWImagePickerController *pickerController);
