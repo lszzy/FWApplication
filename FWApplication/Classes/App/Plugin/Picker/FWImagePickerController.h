@@ -142,6 +142,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willUncheckImageAtIndex:(NSInteger)index;
 /// 已经取消选中图片
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didUncheckImageAtIndex:(NSInteger)index;
+/// 选中数量变化时调用，仅多选有效
+- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willChangeCheckedCount:(NSInteger)checkedCount;
 /// 已经选中数量超过最大选择数量时被调用，默认弹窗提示
 - (void)imagePickerPreviewControllerWillShowExceed:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 图片预览界面关闭返回时被调用
@@ -173,8 +175,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
 @property(nonatomic, strong) UIImage *originImageCheckboxImage;
 @property(nonatomic, strong) UIImage *originImageCheckboxCheckedImage;
-@property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
-@property(nonatomic, assign) BOOL showsImageCountLabel;
 @property(nonatomic, assign) BOOL shouldUseOriginImage;
 @property(nonatomic, assign) BOOL showsOriginImageCheckboxButton;
 /// 是否显示编辑按钮，默认YES
@@ -308,6 +308,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 取消了 checkbox 选中之后调用
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didUncheckImageAtIndex:(NSInteger)index;
 
+/// 选中数量变化时调用，仅多选有效
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController willChangeCheckedCount:(NSInteger)checkedCount;
+
 /// 自定义图片九宫格cell展示，cellForRow自动调用
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController customCell:(FWImagePickerCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 
@@ -361,8 +364,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIView *operationToolBarView;
 @property(nullable, nonatomic, strong, readonly) UIButton *previewButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
-@property(nullable, nonatomic, strong, readonly) UILabel *imageCountLabel;
-@property(nonatomic, assign) BOOL showsImageCountLabel;
 
 /// 也可以直接传入 FWAssetGroup，然后读取其中的 FWAsset 并储存到 imagesAssetArray 中，传入后会赋值到 FWAssetGroup，并自动刷新 UI 展示
 - (void)refreshWithAssetsGroup:(FWAssetGroup * _Nullable)assetsGroup;

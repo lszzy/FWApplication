@@ -72,12 +72,12 @@
         contentType = FWAlbumContentTypeAll;
     } else if (index == 2) {
         imagePickerController.view.tag = OnlyImagePickingTag;
+        imagePickerController.minimumSelectImageCount = 2;
         contentType = FWAlbumContentTypeOnlyPhoto;
     } else {
         imagePickerController.view.tag = OnlyVideoPickingTag;
         contentType = FWAlbumContentTypeOnlyVideo;
     }
-    imagePickerController.showsImageCountLabel = imagePickerController.view.tag != OnlyImagePickingTag;
     imagePickerController.titleView.accessoryImage = [self accessoryImage];
     if (imagePickerController.view.tag == SingleImagePickingTag) {
         imagePickerController.allowsMultipleSelection = NO;
@@ -138,10 +138,12 @@
     FWImagePickerController *imagePickerController = [[FWImagePickerController alloc] init];
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
-    imagePickerController.showsImageCountLabel = albumController.view.tag != OnlyImagePickingTag;
     imagePickerController.view.tag = albumController.view.tag;
     if (albumController.view.tag == SingleImagePickingTag) {
         imagePickerController.allowsMultipleSelection = NO;
+    }
+    if (albumController.view.tag == OnlyImagePickingTag) {
+        imagePickerController.minimumSelectImageCount = 2;
     }
     return imagePickerController;
 }
@@ -170,7 +172,6 @@
     imagePickerPreviewController.delegate = self;
     imagePickerPreviewController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerPreviewController.showsOriginImageCheckboxButton = YES;
-    imagePickerPreviewController.showsImageCountLabel = imagePickerController.view.tag != OnlyImagePickingTag;
     imagePickerPreviewController.showsEditCollectionView = imagePickerController.view.tag != OnlyImagePickingTag;
     imagePickerPreviewController.view.tag = imagePickerController.view.tag;
     return imagePickerPreviewController;

@@ -620,17 +620,6 @@
     [self.sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.bottomToolBarView addSubview:self.sendButton];
     
-    _imageCountLabel = [[UILabel alloc] init];
-    _imageCountLabel.backgroundColor = self.toolBarTintColor;
-    _imageCountLabel.textColor = UIColor.redColor;
-    _imageCountLabel.font = [UIFont systemFontOfSize:12];
-    _imageCountLabel.textAlignment = NSTextAlignmentCenter;
-    _imageCountLabel.lineBreakMode = NSLineBreakByCharWrapping;
-    _imageCountLabel.layer.masksToBounds = YES;
-    _imageCountLabel.layer.cornerRadius = 18.0 / 2;
-    _imageCountLabel.hidden = YES;
-    [self.bottomToolBarView addSubview:_imageCountLabel];
-    
     _originImageCheckboxButton = [[UIButton alloc] init];
     self.originImageCheckboxButton.hidden = !self.showsOriginImageCheckboxButton;
     self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:16];
@@ -656,7 +645,7 @@
     }
     
     [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
-    [self updateImageCountLabelAndCollectionView:NO];
+    [self updateImageCountAndCollectionView:NO];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -671,11 +660,9 @@
     
     CGFloat bottomToolBarPaddingHorizontal = 12.0f;
     CGFloat bottomToolBarContentHeight = 44;
-    CGSize imageCountLabelSize = CGSizeMake(18, 18);
     CGFloat bottomToolBarHeight = bottomToolBarContentHeight + self.view.safeAreaInsets.bottom;
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
-    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - bottomToolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
-    _imageCountLabel.frame = CGRectMake(CGRectGetMinX(self.sendButton.frame) - 5 - imageCountLabelSize.width, CGRectGetMinY(self.sendButton.frame) + (CGRectGetHeight(self.sendButton.frame) - imageCountLabelSize.height) / 2.0, imageCountLabelSize.width, imageCountLabelSize.height);
+    [self updateSendButtonLayout];
     
     self.editButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
     if (self.showsEditButton) {
@@ -896,7 +883,7 @@
         button.selected = NO;
         FWAsset *imageAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray removeObject:imageAsset];
-        [self updateImageCountLabelAndCollectionView:YES];
+        [self updateImageCountAndCollectionView:YES];
         
         if ([self.delegate respondsToSelector:@selector(imagePickerPreviewController:didUncheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self didUncheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -918,7 +905,7 @@
         button.selected = YES;
         FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray addObject:imageAsset];
-        [self updateImageCountLabelAndCollectionView:YES];
+        [self updateImageCountAndCollectionView:YES];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didCheckImageAtIndex:)]) {
             [self.delegate imagePickerPreviewController:self didCheckImageAtIndex:self.imagePreviewView.currentImageIndex];
@@ -1047,13 +1034,27 @@
     [self presentViewController:cropController animated:NO completion:nil];
 }
 
-- (void)updateImageCountLabelAndCollectionView:(BOOL)animated {
-    NSUInteger selectedCount = [self.selectedImageAssetArray count];
-    if (selectedCount > 0 && !_singleCheckMode) {
-        _imageCountLabel.text = [[NSString alloc] initWithFormat:@"%@", @(selectedCount)];
-        _imageCountLabel.hidden = !self.showsImageCountLabel;
-    } else {
-        _imageCountLabel.hidden = YES;
+- (void)updateSendButtonLayout {
+    CGFloat bottomToolBarPaddingHorizontal = 12.0f;
+    CGFloat bottomToolBarContentHeight = 44;
+    [self.sendButton sizeToFit];
+    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - bottomToolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
+}
+
+- (void)updateImageCountAndCollectionView:(BOOL)animated {
+    if (!_singleCheckMode) {
+        NSUInteger selectedCount = [self.selectedImageAssetArray count];
+        if (selectedCount > 0) {
+            self.sendButton.enabled = selectedCount >= self.minimumSelectImageCount;
+            [self.sendButton setTitle:[NSString stringWithFormat:@"%@(%@)", FWAppBundle.doneButton, @(selectedCount)] forState:UIControlStateNormal];
+        } else {
+            self.sendButton.enabled = self.minimumSelectImageCount <= 1;
+            [self.sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
+        }
+        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:willChangeCheckedCount:)]) {
+            [self.delegate imagePickerPreviewController:self willChangeCheckedCount:selectedCount];
+        }
+        [self updateSendButtonLayout];
     }
     
     if (!_singleCheckMode && self.showsEditCollectionView) {
@@ -1595,10 +1596,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         CGFloat toolbarPaddingHorizontal = 12;
         self.operationToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - operationToolBarViewHeight, CGRectGetWidth(self.view.bounds), operationToolBarViewHeight);
         self.previewButton.fwOrigin = CGPointMake(toolbarPaddingHorizontal, (CGRectGetHeight(self.operationToolBarView.bounds) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
-        self.sendButton.frame = CGRectMake(CGRectGetWidth(self.operationToolBarView.bounds) - toolbarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (CGRectGetHeight(self.operationToolBarView.frame) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.sendButton.frame)) / 2.0, CGRectGetWidth(self.sendButton.frame), CGRectGetHeight(self.sendButton.frame));
-        CGSize imageCountLabelSize = CGSizeMake(18, 18);
-        self.imageCountLabel.frame = CGRectMake(CGRectGetMinX(self.sendButton.frame) - imageCountLabelSize.width - 5, CGRectGetMinY(self.sendButton.frame) + (CGRectGetHeight(self.sendButton.frame) - imageCountLabelSize.height) / 2.0, imageCountLabelSize.width, imageCountLabelSize.height);
-        self.imageCountLabel.layer.cornerRadius = CGRectGetHeight(self.imageCountLabel.bounds) / 2;
+        [self updateSendButtonLayout];
         operationToolBarViewHeight = CGRectGetHeight(self.operationToolBarView.frame);
     }
     
@@ -1857,7 +1855,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         
         [_operationToolBarView addSubview:self.sendButton];
         [_operationToolBarView addSubview:self.previewButton];
-        [_operationToolBarView addSubview:self.imageCountLabel];
     }
     return _operationToolBarView;
 }
@@ -1895,23 +1892,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [_previewButton addTarget:self action:@selector(handlePreviewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _previewButton;
-}
-
-@synthesize imageCountLabel = _imageCountLabel;
-- (UILabel *)imageCountLabel {
-    if (!_imageCountLabel) {
-        _imageCountLabel = [[UILabel alloc] init];
-        _imageCountLabel.userInteractionEnabled = NO;// 不要影响 sendButton 的事件
-        _imageCountLabel.backgroundColor = self.toolBarTintColor;
-        _imageCountLabel.textColor = UIColor.redColor;
-        _imageCountLabel.font = [UIFont systemFontOfSize:12];
-        _imageCountLabel.textAlignment = NSTextAlignmentCenter;
-        _imageCountLabel.lineBreakMode = NSLineBreakByCharWrapping;
-        _imageCountLabel.layer.masksToBounds = YES;
-        _imageCountLabel.layer.cornerRadius = 18.0 / 2;
-        _imageCountLabel.hidden = YES;
-    }
-    return _imageCountLabel;
 }
 
 - (void)setAllowsMultipleSelection:(BOOL)allowsMultipleSelection {
@@ -2116,17 +2096,29 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     [self hideAlbumControllerAnimated:YES];
 }
 
+- (void)updateSendButtonLayout {
+    if (!self.allowsMultipleSelection) return;
+    CGFloat toolbarPaddingHorizontal = 12;
+    [self.sendButton sizeToFit];
+    self.sendButton.frame = CGRectMake(CGRectGetWidth(self.operationToolBarView.bounds) - toolbarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (CGRectGetHeight(self.operationToolBarView.frame) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.sendButton.frame)) / 2.0, CGRectGetWidth(self.sendButton.frame), CGRectGetHeight(self.sendButton.frame));
+}
+
 - (void)updateImageCountAndCheckLimited:(BOOL)reloadData {
-    NSInteger selectedImageCount = [self.selectedImageAssetArray count];
-    if (selectedImageCount > 0 && selectedImageCount >= _minimumSelectImageCount) {
-        self.previewButton.enabled = YES;
-        self.sendButton.enabled = YES;
-        self.imageCountLabel.text = [NSString stringWithFormat:@"%@", @(selectedImageCount)];
-        self.imageCountLabel.hidden = !self.showsImageCountLabel;
-    } else {
-        self.previewButton.enabled = NO;
-        self.sendButton.enabled = NO;
-        self.imageCountLabel.hidden = YES;
+    if (self.allowsMultipleSelection) {
+        NSInteger selectedCount = [self.selectedImageAssetArray count];
+        if (selectedCount > 0) {
+            self.previewButton.enabled = selectedCount >= self.minimumSelectImageCount;
+            self.sendButton.enabled = selectedCount >= self.minimumSelectImageCount;
+            [self.sendButton setTitle:[NSString stringWithFormat:@"%@(%@)", FWAppBundle.doneButton, @(selectedCount)] forState:UIControlStateNormal];
+        } else {
+            self.previewButton.enabled = NO;
+            self.sendButton.enabled = NO;
+            [self.sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
+        }
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willChangeCheckedCount:)]) {
+            [self.imagePickerControllerDelegate imagePickerController:self willChangeCheckedCount:selectedCount];
+        }
+        [self updateSendButtonLayout];
     }
     
     if (reloadData) {
