@@ -16,9 +16,19 @@
 
 @interface TestImagePickerViewController () <FWTableViewController, FWImageAlbumControllerDelegate, FWImagePickerControllerDelegate, FWImagePickerPreviewControllerDelegate>
 
+@property(nonatomic, assign) BOOL showsAlbum;
+
 @end
 
 @implementation TestImagePickerViewController
+
+- (void)renderModel {
+    FWWeakifySelf();
+    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        self.showsAlbum = !self.showsAlbum;
+    }];
+}
 
 - (void)renderData {
     [self.tableData addObjectsFromArray:@[
@@ -33,12 +43,50 @@
     if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotDetermined) {
         [FWAssetManager requestAuthorization:^(FWAssetAuthorizationStatus status) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentAlbumViewControllerWithIndex:index];
+                if (self.showsAlbum) {
+                    [self presentAlbumViewControllerWithIndex:index];
+                } else {
+                    [self presentPickerViewControllerWithIndex:index];
+                }
             });
         }];
     } else {
-        [self presentAlbumViewControllerWithIndex:index];
+        if (self.showsAlbum) {
+            [self presentAlbumViewControllerWithIndex:index];
+        } else {
+            [self presentPickerViewControllerWithIndex:index];
+        }
     }
+}
+
+- (void)presentPickerViewControllerWithIndex:(NSInteger)index {
+    FWImagePickerController *imagePickerController = [[FWImagePickerController alloc] init];
+    imagePickerController.imagePickerControllerDelegate = self;
+    imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
+    FWAlbumContentType contentType;
+    if (index == 0) {
+        imagePickerController.view.tag = SingleImagePickingTag;
+        contentType = FWAlbumContentTypeAll;
+    } else if (index == 1) {
+        imagePickerController.view.tag = MultipleImagePickingTag;
+        contentType = FWAlbumContentTypeAll;
+    } else if (index == 2) {
+        imagePickerController.view.tag = OnlyImagePickingTag;
+        contentType = FWAlbumContentTypeOnlyPhoto;
+    } else {
+        imagePickerController.view.tag = OnlyVideoPickingTag;
+        contentType = FWAlbumContentTypeOnlyVideo;
+    }
+    imagePickerController.showsImageCountLabel = imagePickerController.view.tag != OnlyImagePickingTag;
+    imagePickerController.titleView.accessoryImage = [self accessoryImage];
+    if (imagePickerController.view.tag == SingleImagePickingTag) {
+        imagePickerController.allowsMultipleSelection = NO;
+    }
+    [imagePickerController refreshWithContentType:contentType];
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:imagePickerController];
+    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:navigationController animated:YES completion:NULL];
 }
 
 - (void)presentAlbumViewControllerWithIndex:(NSInteger)index {
@@ -91,8 +139,6 @@
     imagePickerController.imagePickerControllerDelegate = self;
     imagePickerController.maximumSelectImageCount = MaxSelectedImageCount;
     imagePickerController.showsImageCountLabel = albumController.view.tag != OnlyImagePickingTag;
-    imagePickerController.titleView.userInteractionEnabled = YES;
-    imagePickerController.titleView.accessoryImage = [self accessoryImage];
     imagePickerController.view.tag = albumController.view.tag;
     if (albumController.view.tag == SingleImagePickingTag) {
         imagePickerController.allowsMultipleSelection = NO;

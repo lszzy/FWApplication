@@ -67,6 +67,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIFont *albumAssetsNumberFont UI_APPEARANCE_SELECTOR;
 // 相册资源数量的颜色
 @property(nullable, nonatomic, strong) UIColor *albumAssetsNumberColor UI_APPEARANCE_SELECTOR;
+// 选中时蒙层颜色
+@property(nonatomic, strong, nullable) UIColor *checkedMaskColor UI_APPEARANCE_SELECTOR;
+/// 蒙层视图
+@property(nonatomic, strong, readonly) UIView *maskView;
+/// 当前是否选中
+@property(nonatomic, assign) BOOL checked;
 
 @end
 
@@ -82,8 +88,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
+/// 背景视图，可设置背景色，添加点击手势等
+@property(nonatomic, strong, readonly) UIView *backgroundView;
 /// 相册只读列表视图
-@property (nonatomic, strong, readonly) UITableView *tableView;
+@property(nonatomic, strong, readonly) UITableView *tableView;
+/// 相册列表视图最大高度，默认0撑满
+@property(nonatomic, assign) CGFloat maximumTableViewHeight;
+/// 当前相册列表实际显示高度
+@property(nonatomic, assign, readonly) CGFloat tableViewHeight;
 
 /// 当前相册列表，异步加载
 @property(nonatomic, strong, readonly) NSMutableArray<FWAssetGroup *> *albumsArray;
@@ -100,14 +112,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册展示内容的类型，可以控制只展示照片、视频或音频的其中一种，也可以同时展示所有类型的资源，默认展示所有类型的资源。
 @property(nonatomic, assign) FWAlbumContentType contentType;
 
-/// 是否直接进入第一个相册列表
+/// 当前选中相册，默认nil
+@property(nullable, nonatomic, strong, readonly) FWAssetGroup *assetsGroup;
+
+/// 是否直接进入第一个相册列表，默认NO
 @property(nonatomic, assign) BOOL pickDefaultAlbumGroup;
-
-/// 选中指定相册回调，优先级低于albumControllerDelegate
-@property(nullable, nonatomic, copy) void (^assetsGroupSelected)(FWAssetGroup *assetsGroup);
-
-/// 加载相册列表，完成时回调
-- (void)loadAlbumsArray:(void (NS_NOESCAPE ^)(void))completion;
 
 @end
 
@@ -321,6 +330,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)imagePickerControllerDidFinishLoading:(FWImagePickerController *)imagePickerController;
 
+/// 图片为空时调用，可自定义空界面等
+- (void)imagePickerControllerWillShowEmpty:(FWImagePickerController *)imagePickerController;
+
 /// 已经选中数量超过最大选择数量时被调用，默认弹窗提示
 - (void)imagePickerControllerWillShowExceed:(FWImagePickerController *)imagePickerController;
 
@@ -334,7 +346,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
-/// 当前titleView，默认不可点击，开启点击后会触发相应delegate方法
+/// 当前titleView，默认不可点击，contentType方式会自动切换点击状态
 @property(nonatomic, strong, readonly) FWNavigationTitleView *titleView;
 
 /*
@@ -355,8 +367,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 也可以直接传入 FWAssetGroup，然后读取其中的 FWAsset 并储存到 imagesAssetArray 中，传入后会赋值到 FWAssetGroup，并自动刷新 UI 展示
 - (void)refreshWithAssetsGroup:(FWAssetGroup * _Nullable)assetsGroup;
 
+/// 根据contentType刷新，自动选取第一个符合条件的相册，自动初始化并使用albumController
+- (void)refreshWithContentType:(FWAlbumContentType)contentType;
+
 @property(nullable, nonatomic, strong, readonly) NSMutableArray<FWAsset *> *imagesAssetArray;
 @property(nullable, nonatomic, strong, readonly) FWAssetGroup *assetsGroup;
+@property(nonatomic, assign, readonly) FWAlbumContentType contentType;
 
 /// 当前被选择的图片对应的 FWAsset 对象数组
 @property(nullable, nonatomic, strong, readonly) NSMutableArray<FWAsset *> *selectedImageAssetArray;
@@ -369,12 +385,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
-
-/// 显示相册列表子控制器
-- (void)showAlbumControllerAnimated:(BOOL)animated;
-
-/// 隐藏相册列表子控制器
-- (void)hideAlbumControllerAnimated:(BOOL)animated;
 
 /**
  * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源

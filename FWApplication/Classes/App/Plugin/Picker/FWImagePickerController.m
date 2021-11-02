@@ -29,6 +29,8 @@
 
 @implementation FWImageAlbumTableCell
 
+@synthesize maskView = _maskView;
+
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -39,6 +41,7 @@
         [FWImageAlbumTableCell appearance].albumNameColor = UIColor.whiteColor;
         [FWImageAlbumTableCell appearance].albumAssetsNumberFont = [UIFont systemFontOfSize:17];
         [FWImageAlbumTableCell appearance].albumAssetsNumberColor = UIColor.whiteColor;
+        [FWImageAlbumTableCell appearance].checkedMaskColor = nil;
     });
 }
 
@@ -58,11 +61,15 @@
     self.imageView.clipsToBounds = YES;
     self.imageView.layer.borderWidth = [UIScreen fwPixelOne];
     self.imageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.1].CGColor;
+    
+    _maskView = [[UIView alloc] init];
+    [self.contentView addSubview:self.maskView];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    self.maskView.frame = CGRectMake(0, 0, MAX(CGRectGetWidth(self.contentView.bounds), CGRectGetWidth(self.bounds)), CGRectGetHeight(self.contentView.bounds));
     CGFloat imageEdgeTop = (CGRectGetHeight(self.contentView.bounds) - self.albumImageSize) / 2.0;
     CGFloat imageEdgeLeft = self.albumImageMarginLeft == -1 ? imageEdgeTop : self.albumImageMarginLeft;
     self.imageView.frame = CGRectMake(imageEdgeLeft, imageEdgeTop, self.albumImageSize, self.albumImageSize);
@@ -97,6 +104,11 @@
     self.detailTextLabel.textColor = albumAssetsNumberColor;
 }
 
+- (void)setChecked:(BOOL)checked {
+    _checked = checked;
+    self.maskView.backgroundColor = checked ? self.checkedMaskColor : nil;
+}
+
 @end
 
 #pragma mark - FWImageAlbumController
@@ -105,12 +117,15 @@
 
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSMutableArray<FWAssetGroup *> *albumsArray;
-@property(nonatomic, assign) BOOL isAlbumsArrayLoaded;
 @property(nonatomic, weak) FWImagePickerController *imagePickerController;
+@property(nonatomic, copy) void (^assetsGroupSelected)(FWAssetGroup *assetsGroup);
+@property(nonatomic, copy) void (^albumArrayLoaded)(void);
 
 @end
 
 @implementation FWImageAlbumController
+
+@synthesize backgroundView = _backgroundView;
 
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
@@ -137,7 +152,14 @@
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
     self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
     
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(cancelItemClicked:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(cancelItemClicked:)];
+}
+
+- (UIView *)backgroundView {
+    if (!_backgroundView) {
+        _backgroundView = [[UIView alloc] init];
+    }
+    return _backgroundView;
 }
 
 - (UITableView *)tableView {
@@ -149,6 +171,7 @@
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.backgroundColor = UIColor.blackColor;
+        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     return _tableView;
 }
@@ -166,6 +189,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if (!self.title) self.title = FWAppBundle.albumButton;
+    [self.view addSubview:self.backgroundView];
     [self.view addSubview:self.tableView];
     
     if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotAuthorized) {
@@ -182,9 +206,19 @@
             [self.albumControllerDelegate albumControllerWillStartLoading:self];
         }
         
-        [self loadAlbumsArray:^{
-            [self refreshAlbumGroups];
-        }];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[FWAssetManager sharedInstance] enumerateAllAlbumsWithAlbumContentType:self.contentType usingBlock:^(FWAssetGroup *resultAssetsGroup) {
+                if (resultAssetsGroup) {
+                    [self.albumsArray addObject:resultAssetsGroup];
+                } else {
+                    // 意味着遍历完所有的相簿了
+                    [self sortAlbumArray];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self refreshAlbumGroups];
+                    });
+                }
+            }];
+        });
     }
 }
 
@@ -193,26 +227,14 @@
     self.fwBackBarItem = FWAppBundle.navBackImage;
 }
 
-- (void)loadAlbumsArray:(void (NS_NOESCAPE ^)(void))completion {
-    if (self.isAlbumsArrayLoaded) {
-        if (completion) completion();
-        return;
-    }
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[FWAssetManager sharedInstance] enumerateAllAlbumsWithAlbumContentType:self.contentType usingBlock:^(FWAssetGroup *resultAssetsGroup) {
-            if (resultAssetsGroup) {
-                [self.albumsArray addObject:resultAssetsGroup];
-            } else {
-                // 意味着遍历完所有的相簿了
-                [self sortAlbumArray];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    self.isAlbumsArrayLoaded = YES;
-                    if (completion) completion();
-                });
-            }
-        }];
-    });
+    self.backgroundView.frame = self.view.bounds;
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(FWTopBarHeight, self.tableView.safeAreaInsets.left, self.tableView.safeAreaInsets.bottom, self.tableView.safeAreaInsets.right);
+    if (!UIEdgeInsetsEqualToEdgeInsets(self.tableView.contentInset, contentInset)) {
+        self.tableView.contentInset = contentInset;
+    }
 }
 
 - (void)sortAlbumArray {
@@ -235,6 +257,12 @@
         [self.albumControllerDelegate albumControllerWillFinishLoading:self];
     }
     
+    if (self.maximumTableViewHeight > 0) {
+        CGRect tableFrame = self.tableView.frame;
+        tableFrame.size.height = self.tableViewHeight + FWTopBarHeight;
+        self.tableView.frame = tableFrame;
+    }
+    
     if ([self.albumsArray count] > 0) {
         if (self.pickDefaultAlbumGroup) {
             [self pickAlbumsGroup:self.albumsArray.firstObject animated:NO];
@@ -247,16 +275,34 @@
             [self fwShowEmptyViewWithText:@"空照片"];
         }
     }
+    
+    if (self.albumArrayLoaded) {
+        self.albumArrayLoaded();
+    }
+}
+
+- (CGFloat)tableViewHeight {
+    if (self.maximumTableViewHeight > 0) {
+        return MIN(self.maximumTableViewHeight, self.albumsArray.count * self.albumTableViewCellHeight);
+    }
+    return self.view.bounds.size.height;
 }
 
 - (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup animated:(BOOL)animated {
     if (!assetsGroup) return;
+    if (self.assetsGroup) {
+        FWImageAlbumTableCell *cell = (FWImageAlbumTableCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.albumsArray indexOfObject:self.assetsGroup] inSection:0]];
+        cell.checked = NO;
+    }
+    _assetsGroup = assetsGroup;
+    FWImageAlbumTableCell *cell = (FWImageAlbumTableCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.albumsArray indexOfObject:assetsGroup] inSection:0]];
+    cell.checked = YES;
     
     [self initImagePickerControllerIfNeeded];
-    if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
-        [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
-    } else if (self.assetsGroupSelected) {
+    if (self.assetsGroupSelected) {
         self.assetsGroupSelected(assetsGroup);
+    } else if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
+        [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
     } else if (self.imagePickerController) {
         self.imagePickerController.title = [assetsGroup name];
         [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
@@ -298,6 +344,7 @@
     cell.textLabel.text = [assetsGroup name];
     cell.detailTextLabel.font = cell.albumAssetsNumberFont;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"· %@", @(assetsGroup.numberOfAssets)];
+    cell.checked = self.assetsGroup && self.assetsGroup == assetsGroup;
     
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:customCell:atIndexPath:)]) {
         [self.albumControllerDelegate albumController:self customCell:cell atIndexPath:indexPath];
@@ -1467,6 +1514,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 @property(nonatomic, strong) FWImagePickerPreviewController *imagePickerPreviewController;
 @property(nonatomic, weak) FWImageAlbumController *albumController;
 @property(nonatomic, assign) BOOL isImagesAssetLoaded;
+@property(nonatomic, assign) BOOL isImagesAssetLoading;
 @property(nonatomic, assign) BOOL hasScrollToInitialPosition;
 
 @end
@@ -1505,7 +1553,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _titleView = titleView;
     titleView.delegate = self;
     self.navigationItem.titleView = titleView;
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWAppBundle.cancelButton target:self action:@selector(handleCancelPickerImage:)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelPickerImage:)];
 }
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
@@ -1577,8 +1625,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _selectedImageAssetArray = [[NSMutableArray alloc] init];
     } else {
         [self.imagesAssetArray removeAllObjects];
-        // 这里不用 remove 选中的图片，因为支持跨相簿选图
-//        [self.selectedImageAssetArray removeAllObjects];
     }
     // 通过 FWAssetGroup 获取该相册所有的图片 FWAsset，并且储存到数组中
     FWAlbumSortType albumSortType = FWAlbumSortTypePositive;
@@ -1587,9 +1633,15 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         albumSortType = [self.imagePickerControllerDelegate albumSortTypeForImagePickerController:self];
     }
     // 遍历相册内的资源较为耗时，交给子线程去处理，因此这里需要显示 Loading
-    if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
+    if (!self.isImagesAssetLoading && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
     }
+    self.isImagesAssetLoading = YES;
+    if (!assetsGroup) {
+        [self refreshCollectionView];
+        return;
+    }
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [assetsGroup enumerateAssetsWithOptions:albumSortType usingBlock:^(FWAsset *resultAsset) {
             // 这里需要对 UI 进行操作，因此放回主线程处理
@@ -1598,21 +1650,43 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     self.isImagesAssetLoaded = NO;
                     [self.imagesAssetArray addObject:resultAsset];
                 } else {
-                    // result 为 nil，即遍历相片或视频完毕
-                    self.isImagesAssetLoaded = YES;
-                    self.hasScrollToInitialPosition = NO;
-                    [self.collectionView reloadData];
-                    [self.collectionView performBatchUpdates:^{
-                    } completion:^(BOOL finished) {
-                        [self scrollToInitialPositionIfNeeded];
-                        if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
-                            [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
-                        }
-                    }];
+                    [self refreshCollectionView];
                 }
             });
         }];
     });
+}
+
+- (void)refreshWithContentType:(FWAlbumContentType)contentType {
+    _contentType = contentType;
+    if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
+        [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
+    }
+    self.isImagesAssetLoading = YES;
+    [self initAlbumControllerIfNeeded];
+}
+
+- (void)refreshCollectionView {
+    // result 为 nil，即遍历相片或视频完毕
+    self.isImagesAssetLoaded = YES;
+    if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
+        [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
+    }
+    self.isImagesAssetLoading = NO;
+    [self.collectionView reloadData];
+    if (self.imagesAssetArray.count > 0) {
+        self.hasScrollToInitialPosition = NO;
+        [self.collectionView performBatchUpdates:^{
+        } completion:^(BOOL finished) {
+            [self scrollToInitialPositionIfNeeded];
+        }];
+    } else {
+        if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
+            [self.imagePickerControllerDelegate imagePickerControllerWillShowEmpty:self];
+        } else {
+            [self fwShowEmptyViewWithText:@"空照片"];
+        }
+    }
 }
 
 - (void)initPreviewViewControllerIfNeeded {
@@ -1669,7 +1743,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     self.albumController.view.frame = self.view.bounds;
     self.albumController.view.hidden = NO;
     self.albumController.view.alpha = 0;
-    CGRect toFrame = CGRectMake(0, 0, self.view.bounds.size.width, 400);
+    CGRect toFrame = CGRectMake(0, 0, self.view.bounds.size.width, self.albumController.tableViewHeight + FWTopBarHeight);
     CGRect fromFrame = toFrame;
     fromFrame.origin.y = -toFrame.size.height;
     self.albumController.tableView.frame = fromFrame;
@@ -1695,6 +1769,53 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.albumController.view.hidden = YES;
         self.albumController.view.alpha = 1;
     }];
+}
+
+- (void)initAlbumControllerIfNeeded {
+    if (!self.albumController) {
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
+            FWImageAlbumController *albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
+            albumController.imagePickerController = self;
+            albumController.contentType = self.contentType;
+            UIImage *accessoryImage = self.titleView.accessoryImage;
+            self.titleView.userInteractionEnabled = NO;
+            self.titleView.accessoryImage = nil;
+            __weak __typeof__(self) self_weak_ = self;
+            albumController.albumArrayLoaded = ^{
+                __typeof__(self) self = self_weak_;
+                if (self.albumController.albumsArray.count > 0) {
+                    self.titleView.userInteractionEnabled = YES;
+                    self.titleView.accessoryImage = accessoryImage;
+                    FWAssetGroup *assetsGroup = self.albumController.albumsArray.firstObject;
+                    self.title = [assetsGroup name];
+                    [self refreshWithAssetsGroup:assetsGroup];
+                } else {
+                    [self refreshWithAssetsGroup:nil];
+                }
+            };
+            albumController.assetsGroupSelected = ^(FWAssetGroup * _Nonnull assetsGroup) {
+                __typeof__(self) self = self_weak_;
+                self.title = [assetsGroup name];
+                [self refreshWithAssetsGroup:assetsGroup];
+                [self hideAlbumControllerAnimated:YES];
+            };
+            
+            self.albumController = albumController;
+            [self addChildViewController:albumController];
+            [albumController didMoveToParentViewController:self];
+            albumController.view.hidden = YES;
+            [self.view addSubview:albumController.view];
+            
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlbumButtonClick:)];
+            [albumController.backgroundView addGestureRecognizer:tapGesture];
+            if (!albumController.backgroundView.backgroundColor) {
+                albumController.backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+            }
+            if (albumController.maximumTableViewHeight <= 0) {
+                albumController.maximumTableViewHeight = albumController.albumTableViewCellHeight * ceil(FWScreenHeight / albumController.albumTableViewCellHeight / 2.0);
+            }
+        }
+    }
 }
 
 #pragma mark - Getters & Setters
@@ -1800,28 +1921,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [self.view addSubview:self.operationToolBarView];
         } else {
             [_operationToolBarView removeFromSuperview];
-        }
-    }
-}
-
-- (void)initAlbumControllerIfNeeded {
-    if (!self.albumController) {
-        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
-            FWImageAlbumController *albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
-            albumController.imagePickerController = self;
-            __weak __typeof__(self) self_weak_ = self;
-            albumController.assetsGroupSelected = ^(FWAssetGroup * _Nonnull assetsGroup) {
-                __typeof__(self) self = self_weak_;
-                self.title = [assetsGroup name];
-                [self refreshWithAssetsGroup:assetsGroup];
-                [self hideAlbumControllerAnimated:YES];
-            };
-            
-            self.albumController = albumController;
-            [self addChildViewController:albumController];
-            [albumController didMoveToParentViewController:self];
-            albumController.view.hidden = YES;
-            [self.view addSubview:albumController.view];
         }
     }
 }
@@ -2011,6 +2110,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         // 发出请求获取大图，如果图片在 iCloud，则会发出网络请求下载图片。这里同时保存请求 id，供取消请求使用
         [self requestImageWithIndexPath:indexPath];
     }
+}
+
+- (void)handleAlbumButtonClick:(id)sender {
+    [self hideAlbumControllerAnimated:YES];
 }
 
 - (void)updateImageCountAndCheckLimited:(BOOL)reloadData {
