@@ -45,6 +45,7 @@ class TestNavigationTitleLabel: UILabel, FWNavigationTitleViewProtocol {
     }
     
     override func renderView() {
+        tableView.fwContentInsetAdjustmentNever()
         tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fwSafeAreaInsets.top
         tableView.fwSetRefreshingTarget(self, action: #selector(onRefreshing))
     }
@@ -96,7 +97,7 @@ class TestNavigationTitleLabel: UILabel, FWNavigationTitleViewProtocol {
         default:
             viewController = SwiftTestViewController()
         }
-        viewController?.fwNavigationItem.title = tableData.object(at: indexPath.row) as? String
+        viewController?.navigationItem.title = tableData.object(at: indexPath.row) as? String
         navigationController?.pushViewController(viewController!, animated: true)
     }
     

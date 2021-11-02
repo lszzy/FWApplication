@@ -27,7 +27,7 @@
 
 - (NSArray *)webItems
 {
-    if (self.fwNavigationItem.leftBarButtonItem) {
+    if (self.navigationItem.leftBarButtonItem) {
         return nil;
     } else {
         return @[
@@ -86,7 +86,7 @@
 
 - (void)renderWebView
 {
-    self.fwView.backgroundColor = [Theme tableColor];
+    self.view.backgroundColor = [Theme tableColor];
     self.webView.scrollView.delegate = self;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     self.webView.scrollView.showsHorizontalScrollIndicator = NO;

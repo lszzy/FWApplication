@@ -19,7 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fwNavigationItem.hidesBackButton = YES;
+    self.navigationItem.hidesBackButton = YES;
     
     FWWeakifySelf();
     [self fwSetLeftBarItem:FWIcon.backImage block:^(id sender) {
@@ -30,7 +30,7 @@
 
 - (void)renderView
 {
-    self.fwView.backgroundColor = [UIColor brownColor];
+    self.view.backgroundColor = [UIColor brownColor];
     
     [self renderViewUp];
     [self renderViewDown];
@@ -43,44 +43,44 @@
     BOOL hasHeader = YES;
     UIView *containerView, *drawerView;
     if (hasHeader) {
-        containerView = [[UIView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4 * 3, self.fwView.fwWidth, ViewHeight)];
+        containerView = [[UIView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4 * 3, self.view.fwWidth, ViewHeight)];
         containerView.backgroundColor = [UIColor grayColor];
-        [self.fwView addSubview:containerView];
+        [self.view addSubview:containerView];
     } else {
-        containerView = self.fwView;
+        containerView = self.view;
     }
     
     UIScrollView *scrollView;
     if (hasHeader) {
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 30, self.fwView.fwWidth, ViewHeight - 30)];
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 30, self.view.fwWidth, ViewHeight - 30)];
         drawerView = containerView;
     } else {
-        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4 * 3, self.fwView.fwWidth, ViewHeight)];
+        scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4 * 3, self.view.fwWidth, ViewHeight)];
         drawerView = scrollView;
     }
     [scrollView fwContentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor whiteColor];
-    scrollView.contentSize = CGSizeMake(self.fwView.fwWidth, 2000);
+    scrollView.contentSize = CGSizeMake(self.view.fwWidth, 2000);
     scrollView.contentInset = UIEdgeInsetsMake(50, 0, 100, 0);
     scrollView.contentOffset = CGPointMake(0, -50);
     [containerView addSubview:scrollView];
     
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.fwView.fwWidth, 2000)];
-    UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.fwView.fwWidth, 50)];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.fwWidth, 2000)];
+    UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.fwWidth, 50)];
     topLabel.textAlignment = NSTextAlignmentCenter;
     topLabel.text = @"I am top";
     topLabel.numberOfLines = 0;
     topLabel.textColor = [UIColor blackColor];
     [contentView addSubview:topLabel];
-    UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 975, self.fwView.fwWidth, 50)];
+    UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 975, self.view.fwWidth, 50)];
     middleLabel.textAlignment = NSTextAlignmentCenter;
     middleLabel.text = @"I am middle";
     middleLabel.numberOfLines = 0;
     middleLabel.textColor = [UIColor blackColor];
     [contentView addSubview:middleLabel];
-    UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1950, self.fwView.fwWidth, 50)];
+    UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1950, self.view.fwWidth, 50)];
     bottomLabel.textAlignment = NSTextAlignmentCenter;
     bottomLabel.text = @"I am bottom";
     bottomLabel.numberOfLines = 0;
@@ -88,13 +88,13 @@
     [contentView addSubview:bottomLabel];
     [scrollView addSubview:contentView];
     
-    UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4, self.fwView.fwWidth, 1)];
+    UIView *redLine = [[UIView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4, self.view.fwWidth, 1)];
     redLine.backgroundColor = [UIColor redColor];
-    [self.fwView addSubview:redLine];
+    [self.view addSubview:redLine];
     
-    redLine = [[UIView alloc] initWithFrame:CGRectMake(0, ViewHeight / 2, self.fwView.fwWidth, 1)];
+    redLine = [[UIView alloc] initWithFrame:CGRectMake(0, ViewHeight / 2, self.view.fwWidth, 1)];
     redLine.backgroundColor = [UIColor redColor];
-    [self.fwView addSubview:redLine];
+    [self.view addSubview:redLine];
     
     CGFloat fromPosition = 0;
     CGFloat toPosition = ViewHeight / 4 * 3;
@@ -104,44 +104,44 @@
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
         FWStrongifySelf();
-        [self.fwView bringSubviewToFront:drawerView];
+        [self.view bringSubviewToFront:drawerView];
         CGFloat targetDistance = toPosition - fromPosition;
         CGFloat distance = position - fromPosition;
         if (distance < targetDistance) {
             CGFloat progress = MIN(1 - distance / targetDistance, 1);
-            self.fwNavigationBar.fwBackgroundColor = [[UIColor brownColor] colorWithAlphaComponent:progress];
+            self.navigationController.navigationBar.fwBackgroundColor = [[UIColor brownColor] colorWithAlphaComponent:progress];
         } else {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
         }
     }];
 }
 
 - (void)renderViewDown
 {
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -ViewHeight / 4 * 3, self.fwView.fwWidth, ViewHeight)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -ViewHeight / 4 * 3, self.view.fwWidth, ViewHeight)];
     [scrollView fwContentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor redColor];
-    scrollView.contentSize = CGSizeMake(self.fwView.fwWidth, 2000);
+    scrollView.contentSize = CGSizeMake(self.view.fwWidth, 2000);
     scrollView.contentInset = UIEdgeInsetsMake(100, 0, 50, 0);
     scrollView.contentOffset = CGPointMake(0, 2000 - ViewHeight + 50);
-    [self.fwView addSubview:scrollView];
+    [self.view addSubview:scrollView];
     
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.fwView.fwWidth, 2000)];
-    UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1950, self.fwView.fwWidth, 50)];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.fwWidth, 2000)];
+    UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 1950, self.view.fwWidth, 50)];
     topLabel.textAlignment = NSTextAlignmentCenter;
     topLabel.text = @"I am top";
     topLabel.numberOfLines = 0;
     topLabel.textColor = [UIColor whiteColor];
     [contentView addSubview:topLabel];
-    UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 975, self.fwView.fwWidth, 50)];
+    UILabel *middleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 975, self.view.fwWidth, 50)];
     middleLabel.textAlignment = NSTextAlignmentCenter;
     middleLabel.text = @"I am middle";
     middleLabel.numberOfLines = 0;
     middleLabel.textColor = [UIColor whiteColor];
     [contentView addSubview:middleLabel];
-    UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.fwView.fwWidth, 50)];
+    UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.fwWidth, 50)];
     bottomLabel.textAlignment = NSTextAlignmentCenter;
     bottomLabel.text = @"I am bottom";
     bottomLabel.numberOfLines = 0;
@@ -155,18 +155,18 @@
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
         FWStrongifySelf();
-        [self.fwView bringSubviewToFront:scrollView];
+        [self.view bringSubviewToFront:scrollView];
         if (position == 0) {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor brownColor];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor brownColor];
         } else {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
         }
     }];
 }
 
 - (void)renderViewLeft
 {
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(FWScreenWidth / 4 * 3, 0, self.fwView.fwWidth, ViewHeight)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(FWScreenWidth / 4 * 3, 0, self.view.fwWidth, ViewHeight)];
     [scrollView fwContentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
@@ -174,7 +174,7 @@
     scrollView.contentSize = CGSizeMake(2000, ViewHeight);
     scrollView.contentInset = UIEdgeInsetsMake(0, 50, 0, 100);
     scrollView.contentOffset = CGPointMake(-50, 0);
-    [self.fwView addSubview:scrollView];
+    [self.view addSubview:scrollView];
     
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2000, ViewHeight)];
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, ViewHeight)];
@@ -203,18 +203,18 @@
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
         FWStrongifySelf();
-        [self.fwView bringSubviewToFront:scrollView];
+        [self.view bringSubviewToFront:scrollView];
         if (position == 0) {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor brownColor];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor brownColor];
         } else {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
         }
     }];
 }
 
 - (void)renderViewRight
 {
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 4 * 3, 0, self.fwView.fwWidth, ViewHeight)];
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 4 * 3, 0, self.view.fwWidth, ViewHeight)];
     [scrollView fwContentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
@@ -222,7 +222,7 @@
     scrollView.contentSize = CGSizeMake(2000, ViewHeight);
     scrollView.contentInset = UIEdgeInsetsMake(0, 100, 0, 50);
     scrollView.contentOffset = CGPointMake(2000 - FWScreenWidth + 50, 0);
-    [self.fwView addSubview:scrollView];
+    [self.view addSubview:scrollView];
     
     UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 2000, ViewHeight)];
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(1950, 0, 50, ViewHeight)];
@@ -251,11 +251,11 @@
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
         FWStrongifySelf();
-        [self.fwView bringSubviewToFront:scrollView];
+        [self.view bringSubviewToFront:scrollView];
         if (position == 0) {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor brownColor];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor brownColor];
         } else {
-            self.fwNavigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fwBackgroundColor = [UIColor fwColorWithHex:0xFFDA00];
         }
     }];
 }

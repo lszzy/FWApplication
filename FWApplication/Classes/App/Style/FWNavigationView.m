@@ -19,99 +19,6 @@
 #import "FWNavigation.h"
 #import <objc/runtime.h>
 
-#pragma mark - FWNavigationView
-
-@interface FWNavigationItem : UINavigationItem
-
-@property (nonatomic, weak) FWNavigationView *navigationView;
-
-@end
-
-@implementation FWNavigationItem
-
-- (void)setTitle:(NSString *)title
-{
-    [super setTitle:title];
-    self.navigationView.contentView.title = title;
-}
-
-- (void)setBackBarButtonItem:(UIBarButtonItem *)item
-{
-    [super setBackBarButtonItem:item];
-    self.navigationView.contentView.backButton = [self buttonWithBarItem:item];
-}
-
-- (void)setLeftBarButtonItem:(UIBarButtonItem *)item
-{
-    [super setLeftBarButtonItem:item];
-    self.navigationView.contentView.leftButton = [self buttonWithBarItem:item];
-    self.navigationView.contentView.leftMoreButton = nil;
-}
-
-- (void)setRightBarButtonItem:(UIBarButtonItem *)item
-{
-    [super setRightBarButtonItem:item];
-    self.navigationView.contentView.rightButton = [self buttonWithBarItem:item];
-    self.navigationView.contentView.rightMoreButton = nil;
-}
-
-- (void)setLeftBarButtonItems:(NSArray<UIBarButtonItem *> *)items animated:(BOOL)animated
-{
-    [super setLeftBarButtonItems:items animated:animated];
-    self.navigationView.contentView.leftButton = nil;
-    self.navigationView.contentView.leftMoreButton = nil;
-    
-    for (UIBarButtonItem *item in items) {
-        UIView *button = [self buttonWithBarItem:item];
-        if (!button) continue;
-        if (!self.navigationView.contentView.leftButton) {
-            self.navigationView.contentView.leftButton = button;
-        } else if (!self.navigationView.contentView.leftMoreButton) {
-            self.navigationView.contentView.leftMoreButton = button;
-        }
-    }
-}
-
-- (void)setRightBarButtonItems:(NSArray<UIBarButtonItem *> *)items animated:(BOOL)animated
-{
-    [super setRightBarButtonItems:items animated:animated];
-    self.navigationView.contentView.rightButton = nil;
-    self.navigationView.contentView.rightMoreButton = nil;
-    
-    for (UIBarButtonItem *item in items) {
-        UIView *button = [self buttonWithBarItem:item];
-        if (!button) continue;
-        if (!self.navigationView.contentView.rightButton) {
-            self.navigationView.contentView.rightButton = button;
-        } else if (!self.navigationView.contentView.rightMoreButton) {
-            self.navigationView.contentView.rightMoreButton = button;
-        }
-    }
-}
-
-- (UIView *)buttonWithBarItem:(UIBarButtonItem *)barItem
-{
-    if (!barItem) return nil;
-    
-    // 指定customView时只支持UIButton
-    id object = nil;
-    if (barItem.customView) {
-        UIButton *customButton = (UIButton *)barItem.customView;
-        if (![customButton isKindOfClass:[UIButton class]]) return nil;
-        object = [customButton imageForState:UIControlStateNormal] ?: [customButton titleForState:UIControlStateNormal];
-    // 未指定customView时支持image和title
-    } else {
-        object = barItem.image ?: barItem.title;
-    }
-    
-    // 创建新的按钮，直接触发barItem的响应事件即可
-    UIButton *button = [[FWNavigationButton alloc] initWithObject:object];
-    [button fwAddTouchTarget:barItem.target action:barItem.action];
-    return button;
-}
-
-@end
-
 @interface FWNavigationBar : UINavigationBar
 
 @property (nonatomic, weak) FWNavigationView *navigationView;
@@ -119,51 +26,6 @@
 @end
 
 @implementation FWNavigationBar
-
-- (BOOL)prefersLargeTitles
-{
-    if (self.navigationView.style == FWNavigationViewStyleCustom) return NO;
-    return [super prefersLargeTitles];
-}
-
-- (void)setPrefersLargeTitles:(BOOL)prefers
-{
-    if (self.navigationView.style == FWNavigationViewStyleCustom) prefers = NO;
-    [super setPrefersLargeTitles:prefers];
-}
-
-- (void)setFwForegroundColor:(UIColor *)color
-{
-    [super setFwForegroundColor:color];
-    self.navigationView.contentView.tintColor = color;
-}
-
-- (void)setFwTitleColor:(UIColor *)color
-{
-    [super setFwTitleColor:color];
-    self.navigationView.contentView.titleView.tintColor = color;
-}
-
-- (void)setFwBackgroundColor:(UIColor *)color
-{
-    [super setFwBackgroundColor:color];
-    self.navigationView.backgroundView.fwThemeImage = nil;
-    self.navigationView.backgroundView.backgroundColor = color;
-}
-
-- (void)setFwBackgroundImage:(UIImage *)image
-{
-    [super setFwBackgroundImage:image];
-    self.navigationView.backgroundView.fwThemeImage = image;
-    self.navigationView.backgroundView.backgroundColor = UIColor.clearColor;
-}
-
-- (void)fwSetBackgroundTransparent
-{
-    [super fwSetBackgroundTransparent];
-    self.navigationView.backgroundView.fwThemeImage = nil;
-    self.navigationView.backgroundView.backgroundColor = UIColor.clearColor;
-}
 
 - (void)layoutSubviews
 {
@@ -189,10 +51,6 @@
 @property (nonatomic, assign) CGFloat maxMiddleHeight;
 @property (nonatomic, assign) CGFloat maxBottomHeight;
 
-@property (nonatomic, strong) NSLayoutConstraint *noneEdgeConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *topEdgeConstraint;
-@property (nonatomic, assign) BOOL issetBackItem;
-
 @end
 
 @implementation FWNavigationView {
@@ -217,8 +75,7 @@
         [self addSubview:_backgroundView];
         [_backgroundView fwPinEdgesToSuperview];
         
-        FWNavigationItem *navigationItem = [[FWNavigationItem alloc] init];
-        navigationItem.navigationView = self;
+        UINavigationItem *navigationItem = [[UINavigationItem alloc] init];
         _navigationItem = navigationItem;
         FWNavigationBar *navigationBar = [[FWNavigationBar alloc] init];
         navigationBar.navigationView = self;
@@ -445,9 +302,7 @@
     _viewController = viewController;
     if (!viewController) return;
     
-    BOOL isHidden = viewController.fwNavigationBarHidden ||
-        !viewController.navigationController || viewController.fwIsChild;
-    self.hidden = isHidden;
+    self.hidden = !viewController.navigationController || viewController.fwIsChild;
 }
 
 - (void)setScrollView:(UIScrollView *)scrollView
@@ -482,154 +337,6 @@
     CGFloat middleHeight = MIN(MAX(minHeight, maxHeight - scrollView.contentOffset.y), maxHeight);
     _middleHeight = middleHeight;
     [self updateLayout];
-}
-
-@end
-
-#pragma mark - UIViewController+FWNavigationView
-
-@implementation UIViewController (FWNavigationView)
-
-+ (void)load
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        FWSwizzleClass(UIViewController, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
-            FWSwizzleOriginal(title);
-            if (!selfObject.fwNavigationViewEnabled) return;
-            
-            selfObject.fwNavigationView.contentView.title = title;
-        }));
-        
-        FWSwizzleClass(UIViewController, @selector(setEdgesForExtendedLayout:), FWSwizzleReturn(void), FWSwizzleArgs(UIRectEdge edges), FWSwizzleCode({
-            FWSwizzleOriginal(edges);
-            if (!selfObject.fwNavigationViewEnabled) return;
-            
-            BOOL topEdges = selfObject.fwNavigationExtendedLayout ? (edges & UIRectEdgeTop) == UIRectEdgeTop : NO;
-            selfObject.fwNavigationView.noneEdgeConstraint.active = !topEdges;
-            selfObject.fwNavigationView.topEdgeConstraint.active = topEdges;
-        }));
-        
-        FWSwizzleClass(UIViewController, @selector(loadView), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            FWSwizzleOriginal();
-            if (!selfObject.fwNavigationViewEnabled) return;
-            
-            BOOL topEdges = selfObject.fwNavigationExtendedLayout ? (selfObject.edgesForExtendedLayout & UIRectEdgeTop) == UIRectEdgeTop : NO;
-            [selfObject.view addSubview:selfObject.fwNavigationView];
-            [selfObject.view addSubview:selfObject.fwContainerView];
-            [selfObject.fwNavigationView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
-            [selfObject.fwContainerView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-            selfObject.fwNavigationView.noneEdgeConstraint = [selfObject.fwContainerView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:selfObject.fwNavigationView];
-            selfObject.fwNavigationView.noneEdgeConstraint.active = !topEdges;
-            selfObject.fwNavigationView.topEdgeConstraint = [selfObject.fwContainerView fwPinEdgeToSuperview:NSLayoutAttributeTop];
-            selfObject.fwNavigationView.topEdgeConstraint.active = topEdges;
-            [selfObject.view setNeedsLayout];
-            [selfObject.view layoutIfNeeded];
-            
-            selfObject.fwNavigationView.viewController = selfObject;
-        }));
-        
-        FWSwizzleClass(UIViewController, @selector(viewWillAppear:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
-            FWSwizzleOriginal(animated);
-            if (!selfObject.fwNavigationViewEnabled) return;
-            
-            [selfObject.view bringSubviewToFront:selfObject.fwNavigationView];
-            // 只初始化backItem一次，iOS14+调用多级pop方法触发viewWillAppear:时，导航栏VC堆栈顺序不对
-            if (selfObject.fwNavigationView.issetBackItem) return;
-            selfObject.fwNavigationView.issetBackItem = YES;
-            if (selfObject.navigationController.viewControllers.count < 2) return;
-            
-            UINavigationItem *navigationItem = selfObject.fwNavigationView.navigationItem;
-            if (!navigationItem.leftBarButtonItem && navigationItem.backBarButtonItem) {
-                [navigationItem.backBarButtonItem fwSetBlock:^(id sender) {
-                    if (![selfObject fwPopBackBarItem]) return;
-                    [selfObject fwCloseViewControllerAnimated:YES];
-                }];
-                navigationItem.leftBarButtonItem = navigationItem.backBarButtonItem;
-            }
-        }));
-        
-        FWSwizzleClass(UIViewController, @selector(viewDidLayoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            FWSwizzleOriginal();
-            if (!selfObject.fwNavigationViewEnabled) return;
-            
-            [selfObject.view bringSubviewToFront:selfObject.fwNavigationView];
-        }));
-        
-        FWSwizzleClass(UIViewController, @selector(viewWillTransitionToSize:withTransitionCoordinator:), FWSwizzleReturn(void), FWSwizzleArgs(CGSize size, id<UIViewControllerTransitionCoordinator> coordinator), FWSwizzleCode({
-            FWSwizzleOriginal(size, coordinator);
-            if (!selfObject.fwNavigationViewEnabled) return;
-            if (!selfObject.navigationController) return;
-            
-            [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-                [selfObject.fwNavigationView orientationChanged];
-            } completion:nil];
-        }));
-    });
-}
-
-- (BOOL)fwNavigationViewEnabled
-{
-    return [objc_getAssociatedObject(self, @selector(fwNavigationViewEnabled)) boolValue];
-}
-
-- (void)setFwNavigationViewEnabled:(BOOL)enabled
-{
-    objc_setAssociatedObject(self, @selector(fwNavigationViewEnabled), @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (FWNavigationView *)fwNavigationView
-{
-    FWNavigationView *navigationView = objc_getAssociatedObject(self, _cmd);
-    if (!navigationView) {
-        navigationView = [[FWNavigationView alloc] init];
-        objc_setAssociatedObject(self, _cmd, navigationView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return navigationView;
-}
-
-- (UINavigationBar *)fwNavigationBar
-{
-    if (!self.fwNavigationViewEnabled) return self.navigationController.navigationBar;
-    return self.fwNavigationView.navigationBar;
-}
-
-- (UINavigationItem *)fwNavigationItem
-{
-    if (!self.fwNavigationViewEnabled) return self.navigationItem;
-    return self.fwNavigationView.navigationItem;
-}
-
-- (UIView *)fwContainerView
-{
-    UIView *containerView = objc_getAssociatedObject(self, _cmd);
-    if (!containerView) {
-        containerView = [[UIView alloc] init];
-        objc_setAssociatedObject(self, _cmd, containerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return containerView;
-}
-
-- (BOOL)fwNavigationExtendedLayout
-{
-    NSNumber *value = objc_getAssociatedObject(self, @selector(fwNavigationExtendedLayout));
-    return value ? value.boolValue : YES;
-}
-
-- (void)setFwNavigationExtendedLayout:(BOOL)extendedLayout
-{
-    objc_setAssociatedObject(self, @selector(fwNavigationExtendedLayout), @(extendedLayout), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    if (!self.fwNavigationViewEnabled) return;
-    
-    BOOL topEdges = extendedLayout ? (self.edgesForExtendedLayout & UIRectEdgeTop) == UIRectEdgeTop : NO;
-    self.fwNavigationView.noneEdgeConstraint.active = !topEdges;
-    self.fwNavigationView.topEdgeConstraint.active = topEdges;
-}
-
-- (UIView *)fwView
-{
-    if (!self.fwNavigationViewEnabled) return self.view;
-    return self.fwContainerView;
 }
 
 @end
@@ -831,8 +538,8 @@
         FWSwizzleClass(UIViewController, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
             FWSwizzleOriginal(title);
             
-            if ([selfObject.fwNavigationItem.titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
-                ((id<FWNavigationTitleViewProtocol>)selfObject.fwNavigationItem.titleView).title = title;
+            if ([selfObject.navigationItem.titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
+                ((id<FWNavigationTitleViewProtocol>)selfObject.navigationItem.titleView).title = title;
             }
         }));
         

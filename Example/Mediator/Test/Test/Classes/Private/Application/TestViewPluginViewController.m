@@ -114,12 +114,12 @@
         toastView.indicatorView = [[FWIndicatorView alloc] initWithType:type];
     };
     self.tableView.hidden = YES;
-    [toastPlugin fwShowLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] inView:self.fwView];
+    [toastPlugin fwShowLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] inView:self.view];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [toastPlugin fwShowLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] inView:self.fwView];
+        [toastPlugin fwShowLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] inView:self.view];
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [toastPlugin fwHideLoading:self.fwView];
+        [toastPlugin fwHideLoading:self.view];
         self.tableView.hidden = NO;
     });
 }

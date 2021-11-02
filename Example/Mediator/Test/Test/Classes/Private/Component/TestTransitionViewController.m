@@ -72,7 +72,7 @@
 {
     [super viewDidLoad];
     
-    self.fwNavigationItem.title = @"全屏弹出框";
+    self.navigationItem.title = @"全屏弹出框";
     
     // 视图延伸到导航栏
     self.fwForcePopGesture = YES;
@@ -86,10 +86,10 @@
     }];
     
     // 设置背景(present时透明，push时不透明)
-    self.fwView.backgroundColor = self.navigationController ? [Theme tableColor] : [[Theme tableColor] colorWithAlphaComponent:0.9];
+    self.view.backgroundColor = self.navigationController ? [Theme tableColor] : [[Theme tableColor] colorWithAlphaComponent:0.9];
     
     // 点击背景关闭，默认子视图也会响应，解决方法：子视图设为UIButton或子视图添加空手势事件
-    [self.fwView fwAddTapGestureWithBlock:^(id sender) {
+    [self.view fwAddTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         [self fwCloseViewControllerAnimated:!self.noAnimate];
     }];
@@ -154,7 +154,7 @@ FWDealloc();
     UIView *contentView = [UIView fwAutoLayoutView];
     _contentView = contentView;
     contentView.backgroundColor = Theme.cellColor;
-    [self.fwView addSubview:contentView];
+    [self.view addSubview:contentView];
     contentView.fwLayoutChain.center();
     
     UIView *childView = [UIView fwAutoLayoutView];
@@ -230,7 +230,7 @@ FWDealloc();
     contentView.layer.masksToBounds = YES;
     contentView.layer.cornerRadius = 10;
     contentView.backgroundColor = Theme.cellColor;
-    [self.fwView addSubview:contentView];
+    [self.view addSubview:contentView];
     contentView.fwLayoutChain.center();
     
     UIView *childView = [UIView fwAutoLayoutView];
@@ -238,8 +238,8 @@ FWDealloc();
     childView.fwLayoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
-    self.fwView.backgroundColor = [[Theme backgroundColor] colorWithAlphaComponent:0.5];
-    [self.fwView fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    self.view.backgroundColor = [[Theme backgroundColor] colorWithAlphaComponent:0.5];
+    [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self dismiss];
     }];

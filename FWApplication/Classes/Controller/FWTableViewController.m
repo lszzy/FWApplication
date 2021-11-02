@@ -8,7 +8,6 @@
  */
 
 #import "FWTableViewController.h"
-#import "FWNavigationView.h"
 #import "FWAutoLayout.h"
 #import "FWToolkit.h"
 #import <objc/runtime.h>
@@ -35,7 +34,7 @@
     UITableView *tableView = [viewController tableView];
     tableView.dataSource = viewController;
     tableView.delegate = viewController;
-    [viewController.fwView addSubview:tableView];
+    [viewController.view addSubview:tableView];
     
     if (self.hookTableViewController) {
         self.hookTableViewController(viewController);

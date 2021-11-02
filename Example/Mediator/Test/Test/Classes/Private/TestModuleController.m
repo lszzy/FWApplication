@@ -189,8 +189,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fwNavigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    self.fwNavigationView.scrollView = self.tableView;
+    self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
     self.fwBarTitle = [self titleView];
 }
 
@@ -284,7 +283,7 @@
     
     Class controllerClass = NSClassFromString([rowData objectAtIndex:1]);
     UIViewController *viewController = [[controllerClass alloc] init];
-    viewController.fwNavigationItem.title = [rowData objectAtIndex:0];
+    viewController.navigationItem.title = [rowData objectAtIndex:0];
     [self.navigationController pushViewController:viewController animated:YES];
 }
 

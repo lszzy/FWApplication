@@ -77,7 +77,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
             if (success) return;
             
             TestWebViewController *viewController = [TestWebViewController new];
-            viewController.fwNavigationItem.title = context.URL;
+            viewController.navigationItem.title = context.URL;
             viewController.requestUrl = context.URL;
             [FWRouter pushViewController:viewController animated:YES];
         }];
@@ -204,7 +204,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     UILabel *label = [UILabel fwAutoLayoutView];
     label.numberOfLines = 0;
     label.text = [NSString stringWithFormat:@"URL: %@\n\nparameters: %@", self.context.URL, self.context.parameters];
-    [self.fwView addSubview:label];
+    [self.view addSubview:label];
     [label fwAlignCenterToSuperview];
     [label fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 40];
     
@@ -238,7 +238,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)renderModel
 {
-    self.fwNavigationItem.title = @"FWRouter";
+    self.navigationItem.title = @"FWRouter";
     NSString *url = @"http://test.com?id=我是中文";
     FWLogDebug(@"fwUrlEncode: %@", [url fwUrlEncode]);
     FWLogDebug(@"fwUrlDecode: %@", [[url fwUrlEncode] fwUrlDecode]);
@@ -505,7 +505,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 - (void)onOpen14
 {
     TestViewController *viewController = [TestViewController new];
-    viewController.fwNavigationItem.title = @"iOS14 bug";
+    viewController.navigationItem.title = @"iOS14 bug";
     FWWeakifySelf();
     viewController.fwBackBarBlock = ^BOOL{
         FWStrongifySelf();

@@ -8,12 +8,6 @@
 import FWApplication
 
 @objcMembers public class Theme: NSObject {
-    @FWUserDefaultAnnotation("isNavBarCustom", defaultValue: false)
-    public static var isNavBarCustom: Bool
-    
-    @FWUserDefaultAnnotation("isNavStyleCustom", defaultValue: false)
-    public static var isNavStyleCustom: Bool
-    
     @FWUserDefaultAnnotation("isLargeTitles", defaultValue: false)
     public static var isLargeTitles: Bool
     
@@ -97,23 +91,22 @@ extension Theme {
         // 导航栏样式设置
         themeChanged()
         
+        // iOS15兼容设置
+        UITableView.fwResetTableStyle()
         // 控制器样式设置
         FWViewControllerManager.sharedInstance.hookInit = { viewController in
             viewController.edgesForExtendedLayout = Theme.isExtendedBottom ? .bottom : []
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
-            viewController.fwNavigationViewEnabled = Theme.isNavBarCustom
-            viewController.fwNavigationExtendedLayout = !Theme.isBarTranslucent
             viewController.fwNavigationBarStyle = .default
             viewController.fwForcePopGesture = true
         }
         FWViewControllerManager.sharedInstance.hookLoadView = { viewController in
             viewController.view.backgroundColor = Theme.tableColor
-            viewController.fwNavigationView.style = Theme.isNavStyleCustom ? .custom : .default
         }
         FWViewControllerManager.sharedInstance.hookViewDidLoad = { viewController in
             viewController.fwBackBarItem = FWIcon.backImage
-            viewController.fwNavigationBar?.prefersLargeTitles = Theme.isLargeTitles
+            viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
         
         FWViewControllerManager.sharedInstance.hookScrollViewController = { viewController in

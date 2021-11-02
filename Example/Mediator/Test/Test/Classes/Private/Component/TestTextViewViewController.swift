@@ -44,9 +44,9 @@ import FWApplication
     }()
     
     override func renderView() {
-        fwView.addSubview(textView)
-        fwView.addSubview(textView2)
-        fwView.addSubview(textView3)
+        view.addSubview(textView)
+        view.addSubview(textView2)
+        view.addSubview(textView3)
         textView2.fwLayoutChain.left(16).right(16).topToBottomOfView(textView, withOffset: 16)
         textView3.fwLayoutChain.left(16).right(16).topToBottomOfView(textView2, withOffset: 16).height(44)
     }

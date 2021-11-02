@@ -30,8 +30,6 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     func renderTableView() {
-        fwNavigationView.scrollView = tableView
-        
         let footerView = UIView(frame: CGRect(x: 0, y: 0, width: FWScreenWidth, height: 90))
         tableView.tableFooterView = footerView
         
@@ -145,23 +143,19 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onOption() {
-        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isNavBarCustom ? FWLocalizedString("navBarSystem") : FWLocalizedString("navBarCustom"), Theme.isNavStyleCustom ? FWLocalizedString("navStyleDefault") : FWLocalizedString("navStyleCustom"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? "导航栏不透明" : "导航栏半透明", Theme.isBarAppearance ? "禁用导航栏Appearance" : "启用导航栏Appearance", Theme.isExtendedBottom ? "控制器底部不延伸" : "控制器底部延伸", Theme.isInsetNever ? "滚动视图边距自适应" : "滚动视图边距不适应"]) { (index) in
+        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? "导航栏不透明" : "导航栏半透明", Theme.isBarAppearance ? "禁用导航栏Appearance" : "启用导航栏Appearance", Theme.isExtendedBottom ? "控制器底部不延伸" : "控制器底部延伸", Theme.isInsetNever ? "滚动视图边距自适应" : "滚动视图边距不适应"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
             case 1:
-                Theme.isNavBarCustom = !Theme.isNavBarCustom
-            case 2:
-                Theme.isNavStyleCustom = !Theme.isNavStyleCustom
-            case 3:
                 Theme.isLargeTitles = !Theme.isLargeTitles
-            case 4:
+            case 2:
                 Theme.isBarTranslucent = !Theme.isBarTranslucent
-            case 5:
+            case 3:
                 Theme.isBarAppearance = !Theme.isBarAppearance
-            case 6:
+            case 4:
                 Theme.isExtendedBottom = !Theme.isExtendedBottom
-            case 7:
+            case 5:
                 Theme.isInsetNever = !Theme.isInsetNever
             default:
                 break
@@ -207,7 +201,7 @@ extension SettingsViewController {
             }
             cell.detailTextLabel?.text = root
         } else if "onOption" == action {
-            cell.detailTextLabel?.text = Theme.isNavBarCustom ? FWLocalizedString("navBarCustom") : FWLocalizedString("navBarSystem")
+            cell.detailTextLabel?.text = Theme.isLargeTitles ? FWLocalizedString("largeTitles") : FWLocalizedString("normalTitles")
         } else {
             cell.detailTextLabel?.text = ""
         }

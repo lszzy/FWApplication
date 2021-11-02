@@ -22,7 +22,7 @@
 {
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = Theme.textColor;
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     view.fwLayoutChain.remake().topWithInset(20).leftWithInset(20).size(CGSizeMake(100, 100)).width(50).height(50);
     
     UILabel *label = [[UILabel alloc] init];
@@ -32,7 +32,7 @@
     label.backgroundColor = Theme.backgroundColor;
     label.fwContentInset = UIEdgeInsetsMake(5, 5, 5, 5);
     [label fwSetCornerRadius:5];
-    [self.fwView addSubview:label];
+    [self.view addSubview:label];
     [label fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.widthToView(view).centerYToView(view).leftToRightOfViewWithOffset(view, 20);
     }];
@@ -40,12 +40,12 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"btn" forState:UIControlStateNormal];
-    [self.fwView addSubview:button];
+    [self.view addSubview:button];
     button.fwLayoutChain.widthToView(view).heightToView(view).leftToRightOfViewWithOffset(label, 20).topToViewWithOffset(view, 0);
     
     UIImageView *image = [UIImageView new];
     image.image = [UIImage fwImageWithAppIcon];
-    [self.fwView addSubview:image];
+    [self.view addSubview:image];
     image.fwLayoutChain.attribute(NSLayoutAttributeWidth, NSLayoutAttributeWidth, view).heightToWidth(1.0).centerYToView(view).attributeWithOffset(NSLayoutAttributeLeft, NSLayoutAttributeRight, button, 20);
     
     CGFloat lineHeight = ceil(FWFontRegular(16).lineHeight);
@@ -61,7 +61,7 @@
     attr.font = FWFontRegular(16);
     attr.textColor = Theme.textColor;
     attr.textAlignment = kCTTextAlignmentLeft;
-    [self.fwView addSubview:attr];
+    [self.view addSubview:attr];
     attr.fwLayoutChain.leftWithInset(20).rightWithInset(20).topToBottomOfViewWithOffset(view, 20);
     
     [self.attributedLabel setText:@"我是非常长的文本，要多长有多长，我会自动截断，再附加视图，不信你看嘛，我是显示不下了的文本，我是更多文本，我是更多更多的文本，我又要换行了"];
@@ -94,7 +94,7 @@
     emptyLabel.textAlignment = NSTextAlignmentCenter;
     emptyLabel.textColor = Theme.textColor;
     emptyLabel.backgroundColor = Theme.backgroundColor;
-    [self.fwView addSubview:emptyLabel];
+    [self.view addSubview:emptyLabel];
     [emptyLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.topToBottomOfViewWithOffset(attr, 20);
         make.leftWithInset(20);
@@ -105,7 +105,7 @@
     emptyLabel2.textColor = Theme.textColor;
     emptyLabel2.backgroundColor = Theme.backgroundColor;
     emptyLabel2.fwContentInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    [self.fwView addSubview:emptyLabel2];
+    [self.view addSubview:emptyLabel2];
     [emptyLabel2 fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftToRightOfViewWithOffset(emptyLabel, 20);
         make.centerYToView(emptyLabel);
@@ -117,7 +117,7 @@
     resultLabel.text = [NSString stringWithFormat:@"%@ <=> %@", NSStringFromCGSize(emptySize), NSStringFromCGSize(emptySize2)];
     resultLabel.textAlignment = NSTextAlignmentCenter;
     resultLabel.textColor = Theme.textColor;
-    [self.fwView addSubview:resultLabel];
+    [self.view addSubview:resultLabel];
     [resultLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.centerX();
         make.centerYToView(emptyLabel2);
@@ -128,7 +128,7 @@
     numberLabel.numberOfLines = 0;
     numberLabel.textColor = Theme.textColor;
     numberLabel.text = [self numberString];
-    [self.fwView addSubview:numberLabel];
+    [self.view addSubview:numberLabel];
     [numberLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftWithInset(20).rightWithInset(20)
             .topToBottomOfViewWithOffset(attr, 50);

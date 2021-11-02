@@ -19,7 +19,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
 
 - (void)renderView
 {
-    self.fwView.backgroundColor = [UIColor fwThemeColor:^UIColor * _Nonnull(FWThemeStyle style) {
+    self.view.backgroundColor = [UIColor fwThemeColor:^UIColor * _Nonnull(FWThemeStyle style) {
         if (style == FWThemeStyleDark) {
             return [UIColor blackColor];
         } else if (style == FWThemeStyleLight) {
@@ -39,7 +39,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
             return [UIColor redColor];
         }
     }];
-    [self.fwView addSubview:colorView];
+    [self.view addSubview:colorView];
     
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 90, 50, 50)];
     imageView.fwThemeImage = [UIImage fwThemeImage:^UIImage *(FWThemeStyle style) {
@@ -51,7 +51,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
             return [[TestBundle imageNamed:@"theme_image_dark"] fwImageWithTintColor:[UIColor redColor]];
         }
     }];
-    [self.fwView addSubview:imageView];
+    [self.view addSubview:imageView];
     
     CALayer *layer = [CALayer new];
     layer.frame = CGRectMake(20, 160, 50, 50);
@@ -65,7 +65,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
             return [UIColor redColor];
         }
     }];
-    [self.fwView.layer addSublayer:layer];
+    [self.view.layer addSublayer:layer];
     
     UILabel *themeLabel = [UILabel new];
     themeLabel.frame = CGRectMake(20, 230, FWScreenWidth, 50);
@@ -79,7 +79,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
         }
     }];
     themeLabel.attributedText = [NSAttributedString fwAttributedString:@"我是AttributedString" withFont:FWFontSize(16).fwBoldFont textColor:textColor];
-    [self.fwView addSubview:themeLabel];
+    [self.view addSubview:themeLabel];
 }
 
 - (void)renderModel

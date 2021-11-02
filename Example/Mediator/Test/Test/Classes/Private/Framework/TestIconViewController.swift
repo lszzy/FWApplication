@@ -72,7 +72,7 @@ class TestIconCell: UICollectionViewCell {
     }
     
     func renderCollectionLayout() {
-        fwView.addSubview(searchBar)
+        view.addSubview(searchBar)
         searchBar.fwLayoutChain
             .edges(excludingEdge: .bottom)
             .height(FWNavigationBarHeight)

@@ -40,7 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.fwNavigationBar fwSetBackgroundTransparent];
+    [self.navigationController.navigationBar fwSetBackgroundTransparent];
 }
 
 - (void)renderView
@@ -68,7 +68,7 @@
         [self fwCloseViewControllerAnimated:YES];
     }];
     [contentView addSubview:closeLabel];
-    [self.fwView addSubview:contentView];
+    [self.view addSubview:contentView];
     
     [contentView fwDrawerView:UISwipeGestureRecognizerDirectionRight
                     positions:@[@(-FWScreenWidth / 2.0), @(0)]
@@ -78,7 +78,7 @@
     UIImageView *imageView = [UIImageView new];
     _imageView = imageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.fwView addSubview:imageView];
+    [self.view addSubview:imageView];
     imageView.fwLayoutChain.center().size(CGSizeMake(200, 200));
 }
 

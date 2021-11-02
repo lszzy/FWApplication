@@ -9,7 +9,6 @@
 
 #import "FWEmptyPlugin.h"
 #import "FWEmptyPluginImpl.h"
-#import "FWNavigationView.h"
 #import "FWPlugin.h"
 #import "FWProxy.h"
 #import "FWSwizzle.h"
@@ -114,57 +113,57 @@
 
 - (UIEdgeInsets)fwEmptyInsets
 {
-    return self.fwView.fwEmptyInsets;
+    return self.view.fwEmptyInsets;
 }
 
 - (void)setFwEmptyInsets:(UIEdgeInsets)fwEmptyInsets
 {
-    self.fwView.fwEmptyInsets = fwEmptyInsets;
+    self.view.fwEmptyInsets = fwEmptyInsets;
 }
 
 - (void)fwShowEmptyView
 {
-    [self.fwView fwShowEmptyView];
+    [self.view fwShowEmptyView];
 }
 
 - (void)fwShowEmptyViewLoading
 {
-    [self.fwView fwShowEmptyViewLoading];
+    [self.view fwShowEmptyViewLoading];
 }
 
 - (void)fwShowEmptyViewWithText:(NSString *)text
 {
-    [self.fwView fwShowEmptyViewWithText:text];
+    [self.view fwShowEmptyViewWithText:text];
 }
 
 - (void)fwShowEmptyViewWithText:(NSString *)text detail:(NSString *)detail
 {
-    [self.fwView fwShowEmptyViewWithText:text detail:detail];
+    [self.view fwShowEmptyViewWithText:text detail:detail];
 }
 
 - (void)fwShowEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image
 {
-    [self.fwView fwShowEmptyViewWithText:text detail:detail image:image];
+    [self.view fwShowEmptyViewWithText:text detail:detail image:image];
 }
 
 - (void)fwShowEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    [self.fwView fwShowEmptyViewWithText:text detail:detail image:image action:action block:block];
+    [self.view fwShowEmptyViewWithText:text detail:detail image:image action:action block:block];
 }
 
 - (void)fwShowEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    [self.fwView fwShowEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block];
+    [self.view fwShowEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block];
 }
 
 - (void)fwHideEmptyView
 {
-    [self.fwView fwHideEmptyView];
+    [self.view fwHideEmptyView];
 }
 
 - (BOOL)fwHasEmptyView
 {
-    return [self.fwView fwHasEmptyView];
+    return [self.view fwHasEmptyView];
 }
 
 @end

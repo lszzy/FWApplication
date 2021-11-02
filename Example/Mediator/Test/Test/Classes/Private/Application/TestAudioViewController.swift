@@ -34,11 +34,11 @@ import FWApplication
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fwView.addSubview(audioImage)
-        fwView.addSubview(audioLabel)
+        view.addSubview(audioImage)
+        view.addSubview(audioLabel)
         audioImage.fwLayoutChain.centerX().size(CGSize(width: 100, height: 100))
-            .centerYToView(fwView, withOffset: -58)
-        audioLabel.fwLayoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: fwView, withOffset: 8)
+            .centerYToView(view, withOffset: -58)
+        audioLabel.fwLayoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: view, withOffset: 8)
         
         audioPlayer.delegate = self
         audioPlayer.dataSource = self

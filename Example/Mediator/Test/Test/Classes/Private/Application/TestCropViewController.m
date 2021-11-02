@@ -132,7 +132,7 @@
 #pragma mark - View Creation/Lifecycle -
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.fwNavigationItem.title = NSLocalizedString(@"FWImageCropController", @"");
+    self.navigationItem.title = NSLocalizedString(@"FWImageCropController", @"");
     
     self.navigationController.navigationBar.translucent = NO;
     
@@ -142,7 +142,7 @@
     self.imageView = [[UIImageView alloc] init];
     self.imageView.userInteractionEnabled = YES;
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    [self.fwView addSubview:self.imageView];
+    [self.view addSubview:self.imageView];
     
     self.imageView.accessibilityIgnoresInvertColors = YES;
     

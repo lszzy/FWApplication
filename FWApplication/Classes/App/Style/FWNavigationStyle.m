@@ -8,7 +8,6 @@
  */
 
 #import "FWNavigationStyle.h"
-#import "FWNavigationView.h"
 #import "FWAdaptive.h"
 #import "FWSwizzle.h"
 #import "FWToolkit.h"
@@ -90,11 +89,6 @@
 {
     objc_setAssociatedObject(self, @selector(fwStatusBarHidden), @(fwStatusBarHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self setNeedsStatusBarAppearanceUpdate];
-    
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        self.fwNavigationView.topHidden = fwStatusBarHidden;
-    }
 }
 
 - (UIStatusBarStyle)fwStatusBarStyle
@@ -178,42 +172,35 @@
     BOOL isTransparent = (styleNum.integerValue == FWNavigationBarStyleTransparent) || appearance.isTransparent;
     BOOL isTranslucent = (styleNum.integerValue == FWNavigationBarStyleTranslucent) || appearance.isTranslucent;
     
-    // 自定义导航栏，隐藏系统默认导航栏，切换自定义导航栏显示状态
-    if ([self fwNavigationViewEnabled]) {
-        if (self.navigationController.navigationBarHidden != YES) {
-            [self.navigationController setNavigationBarHidden:YES animated:animated];
-        }
-        self.fwNavigationView.hidden = isHidden;
     // 系统导航栏，动态切换动画不突兀，一般在viewWillAppear:中调用，立即生效
-    } else {
-        if (self.navigationController.navigationBarHidden != isHidden) {
-            [self.navigationController setNavigationBarHidden:isHidden animated:animated];
-        }
+    if (self.navigationController.navigationBarHidden != isHidden) {
+        [self.navigationController setNavigationBarHidden:isHidden animated:animated];
     }
     
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
     if (isTransparent) {
-        [self.fwNavigationBar fwSetBackgroundTransparent];
+        [navigationBar fwSetBackgroundTransparent];
     }
-    if (isTranslucent != self.fwNavigationBar.fwIsTranslucent) {
-        self.fwNavigationBar.fwIsTranslucent = isTranslucent;
+    if (isTranslucent != navigationBar.fwIsTranslucent) {
+        navigationBar.fwIsTranslucent = isTranslucent;
     }
     if (appearance.backgroundColor) {
-        self.fwNavigationBar.fwBackgroundColor = appearance.backgroundColor;
+        navigationBar.fwBackgroundColor = appearance.backgroundColor;
     }
     if (appearance.backgroundImage) {
-        self.fwNavigationBar.fwBackgroundImage = appearance.backgroundImage;
+        navigationBar.fwBackgroundImage = appearance.backgroundImage;
     }
     if (appearance.shadowImage) {
-        self.fwNavigationBar.fwShadowImage = appearance.shadowImage;
+        navigationBar.fwShadowImage = appearance.shadowImage;
     }
     if (appearance.foregroundColor) {
-        self.fwNavigationBar.fwForegroundColor = appearance.foregroundColor;
+        navigationBar.fwForegroundColor = appearance.foregroundColor;
     }
     if (appearance.titleColor) {
-        self.fwNavigationBar.fwTitleColor = appearance.titleColor;
+        navigationBar.fwTitleColor = appearance.titleColor;
     }
     if (appearance.appearanceBlock) {
-        appearance.appearanceBlock(self.fwNavigationBar);
+        appearance.appearanceBlock(navigationBar);
     }
 }
 
@@ -257,11 +244,6 @@
 
 - (CGFloat)fwStatusBarHeight
 {
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        return self.fwNavigationView.topHeight;
-    }
-    
     // 1. 导航栏隐藏时不占用布局高度始终为0
     if (!self.navigationController || self.navigationController.navigationBarHidden) return 0.0;
     
@@ -292,11 +274,6 @@
 
 - (CGFloat)fwNavigationBarHeight
 {
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        return self.fwNavigationView.middleHeight;
-    }
-    
     // 系统导航栏
     if (!self.navigationController || self.navigationController.navigationBarHidden) return 0.0;
     return self.navigationController.navigationBar.frame.size.height;
@@ -304,11 +281,6 @@
 
 - (CGFloat)fwTopBarHeight
 {
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        return self.fwNavigationView.height;
-    }
-    
     // 通常情况下导航栏显示时可以这样计算：CGRectGetMaxY(self.navigationController.navigationBar.frame)
     return [self fwStatusBarHeight] + [self fwNavigationBarHeight];
     
@@ -350,46 +322,31 @@
 
 - (id)fwBarTitle
 {
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        return self.fwNavigationView.titleView ?: self.fwNavigationItem.title;
-    }
-    
     // 系统导航栏
-    return self.fwNavigationItem.titleView ?: self.fwNavigationItem.title;
+    return self.navigationItem.titleView ?: self.navigationItem.title;
 }
 
 - (void)setFwBarTitle:(id)title
 {
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        if ([title isKindOfClass:[UIView class]]) {
-            self.fwNavigationView.titleView = title;
-        } else {
-            self.fwNavigationItem.title = title;
-        }
-        return;
-    }
-    
     if ([title isKindOfClass:[UIView class]]) {
-        self.fwNavigationItem.titleView = title;
+        self.navigationItem.titleView = title;
     } else {
-        self.fwNavigationItem.title = title;
+        self.navigationItem.title = title;
     }
 }
 
 - (id)fwLeftBarItem
 {
-    return self.fwNavigationItem.leftBarButtonItem;
+    return self.navigationItem.leftBarButtonItem;
 }
 
 - (void)setFwLeftBarItem:(id)object
 {
     if (!object || [object isKindOfClass:[UIBarButtonItem class]]) {
-        self.fwNavigationItem.leftBarButtonItem = object;
+        self.navigationItem.leftBarButtonItem = object;
     } else {
         __weak __typeof__(self) self_weak_ = self;
-        self.fwNavigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
+        self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
             __typeof__(self) self = self_weak_;
             if (![self fwPopBackBarItem]) return;
             [self fwCloseViewControllerAnimated:YES];
@@ -399,16 +356,16 @@
 
 - (id)fwRightBarItem
 {
-    return self.fwNavigationItem.rightBarButtonItem;
+    return self.navigationItem.rightBarButtonItem;
 }
 
 - (void)setFwRightBarItem:(id)object
 {
     if (!object || [object isKindOfClass:[UIBarButtonItem class]]) {
-        self.fwNavigationItem.rightBarButtonItem = object;
+        self.navigationItem.rightBarButtonItem = object;
     } else {
         __weak __typeof__(self) self_weak_ = self;
-        self.fwNavigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
+        self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
             __typeof__(self) self = self_weak_;
             if (![self fwPopBackBarItem]) return;
             [self fwCloseViewControllerAnimated:YES];
@@ -418,78 +375,65 @@
 
 - (void)fwSetLeftBarItem:(id)object target:(id)target action:(SEL)action
 {
-    self.fwNavigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
 }
 
 - (void)fwSetLeftBarItem:(id)object block:(void (^)(id sender))block
 {
-    self.fwNavigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
 }
 
 - (void)fwSetRightBarItem:(id)object target:(id)target action:(SEL)action
 {
-    self.fwNavigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
 }
 
 - (void)fwSetRightBarItem:(id)object block:(void (^)(id sender))block
 {
-    self.fwNavigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
 }
 
 - (void)fwAddLeftBarItem:(id)object target:(id)target action:(SEL)action
 {
     UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
-    NSMutableArray *items = self.fwNavigationItem.leftBarButtonItems ? [self.fwNavigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.navigationItem.leftBarButtonItems ? [self.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.fwNavigationItem.leftBarButtonItems = [items copy];
+    self.navigationItem.leftBarButtonItems = [items copy];
 }
 
 - (void)fwAddLeftBarItem:(id)object block:(void (^)(id sender))block
 {
     UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
-    NSMutableArray *items = self.fwNavigationItem.leftBarButtonItems ? [self.fwNavigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.navigationItem.leftBarButtonItems ? [self.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.fwNavigationItem.leftBarButtonItems = [items copy];
+    self.navigationItem.leftBarButtonItems = [items copy];
 }
 
 - (void)fwAddRightBarItem:(id)object target:(id)target action:(SEL)action
 {
     UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
-    NSMutableArray *items = self.fwNavigationItem.rightBarButtonItems ? [self.fwNavigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.navigationItem.rightBarButtonItems ? [self.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.fwNavigationItem.rightBarButtonItems = [items copy];
+    self.navigationItem.rightBarButtonItems = [items copy];
 }
 
 - (void)fwAddRightBarItem:(id)object block:(void (^)(id sender))block
 {
     UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
-    NSMutableArray *items = self.fwNavigationItem.rightBarButtonItems ? [self.fwNavigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.navigationItem.rightBarButtonItems ? [self.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.fwNavigationItem.rightBarButtonItems = [items copy];
+    self.navigationItem.rightBarButtonItems = [items copy];
 }
 
 #pragma mark - Back
 
 - (id)fwBackBarItem
 {
-    return self.fwNavigationItem.backBarButtonItem;
+    return self.navigationItem.backBarButtonItem;
 }
 
 - (void)setFwBackBarItem:(id)object
 {
-    // 自定义导航栏
-    if (self.fwNavigationViewEnabled) {
-        UIBarButtonItem *backItem;
-        if ([object isKindOfClass:[UIBarButtonItem class]]) {
-            backItem = (UIBarButtonItem *)object;
-        } else {
-            backItem = [UIBarButtonItem fwBarItemWithObject:(object ?: [UIImage new]) target:nil action:nil];
-        }
-        self.fwNavigationItem.backBarButtonItem = backItem;
-        self.fwNavigationBar.fwBackImage = nil;
-        return;
-    }
-    
     // 系统导航栏
     if (![object isKindOfClass:[UIImage class]]) {
         UIBarButtonItem *backItem;
@@ -500,8 +444,8 @@
         } else {
             backItem = [UIBarButtonItem fwBarItemWithObject:object target:nil action:nil];
         }
-        self.fwNavigationItem.backBarButtonItem = backItem;
-        self.fwNavigationBar.fwBackImage = nil;
+        self.navigationItem.backBarButtonItem = backItem;
+        self.navigationController.navigationBar.fwBackImage = nil;
         return;
     }
     
@@ -520,8 +464,8 @@
         UIGraphicsEndImageContext();
     }
     
-    self.fwNavigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.fwNavigationBar.fwBackImage = indicatorImage;
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.navigationController.navigationBar.fwBackImage = indicatorImage;
 }
 
 - (BOOL)fwPopBackBarItem

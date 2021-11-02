@@ -20,7 +20,7 @@ class HomeViewController: UIViewController, FWViewController {
         super.viewDidLoad()
         
         // FIXME: hotfix
-        fwView.addSubview(loginButton)
+        view.addSubview(loginButton)
     }
     
     override func viewWillAppear(_ animated: Bool) {

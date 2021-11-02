@@ -46,7 +46,7 @@ import FWApplication
         default:
             viewController = SwiftTestViewController()
         }
-        viewController?.fwNavigationItem.title = tableData.object(at: indexPath.row) as? String
+        viewController?.navigationItem.title = tableData.object(at: indexPath.row) as? String
         navigationController?.pushViewController(viewController!, animated: true)
     }
 }
@@ -55,17 +55,17 @@ import FWApplication
     func renderState(_ state: FWViewControllerState, with object: Any?) {
         switch state {
         case .success:
-            fwView.fwShowEmpty(withText: object as? String)
+            view.fwShowEmpty(withText: object as? String)
         case .failure:
-            fwView.fwShowEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
-                self?.fwView.fwHideEmpty()
+            view.fwShowEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
+                self?.view.fwHideEmpty()
                 
                 self?.renderState(.loading, with: nil)
             }
         case .loading:
-            fwView.fwShowLoading(withText: "开始加载")
+            view.fwShowLoading(withText: "开始加载")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.fwView.fwHideLoading()
+                self?.view.fwHideLoading()
                 
                 if [0, 1].randomElement() == 1 {
                     self?.renderState(.success, with: "加载成功")
@@ -114,7 +114,7 @@ import FWApplication
     }
     
     func renderCollectionLayout() {
-        fwView.addSubview(contentView)
+        view.addSubview(contentView)
         contentView.fwLayoutChain.edges(excludingEdge: .bottom).height(200)
         
         collectionView.removeFromSuperview()
@@ -172,7 +172,7 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < collectionData.count {
-            fwView.fwShowMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
+            view.fwShowMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
         }
     }
     

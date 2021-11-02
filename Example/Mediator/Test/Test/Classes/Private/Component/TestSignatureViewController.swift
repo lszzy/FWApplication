@@ -39,13 +39,13 @@ import FWApplication
     }()
     
     override func renderView() {
-        fwView.addSubview(signatureView)
+        view.addSubview(signatureView)
         signatureView.fwLayoutChain.left().right().centerYToView(view as Any, withOffset: -100).height(300)
         
-        fwView.addSubview(clearButton)
+        view.addSubview(clearButton)
         clearButton.fwLayoutChain.centerX().topToBottomOfView(signatureView, withOffset: 20)
         
-        fwView.addSubview(saveButton)
+        view.addSubview(saveButton)
         saveButton.fwLayoutChain.centerX().topToBottomOfView(clearButton, withOffset: 20)
     }
     

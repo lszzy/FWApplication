@@ -204,7 +204,7 @@ import FWApplication
         } else {
             let album = albums[indexPath.row]
             let viewController = TestAssetViewController()
-            viewController.fwNavigationItem.title = album.name()
+            viewController.navigationItem.title = album.name()
             viewController.album = album
             viewController.isAlbum = true
             fwOpen(viewController, animated: true)

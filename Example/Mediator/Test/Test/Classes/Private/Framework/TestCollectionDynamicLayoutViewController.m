@@ -384,7 +384,7 @@ static BOOL isExpanded = NO;
         self.collectionView.fwShowRefreshing = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView fwEndRefreshing];
         if (!self.collectionView.fwShowRefreshing) {
-            self.fwNavigationItem.rightBarButtonItem = nil;
+            self.navigationItem.rightBarButtonItem = nil;
         }
     });
 }

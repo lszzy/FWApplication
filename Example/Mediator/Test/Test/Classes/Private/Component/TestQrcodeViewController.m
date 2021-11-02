@@ -26,8 +26,8 @@
     [super viewDidLoad];
     self.fwNavigationBarStyle = FWNavigationBarStyleTransparent;
     self.fwExtendedLayoutEdge = UIRectEdgeTop;
-    self.fwNavigationItem.title = @"扫一扫";
-    self.fwNavigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(onPhotoLibrary)];
+    self.navigationItem.title = @"扫一扫";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(onPhotoLibrary)];
     
     // 相机授权
     [[FWAuthorizeManager managerWithType:FWAuthorizeTypeCamera] authorize:^(FWAuthorizeStatus status) {
@@ -35,8 +35,8 @@
             [self fwShowAlertWithTitle:(status == FWAuthorizeStatusRestricted ? @"未检测到您的摄像头" : @"未打开摄像头权限") message:nil cancel:nil cancelBlock:NULL];
         } else {
             [self setupScanManager];
-            [self.fwView addSubview:self.scanView];
-            [self.fwView addSubview:self.promptLabel];
+            [self.view addSubview:self.scanView];
+            [self.view addSubview:self.promptLabel];
             
             // 由于异步授权，viewWillAppear时可能未完成，此处调用start
             [self startScanManager];
@@ -122,7 +122,7 @@
     self.scanManager.scanBrightnessBlock = ^(CGFloat brightness) {
         FWStrongifySelf();
         if (brightness < -1) {
-            [self.fwView addSubview:self.flashlightBtn];
+            [self.view addSubview:self.flashlightBtn];
         } else {
             if (self.flashlightSelected == NO) {
                 [self removeFlashlightBtn];

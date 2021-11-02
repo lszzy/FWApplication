@@ -28,7 +28,7 @@
     _mapView = mapView;
     mapView.delegate = self;
     mapView.showsUserLocation = YES;
-    [self.fwView addSubview:mapView];
+    [self.view addSubview:mapView];
 }
 
 #pragma mark - MKMapViewDelegate

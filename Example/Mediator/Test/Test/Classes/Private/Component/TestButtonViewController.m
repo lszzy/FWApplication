@@ -16,70 +16,70 @@
     UIButton *button = [UIButton fwButtonWithTitle:@"Button重复点击" font:[UIFont fwFontOfSize:15] titleColor:[Theme textColor]];
     button.frame = CGRectMake(25, 20, 150, 50);
     [button fwAddTouchTarget:self action:@selector(onClick1:)];
-    [self.fwView addSubview:button];
+    [self.view addSubview:button];
     
     UILabel *label = [UILabel fwLabelWithText:@"View重复点击" font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     label.textAlignment = NSTextAlignmentCenter;
     label.userInteractionEnabled = YES;
     label.frame = CGRectMake(200, 20, 150, 50);
     [label fwAddTapGestureWithTarget:self action:@selector(onClick2:)];
-    [self.fwView addSubview:label];
+    [self.view addSubview:label];
     
     button = [UIButton fwButtonWithTitle:@"Button不可重复点击" font:[UIFont fwFontOfSize:15] titleColor:[Theme textColor]];
     button.frame = CGRectMake(25, 90, 150, 50);
     [button fwAddTouchTarget:self action:@selector(onClick3:)];
-    [self.fwView addSubview:button];
+    [self.view addSubview:button];
     
     label = [UILabel fwLabelWithText:@"View不可重复点击" font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
     label.textAlignment = NSTextAlignmentCenter;
     label.userInteractionEnabled = YES;
     label.frame = CGRectMake(200, 90, 150, 50);
     [label fwAddTapGestureWithTarget:self action:@selector(onClick4:)];
-    [self.fwView addSubview:label];
+    [self.view addSubview:label];
     
     button = [UIButton fwButtonWithTitle:@"Button1秒内不可重复点击" font:[UIFont fwFontOfSize:15] titleColor:[Theme textColor]];
     button.fwTouchEventInterval = 1;
     button.frame = CGRectMake(25, 160, 200, 50);
     [button fwAddTouchTarget:self action:@selector(onClick5:)];
-    [self.fwView addSubview:button];
+    [self.view addSubview:button];
     
     UIView *view = [UIView new];
     view.backgroundColor = [Theme textColor];
     view.frame = CGRectMake(30, 230, 70, 70);
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     button = [UIButton buttonWithType:UIButtonTypeCustom];
     button.backgroundColor = [Theme textColor];
     button.frame = CGRectMake(50, 250, 30, 30);
     button.fwTouchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
     [button fwAddTouchTarget:self action:@selector(onClick6:)];
-    [self.fwView addSubview:button];
+    [self.view addSubview:button];
     
     view = [UIView new];
     view.backgroundColor = [Theme textColor];
     view.frame = CGRectMake(130, 230, 70, 70);
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [UIView new];
     view.backgroundColor = [Theme textColor];
     view.frame = CGRectMake(150, 250, 30, 30);
     view.fwTouchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
     [view fwAddTapGestureWithTarget:self action:@selector(onClick6:)];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     UIButton *timerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     timerButton.frame = CGRectMake(30, 300, 80, 30);
     timerButton.titleLabel.font = [UIFont fwFontOfSize:15];
     [timerButton setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [timerButton setTitle:@"=>" forState:UIControlStateNormal];
-    [self.fwView addSubview:timerButton];
+    [self.view addSubview:timerButton];
     
     UIButton *timerButton1 = [UIButton buttonWithType:UIButtonTypeCustom];
     timerButton1.frame = CGRectMake(120, 300, 80, 30);
     timerButton1.titleLabel.font = [UIFont fwFontOfSize:15];
     [timerButton1 setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [timerButton1 setTitle:@"=>" forState:UIControlStateNormal];
-    [self.fwView addSubview:timerButton1];
+    [self.view addSubview:timerButton1];
     
     UIButton *timerButton2 = [UIButton buttonWithType:UIButtonTypeCustom];
     timerButton2.frame = CGRectMake(220, 300, 80, 30);
@@ -104,7 +104,7 @@
         } repeats:YES];
         [timer2 fire];
     }];
-    [self.fwView addSubview:timerButton2];
+    [self.view addSubview:timerButton2];
     
     UIButton *button1 = [UIButton buttonWithType:UIButtonTypeSystem];
     button1.frame = CGRectMake(25, 370, 150, 50);
@@ -113,7 +113,7 @@
     [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button1.backgroundColor = FWColorHex(0xFFDA00);
     [button1 fwSetCornerRadius:5];
-    [self.fwView addSubview:button1];
+    [self.view addSubview:button1];
     
     UIButton *button2 = [UIButton buttonWithType:UIButtonTypeSystem];
     button2.frame = CGRectMake(200, 370, 150, 50);
@@ -121,7 +121,7 @@
     [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button2.backgroundColor = FWColorHex(0xFFDA00);
     [button2 fwSetCornerRadius:5];
-    [self.fwView addSubview:button2];
+    [self.view addSubview:button2];
     
     UIButton *button3 = [UIButton buttonWithType:UIButtonTypeCustom];
     button3.frame = CGRectMake(25, 430, 150, 50);
@@ -130,7 +130,7 @@
     [button3 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button3.backgroundColor = FWColorHex(0xFFDA00);
     [button3 fwSetCornerRadius:5];
-    [self.fwView addSubview:button3];
+    [self.view addSubview:button3];
     
     UIButton *button4 = [UIButton buttonWithType:UIButtonTypeCustom];
     button4.frame = CGRectMake(200, 430, 150, 50);
@@ -138,7 +138,7 @@
     [button4 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button4.backgroundColor = FWColorHex(0xFFDA00);
     [button4 fwSetCornerRadius:5];
-    [self.fwView addSubview:button4];
+    [self.view addSubview:button4];
     
     button1 = [UIButton buttonWithType:UIButtonTypeSystem];
     button1.frame = CGRectMake(25, 500, 150, 50);
@@ -148,7 +148,7 @@
     [button1 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button1.backgroundColor = FWColorHex(0xFFDA00);
     [button1 fwSetCornerRadius:5];
-    [self.fwView addSubview:button1];
+    [self.view addSubview:button1];
     
     button2 = [UIButton buttonWithType:UIButtonTypeSystem];
     button2.frame = CGRectMake(200, 500, 150, 50);
@@ -157,7 +157,7 @@
     [button2 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button2.backgroundColor = FWColorHex(0xFFDA00);
     [button2 fwSetCornerRadius:5];
-    [self.fwView addSubview:button2];
+    [self.view addSubview:button2];
     
     button3 = [UIButton buttonWithType:UIButtonTypeCustom];
     button3.frame = CGRectMake(25, 570, 150, 50);
@@ -168,7 +168,7 @@
     [button3 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button3.backgroundColor = FWColorHex(0xFFDA00);
     [button3 fwSetCornerRadius:5];
-    [self.fwView addSubview:button3];
+    [self.view addSubview:button3];
     
     button4 = [UIButton buttonWithType:UIButtonTypeCustom];
     button4.frame = CGRectMake(200, 570, 150, 50);
@@ -178,7 +178,7 @@
     [button4 setTitleColor:UIColor.blackColor forState:UIControlStateNormal];
     button4.backgroundColor = FWColorHex(0xFFDA00);
     [button4 fwSetCornerRadius:5];
-    [self.fwView addSubview:button4];
+    [self.view addSubview:button4];
 }
 
 #pragma mark - Action

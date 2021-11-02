@@ -35,7 +35,7 @@
     } else {
         self.fwNavigationBarStyle = [[@[@(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleHidden)] fwRandomObject] integerValue];
     }
-    self.fwNavigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fwNavigationBarStyle)];
+    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fwNavigationBarStyle)];
     
     FWWeakifySelf();
     [self fwSetRightBarItem:@"打开界面" block:^(id sender) {
@@ -67,7 +67,7 @@ FWPropertyAssign(BOOL, hideToast);
 {
     [super viewDidLoad];
     
-    self.fwNavigationBar.fwBackgroundView.backgroundColor = Theme.backgroundColor;
+    self.navigationController.navigationBar.fwBackgroundView.backgroundColor = Theme.backgroundColor;
     self.fwTabBarHidden = YES;
     [self fwObserveNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
     
@@ -119,7 +119,7 @@ FWPropertyAssign(BOOL, hideToast);
     frameLabel.textColor = [Theme textColor];
     frameLabel.font = [UIFont fwFontOfSize:15];
     frameLabel.textAlignment = NSTextAlignmentCenter;
-    [self.fwView addSubview:frameLabel]; {
+    [self.view addSubview:frameLabel]; {
         frameLabel.fwLayoutChain.leftWithInset(10).rightWithInset(10)
             .bottomWithInset(FWTabBarHeight + 10);
     }
@@ -245,12 +245,12 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onTitleColor
 {
-    self.fwNavigationBar.fwTitleColor = self.fwNavigationBar.fwTitleColor ? nil : Theme.buttonColor;
+    self.navigationController.navigationBar.fwTitleColor = self.navigationController.navigationBar.fwTitleColor ? nil : Theme.buttonColor;
 }
 
 - (void)onLargeTitle
 {
-    self.fwNavigationBar.prefersLargeTitles = !self.fwNavigationBar.prefersLargeTitles;
+    self.navigationController.navigationBar.prefersLargeTitles = !self.navigationController.navigationBar.prefersLargeTitles;
     [self refreshBarFrame];
 }
 
@@ -333,7 +333,7 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.hideToast = YES;
     viewController.preferredContentSize = CGSizeMake(FWScreenWidth / 2, FWScreenHeight / 2);
     [viewController fwSetPopoverPresentation:^(UIPopoverPresentationController *controller) {
-        controller.barButtonItem = self.fwNavigationItem.rightBarButtonItem;
+        controller.barButtonItem = self.navigationItem.rightBarButtonItem;
         controller.permittedArrowDirections = UIPopoverArrowDirectionUp;
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         controller.passthroughViews = [NSArray arrayWithObjects:cell, nil];

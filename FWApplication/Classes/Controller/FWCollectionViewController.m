@@ -8,7 +8,6 @@
  */
 
 #import "FWCollectionViewController.h"
-#import "FWNavigationView.h"
 #import "FWAutoLayout.h"
 #import "FWToolkit.h"
 #import <objc/runtime.h>
@@ -35,7 +34,7 @@
     UICollectionView *collectionView = [viewController collectionView];
     collectionView.dataSource = viewController;
     collectionView.delegate = viewController;
-    [viewController.fwView addSubview:collectionView];
+    [viewController.view addSubview:collectionView];
     
     if (self.hookCollectionViewController) {
         self.hookCollectionViewController(viewController);

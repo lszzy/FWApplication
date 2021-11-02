@@ -7,7 +7,6 @@
 //
 
 #import "UIViewController+FWApplication.h"
-#import "FWNavigationView.h"
 #import "FWAutoLayout.h"
 #import "FWSwizzle.h"
 #import "FWToolkit.h"
@@ -74,7 +73,7 @@ static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresenta
 
 - (void)fwAddChildViewController:(UIViewController *)viewController
 {
-    [self fwAddChildViewController:viewController inView:self.fwView];
+    [self fwAddChildViewController:viewController inView:self.view];
 }
 
 - (void)fwAddChildViewController:(UIViewController *)viewController inView:(UIView *)view

@@ -101,21 +101,21 @@ import UIKit.UIGestureRecognizerSubclass
     private func layout() {
         
         contentImageView.translatesAutoresizingMaskIntoConstraints = false
-        fwView.addSubview(contentImageView)
+        view.addSubview(contentImageView)
         contentImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         contentImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         contentImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         contentImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         overlayView.translatesAutoresizingMaskIntoConstraints = false
-        fwView.addSubview(overlayView)
+        view.addSubview(overlayView)
         overlayView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         overlayView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         overlayView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         overlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
         popupView.translatesAutoresizingMaskIntoConstraints = false
-        fwView.addSubview(popupView)
+        view.addSubview(popupView)
         popupView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         popupView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomConstraint = popupView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: popupOffset)

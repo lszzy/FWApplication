@@ -8,7 +8,6 @@
  */
 
 #import "FWScrollViewController.h"
-#import "FWNavigationView.h"
 #import "FWAutoLayout.h"
 #import "FWToolkit.h"
 #import <objc/runtime.h>
@@ -32,7 +31,7 @@
 - (void)scrollViewControllerLoadView:(UIViewController<FWScrollViewController> *)viewController
 {
     UIScrollView *scrollView = [viewController scrollView];
-    [viewController.fwView addSubview:scrollView];
+    [viewController.view addSubview:scrollView];
     
     UIView *contentView = [viewController contentView];
     [scrollView addSubview:contentView];

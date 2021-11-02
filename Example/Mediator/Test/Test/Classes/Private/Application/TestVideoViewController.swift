@@ -98,7 +98,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         self.player.playerView.playerBackgroundColor = Theme.backgroundColor
         
         self.addChild(self.player)
-        self.fwView.addSubview(self.player.view)
+        self.view.addSubview(self.player.view)
         self.player.view.fwPinEdgesToSuperview()
         self.player.didMove(toParent: self)
         

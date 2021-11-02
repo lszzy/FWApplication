@@ -105,7 +105,7 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
     
     self.textView = [[UITextView alloc] initWithFrame:self.view.bounds];
     self.textView.editable = NO;
-    [self.fwView addSubview:self.textView];
+    [self.view addSubview:self.textView];
 }
 
 - (void)renderModel

@@ -24,7 +24,7 @@
     
     [self fwSetLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
-    [self.fwNavigationItem.leftBarButtonItem fwShowBadgeView:badgeView badgeValue:nil];
+    [self.navigationItem.leftBarButtonItem fwShowBadgeView:badgeView badgeValue:nil];
     
     UIBarButtonItem *rightItem = [UIBarButtonItem fwBarItemWithObject:FWIcon.backImage target:self action:@selector(onClick:)];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
@@ -35,7 +35,7 @@
     UIBarButtonItem *customItem = [UIBarButtonItem fwBarItemWithObject:customView target:self action:@selector(onClick:)];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
     [customItem fwShowBadgeView:badgeView badgeValue:@"1"];
-    self.fwNavigationItem.rightBarButtonItems = @[rightItem, customItem];
+    self.navigationItem.rightBarButtonItems = @[rightItem, customItem];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -62,43 +62,43 @@
     view.backgroundColor = [Theme textColor];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
     [view fwShowBadgeView:badgeView badgeValue:nil];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(20, 90, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
     [view fwShowBadgeView:badgeView badgeValue:@"9"];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(90, 90, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
     [view fwShowBadgeView:badgeView badgeValue:@"99"];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(160, 90, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
     [view fwShowBadgeView:badgeView badgeValue:@"99+"];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(20, 160, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleBig];
     [view fwShowBadgeView:badgeView badgeValue:@"9"];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(90, 160, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleBig];
     [view fwShowBadgeView:badgeView badgeValue:@"99"];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(160, 160, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleBig];
     [view fwShowBadgeView:badgeView badgeValue:@"99+"];
-    [self.fwView addSubview:view];
+    [self.view addSubview:view];
 }
 
 #pragma mark - Action

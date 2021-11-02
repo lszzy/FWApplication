@@ -39,24 +39,24 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
     _valueLabel.textColor = Theme.textColor;
     _valueLabel.font = [UIFont boldSystemFontOfSize:24];
     _valueLabel.text = @"Empty";
-    [self.fwView addSubview:_valueLabel];
+    [self.view addSubview:_valueLabel];
     _valueLabel.fwLayoutChain.centerX().topWithInset(30);
     
     _boxContainerView = [UIView new];
-    [self.fwView addSubview:_boxContainerView];
+    [self.view addSubview:_boxContainerView];
     _boxContainerView.fwLayoutChain.leftWithInset(35).rightWithInset(35)
         .height(52).topToBottomOfViewWithOffset(_valueLabel, 30);
     
     _clearButton = [Theme largeButton];
     [_clearButton setTitle:@"Clear" forState:UIControlStateNormal];
     [_clearButton addTarget:self action:@selector(clearBtnEvent) forControlEvents:UIControlEventTouchUpInside];
-    [self.fwView addSubview:_clearButton];
+    [self.view addSubview:_clearButton];
     _clearButton.fwLayoutChain.centerX().topToBottomOfViewWithOffset(_boxContainerView, 30);
     
     _securityButton = [Theme largeButton];
     [_securityButton setTitle:@"Security" forState:UIControlStateNormal];
     [_securityButton addTarget:self action:@selector(securityBtnEvent) forControlEvents:UIControlEventTouchUpInside];
-    [self.fwView addSubview:_securityButton];
+    [self.view addSubview:_securityButton];
     _securityButton.fwLayoutChain.centerX().topToBottomOfViewWithOffset(_clearButton, 30);
 }
 

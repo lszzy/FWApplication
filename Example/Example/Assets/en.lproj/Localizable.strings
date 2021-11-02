@@ -22,10 +22,6 @@
 "optionTitle" = "Option";
 "loginRequired" = "Login Required";
 "loginOptional" = "Login Optional";
-"navBarSystem" = "System NavigationBar";
-"navBarCustom" = "Custom NavigationBar";
-"navStyleDefault" = "Default Style";
-"navStyleCustom" = "Custom Style";
 "normalTitles" = "Normal Titles";
 "largeTitles" = "Large Titles";
 "welcomeTitle" = "Do you know that I'm waiting for you?";

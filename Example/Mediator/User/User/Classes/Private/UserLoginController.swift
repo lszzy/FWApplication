@@ -13,7 +13,7 @@ import Core
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fwNavigationItem.title = UserBundle.localizedString("loginButton")
+        navigationItem.title = UserBundle.localizedString("loginButton")
         fwSetLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
             self?.fwClose(animated: true)
         }
@@ -24,7 +24,7 @@ import Core
         button.fwAddTouch { [weak self] (sender) in
             self?.dismiss(animated: true, completion: self?.completion)
         }
-        fwView.addSubview(button)
+        view.addSubview(button)
         button.fwLayoutChain.center()
     }
 }
