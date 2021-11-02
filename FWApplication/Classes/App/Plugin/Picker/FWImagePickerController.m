@@ -255,18 +255,12 @@
     [self initImagePickerControllerIfNeeded];
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:didSelectAssetsGroup:)]) {
         [self.albumControllerDelegate albumController:self didSelectAssetsGroup:assetsGroup];
+    } else if (self.assetsGroupSelected) {
+        self.assetsGroupSelected(assetsGroup);
     } else if (self.imagePickerController) {
-        if (self.navigationController) {
-            self.imagePickerController.title = [assetsGroup name];
-            [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
-            [self.navigationController pushViewController:self.imagePickerController animated:animated];
-        } else {
-            [self dismissViewControllerAnimated:animated completion:^{
-                self.imagePickerController.title = [assetsGroup name];
-                [self.imagePickerController.titleView setActive:NO animated:animated];
-                [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
-            }];
-        }
+        self.imagePickerController.title = [assetsGroup name];
+        [self.imagePickerController refreshWithAssetsGroup:assetsGroup];
+        [self.navigationController pushViewController:self.imagePickerController animated:animated];
     }
 }
 
@@ -1471,10 +1465,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 @interface FWImagePickerController () <FWNavigationTitleViewDelegate>
 
 @property(nonatomic, strong) FWImagePickerPreviewController *imagePickerPreviewController;
-@property(nonatomic, strong) FWImageAlbumController *albumController;
+@property(nonatomic, weak) FWImageAlbumController *albumController;
 @property(nonatomic, assign) BOOL isImagesAssetLoaded;
 @property(nonatomic, assign) BOOL hasScrollToInitialPosition;
-@property(nonatomic, assign) BOOL canScrollToInitialPosition;// 要等数据加载完才允许滚动
+
 @end
 
 @implementation FWImagePickerController
@@ -1630,15 +1624,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
-- (void)initAlbumControllerIfNeeded {
-    if (!self.albumController) {
-        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
-            self.albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
-            self.albumController.imagePickerController = self;
-        }
-    }
-}
-
 - (CGSize)referenceImageSize {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.bounds);
     CGFloat collectionViewContentSpacing = collectionViewWidth - (self.collectionView.contentInset.left + self.collectionView.contentInset.right) - (self.collectionViewLayout.sectionInset.left + self.collectionViewLayout.sectionInset.right);
@@ -1673,6 +1658,43 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         }
         self.hasScrollToInitialPosition = YES;
     }
+}
+
+- (void)showAlbumControllerAnimated:(BOOL)animated {
+    [self initAlbumControllerIfNeeded];
+    if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willShowAlbumController:)]) {
+        [self.imagePickerControllerDelegate imagePickerController:self willShowAlbumController:self.albumController];
+    }
+    
+    self.albumController.view.frame = self.view.bounds;
+    self.albumController.view.hidden = NO;
+    self.albumController.view.alpha = 0;
+    CGRect toFrame = CGRectMake(0, 0, self.view.bounds.size.width, 400);
+    CGRect fromFrame = toFrame;
+    fromFrame.origin.y = -toFrame.size.height;
+    self.albumController.tableView.frame = fromFrame;
+    [UIView animateWithDuration:animated ? 0.25 : 0 animations:^{
+        self.albumController.view.alpha = 1;
+        self.albumController.tableView.frame = toFrame;
+    }];
+}
+
+- (void)hideAlbumControllerAnimated:(BOOL)animated {
+    if (!self.albumController) return;
+    if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willHideAlbumController:)]) {
+        [self.imagePickerControllerDelegate imagePickerController:self willHideAlbumController:self.albumController];
+    }
+    
+    [self.titleView setActive:NO animated:animated];
+    CGRect toFrame = self.albumController.tableView.frame;
+    toFrame.origin.y = -toFrame.size.height;
+    [UIView animateWithDuration:animated ? 0.25 : 0 animations:^{
+        self.albumController.view.alpha = 0;
+        self.albumController.tableView.frame = toFrame;
+    } completion:^(BOOL finished) {
+        self.albumController.view.hidden = YES;
+        self.albumController.view.alpha = 1;
+    }];
 }
 
 #pragma mark - Getters & Setters
@@ -1782,6 +1804,28 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
+- (void)initAlbumControllerIfNeeded {
+    if (!self.albumController) {
+        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
+            FWImageAlbumController *albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
+            albumController.imagePickerController = self;
+            __weak __typeof__(self) self_weak_ = self;
+            albumController.assetsGroupSelected = ^(FWAssetGroup * _Nonnull assetsGroup) {
+                __typeof__(self) self = self_weak_;
+                self.title = [assetsGroup name];
+                [self refreshWithAssetsGroup:assetsGroup];
+                [self hideAlbumControllerAnimated:YES];
+            };
+            
+            self.albumController = albumController;
+            [self addChildViewController:albumController];
+            [albumController didMoveToParentViewController:self];
+            albumController.view.hidden = YES;
+            [self.view addSubview:albumController.view];
+        }
+    }
+}
+
 #pragma mark - <UICollectionViewDelegate, UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -1864,20 +1908,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)didTouchTitleView:(FWNavigationTitleView *)titleView isActive:(BOOL)isActive {
     if (isActive) {
-        [self initAlbumControllerIfNeeded];
-        if (!self.albumController) return;
-        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willPresentAlbumController:)]) {
-            [self.imagePickerControllerDelegate imagePickerController:self willPresentAlbumController:self.albumController];
-        } else {
-            [self presentViewController:self.albumController animated:YES completion:nil];
-        }
+        [self showAlbumControllerAnimated:YES];
     } else {
-        if (!self.albumController) return;
-        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:willDismissAlbumController:)]) {
-            [self.imagePickerControllerDelegate imagePickerController:self willDismissAlbumController:self.albumController];
-        } else {
-            [self.albumController dismissViewControllerAnimated:YES completion:nil];
-        }
+        [self hideAlbumControllerAnimated:YES];
     }
 }
 

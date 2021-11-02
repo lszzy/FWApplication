@@ -103,6 +103,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否直接进入第一个相册列表
 @property(nonatomic, assign) BOOL pickDefaultAlbumGroup;
 
+/// 选中指定相册回调，优先级低于albumControllerDelegate
+@property(nullable, nonatomic, copy) void (^assetsGroupSelected)(FWAssetGroup *assetsGroup);
+
 /// 加载相册列表，完成时回调
 - (void)loadAlbumsArray:(void (NS_NOESCAPE ^)(void))completion;
 
@@ -302,11 +305,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 标题视图被点击时调用，返回弹出的相册列表控制器
 - (FWImageAlbumController *)albumControllerForImagePickerController:(FWImagePickerController *)imagePickerController;
 
-/// 即将弹出相册列表控制器时调用，未实现时直接present
-- (void)imagePickerController:(FWImagePickerController *)imagePickerController willPresentAlbumController:(FWImageAlbumController *)albumController;
+/// 即将显示弹出相册列表控制器时调用
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController willShowAlbumController:(FWImageAlbumController *)albumController;
 
-/// 即将关闭相册列表控制器时调用，未实现时直接dismiss
-- (void)imagePickerController:(FWImagePickerController *)imagePickerController willDismissAlbumController:(FWImageAlbumController *)albumController;
+/// 即将隐藏弹出相册列表控制器时调用
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController willHideAlbumController:(FWImageAlbumController *)albumController;
 
 /**
  *  即将需要显示 Loading 时调用
@@ -366,6 +369,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
+
+/// 显示相册列表子控制器
+- (void)showAlbumControllerAnimated:(BOOL)animated;
+
+/// 隐藏相册列表子控制器
+- (void)hideAlbumControllerAnimated:(BOOL)animated;
 
 /**
  * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源
