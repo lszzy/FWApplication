@@ -164,6 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
 @property(nullable, nonatomic, strong, readonly) UIView *topToolBarView;
+@property(nonatomic, assign) CGFloat toolBarPaddingHorizontal;
 @property(nullable, nonatomic, strong, readonly) UIButton *backButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *checkboxButton;
 @property(nonatomic, strong) UIImage *checkboxImage;
@@ -362,6 +363,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UICollectionView *collectionView;
 
 @property(nullable, nonatomic, strong, readonly) UIView *operationToolBarView;
+@property(nonatomic, assign) CGFloat toolBarPaddingHorizontal;
 @property(nullable, nonatomic, strong, readonly) UIButton *previewButton;
 @property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
 

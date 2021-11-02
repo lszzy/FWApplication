@@ -397,7 +397,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 /* In horizontal mode, offsets all of the buttons vertically by height of status bar. */
 @property (nonatomic, assign) CGFloat statusBarHeightInset;
-/// 按钮内边距，默认10
+/// 按钮内边距，默认16
 @property (nonatomic, assign) CGFloat buttonInsetPadding;
 
 /* Set an inset that will expand the background view beyond the bounds. */

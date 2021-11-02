@@ -551,6 +551,7 @@
         self.editCollectionCellSize = CGSizeMake(60, 60);
         self.maximumSelectImageCount = 9;
         self.minimumSelectImageCount = 0;
+        _toolBarPaddingHorizontal = 16;
         
         self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
         self.toolBarTintColor = UIColor.whiteColor;
@@ -655,20 +656,19 @@
     CGFloat topToolbarContentHeight = CGRectGetHeight(self.topToolBarView.bounds) - topToolbarPaddingTop;
     self.backButton.fwOrigin = CGPointMake(16 + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
     if (!self.checkboxButton.hidden) {
-        self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - 10 - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
+        self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
     }
     
-    CGFloat bottomToolBarPaddingHorizontal = 12.0f;
     CGFloat bottomToolBarContentHeight = 44;
     CGFloat bottomToolBarHeight = bottomToolBarContentHeight + self.view.safeAreaInsets.bottom;
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
     [self updateSendButtonLayout];
     
-    self.editButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
+    self.editButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
     if (self.showsEditButton) {
         self.originImageCheckboxButton.fwOrigin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     } else {
-        self.originImageCheckboxButton.fwOrigin = CGPointMake(bottomToolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+        self.originImageCheckboxButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     }
     
     self.editCollectionView.frame = CGRectMake(0, CGRectGetMinY(self.bottomToolBarView.frame) - self.editCollectionViewHeight, CGRectGetWidth(self.view.bounds), self.editCollectionViewHeight);
@@ -689,7 +689,7 @@
     if (!_editCollectionViewLayout) {
         _editCollectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
         _editCollectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        _editCollectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 12, 10, 12);
+        _editCollectionViewLayout.sectionInset = UIEdgeInsetsMake(10, 16, 10, 16);
         _editCollectionViewLayout.minimumLineSpacing = _editCollectionViewLayout.sectionInset.bottom;
         _editCollectionViewLayout.minimumInteritemSpacing = _editCollectionViewLayout.sectionInset.left;
     }
@@ -1035,10 +1035,9 @@
 }
 
 - (void)updateSendButtonLayout {
-    CGFloat bottomToolBarPaddingHorizontal = 12.0f;
     CGFloat bottomToolBarContentHeight = 44;
     [self.sendButton sizeToFit];
-    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - bottomToolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
+    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
 }
 
 - (void)updateImageCountAndCollectionView:(BOOL)animated {
@@ -1544,6 +1543,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _allowsMultipleSelection = YES;
     _maximumSelectImageCount = 9;
     _minimumSelectImageCount = 0;
+    _toolBarPaddingHorizontal = 16;
     
     self.fwStatusBarStyle = UIStatusBarStyleLightContent;
     self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
@@ -1593,9 +1593,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     CGFloat operationToolBarViewHeight = 0;
     if (self.allowsMultipleSelection) {
         operationToolBarViewHeight = FWToolBarHeight;
-        CGFloat toolbarPaddingHorizontal = 12;
         self.operationToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - operationToolBarViewHeight, CGRectGetWidth(self.view.bounds), operationToolBarViewHeight);
-        self.previewButton.fwOrigin = CGPointMake(toolbarPaddingHorizontal, (CGRectGetHeight(self.operationToolBarView.bounds) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
+        self.previewButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal, (CGRectGetHeight(self.operationToolBarView.bounds) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
         [self updateSendButtonLayout];
         operationToolBarViewHeight = CGRectGetHeight(self.operationToolBarView.frame);
     }
@@ -2098,9 +2097,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)updateSendButtonLayout {
     if (!self.allowsMultipleSelection) return;
-    CGFloat toolbarPaddingHorizontal = 12;
     [self.sendButton sizeToFit];
-    self.sendButton.frame = CGRectMake(CGRectGetWidth(self.operationToolBarView.bounds) - toolbarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (CGRectGetHeight(self.operationToolBarView.frame) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.sendButton.frame)) / 2.0, CGRectGetWidth(self.sendButton.frame), CGRectGetHeight(self.sendButton.frame));
+    self.sendButton.frame = CGRectMake(CGRectGetWidth(self.operationToolBarView.bounds) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (CGRectGetHeight(self.operationToolBarView.frame) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.sendButton.frame)) / 2.0, CGRectGetWidth(self.sendButton.frame), CGRectGetHeight(self.sendButton.frame));
 }
 
 - (void)updateImageCountAndCheckLimited:(BOOL)reloadData {

@@ -1311,7 +1311,7 @@ static const CGFloat kFWImageCropOverLayerCornerWidth = 20.0f;
 }
 
 - (void)setup {
-    _buttonInsetPadding = 10.f;
+    _buttonInsetPadding = 16.f;
     self.backgroundView = [[UIView alloc] initWithFrame:self.bounds];
     self.backgroundView.backgroundColor = [UIColor colorWithWhite:0.12f alpha:1.0f];
     [self addSubview:self.backgroundView];
