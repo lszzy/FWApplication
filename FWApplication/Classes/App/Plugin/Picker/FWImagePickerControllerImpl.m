@@ -23,4 +23,14 @@
     return instance;
 }
 
+- (void)fwViewController:(UIViewController *)viewController
+         showImagePicker:(FWImagePickerFilterType)filterType
+          selectionLimit:(NSInteger)selectionLimit
+           allowsEditing:(BOOL)allowsEditing
+             customBlock:(void (^)(id _Nonnull))customBlock
+              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
+{
+    
+}
+
 @end

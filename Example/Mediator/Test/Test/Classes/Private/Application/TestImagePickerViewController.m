@@ -39,26 +39,6 @@
     ]];
 }
 
-- (void)authorizationPresentAlbumViewControllerWithIndex:(NSInteger)index {
-    if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotDetermined) {
-        [FWAssetManager requestAuthorization:^(FWAssetAuthorizationStatus status) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (self.showsAlbum) {
-                    [self presentAlbumViewControllerWithIndex:index];
-                } else {
-                    [self presentPickerViewControllerWithIndex:index];
-                }
-            });
-        }];
-    } else {
-        if (self.showsAlbum) {
-            [self presentAlbumViewControllerWithIndex:index];
-        } else {
-            [self presentPickerViewControllerWithIndex:index];
-        }
-    }
-}
-
 - (void)presentPickerViewControllerWithIndex:(NSInteger)index {
     FWImagePickerController *imagePickerController = [[FWImagePickerController alloc] init];
     imagePickerController.imagePickerControllerDelegate = self;
@@ -129,7 +109,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    [self authorizationPresentAlbumViewControllerWithIndex:indexPath.row];
+    if (self.showsAlbum) {
+        [self presentAlbumViewControllerWithIndex:indexPath.row];
+    } else {
+        [self presentPickerViewControllerWithIndex:indexPath.row];
+    }
 }
 
 #pragma mark - <QMUIAlbumViewControllerDelegate>

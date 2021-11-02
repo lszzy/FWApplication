@@ -203,33 +203,21 @@
     [self.view addSubview:self.backgroundView];
     [self.view addSubview:self.tableView];
     
-    if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotAuthorized) {
-        if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowDenied:)]) {
-            [self.albumControllerDelegate albumControllerWillShowDenied:self];
-        } else {
-            NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-            NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
-            NSString *tipText = [NSString stringWithFormat:@"请在设备的\"设置-隐私-照片\"选项中，允许%@访问你的手机相册", appName];
-            [self fwShowEmptyViewWithText:tipText];
-        }
-    } else {
-        if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
-            [self.albumControllerDelegate albumControllerWillStartLoading:self];
-        }
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[FWAssetManager sharedInstance] enumerateAllAlbumsWithAlbumContentType:self.contentType usingBlock:^(FWAssetGroup *resultAssetsGroup) {
-                if (resultAssetsGroup) {
-                    [self.albumsArray addObject:resultAssetsGroup];
+    FWAssetAuthorizationStatus authorizationStatus = [FWAssetManager authorizationStatus];
+    if (authorizationStatus == FWAssetAuthorizationStatusNotDetermined) {
+        [FWAssetManager requestAuthorization:^(FWAssetAuthorizationStatus status) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (status == FWAssetAuthorizationStatusNotAuthorized) {
+                    [self showDeniedView];
                 } else {
-                    // 意味着遍历完所有的相簿了
-                    [self sortAlbumArray];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self refreshAlbumGroups];
-                    });
+                    [self loadAlbumArray];
                 }
-            }];
-        });
+            });
+        }];
+    } else if (authorizationStatus == FWAssetAuthorizationStatusNotAuthorized) {
+        [self showDeniedView];
+    } else {
+        [self loadAlbumArray];
     }
 }
 
@@ -246,6 +234,26 @@
     if (!UIEdgeInsetsEqualToEdgeInsets(self.tableView.contentInset, contentInset)) {
         self.tableView.contentInset = contentInset;
     }
+}
+
+- (void)loadAlbumArray {
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
+        [self.albumControllerDelegate albumControllerWillStartLoading:self];
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[FWAssetManager sharedInstance] enumerateAllAlbumsWithAlbumContentType:self.contentType usingBlock:^(FWAssetGroup *resultAssetsGroup) {
+            if (resultAssetsGroup) {
+                [self.albumsArray addObject:resultAssetsGroup];
+            } else {
+                // 意味着遍历完所有的相簿了
+                [self sortAlbumArray];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self refreshAlbumGroups];
+                });
+            }
+        }];
+    });
 }
 
 - (void)sortAlbumArray {
@@ -285,6 +293,27 @@
         } else {
             [self fwShowEmptyViewWithText:@"空照片"];
         }
+    }
+    
+    if (self.albumArrayLoaded) {
+        self.albumArrayLoaded();
+    }
+}
+
+- (void)showDeniedView {
+    if (self.maximumTableViewHeight > 0) {
+        CGRect tableFrame = self.tableView.frame;
+        tableFrame.size.height = self.tableViewHeight + FWTopBarHeight;
+        self.tableView.frame = tableFrame;
+    }
+    
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowDenied:)]) {
+        [self.albumControllerDelegate albumControllerWillShowDenied:self];
+    } else {
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
+        NSString *tipText = [NSString stringWithFormat:@"请在设备的\"设置-隐私-照片\"选项中，允许%@访问你的手机相册", appName];
+        [self fwShowEmptyViewWithText:tipText];
     }
     
     if (self.albumArrayLoaded) {

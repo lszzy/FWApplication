@@ -8,14 +8,14 @@
  */
 
 #import "FWImagePickerPlugin.h"
+#import "FWImageCropController.h"
+#import "FWImagePickerControllerImpl.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UIImagePickerController+FWImagePickerPluginImpl
-
-@class FWImageCropController;
 
 /*!
  @brief UIImagePickerController+FWImagePickerPluginImpl

@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 单例模式
 @property (class, nonatomic, readonly) FWImagePickerControllerImpl *sharedInstance;
 
+/// 是否显示相册列表控制器，默认为NO，点击titleView切换相册
+@property (nonatomic, assign) BOOL showsAlbumController;
+
 /// 自定义相册列表控制器句柄，默认nil时使用自带控制器
 @property (nonatomic, copy, nullable) __kindof FWImageAlbumController * (^albumControllerBlock)(void);
 
