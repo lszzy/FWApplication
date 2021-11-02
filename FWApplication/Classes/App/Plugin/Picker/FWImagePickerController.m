@@ -34,15 +34,19 @@
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [FWImageAlbumTableCell appearance].albumImageSize = 72;
-        [FWImageAlbumTableCell appearance].albumImageMarginLeft = 16;
-        [FWImageAlbumTableCell appearance].albumNameInsets = UIEdgeInsetsMake(0, 14, 0, 3);
-        [FWImageAlbumTableCell appearance].albumNameFont = [UIFont systemFontOfSize:17];
-        [FWImageAlbumTableCell appearance].albumNameColor = UIColor.whiteColor;
-        [FWImageAlbumTableCell appearance].albumAssetsNumberFont = [UIFont systemFontOfSize:17];
-        [FWImageAlbumTableCell appearance].albumAssetsNumberColor = UIColor.whiteColor;
-        [FWImageAlbumTableCell appearance].checkedMaskColor = nil;
+        [self setDefaultAppearance];
     });
+}
+
++ (void)setDefaultAppearance {
+    [FWImageAlbumTableCell appearance].albumImageSize = 72;
+    [FWImageAlbumTableCell appearance].albumImageMarginLeft = 16;
+    [FWImageAlbumTableCell appearance].albumNameInsets = UIEdgeInsetsMake(0, 14, 0, 3);
+    [FWImageAlbumTableCell appearance].albumNameFont = [UIFont systemFontOfSize:17];
+    [FWImageAlbumTableCell appearance].albumNameColor = UIColor.whiteColor;
+    [FWImageAlbumTableCell appearance].albumAssetsNumberFont = [UIFont systemFontOfSize:17];
+    [FWImageAlbumTableCell appearance].albumAssetsNumberColor = UIColor.whiteColor;
+    [FWImageAlbumTableCell appearance].checkedMaskColor = nil;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
@@ -437,14 +441,18 @@
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [FWImagePickerPreviewCollectionCell appearance].imageViewInsets = UIEdgeInsetsZero;
-        [FWImagePickerPreviewCollectionCell appearance].checkedBorderColor = [UIColor whiteColor];
-        [FWImagePickerPreviewCollectionCell appearance].checkedBorderWidth = 3;
-        [FWImagePickerPreviewCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
-        [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
-        [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
-        [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
+        [self setDefaultAppearance];
     });
+}
+
++ (void)setDefaultAppearance {
+    [FWImagePickerPreviewCollectionCell appearance].imageViewInsets = UIEdgeInsetsZero;
+    [FWImagePickerPreviewCollectionCell appearance].checkedBorderColor = [UIColor whiteColor];
+    [FWImagePickerPreviewCollectionCell appearance].checkedBorderWidth = 3;
+    [FWImagePickerPreviewCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+    [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
+    [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
+    [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -1251,20 +1259,24 @@
 + (void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [FWImagePickerCollectionCell appearance].checkboxImage = FWAppBundle.pickerCheckImage;
-        [FWImagePickerCollectionCell appearance].checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
-        [FWImagePickerCollectionCell appearance].checkboxButtonMargins = UIEdgeInsetsMake(6, 6, 6, 6);
-        [FWImagePickerCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
-        [FWImagePickerCollectionCell appearance].checkedMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
-        [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
-        [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
-        [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = [UIColor blackColor];
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
-        [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
+        [self setDefaultAppearance];
     });
+}
+
++ (void)setDefaultAppearance {
+    [FWImagePickerCollectionCell appearance].checkboxImage = FWAppBundle.pickerCheckImage;
+    [FWImagePickerCollectionCell appearance].checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
+    [FWImagePickerCollectionCell appearance].checkboxButtonMargins = UIEdgeInsetsMake(6, 6, 6, 6);
+    [FWImagePickerCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
+    [FWImagePickerCollectionCell appearance].checkedMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
+    [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
+    [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = [UIColor blackColor];
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {

@@ -316,26 +316,10 @@
 
 - (void)scrollView:(UIScrollView *)scrollView offsetChanged:(NSDictionary *)change
 {
-    if (!self.superview) return;
+    if (!self.superview || self.maxBottomHeight <= 0) return;
     
-    // 底部可滚动时处理bottomView动画效果
-    if (self.maxBottomHeight > 0) {
-        CGFloat bottomHeight = MIN(MAX(0, self.maxBottomHeight - scrollView.contentOffset.y), self.maxBottomHeight);
-        _bottomHeight = bottomHeight;
-        [self updateLayout];
-        return;
-    }
-    
-    // default样式且为竖屏并开启了iOS11+largeTitles显示时处理大标题动画效果
-    if (self.style == FWNavigationViewStyleCustom || [UIDevice fwIsLandscape]) return;
-    if (!self.navigationBar.prefersLargeTitles || self.navigationItem.largeTitleDisplayMode == UINavigationItemLargeTitleDisplayModeNever) return;
-    UIView *largeTitleView = self.navigationBar.fwLargeTitleView;
-    if (!largeTitleView || largeTitleView.frame.origin.y <= 0) return;
-    
-    CGFloat minHeight = largeTitleView.frame.origin.y;
-    CGFloat maxHeight = minHeight + UINavigationBar.fwLargeTitleHeight;
-    CGFloat middleHeight = MIN(MAX(minHeight, maxHeight - scrollView.contentOffset.y), maxHeight);
-    _middleHeight = middleHeight;
+    CGFloat bottomHeight = MIN(MAX(0, self.maxBottomHeight - scrollView.contentOffset.y), self.maxBottomHeight);
+    _bottomHeight = bottomHeight;
     [self updateLayout];
 }
 
@@ -579,22 +563,6 @@
     appearance.subtitleEdgeInsets = UIEdgeInsetsZero;
 }
 
-+ (void)applyAppearance:(FWNavigationTitleView *)titleView {
-    FWNavigationTitleView *appearance = FWNavigationTitleView.appearance;
-    titleView.adjustsTintColor = appearance.adjustsTintColor;
-    titleView.maximumWidth = appearance.maximumWidth;
-    titleView.loadingViewSize = appearance.loadingViewSize;
-    titleView.loadingViewSpacing = appearance.loadingViewSpacing;
-    titleView.horizontalTitleFont = appearance.horizontalTitleFont;
-    titleView.horizontalSubtitleFont = appearance.horizontalSubtitleFont;
-    titleView.verticalTitleFont = appearance.verticalTitleFont;
-    titleView.verticalSubtitleFont = appearance.verticalSubtitleFont;
-    titleView.accessoryViewOffset = appearance.accessoryViewOffset;
-    titleView.subAccessoryViewOffset = appearance.subAccessoryViewOffset;
-    titleView.titleEdgeInsets = appearance.titleEdgeInsets;
-    titleView.subtitleEdgeInsets = appearance.subtitleEdgeInsets;
-}
-
 #pragma mark - Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -634,7 +602,7 @@
         self.showsSubAccessoryPlaceholder = NO;
         self.showsLoadingPlaceholder = YES;
         
-        [FWNavigationTitleView applyAppearance:self];
+        [self fwApplyAppearance];
     }
     return self;
 }
