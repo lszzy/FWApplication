@@ -7,6 +7,7 @@
 //
 
 #import "FWAppDelegate.h"
+#import "FWNavigationStyle.h"
 #import "FWViewPluginImpl.h"
 
 #if __has_include("FWWebViewController.h")

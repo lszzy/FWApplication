@@ -147,7 +147,6 @@
     _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
     _toolBarTintColor = UIColor.whiteColor;
     
-    self.fwStatusBarStyle = UIStatusBarStyleLightContent;
     self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
     self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
@@ -184,6 +183,14 @@
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
     self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewDidLoad {
@@ -1545,7 +1552,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _minimumSelectImageCount = 0;
     _toolBarPaddingHorizontal = 16;
     
-    self.fwStatusBarStyle = UIStatusBarStyleLightContent;
     self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
     self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
@@ -1565,6 +1571,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
     self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)viewDidLoad {
