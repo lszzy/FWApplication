@@ -417,47 +417,38 @@
 
 @interface FWAsset (FWImagePickerPreviewController)
 
-@property(nonatomic, strong) UIImage *croppedImage;
-@property(nonatomic, assign) CGRect croppedRect;
-@property(nonatomic, assign) NSInteger croppedAngle;
-@property(nonatomic, assign) BOOL useOriginImage;
+@property(nonatomic, assign) CGRect pickerCroppedRect;
+@property(nonatomic, assign) NSInteger pickerCroppedAngle;
+@property(nonatomic, assign) BOOL pickerUseOrigin;
 
 @end
 
 @implementation FWAsset (FWImagePickerPreviewController)
 
-- (UIImage *)croppedImage {
-    return objc_getAssociatedObject(self, @selector(croppedImage));
-}
-
-- (void)setCroppedImage:(UIImage *)croppedImage {
-    objc_setAssociatedObject(self, @selector(croppedImage), croppedImage, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGRect)croppedRect {
-    NSValue *value = objc_getAssociatedObject(self, @selector(croppedRect));
+- (CGRect)pickerCroppedRect {
+    NSValue *value = objc_getAssociatedObject(self, @selector(pickerCroppedRect));
     return [value CGRectValue];
 }
 
-- (void)setCroppedRect:(CGRect)croppedRect {
-    objc_setAssociatedObject(self, @selector(croppedRect), [NSValue valueWithCGRect:croppedRect], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setPickerCroppedRect:(CGRect)pickerCroppedRect {
+    objc_setAssociatedObject(self, @selector(pickerCroppedRect), [NSValue valueWithCGRect:pickerCroppedRect], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSInteger)croppedAngle {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(croppedAngle));
+- (NSInteger)pickerCroppedAngle {
+    NSNumber *value = objc_getAssociatedObject(self, @selector(pickerCroppedAngle));
     return [value integerValue];
 }
 
-- (void)setCroppedAngle:(NSInteger)croppedAngle {
-    objc_setAssociatedObject(self, @selector(croppedAngle), @(croppedAngle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setPickerCroppedAngle:(NSInteger)pickerCroppedAngle {
+    objc_setAssociatedObject(self, @selector(pickerCroppedAngle), @(pickerCroppedAngle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)useOriginImage {
-    return [objc_getAssociatedObject(self, @selector(useOriginImage)) boolValue];
+- (BOOL)pickerUseOrigin {
+    return [objc_getAssociatedObject(self, @selector(pickerUseOrigin)) boolValue];
 }
 
-- (void)setUseOriginImage:(BOOL)useOriginImage {
-    objc_setAssociatedObject(self, @selector(useOriginImage), @(useOriginImage), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setPickerUseOrigin:(BOOL)pickerUseOrigin {
+    objc_setAssociatedObject(self, @selector(pickerUseOrigin), @(pickerUseOrigin), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
@@ -547,8 +538,8 @@
 
 - (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize {
     self.assetIdentifier = asset.identifier;
-    if (asset.croppedImage) {
-        self.imageView.image = asset.croppedImage;
+    if (asset.editedImage) {
+        self.imageView.image = asset.editedImage;
     } else {
         [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
             if ([self.assetIdentifier isEqualToString:asset.identifier]) {
@@ -958,6 +949,11 @@
 }
 
 - (void)handleEditButtonClick:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:willEditImageAtIndex:)]) {
+        [self.delegate imagePickerPreviewController:self willEditImageAtIndex:self.imagePreviewView.currentImageIndex];
+        return;
+    }
+    
     FWZoomImageView *imageView = [self.imagePreviewView currentZoomImageView];
     FWAsset *imageAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
     [imageAsset requestOriginImageWithCompletion:^(UIImage * _Nullable result, NSDictionary<NSString *,id> * _Nullable info, BOOL finished) {
@@ -1007,7 +1003,7 @@
         }
         BOOL useOriginImage = self.shouldUseOriginImage;
         [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.useOriginImage = useOriginImage;
+            obj.pickerUseOrigin = useOriginImage;
         }];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
@@ -1059,16 +1055,16 @@
     } else {
         cropController = [[FWImageCropController alloc] initWithImage:image];
     }
-    if (imageAsset.croppedImage) {
-        cropController.imageCropFrame = imageAsset.croppedRect;
-        cropController.angle = imageAsset.croppedAngle;
+    if (imageAsset.editedImage) {
+        cropController.imageCropFrame = imageAsset.pickerCroppedRect;
+        cropController.angle = imageAsset.pickerCroppedAngle;
     }
     __weak __typeof__(self) self_weak_ = self;
     cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
         __typeof__(self) self = self_weak_;
-        imageAsset.croppedImage = image;
-        imageAsset.croppedRect = cropRect;
-        imageAsset.croppedAngle = angle;
+        imageAsset.editedImage = image;
+        imageAsset.pickerCroppedRect = cropRect;
+        imageAsset.pickerCroppedAngle = angle;
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
     };
     cropController.onDidFinishCancelled = ^(BOOL isFinished) {
@@ -1141,9 +1137,9 @@
     // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
-    if (imageAsset.croppedImage) {
+    if (imageAsset.editedImage) {
         [imageView resetContent];
-        imageView.image = imageAsset.croppedImage;
+        imageView.image = imageAsset.editedImage;
         return;
     }
     
@@ -2064,7 +2060,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     [self dismissViewControllerAnimated:YES completion:^() {
         BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
         [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.useOriginImage = useOriginImage;
+            obj.pickerUseOrigin = useOriginImage;
         }];
         
         if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
@@ -2287,15 +2283,15 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
             filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fwMd5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-            [asset requestVideoURLWithOutputURL:fileURL exportPreset:asset.useOriginImage ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
+            [asset requestVideoURLWithOutputURL:fileURL exportPreset:asset.pickerUseOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(index, videoURL, info);
                 });
             } withProgressHandler:nil];
         } else if (asset.assetType == FWAssetTypeImage) {
-            if (asset.croppedImage) {
+            if (asset.editedImage) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(index, asset.croppedImage, nil);
+                    completionHandler(index, asset.editedImage, nil);
                 });
                 return;
             }
@@ -2318,7 +2314,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     });
                 }];
             } else {
-                if (asset.useOriginImage) {
+                if (asset.pickerUseOrigin) {
                     [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (finished) {

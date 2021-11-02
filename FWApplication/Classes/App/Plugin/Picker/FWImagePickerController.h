@@ -148,6 +148,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewControllerWillShowExceed:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 图片预览界面关闭返回时被调用
 - (void)imagePickerPreviewControllerDidCancel:(FWImagePickerPreviewController *)imagePickerPreviewController;
+/// 自定义编辑按钮点击事件，启用编辑时生效，未实现时使用图片裁剪控制器
+- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willEditImageAtIndex:(NSInteger)index;
 /// 自定义图片裁剪控制器，启用编辑时生效，未实现时使用默认配置
 - (FWImageCropController *)imageCropControllerForPreviewController:(FWImagePickerPreviewController *)previewController image:(UIImage *)image;
 /// 自定义编辑cell展示，cellForRow自动调用

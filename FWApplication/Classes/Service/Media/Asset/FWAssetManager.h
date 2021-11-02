@@ -50,10 +50,16 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
 - (instancetype)initWithPHAsset:(PHAsset *)phAsset;
 
 @property(nonatomic, strong, readonly) PHAsset *phAsset;
-@property(nonatomic, assign, readonly) FWAssetDownloadStatus downloadStatus; // 从 iCloud 下载资源大图的状态
-@property(nonatomic, assign) double downloadProgress; // 从 iCloud 下载资源大图的进度
-@property(nonatomic, assign) NSInteger requestID; // 从 iCloud 请求获得资源的大图的请求 ID
-@property(nonatomic, copy, readonly) NSString *identifier;// Asset 的标识，每个 FWAsset 的 identifier 都不同。只要两个 FWAsset 的 identifier 相同则认为它们是同一个 asset
+// 从 iCloud 下载资源大图的状态
+@property(nonatomic, assign, readonly) FWAssetDownloadStatus downloadStatus;
+// 从 iCloud 下载资源大图的进度
+@property(nonatomic, assign) double downloadProgress;
+// 从 iCloud 请求获得资源的大图的请求 ID
+@property(nonatomic, assign) NSInteger requestID;
+// Asset 的标识，每个 FWAsset 的 identifier 都不同。只要两个 FWAsset 的 identifier 相同则认为它们是同一个 asset
+@property(nonatomic, copy, readonly) NSString *identifier;
+// 自定义编辑后的图片，用于实现图片裁剪等功能，默认nil
+@property(nullable, nonatomic, strong) UIImage *editedImage;
 
 /// Asset 的原图（包含系统相册“编辑”功能处理后的效果）
 - (nullable UIImage *)originImage;
