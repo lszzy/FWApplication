@@ -334,6 +334,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)imagePickerControllerDidFinishLoading:(FWImagePickerController *)imagePickerController;
 
+/// 图片未授权时调用，可自定义空界面等
+- (void)imagePickerControllerWillShowDenied:(FWImagePickerController *)imagePickerController;
+
 /// 图片为空时调用，可自定义空界面等
 - (void)imagePickerControllerWillShowEmpty:(FWImagePickerController *)imagePickerController;
 

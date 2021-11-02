@@ -1733,10 +1733,21 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [self scrollToInitialPositionIfNeeded];
         }];
     } else {
-        if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
-            [self.imagePickerControllerDelegate imagePickerControllerWillShowEmpty:self];
+        if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotAuthorized) {
+            if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
+                [self.imagePickerControllerDelegate imagePickerControllerWillShowDenied:self];
+            } else {
+                NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+                NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
+                NSString *tipText = [NSString stringWithFormat:@"请在设备的\"设置-隐私-照片\"选项中，允许%@访问你的手机相册", appName];
+                [self fwShowEmptyViewWithText:tipText];
+            }
         } else {
-            [self fwShowEmptyViewWithText:@"空照片"];
+            if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
+                [self.imagePickerControllerDelegate imagePickerControllerWillShowEmpty:self];
+            } else {
+                [self fwShowEmptyViewWithText:@"空照片"];
+            }
         }
     }
 }
