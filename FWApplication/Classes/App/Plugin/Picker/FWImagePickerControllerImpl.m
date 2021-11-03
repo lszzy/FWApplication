@@ -35,58 +35,18 @@
         __weak __typeof__(self) self_weak_ = self;
         albumController.pickerControllerBlock = ^FWImagePickerController * _Nonnull{
             __typeof__(self) self = self_weak_;
-            FWImagePickerController *pickerController = [self pickerControllerWithFilterType:filterType selectionLimit:selectionLimit customBlock:customBlock completion:^(NSArray<FWAsset *> *imagesAssetArray) {
-                __typeof__(self) self = self_weak_;
-                if (imagesAssetArray.count < 1) {
-                    if (completion) completion(@[], @[], YES);
-                    return;
-                }
-                
-                if (self.showLoadingBlock) self.showLoadingBlock(viewController, NO);
-                [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
-                    __typeof__(self) self = self_weak_;
-                    if (self.showLoadingBlock) self.showLoadingBlock(viewController, YES);
-                    if (completion) completion(objects, results, objects.count < 1);
-                }];
-            }];
-            pickerController.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
-                __typeof__(self) self = self_weak_;
-                FWImagePickerPreviewController *previewController = [self previewControllerWithAllowsEditing:allowsEditing];
-                previewController.cropControllerBlock = self.cropControllerBlock;
-                return previewController;
-            };
-            return pickerController;
+            return [self pickerControllerWithViewController:viewController filterType:filterType selectionLimit:selectionLimit allowsEditing:allowsEditing customBlock:customBlock completion:completion];
         };
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:albumController];
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
         [viewController presentViewController:navigationController animated:YES completion:NULL];
     } else {
+        FWImagePickerController *pickerController = [self pickerControllerWithViewController:viewController filterType:filterType selectionLimit:selectionLimit allowsEditing:allowsEditing customBlock:customBlock completion:completion];
         __weak __typeof__(self) self_weak_ = self;
-        FWImagePickerController *pickerController = [self pickerControllerWithFilterType:filterType selectionLimit:selectionLimit customBlock:customBlock completion:^(NSArray<FWAsset *> *imagesAssetArray) {
-            __typeof__(self) self = self_weak_;
-            if (imagesAssetArray.count < 1) {
-                if (completion) completion(@[], @[], YES);
-                return;
-            }
-            
-            if (self.showLoadingBlock) self.showLoadingBlock(viewController, NO);
-            [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
-                __typeof__(self) self = self_weak_;
-                if (self.showLoadingBlock) self.showLoadingBlock(viewController, YES);
-                if (completion) completion(objects, results, objects.count < 1);
-            }];
-        }];
         pickerController.albumControllerBlock = ^FWImageAlbumController * _Nonnull{
             __typeof__(self) self = self_weak_;
-            FWImageAlbumController *albumController = [self albumControllerWithFilterType:filterType];
-            return albumController;
-        };
-        pickerController.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
-            __typeof__(self) self = self_weak_;
-            FWImagePickerPreviewController *previewController = [self previewControllerWithAllowsEditing:allowsEditing];
-            previewController.cropControllerBlock = self.cropControllerBlock;
-            return previewController;
+            return [self albumControllerWithFilterType:filterType];
         };
         [pickerController refreshWithContentType:[self contentTypeWithFilterType:filterType]];
 
@@ -96,10 +56,12 @@
     }
 }
 
-- (FWImagePickerController *)pickerControllerWithFilterType:(FWImagePickerFilterType)filterType
-                                             selectionLimit:(NSInteger)selectionLimit
-                                                customBlock:(void (^)(id _Nonnull))customBlock
-                                                 completion:(void (^)(NSArray<FWAsset *> * _Nonnull))completion
+- (FWImagePickerController *)pickerControllerWithViewController:(UIViewController *)viewController
+                                                     filterType:(FWImagePickerFilterType)filterType
+                                                 selectionLimit:(NSInteger)selectionLimit
+                                                  allowsEditing:(BOOL)allowsEditing
+                                                    customBlock:(void (^)(id _Nonnull))customBlock
+                                                     completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
     FWImagePickerController *pickerController;
     if (self.pickerControllerBlock) {
@@ -112,11 +74,27 @@
     if (self.customBlock) self.customBlock(pickerController);
     if (customBlock) customBlock(pickerController);
     
+    __weak __typeof__(self) self_weak_ = self;
+    pickerController.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
+        __typeof__(self) self = self_weak_;
+        return [self previewControllerWithAllowsEditing:allowsEditing];
+    };
     pickerController.didFinishPicking = ^(NSArray<FWAsset *> * _Nonnull imagesAssetArray) {
-        if (completion) completion(imagesAssetArray);
+        __typeof__(self) self = self_weak_;
+        if (imagesAssetArray.count < 1) {
+            if (completion) completion(@[], @[], YES);
+            return;
+        }
+        
+        if (self.showLoadingBlock) self.showLoadingBlock(viewController, NO);
+        [FWImagePickerController requestImagesAssetArray:imagesAssetArray filterType:filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+            __typeof__(self) self = self_weak_;
+            if (self.showLoadingBlock) self.showLoadingBlock(viewController, YES);
+            if (completion) completion(objects, results, objects.count < 1);
+        }];
     };
     pickerController.didCancelPicking = ^{
-        if (completion) completion(@[]);
+        if (completion) completion(@[], @[], YES);
     };
     return pickerController;
 }
@@ -143,6 +121,7 @@
         previewController = [[FWImagePickerPreviewController alloc] init];
     }
     previewController.showsEditButton = allowsEditing;
+    previewController.cropControllerBlock = self.cropControllerBlock;
     return previewController;
 }
 
