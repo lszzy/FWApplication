@@ -823,7 +823,8 @@
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
     if (imageAsset.assetType == FWAssetTypeImage) {
         if (imageAsset.assetSubType == FWAssetSubTypeLivePhoto) {
-            return FWImagePreviewMediaTypeLivePhoto;
+            BOOL checkLivePhoto = (self.imagePickerController.filterType & FWImagePickerFilterTypeLivePhoto) || self.imagePickerController.filterType < 1;
+            if (checkLivePhoto) return FWImagePreviewMediaTypeLivePhoto;
         }
         return FWImagePreviewMediaTypeImage;
     } else if (imageAsset.assetType == FWAssetTypeVideo) {
@@ -1244,7 +1245,8 @@
         
         // 这么写是为了消除 Xcode 的 API available warning
         BOOL isLivePhoto = NO;
-        if (imageAsset.assetSubType == FWAssetSubTypeLivePhoto) {
+        BOOL checkLivePhoto = (self.imagePickerController.filterType & FWImagePickerFilterTypeLivePhoto) || self.imagePickerController.filterType < 1;
+        if (imageAsset.assetSubType == FWAssetSubTypeLivePhoto && checkLivePhoto) {
             isLivePhoto = YES;
             imageView.tag = -1;
             imageAsset.requestID = [imageAsset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
