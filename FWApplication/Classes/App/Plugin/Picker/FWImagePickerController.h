@@ -412,12 +412,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 也可以直接传入 FWAssetGroup，然后读取其中的 FWAsset 并储存到 imagesAssetArray 中，传入后会赋值到 FWAssetGroup，并自动刷新 UI 展示
 - (void)refreshWithAssetsGroup:(FWAssetGroup * _Nullable)assetsGroup;
 
-/// 根据contentType刷新，自动选取第一个符合条件的相册，自动初始化并使用albumController
-- (void)refreshWithContentType:(FWAlbumContentType)contentType;
+/// 根据filterType刷新，自动选取第一个符合条件的相册，自动初始化并使用albumController
+- (void)refreshWithFilterType:(FWImagePickerFilterType)filterType;
 
 @property(nullable, nonatomic, strong, readonly) NSMutableArray<FWAsset *> *imagesAssetArray;
 @property(nullable, nonatomic, strong, readonly) FWAssetGroup *assetsGroup;
-@property(nonatomic, assign, readonly) FWAlbumContentType contentType;
+/// 图片过滤类型，默认0不过滤，影响requestImage结果和previewController预览效果
+@property(nonatomic, assign) FWImagePickerFilterType filterType;
 
 /// 当前被选择的图片对应的 FWAsset 对象数组
 @property(nullable, nonatomic, strong, readonly) NSMutableArray<FWAsset *> *selectedImageAssetArray;
@@ -437,8 +438,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否需要请求图片资源，默认NO，开启后会先回调didFinishRequest再回调didFinishPicking
 @property(nonatomic, assign) BOOL shouldRequestImage;
 
-/// 请求资源过滤类型，默认0不过滤，shouldRequestImage开启才生效
-@property(nonatomic, assign) FWImagePickerFilterType requestFilterType;
+/// 图片过滤类型转换为相册内容类型
++ (FWAlbumContentType)albumContentTypeWithFilterType:(FWImagePickerFilterType)filterType;
 
 /**
  * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源。

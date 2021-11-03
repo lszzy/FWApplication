@@ -48,7 +48,7 @@
             __typeof__(self) self = self_weak_;
             return [self albumControllerWithFilterType:filterType];
         };
-        [pickerController refreshWithContentType:[self contentTypeWithFilterType:filterType]];
+        [pickerController refreshWithFilterType:filterType];
 
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:pickerController];
         navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -74,7 +74,7 @@
     if (customBlock) customBlock(pickerController);
     
     pickerController.shouldRequestImage = YES;
-    pickerController.requestFilterType = filterType;
+    pickerController.filterType = filterType;
     __weak __typeof__(self) self_weak_ = self;
     pickerController.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
         __typeof__(self) self = self_weak_;
@@ -98,7 +98,7 @@
         albumController = [[FWImageAlbumController alloc] init];
         albumController.pickDefaultAlbumGroup = YES;
     }
-    albumController.contentType = [self contentTypeWithFilterType:filterType];
+    albumController.contentType = [FWImagePickerController albumContentTypeWithFilterType:filterType];
     return albumController;
 }
 
@@ -113,20 +113,6 @@
     previewController.showsEditButton = allowsEditing;
     previewController.cropControllerBlock = self.cropControllerBlock;
     return previewController;
-}
-
-- (FWAlbumContentType)contentTypeWithFilterType:(FWImagePickerFilterType)filterType
-{
-    FWAlbumContentType contentType = filterType < 1 ? FWAlbumContentTypeAll : FWAlbumContentTypeOnlyPhoto;
-    if (filterType & FWImagePickerFilterTypeVideo) {
-        if (filterType & FWImagePickerFilterTypeImage ||
-            filterType & FWImagePickerFilterTypeLivePhoto) {
-            contentType = FWAlbumContentTypeAll;
-        } else {
-            contentType = FWAlbumContentTypeOnlyVideo;
-        }
-    }
-    return contentType;
 }
 
 @end

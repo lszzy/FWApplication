@@ -1025,7 +1025,7 @@
         } else if (self.showsDefaultLoading) {
             [self fwShowLoading];
         }
-        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.requestFilterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
                 [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
@@ -1760,8 +1760,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     });
 }
 
-- (void)refreshWithContentType:(FWAlbumContentType)contentType {
-    _contentType = contentType;
+- (void)refreshWithFilterType:(FWImagePickerFilterType)filterType {
+    _filterType = filterType;
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
     } else if (self.showsDefaultLoading) {
@@ -1906,7 +1906,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     
     self.albumController = albumController;
     albumController.imagePickerController = self;
-    albumController.contentType = self.contentType;
+    albumController.contentType = [FWImagePickerController albumContentTypeWithFilterType:self.filterType];
     __weak __typeof__(self) self_weak_ = self;
     albumController.albumArrayLoaded = ^{
         __typeof__(self) self = self_weak_;
@@ -2135,7 +2135,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         } else if (self.showsDefaultLoading) {
             [self fwShowLoading];
         }
-        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.requestFilterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
@@ -2345,6 +2345,20 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             }
         });
     }];
+}
+
++ (FWAlbumContentType)albumContentTypeWithFilterType:(FWImagePickerFilterType)filterType
+{
+    FWAlbumContentType contentType = filterType < 1 ? FWAlbumContentTypeAll : FWAlbumContentTypeOnlyPhoto;
+    if (filterType & FWImagePickerFilterTypeVideo) {
+        if (filterType & FWImagePickerFilterTypeImage ||
+            filterType & FWImagePickerFilterTypeLivePhoto) {
+            contentType = FWAlbumContentTypeAll;
+        } else {
+            contentType = FWAlbumContentTypeOnlyVideo;
+        }
+    }
+    return contentType;
 }
 
 + (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
