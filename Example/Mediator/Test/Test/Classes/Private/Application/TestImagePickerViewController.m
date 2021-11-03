@@ -34,10 +34,11 @@
                 } else {
                     [FWPluginManager registerPlugin:@protocol(FWImagePickerPlugin) withObject:[FWImagePickerControllerImpl class]];
                     FWImagePickerControllerImpl.sharedInstance.showLoadingBlock = ^(UIViewController * _Nonnull viewController, BOOL finished) {
+                        UIViewController *targetController = viewController.navigationController ?: viewController;
                         if (!finished) {
-                            [viewController fwShowLoading];
+                            [targetController fwShowLoading];
                         } else {
-                            [viewController fwHideLoading];
+                            [targetController fwHideLoading];
                         }
                     };
                     FWImagePickerControllerImpl.sharedInstance.customBlock = ^(FWImagePickerController * _Nonnull pickerController) {

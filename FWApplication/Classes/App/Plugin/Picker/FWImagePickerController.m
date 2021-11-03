@@ -239,6 +239,8 @@
 - (void)loadAlbumArray {
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
         [self.albumControllerDelegate albumControllerWillStartLoading:self];
+    } else if (self.showLoadingBlock) {
+        self.showLoadingBlock(self, NO);
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -272,8 +274,10 @@
 }
 
 - (void)refreshAlbumGroups {
-    if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillFinishLoading:)]) {
-        [self.albumControllerDelegate albumControllerWillFinishLoading:self];
+    if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerDidFinishLoading:)]) {
+        [self.albumControllerDelegate albumControllerDidFinishLoading:self];
+    } else if (self.showLoadingBlock) {
+        self.showLoadingBlock(self, YES);
     }
     
     if (self.maximumTableViewHeight > 0) {
@@ -1001,27 +1005,61 @@
     }];
 }
 
-- (void)handleSendButtonClick:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^(void) {
-        if (self.selectedImageAssetArray.count == 0) {
-            // 如果没选中任何一张，则点击发送按钮直接发送当前这张大图
-            FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
-            [self.selectedImageAssetArray addObject:currentAsset];
-        }
-        BOOL useOriginImage = self.shouldUseOriginImage;
-        [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.pickerUseOrigin = useOriginImage;
-        }];
-        
-        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
-            [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-        } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
-            [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-        } else if (self.imagePickerController.didFinishPicking) {
-            self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
-        }
-        [self.imagePickerController.selectedImageAssetArray removeAllObjects];
+- (void)handleSendButtonClick:(UIButton *)sender {
+    sender.userInteractionEnabled = NO;
+    if (self.selectedImageAssetArray.count == 0) {
+        // 如果没选中任何一张，则点击发送按钮直接发送当前这张大图
+        FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
+        [self.selectedImageAssetArray addObject:currentAsset];
+    }
+    BOOL useOriginImage = self.shouldUseOriginImage;
+    [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.pickerUseOrigin = useOriginImage;
     }];
+    
+    if (self.imagePickerController.shouldRequestImage) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillStartLoading:)]) {
+            [self.delegate imagePickerPreviewControllerWillStartLoading:self];
+        } else if (self.showLoadingBlock) {
+            self.showLoadingBlock(self, NO);
+        }
+        
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.requestFilterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
+                [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
+            } else if (self.showLoadingBlock) {
+                self.showLoadingBlock(self, YES);
+            }
+            
+            [self dismissViewControllerAnimated:YES completion:^(void) {
+                if ([self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishRequestImageWithObjects:results:)]) {
+                    [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishRequestImageWithObjects:objects results:results];
+                } else if (self.imagePickerController.didFinishRequest) {
+                    self.imagePickerController.didFinishRequest(objects, results);
+                }
+                
+                if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
+                    [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+                } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+                    [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+                } else if (self.imagePickerController.didFinishPicking) {
+                    self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
+                }
+                [self.imagePickerController.selectedImageAssetArray removeAllObjects];
+            }];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^(void) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
+                [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+            } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+                [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+            } else if (self.imagePickerController.didFinishPicking) {
+                self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
+            }
+            [self.imagePickerController.selectedImageAssetArray removeAllObjects];
+        }];
+    }
 }
 
 - (void)handleOriginImageCheckboxButtonClick:(UIButton *)button {
@@ -1694,6 +1732,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     // 遍历相册内的资源较为耗时，交给子线程去处理，因此这里需要显示 Loading
     if (!self.isImagesAssetLoading && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
+    } else if (!self.isImagesAssetLoading && self.showLoadingBlock) {
+        self.showLoadingBlock(self, NO);
     }
     self.isImagesAssetLoading = YES;
     if (!assetsGroup) {
@@ -1720,6 +1760,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _contentType = contentType;
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
+    } else if (self.showLoadingBlock) {
+        self.showLoadingBlock(self, NO);
     }
     self.isImagesAssetLoading = YES;
     [self initAlbumControllerIfNeeded];
@@ -1730,6 +1772,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     self.isImagesAssetLoaded = YES;
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
+    } else if (self.showLoadingBlock) {
+        self.showLoadingBlock(self, YES);
     }
     self.isImagesAssetLoading = NO;
     [self.collectionView reloadData];
@@ -2074,20 +2118,51 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 #pragma mark - 按钮点击回调
 
-- (void)handleSendButtonClick:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:^() {
-        BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
-        [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.pickerUseOrigin = useOriginImage;
-        }];
-        
-        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
-            [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-        } else if (self.didFinishPicking) {
-            self.didFinishPicking(self.selectedImageAssetArray.copy);
-        }
-        [self.selectedImageAssetArray removeAllObjects];
+- (void)handleSendButtonClick:(UIButton *)sender {
+    sender.userInteractionEnabled = NO;
+    BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
+    [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        obj.pickerUseOrigin = useOriginImage;
     }];
+    
+    if (self.shouldRequestImage) {
+        if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
+            [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
+        } else if (self.showLoadingBlock) {
+            self.showLoadingBlock(self, NO);
+        }
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.requestFilterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+            if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
+                [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
+            } else if (self.showLoadingBlock) {
+                self.showLoadingBlock(self, YES);
+            }
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishRequestImageWithObjects:results:)]) {
+                    [self.imagePickerControllerDelegate imagePickerController:self didFinishRequestImageWithObjects:objects results:results];
+                } else if (self.didFinishRequest) {
+                    self.didFinishRequest(objects, results);
+                }
+                
+                if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+                    [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+                } else if (self.didFinishPicking) {
+                    self.didFinishPicking(self.selectedImageAssetArray.copy);
+                }
+                [self.selectedImageAssetArray removeAllObjects];
+            }];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:^() {
+            if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+                [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+            } else if (self.didFinishPicking) {
+                self.didFinishPicking(self.selectedImageAssetArray.copy);
+            }
+            [self.selectedImageAssetArray removeAllObjects];
+        }];
+    }
 }
 
 - (void)handlePreviewButtonClick:(id)sender {

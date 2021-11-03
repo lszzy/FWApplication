@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义图片裁剪控制器句柄，默认nil时使用自带控制器
 @property (nonatomic, copy, nullable) FWImageCropController * (^cropControllerBlock)(UIImage *image);
 
-/// 自定义显示加载进度句柄，图片选取完成后请求资源时调用，参数为来源控制器和是否完成加载，默认nil
+/// 自定义显示loading句柄，参数为当前控制器和是否完成loading，默认nil
 @property (nonatomic, copy, nullable) void (^showLoadingBlock)(UIViewController *viewController, BOOL finished);
 
 /// 图片选取全局自定义句柄，show方法自动调用

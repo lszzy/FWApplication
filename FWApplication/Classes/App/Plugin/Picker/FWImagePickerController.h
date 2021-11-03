@@ -39,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 即将需要显示 Loading 时调用，可自定义Loading效果
 - (void)albumControllerWillStartLoading:(FWImageAlbumController *)albumController;
 
-/// 即将需要隐藏 Loading 时调用，可自定义Loading效果
-- (void)albumControllerWillFinishLoading:(FWImageAlbumController *)albumController;
+/// 需要隐藏 Loading 时调用，可自定义Loading效果
+- (void)albumControllerDidFinishLoading:(FWImageAlbumController *)albumController;
 
 /// 相册列表未授权时调用，可自定义空界面等
 - (void)albumControllerWillShowDenied:(FWImageAlbumController *)albumController;
@@ -106,6 +106,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义pickerController句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImagePickerController * (^pickerControllerBlock)(void);
 
+/// 自定义显示loading句柄，参数为当前控制器和是否完成loading，默认nil，优先级低于delegate
+@property (nonatomic, copy, nullable) void (^showLoadingBlock)(UIViewController *viewController, BOOL finished);
+
 /// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
 @property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 
@@ -147,6 +150,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didUncheckImageAtIndex:(NSInteger)index;
 /// 选中数量变化时调用，仅多选有效
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willChangeCheckedCount:(NSInteger)checkedCount;
+/// 即将需要显示 Loading 时调用
+- (void)imagePickerPreviewControllerWillStartLoading:(FWImagePickerPreviewController *)imagePickerPreviewController;
+/// 即将需要隐藏 Loading 时调用
+- (void)imagePickerPreviewControllerDidFinishLoading:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 已经选中数量超过最大选择数量时被调用，默认弹窗提示
 - (void)imagePickerPreviewControllerWillShowExceed:(FWImagePickerPreviewController *)imagePickerPreviewController;
 /// 图片预览界面关闭返回时被调用
@@ -166,6 +173,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, weak) id<FWImagePickerPreviewControllerDelegate> delegate;
 /// 自定义裁剪控制器句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImageCropController * (^cropControllerBlock)(UIImage *image);
+/// 自定义显示loading句柄，参数为当前控制器和是否完成loading，默认nil，优先级低于delegate
+@property (nonatomic, copy, nullable) void (^showLoadingBlock)(UIViewController *viewController, BOOL finished);
 
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
@@ -280,7 +289,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (FWAlbumSortType)albumSortTypeForImagePickerController:(FWImagePickerController *)imagePickerController;
 
 /**
- *  多选模式下选择图片完毕后被调用（点击 sendButton 后被调用），单选模式下没有底部发送按钮，所以也不会走到这个delegate
+ *  图片资源请求完成后被调用（点击 sendButton 后被调用），开启shouldRequestImage时才回调，点取消时不会回调
+ *
+ *  @param imagePickerController 对应的 FWImagePickerController
+ *  @param objects 资源对象数组，类型为UIImage|PHLivePhoto|NSURL
+ *  @param results 结果信息字典数组，数量和objects相同
+ */
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishRequestImageWithObjects:(NSArray *)objects results:(NSArray *)results;
+
+/**
+ *  选择图片完毕后被调用（点击 sendButton 后被调用），如果previewController没有实现完成回调方法，也会走到这个方法
  *
  *  @param imagePickerController 对应的 FWImagePickerController
  *  @param imagesAssetArray          包含被选择的图片的 FWAsset 对象的数组。
@@ -288,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray;
 
 /**
- *  取消选择图片后被调用
+ *  取消选择图片后被调用，如果albumController没有实现取消回调方法，也会走到这个方法
  */
 - (void)imagePickerControllerDidCancel:(FWImagePickerController *)imagePickerController;
 
@@ -360,7 +378,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, copy) FWImagePickerPreviewController * (^previewControllerBlock)(void);
 /// 自定义相册控制器句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImageAlbumController * (^albumControllerBlock)(void);
+/// 自定义显示loading句柄，参数为当前控制器和是否完成loading，默认nil，优先级低于delegate
+@property (nonatomic, copy, nullable) void (^showLoadingBlock)(UIViewController *viewController, BOOL finished);
 
+/// 图片请求资源完成回调句柄，优先级低于delegate，objects类型为UIImage|PHLivePhoto|NSURL
+@property(nullable, nonatomic, copy) void (^didFinishRequest)(NSArray *objects, NSArray *results);
 /// 图片选取完成回调句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) void (^didFinishPicking)(NSArray<FWAsset *> *imagesAssetArray);
 /// 图片选取取消回调句柄，优先级低于delegate
@@ -409,6 +431,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 最少需要选择的图片数，默认为 0
 @property(nonatomic, assign) NSUInteger minimumSelectImageCount;
+
+/// 是否需要请求图片资源，默认NO，请求完成回调delegate之后才回调完成，会触发loading
+@property(nonatomic, assign) BOOL shouldRequestImage;
+
+/// 请求资源过滤类型，默认0不过滤，shouldRequestImage开启才生效
+@property(nonatomic, assign) FWImagePickerFilterType requestFilterType;
 
 /**
  * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源
