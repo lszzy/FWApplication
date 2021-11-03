@@ -33,14 +33,6 @@
                     [FWPluginManager unregisterPlugin:@protocol(FWImagePickerPlugin)];
                 } else {
                     [FWPluginManager registerPlugin:@protocol(FWImagePickerPlugin) withObject:[FWImagePickerControllerImpl class]];
-                    FWImagePickerControllerImpl.sharedInstance.showLoadingBlock = ^(UIViewController * _Nonnull viewController, BOOL finished) {
-                        UIViewController *targetController = viewController.navigationController ?: viewController;
-                        if (!finished) {
-                            [targetController fwShowLoading];
-                        } else {
-                            [targetController fwHideLoading];
-                        }
-                    };
                     FWImagePickerControllerImpl.sharedInstance.customBlock = ^(FWImagePickerController * _Nonnull pickerController) {
                         FWStrongifySelf();
                         pickerController.titleAccessoryImage = [self accessoryImage];
@@ -88,7 +80,7 @@
                               customBlock:nil
                                completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results, BOOL cancel) {
         FWStrongifySelf();
-        if (cancel) {
+        if (cancel || objects.count < 1) {
             [self fwShowMessageWithText:@"已取消"];
         } else {
             [self fwShowImagePreviewWithImageURLs:objects currentIndex:0 sourceView:nil];

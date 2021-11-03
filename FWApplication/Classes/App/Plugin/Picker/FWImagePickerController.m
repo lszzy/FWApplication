@@ -150,6 +150,7 @@
     _albumTableViewCellHeight = 88;
     _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
     _toolBarTintColor = UIColor.whiteColor;
+    _showsDefaultLoading = YES;
     
     self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
@@ -239,8 +240,8 @@
 - (void)loadAlbumArray {
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
         [self.albumControllerDelegate albumControllerWillStartLoading:self];
-    } else if (self.showLoadingBlock) {
-        self.showLoadingBlock(self, NO);
+    } else if (self.showsDefaultLoading) {
+        [self fwShowLoading];
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -276,8 +277,8 @@
 - (void)refreshAlbumGroups {
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerDidFinishLoading:)]) {
         [self.albumControllerDelegate albumControllerDidFinishLoading:self];
-    } else if (self.showLoadingBlock) {
-        self.showLoadingBlock(self, YES);
+    } else if (self.showsDefaultLoading) {
+        [self fwHideLoading];
     }
     
     if (self.maximumTableViewHeight > 0) {
@@ -598,6 +599,7 @@
         self.maximumSelectImageCount = 9;
         self.minimumSelectImageCount = 0;
         _toolBarPaddingHorizontal = 16;
+        _showsDefaultLoading = YES;
         
         self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
         self.toolBarTintColor = UIColor.whiteColor;
@@ -1020,15 +1022,14 @@
     if (self.imagePickerController.shouldRequestImage) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillStartLoading:)]) {
             [self.delegate imagePickerPreviewControllerWillStartLoading:self];
-        } else if (self.showLoadingBlock) {
-            self.showLoadingBlock(self, NO);
+        } else if (self.showsDefaultLoading) {
+            [self fwShowLoading];
         }
-        
         [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.requestFilterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
                 [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
-            } else if (self.showLoadingBlock) {
-                self.showLoadingBlock(self, YES);
+            } else if (self.showsDefaultLoading) {
+                [self fwHideLoading];
             }
             
             [self dismissViewControllerAnimated:YES completion:^(void) {
@@ -1637,6 +1638,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _maximumSelectImageCount = 9;
     _minimumSelectImageCount = 0;
     _toolBarPaddingHorizontal = 16;
+    _showsDefaultLoading = YES;
     
     self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
@@ -1730,12 +1732,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         albumSortType = [self.imagePickerControllerDelegate albumSortTypeForImagePickerController:self];
     }
     // 遍历相册内的资源较为耗时，交给子线程去处理，因此这里需要显示 Loading
-    if (!self.isImagesAssetLoading && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
-        [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
-    } else if (!self.isImagesAssetLoading && self.showLoadingBlock) {
-        self.showLoadingBlock(self, NO);
+    if (!self.isImagesAssetLoading) {
+        self.isImagesAssetLoading = YES;
+        if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
+            [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
+        } else if (self.showsDefaultLoading) {
+            [self fwShowLoading];
+        }
     }
-    self.isImagesAssetLoading = YES;
     if (!assetsGroup) {
         [self refreshCollectionView];
         return;
@@ -1760,8 +1764,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _contentType = contentType;
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
-    } else if (self.showLoadingBlock) {
-        self.showLoadingBlock(self, NO);
+    } else if (self.showsDefaultLoading) {
+        [self fwShowLoading];
     }
     self.isImagesAssetLoading = YES;
     [self initAlbumControllerIfNeeded];
@@ -1772,8 +1776,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     self.isImagesAssetLoaded = YES;
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
-    } else if (self.showLoadingBlock) {
-        self.showLoadingBlock(self, YES);
+    } else if (self.showsDefaultLoading) {
+        [self fwHideLoading];
     }
     self.isImagesAssetLoading = NO;
     [self.collectionView reloadData];
@@ -2128,14 +2132,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.shouldRequestImage) {
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
-        } else if (self.showLoadingBlock) {
-            self.showLoadingBlock(self, NO);
+        } else if (self.showsDefaultLoading) {
+            [self fwShowLoading];
         }
         [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.requestFilterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
-            } else if (self.showLoadingBlock) {
-                self.showLoadingBlock(self, YES);
+            } else if (self.showsDefaultLoading) {
+                [self fwHideLoading];
             }
             
             [self dismissViewControllerAnimated:YES completion:^{

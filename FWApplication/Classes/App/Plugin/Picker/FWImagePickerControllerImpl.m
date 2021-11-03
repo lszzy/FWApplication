@@ -70,7 +70,6 @@
     }
     pickerController.allowsMultipleSelection = selectionLimit != 1;
     pickerController.maximumSelectImageCount = selectionLimit > 0 ? selectionLimit : INT_MAX;
-    pickerController.showLoadingBlock = self.showLoadingBlock;
     if (self.customBlock) self.customBlock(pickerController);
     if (customBlock) customBlock(pickerController);
     
@@ -100,7 +99,6 @@
         albumController.pickDefaultAlbumGroup = YES;
     }
     albumController.contentType = [self contentTypeWithFilterType:filterType];
-    albumController.showLoadingBlock = self.showLoadingBlock;
     return albumController;
 }
 
@@ -114,7 +112,6 @@
     }
     previewController.showsEditButton = allowsEditing;
     previewController.cropControllerBlock = self.cropControllerBlock;
-    previewController.showLoadingBlock = self.showLoadingBlock;
     return previewController;
 }
 
