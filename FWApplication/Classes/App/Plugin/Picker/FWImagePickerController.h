@@ -164,6 +164,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FWImagePickerPreviewController : FWImagePreviewController <UICollectionViewDataSource, UICollectionViewDelegate, FWImagePreviewViewDelegate>
 
 @property(nullable, nonatomic, weak) id<FWImagePickerPreviewControllerDelegate> delegate;
+/// 自定义裁剪控制器句柄，优先级低于delegate
+@property(nullable, nonatomic, copy) FWImageCropController * (^cropControllerBlock)(UIImage *image);
 
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
@@ -354,6 +356,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FWImagePickerController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, FWImagePickerPreviewControllerDelegate>
 
 @property(nullable, nonatomic, weak) id<FWImagePickerControllerDelegate> imagePickerControllerDelegate;
+/// 自定义预览控制器句柄，优先级低于delegate
+@property(nullable, nonatomic, copy) FWImagePickerPreviewController * (^previewControllerBlock)(void);
+/// 自定义相册控制器句柄，优先级低于delegate
+@property(nullable, nonatomic, copy) FWImageAlbumController * (^albumControllerBlock)(void);
 
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;

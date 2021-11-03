@@ -351,18 +351,18 @@
 }
 
 - (void)initImagePickerControllerIfNeeded {
-    if (!self.imagePickerController) {
-        FWImagePickerController *imagePickerController;
-        if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
-            imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
-        } else if (self.pickerControllerBlock) {
-            imagePickerController = self.pickerControllerBlock();
-        }
-        if (imagePickerController) {
-            // 此处需要强引用imagePickerController，防止weak属性释放imagePickerController
-            objc_setAssociatedObject(self, @selector(imagePickerController), imagePickerController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            self.imagePickerController = imagePickerController;
-        }
+    if (self.imagePickerController) return;
+    
+    FWImagePickerController *imagePickerController;
+    if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
+        imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+    } else if (self.pickerControllerBlock) {
+        imagePickerController = self.pickerControllerBlock();
+    }
+    if (imagePickerController) {
+        // 此处需要强引用imagePickerController，防止weak属性释放imagePickerController
+        objc_setAssociatedObject(self, @selector(imagePickerController), imagePickerController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        self.imagePickerController = imagePickerController;
     }
 }
 
@@ -1057,6 +1057,8 @@
     FWImageCropController *cropController;
     if (self.delegate && [self.delegate respondsToSelector:@selector(imageCropControllerForPreviewController:image:)]) {
         cropController = [self.delegate imageCropControllerForPreviewController:self image:image];
+    } else if (self.cropControllerBlock) {
+        cropController = self.cropControllerBlock(image);
     } else {
         cropController = [[FWImageCropController alloc] initWithImage:image];
     }
@@ -1754,12 +1756,16 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 }
 
 - (void)initPreviewViewControllerIfNeeded {
-    if (!self.imagePickerPreviewController) {
+    if (self.imagePickerPreviewController) return;
+    
+    if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerForImagePickerController:)]) {
         self.imagePickerPreviewController = [self.imagePickerControllerDelegate imagePickerPreviewControllerForImagePickerController:self];
-        self.imagePickerPreviewController.imagePickerController = self;
-        self.imagePickerPreviewController.maximumSelectImageCount = self.maximumSelectImageCount;
-        self.imagePickerPreviewController.minimumSelectImageCount = self.minimumSelectImageCount;
+    } else if (self.previewControllerBlock) {
+        self.imagePickerPreviewController = self.previewControllerBlock();
     }
+    self.imagePickerPreviewController.imagePickerController = self;
+    self.imagePickerPreviewController.maximumSelectImageCount = self.maximumSelectImageCount;
+    self.imagePickerPreviewController.minimumSelectImageCount = self.minimumSelectImageCount;
 }
 
 - (CGSize)referenceImageSize {
@@ -1836,49 +1842,54 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 }
 
 - (void)initAlbumControllerIfNeeded {
-    if (!self.albumController) {
-        if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
-            FWImageAlbumController *albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
-            albumController.imagePickerController = self;
-            albumController.contentType = self.contentType;
-            UIImage *accessoryImage = self.titleView.accessoryImage;
-            self.titleView.userInteractionEnabled = NO;
-            self.titleView.accessoryImage = nil;
-            __weak __typeof__(self) self_weak_ = self;
-            albumController.albumArrayLoaded = ^{
-                __typeof__(self) self = self_weak_;
-                if (self.albumController.albumsArray.count > 0) {
-                    self.titleView.userInteractionEnabled = YES;
-                    self.titleView.accessoryImage = accessoryImage;
-                    FWAssetGroup *assetsGroup = self.albumController.albumsArray.firstObject;
-                    self.title = [assetsGroup name];
-                    [self refreshWithAssetsGroup:assetsGroup];
-                } else {
-                    [self refreshWithAssetsGroup:nil];
-                }
-            };
-            albumController.assetsGroupSelected = ^(FWAssetGroup * _Nonnull assetsGroup) {
-                __typeof__(self) self = self_weak_;
-                self.title = [assetsGroup name];
-                [self refreshWithAssetsGroup:assetsGroup];
-                [self hideAlbumControllerAnimated:YES];
-            };
-            
-            self.albumController = albumController;
-            [self addChildViewController:albumController];
-            [albumController didMoveToParentViewController:self];
-            albumController.view.hidden = YES;
-            [self.view addSubview:albumController.view];
-            
-            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlbumButtonClick:)];
-            [albumController.backgroundView addGestureRecognizer:tapGesture];
-            if (!albumController.backgroundView.backgroundColor) {
-                albumController.backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-            }
-            if (albumController.maximumTableViewHeight <= 0) {
-                albumController.maximumTableViewHeight = albumController.albumTableViewCellHeight * ceil(FWScreenHeight / albumController.albumTableViewCellHeight / 2.0);
-            }
+    if (self.albumController) return;
+    
+    FWImageAlbumController *albumController;
+    if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(albumControllerForImagePickerController:)]) {
+        albumController = [self.imagePickerControllerDelegate albumControllerForImagePickerController:self];
+    } else if (self.albumControllerBlock) {
+        albumController = self.albumControllerBlock();
+    }
+    if (!albumController) return;
+    
+    self.albumController = albumController;
+    albumController.imagePickerController = self;
+    albumController.contentType = self.contentType;
+    UIImage *accessoryImage = self.titleView.accessoryImage;
+    self.titleView.userInteractionEnabled = NO;
+    self.titleView.accessoryImage = nil;
+    __weak __typeof__(self) self_weak_ = self;
+    albumController.albumArrayLoaded = ^{
+        __typeof__(self) self = self_weak_;
+        if (self.albumController.albumsArray.count > 0) {
+            self.titleView.userInteractionEnabled = YES;
+            self.titleView.accessoryImage = accessoryImage;
+            FWAssetGroup *assetsGroup = self.albumController.albumsArray.firstObject;
+            self.title = [assetsGroup name];
+            [self refreshWithAssetsGroup:assetsGroup];
+        } else {
+            [self refreshWithAssetsGroup:nil];
         }
+    };
+    albumController.assetsGroupSelected = ^(FWAssetGroup * _Nonnull assetsGroup) {
+        __typeof__(self) self = self_weak_;
+        self.title = [assetsGroup name];
+        [self refreshWithAssetsGroup:assetsGroup];
+        [self hideAlbumControllerAnimated:YES];
+    };
+    
+    [self addChildViewController:albumController];
+    [albumController didMoveToParentViewController:self];
+    albumController.view.hidden = YES;
+    [self.view addSubview:albumController.view];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlbumButtonClick:)];
+    [albumController.backgroundView addGestureRecognizer:tapGesture];
+    if (!albumController.backgroundView.backgroundColor) {
+        albumController.backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    }
+    if (albumController.maximumTableViewHeight <= 0) {
+        albumController.maximumTableViewHeight = albumController.albumTableViewCellHeight * ceil(FWScreenHeight / albumController.albumTableViewCellHeight / 2.0);
     }
 }
 
@@ -2028,23 +2039,24 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didSelectImageWithImagesAsset:afterImagePickerPreviewControllerUpdate:)]) {
         [self.imagePickerControllerDelegate imagePickerController:self didSelectImageWithImagesAsset:imageAsset afterImagePickerPreviewControllerUpdate:self.imagePickerPreviewController];
     }
-    if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerForImagePickerController:)]) {
-        [self initPreviewViewControllerIfNeeded];
-        if (!self.allowsMultipleSelection) {
-            // 单选的情况下
-            [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:@[imageAsset].mutableCopy
-                                                                        selectedImageAssetArray:self.selectedImageAssetArray
-                                                                              currentImageIndex:0
-                                                                                singleCheckMode:YES
-                                                                                    previewMode:NO];
-        } else {
-            // cell 处于编辑状态，即图片允许多选
-            [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:self.imagesAssetArray
-                                                                        selectedImageAssetArray:self.selectedImageAssetArray
-                                                                              currentImageIndex:indexPath.item
-                                                                                singleCheckMode:NO
-                                                                                    previewMode:NO];
-        }
+    
+    [self initPreviewViewControllerIfNeeded];
+    if (!self.allowsMultipleSelection) {
+        // 单选的情况下
+        [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:@[imageAsset].mutableCopy
+                                                                    selectedImageAssetArray:self.selectedImageAssetArray
+                                                                          currentImageIndex:0
+                                                                            singleCheckMode:YES
+                                                                                previewMode:NO];
+    } else {
+        // cell 处于编辑状态，即图片允许多选
+        [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:self.imagesAssetArray
+                                                                    selectedImageAssetArray:self.selectedImageAssetArray
+                                                                          currentImageIndex:indexPath.item
+                                                                            singleCheckMode:NO
+                                                                                previewMode:NO];
+    }
+    if (self.imagePickerPreviewController) {
         [self.navigationController pushViewController:self.imagePickerPreviewController animated:YES];
     }
 }
@@ -2083,7 +2095,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                                                                       currentImageIndex:0
                                                                         singleCheckMode:NO
                                                                             previewMode:YES];
-    [self.navigationController pushViewController:self.imagePickerPreviewController animated:YES];
+    if (self.imagePickerPreviewController) {
+        [self.navigationController pushViewController:self.imagePickerPreviewController animated:YES];
+    }
 }
 
 - (void)handleCancelPickerImage:(id)sender {
