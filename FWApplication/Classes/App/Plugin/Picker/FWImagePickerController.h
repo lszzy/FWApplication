@@ -136,7 +136,7 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /// 完成选中图片回调，未实现时自动转发给当前imagePickerController
-- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray;
+- (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController didFinishPickingImageWithImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray;
 /// 即将选中图片
 - (void)imagePickerPreviewController:(FWImagePickerPreviewController *)imagePickerPreviewController willCheckImageAtIndex:(NSInteger)index;
 /// 已经选中图片
@@ -285,7 +285,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param imagePickerController 对应的 FWImagePickerController
  *  @param imagesAssetArray          包含被选择的图片的 FWAsset 对象的数组。
  */
-- (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray;
+- (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishPickingImageWithImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray;
 
 /**
  *  取消选择图片后被调用
@@ -361,11 +361,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义相册控制器句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImageAlbumController * (^albumControllerBlock)(void);
 
+/// 图片选取完成回调句柄，优先级低于delegate
+@property(nullable, nonatomic, copy) void (^didFinishPicking)(NSArray<FWAsset *> *imagesAssetArray);
+/// 图片选取取消回调句柄，优先级低于delegate
+@property(nullable, nonatomic, copy) void (^didCancelPicking)(void);
+
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
 /// 当前titleView，默认不可点击，contentType方式会自动切换点击状态
 @property(nonatomic, strong, readonly) FWNavigationTitleView *titleView;
+/// 标题视图accessoryImage，默认nil，contentType方式会自动设置
+@property(nullable, nonatomic, strong) UIImage *titleAccessoryImage;
 
 /*
  * 图片的最小尺寸，布局时如果有剩余空间，会将空间分配给图片大小，所以最终显示出来的大小不一定等于minimumImageWidth。默认是75。
@@ -408,7 +415,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * 下载完成后，主线程回调资源对象和结果信息，根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
-+ (void)requestImagesAssetArray:(NSMutableArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
++ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
 
 @end
 
