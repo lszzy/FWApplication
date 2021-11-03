@@ -103,6 +103,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册列表事件代理
 @property(nullable, nonatomic, weak) id<FWImageAlbumControllerDelegate> albumControllerDelegate;
 
+/// 自定义pickerController句柄，优先级低于delegate
+@property(nullable, nonatomic, copy) FWImagePickerController * (^pickerControllerBlock)(void);
+
 /// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
 @property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 

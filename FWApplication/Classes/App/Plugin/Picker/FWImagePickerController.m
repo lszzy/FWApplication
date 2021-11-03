@@ -352,9 +352,14 @@
 
 - (void)initImagePickerControllerIfNeeded {
     if (!self.imagePickerController) {
+        FWImagePickerController *imagePickerController;
         if ([self.albumControllerDelegate respondsToSelector:@selector(imagePickerControllerForAlbumController:)]) {
+            imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
+        } else if (self.pickerControllerBlock) {
+            imagePickerController = self.pickerControllerBlock();
+        }
+        if (imagePickerController) {
             // 此处需要强引用imagePickerController，防止weak属性释放imagePickerController
-            FWImagePickerController *imagePickerController = [self.albumControllerDelegate imagePickerControllerForAlbumController:self];
             objc_setAssociatedObject(self, @selector(imagePickerController), imagePickerController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             self.imagePickerController = imagePickerController;
         }

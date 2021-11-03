@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return 照片选择器，不支持的返回nil
  */
 + (nullable instancetype)fwPickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
-                                           cropController:(nullable FWImageCropController * _Nullable (^)(UIImage *image))cropController
+                                           cropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
                                                completion:(void (^)(UIImage * _Nullable image, NSDictionary * _Nullable info, BOOL cancel))completion;
 
 @end
@@ -101,7 +101,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
  @return 照片选择器
  */
-+ (instancetype)fwPickerControllerWithCropController:(nullable FWImageCropController * _Nullable (^)(UIImage *image))cropController
++ (instancetype)fwPickerControllerWithCropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
                                           completion:(void (^)(UIImage * _Nullable image, PHPickerResult * _Nullable result, BOOL cancel))completion;
 
 @end
@@ -150,7 +150,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
  @return 照片选择器
  */
-+ (nullable __kindof UIViewController *)fwPickerControllerWithCropController:(nullable FWImageCropController * _Nullable (^)(UIImage *image))cropController
++ (nullable __kindof UIViewController *)fwPickerControllerWithCropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
                                                                   completion:(void (^)(UIImage * _Nullable image, id _Nullable result, BOOL cancel))completion;
 
 @end
@@ -170,7 +170,7 @@ API_AVAILABLE(ios(14.0))
 @property (nonatomic, assign) BOOL cropControllerEnabled;
 
 /// 自定义图片裁剪控制器句柄，启用自定义裁剪后生效
-@property (nonatomic, copy, nullable) FWImageCropController * _Nullable (^cropControllerBlock)(UIImage *image);
+@property (nonatomic, copy, nullable) FWImageCropController * (^cropControllerBlock)(UIImage *image);
 
 /// 图片选取全局自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(__kindof UIViewController *pickerController);

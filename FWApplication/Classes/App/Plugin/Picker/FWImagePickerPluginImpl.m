@@ -203,14 +203,16 @@
 }
 
 + (instancetype)fwPickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
-                                  cropController:(nullable FWImageCropController * _Nullable (^)(UIImage * _Nonnull))cropControllerBlock
+                                  cropController:(nullable FWImageCropController * (^)(UIImage * _Nonnull))cropControllerBlock
                                       completion:(void (^)(UIImage * _Nullable, NSDictionary * _Nullable, BOOL))completion
 {
     UIImagePickerController *pickerController = [UIImagePickerController fwPickerControllerWithSourceType:sourceType filterType:FWImagePickerFilterTypeImage allowsEditing:NO shouldDismiss:NO completion:^(UIImagePickerController * _Nullable picker, id  _Nullable object, NSDictionary * _Nullable info, BOOL cancel) {
         UIImage *originalImage = cancel ? nil : object;
         if (originalImage) {
-            FWImageCropController *cropController = cropControllerBlock ? cropControllerBlock(originalImage) : nil;
-            if (!cropController) {
+            FWImageCropController *cropController;
+            if (cropControllerBlock) {
+                cropController = cropControllerBlock(originalImage);
+            } else {
                 cropController = [[FWImageCropController alloc] initWithImage:originalImage];
                 cropController.aspectRatioPreset = FWImageCropAspectRatioPresetSquare;
                 cropController.aspectRatioLockEnabled = YES;
@@ -288,13 +290,15 @@
     return pickerController;
 }
 
-+ (instancetype)fwPickerControllerWithCropController:(FWImageCropController * _Nullable (^)(UIImage * _Nonnull))cropControllerBlock completion:(void (^)(UIImage * _Nullable, PHPickerResult * _Nullable, BOOL))completion
++ (instancetype)fwPickerControllerWithCropController:(FWImageCropController * (^)(UIImage * _Nonnull))cropControllerBlock completion:(void (^)(UIImage * _Nullable, PHPickerResult * _Nullable, BOOL))completion
 {
     PHPickerViewController *pickerController = [PHPickerViewController fwPickerControllerWithFilterType:FWImagePickerFilterTypeImage selectionLimit:1 shouldDismiss:NO completion:^(PHPickerViewController * _Nullable picker, NSArray *objects, NSArray<PHPickerResult *> *results, BOOL cancel) {
         UIImage *originalImage = objects.firstObject;
         if (originalImage) {
-            FWImageCropController *cropController = cropControllerBlock ? cropControllerBlock(originalImage) : nil;
-            if (!cropController) {
+            FWImageCropController *cropController;
+            if (cropControllerBlock) {
+                cropController = cropControllerBlock(originalImage);
+            } else {
                 cropController = [[FWImageCropController alloc] initWithImage:originalImage];
                 cropController.aspectRatioPreset = FWImageCropAspectRatioPresetSquare;
                 cropController.aspectRatioLockEnabled = YES;
@@ -357,7 +361,7 @@
     }
 }
 
-+ (__kindof UIViewController *)fwPickerControllerWithCropController:(FWImageCropController * _Nullable (^)(UIImage * _Nonnull))cropController completion:(void (^)(UIImage * _Nullable, id _Nullable, BOOL))completion
++ (__kindof UIViewController *)fwPickerControllerWithCropController:(FWImageCropController * (^)(UIImage * _Nonnull))cropController completion:(void (^)(UIImage * _Nullable, id _Nullable, BOOL))completion
 {
     if (@available(iOS 14, *)) {
         return [PHPickerViewController fwPickerControllerWithCropController:cropController completion:completion];
