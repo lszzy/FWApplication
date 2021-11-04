@@ -60,6 +60,10 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
 @property(nonatomic, copy, readonly) NSString *identifier;
 // 自定义编辑后的图片，用于实现图片裁剪等功能，默认nil
 @property(nullable, nonatomic, strong) UIImage *editedImage;
+// 自定义请求结果对象，用于保存请求结果场景，默认nil
+@property(nullable, nonatomic, strong) id requestObject;
+// 自定义请求结果信息，用于保存请求结果场景，默认nil
+@property(nullable, nonatomic, copy) NSDictionary *requestInfo;
 
 /// Asset 的原图（包含系统相册“编辑”功能处理后的效果）
 - (nullable UIImage *)originImage;

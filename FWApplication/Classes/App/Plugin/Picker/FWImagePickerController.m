@@ -1026,7 +1026,7 @@
         } else if (self.showsDefaultLoading) {
             [self fwShowLoading];
         }
-        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType completion:^{
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
                 [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
@@ -1034,12 +1034,6 @@
             }
             
             [self dismissViewControllerAnimated:YES completion:^(void) {
-                if ([self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishRequestImageWithObjects:results:)]) {
-                    [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishRequestImageWithObjects:objects results:results];
-                } else if (self.imagePickerController.didFinishRequest) {
-                    self.imagePickerController.didFinishRequest(objects, results);
-                }
-                
                 if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
                     [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
                 } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
@@ -2137,7 +2131,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         } else if (self.showsDefaultLoading) {
             [self fwShowLoading];
         }
-        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType completion:^{
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
@@ -2145,12 +2139,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             }
             
             [self dismissViewControllerAnimated:YES completion:^{
-                if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishRequestImageWithObjects:results:)]) {
-                    [self.imagePickerControllerDelegate imagePickerController:self didFinishRequestImageWithObjects:objects results:results];
-                } else if (self.didFinishRequest) {
-                    self.didFinishRequest(objects, results);
-                }
-                
                 if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
                     [self.imagePickerControllerDelegate imagePickerController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
                 } else if (self.didFinishPicking) {
@@ -2363,34 +2351,22 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     return contentType;
 }
 
-+ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull))completion
++ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(void))completion
 {
-    if (!completion) return;
     if (imagesAssetArray.count < 1) {
-        completion(@[], @[]);
+        if (completion) completion();
         return;
     }
     
-    NSMutableArray<NSArray *> *results = [NSMutableArray array];
     NSInteger totalCount = imagesAssetArray.count;
     __block NSInteger finishCount = 0;
-    void (^completionHandler)(NSInteger index, id _Nullable object, NSDictionary * _Nullable info) = ^(NSInteger index, id _Nullable object, NSDictionary * _Nullable info){
-        if (object) {
-            [results addObject:[NSArray arrayWithObjects:@(index), object, info ?: @{}, nil]];
-        }
+    void (^completionHandler)(FWAsset *asset, id _Nullable object, NSDictionary * _Nullable info) = ^(FWAsset *asset, id _Nullable object, NSDictionary * _Nullable info){
+        asset.requestObject = object;
+        asset.requestInfo = info;
         
         finishCount += 1;
         if (finishCount == totalCount) {
-            [results sortUsingComparator:^NSComparisonResult(NSArray *arr1, NSArray *arr2) {
-                return [arr1.firstObject compare:arr2.firstObject];
-            }];
-            NSMutableArray *objects = [NSMutableArray array];
-            NSMutableArray *infos = [NSMutableArray array];
-            for (NSArray *result in results) {
-                [objects addObject:[result objectAtIndex:1]];
-                [infos addObject:[result objectAtIndex:2]];
-            }
-            completion(objects.copy, infos.copy);
+            if (completion) completion();
         }
     };
     
@@ -2404,13 +2380,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             [asset requestVideoURLWithOutputURL:fileURL exportPreset:asset.pickerUseOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(index, videoURL, info);
+                    completionHandler(asset, videoURL, info);
                 });
             } withProgressHandler:nil];
         } else if (asset.assetType == FWAssetTypeImage) {
             if (asset.editedImage) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completionHandler(index, asset.editedImage, nil);
+                    completionHandler(asset, asset.editedImage, nil);
                 });
                 return;
             }
@@ -2419,7 +2395,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (finished) {
-                            completionHandler(index, livePhoto, info);
+                            completionHandler(asset, livePhoto, info);
                         }
                     });
                 } withProgressHandler:nil];
@@ -2428,7 +2404,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                         UIImage *resultImage = imageData ? [UIImage fwImageWithData:imageData] : nil;
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            completionHandler(index, resultImage, info);
+                            completionHandler(asset, resultImage, info);
                         });
                     });
                 }];
@@ -2437,7 +2413,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (finished) {
-                                completionHandler(index, result, info);
+                                completionHandler(asset, result, info);
                             }
                         });
                     } withProgressHandler:nil];
@@ -2445,7 +2421,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     [asset requestPreviewImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             if (finished) {
-                                completionHandler(index, result, info);
+                                completionHandler(asset, result, info);
                             }
                         });
                     } withProgressHandler:nil];

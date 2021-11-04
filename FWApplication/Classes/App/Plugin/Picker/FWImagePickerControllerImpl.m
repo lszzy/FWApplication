@@ -80,8 +80,16 @@
         __typeof__(self) self = self_weak_;
         return [self previewControllerWithAllowsEditing:allowsEditing];
     };
-    pickerController.didFinishRequest = ^(NSArray * _Nonnull objects, NSArray * _Nonnull results) {
-        if (completion) completion(objects, results, objects.count < 1);
+    pickerController.didFinishPicking = ^(NSArray<FWAsset *> * _Nonnull imagesAssetArray) {
+        NSMutableArray *objects = [NSMutableArray array];
+        NSMutableArray *results = [NSMutableArray array];
+        [imagesAssetArray enumerateObjectsUsingBlock:^(FWAsset *obj, NSUInteger idx, BOOL *stop) {
+            if (obj.requestObject) {
+                [objects addObject:obj.requestObject];
+                [results addObject:obj.requestInfo ?: @{}];
+            }
+        }];
+        if (completion) completion(objects.copy, results.copy, objects.count < 1);
     };
     pickerController.didCancelPicking = ^{
         if (completion) completion(@[], @[], YES);
@@ -96,7 +104,7 @@
         albumController = self.albumControllerBlock();
     } else {
         albumController = [[FWImageAlbumController alloc] init];
-        albumController.pickDefaultAlbumGroup = YES;
+        albumController.pickDefaultAlbumGroup = self.showsAlbumController;
     }
     albumController.contentType = [FWImagePickerController albumContentTypeWithFilterType:filterType];
     return albumController;

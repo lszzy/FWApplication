@@ -290,15 +290,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (FWAlbumSortType)albumSortTypeForImagePickerController:(FWImagePickerController *)imagePickerController;
 
 /**
- *  图片资源请求完成后被调用（点击 sendButton 后被调用），开启shouldRequestImage时才回调，点取消时不会回调
- *
- *  @param imagePickerController 对应的 FWImagePickerController
- *  @param objects 资源对象数组，类型为UIImage|PHLivePhoto|NSURL
- *  @param results 结果信息字典数组，数量和objects相同
- */
-- (void)imagePickerController:(FWImagePickerController *)imagePickerController didFinishRequestImageWithObjects:(NSArray *)objects results:(NSArray *)results;
-
-/**
  *  选择图片完毕后被调用（点击 sendButton 后被调用），如果previewController没有实现完成回调方法，也会走到这个方法
  *
  *  @param imagePickerController 对应的 FWImagePickerController
@@ -380,8 +371,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义相册控制器句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImageAlbumController * (^albumControllerBlock)(void);
 
-/// 图片请求资源完成回调句柄，优先级低于delegate，objects类型为UIImage|PHLivePhoto|NSURL
-@property(nullable, nonatomic, copy) void (^didFinishRequest)(NSArray *objects, NSArray *results);
 /// 图片选取完成回调句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) void (^didFinishPicking)(NSArray<FWAsset *> *imagesAssetArray);
 /// 图片选取取消回调句柄，优先级低于delegate
@@ -435,17 +424,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 是否显示默认loading，优先级低于delegate，默认YES
 @property(nonatomic, assign) BOOL showsDefaultLoading;
 
-/// 是否需要请求图片资源，默认NO，开启后会先回调didFinishRequest再回调didFinishPicking
+/// 是否需要请求图片资源，默认NO，开启后会先requestImagesAssetArray再回调didFinishPicking
 @property(nonatomic, assign) BOOL shouldRequestImage;
 
 /// 图片过滤类型转换为相册内容类型
 + (FWAlbumContentType)albumContentTypeWithFilterType:(FWImagePickerFilterType)filterType;
 
 /**
- * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源。
- * 下载完成后，主线程回调资源对象和结果信息，根据过滤类型返回UIImage|PHLivePhoto|NSURL
+ * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源，下载完成后，主线程回调。
+ * 图片资源对象和结果信息保存在FWAsset.requestObject，自动根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
-+ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(NSArray *objects, NSArray *results))completion;
++ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(nullable void (^)(void))completion;
 
 @end
 
