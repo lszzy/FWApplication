@@ -828,6 +828,8 @@
 }
 
 - (BOOL)imagePreviewView:(FWImagePreviewView *)imagePreviewView shouldResetZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
+    // 为了防止切换图片时产生闪烁，只重置videoPlayerItem，加载失败时需清空显示
+    zoomImageView.videoPlayerItem = nil;
     return NO;
 }
 
@@ -847,6 +849,145 @@
     
     [self updateOriginImageCheckboxButtonWithIndex:index];
     [self updateCollectionViewCheckedIndex:[self.editImageAssetArray indexOfObject:imageAsset]];
+}
+
+- (void)requestImageForZoomImageView:(FWZoomImageView *)imageView withIndex:(NSInteger)index {
+    // 如果是走 PhotoKit 的逻辑，那么这个 block 会被多次调用，并且第一次调用时返回的图片是一张小图，
+    // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
+    if (imageAsset.editedImage) {
+        imageView.image = imageAsset.editedImage;
+        return;
+    }
+    
+    // 获取资源图片的预览图，这是一张适合当前设备屏幕大小的图片，最终展示时把图片交给组件控制最终展示出来的大小。
+    // 系统相册本质上也是这么处理的，因此无论是系统相册，还是这个系列组件，由始至终都没有显示照片原图，
+    // 这也是系统相册能加载这么快的原因。
+    // 另外这里采用异步请求获取图片，避免获取图片时 UI 卡顿
+    PHAssetImageProgressHandler phProgressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
+        imageAsset.downloadProgress = progress;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (self.downloadStatus != FWAssetDownloadStatusDownloading) {
+                self.downloadStatus = FWAssetDownloadStatusDownloading;
+                imageView.progress = 0;
+            }
+            // 拉取资源的初期，会有一段时间没有进度，猜测是发出网络请求以及与 iCloud 建立连接的耗时，这时预先给个 0.02 的进度值，看上去好看些
+            float targetProgress = fmax(0.02, progress);
+            if (targetProgress < imageView.progress) {
+                imageView.progress = targetProgress;
+            } else {
+                imageView.progress = fmax(0.02, progress);
+            }
+            if (error) {
+                self.downloadStatus = FWAssetDownloadStatusFailed;
+                imageView.progress = 0;
+            }
+        });
+    };
+    if (imageAsset.assetType == FWAssetTypeVideo) {
+        imageView.tag = -1;
+        imageAsset.requestID = [imageAsset requestPlayerItemWithCompletion:^(AVPlayerItem *playerItem, NSDictionary *info) {
+            // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
+            // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
+            dispatch_async(dispatch_get_main_queue(), ^{
+                BOOL isCurrentRequest = (imageView.tag == -1 && imageAsset.requestID == 0) || imageView.tag == imageAsset.requestID;
+                BOOL loadICloudImageFault = !playerItem || info[PHImageErrorKey];
+                if (isCurrentRequest && !loadICloudImageFault) {
+                    imageView.videoPlayerItem = playerItem;
+                } else if (isCurrentRequest) {
+                    imageView.image = nil;
+                    imageView.livePhoto = nil;
+                }
+            });
+        } withProgressHandler:phProgressHandler];
+        imageView.tag = imageAsset.requestID;
+    } else {
+        if (imageAsset.assetType != FWAssetTypeImage) {
+            return;
+        }
+        
+        // 这么写是为了消除 Xcode 的 API available warning
+        BOOL isLivePhoto = NO;
+        BOOL checkLivePhoto = (self.imagePickerController.filterType & FWImagePickerFilterTypeLivePhoto) || self.imagePickerController.filterType < 1;
+        if (imageAsset.assetSubType == FWAssetSubTypeLivePhoto && checkLivePhoto) {
+            isLivePhoto = YES;
+            imageView.tag = -1;
+            imageAsset.requestID = [imageAsset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
+                // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
+                // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    BOOL isCurrentRequest = (imageView.tag == -1 && imageAsset.requestID == 0) || imageView.tag == imageAsset.requestID;
+                    BOOL loadICloudImageFault = !livePhoto || info[PHImageErrorKey];
+                    if (isCurrentRequest && !loadICloudImageFault) {
+                        // 如果是走 PhotoKit 的逻辑，那么这个 block 会被多次调用，并且第一次调用时返回的图片是一张小图，
+                        // 这时需要把图片放大到跟屏幕一样大，避免后面加载大图后图片的显示会有跳动
+                        imageView.livePhoto = livePhoto;
+                    } else if (isCurrentRequest) {
+                        imageView.image = nil;
+                        imageView.livePhoto = nil;
+                    }
+                    if (finished && livePhoto) {
+                        // 资源资源已经在本地或下载成功
+                        [imageAsset updateDownloadStatusWithDownloadResult:YES];
+                        self.downloadStatus = FWAssetDownloadStatusSucceed;
+                        imageView.progress = 1;
+                    } else if (finished) {
+                        // 下载错误
+                        [imageAsset updateDownloadStatusWithDownloadResult:NO];
+                        self.downloadStatus = FWAssetDownloadStatusFailed;
+                        imageView.progress = 0;
+                    }
+                });
+            } withProgressHandler:phProgressHandler];
+            imageView.tag = imageAsset.requestID;
+        }
+        
+        if (isLivePhoto) {
+        } else if (imageAsset.assetSubType == FWAssetSubTypeGIF) {
+            [imageAsset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    UIImage *resultImage = [UIImage fwImageWithData:imageData];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (resultImage) {
+                            imageView.image = resultImage;
+                        } else {
+                            imageView.image = nil;
+                            imageView.livePhoto = nil;
+                        }
+                    });
+                });
+            }];
+        } else {
+            imageView.tag = -1;
+            imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^void(UIImage *result, NSDictionary *info, BOOL finished) {
+                // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
+                // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    BOOL isCurrentRequest = (imageView.tag == -1 && imageAsset.requestID == 0) || imageView.tag == imageAsset.requestID;
+                    BOOL loadICloudImageFault = !result || info[PHImageErrorKey];
+                    if (isCurrentRequest && !loadICloudImageFault) {
+                        imageView.image = result;
+                    } else if (isCurrentRequest) {
+                        imageView.image = nil;
+                        imageView.livePhoto = nil;
+                    }
+                    if (finished && result) {
+                        // 资源资源已经在本地或下载成功
+                        [imageAsset updateDownloadStatusWithDownloadResult:YES];
+                        self.downloadStatus = FWAssetDownloadStatusSucceed;
+                        imageView.progress = 1;
+                    } else if (finished) {
+                        // 下载错误
+                        [imageAsset updateDownloadStatusWithDownloadResult:NO];
+                        self.downloadStatus = FWAssetDownloadStatusFailed;
+                        imageView.progress = 0;
+                    }
+                });
+            } withProgressHandler:phProgressHandler];
+            imageView.tag = imageAsset.requestID;
+        }
+    }
 }
 
 #pragma mark - <FWZoomImageViewDelegate>
@@ -898,7 +1039,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     FWAsset *imageAsset = [self.editImageAssetArray objectAtIndex:indexPath.item];
     NSInteger imageIndex = [self.imagesAssetArray indexOfObject:imageAsset];
-    if (imageIndex != NSNotFound) {
+    if (imageIndex != NSNotFound && self.imagePreviewView.currentImageIndex != imageIndex) {
         self.imagePreviewView.currentImageIndex = imageIndex;
     }
     
@@ -1164,143 +1305,6 @@
         cell.checked = YES;
         if ([self.editCollectionView numberOfItemsInSection:0] > _editCheckedIndex) {
             [self.editCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }
-    }
-}
-
-#pragma mark - Request Image
-
-- (void)requestImageForZoomImageView:(FWZoomImageView *)imageView withIndex:(NSInteger)index {
-    // 如果是走 PhotoKit 的逻辑，那么这个 block 会被多次调用，并且第一次调用时返回的图片是一张小图，
-    // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
-    FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
-    if (imageAsset.editedImage) {
-        imageView.image = imageAsset.editedImage;
-        return;
-    }
-    
-    if (!imageView.reusedIdentifier || ![imageView.reusedIdentifier isEqual:imageAsset.identifier]) {
-        imageView.image = nil;
-        imageView.videoPlayerItem = nil;
-        imageView.livePhoto = nil;
-        imageView.reusedIdentifier = imageAsset.identifier;
-    }
-    
-    // 获取资源图片的预览图，这是一张适合当前设备屏幕大小的图片，最终展示时把图片交给组件控制最终展示出来的大小。
-    // 系统相册本质上也是这么处理的，因此无论是系统相册，还是这个系列组件，由始至终都没有显示照片原图，
-    // 这也是系统相册能加载这么快的原因。
-    // 另外这里采用异步请求获取图片，避免获取图片时 UI 卡顿
-    PHAssetImageProgressHandler phProgressHandler = ^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
-        imageAsset.downloadProgress = progress;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (self.downloadStatus != FWAssetDownloadStatusDownloading) {
-                self.downloadStatus = FWAssetDownloadStatusDownloading;
-                imageView.progress = 0;
-            }
-            // 拉取资源的初期，会有一段时间没有进度，猜测是发出网络请求以及与 iCloud 建立连接的耗时，这时预先给个 0.02 的进度值，看上去好看些
-            float targetProgress = fmax(0.02, progress);
-            if (targetProgress < imageView.progress) {
-                imageView.progress = targetProgress;
-            } else {
-                imageView.progress = fmax(0.02, progress);
-            }
-            if (error) {
-                self.downloadStatus = FWAssetDownloadStatusFailed;
-                imageView.progress = 0;
-            }
-        });
-    };
-    if (imageAsset.assetType == FWAssetTypeVideo) {
-        imageView.tag = -1;
-        imageAsset.requestID = [imageAsset requestPlayerItemWithCompletion:^(AVPlayerItem *playerItem, NSDictionary *info) {
-            // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
-            // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
-            dispatch_async(dispatch_get_main_queue(), ^{
-                BOOL isNewRequest = (imageView.tag == -1 && imageAsset.requestID == 0);
-                BOOL isCurrentRequest = imageView.tag == imageAsset.requestID;
-                BOOL loadICloudImageFault = !playerItem || info[PHImageErrorKey];
-                if (!loadICloudImageFault && (isNewRequest || isCurrentRequest)) {
-                    imageView.videoPlayerItem = playerItem;
-                }
-            });
-        } withProgressHandler:phProgressHandler];
-        imageView.tag = imageAsset.requestID;
-    } else {
-        if (imageAsset.assetType != FWAssetTypeImage) {
-            return;
-        }
-        
-        // 这么写是为了消除 Xcode 的 API available warning
-        BOOL isLivePhoto = NO;
-        BOOL checkLivePhoto = (self.imagePickerController.filterType & FWImagePickerFilterTypeLivePhoto) || self.imagePickerController.filterType < 1;
-        if (imageAsset.assetSubType == FWAssetSubTypeLivePhoto && checkLivePhoto) {
-            isLivePhoto = YES;
-            imageView.tag = -1;
-            imageAsset.requestID = [imageAsset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
-                // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
-                // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    BOOL isNewRequest = (imageView.tag == -1 && imageAsset.requestID == 0);
-                    BOOL isCurrentRequest = imageView.tag == imageAsset.requestID;
-                    BOOL loadICloudImageFault = !livePhoto || info[PHImageErrorKey];
-                    if (!loadICloudImageFault && (isNewRequest || isCurrentRequest)) {
-                        // 如果是走 PhotoKit 的逻辑，那么这个 block 会被多次调用，并且第一次调用时返回的图片是一张小图，
-                        // 这时需要把图片放大到跟屏幕一样大，避免后面加载大图后图片的显示会有跳动
-                        imageView.livePhoto = livePhoto;
-                    }
-                    if (finished && livePhoto) {
-                        // 资源资源已经在本地或下载成功
-                        [imageAsset updateDownloadStatusWithDownloadResult:YES];
-                        self.downloadStatus = FWAssetDownloadStatusSucceed;
-                        imageView.progress = 1;
-                    } else if (finished) {
-                        // 下载错误
-                        [imageAsset updateDownloadStatusWithDownloadResult:NO];
-                        self.downloadStatus = FWAssetDownloadStatusFailed;
-                        imageView.progress = 0;
-                    }
-                });
-            } withProgressHandler:phProgressHandler];
-            imageView.tag = imageAsset.requestID;
-        }
-        
-        if (isLivePhoto) {
-        } else if (imageAsset.assetSubType == FWAssetSubTypeGIF) {
-            [imageAsset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    UIImage *resultImage = [UIImage fwImageWithData:imageData];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        imageView.image = resultImage;
-                    });
-                });
-            }];
-        } else {
-            imageView.tag = -1;
-            imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^void(UIImage *result, NSDictionary *info, BOOL finished) {
-                // 这里可能因为 imageView 复用，导致前面的请求得到的结果显示到别的 imageView 上，
-                // 因此判断如果是新请求（无复用问题）或者是当前的请求才把获得的图片结果展示出来
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    BOOL isNewRequest = (imageView.tag == -1 && imageAsset.requestID == 0);
-                    BOOL isCurrentRequest = imageView.tag == imageAsset.requestID;
-                    BOOL loadICloudImageFault = !result || info[PHImageErrorKey];
-                    if (!loadICloudImageFault && (isNewRequest || isCurrentRequest)) {
-                        imageView.image = result;
-                    }
-                    if (finished && result) {
-                        // 资源资源已经在本地或下载成功
-                        [imageAsset updateDownloadStatusWithDownloadResult:YES];
-                        self.downloadStatus = FWAssetDownloadStatusSucceed;
-                        imageView.progress = 1;
-                    } else if (finished) {
-                        // 下载错误
-                        [imageAsset updateDownloadStatusWithDownloadResult:NO];
-                        self.downloadStatus = FWAssetDownloadStatusFailed;
-                        imageView.progress = 0;
-                    }
-                });
-            } withProgressHandler:phProgressHandler];
-            imageView.tag = imageAsset.requestID;
         }
     }
 }
@@ -2236,6 +2240,49 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
+- (void)requestImageWithIndexPath:(NSIndexPath *)indexPath {
+    // 发出请求获取大图，如果图片在 iCloud，则会发出网络请求下载图片。这里同时保存请求 id，供取消请求使用
+    FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:indexPath.item];
+    FWImagePickerCollectionCell *cell = (FWImagePickerCollectionCell *)[_collectionView cellForItemAtIndexPath:indexPath];
+    imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary *info, BOOL finished) {
+        if (finished && result) {
+            // 资源资源已经在本地或下载成功
+            [imageAsset updateDownloadStatusWithDownloadResult:YES];
+            cell.downloadStatus = FWAssetDownloadStatusSucceed;
+            
+        } else if (finished) {
+            // 下载错误
+            [imageAsset updateDownloadStatusWithDownloadResult:NO];
+            cell.downloadStatus = FWAssetDownloadStatusFailed;
+        }
+        
+    } withProgressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
+        imageAsset.downloadProgress = progress;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSArray *visibleItemIndexPaths = self.collectionView.indexPathsForVisibleItems;
+            BOOL itemVisible = NO;
+            for (NSIndexPath *visibleIndexPath in visibleItemIndexPaths) {
+                if ([indexPath isEqual:visibleIndexPath]) {
+                    itemVisible = YES;
+                    break;
+                }
+            }
+            
+            if (itemVisible) {
+                if (cell.downloadStatus != FWAssetDownloadStatusDownloading) {
+                    cell.downloadStatus = FWAssetDownloadStatusDownloading;
+                    // 预先设置预览界面的下载状态
+                    self.imagePickerPreviewController.downloadStatus = FWAssetDownloadStatusDownloading;
+                }
+                if (error) {
+                    cell.downloadStatus = FWAssetDownloadStatusFailed;
+                }
+            }
+        });
+    }];
+}
+
 - (void)handleAlbumButtonClick:(id)sender {
     [self hideAlbumControllerAnimated:YES];
 }
@@ -2283,49 +2330,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 }
 
 #pragma mark - Request Image
-
-- (void)requestImageWithIndexPath:(NSIndexPath *)indexPath {
-    // 发出请求获取大图，如果图片在 iCloud，则会发出网络请求下载图片。这里同时保存请求 id，供取消请求使用
-    FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:indexPath.item];
-    FWImagePickerCollectionCell *cell = (FWImagePickerCollectionCell *)[_collectionView cellForItemAtIndexPath:indexPath];
-    imageAsset.requestID = [imageAsset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary *info, BOOL finished) {
-        if (finished && result) {
-            // 资源资源已经在本地或下载成功
-            [imageAsset updateDownloadStatusWithDownloadResult:YES];
-            cell.downloadStatus = FWAssetDownloadStatusSucceed;
-            
-        } else if (finished) {
-            // 下载错误
-            [imageAsset updateDownloadStatusWithDownloadResult:NO];
-            cell.downloadStatus = FWAssetDownloadStatusFailed;
-        }
-        
-    } withProgressHandler:^(double progress, NSError *error, BOOL *stop, NSDictionary *info) {
-        imageAsset.downloadProgress = progress;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSArray *visibleItemIndexPaths = self.collectionView.indexPathsForVisibleItems;
-            BOOL itemVisible = NO;
-            for (NSIndexPath *visibleIndexPath in visibleItemIndexPaths) {
-                if ([indexPath isEqual:visibleIndexPath]) {
-                    itemVisible = YES;
-                    break;
-                }
-            }
-            
-            if (itemVisible) {
-                if (cell.downloadStatus != FWAssetDownloadStatusDownloading) {
-                    cell.downloadStatus = FWAssetDownloadStatusDownloading;
-                    // 预先设置预览界面的下载状态
-                    self.imagePickerPreviewController.downloadStatus = FWAssetDownloadStatusDownloading;
-                }
-                if (error) {
-                    cell.downloadStatus = FWAssetDownloadStatusFailed;
-                }
-            }
-        });
-    }];
-}
 
 + (FWAlbumContentType)albumContentTypeWithFilterType:(FWImagePickerFilterType)filterType {
     FWAlbumContentType contentType = filterType < 1 ? FWAlbumContentTypeAll : FWAlbumContentTypeOnlyPhoto;
