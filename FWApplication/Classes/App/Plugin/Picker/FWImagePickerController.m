@@ -398,6 +398,8 @@
     
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumController:customCell:atIndexPath:)]) {
         [self.albumControllerDelegate albumController:self customCell:cell atIndexPath:indexPath];
+    } else if (self.customCellBlock) {
+        self.customCellBlock(cell, indexPath);
     }
     return cell;
 }
@@ -1052,6 +1054,8 @@
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:customCell:atIndexPath:)]) {
         [self.delegate imagePickerPreviewController:self customCell:cell atIndexPath:indexPath];
+    } else if (self.customCellBlock) {
+        self.customCellBlock(cell, indexPath);
     }
     return cell;
 }
@@ -1259,9 +1263,9 @@
         cropController.angle = imageAsset.pickerCroppedAngle;
     }
     __weak __typeof__(self) self_weak_ = self;
-    cropController.onDidCropToRect = ^(UIImage * _Nonnull image, CGRect cropRect, NSInteger angle) {
+    cropController.onDidCropToRect = ^(UIImage * _Nonnull editedImage, CGRect cropRect, NSInteger angle) {
         __typeof__(self) self = self_weak_;
-        imageAsset.editedImage = image;
+        imageAsset.editedImage = (image != editedImage) ? editedImage : nil;
         imageAsset.pickerCroppedRect = cropRect;
         imageAsset.pickerCroppedAngle = angle;
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
@@ -2103,6 +2107,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:customCell:atIndexPath:)]) {
         [self.imagePickerControllerDelegate imagePickerController:self customCell:cell atIndexPath:indexPath];
+    } else if (self.customCellBlock) {
+        self.customCellBlock(cell, indexPath);
     }
     return cell;
 }

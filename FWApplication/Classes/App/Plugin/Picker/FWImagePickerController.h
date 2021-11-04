@@ -106,6 +106,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义pickerController句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImagePickerController * (^pickerControllerBlock)(void);
 
+/// 自定义cell展示句柄，cellForRow自动调用，优先级低于delegate
+@property(nullable, nonatomic, copy) void (^customCellBlock)(FWImageAlbumTableCell *cell, NSIndexPath *indexPath);
+
 /// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
 @property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 
@@ -173,6 +176,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, weak) id<FWImagePickerPreviewControllerDelegate> delegate;
 /// 自定义裁剪控制器句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImageCropController * (^cropControllerBlock)(UIImage *image);
+/// 自定义cell展示句柄，cellForItem自动调用，优先级低于delegate
+@property(nullable, nonatomic, copy) void (^customCellBlock)(FWImagePickerPreviewCollectionCell *cell, NSIndexPath *indexPath);
 
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
@@ -264,7 +269,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
 @property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
 
-/// 左下角图标视图，默认显示editedIconImage和videoIconImage
+/// 左下角图标视图，默认判断显示editedIconImage和videoIconImage
 @property(nonatomic, strong, readonly) UIImageView *iconImageView;
 @property(nullable, nonatomic, strong) UIImage *editedIconImage UI_APPEARANCE_SELECTOR;
 @property(nullable, nonatomic, strong) UIImage *videoIconImage UI_APPEARANCE_SELECTOR;
@@ -378,6 +383,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, copy) FWImagePickerPreviewController * (^previewControllerBlock)(void);
 /// 自定义相册控制器句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) FWImageAlbumController * (^albumControllerBlock)(void);
+/// 自定义cell展示句柄，cellForItem自动调用，优先级低于delegate
+@property(nullable, nonatomic, copy) void (^customCellBlock)(FWImagePickerCollectionCell *cell, NSIndexPath *indexPath);
 
 /// 图片选取完成回调句柄，优先级低于delegate
 @property(nullable, nonatomic, copy) void (^didFinishPicking)(NSArray<FWAsset *> *imagesAssetArray);
@@ -477,7 +484,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
 @property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
 
-/// 左下角图标视图，默认显示editedIconImage和videoIconImage
+/// 左下角图标视图，默认判断显示editedIconImage和videoIconImage
 @property(nonatomic, strong, readonly) UIImageView *iconImageView;
 @property(nullable, nonatomic, strong) UIImage *editedIconImage UI_APPEARANCE_SELECTOR;
 @property(nullable, nonatomic, strong) UIImage *videoIconImage UI_APPEARANCE_SELECTOR;

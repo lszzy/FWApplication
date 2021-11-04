@@ -37,6 +37,8 @@
                         FWStrongifySelf();
                         pickerController.titleAccessoryImage = [self accessoryImage];
                     };
+                    FWImagePickerCollectionCell.appearance.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
+                    FWImagePickerPreviewCollectionCell.appearance.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
                 }
             } else {
                 id<FWImagePickerPlugin> pickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];
