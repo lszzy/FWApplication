@@ -2886,30 +2886,19 @@ typedef NS_ENUM(NSInteger, FWImageCropViewOverlayEdge) {
     CGRect cropBoxFrame = self.cropBoxFrame;
     CGPoint contentOffset = self.scrollView.contentOffset;
     UIEdgeInsets edgeInsets = self.scrollView.contentInset;
-    CGFloat scale = MIN(imageSize.width / contentSize.width, imageSize.height / contentSize.height);
+    CGFloat scaleWidth = imageSize.width / contentSize.width;
+    CGFloat scaleHeight = imageSize.height / contentSize.height;
+    BOOL isSquare = floor(cropBoxFrame.size.width) == floor(cropBoxFrame.size.height);
     
     CGRect frame = CGRectZero;
-    
-    // Calculate the normalized origin
     frame.origin.x = floorf((floorf(contentOffset.x) + edgeInsets.left) * (imageSize.width / contentSize.width));
     frame.origin.x = MAX(0, frame.origin.x);
-    
     frame.origin.y = floorf((floorf(contentOffset.y) + edgeInsets.top) * (imageSize.height / contentSize.height));
     frame.origin.y = MAX(0, frame.origin.y);
-    
-    // Calculate the normalized width
-    frame.size.width = ceilf(cropBoxFrame.size.width * scale);
+    frame.size.width = ceilf(cropBoxFrame.size.width * (isSquare ? MIN(scaleWidth, scaleHeight) : scaleWidth));
     frame.size.width = MIN(imageSize.width, frame.size.width);
-
-    // Calculate normalized height
-    if (floor(cropBoxFrame.size.width) == floor(cropBoxFrame.size.height)) {
-        frame.size.height = frame.size.width;
-    } else {
-        frame.size.height = ceilf(cropBoxFrame.size.height * scale);
-        frame.size.height = MIN(imageSize.height, frame.size.height);
-    }
+    frame.size.height = isSquare ? frame.size.width : ceilf(cropBoxFrame.size.height * scaleHeight);
     frame.size.height = MIN(imageSize.height, frame.size.height);
-
     return frame;
 }
 
