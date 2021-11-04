@@ -70,15 +70,15 @@
     }
     pickerController.allowsMultipleSelection = selectionLimit != 1;
     pickerController.maximumSelectImageCount = selectionLimit > 0 ? selectionLimit : INT_MAX;
-    if (self.customBlock) self.customBlock(pickerController);
-    if (customBlock) customBlock(pickerController);
-    
     pickerController.shouldRequestImage = YES;
     pickerController.filterType = filterType;
     __weak __typeof__(self) self_weak_ = self;
     pickerController.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
         __typeof__(self) self = self_weak_;
         return [self previewControllerWithAllowsEditing:allowsEditing];
+    };
+    pickerController.didCancelPicking = ^{
+        if (completion) completion(@[], @[], YES);
     };
     pickerController.didFinishPicking = ^(NSArray<FWAsset *> * _Nonnull imagesAssetArray) {
         NSMutableArray *objects = [NSMutableArray array];
@@ -91,9 +91,9 @@
         }];
         if (completion) completion(objects.copy, results.copy, objects.count < 1);
     };
-    pickerController.didCancelPicking = ^{
-        if (completion) completion(@[], @[], YES);
-    };
+    
+    if (self.customBlock) self.customBlock(pickerController);
+    if (customBlock) customBlock(pickerController);
     return pickerController;
 }
 
