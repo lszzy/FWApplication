@@ -460,6 +460,7 @@
 
 @synthesize videoDurationLabel = _videoDurationLabel;
 @synthesize maskView = _maskView;
+@synthesize iconImageView = _iconImageView;
 
 + (void)initialize {
     static dispatch_once_t onceToken;
@@ -476,6 +477,7 @@
     [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
     [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
     [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
+    [FWImagePickerPreviewCollectionCell appearance].iconImageViewMargins = UIEdgeInsetsMake(5, 7, 5, 5);
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -493,6 +495,10 @@
     self.imageView.clipsToBounds = YES;
     [self.contentView addSubview:self.imageView];
     
+    _iconImageView = [[UIImageView alloc] init];
+    self.iconImageView.hidden = YES;
+    [self.contentView addSubview:self.iconImageView];
+    
     _maskView = [[UIView alloc] init];
     [self.contentView addSubview:self.maskView];
 }
@@ -506,6 +512,11 @@
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
         self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+    }
+    
+    if (!self.iconImageView.hidden) {
+        [self.iconImageView sizeToFit];
+        self.iconImageView.fwOrigin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
     }
 }
 
@@ -560,6 +571,15 @@
     } else {
         self.videoDurationLabel.hidden = YES;
     }
+    
+    UIImage *iconImage = nil;
+    if (self.editedIconImage && asset.editedImage) {
+        iconImage = self.editedIconImage;
+    } else if (self.videoIconImage && asset.assetType == FWAssetTypeVideo) {
+        iconImage = self.videoIconImage;
+    }
+    self.iconImageView.image = iconImage;
+    self.iconImageView.hidden = !iconImage;
     
     [self setNeedsLayout];
 }
@@ -1324,6 +1344,7 @@
 
 @synthesize maskView = _maskView;
 @synthesize videoDurationLabel = _videoDurationLabel;
+@synthesize iconImageView = _iconImageView;
 
 + (void)initialize {
     static dispatch_once_t onceToken;
@@ -1346,6 +1367,7 @@
     [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
     [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
     [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
+    [FWImagePickerCollectionCell appearance].iconImageViewMargins = UIEdgeInsetsMake(5, 7, 5, 5);
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -1363,6 +1385,10 @@
     self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.contentImageView.clipsToBounds = YES;
     [self.contentView addSubview:self.contentImageView];
+    
+    _iconImageView = [[UIImageView alloc] init];
+    self.iconImageView.hidden = YES;
+    [self.contentView addSubview:self.iconImageView];
     
     _maskView = [[UIView alloc] init];
     [self.contentView addSubview:self.maskView];
@@ -1397,6 +1423,15 @@
         self.videoDurationLabel.hidden = YES;
     }
     
+    UIImage *iconImage = nil;
+    if (self.editedIconImage && asset.editedImage) {
+        iconImage = self.editedIconImage;
+    } else if (self.videoIconImage && asset.assetType == FWAssetTypeVideo) {
+        iconImage = self.videoIconImage;
+    }
+    self.iconImageView.image = iconImage;
+    self.iconImageView.hidden = !iconImage;
+    
     [self setNeedsLayout];
 }
 
@@ -1422,6 +1457,11 @@
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
         self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+    }
+    
+    if (!self.iconImageView.hidden) {
+        [self.iconImageView sizeToFit];
+        self.iconImageView.fwOrigin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
     }
 }
 

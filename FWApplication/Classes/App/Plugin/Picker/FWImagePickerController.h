@@ -264,6 +264,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
 @property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
 
+/// 左下角图标视图，默认显示editedIconImage和videoIconImage
+@property(nonatomic, strong, readonly) UIImageView *iconImageView;
+@property(nullable, nonatomic, strong) UIImage *editedIconImage UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) UIImage *videoIconImage UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) UIEdgeInsets iconImageViewMargins UI_APPEARANCE_SELECTOR;
+
 /// 当前这个 cell 正在展示的 FWAsset 的 identifier
 @property(nonatomic, copy, nullable) NSString *assetIdentifier;
 - (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize;
@@ -470,6 +476,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) UIColor *videoDurationLabelTextColor UI_APPEARANCE_SELECTOR;
 /// 视频时长文字的间距，相对于 cell 右下角而言，也即如果 right 越大则越往左，bottom 越大则越往上，另外 top 会影响底部遮罩的高度
 @property(nonatomic, assign) UIEdgeInsets videoDurationLabelMargins UI_APPEARANCE_SELECTOR;
+
+/// 左下角图标视图，默认显示editedIconImage和videoIconImage
+@property(nonatomic, strong, readonly) UIImageView *iconImageView;
+@property(nullable, nonatomic, strong) UIImage *editedIconImage UI_APPEARANCE_SELECTOR;
+@property(nullable, nonatomic, strong) UIImage *videoIconImage UI_APPEARANCE_SELECTOR;
+@property(nonatomic, assign) UIEdgeInsets iconImageViewMargins UI_APPEARANCE_SELECTOR;
 
 /// checkedIndexLabel 的字号
 @property(nonatomic, strong) UIFont *checkedIndexLabelFont UI_APPEARANCE_SELECTOR;
