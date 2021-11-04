@@ -1265,7 +1265,7 @@
     __weak __typeof__(self) self_weak_ = self;
     cropController.onDidCropToRect = ^(UIImage * _Nonnull editedImage, CGRect cropRect, NSInteger angle) {
         __typeof__(self) self = self_weak_;
-        imageAsset.editedImage = (image != editedImage) ? editedImage : nil;
+        imageAsset.editedImage = (editedImage != image) ? editedImage : nil;
         imageAsset.pickerCroppedRect = cropRect;
         imageAsset.pickerCroppedAngle = angle;
         [self.presentedViewController dismissViewControllerAnimated:NO completion:nil];
@@ -1405,11 +1405,15 @@
 
 - (void)renderWithAsset:(FWAsset *)asset referenceSize:(CGSize)referenceSize {
     self.assetIdentifier = asset.identifier;
-    [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
-        if ([self.assetIdentifier isEqualToString:asset.identifier]) {
-            self.contentImageView.image = result;
-        }
-    }];
+    if (asset.editedImage) {
+        self.contentImageView.image = asset.editedImage;
+    } else {
+        [asset requestThumbnailImageWithSize:referenceSize completion:^(UIImage *result, NSDictionary *info, BOOL finished) {
+            if ([self.assetIdentifier isEqualToString:asset.identifier]) {
+                self.contentImageView.image = result;
+            }
+        }];
+    }
     
     if (self.showsCheckedIndexLabel) {
         [self initCheckedIndexLabelIfNeeded];
