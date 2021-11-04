@@ -902,12 +902,6 @@
     return nil;
 }
 
-- (void)resetContent {
-    self.image = nil;
-    self.videoPlayerItem = nil;
-    self.livePhoto = nil;
-}
-
 @end
 
 #pragma mark - FWZoomImageVideoToolbar

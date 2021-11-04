@@ -136,9 +136,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// 重置图片或视频的大小，使用的场景例如：相册控件里放大当前图片、划到下一张、再回来，当前的图片或视频应该恢复到原来大小。注意子类重写需要调一下super
 - (void)revertZooming;
 
-/// 重置当前显示的图片|LivePhoto|视频
-- (void)resetContent;
-
 /// 快速设置图片URL，网络图片支持占位图，参数支持UIImage|PHLivePhoto|AVPlayerItem|NSURL|NSString类型
 - (void)setImageURL:(nullable id)imageURL placeholderImage:(nullable UIImage *)placeholderImage;
 

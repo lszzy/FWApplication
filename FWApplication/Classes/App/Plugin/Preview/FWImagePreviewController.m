@@ -169,7 +169,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         shouldReset = [self.delegate imagePreviewView:self shouldResetZoomImageView:zoomView atIndex:indexPath.item];
     }
     if (shouldReset) {
-        [zoomView resetContent];
+        zoomView.image = nil;
+        zoomView.videoPlayerItem = nil;
+        zoomView.livePhoto = nil;
     }
     
     if (self.customZoomImageView) {
@@ -181,7 +183,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     } else if (self.renderZoomImageView) {
         self.renderZoomImageView(zoomView, indexPath.item);
     } else if (self.imageURLs.count > indexPath.item) {
-        zoomView.reusedIdentifier = @(indexPath.item);
         UIImage *placeholderImage = self.placeholderImage ? self.placeholderImage(indexPath.item) : nil;
         [zoomView setImageURL:imageURL placeholderImage:placeholderImage];
     }

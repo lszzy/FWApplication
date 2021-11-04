@@ -431,7 +431,6 @@
 
 @property(nonatomic, assign) CGRect pickerCroppedRect;
 @property(nonatomic, assign) NSInteger pickerCroppedAngle;
-@property(nonatomic, assign) BOOL pickerUseOrigin;
 
 @end
 
@@ -453,14 +452,6 @@
 
 - (void)setPickerCroppedAngle:(NSInteger)pickerCroppedAngle {
     objc_setAssociatedObject(self, @selector(pickerCroppedAngle), @(pickerCroppedAngle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)pickerUseOrigin {
-    return [objc_getAssociatedObject(self, @selector(pickerUseOrigin)) boolValue];
-}
-
-- (void)setPickerUseOrigin:(BOOL)pickerUseOrigin {
-    objc_setAssociatedObject(self, @selector(pickerUseOrigin), @(pickerUseOrigin), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
@@ -593,6 +584,7 @@
     if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
         _showsEditButton = YES;
         _showsEditCollectionView = YES;
+        _shouldUseOriginImage = YES;
         _editCheckedIndex = NSNotFound;
         self.editCollectionViewHeight = 80;
         self.editCollectionCellSize = CGSizeMake(60, 60);
@@ -788,6 +780,7 @@
 
 - (void)setShowsOriginImageCheckboxButton:(BOOL)showsOriginImageCheckboxButton {
     _showsOriginImageCheckboxButton = showsOriginImageCheckboxButton;
+    self.shouldUseOriginImage = !showsOriginImageCheckboxButton;
     self.originImageCheckboxButton.hidden = !showsOriginImageCheckboxButton;
 }
 
@@ -1015,10 +1008,6 @@
         FWAsset *currentAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
         [self.selectedImageAssetArray addObject:currentAsset];
     }
-    BOOL useOriginImage = self.shouldUseOriginImage;
-    [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.pickerUseOrigin = useOriginImage;
-    }];
     
     if (self.imagePickerController.shouldRequestImage) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillStartLoading:)]) {
@@ -1026,7 +1015,7 @@
         } else if (self.showsDefaultLoading) {
             [self fwShowLoading];
         }
-        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType completion:^{
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType useOrigin:self.shouldUseOriginImage completion:^{
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
                 [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
@@ -1036,10 +1025,12 @@
             [self dismissViewControllerAnimated:YES completion:^(void) {
                 if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
                     [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-                } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
-                    [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-                } else if (self.imagePickerController.didFinishPicking) {
-                    self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
+                } else {
+                    if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+                        [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+                    } else if (self.imagePickerController.didFinishPicking) {
+                        self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
+                    }
                 }
                 [self.imagePickerController.selectedImageAssetArray removeAllObjects];
             }];
@@ -1048,10 +1039,12 @@
         [self dismissViewControllerAnimated:YES completion:^(void) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewController:didFinishPickingImageWithImagesAssetArray:)]) {
                 [self.delegate imagePickerPreviewController:self didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-            } else if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
-                [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
-            } else if (self.imagePickerController.didFinishPicking) {
-                self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
+            } else {
+                if (self.imagePickerController.imagePickerControllerDelegate && [self.imagePickerController.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerController:didFinishPickingImageWithImagesAssetArray:)]) {
+                    [self.imagePickerController.imagePickerControllerDelegate imagePickerController:self.imagePickerController didFinishPickingImageWithImagesAssetArray:self.selectedImageAssetArray.copy];
+                } else if (self.imagePickerController.didFinishPicking) {
+                    self.imagePickerController.didFinishPicking(self.selectedImageAssetArray.copy);
+                }
             }
             [self.imagePickerController.selectedImageAssetArray removeAllObjects];
         }];
@@ -1183,13 +1176,14 @@
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
     if (imageAsset.editedImage) {
-        [imageView resetContent];
         imageView.image = imageAsset.editedImage;
         return;
     }
     
     if (!imageView.reusedIdentifier || ![imageView.reusedIdentifier isEqual:imageAsset.identifier]) {
-        [imageView resetContent];
+        imageView.image = nil;
+        imageView.videoPlayerItem = nil;
+        imageView.livePhoto = nil;
         imageView.reusedIdentifier = imageAsset.identifier;
     }
     
@@ -2120,18 +2114,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)handleSendButtonClick:(UIButton *)sender {
     sender.userInteractionEnabled = NO;
-    BOOL useOriginImage = self.imagePickerPreviewController.shouldUseOriginImage;
-    [self.selectedImageAssetArray enumerateObjectsUsingBlock:^(FWAsset * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        obj.pickerUseOrigin = useOriginImage;
-    }];
-    
     if (self.shouldRequestImage) {
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
             [self fwShowLoading];
         }
-        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType completion:^{
+        [self initPreviewViewControllerIfNeeded];
+        [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType useOrigin:self.imagePickerPreviewController.shouldUseOriginImage completion:^{
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
@@ -2337,8 +2327,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }];
 }
 
-+ (FWAlbumContentType)albumContentTypeWithFilterType:(FWImagePickerFilterType)filterType
-{
++ (FWAlbumContentType)albumContentTypeWithFilterType:(FWImagePickerFilterType)filterType {
     FWAlbumContentType contentType = filterType < 1 ? FWAlbumContentTypeAll : FWAlbumContentTypeOnlyPhoto;
     if (filterType & FWImagePickerFilterTypeVideo) {
         if (filterType & FWImagePickerFilterTypeImage ||
@@ -2351,8 +2340,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     return contentType;
 }
 
-+ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(void (^)(void))completion
-{
++ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray
+                     filterType:(FWImagePickerFilterType)filterType
+                      useOrigin:(BOOL)useOrigin
+                     completion:(void (^)(void))completion {
     if (imagesAssetArray.count < 1) {
         if (completion) completion();
         return;
@@ -2378,7 +2369,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
             filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fwMd5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-            [asset requestVideoURLWithOutputURL:fileURL exportPreset:asset.pickerUseOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
+            [asset requestVideoURLWithOutputURL:fileURL exportPreset:useOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     completionHandler(asset, videoURL, info);
                 });
@@ -2394,9 +2385,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             if (checkLivePhoto && asset.assetSubType == FWAssetSubTypeLivePhoto) {
                 [asset requestLivePhotoWithCompletion:^void(PHLivePhoto *livePhoto, NSDictionary *info, BOOL finished) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        if (finished) {
-                            completionHandler(asset, livePhoto, info);
-                        }
+                        if (finished) completionHandler(asset, livePhoto, info);
                     });
                 } withProgressHandler:nil];
             } else if (asset.assetSubType == FWAssetSubTypeGIF) {
@@ -2409,20 +2398,16 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                     });
                 }];
             } else {
-                if (asset.pickerUseOrigin) {
+                if (useOrigin) {
                     [asset requestOriginImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            if (finished) {
-                                completionHandler(asset, result, info);
-                            }
+                            if (finished) completionHandler(asset, result, info);
                         });
                     } withProgressHandler:nil];
                 } else {
                     [asset requestPreviewImageWithCompletion:^(UIImage *result, NSDictionary<NSString *,id> *info, BOOL finished) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            if (finished) {
-                                completionHandler(asset, result, info);
-                            }
+                            if (finished) completionHandler(asset, result, info);
                         });
                     } withProgressHandler:nil];
                 }

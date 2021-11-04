@@ -190,7 +190,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
 @property(nonatomic, strong) UIImage *originImageCheckboxImage;
 @property(nonatomic, strong) UIImage *originImageCheckboxCheckedImage;
+/// 是否使用原图，不显示原图按钮时默认YES，显示原图按钮时默认NO
 @property(nonatomic, assign) BOOL shouldUseOriginImage;
+/// 是否显示原图按钮，默认NO，设置后会修改shouldUseOriginImage
 @property(nonatomic, assign) BOOL showsOriginImageCheckboxButton;
 /// 是否显示编辑按钮，默认YES
 @property(nonatomic, assign) BOOL showsEditButton;
@@ -434,7 +436,10 @@ NS_ASSUME_NONNULL_BEGIN
  * 检查并下载一组资源，如果资源仍未从 iCloud 中成功下载，则会发出请求从 iCloud 加载资源，下载完成后，主线程回调。
  * 图片资源对象和结果信息保存在FWAsset.requestObject，自动根据过滤类型返回UIImage|PHLivePhoto|NSURL
  */
-+ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray filterType:(FWImagePickerFilterType)filterType completion:(nullable void (^)(void))completion;
++ (void)requestImagesAssetArray:(NSArray<FWAsset *> *)imagesAssetArray
+                     filterType:(FWImagePickerFilterType)filterType
+                      useOrigin:(BOOL)useOrigin
+                     completion:(nullable void (^)(void))completion;
 
 @end
 
