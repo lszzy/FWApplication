@@ -14,10 +14,40 @@
 
 @implementation TestImagePickerViewController
 
-- (UIImage *)accessoryImage {
-    UIBezierPath *bezierPath = [UIBezierPath fwShapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
-    UIImage *accessoryImage = [[bezierPath fwShapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    return accessoryImage;
++ (void)initialize {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [self setupPlugin];
+    });
+}
+
++ (void)setupPlugin {
+    [FWPluginManager registerPlugin:@protocol(FWImagePickerPlugin) withObject:[FWImagePickerControllerImpl class]];
+    FWImagePickerControllerImpl.sharedInstance.pickerControllerBlock = ^FWImagePickerController * _Nonnull{
+        FWImagePickerController *pickerController = [[FWImagePickerController alloc] init];
+        UIBezierPath *bezierPath = [UIBezierPath fwShapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
+        UIImage *accessoryImage = [[bezierPath fwShapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        pickerController.titleAccessoryImage = accessoryImage;
+        
+        pickerController.customCellBlock = ^(FWImagePickerCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
+            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
+        };
+        return pickerController;
+    };
+    FWImagePickerControllerImpl.sharedInstance.albumControllerBlock = ^FWImageAlbumController * _Nonnull{
+        FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
+        albumController.customCellBlock = ^(FWImageAlbumTableCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
+            cell.checkedMaskColor = [UIColor fwColorWithHex:0xFFFFFF alpha:0.15];
+        };
+        return albumController;
+    };
+    FWImagePickerControllerImpl.sharedInstance.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
+        FWImagePickerPreviewController *previewController = [[FWImagePickerPreviewController alloc] init];
+        previewController.customCellBlock = ^(FWImagePickerPreviewCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
+            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
+        };
+        return previewController;
+    };
 }
 
 - (void)renderModel {
@@ -32,13 +62,7 @@
                     [FWPluginManager unloadPlugin:@protocol(FWImagePickerPlugin)];
                     [FWPluginManager unregisterPlugin:@protocol(FWImagePickerPlugin)];
                 } else {
-                    [FWPluginManager registerPlugin:@protocol(FWImagePickerPlugin) withObject:[FWImagePickerControllerImpl class]];
-                    FWImagePickerControllerImpl.sharedInstance.customBlock = ^(FWImagePickerController * _Nonnull pickerController) {
-                        FWStrongifySelf();
-                        pickerController.titleAccessoryImage = [self accessoryImage];
-                    };
-                    FWImagePickerCollectionCell.appearance.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
-                    FWImagePickerPreviewCollectionCell.appearance.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
+                    [self.class setupPlugin];
                 }
             } else {
                 id<FWImagePickerPlugin> pickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];

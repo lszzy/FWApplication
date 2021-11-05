@@ -108,6 +108,11 @@
     self.detailTextLabel.textColor = albumAssetsNumberColor;
 }
 
+- (void)setCheckedMaskColor:(UIColor *)checkedMaskColor {
+    _checkedMaskColor = checkedMaskColor;
+    self.maskView.backgroundColor = self.checked ? checkedMaskColor : nil;
+}
+
 - (void)setChecked:(BOOL)checked {
     _checked = checked;
     self.maskView.backgroundColor = checked ? self.checkedMaskColor : nil;
@@ -121,6 +126,7 @@
 
 @property(nonatomic, strong) UITableView *tableView;
 @property(nonatomic, strong) NSMutableArray<FWAssetGroup *> *albumsArray;
+@property(nonatomic, strong) FWAssetGroup *assetsGroup;
 @property(nonatomic, weak) FWImagePickerController *imagePickerController;
 @property(nonatomic, copy) void (^assetsGroupSelected)(FWAssetGroup *assetsGroup);
 @property(nonatomic, copy) void (^albumArrayLoaded)(void);
@@ -188,6 +194,16 @@
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
     self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
+}
+
+- (void)setAssetsGroup:(FWAssetGroup *)assetsGroup {
+    if (self.assetsGroup) {
+        FWImageAlbumTableCell *cell = (FWImageAlbumTableCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.albumsArray indexOfObject:self.assetsGroup] inSection:0]];
+        cell.checked = NO;
+    }
+    _assetsGroup = assetsGroup;
+    FWImageAlbumTableCell *cell = (FWImageAlbumTableCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.albumsArray indexOfObject:assetsGroup] inSection:0]];
+    cell.checked = YES;
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -335,13 +351,7 @@
 
 - (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup animated:(BOOL)animated {
     if (!assetsGroup) return;
-    if (self.assetsGroup) {
-        FWImageAlbumTableCell *cell = (FWImageAlbumTableCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.albumsArray indexOfObject:self.assetsGroup] inSection:0]];
-        cell.checked = NO;
-    }
-    _assetsGroup = assetsGroup;
-    FWImageAlbumTableCell *cell = (FWImageAlbumTableCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[self.albumsArray indexOfObject:assetsGroup] inSection:0]];
-    cell.checked = YES;
+    self.assetsGroup = assetsGroup;
     
     [self initImagePickerControllerIfNeeded];
     if (self.assetsGroupSelected) {
@@ -1953,9 +1963,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     albumController.albumArrayLoaded = ^{
         __typeof__(self) self = self_weak_;
         if (self.albumController.albumsArray.count > 0) {
+            FWAssetGroup *assetsGroup = self.albumController.albumsArray.firstObject;
+            self.albumController.assetsGroup = assetsGroup;
             self.titleView.userInteractionEnabled = YES;
             if (self.titleAccessoryImage) self.titleView.accessoryImage = self.titleAccessoryImage;
-            FWAssetGroup *assetsGroup = self.albumController.albumsArray.firstObject;
             self.title = [assetsGroup name];
             [self refreshWithAssetsGroup:assetsGroup];
         } else {
