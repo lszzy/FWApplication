@@ -468,7 +468,10 @@
 
 @end
 
-@implementation FWImagePickerPreviewCollectionCell
+@implementation FWImagePickerPreviewCollectionCell {
+    BOOL _showsEditedIcon;
+    BOOL _showsVideoIcon;
+}
 
 @synthesize videoDurationLabel = _videoDurationLabel;
 @synthesize maskView = _maskView;
@@ -552,6 +555,16 @@
     }
 }
 
+- (void)setEditedIconImage:(UIImage *)editedIconImage {
+    _editedIconImage = editedIconImage;
+    [self updateIconImageView];
+}
+
+- (void)setVideoIconImage:(UIImage *)videoIconImage {
+    _videoIconImage = videoIconImage;
+    [self updateIconImageView];
+}
+
 - (void)initVideoDurationLabelIfNeeded {
     if (!self.videoDurationLabel) {
         _videoDurationLabel = [[UILabel alloc] init];
@@ -584,15 +597,20 @@
         self.videoDurationLabel.hidden = YES;
     }
     
+    _showsEditedIcon = asset.editedImage != nil;
+    _showsVideoIcon = asset.assetType == FWAssetTypeVideo;
+    [self updateIconImageView];
+}
+
+- (void)updateIconImageView {
     UIImage *iconImage = nil;
-    if (self.editedIconImage && asset.editedImage) {
+    if (_showsEditedIcon && self.editedIconImage) {
         iconImage = self.editedIconImage;
-    } else if (self.videoIconImage && asset.assetType == FWAssetTypeVideo) {
+    } else if (_showsVideoIcon && self.videoIconImage) {
         iconImage = self.videoIconImage;
     }
     self.iconImageView.image = iconImage;
     self.iconImageView.hidden = !iconImage;
-    
     [self setNeedsLayout];
 }
 
@@ -1354,7 +1372,10 @@
 
 @end
 
-@implementation FWImagePickerCollectionCell
+@implementation FWImagePickerCollectionCell {
+    BOOL _showsEditedIcon;
+    BOOL _showsVideoIcon;
+}
 
 @synthesize maskView = _maskView;
 @synthesize videoDurationLabel = _videoDurationLabel;
@@ -1400,12 +1421,12 @@
     self.contentImageView.clipsToBounds = YES;
     [self.contentView addSubview:self.contentImageView];
     
+    _maskView = [[UIView alloc] init];
+    [self.contentView addSubview:self.maskView];
+    
     _iconImageView = [[UIImageView alloc] init];
     self.iconImageView.hidden = YES;
     [self.contentView addSubview:self.iconImageView];
-    
-    _maskView = [[UIView alloc] init];
-    [self.contentView addSubview:self.maskView];
     
     self.checkboxButton = [[UIButton alloc] init];
     self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
@@ -1441,16 +1462,9 @@
         self.videoDurationLabel.hidden = YES;
     }
     
-    UIImage *iconImage = nil;
-    if (self.editedIconImage && asset.editedImage) {
-        iconImage = self.editedIconImage;
-    } else if (self.videoIconImage && asset.assetType == FWAssetTypeVideo) {
-        iconImage = self.videoIconImage;
-    }
-    self.iconImageView.image = iconImage;
-    self.iconImageView.hidden = !iconImage;
-    
-    [self setNeedsLayout];
+    _showsEditedIcon = asset.editedImage != nil;
+    _showsVideoIcon = asset.assetType == FWAssetTypeVideo;
+    [self updateIconImageView];
 }
 
 - (void)layoutSubviews {
@@ -1558,9 +1572,9 @@
     _disabled = disabled;
     if (_selectable) {
         if (disabled) {
-            [self.contentView insertSubview:self.checkboxButton belowSubview:self.maskView];
+            [self.contentView bringSubviewToFront:self.maskView];
         } else {
-            [self.contentView insertSubview:self.checkboxButton aboveSubview:self.maskView];
+            [self.contentView insertSubview:self.maskView aboveSubview:self.contentImageView];
         }
         [self updateMaskView];
     }
@@ -1603,6 +1617,16 @@
     }
 }
 
+- (void)setEditedIconImage:(UIImage *)editedIconImage {
+    _editedIconImage = editedIconImage;
+    [self updateIconImageView];
+}
+
+- (void)setVideoIconImage:(UIImage *)videoIconImage {
+    _videoIconImage = videoIconImage;
+    [self updateIconImageView];
+}
+
 - (void)updateCheckedIndexLabel {
     if (self.showsCheckedIndexLabel && self.selectable && self.checked
         && self.checkedIndex != NSNotFound && self.checkedIndex >= 0) {
@@ -1622,12 +1646,24 @@
     }
 }
 
+- (void)updateIconImageView {
+    UIImage *iconImage = nil;
+    if (_showsEditedIcon && self.editedIconImage) {
+        iconImage = self.editedIconImage;
+    } else if (_showsVideoIcon && self.videoIconImage) {
+        iconImage = self.videoIconImage;
+    }
+    self.iconImageView.image = iconImage;
+    self.iconImageView.hidden = !iconImage;
+    [self setNeedsLayout];
+}
+
 - (void)initVideoDurationLabelIfNeeded {
     if (!self.videoDurationLabel) {
         _videoDurationLabel = [[UILabel alloc] init];
         _videoDurationLabel.font = self.videoDurationLabelFont;
         _videoDurationLabel.textColor = self.videoDurationLabelTextColor;
-        [self.contentView insertSubview:_videoDurationLabel belowSubview:self.maskView];
+        [self.contentView addSubview:_videoDurationLabel];
         [self setNeedsLayout];
     }
 }
