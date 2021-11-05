@@ -342,10 +342,12 @@
 }
 
 - (CGFloat)tableViewHeight {
-    if (self.maximumTableViewHeight > 0) {
-        return MIN(self.maximumTableViewHeight, self.albumsArray.count * self.albumTableViewCellHeight);
+    if (self.maximumTableViewHeight <= 0) {
+        return self.view.bounds.size.height;
     }
-    return self.view.bounds.size.height;
+    
+    CGFloat albumsHeight = self.albumsArray.count * self.albumTableViewCellHeight;
+    return MIN(self.maximumTableViewHeight, albumsHeight + self.additionalTableViewHeight);
 }
 
 - (void)pickAlbumsGroup:(FWAssetGroup *)assetsGroup animated:(BOOL)animated {
@@ -2037,7 +2039,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         albumController.backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
     }
     if (albumController.maximumTableViewHeight <= 0) {
-        albumController.maximumTableViewHeight = albumController.albumTableViewCellHeight * ceil(FWScreenHeight / albumController.albumTableViewCellHeight / 2.0);
+        albumController.maximumTableViewHeight = albumController.albumTableViewCellHeight * ceil(FWScreenHeight / albumController.albumTableViewCellHeight / 2.0) + albumController.additionalTableViewHeight;
     }
 }
 

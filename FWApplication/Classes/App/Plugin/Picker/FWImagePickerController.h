@@ -92,9 +92,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, readonly) UIView *backgroundView;
 /// 相册只读列表视图
 @property(nonatomic, strong, readonly) UITableView *tableView;
-/// 相册列表视图最大高度，默认0撑满
+
+/// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
+@property(nonatomic, assign) CGFloat albumTableViewCellHeight;
+/// 相册列表视图最大高度，默认0不限制
 @property(nonatomic, assign) CGFloat maximumTableViewHeight;
-/// 当前相册列表实际显示高度
+/// 相册列表附加显示高度，当内容高度小于最大高度时生效，默认0
+@property(nonatomic, assign) CGFloat additionalTableViewHeight;
+/// 当前相册列表实际显示高度，只读
 @property(nonatomic, assign, readonly) CGFloat tableViewHeight;
 
 /// 当前相册列表，异步加载
@@ -108,9 +113,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 自定义cell展示句柄，cellForRow自动调用，优先级低于delegate
 @property(nullable, nonatomic, copy) void (^customCellBlock)(FWImageAlbumTableCell *cell, NSIndexPath *indexPath);
-
-/// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
-@property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 
 /// 相册列表默认封面图，默认nil
 @property(nullable, nonatomic, strong) UIImage *defaultPosterImage;
