@@ -184,17 +184,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
-@property(nullable, nonatomic, strong, readonly) UIView *topToolBarView;
+@property(nonatomic, strong, readonly) UIView *topToolBarView;
 @property(nonatomic, assign) CGFloat toolBarPaddingHorizontal;
-@property(nullable, nonatomic, strong, readonly) UIButton *backButton;
-@property(nullable, nonatomic, strong, readonly) UIButton *checkboxButton;
+@property(nonatomic, strong, readonly) UIButton *backButton;
+@property(nonatomic, strong, readonly) UIButton *checkboxButton;
 @property(nonatomic, strong) UIImage *checkboxImage;
 @property(nonatomic, strong) UIImage *checkboxCheckedImage;
 
-@property(nullable, nonatomic, strong, readonly) UIView *bottomToolBarView;
-@property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
-@property(nullable, nonatomic, strong, readonly) UIButton *editButton;
-@property(nullable, nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
+@property(nonatomic, strong, readonly) UIView *bottomToolBarView;
+@property(nonatomic, strong, readonly) UIButton *sendButton;
+@property(nonatomic, strong, readonly) UIButton *editButton;
+@property(nonatomic, strong, readonly) UIButton *originImageCheckboxButton;
 @property(nonatomic, strong) UIImage *originImageCheckboxImage;
 @property(nonatomic, strong) UIImage *originImageCheckboxCheckedImage;
 /// 是否使用原图，不显示原图按钮时默认YES，显示原图按钮时默认NO
@@ -206,8 +206,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 是否显示编辑collectionView，默认YES，仅多选生效
 @property(nonatomic, assign) BOOL showsEditCollectionView;
-@property(nullable, nonatomic, strong, readonly) UICollectionViewFlowLayout *editCollectionViewLayout;
-@property(nullable, nonatomic, strong, readonly) UICollectionView *editCollectionView;
+@property(nonatomic, strong, readonly) UICollectionViewFlowLayout *editCollectionViewLayout;
+@property(nonatomic, strong, readonly) UICollectionView *editCollectionView;
 /// 编辑collectionView总高度，默认80
 @property(nonatomic, assign) CGFloat editCollectionViewHeight;
 /// 编辑collectionCell大小，默认(60, 60)
@@ -409,13 +409,13 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, assign) CGFloat minimumImageWidth;
 
-@property(nullable, nonatomic, strong, readonly) UICollectionViewFlowLayout *collectionViewLayout;
-@property(nullable, nonatomic, strong, readonly) UICollectionView *collectionView;
+@property(nonatomic, strong, readonly) UICollectionViewFlowLayout *collectionViewLayout;
+@property(nonatomic, strong, readonly) UICollectionView *collectionView;
 
-@property(nullable, nonatomic, strong, readonly) UIView *operationToolBarView;
+@property(nonatomic, strong, readonly) UIView *operationToolBarView;
 @property(nonatomic, assign) CGFloat toolBarPaddingHorizontal;
-@property(nullable, nonatomic, strong, readonly) UIButton *previewButton;
-@property(nullable, nonatomic, strong, readonly) UIButton *sendButton;
+@property(nonatomic, strong, readonly) UIButton *previewButton;
+@property(nonatomic, strong, readonly) UIButton *sendButton;
 
 /// 也可以直接传入 FWAssetGroup，然后读取其中的 FWAsset 并储存到 imagesAssetArray 中，传入后会赋值到 FWAssetGroup，并自动刷新 UI 展示
 - (void)refreshWithAssetsGroup:(FWAssetGroup * _Nullable)assetsGroup;

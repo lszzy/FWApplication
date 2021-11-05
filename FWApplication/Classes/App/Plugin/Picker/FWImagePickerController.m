@@ -664,73 +664,9 @@
     [super viewDidLoad];
     
     self.imagePreviewView.delegate = self;
-    
-    _topToolBarView = [[UIView alloc] init];
-    self.topToolBarView.backgroundColor = self.toolBarBackgroundColor;
-    self.topToolBarView.tintColor = self.toolBarTintColor;
     [self.view addSubview:self.topToolBarView];
-    
-    _backButton = [[UIButton alloc] init];
-    [self.backButton setImage:FWAppBundle.navBackImage forState:UIControlStateNormal];
-    [self.backButton sizeToFit];
-    [self.backButton addTarget:self action:@selector(handleCancelPreviewImage:) forControlEvents:UIControlEventTouchUpInside];
-    self.backButton.fwTouchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
-    self.backButton.fwDisabledAlpha = 0.3;
-    self.backButton.fwHighlightedAlpha = 0.5;
-    [self.topToolBarView addSubview:self.backButton];
-    
-    _checkboxButton = [[UIButton alloc] init];
-    [self.checkboxButton setImage:self.checkboxImage forState:UIControlStateNormal];
-    [self.checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected];
-    [self.checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
-    [self.checkboxButton sizeToFit];
-    [self.checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    self.checkboxButton.fwDisabledAlpha = 0.3;
-    self.checkboxButton.fwHighlightedAlpha = 0.5;
-    [self.topToolBarView addSubview:self.checkboxButton];
-    
-    _bottomToolBarView = [[UIView alloc] init];
-    self.bottomToolBarView.backgroundColor = self.toolBarBackgroundColor;
     [self.view addSubview:self.bottomToolBarView];
     [self.view addSubview:self.editCollectionView];
-    
-    _editButton = [[UIButton alloc] init];
-    self.editButton.hidden = !self.showsEditButton;
-    self.editButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    [self.editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
-    self.editButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.editButton sizeToFit];
-    self.editButton.fwDisabledAlpha = 0.3;
-    self.editButton.fwHighlightedAlpha = 0.5;
-    [self.editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomToolBarView addSubview:self.editButton];
-    
-    _sendButton = [[UIButton alloc] init];
-    self.sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
-    [self.sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
-    self.sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.sendButton sizeToFit];
-    self.sendButton.fwDisabledAlpha = 0.3;
-    self.sendButton.fwHighlightedAlpha = 0.5;
-    [self.sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomToolBarView addSubview:self.sendButton];
-    
-    _originImageCheckboxButton = [[UIButton alloc] init];
-    self.originImageCheckboxButton.hidden = !self.showsOriginImageCheckboxButton;
-    self.originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:16];
-    [self.originImageCheckboxButton setImage:self.originImageCheckboxImage forState:UIControlStateNormal];
-    [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected];
-    [self.originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
-    [self.originImageCheckboxButton setTitle:FWAppBundle.originalButton forState:UIControlStateNormal];
-    [self.originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
-    [self.originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
-    [self.originImageCheckboxButton sizeToFit];
-    self.originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
-    self.originImageCheckboxButton.fwDisabledAlpha = 0.3;
-    self.originImageCheckboxButton.fwHighlightedAlpha = 0.5;
-    [self.originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.bottomToolBarView addSubview:self.originImageCheckboxButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -806,6 +742,112 @@
         _editCollectionView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     return _editCollectionView;
+}
+
+@synthesize topToolBarView = _topToolBarView;
+- (UIView *)topToolBarView {
+    if (!_topToolBarView) {
+        _topToolBarView = [[UIView alloc] init];
+        _topToolBarView.backgroundColor = self.toolBarBackgroundColor;
+        _topToolBarView.tintColor = self.toolBarTintColor;
+        [_topToolBarView addSubview:self.backButton];
+        [_topToolBarView addSubview:self.checkboxButton];
+    }
+    return _topToolBarView;
+}
+
+@synthesize backButton = _backButton;
+- (UIButton *)backButton {
+    if (!_backButton) {
+        _backButton = [[UIButton alloc] init];
+        [_backButton setImage:FWAppBundle.navBackImage forState:UIControlStateNormal];
+        [_backButton sizeToFit];
+        [_backButton addTarget:self action:@selector(handleCancelPreviewImage:) forControlEvents:UIControlEventTouchUpInside];
+        _backButton.fwTouchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
+        _backButton.fwDisabledAlpha = 0.3;
+        _backButton.fwHighlightedAlpha = 0.5;
+    }
+    return _backButton;
+}
+
+@synthesize checkboxButton = _checkboxButton;
+- (UIButton *)checkboxButton {
+    if (!_checkboxButton) {
+        _checkboxButton = [[UIButton alloc] init];
+        [_checkboxButton setImage:self.checkboxImage forState:UIControlStateNormal];
+        [_checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected];
+        [_checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
+        [_checkboxButton sizeToFit];
+        [_checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        _checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+        _checkboxButton.fwDisabledAlpha = 0.3;
+        _checkboxButton.fwHighlightedAlpha = 0.5;
+    }
+    return _checkboxButton;
+}
+
+@synthesize bottomToolBarView = _bottomToolBarView;
+- (UIView *)bottomToolBarView {
+    if (!_bottomToolBarView) {
+        _bottomToolBarView = [[UIView alloc] init];
+        _bottomToolBarView.backgroundColor = self.toolBarBackgroundColor;
+        [_bottomToolBarView addSubview:self.editButton];
+        [_bottomToolBarView addSubview:self.sendButton];
+        [_bottomToolBarView addSubview:self.originImageCheckboxButton];
+    }
+    return _bottomToolBarView;
+}
+
+@synthesize editButton = _editButton;
+- (UIButton *)editButton {
+    if (!_editButton) {
+        _editButton = [[UIButton alloc] init];
+        _editButton.hidden = !self.showsEditButton;
+        _editButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+        [_editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
+        _editButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_editButton sizeToFit];
+        _editButton.fwDisabledAlpha = 0.3;
+        _editButton.fwHighlightedAlpha = 0.5;
+        [_editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _editButton;
+}
+
+@synthesize sendButton = _sendButton;
+- (UIButton *)sendButton {
+    if (!_sendButton) {
+        _sendButton = [[UIButton alloc] init];
+        _sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+        [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
+        _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_sendButton sizeToFit];
+        _sendButton.fwDisabledAlpha = 0.3;
+        _sendButton.fwHighlightedAlpha = 0.5;
+        [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _sendButton;
+}
+
+@synthesize originImageCheckboxButton = _originImageCheckboxButton;
+- (UIButton *)originImageCheckboxButton {
+    if (!_originImageCheckboxButton) {
+        _originImageCheckboxButton = [[UIButton alloc] init];
+        _originImageCheckboxButton.hidden = !self.showsOriginImageCheckboxButton;
+        _originImageCheckboxButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [_originImageCheckboxButton setImage:self.originImageCheckboxImage forState:UIControlStateNormal];
+        [_originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected];
+        [_originImageCheckboxButton setImage:self.originImageCheckboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
+        [_originImageCheckboxButton setTitle:FWAppBundle.originalButton forState:UIControlStateNormal];
+        [_originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
+        [_originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
+        [_originImageCheckboxButton sizeToFit];
+        _originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
+        _originImageCheckboxButton.fwDisabledAlpha = 0.3;
+        _originImageCheckboxButton.fwHighlightedAlpha = 0.5;
+        [_originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _originImageCheckboxButton;
 }
 
 - (NSMutableArray<FWAsset *> *)editImageAssetArray {
@@ -2078,7 +2120,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (!_operationToolBarView) {
         _operationToolBarView = [[UIView alloc] init];
         _operationToolBarView.backgroundColor = self.toolBarBackgroundColor;
-        
         [_operationToolBarView addSubview:self.sendButton];
         [_operationToolBarView addSubview:self.previewButton];
     }
