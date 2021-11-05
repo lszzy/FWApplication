@@ -52,13 +52,12 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self didInitializeWithStyle:style];
+        [self fwApplyAppearance];
     }
     return self;
 }
 
 - (void)didInitializeWithStyle:(UITableViewCellStyle)style {
-    [self fwApplyAppearance];
-    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -493,18 +492,18 @@
     [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
     [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
     [FWImagePickerPreviewCollectionCell appearance].iconImageViewMargins = UIEdgeInsetsMake(5, 7, 5, 5);
+    [FWImagePickerPreviewCollectionCell appearance].showsVideoDurationLabel = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self didInitialize];
+        [self fwApplyAppearance];
     }
     return self;
 }
 
 - (void)didInitialize {
-    [self fwApplyAppearance];
-    
     _imageView = [[UIImageView alloc] init];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
@@ -565,6 +564,11 @@
     [self updateIconImageView];
 }
 
+- (void)setShowsVideoDurationLabel:(BOOL)showsVideoDurationLabel {
+    _showsVideoDurationLabel = showsVideoDurationLabel;
+    self.videoDurationLabel.hidden = !showsVideoDurationLabel || !_showsVideoIcon;
+}
+
 - (void)initVideoDurationLabelIfNeeded {
     if (!self.videoDurationLabel) {
         _videoDurationLabel = [[UILabel alloc] init];
@@ -587,7 +591,7 @@
         }];
     }
     
-    if (asset.assetType == FWAssetTypeVideo) {
+    if (asset.assetType == FWAssetTypeVideo && self.showsVideoDurationLabel) {
         [self initVideoDurationLabelIfNeeded];
         NSUInteger min = floor(asset.duration / 60);
         NSUInteger sec = floor(asset.duration - min * 60);
@@ -1403,19 +1407,20 @@
     [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
     [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
     [FWImagePickerCollectionCell appearance].iconImageViewMargins = UIEdgeInsetsMake(5, 7, 5, 5);
+    [FWImagePickerCollectionCell appearance].showsVideoDurationLabel = YES;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         _checkedIndex = NSNotFound;
-        [self initImagePickerCollectionViewCellUI];
+        [self didInitialize];
         [self fwApplyAppearance];
     }
     return self;
 }
 
-- (void)initImagePickerCollectionViewCellUI {
+- (void)didInitialize {
     _contentImageView = [[UIImageView alloc] init];
     self.contentImageView.contentMode = UIViewContentModeScaleAspectFill;
     self.contentImageView.clipsToBounds = YES;
@@ -1452,7 +1457,7 @@
         self.checkedIndexLabel.hidden = YES;
     }
     
-    if (asset.assetType == FWAssetTypeVideo) {
+    if (asset.assetType == FWAssetTypeVideo && self.showsVideoDurationLabel) {
         [self initVideoDurationLabelIfNeeded];
         NSUInteger min = floor(asset.duration / 60);
         NSUInteger sec = floor(asset.duration - min * 60);
@@ -1566,6 +1571,11 @@
     } else {
         self.checkedIndexLabel.hidden = YES;
     }
+}
+
+- (void)setShowsVideoDurationLabel:(BOOL)showsVideoDurationLabel {
+    _showsVideoDurationLabel = showsVideoDurationLabel;
+    self.videoDurationLabel.hidden = !showsVideoDurationLabel || !_showsVideoIcon;
 }
 
 - (void)setDisabled:(BOOL)disabled {

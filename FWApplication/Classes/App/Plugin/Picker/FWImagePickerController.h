@@ -262,6 +262,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, assign) BOOL disabled;
 
 @property(nonatomic, strong, readonly) UILabel *videoDurationLabel;
+/// 是否显示videoDurationLabel，默认YES
+@property(nonatomic, assign) BOOL showsVideoDurationLabel UI_APPEARANCE_SELECTOR;
 /// videoDurationLabel 的字号
 @property(nonatomic, strong) UIFont *videoDurationLabelFont UI_APPEARANCE_SELECTOR;
 /// videoDurationLabel 的字体颜色
@@ -502,6 +504,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) UIColor *checkedIndexLabelBackgroundColor UI_APPEARANCE_SELECTOR;
 /// 是否显示checkedIndexLabel，大小和checkboxButton保持一致
 @property(nonatomic, assign) BOOL showsCheckedIndexLabel UI_APPEARANCE_SELECTOR;
+/// 是否显示videoDurationLabel，默认YES
+@property(nonatomic, assign) BOOL showsVideoDurationLabel UI_APPEARANCE_SELECTOR;
 
 @property(nonatomic, strong, readonly) UIImageView *contentImageView;
 @property(nonatomic, strong, readonly) UIButton *checkboxButton;
