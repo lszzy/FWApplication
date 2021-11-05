@@ -58,6 +58,7 @@
 }
 
 - (void)didInitializeWithStyle:(UITableViewCellStyle)style {
+    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -397,7 +398,6 @@
     FWImageAlbumTableCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifer];
     if (!cell) {
         cell = [[FWImageAlbumTableCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifer];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     FWAssetGroup *assetsGroup = self.albumsArray[indexPath.row];
     cell.imageView.image = [assetsGroup posterImageWithSize:CGSizeMake(cell.albumImageSize, cell.albumImageSize)] ?: self.defaultPosterImage;
