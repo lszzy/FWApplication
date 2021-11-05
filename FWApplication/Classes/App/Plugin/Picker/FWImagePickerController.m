@@ -58,7 +58,6 @@
 }
 
 - (void)didInitializeWithStyle:(UITableViewCellStyle)style {
-    self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
