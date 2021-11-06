@@ -39,9 +39,9 @@
 }
 
 + (void)setDefaultAppearance {
-    [FWImageAlbumTableCell appearance].albumImageSize = 72;
+    [FWImageAlbumTableCell appearance].albumImageSize = 60;
     [FWImageAlbumTableCell appearance].albumImageMarginLeft = 16;
-    [FWImageAlbumTableCell appearance].albumNameInsets = UIEdgeInsetsMake(0, 14, 0, 3);
+    [FWImageAlbumTableCell appearance].albumNameInsets = UIEdgeInsetsMake(0, 12, 0, 4);
     [FWImageAlbumTableCell appearance].albumNameFont = [UIFont systemFontOfSize:17];
     [FWImageAlbumTableCell appearance].albumNameColor = UIColor.whiteColor;
     [FWImageAlbumTableCell appearance].albumAssetsNumberFont = [UIFont systemFontOfSize:17];
@@ -152,7 +152,7 @@
 
 - (void)didInitialize {
     _albumsArray = [[NSMutableArray alloc] init];
-    _albumTableViewCellHeight = 88;
+    _albumTableViewCellHeight = 76;
     _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
     _toolBarTintColor = UIColor.whiteColor;
     _showsDefaultLoading = YES;
@@ -415,7 +415,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self pickAlbumsGroup:self.albumsArray[indexPath.row] animated:YES];
 }
 
@@ -648,8 +647,8 @@
         _toolBarPaddingHorizontal = 16;
         _showsDefaultLoading = YES;
         
-        self.toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
-        self.toolBarTintColor = UIColor.whiteColor;
+        _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
+        _toolBarTintColor = UIColor.whiteColor;
         self.fwNavigationBarHidden = YES;
         
         _checkboxImage = FWAppBundle.pickerCheckImage;

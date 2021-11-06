@@ -93,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 相册只读列表视图
 @property(nonatomic, strong, readonly) UITableView *tableView;
 
-/// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认88
+/// 相册列表 cell 的高度，同时也是相册预览图的宽高，默认76
 @property(nonatomic, assign) CGFloat albumTableViewCellHeight;
 /// 相册列表视图最大高度，默认0不限制
 @property(nonatomic, assign) CGFloat maximumTableViewHeight;
