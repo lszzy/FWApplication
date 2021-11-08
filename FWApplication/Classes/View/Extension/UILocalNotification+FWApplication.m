@@ -11,7 +11,7 @@
 
 @implementation UNUserNotificationCenter (FWApplication)
 
-+ (UNMutableNotificationContent *)fwLocalNotificationWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body userInfo:(NSDictionary *)userInfo category:(NSString *)category badge:(NSNumber *)badge soundName:(NSString *)soundName
++ (UNMutableNotificationContent *)fwLocalNotificationWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body userInfo:(NSDictionary *)userInfo category:(NSString *)category badge:(NSNumber *)badge soundName:(NSString *)soundName block:(void (NS_NOESCAPE ^)(UNMutableNotificationContent *))block
 {
     UNMutableNotificationContent *notification = [[UNMutableNotificationContent alloc] init];
     if (title) notification.title = title;
@@ -20,9 +20,8 @@
     if (userInfo) notification.userInfo = userInfo;
     if (category) notification.categoryIdentifier = category;
     notification.badge = badge;
-    if (soundName) {
-        notification.sound = [@"default" isEqualToString:soundName] ? [UNNotificationSound defaultSound] : [UNNotificationSound soundNamed:soundName];
-    }
+    if (soundName) notification.sound = [@"default" isEqualToString:soundName] ? [UNNotificationSound defaultSound] : [UNNotificationSound soundNamed:soundName];
+    if (block) block(notification);
     return notification;
 }
 

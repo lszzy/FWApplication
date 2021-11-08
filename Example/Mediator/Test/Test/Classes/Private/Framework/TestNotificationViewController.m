@@ -61,17 +61,31 @@
 
 - (void)onNotification1
 {
-    [[FWNotificationManager sharedInstance] registerLocalNotification:@"test" title:@"立即通知" subtitle:nil body:@"body" userInfo:@{@"id": @"test"} badge:0 soundName:nil timeInterval:0 repeats:NO];
+    [[FWNotificationManager sharedInstance] registerLocalNotification:@"test" title:@"立即通知" subtitle:nil body:@"body" userInfo:@{@"id": @"test"} badge:0 soundName:nil timeInterval:0 repeats:NO block:^(UNMutableNotificationContent *content) {
+        // iOS15时效性通知，需entitlements开启配置生效
+        #if __IPHONE_15_0
+        if (@available(iOS 15.0, *)) {
+            content.interruptionLevel = UNNotificationInterruptionLevelTimeSensitive;
+        }
+        #endif
+    }];
 }
 
 - (void)onNotification2
 {
-    [[FWNotificationManager sharedInstance] registerLocalNotification:@"test2" title:@"5秒后通知" subtitle:@"subtitle" body:@"body" userInfo:@{@"id": @"test2"} badge:1 soundName:@"default" timeInterval:5 repeats:NO];
+    [[FWNotificationManager sharedInstance] registerLocalNotification:@"test2" title:@"5秒后通知" subtitle:@"subtitle" body:@"body" userInfo:@{@"id": @"test2"} badge:1 soundName:@"default" timeInterval:5 repeats:NO block:^(UNMutableNotificationContent * _Nonnull content) {
+        // iOS15时效性通知，需entitlements开启配置生效
+        #if __IPHONE_15_0
+        if (@available(iOS 15.0, *)) {
+            content.interruptionLevel = UNNotificationInterruptionLevelTimeSensitive;
+        }
+        #endif
+    }];
 }
 
 - (void)onNotification3
 {
-    [[FWNotificationManager sharedInstance] registerLocalNotification:@"test3" title:@"重复1分钟通知" subtitle:@"subtitle" body:@"body" userInfo:@{@"id": @"test3"} badge:1 soundName:@"default" timeInterval:60 repeats:YES];
+    [[FWNotificationManager sharedInstance] registerLocalNotification:@"test3" title:@"重复1分钟通知" subtitle:@"subtitle" body:@"body" userInfo:@{@"id": @"test3"} badge:1 soundName:@"default" timeInterval:60 repeats:YES block:nil];
 }
 
 - (void)onNotification4
