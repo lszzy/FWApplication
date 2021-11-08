@@ -32,20 +32,21 @@
 - (void)renderTableLayout
 {
     self.navigationView = [[FWNavigationView alloc] init];
-    self.navigationView.viewController = self;
-    self.navigationView.navigationBar.fwForegroundColor = Theme.textColor;
-    self.navigationView.navigationBar.fwBackgroundColor = Theme.barColor;
-    self.navigationView.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:[[FWMenuButton alloc] initWithImage:FWIcon.backImage] block:^(id  _Nonnull sender) {
+    self.titleView = self.navigationView.menuView.titleView;
+    self.navigationView.menuView.tintColor = Theme.textColor;
+    self.navigationView.backgroundColor = Theme.barColor;
+    self.navigationView.bottomHeight = FWNavigationBarHeight;
+    self.navigationView.bottomHidden = YES;
+    self.navigationView.bottomView.backgroundColor = UIColor.greenColor;
+    self.navigationView.menuView.leftButton = [FWMenuButton buttonWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         [FWRouter closeViewControllerAnimated:YES];
     }];
-    self.navigationView.navigationItem.rightBarButtonItems = @[
-        [UIBarButtonItem fwBarItemWithObject:[[FWMenuButton alloc] initWithImage:FWIcon.closeImage] block:^(id  _Nonnull sender) {
-            [FWRouter closeViewControllerAnimated:YES];
-        }],
-        [UIBarButtonItem fwBarItemWithObject:[[FWMenuButton alloc] initWithImage:FWIcon.backImage] block:^(id  _Nonnull sender) {
-            [FWRouter closeViewControllerAnimated:YES];
-        }],
-    ];
+    self.navigationView.menuView.rightButton = [FWMenuButton buttonWithObject:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+        [FWRouter closeViewControllerAnimated:YES];
+    }];
+    self.navigationView.menuView.rightMoreButton = [FWMenuButton buttonWithObject:FWIcon.actionImage block:^(id  _Nonnull sender) {
+        [FWRouter closeViewControllerAnimated:YES];
+    }];
     [self.view addSubview:self.navigationView];
     [self.navigationView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
     
@@ -70,18 +71,9 @@
     toolbar.items = @[leftItem, flexibleItem, rightItem];
     [toolbar sizeToFit];
     
-    FWMenuTitleView *titleView = [[FWMenuTitleView alloc] init];
-    self.titleView = titleView;
-    titleView.showsLoadingView = YES;
-    self.navigationView.titleView = titleView;
-    self.navigationView.navigationItem.title = @"我是很长很长要多长有多长长得不得了的按钮";
+    self.titleView.showsLoadingView = YES;
+    self.titleView.title = @"我是很长很长要多长有多长长得不得了的按钮";
     self.horizontalAlignment = self.titleView.contentHorizontalAlignment;
-    
-    self.navigationView.bottomView.backgroundColor = UIColor.brownColor;
-    self.navigationView.bottomHidden = YES;
-    UILabel *titleLabel = [UILabel fwLabelWithText:@"FWNavigationView" font:FWFontBold(18) textColor:UIColor.whiteColor];
-    [self.navigationView.bottomView addSubview:titleLabel];
-    titleLabel.fwLayoutChain.leftWithInset(15).bottomWithInset(15);
 }
 
 - (void)renderModel
@@ -107,14 +99,11 @@
         @"水平方向的对齐方式",
         @"模拟标题的loading状态切换",
         @"标题点击效果",
-        @"导航栏顶部视图切换",
-        @"导航栏自定义视图切换",
-        @"导航栏中间视图切换",
-        @"导航栏底部视图切换",
-        @"导航栏绑定控制器切换",
-        @"导航栏固定高度切换",
-        @"导航栏内间距切换",
-        @"导航栏滚动效果切换",
+        
+        @"状态栏切换",
+        @"菜单栏切换",
+        @"底部栏切换",
+        @"导航栏切换",
     ]];
 }
 
@@ -198,60 +187,23 @@
             break;
         case 7:
         {
-            if (self.navigationView.topView.backgroundColor != UIColor.greenColor) {
-                self.navigationView.topView.backgroundColor = UIColor.greenColor;
-            } else {
-                self.navigationView.topHidden = !self.navigationView.topHidden;
-            }
+            [self.navigationView setTopHidden:!self.navigationView.topHidden animated:YES];
         }
             break;
         case 8:
         {
-            if (self.navigationView.contentView.backgroundColor != UIColor.yellowColor) {
-                self.navigationView.contentView.backgroundColor = UIColor.yellowColor;
-                self.navigationView.style = FWNavigationViewStyleCustom;
-            } else {
-                self.navigationView.style = self.navigationView.style == FWNavigationViewStyleDefault ? FWNavigationViewStyleCustom : FWNavigationViewStyleDefault;
-            }
-        }
+            [self.navigationView setMenuHidden:!self.navigationView.menuHidden animated:YES];
             break;
+        }
         case 9:
         {
-            self.navigationView.middleHidden = !self.navigationView.middleHidden;
-        }
+            [self.navigationView setBottomHidden:!self.navigationView.bottomHidden animated:YES];
             break;
+        }
         case 10:
         {
-            self.navigationView.bottomHidden = !self.navigationView.bottomHidden;
-            self.navigationView.bottomHeight = 100;
-        }
+            [self.navigationView setHidden:!self.navigationView.hidden animated:YES];
             break;
-        case 11:
-        {
-            self.navigationView.viewController = self.navigationView.viewController ? nil : self;
-        }
-            break;
-        case 12:
-        {
-            if (self.navigationView.middleHeight == 100) {
-                self.navigationView.middleHeight = 0;
-                self.navigationView.contentInsets = UIEdgeInsetsZero;
-                self.navigationView.middleView.backgroundColor = nil;
-            } else {
-                self.navigationView.middleHeight = 100;
-                self.navigationView.contentInsets = UIEdgeInsetsMake(0, 0, 100 - self.navigationView.contentHeight, 0);
-                self.navigationView.middleView.backgroundColor = [UIColor orangeColor];
-            }
-        }
-            break;
-        case 13:
-        {
-            self.navigationView.contentInsets = UIEdgeInsetsEqualToEdgeInsets(self.navigationView.contentInsets, UIEdgeInsetsZero) ? UIEdgeInsetsMake(0, 0, 100 - self.navigationView.contentHeight, 0) : UIEdgeInsetsZero;
-        }
-            break;
-        case 14:
-        {
-            self.navigationView.scrollView = self.navigationView.scrollView ? nil : tableView;
         }
             break;
     }
@@ -287,12 +239,6 @@
             break;
     }
     return cell;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    CGFloat progress = 1.0 - (self.navigationView.bottomHeight / 100);
-    self.titleView.tintColor = [Theme.textColor colorWithAlphaComponent:progress];
 }
 
 #pragma mark - FWMenuTitleViewDelegate

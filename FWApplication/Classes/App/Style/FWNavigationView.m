@@ -8,319 +8,155 @@
  */
 
 #import "FWNavigationView.h"
-#import "FWNavigationStyle.h"
 #import "FWViewPluginImpl.h"
 #import "FWAutoLayout.h"
 #import "FWSwizzle.h"
-#import "FWMessage.h"
 #import "FWToolkit.h"
 #import "FWAdaptive.h"
 #import "FWBlock.h"
 #import "FWNavigation.h"
 #import <objc/runtime.h>
 
-@interface FWNavigationBar : UINavigationBar
+@implementation FWNavigationView
 
-@property (nonatomic, weak) FWNavigationView *navigationView;
-
-@end
-
-@implementation FWNavigationBar
-
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    
-    UIView *backgroundView = self.fwBackgroundView;
-    backgroundView.frame = CGRectMake(backgroundView.frame.origin.x, -self.navigationView.topHeight, backgroundView.frame.size.width, self.navigationView.bounds.size.height);
-}
-
-@end
-
-@interface FWNavigationView () <UINavigationBarDelegate>
-
-@property (nonatomic, strong) UIView *topView;
-@property (nonatomic, strong) UIView *middleView;
-@property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) FWMenuView *contentView;
-
-@property (nonatomic, strong) NSLayoutConstraint *topConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *middleConstraint;
-@property (nonatomic, strong) NSLayoutConstraint *bottomConstraint;
-@property (nonatomic, strong) NSNumber *statusBarHidden;
-@property (nonatomic, assign) CGFloat maxMiddleHeight;
-@property (nonatomic, assign) CGFloat maxBottomHeight;
-
-@end
-
-@implementation FWNavigationView {
-    CGFloat _topHeight;
-    CGFloat _middleHeight;
-    CGFloat _bottomHeight;
-}
+@synthesize topView = _topView;
+@synthesize bottomView = _bottomView;
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithFrame:(CGRect)frame
-{
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        _style = FWNavigationViewStyleDefault;
-        _topHeight = FWStatusBarHeight;
-        _middleHeight = 0;
-        _bottomHeight = 0;
-        
-        _backgroundView = [[UIImageView alloc] init];
-        _backgroundView.hidden = YES;
-        [self addSubview:_backgroundView];
-        [_backgroundView fwPinEdgesToSuperview];
-        
-        UINavigationItem *navigationItem = [[UINavigationItem alloc] init];
-        _navigationItem = navigationItem;
-        FWNavigationBar *navigationBar = [[FWNavigationBar alloc] init];
-        navigationBar.navigationView = self;
-        _navigationBar = navigationBar;
-        _navigationBar.delegate = self;
-        _navigationBar.items = @[_navigationItem];
-        _middleView = [[UIView alloc] init];
-        [_middleView addSubview:_navigationBar];
-        [_navigationBar fwPinEdgesToSuperview];
-        [self addSubview:_middleView];
-        
-        _contentView = [[FWMenuView alloc] init];
-        _contentView.clipsToBounds = YES;
-        _contentView.hidden = YES;
-        [_middleView addSubview:_contentView];
-        [_contentView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeTop ofView:_navigationBar];
-        [_contentView fwPinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeLeft ofView:_navigationBar];
-        [_contentView fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeBottom ofView:_navigationBar];
-        [_contentView fwPinEdge:NSLayoutAttributeRight toEdge:NSLayoutAttributeRight ofView:_navigationBar];
-        
-        _topConstraint = [_middleView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:_topHeight];
-        [_middleView fwPinEdgesToSuperviewHorizontal];
-        _middleConstraint = [_middleView fwSetDimension:NSLayoutAttributeHeight toSize:_middleHeight];
-        _middleConstraint.active = _middleHeight > 0;
-        _bottomConstraint = [_middleView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:_bottomHeight];
+        [self didInitialize];
     }
     return self;
 }
 
-- (void)updateLayout
-{
-    // 绑定控制器时，先同步状态栏变化，再更新布局。导航栏无需同步，为0时自适应
-    _statusBarHidden = nil;
-    if (self.viewController) {
-        // 1. 导航栏不存在时顶部高度始终为0
-        if (!self.viewController.navigationController) {
-            _topHeight = 0;
-            _statusBarHidden = @(YES);
-        // 2. 竖屏且为iOS13+弹出pageSheet样式时顶部高度为0
-        } else if (![UIDevice fwIsLandscape] && self.viewController.fwIsPageSheet) {
-            _topHeight = 0;
-            _statusBarHidden = @(YES);
-        // 3. 竖屏且异形屏，无论导航栏是否显示，顶部高度固定
-        } else if (![UIDevice fwIsLandscape] && [UIScreen fwIsNotchedScreen]) {
-            _topHeight = [UIScreen fwStatusBarHeight];
-            _statusBarHidden = @(NO);
-        // 4. 其他情况顶部高度固定，状态栏显示时高度存在，隐藏时高度为0
-        } else {
-            _topHeight = [UIScreen fwStatusBarHeight];
-            _statusBarHidden = @(UIApplication.sharedApplication.statusBarHidden);
-        }
-    }
+- (void)didInitialize {
+    _topHeight = FWStatusBarHeight;
+    _menuHeight = FWNavigationBarHeight;
+    _bottomHeight = 0;
     
-    self.topConstraint.constant = self.topHeight;
-    self.bottomConstraint.constant = -self.bottomHeight;
-    BOOL middleHidden = self.isHidden || self.middleHidden;
-    self.middleConstraint.constant = middleHidden ? 0 : _middleHeight;
-    self.middleConstraint.active = middleHidden || _middleHeight > 0;
+    _backgroundView = [[UIImageView alloc] init];
+    _backgroundView.clipsToBounds = YES;
+    [self addSubview:self.backgroundView];
+    [self.backgroundView fwPinEdgesToSuperview];
+    
+    _menuView = [[FWMenuView alloc] init];
+    self.menuView.titleView = [[FWMenuTitleView alloc] init];
+    [self addSubview:self.menuView];
+    [self.menuView fwPinEdgesToSuperviewHorizontal];
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.topHeight];
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.bottomHeight];
+    [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.menuHeight];
+}
+
+- (void)updateLayout:(BOOL)animated {
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.hidden || self.topHidden ? 0 : self.topHeight];
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.hidden || self.bottomHidden ? 0 : self.bottomHeight];
+    [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.hidden || self.menuHidden ? 0 : self.menuHeight];
     [self invalidateIntrinsicContentSize];
+    
+    if (animated && self.superview) {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.superview layoutIfNeeded];
+        }];
+    }
 }
 
-- (void)orientationChanged
-{
-    _middleHeight = _maxMiddleHeight;
-    [self.navigationBar sizeToFit];
-    [self.contentView setNeedsUpdateConstraints];
-    [self updateLayout];
-}
-
-- (CGSize)sizeThatFits:(CGSize)size
-{
+- (CGSize)sizeThatFits:(CGSize)size {
     CGFloat maxWidth = CGRectGetWidth(self.bounds) ?: UIScreen.mainScreen.bounds.size.width;
     return CGSizeMake(MIN(size.width, maxWidth), self.height);
 }
 
-- (CGSize)intrinsicContentSize
-{
+- (CGSize)intrinsicContentSize {
     return [self sizeThatFits:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)];
 }
 
 #pragma mark - Accessor
 
-- (UIView *)topView
-{
+- (UIView *)topView {
     if (!_topView) {
         _topView = [[UIView alloc] init];
         _topView.clipsToBounds = YES;
-        _topView.hidden = self.topHidden;
         [self addSubview:_topView];
         [_topView fwPinEdgesToSuperviewHorizontal];
         [_topView fwPinEdgeToSuperview:NSLayoutAttributeTop];
-        [_topView fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:self.middleView];
+        [_topView fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:self.menuView];
     }
     return _topView;
 }
 
-- (UIView *)bottomView
-{
+- (UIView *)bottomView {
     if (!_bottomView) {
         _bottomView = [[UIView alloc] init];
         _bottomView.clipsToBounds = YES;
-        _bottomView.hidden = self.bottomHidden;
         [self addSubview:_bottomView];
         [_bottomView fwPinEdgesToSuperviewHorizontal];
         [_bottomView fwPinEdgeToSuperview:NSLayoutAttributeBottom];
-        [_bottomView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.middleView];
+        [_bottomView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.menuView];
     }
     return _bottomView;
 }
 
-- (void)setStyle:(FWNavigationViewStyle)style
-{
-    _style = style;
-    if (style == FWNavigationViewStyleDefault) {
-        self.contentView.hidden = YES;
-        self.backgroundView.hidden = YES;
-        self.navigationBar.hidden = NO;
-    } else {
-        self.contentView.hidden = NO;
-        self.backgroundView.hidden = NO;
-        self.navigationBar.hidden = YES;
-    }
-}
-
-- (void)setTopHeight:(CGFloat)topHeight
-{
+- (void)setTopHeight:(CGFloat)topHeight {
     _topHeight = topHeight;
-    [self updateLayout];
+    [self updateLayout:NO];
 }
 
-- (void)setTopHidden:(BOOL)topHidden
-{
-    _topHidden = topHidden;
-    _topView.hidden = topHidden;
-    [self updateLayout];
+- (void)setMenuHeight:(CGFloat)menuHeight {
+    _menuHeight = menuHeight;
+    [self updateLayout:NO];
 }
 
-- (void)setMiddleHeight:(CGFloat)middleHeight
-{
-    _middleHeight = middleHeight;
-    _maxMiddleHeight = middleHeight;
-    [self updateLayout];
-}
-
-- (void)setMiddleHidden:(BOOL)middleHidden
-{
-    _middleHidden = middleHidden;
-    _middleView.hidden = middleHidden;
-    [self updateLayout];
-}
-
-- (void)setContentInsets:(UIEdgeInsets)contentInsets
-{
-    _contentInsets = contentInsets;
-    [self.navigationBar fwPinEdgesToSuperviewWithInsets:contentInsets];
-    [self updateLayout];
-}
-
-- (void)setBottomHeight:(CGFloat)bottomHeight
-{
+- (void)setBottomHeight:(CGFloat)bottomHeight {
     _bottomHeight = bottomHeight;
-    _maxBottomHeight = bottomHeight;
-    [self updateLayout];
+    [self updateLayout:NO];
 }
 
-- (void)setBottomHidden:(BOOL)bottomHidden
-{
-    _bottomHidden = bottomHidden;
-    _bottomView.hidden = bottomHidden;
-    [self updateLayout];
+- (CGFloat)height {
+    CGFloat height = 0;
+    if (self.hidden) return height;
+    if (!self.topHidden) height += self.topHeight;
+    if (!self.menuHidden) height += self.menuHeight;
+    if (!self.bottomHidden) height += self.bottomHeight;
+    return height;
 }
 
-- (void)setHidden:(BOOL)hidden
-{
+- (void)setTopHidden:(BOOL)hidden {
+    [self setTopHidden:hidden animated:NO];
+}
+
+- (void)setMenuHidden:(BOOL)hidden {
+    [self setMenuHidden:hidden animated:NO];
+}
+
+- (void)setBottomHidden:(BOOL)hidden {
+    [self setBottomHidden:hidden animated:NO];
+}
+
+- (void)setHidden:(BOOL)hidden {
+    [self setHidden:hidden animated:NO];
+}
+
+- (void)setTopHidden:(BOOL)hidden animated:(BOOL)animated {
+    _topHidden = hidden;
+    [self updateLayout:animated];
+}
+
+- (void)setMenuHidden:(BOOL)hidden animated:(BOOL)animated {
+    _menuHidden = hidden;
+    [self updateLayout:animated];
+}
+
+- (void)setBottomHidden:(BOOL)hidden animated:(BOOL)animated {
+    _bottomHidden = hidden;
+    [self updateLayout:animated];
+}
+
+- (void)setHidden:(BOOL)hidden animated:(BOOL)animated {
     [super setHidden:hidden];
-    [self updateLayout];
-}
-
-- (CGFloat)topHeight
-{
-    BOOL topHidden = self.statusBarHidden ? [self.statusBarHidden boolValue] : self.topHidden;
-    return self.isHidden || topHidden ? 0 : _topHeight;
-}
-
-- (CGFloat)middleHeight
-{
-    if (self.isHidden || self.middleHidden) return 0;
-    if (_middleHeight > 0) return _middleHeight;
-    return self.contentHeight + self.contentInsets.top + self.contentInsets.bottom;
-}
-
-- (CGFloat)bottomHeight
-{
-    return self.isHidden || self.bottomHidden ? 0 : _bottomHeight;
-}
-
-- (CGFloat)contentHeight
-{
-    if (self.navigationBar.frame.size.height <= 0) [self.navigationBar sizeToFit];
-    CGFloat barHeight = self.navigationBar.frame.size.height ?: [UIScreen fwNavigationBarHeight];
-    return barHeight;
-}
-
-- (CGFloat)height
-{
-    return self.topHeight + self.middleHeight + self.bottomHeight;
-}
-
-#pragma mark - Public
-
-- (void)setTitleView:(UIView *)titleView
-{
-    _titleView = titleView;
-    
-    if (self.style == FWNavigationViewStyleDefault) {
-        self.navigationItem.titleView = titleView;
-    } else {
-        self.contentView.titleView = titleView;
-    }
-}
-
-- (void)setViewController:(UIViewController *)viewController
-{
-    _viewController = viewController;
-    if (!viewController) return;
-    
-    self.hidden = !viewController.navigationController || viewController.fwIsChild;
-}
-
-- (void)setScrollView:(UIScrollView *)scrollView
-{
-    if (scrollView == _scrollView) return;
-    
-    if (_scrollView) [_scrollView fwUnobserveProperty:@"contentOffset" target:self action:@selector(scrollView:offsetChanged:)];
-    _scrollView = scrollView;
-    if (scrollView) [scrollView fwObserveProperty:@"contentOffset" target:self action:@selector(scrollView:offsetChanged:)];
-}
-
-- (void)scrollView:(UIScrollView *)scrollView offsetChanged:(NSDictionary *)change
-{
-    if (!self.superview || self.maxBottomHeight <= 0) return;
-    
-    CGFloat bottomHeight = MIN(MAX(0, self.maxBottomHeight - scrollView.contentOffset.y), self.maxBottomHeight);
-    _bottomHeight = bottomHeight;
-    [self updateLayout];
+    [self updateLayout:animated];
 }
 
 @end
@@ -334,6 +170,15 @@
 @end
 
 @implementation FWMenuView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.clipsToBounds = YES;
+    }
+    return self;
+}
 
 - (void)setLeftButton:(__kindof UIView *)leftButton
 {
@@ -1124,7 +969,6 @@
 
 @interface FWMenuButton()
 
-@property (nonatomic, assign) BOOL isImageType;
 @property (nonatomic, strong) UIImage *highlightedImage;
 @property (nonatomic, strong) UIImage *disabledImage;
 
@@ -1132,49 +976,60 @@
 
 @implementation FWMenuButton
 
-- (instancetype)init
-{
-    return [self initWithTitle:nil];
-}
-
-- (instancetype)initWithObject:(id)object
-{
-    if (!object) return nil;
++ (instancetype)buttonWithObject:(id)object target:(id)target action:(SEL)action {
+    FWMenuButton *button;
     if ([object isKindOfClass:[UIImage class]]) {
-        return [self initWithImage:(UIImage *)object];
-    } else if ([object isKindOfClass:[NSString class]]) {
-        return [self initWithTitle:(NSString *)object];
+        button = [[FWMenuButton alloc] initWithImage:(UIImage *)object];
+    } else {
+        button = [[FWMenuButton alloc] initWithTitle:object];
     }
-    return nil;
+    if (target && action) {
+        [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+    }
+    return button;
 }
 
-- (instancetype)initWithTitle:(NSString *)title
-{
++ (instancetype)buttonWithObject:(id)object block:(void (^)(id))block {
+    FWMenuButton *button;
+    if ([object isKindOfClass:[UIImage class]]) {
+        button = [[FWMenuButton alloc] initWithImage:(UIImage *)object];
+    } else {
+        button = [[FWMenuButton alloc] initWithTitle:object];
+    }
+    if (block) [button fwAddTouchBlock:block];
+    return button;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self didInitialize];
+    }
+    return self;
+}
+
+- (instancetype)initWithTitle:(NSString *)title {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        self.isImageType = NO;
         [self setTitle:title forState:UIControlStateNormal];
-        [self renderButtonStyle];
+        [self didInitialize];
         [self sizeToFit];
     }
     return self;
 }
 
-- (instancetype)initWithImage:(UIImage *)image
-{
+- (instancetype)initWithImage:(UIImage *)image {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        self.isImageType = YES;
         [self setTitle:nil forState:UIControlStateNormal];
-        [self renderButtonStyle];
+        [self didInitialize];
         [self setImage:image forState:UIControlStateNormal];
         [self sizeToFit];
     }
     return self;
 }
 
-- (void)renderButtonStyle
-{
+- (void)didInitialize {
     self.titleLabel.font = [UIFont systemFontOfSize:17];
     self.titleLabel.backgroundColor = [UIColor clearColor];
     self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
@@ -1187,8 +1042,7 @@
     self.contentEdgeInsets = UIEdgeInsetsMake(8, 8, 8, 8);
 }
 
-- (void)setImage:(UIImage *)image forState:(UIControlState)state
-{
+- (void)setImage:(UIImage *)image forState:(UIControlState)state {
     if (image && self.adjustsTintColor) {
         image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     }
@@ -1214,8 +1068,7 @@
     [super setImage:image forState:state];
 }
 
-- (void)setAdjustsTintColor:(BOOL)adjustsTintColor
-{
+- (void)setAdjustsTintColor:(BOOL)adjustsTintColor {
     if (_adjustsTintColor == adjustsTintColor) return;
     _adjustsTintColor = adjustsTintColor;
     if (!self.currentImage) return;
@@ -1233,16 +1086,14 @@
     }
 }
 
-- (void)tintColorDidChange
-{
+- (void)tintColorDidChange {
     [super tintColorDidChange];
     [self setTitleColor:self.tintColor forState:UIControlStateNormal];
     [self setTitleColor:[self.tintColor colorWithAlphaComponent:0.2f] forState:UIControlStateHighlighted];
     [self setTitleColor:[self.tintColor colorWithAlphaComponent:0.2f] forState:UIControlStateDisabled];
 }
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
     [super layoutSubviews];
     
     UIView *navigationBar = nil;

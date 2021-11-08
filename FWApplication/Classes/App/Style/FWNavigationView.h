@@ -13,91 +13,47 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWNavigationView
 
-/// 自定义导航栏样式
-typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
-    /// 默认样式，使用UINavigationBar实现
-    FWNavigationViewStyleDefault = 0,
-    /// 完全自定义样式，提供navigationView容器视图，自行处理布局
-    FWNavigationViewStyleCustom,
-};
-
 @class FWMenuView;
 
 /**
- * 自定义导航栏视图，高度自动布局，隐藏时自动收起；整体高度为height，隐藏时为0；
- * 绑定控制器后自动同步系统导航栏状态，可解除绑定。
- *
- * 自定义导航栏视图结构如下：
- * 顶部：延迟加载topView，高度为topHeight，可设置topHidden显示或隐藏
- * 中间：初始加载middleView，高度为middelHeight，可设置middleHidden显示或隐藏
- *     navigationBar: 高度同middleHeight，default样式时显示，兼容FWNavigationStyle方法
- *     contentView: 高度为contentHeight，custom样式时显示，内容完全自定义
- * 底部：延迟加载bottomView，高度为bottomHeight，可设置bottomHidden显示或隐藏
+ * 自定义导航栏视图，高度自动布局，隐藏时自动收起；整体高度为height，隐藏时为0
  */
 @interface FWNavigationView : UIView
 
-/// 当前导航栏样式，默认default，设置后自动显示navigationBar或contentView
-@property (nonatomic, assign) FWNavigationViewStyle style;
-
-/// 背景视图，仅custom样式时显示，default样式请使用navigationBar设置背景
+/// 背景图片视图，用于设置背景图片
 @property (nonatomic, strong, readonly) UIImageView *backgroundView;
 
-/// 顶部视图，延迟加载，默认不加载
+/// 顶部视图，延迟加载
 @property (nonatomic, strong, readonly) UIView *topView;
-
-/// 顶部是否隐藏，隐藏后自动收起，默认NO。绑定控制器后自动跟随系统导航栏变化
-@property (nonatomic, assign) BOOL topHidden;
-
-/// 自定义顶部高度，隐藏时自动收起，默认FWStatusBarHeight。绑定控制器后自动跟随系统导航栏变化
-@property (nonatomic, assign) CGFloat topHeight;
-
-/// 中间视图，初始加载，默认高度跟随navigationBar自适应
-@property (nonatomic, strong, readonly) UIView *middleView;
-
-/// 中间视图是否隐藏，隐藏后自动收起，默认NO
-@property (nonatomic, assign) BOOL middleHidden;
-
-/// 中间视图高度，隐藏时自动收起，默认0自适应，非0时固定高度。绑定控制器后自动跟随系统导航栏变化
-@property (nonatomic, assign) CGFloat middleHeight;
-
-/// 自定义导航栏，默认高度自适应，default样式时显示
-@property (nonatomic, strong, readonly) UINavigationBar *navigationBar;
-
-/// 自定义导航项，可设置标题、按钮等，default样式时生效
-@property (nonatomic, strong, readonly) UINavigationItem *navigationItem;
-
-/// 内容视图，初始加载，custom样式时显示，与navigationBar布局相同
-@property (nonatomic, strong, readonly) FWMenuView *contentView;
-
-/// 内容视图内间距，支持navigationBar和contentView，默认zero
-@property (nonatomic, assign) UIEdgeInsets contentInsets;
-
-/// 内容视图高度，只读，与是否隐藏无关。绑定控制器后自动跟随系统导航栏变化
-@property (nonatomic, assign, readonly) CGFloat contentHeight;
-
-/// 底部视图，延迟加载，默认不加载
+/// 菜单视图，初始加载
+@property (nonatomic, strong, readonly) FWMenuView *menuView;
+/// 底部视图，延迟加载
 @property (nonatomic, strong, readonly) UIView *bottomView;
 
-/// 底部是否隐藏，隐藏后自动收起，默认NO
-@property (nonatomic, assign) BOOL bottomHidden;
-
-/// 自定义底部高度，隐藏时自动收起，默认0
+/// 顶部高度，默认FWStatusBarHeight
+@property (nonatomic, assign) CGFloat topHeight;
+/// 菜单高度，默认FWNavigationBarHeight
+@property (nonatomic, assign) CGFloat menuHeight;
+/// 底部高度，默认0
 @property (nonatomic, assign) CGFloat bottomHeight;
-
-/// 当前总高度，自动计算实际显示高度，隐藏时为0
+/// 导航栏只读总高度，topHeight+menuHeight+bottomHeight，隐藏时为0
 @property (nonatomic, assign, readonly) CGFloat height;
 
-/// 设置标题视图，default样式使用navigationBar，custom样式使用contentView，不支持style动态切换
-@property (nonatomic, weak, nullable) UIView *titleView;
+/// 顶部栏是否隐藏，默认NO
+@property (nonatomic, assign) BOOL topHidden;
+/// 菜单是否隐藏，默认NO
+@property (nonatomic, assign) BOOL menuHidden;
+/// 底部栏是否隐藏，默认NO
+@property (nonatomic, assign) BOOL bottomHidden;
 
-/// 绑定视图控制器，绑定后导航栏状态自动跟随变化，设为nil时解除绑定
-@property (nonatomic, weak, nullable) UIViewController *viewController;
-
-/// 绑定scrollView，绑定后自动处理bottomView滚动动画效果并更新bottomHeight，要求scrollView内容足够高
-@property (nonatomic, weak, nullable) UIScrollView *scrollView;
-
-/// 通知视图方向已改变，自动调整布局
-- (void)orientationChanged;
+/// 动态隐藏顶部栏
+- (void)setTopHidden:(BOOL)hidden animated:(BOOL)animated;
+/// 动态隐藏菜单栏
+- (void)setMenuHidden:(BOOL)hidden animated:(BOOL)animated;
+/// 动态隐藏底部栏
+- (void)setBottomHidden:(BOOL)hidden animated:(BOOL)animated;
+/// 动态隐藏导航栏
+- (void)setHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end
 
@@ -290,14 +246,17 @@ typedef NS_ENUM(NSInteger, FWMenuTitleViewStyle) {
 /// UIBarButtonItem默认都是跟随tintColor的，所以这里声明是否让图片也是用AlwaysTemplate模式，默认YES
 @property (nonatomic, assign) BOOL adjustsTintColor;
 
-/// 初始化标题类型按钮，默认内间距：{8, 8, 8, 8}，可自定义
+/// 指定标题初始化，默认内间距：{8, 8, 8, 8}，可自定义
 - (instancetype)initWithTitle:(nullable NSString *)title;
 
-/// 初始化图片类型按钮，默认内间距：{8, 8, 8, 8}，可自定义
+/// 指定图片初始化，默认内间距：{8, 8, 8, 8}，可自定义
 - (instancetype)initWithImage:(nullable UIImage *)image;
 
-/// 使用指定对象创建按钮，支持UIImage|NSString，不支持时返回nil
-- (nullable instancetype)initWithObject:(nullable id)object;
+/// 使用指定对象创建按钮，支持UIImage|NSString(默认)，同时添加点击事件
++ (instancetype)buttonWithObject:(nullable id)object target:(nullable id)target action:(nullable SEL)action;
+
+/// 使用指定对象创建按钮，支持UIImage|NSString(默认)，同时添加点击句柄
++ (instancetype)buttonWithObject:(nullable id)object block:(nullable void (^)(id sender))block;
 
 @end
 

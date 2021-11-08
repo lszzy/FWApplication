@@ -27,16 +27,15 @@ class TestNavigationTitleLabel: UILabel, FWMenuTitleViewProtocol {
 @objcMembers class TestNavigationScrollViewController: TestViewController, FWTableViewController {
     private lazy var navigationView: FWNavigationView = {
         let navigationView = FWNavigationView()
-        navigationView.style = .custom
         navigationView.backgroundColor = Theme.barColor
-        navigationView.contentView.titleView = TestNavigationTitleLabel()
-        navigationView.contentView.title = "我是很长很长要多长有多长长得不得了的按钮"
-        navigationView.contentView.tintColor = Theme.textColor
+        navigationView.menuView.titleView = TestNavigationTitleLabel()
+        navigationView.menuView.title = "我是很长很长要多长有多长长得不得了的按钮"
+        navigationView.menuView.tintColor = Theme.textColor
         let leftButton = FWMenuButton(image: FWIcon.backImage)
         leftButton.fwAddTouch { sender in
             FWRouter.closeViewController(animated: true)
         }
-        navigationView.contentView.leftButton = leftButton
+        navigationView.menuView.leftButton = leftButton
         return navigationView
     }()
     
