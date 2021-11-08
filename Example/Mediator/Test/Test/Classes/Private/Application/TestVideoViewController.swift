@@ -24,8 +24,8 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         }
     }
     
-    private lazy var closeButton: FWMenuButton = {
-        let result = FWMenuButton(image: FWIcon.closeImage)
+    private lazy var closeButton: FWToolbarButton = {
+        let result = FWToolbarButton(image: FWIcon.closeImage)
         result.tintColor = Theme.textColor
         result.fwAddTouch { sender in
             FWRouter.closeViewController(animated: true)
@@ -33,8 +33,8 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         return result
     }()
     
-    private lazy var playButton: FWMenuButton = {
-        let result = FWMenuButton(image: FWIconImage("octicon-playback-play", 24))
+    private lazy var playButton: FWToolbarButton = {
+        let result = FWToolbarButton(image: FWIconImage("octicon-playback-play", 24))
         result.tintColor = Theme.textColor
         result.fwAddTouch { [weak self] sender in
             guard let player = self?.videoPlayer else { return }

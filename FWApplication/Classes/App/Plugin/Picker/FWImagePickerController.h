@@ -289,7 +289,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class FWImagePickerCollectionCell;
 @class FWImagePickerController;
-@class FWMenuTitleView;
+@class FWToolbarTitleView;
 
 @protocol FWImagePickerControllerDelegate <NSObject>
 
@@ -399,7 +399,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nullable, nonatomic, strong) UIColor *toolBarTintColor;
 
 /// 当前titleView，默认不可点击，contentType方式会自动切换点击状态
-@property(nonatomic, strong, readonly) FWMenuTitleView *titleView;
+@property(nonatomic, strong, readonly) FWToolbarTitleView *titleView;
 /// 标题视图accessoryImage，默认nil，contentType方式会自动设置
 @property(nullable, nonatomic, strong) UIImage *titleAccessoryImage;
 

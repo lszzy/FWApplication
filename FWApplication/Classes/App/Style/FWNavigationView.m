@@ -17,7 +17,9 @@
 #import "FWNavigation.h"
 #import <objc/runtime.h>
 
-@implementation FWNavigationView
+#pragma mark - FWToolbarView
+
+@implementation FWToolbarView
 
 @synthesize topView = _topView;
 @synthesize bottomView = _bottomView;
@@ -33,17 +35,16 @@
 }
 
 - (void)didInitialize {
-    _topHeight = FWStatusBarHeight;
-    _menuHeight = FWNavigationBarHeight;
-    _bottomHeight = 0;
+    _topHeight = 0;
+    _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+    _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
     
     _backgroundView = [[UIImageView alloc] init];
     _backgroundView.clipsToBounds = YES;
     [self addSubview:self.backgroundView];
     [self.backgroundView fwPinEdgesToSuperview];
     
-    _menuView = [[FWMenuView alloc] init];
-    self.menuView.titleView = [[FWMenuTitleView alloc] init];
+    _menuView = [[FWToolbarMenuView alloc] init];
     [self addSubview:self.menuView];
     [self.menuView fwPinEdgesToSuperviewHorizontal];
     [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.topHeight];
@@ -52,9 +53,7 @@
 }
 
 - (void)updateLayout:(BOOL)animated {
-    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.hidden || self.topHidden ? 0 : self.topHeight];
-    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.hidden || self.bottomHidden ? 0 : self.bottomHeight];
-    [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.hidden || self.menuHidden ? 0 : self.menuHeight];
+    [self setNeedsUpdateConstraints];
     [self invalidateIntrinsicContentSize];
     
     if (animated && self.superview) {
@@ -62,6 +61,14 @@
             [self.superview layoutIfNeeded];
         }];
     }
+}
+
+- (void)updateConstraints {
+    [super updateConstraints];
+    
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.hidden || self.topHidden ? 0 : self.topHeight];
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.hidden || self.bottomHidden ? 0 : self.bottomHeight];
+    [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.hidden || self.menuHidden ? 0 : self.menuHeight];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -161,15 +168,32 @@
 
 @end
 
-#pragma mark - FWMenuView
+#pragma mark - FWNavigationView
 
-@interface FWMenuView ()
+@implementation FWNavigationView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.topHeight = FWStatusBarHeight;
+        self.menuHeight = FWNavigationBarHeight;
+        self.bottomHeight = 0;
+        self.menuView.titleView = [[FWToolbarTitleView alloc] init];
+    }
+    return self;
+}
+
+@end
+
+#pragma mark - FWToolbarMenuView
+
+@interface FWToolbarMenuView ()
 
 @property (nonatomic, strong) NSMutableArray *subviewContraints;
 
 @end
 
-@implementation FWMenuView
+@implementation FWToolbarMenuView
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
@@ -209,16 +233,16 @@
 
 - (NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
-        return ((id<FWMenuTitleViewProtocol>)self.titleView).title;
+    if ([self.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
+        return ((id<FWToolbarTitleViewProtocol>)self.titleView).title;
     }
     return nil;
 }
 
 - (void)setTitle:(NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
-        ((id<FWMenuTitleViewProtocol>)self.titleView).title = title;
+    if ([self.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
+        ((id<FWToolbarTitleViewProtocol>)self.titleView).title = title;
     }
 }
 
@@ -305,9 +329,9 @@
 
 @end
 
-#pragma mark - FWMenuTitleView
+#pragma mark - FWToolbarTitleView
 
-@interface FWMenuTitleView ()
+@interface FWToolbarTitleView ()
 
 @property(nonatomic, strong, readonly) UIView *contentView;
 @property(nonatomic, assign) CGSize titleLabelSize;
@@ -316,7 +340,7 @@
 
 @end
 
-@implementation FWMenuTitleView
+@implementation FWToolbarTitleView
 
 #pragma mark - Static
 
@@ -332,7 +356,7 @@
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UINavigationBar, @selector(layoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             UIView *titleView = selfObject.topItem.titleView;
-            if (![titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
+            if (![titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
                 FWSwizzleOriginal();
                 return;
             }
@@ -358,23 +382,23 @@
         FWSwizzleClass(UIViewController, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
             FWSwizzleOriginal(title);
             
-            if ([selfObject.navigationItem.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
-                ((id<FWMenuTitleViewProtocol>)selfObject.navigationItem.titleView).title = title;
+            if ([selfObject.navigationItem.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
+                ((id<FWToolbarTitleViewProtocol>)selfObject.navigationItem.titleView).title = title;
             }
         }));
         
         FWSwizzleClass(UINavigationItem, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
             FWSwizzleOriginal(title);
             
-            if ([selfObject.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
-                ((id<FWMenuTitleViewProtocol>)selfObject.titleView).title = title;
+            if ([selfObject.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
+                ((id<FWToolbarTitleViewProtocol>)selfObject.titleView).title = title;
             }
         }));
         
-        FWSwizzleClass(UINavigationItem, @selector(setTitleView:), FWSwizzleReturn(void), FWSwizzleArgs(UIView<FWMenuTitleViewProtocol> *titleView), FWSwizzleCode({
+        FWSwizzleClass(UINavigationItem, @selector(setTitleView:), FWSwizzleReturn(void), FWSwizzleArgs(UIView<FWToolbarTitleViewProtocol> *titleView), FWSwizzleCode({
             FWSwizzleOriginal(titleView);
             
-            if ([titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
+            if ([titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
                 if (titleView.title.length <= 0) {
                     titleView.title = selfObject.title;
                 }
@@ -384,7 +408,7 @@
 }
 
 + (void)setDefaultAppearance {
-    FWMenuTitleView *appearance = [FWMenuTitleView appearance];
+    FWToolbarTitleView *appearance = [FWToolbarTitleView appearance];
     appearance.adjustsTintColor = YES;
     appearance.maximumWidth = CGFLOAT_MAX;
     appearance.loadingViewSize = CGSizeMake(18, 18);
@@ -402,14 +426,14 @@
 #pragma mark - Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    return [self initWithStyle:FWMenuTitleViewStyleHorizontal frame:frame];
+    return [self initWithStyle:FWToolbarTitleViewStyleHorizontal frame:frame];
 }
 
-- (instancetype)initWithStyle:(FWMenuTitleViewStyle)style {
+- (instancetype)initWithStyle:(FWToolbarTitleViewStyle)style {
     return [self initWithStyle:style frame:CGRectZero];
 }
 
-- (instancetype)initWithStyle:(FWMenuTitleViewStyle)style frame:(CGRect)frame {
+- (instancetype)initWithStyle:(FWToolbarTitleViewStyle)style frame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self addTarget:self action:@selector(titleViewTouched) forControlEvents:UIControlEventTouchUpInside];
         
@@ -449,9 +473,9 @@
 
 #pragma mark - Accessor
 
-- (void)setStyle:(FWMenuTitleViewStyle)style {
+- (void)setStyle:(FWToolbarTitleViewStyle)style {
     _style = style;
-    if (style == FWMenuTitleViewStyleVertical) {
+    if (style == FWToolbarTitleViewStyleVertical) {
         self.titleLabel.font = self.verticalTitleFont;
         self.subtitleLabel.font = self.verticalSubtitleFont;
     } else {
@@ -503,7 +527,7 @@
 
 - (void)setHorizontalTitleFont:(UIFont *)horizontalTitleFont {
     _horizontalTitleFont = horizontalTitleFont;
-    if (self.style == FWMenuTitleViewStyleHorizontal) {
+    if (self.style == FWToolbarTitleViewStyleHorizontal) {
         self.titleLabel.font = horizontalTitleFont;
         [self refreshLayout];
     }
@@ -511,7 +535,7 @@
 
 - (void)setHorizontalSubtitleFont:(UIFont *)horizontalSubtitleFont {
     _horizontalSubtitleFont = horizontalSubtitleFont;
-    if (self.style == FWMenuTitleViewStyleHorizontal) {
+    if (self.style == FWToolbarTitleViewStyleHorizontal) {
         self.subtitleLabel.font = horizontalSubtitleFont;
         [self refreshLayout];
     }
@@ -519,7 +543,7 @@
 
 - (void)setVerticalTitleFont:(UIFont *)verticalTitleFont {
     _verticalTitleFont = verticalTitleFont;
-    if (self.style == FWMenuTitleViewStyleVertical) {
+    if (self.style == FWToolbarTitleViewStyleVertical) {
         self.titleLabel.font = verticalTitleFont;
         [self refreshLayout];
     }
@@ -527,7 +551,7 @@
 
 - (void)setVerticalSubtitleFont:(UIFont *)verticalSubtitleFont {
     _verticalSubtitleFont = verticalSubtitleFont;
-    if (self.style == FWMenuTitleViewStyleVertical) {
+    if (self.style == FWToolbarTitleViewStyleVertical) {
         self.subtitleLabel.font = verticalSubtitleFont;
         [self refreshLayout];
     }
@@ -606,7 +630,7 @@
 }
 
 - (void)updateSubAccessoryViewHidden {
-    if (self.subAccessoryView && self.subtitleLabel.text.length && self.style == FWMenuTitleViewStyleVertical) {
+    if (self.subAccessoryView && self.subtitleLabel.text.length && self.style == FWToolbarTitleViewStyleVertical) {
         self.subAccessoryView.hidden = NO;
     } else {
         self.subAccessoryView.hidden = YES;
@@ -778,7 +802,7 @@
 }
 
 - (CGSize)contentSize {
-    if (self.style == FWMenuTitleViewStyleVertical) {
+    if (self.style == FWToolbarTitleViewStyleVertical) {
         CGSize size = CGSizeZero;
         CGFloat firstLineWidth = [self firstLineWidthInVerticalStyle];
         CGFloat secondLineWidth = [self secondLineWidthInVerticalStyle];
@@ -829,7 +853,7 @@
     UIEdgeInsets titleEdgeInsets = self.titleEdgeInsetsIfShowingTitleLabel;
     UIEdgeInsets subtitleEdgeInsets = self.subtitleEdgeInsetsIfShowingSubtitleLabel;
     
-    if (self.style == FWMenuTitleViewStyleVertical) {
+    if (self.style == FWToolbarTitleViewStyleVertical) {
         CGFloat firstLineWidth = [self firstLineWidthInVerticalStyle];
         CGFloat firstLineMinX = 0;
         CGFloat firstLineMaxX = 0;
@@ -965,23 +989,23 @@
 
 @end
 
-#pragma mark - FWMenuButton
+#pragma mark - FWToolbarButton
 
-@interface FWMenuButton()
+@interface FWToolbarButton()
 
 @property (nonatomic, strong) UIImage *highlightedImage;
 @property (nonatomic, strong) UIImage *disabledImage;
 
 @end
 
-@implementation FWMenuButton
+@implementation FWToolbarButton
 
 + (instancetype)buttonWithObject:(id)object target:(id)target action:(SEL)action {
-    FWMenuButton *button;
+    FWToolbarButton *button;
     if ([object isKindOfClass:[UIImage class]]) {
-        button = [[FWMenuButton alloc] initWithImage:(UIImage *)object];
+        button = [[FWToolbarButton alloc] initWithImage:(UIImage *)object];
     } else {
-        button = [[FWMenuButton alloc] initWithTitle:object];
+        button = [[FWToolbarButton alloc] initWithTitle:object];
     }
     if (target && action) {
         [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
@@ -990,11 +1014,11 @@
 }
 
 + (instancetype)buttonWithObject:(id)object block:(void (^)(id))block {
-    FWMenuButton *button;
+    FWToolbarButton *button;
     if ([object isKindOfClass:[UIImage class]]) {
-        button = [[FWMenuButton alloc] initWithImage:(UIImage *)object];
+        button = [[FWToolbarButton alloc] initWithImage:(UIImage *)object];
     } else {
-        button = [[FWMenuButton alloc] initWithTitle:object];
+        button = [[FWToolbarButton alloc] initWithTitle:object];
     }
     if (block) [button fwAddTouchBlock:block];
     return button;

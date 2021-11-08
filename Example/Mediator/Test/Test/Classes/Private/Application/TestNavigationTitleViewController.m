@@ -8,12 +8,12 @@
 
 #import "TestNavigationTitleViewController.h"
 
-@interface TestNavigationTitleViewController () <FWTableViewController, FWMenuTitleViewDelegate, FWPopupMenuDelegate>
+@interface TestNavigationTitleViewController () <FWTableViewController, FWToolbarTitleViewDelegate, FWPopupMenuDelegate>
 
-@property(nonatomic, strong) UIToolbar *toolbar;
 @property(nonatomic, strong) FWNavigationView *navigationView;
-@property(nonatomic, strong) FWMenuTitleView *titleView;
+@property(nonatomic, strong) FWToolbarTitleView *titleView;
 @property(nonatomic, assign) UIControlContentHorizontalAlignment horizontalAlignment;
+@property(nonatomic, strong) FWToolbarView *toolbarView;
 
 @end
 
@@ -32,48 +32,49 @@
 - (void)renderTableLayout
 {
     self.navigationView = [[FWNavigationView alloc] init];
-    self.titleView = self.navigationView.menuView.titleView;
     self.navigationView.menuView.tintColor = Theme.textColor;
     self.navigationView.backgroundColor = Theme.barColor;
-    self.navigationView.bottomHeight = FWNavigationBarHeight;
-    self.navigationView.bottomHidden = YES;
-    self.navigationView.bottomView.backgroundColor = UIColor.greenColor;
-    self.navigationView.menuView.leftButton = [FWMenuButton buttonWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
-        [FWRouter closeViewControllerAnimated:YES];
-    }];
-    self.navigationView.menuView.rightButton = [FWMenuButton buttonWithObject:FWIcon.refreshImage block:^(id  _Nonnull sender) {
-        [FWRouter closeViewControllerAnimated:YES];
-    }];
-    self.navigationView.menuView.rightMoreButton = [FWMenuButton buttonWithObject:FWIcon.actionImage block:^(id  _Nonnull sender) {
-        [FWRouter closeViewControllerAnimated:YES];
-    }];
-    [self.view addSubview:self.navigationView];
-    [self.navigationView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
-    
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
-    [self.tableView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-    [self.tableView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.navigationView];
-}
-
-- (void)renderView
-{
-    UIToolbar *toolbar = [UIToolbar new];
-    toolbar.fwBarPosition = UIBarPositionBottom;
-    _toolbar = toolbar;
-    toolbar.fwForegroundColor = Theme.textColor;
-    toolbar.fwBackgroundColor = Theme.barColor;
-    [self.view addSubview:toolbar];
-    toolbar.fwLayoutChain.edgesToSafeAreaWithInsetsExcludingEdge(UIEdgeInsetsZero, NSLayoutAttributeTop);
-    
-    UIBarButtonItem *leftItem = [UIBarButtonItem fwBarItemWithObject:@"取消" block:nil];
-    UIBarButtonItem *flexibleItem = [UIBarButtonItem fwBarItemWithObject:@(UIBarButtonSystemItemFlexibleSpace) block:nil];
-    UIBarButtonItem *rightItem = [UIBarButtonItem fwBarItemWithObject:@"确定" block:nil];
-    toolbar.items = @[leftItem, flexibleItem, rightItem];
-    [toolbar sizeToFit];
-    
+    self.titleView = self.navigationView.menuView.titleView;
     self.titleView.showsLoadingView = YES;
     self.titleView.title = @"我是很长很长要多长有多长长得不得了的按钮";
     self.horizontalAlignment = self.titleView.contentHorizontalAlignment;
+    self.navigationView.bottomHeight = FWNavigationBarHeight;
+    self.navigationView.bottomHidden = YES;
+    self.navigationView.bottomView.backgroundColor = UIColor.greenColor;
+    self.navigationView.menuView.leftButton = [FWToolbarButton buttonWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+        [FWRouter closeViewControllerAnimated:YES];
+    }];
+    self.navigationView.menuView.rightButton = [FWToolbarButton buttonWithObject:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+        [FWRouter closeViewControllerAnimated:YES];
+    }];
+    self.navigationView.menuView.rightMoreButton = [FWToolbarButton buttonWithObject:FWIcon.actionImage block:^(id  _Nonnull sender) {
+        [FWRouter closeViewControllerAnimated:YES];
+    }];
+    [self.view addSubview:self.navigationView];
+    self.navigationView.fwLayoutChain.left().right().top();
+    
+    self.toolbarView = [[FWToolbarView alloc] init];
+    self.toolbarView.tintColor = Theme.textColor;
+    self.toolbarView.backgroundColor = Theme.barColor;
+    self.toolbarView.topHeight = 44;
+    self.toolbarView.topHidden = YES;
+    self.toolbarView.topView.backgroundColor = UIColor.greenColor;
+    FWWeakifySelf();
+    self.toolbarView.menuView.leftButton = [FWToolbarButton buttonWithObject:@"取消" block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        [self.toolbarView setHidden:YES animated:YES];
+        [self fwShowMessageWithText:@"点击了取消"];
+    }];
+    self.toolbarView.menuView.rightButton = [FWToolbarButton buttonWithObject:@"确定" block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        [self.toolbarView setHidden:YES animated:YES];
+        [self fwShowMessageWithText:@"点击了确定"];
+    }];
+    [self.view addSubview:self.toolbarView];
+    self.toolbarView.fwLayoutChain.left().right().bottom();
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
+    self.tableView.fwLayoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
 }
 
 - (void)renderModel
@@ -100,10 +101,15 @@
         @"模拟标题的loading状态切换",
         @"标题点击效果",
         
-        @"状态栏切换",
-        @"菜单栏切换",
-        @"底部栏切换",
+        @"导航栏顶部切换",
+        @"导航栏菜单切换",
+        @"导航栏底部切换",
         @"导航栏切换",
+        
+        @"工具栏顶部切换",
+        @"工具栏菜单切换",
+        @"工具栏底部切换",
+        @"工具栏切换",
     ]];
 }
 
@@ -138,8 +144,8 @@
             self.titleView.subtitle = self.titleView.subtitle ? nil : @"(副标题)";
             break;
         case 3:
-            self.titleView.style = self.titleView.style == FWMenuTitleViewStyleHorizontal ? FWMenuTitleViewStyleVertical : FWMenuTitleViewStyleHorizontal;
-            self.titleView.subtitle = self.titleView.style == FWMenuTitleViewStyleVertical ? @"(副标题)" : self.titleView.subtitle;
+            self.titleView.style = self.titleView.style == FWToolbarTitleViewStyleHorizontal ? FWToolbarTitleViewStyleVertical : FWToolbarTitleViewStyleHorizontal;
+            self.titleView.subtitle = self.titleView.style == FWToolbarTitleViewStyleVertical ? @"(副标题)" : self.titleView.subtitle;
             break;
         case 4:
         {
@@ -168,7 +174,7 @@
             self.titleView.showsLoadingPlaceholder = NO;
             self.titleView.title = @"加载中...";
             self.titleView.subtitle = nil;
-            self.titleView.style = FWMenuTitleViewStyleHorizontal;
+            self.titleView.style = FWToolbarTitleViewStyleHorizontal;
             self.titleView.accessoryImage = nil;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 self.titleView.showsLoadingPlaceholder = YES;
@@ -205,6 +211,26 @@
             [self.navigationView setHidden:!self.navigationView.hidden animated:YES];
             break;
         }
+        case 11:
+        {
+            [self.toolbarView setTopHidden:!self.toolbarView.topHidden animated:YES];
+        }
+            break;
+        case 12:
+        {
+            [self.toolbarView setMenuHidden:!self.toolbarView.menuHidden animated:YES];
+            break;
+        }
+        case 13:
+        {
+            [self.toolbarView setBottomHidden:!self.toolbarView.bottomHidden animated:YES];
+            break;
+        }
+        case 14:
+        {
+            [self.toolbarView setHidden:!self.toolbarView.hidden animated:YES];
+            break;
+        }
             break;
     }
     
@@ -228,7 +254,7 @@
             cell.textLabel.text = self.titleView.subtitle ? @"去掉副标题" : @"显示副标题";
             break;
         case 3:
-            cell.textLabel.text = self.titleView.style == FWMenuTitleViewStyleHorizontal ? @"切换为上下两行显示" : @"切换为水平一行显示";
+            cell.textLabel.text = self.titleView.style == FWToolbarTitleViewStyleHorizontal ? @"切换为上下两行显示" : @"切换为水平一行显示";
             break;
         case 4:
             cell.textLabel.text = [self.tableData fwObjectAtIndex:indexPath.row];
@@ -241,9 +267,9 @@
     return cell;
 }
 
-#pragma mark - FWMenuTitleViewDelegate
+#pragma mark - FWToolbarTitleViewDelegate
 
-- (void)didChangedActive:(BOOL)active forTitleView:(FWMenuTitleView *)titleView {
+- (void)didChangedActive:(BOOL)active forTitleView:(FWToolbarTitleView *)titleView {
     if (!active) return;
     
     [FWPopupMenu showRelyOnView:titleView titles:@[@"菜单1", @"菜单2"] icons:nil menuWidth:120 otherSettings:^(FWPopupMenu *popupMenu) {

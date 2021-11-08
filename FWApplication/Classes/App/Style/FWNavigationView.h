@@ -11,14 +11,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FWNavigationView
+#pragma mark - FWToolbarView
 
-@class FWMenuView;
+@class FWToolbarMenuView;
 
 /**
- * 自定义导航栏视图，高度自动布局，隐藏时自动收起；整体高度为height，隐藏时为0
+ * 自定义工具栏视图，高度自动布局(总高度height)，隐藏时自动收起(高度0)；子类可继承
+ *
+ * 顶部：topView，高度为topHeight(默认0)，可设置topHidden隐藏
+ * 中间：menuView，高度为menuHeight(默认FWToolBarHeight-安全区域高度)，可设置menuHidden隐藏
+ * 底部：bottomView，高度为bottomHeight(默认安全区域高度)，可设置bottomHidden隐藏
  */
-@interface FWNavigationView : UIView
+@interface FWToolbarView : UIView
 
 /// 背景图片视图，用于设置背景图片
 @property (nonatomic, strong, readonly) UIImageView *backgroundView;
@@ -26,17 +30,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 顶部视图，延迟加载
 @property (nonatomic, strong, readonly) UIView *topView;
 /// 菜单视图，初始加载
-@property (nonatomic, strong, readonly) FWMenuView *menuView;
+@property (nonatomic, strong, readonly) FWToolbarMenuView *menuView;
 /// 底部视图，延迟加载
 @property (nonatomic, strong, readonly) UIView *bottomView;
 
-/// 顶部高度，默认FWStatusBarHeight
+/// 顶部高度，默认0
 @property (nonatomic, assign) CGFloat topHeight;
-/// 菜单高度，默认FWNavigationBarHeight
+/// 菜单高度，默认FWToolBarHeight-安全区域高度
 @property (nonatomic, assign) CGFloat menuHeight;
-/// 底部高度，默认0
+/// 底部高度，默认安全区域高度
 @property (nonatomic, assign) CGFloat bottomHeight;
-/// 导航栏只读总高度，topHeight+menuHeight+bottomHeight，隐藏时为0
+/// 工具栏只读总高度，topHeight+menuHeight+bottomHeight，隐藏时为0
 @property (nonatomic, assign, readonly) CGFloat height;
 
 /// 顶部栏是否隐藏，默认NO
@@ -52,47 +56,60 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setMenuHidden:(BOOL)hidden animated:(BOOL)animated;
 /// 动态隐藏底部栏
 - (void)setBottomHidden:(BOOL)hidden animated:(BOOL)animated;
-/// 动态隐藏导航栏
+/// 动态隐藏工具栏
 - (void)setHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end
 
-#pragma mark - FWMenuView
+#pragma mark - FWNavigationView
 
 /**
- * 自定义菜单栏视图，支持完全自定义
+ * 自定义导航栏视图，继承FWToolbarView，高度自动布局(总高度height)，隐藏时自动收起(高度0)；自带titleView
+ *
+ * 顶部：topView，高度为topHeight(默认FWStatusBarHeight)，可设置topHidden隐藏
+ * 中间：menuView，高度为menuHeight(默认FWNavigationBarHeight)，可设置menuHidden隐藏
+ * 底部：bottomView，高度为bottomHeight(默认0)，可设置bottomHidden隐藏
+ */
+@interface FWNavigationView : FWToolbarView
+
+@end
+
+#pragma mark - FWToolbarMenuView
+
+/**
+ * 自定义工具栏菜单视图，支持完全自定义
  *
  * 默认最多只支持左右各两个按钮，如需更多按钮，请自行添加并布局即可
  */
-@interface FWMenuView : UIView
+@interface FWToolbarMenuView : UIView
 
 /// 自定义返回按钮，自定义导航栏使用时会自动设置为左侧按钮
 @property (nonatomic, strong, nullable) __kindof UIView *backButton;
 
-/// 自定义左侧按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWMenuButton
+/// 自定义左侧按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftButton;
 
-/// 自定义左侧更多按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWMenuButton
+/// 自定义左侧更多按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftMoreButton;
 
-/// 自定义标题视图，居中显示，需支持自动布局，左右最大间距为0。建议使用FWMenuTitleView
+/// 自定义标题视图，居中显示，需支持自动布局，左右最大间距为0。建议使用FWToolbarTitleView
 @property (nonatomic, strong, nullable) __kindof UIView *titleView;
 
-/// 快速设置标题，titleView类型为FWMenuTitleViewProtocol时才生效
+/// 快速设置标题，titleView类型为FWToolbarTitleViewProtocol时才生效
 @property (nonatomic, copy, nullable) NSString *title;
 
-/// 自定义右侧更多按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWMenuButton
+/// 自定义右侧更多按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightMoreButton;
 
-/// 自定义右侧按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWMenuButton
+/// 自定义右侧按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightButton;
 
 @end
 
-#pragma mark - FWMenuTitleView
+#pragma mark - FWToolbarTitleView
 
 /// 自定义titleView协议
-@protocol FWMenuTitleViewProtocol <NSObject>
+@protocol FWToolbarTitleViewProtocol <NSObject>
 
 @required
 
@@ -101,11 +118,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@class FWMenuTitleView;
+@class FWToolbarTitleView;
 @protocol FWIndicatorViewPlugin;
 
 /// 自定义titleView事件代理
-@protocol FWMenuTitleViewDelegate <NSObject>
+@protocol FWToolbarTitleViewDelegate <NSObject>
 
 @optional
 
@@ -115,7 +132,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param titleView 被点击的 titleView
  @param isActive titleView 是否处于活跃状态
  */
-- (void)didTouchTitleView:(FWMenuTitleView *)titleView isActive:(BOOL)isActive;
+- (void)didTouchTitleView:(FWToolbarTitleView *)titleView isActive:(BOOL)isActive;
 
 /**
  titleView 的活跃状态发生变化时会被调用，也即 [titleView setActive:] 被调用时。
@@ -123,14 +140,14 @@ NS_ASSUME_NONNULL_BEGIN
  @param active 是否处于活跃状态
  @param titleView 变换状态的 titleView
  */
-- (void)didChangedActive:(BOOL)active forTitleView:(FWMenuTitleView *)titleView;
+- (void)didChangedActive:(BOOL)active forTitleView:(FWToolbarTitleView *)titleView;
 
 @end
 
 /// 自定义titleView布局方式，默认水平布局
-typedef NS_ENUM(NSInteger, FWMenuTitleViewStyle) {
-    FWMenuTitleViewStyleHorizontal = 0,
-    FWMenuTitleViewStyleVertical,
+typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
+    FWToolbarTitleViewStyleHorizontal = 0,
+    FWToolbarTitleViewStyleVertical,
 };
 
 /**
@@ -140,13 +157,13 @@ typedef NS_ENUM(NSInteger, FWMenuTitleViewStyle) {
  *
  *  @see https://github.com/Tencent/QMUI_iOS
  */
-@interface FWMenuTitleView : UIControl <FWMenuTitleViewProtocol>
+@interface FWToolbarTitleView : UIControl <FWToolbarTitleViewProtocol>
 
 /// 事件代理
-@property(nonatomic, weak, nullable) id<FWMenuTitleViewDelegate> delegate;
+@property(nonatomic, weak, nullable) id<FWToolbarTitleViewDelegate> delegate;
 
 /// 标题栏样式
-@property(nonatomic, assign) FWMenuTitleViewStyle style;
+@property(nonatomic, assign) FWToolbarTitleViewStyle style;
 
 /// 标题栏是否是激活状态，主要针对accessoryImage生效
 @property(nonatomic, assign, getter=isActive) BOOL active;
@@ -230,18 +247,18 @@ typedef NS_ENUM(NSInteger, FWMenuTitleViewStyle) {
 @property(nonatomic, assign) BOOL showsSubAccessoryPlaceholder;
 
 /// 指定样式初始化
-- (instancetype)initWithStyle:(FWMenuTitleViewStyle)style;
+- (instancetype)initWithStyle:(FWToolbarTitleViewStyle)style;
 
 @end
 
-#pragma mark - FWMenuButton
+#pragma mark - FWToolbarButton
 
 /**
- * 自定义菜单栏按钮，兼容系统customView方式和自定义方式
+ * 自定义工具栏按钮，兼容系统customView方式和自定义方式
  *
- * UIBarButtonItem自定义导航栏时最左和最右间距为16，系统导航栏时为8；FWMenuButton作为customView使用时，会自动调整按钮内间距，和系统表现一致
+ * UIBarButtonItem自定义导航栏时最左和最右间距为16，系统导航栏时为8；FWToolbarButton作为customView使用时，会自动调整按钮内间距，和系统表现一致
  */
-@interface FWMenuButton : UIButton
+@interface FWToolbarButton : UIButton
 
 /// UIBarButtonItem默认都是跟随tintColor的，所以这里声明是否让图片也是用AlwaysTemplate模式，默认YES
 @property (nonatomic, assign) BOOL adjustsTintColor;

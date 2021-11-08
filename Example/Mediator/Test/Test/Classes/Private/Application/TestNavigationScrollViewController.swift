@@ -8,7 +8,7 @@
 
 import FWApplication
 
-class TestNavigationTitleLabel: UILabel, FWMenuTitleViewProtocol {
+class TestNavigationTitleLabel: UILabel, FWToolbarTitleViewProtocol {
     override init(frame: CGRect) {
         super.init(frame: frame)
         font = UIFont.boldSystemFont(ofSize: 17)
@@ -31,7 +31,7 @@ class TestNavigationTitleLabel: UILabel, FWMenuTitleViewProtocol {
         navigationView.menuView.titleView = TestNavigationTitleLabel()
         navigationView.menuView.title = "我是很长很长要多长有多长长得不得了的按钮"
         navigationView.menuView.tintColor = Theme.textColor
-        let leftButton = FWMenuButton(image: FWIcon.backImage)
+        let leftButton = FWToolbarButton(image: FWIcon.backImage)
         leftButton.fwAddTouch { sender in
             FWRouter.closeViewController(animated: true)
         }
@@ -47,6 +47,19 @@ class TestNavigationTitleLabel: UILabel, FWMenuTitleViewProtocol {
         tableView.fwContentInsetAdjustmentNever()
         tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fwSafeAreaInsets.top
         tableView.fwSetRefreshingTarget(self, action: #selector(onRefreshing))
+        
+        let toolbar = UIToolbar()
+        toolbar.fwBarPosition = .bottom
+        toolbar.fwForegroundColor = Theme.textColor
+        toolbar.fwBackgroundColor = Theme.barColor
+        view.addSubview(toolbar)
+        toolbar.fwLayoutChain.edgesToSafeArea(excludingEdge: .top)
+        
+        let leftItem = UIBarButtonItem.fwBarItem(with: "取消", block: nil)
+        let flexibleItem = UIBarButtonItem.fwBarItem(with: NSNumber(value: UIBarButtonItem.SystemItem.flexibleSpace.rawValue), block: nil)
+        let rightItem = UIBarButtonItem.fwBarItem(with: "确定", block: nil)
+        toolbar.items = [leftItem, flexibleItem, rightItem]
+        toolbar.sizeToFit()
     }
     
     override func renderData() {
