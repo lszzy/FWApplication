@@ -1743,7 +1743,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 #pragma mark - FWImagePickerController
 
-@interface FWImagePickerController () <FWNavigationTitleViewDelegate>
+@interface FWImagePickerController () <FWMenuTitleViewDelegate>
 
 @property(nonatomic, strong) FWImagePickerPreviewController *imagePickerPreviewController;
 @property(nonatomic, weak) FWImageAlbumController *albumController;
@@ -1784,7 +1784,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
     self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
     
-    FWNavigationTitleView *titleView = [[FWNavigationTitleView alloc] init];
+    FWMenuTitleView *titleView = [[FWMenuTitleView alloc] init];
     _titleView = titleView;
     titleView.delegate = self;
     self.navigationItem.titleView = titleView;
@@ -2252,9 +2252,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
-#pragma mark - FWNavigationTitleViewDelegate
+#pragma mark - FWMenuTitleViewDelegate
 
-- (void)didTouchTitleView:(FWNavigationTitleView *)titleView isActive:(BOOL)isActive {
+- (void)didTouchTitleView:(FWMenuTitleView *)titleView isActive:(BOOL)isActive {
     if (isActive) {
         [self showAlbumControllerAnimated:YES];
     } else {

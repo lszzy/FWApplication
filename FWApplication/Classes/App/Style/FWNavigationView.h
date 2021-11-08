@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
     FWNavigationViewStyleCustom,
 };
 
-@class FWNavigationContentView;
+@class FWMenuView;
 
 /**
  * 自定义导航栏视图，高度自动布局，隐藏时自动收起；整体高度为height，隐藏时为0；
@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
 @property (nonatomic, strong, readonly) UINavigationItem *navigationItem;
 
 /// 内容视图，初始加载，custom样式时显示，与navigationBar布局相同
-@property (nonatomic, strong, readonly) FWNavigationContentView *contentView;
+@property (nonatomic, strong, readonly) FWMenuView *contentView;
 
 /// 内容视图内间距，支持navigationBar和contentView，默认zero
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
@@ -101,42 +101,42 @@ typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
 
 @end
 
-#pragma mark - FWNavigationContentView
+#pragma mark - FWMenuView
 
 /**
- * 自定义导航栏内容视图，支持完全自定义
+ * 自定义菜单栏视图，支持完全自定义
  *
  * 默认最多只支持左右各两个按钮，如需更多按钮，请自行添加并布局即可
  */
-@interface FWNavigationContentView : UIView
+@interface FWMenuView : UIView
 
 /// 自定义返回按钮，自定义导航栏使用时会自动设置为左侧按钮
 @property (nonatomic, strong, nullable) __kindof UIView *backButton;
 
-/// 自定义左侧按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWNavigationButton
+/// 自定义左侧按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWMenuButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftButton;
 
-/// 自定义左侧更多按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWNavigationButton
+/// 自定义左侧更多按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWMenuButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftMoreButton;
 
-/// 自定义标题视图，居中显示，需支持自动布局，左右最大间距为0。默认初始化FWNavigationTitleView，设为nil可清空
+/// 自定义标题视图，居中显示，需支持自动布局，左右最大间距为0。建议使用FWMenuTitleView
 @property (nonatomic, strong, nullable) __kindof UIView *titleView;
 
-/// 快速设置标题，titleView类型为FWNavigationTitleViewProtocol时才生效
+/// 快速设置标题，titleView类型为FWMenuTitleViewProtocol时才生效
 @property (nonatomic, copy, nullable) NSString *title;
 
-/// 自定义右侧更多按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWNavigationButton
+/// 自定义右侧更多按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWMenuButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightMoreButton;
 
-/// 自定义右侧按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWNavigationButton
+/// 自定义右侧按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWMenuButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightButton;
 
 @end
 
-#pragma mark - FWNavigationTitleView
+#pragma mark - FWMenuTitleView
 
 /// 自定义titleView协议
-@protocol FWNavigationTitleViewProtocol <NSObject>
+@protocol FWMenuTitleViewProtocol <NSObject>
 
 @required
 
@@ -145,11 +145,11 @@ typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
 
 @end
 
-@class FWNavigationTitleView;
+@class FWMenuTitleView;
 @protocol FWIndicatorViewPlugin;
 
 /// 自定义titleView事件代理
-@protocol FWNavigationTitleViewDelegate <NSObject>
+@protocol FWMenuTitleViewDelegate <NSObject>
 
 @optional
 
@@ -159,7 +159,7 @@ typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
  @param titleView 被点击的 titleView
  @param isActive titleView 是否处于活跃状态
  */
-- (void)didTouchTitleView:(FWNavigationTitleView *)titleView isActive:(BOOL)isActive;
+- (void)didTouchTitleView:(FWMenuTitleView *)titleView isActive:(BOOL)isActive;
 
 /**
  titleView 的活跃状态发生变化时会被调用，也即 [titleView setActive:] 被调用时。
@@ -167,30 +167,30 @@ typedef NS_ENUM(NSInteger, FWNavigationViewStyle) {
  @param active 是否处于活跃状态
  @param titleView 变换状态的 titleView
  */
-- (void)didChangedActive:(BOOL)active forTitleView:(FWNavigationTitleView *)titleView;
+- (void)didChangedActive:(BOOL)active forTitleView:(FWMenuTitleView *)titleView;
 
 @end
 
 /// 自定义titleView布局方式，默认水平布局
-typedef NS_ENUM(NSInteger, FWNavigationTitleViewStyle) {
-    FWNavigationTitleViewStyleHorizontal = 0,
-    FWNavigationTitleViewStyleVertical,
+typedef NS_ENUM(NSInteger, FWMenuTitleViewStyle) {
+    FWMenuTitleViewStyleHorizontal = 0,
+    FWMenuTitleViewStyleVertical,
 };
 
 /**
- *  可作为导航栏标题控件，通过 navigationItem.titleView 来设置。也可当成单独的组件，脱离 UIViewController 使用
+ *  可作为导航栏标题控件，通过 navigationItem.titleView 来设置。也可当成单独的标题组件，脱离 UIViewController 使用
  *
  *  默认情况下 titleView 是不支持点击的，如需点击，请把 `userInteractionEnabled` 设为 `YES`
  *
  *  @see https://github.com/Tencent/QMUI_iOS
  */
-@interface FWNavigationTitleView : UIControl <FWNavigationTitleViewProtocol>
+@interface FWMenuTitleView : UIControl <FWMenuTitleViewProtocol>
 
 /// 事件代理
-@property(nonatomic, weak, nullable) id<FWNavigationTitleViewDelegate> delegate;
+@property(nonatomic, weak, nullable) id<FWMenuTitleViewDelegate> delegate;
 
 /// 标题栏样式
-@property(nonatomic, assign) FWNavigationTitleViewStyle style;
+@property(nonatomic, assign) FWMenuTitleViewStyle style;
 
 /// 标题栏是否是激活状态，主要针对accessoryImage生效
 @property(nonatomic, assign, getter=isActive) BOOL active;
@@ -274,18 +274,18 @@ typedef NS_ENUM(NSInteger, FWNavigationTitleViewStyle) {
 @property(nonatomic, assign) BOOL showsSubAccessoryPlaceholder;
 
 /// 指定样式初始化
-- (instancetype)initWithStyle:(FWNavigationTitleViewStyle)style;
+- (instancetype)initWithStyle:(FWMenuTitleViewStyle)style;
 
 @end
 
-#pragma mark - FWNavigationButton
+#pragma mark - FWMenuButton
 
 /**
- * 自定义导航栏按钮，兼容系统customView方式和自定义方式
+ * 自定义菜单栏按钮，兼容系统customView方式和自定义方式
  *
- * UIBarButtonItem自定义导航栏时最左和最右间距为16，系统导航栏时为8；FWNavigationButton作为customView使用时，会自动调整按钮内间距，和系统表现一致
+ * UIBarButtonItem自定义导航栏时最左和最右间距为16，系统导航栏时为8；FWMenuButton作为customView使用时，会自动调整按钮内间距，和系统表现一致
  */
-@interface FWNavigationButton : UIButton
+@interface FWMenuButton : UIButton
 
 /// UIBarButtonItem默认都是跟随tintColor的，所以这里声明是否让图片也是用AlwaysTemplate模式，默认YES
 @property (nonatomic, assign) BOOL adjustsTintColor;

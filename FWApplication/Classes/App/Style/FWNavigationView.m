@@ -42,7 +42,7 @@
 @property (nonatomic, strong) UIView *topView;
 @property (nonatomic, strong) UIView *middleView;
 @property (nonatomic, strong) UIView *bottomView;
-@property (nonatomic, strong) FWNavigationContentView *contentView;
+@property (nonatomic, strong) FWMenuView *contentView;
 
 @property (nonatomic, strong) NSLayoutConstraint *topConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *middleConstraint;
@@ -87,7 +87,7 @@
         [_navigationBar fwPinEdgesToSuperview];
         [self addSubview:_middleView];
         
-        _contentView = [[FWNavigationContentView alloc] init];
+        _contentView = [[FWMenuView alloc] init];
         _contentView.clipsToBounds = YES;
         _contentView.hidden = YES;
         [_middleView addSubview:_contentView];
@@ -325,24 +325,15 @@
 
 @end
 
-#pragma mark - FWNavigationContentView
+#pragma mark - FWMenuView
 
-@interface FWNavigationContentView ()
+@interface FWMenuView ()
 
 @property (nonatomic, strong) NSMutableArray *subviewContraints;
 
 @end
 
-@implementation FWNavigationContentView
-
-- (instancetype)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.titleView = [[FWNavigationTitleView alloc] initWithFrame:CGRectZero];
-    }
-    return self;
-}
+@implementation FWMenuView
 
 - (void)setLeftButton:(__kindof UIView *)leftButton
 {
@@ -373,16 +364,16 @@
 
 - (NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
-        return ((id<FWNavigationTitleViewProtocol>)self.titleView).title;
+    if ([self.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
+        return ((id<FWMenuTitleViewProtocol>)self.titleView).title;
     }
     return nil;
 }
 
 - (void)setTitle:(NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
-        ((id<FWNavigationTitleViewProtocol>)self.titleView).title = title;
+    if ([self.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
+        ((id<FWMenuTitleViewProtocol>)self.titleView).title = title;
     }
 }
 
@@ -469,9 +460,9 @@
 
 @end
 
-#pragma mark - FWNavigationTitleView
+#pragma mark - FWMenuTitleView
 
-@interface FWNavigationTitleView ()
+@interface FWMenuTitleView ()
 
 @property(nonatomic, strong, readonly) UIView *contentView;
 @property(nonatomic, assign) CGSize titleLabelSize;
@@ -480,7 +471,7 @@
 
 @end
 
-@implementation FWNavigationTitleView
+@implementation FWMenuTitleView
 
 #pragma mark - Static
 
@@ -496,7 +487,7 @@
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UINavigationBar, @selector(layoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             UIView *titleView = selfObject.topItem.titleView;
-            if (![titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
+            if (![titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
                 FWSwizzleOriginal();
                 return;
             }
@@ -522,23 +513,23 @@
         FWSwizzleClass(UIViewController, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
             FWSwizzleOriginal(title);
             
-            if ([selfObject.navigationItem.titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
-                ((id<FWNavigationTitleViewProtocol>)selfObject.navigationItem.titleView).title = title;
+            if ([selfObject.navigationItem.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
+                ((id<FWMenuTitleViewProtocol>)selfObject.navigationItem.titleView).title = title;
             }
         }));
         
         FWSwizzleClass(UINavigationItem, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
             FWSwizzleOriginal(title);
             
-            if ([selfObject.titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
-                ((id<FWNavigationTitleViewProtocol>)selfObject.titleView).title = title;
+            if ([selfObject.titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
+                ((id<FWMenuTitleViewProtocol>)selfObject.titleView).title = title;
             }
         }));
         
-        FWSwizzleClass(UINavigationItem, @selector(setTitleView:), FWSwizzleReturn(void), FWSwizzleArgs(UIView<FWNavigationTitleViewProtocol> *titleView), FWSwizzleCode({
+        FWSwizzleClass(UINavigationItem, @selector(setTitleView:), FWSwizzleReturn(void), FWSwizzleArgs(UIView<FWMenuTitleViewProtocol> *titleView), FWSwizzleCode({
             FWSwizzleOriginal(titleView);
             
-            if ([titleView conformsToProtocol:@protocol(FWNavigationTitleViewProtocol)]) {
+            if ([titleView conformsToProtocol:@protocol(FWMenuTitleViewProtocol)]) {
                 if (titleView.title.length <= 0) {
                     titleView.title = selfObject.title;
                 }
@@ -548,7 +539,7 @@
 }
 
 + (void)setDefaultAppearance {
-    FWNavigationTitleView *appearance = [FWNavigationTitleView appearance];
+    FWMenuTitleView *appearance = [FWMenuTitleView appearance];
     appearance.adjustsTintColor = YES;
     appearance.maximumWidth = CGFLOAT_MAX;
     appearance.loadingViewSize = CGSizeMake(18, 18);
@@ -566,14 +557,14 @@
 #pragma mark - Lifecycle
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    return [self initWithStyle:FWNavigationTitleViewStyleHorizontal frame:frame];
+    return [self initWithStyle:FWMenuTitleViewStyleHorizontal frame:frame];
 }
 
-- (instancetype)initWithStyle:(FWNavigationTitleViewStyle)style {
+- (instancetype)initWithStyle:(FWMenuTitleViewStyle)style {
     return [self initWithStyle:style frame:CGRectZero];
 }
 
-- (instancetype)initWithStyle:(FWNavigationTitleViewStyle)style frame:(CGRect)frame {
+- (instancetype)initWithStyle:(FWMenuTitleViewStyle)style frame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self addTarget:self action:@selector(titleViewTouched) forControlEvents:UIControlEventTouchUpInside];
         
@@ -613,9 +604,9 @@
 
 #pragma mark - Accessor
 
-- (void)setStyle:(FWNavigationTitleViewStyle)style {
+- (void)setStyle:(FWMenuTitleViewStyle)style {
     _style = style;
-    if (style == FWNavigationTitleViewStyleVertical) {
+    if (style == FWMenuTitleViewStyleVertical) {
         self.titleLabel.font = self.verticalTitleFont;
         self.subtitleLabel.font = self.verticalSubtitleFont;
     } else {
@@ -667,7 +658,7 @@
 
 - (void)setHorizontalTitleFont:(UIFont *)horizontalTitleFont {
     _horizontalTitleFont = horizontalTitleFont;
-    if (self.style == FWNavigationTitleViewStyleHorizontal) {
+    if (self.style == FWMenuTitleViewStyleHorizontal) {
         self.titleLabel.font = horizontalTitleFont;
         [self refreshLayout];
     }
@@ -675,7 +666,7 @@
 
 - (void)setHorizontalSubtitleFont:(UIFont *)horizontalSubtitleFont {
     _horizontalSubtitleFont = horizontalSubtitleFont;
-    if (self.style == FWNavigationTitleViewStyleHorizontal) {
+    if (self.style == FWMenuTitleViewStyleHorizontal) {
         self.subtitleLabel.font = horizontalSubtitleFont;
         [self refreshLayout];
     }
@@ -683,7 +674,7 @@
 
 - (void)setVerticalTitleFont:(UIFont *)verticalTitleFont {
     _verticalTitleFont = verticalTitleFont;
-    if (self.style == FWNavigationTitleViewStyleVertical) {
+    if (self.style == FWMenuTitleViewStyleVertical) {
         self.titleLabel.font = verticalTitleFont;
         [self refreshLayout];
     }
@@ -691,7 +682,7 @@
 
 - (void)setVerticalSubtitleFont:(UIFont *)verticalSubtitleFont {
     _verticalSubtitleFont = verticalSubtitleFont;
-    if (self.style == FWNavigationTitleViewStyleVertical) {
+    if (self.style == FWMenuTitleViewStyleVertical) {
         self.subtitleLabel.font = verticalSubtitleFont;
         [self refreshLayout];
     }
@@ -770,7 +761,7 @@
 }
 
 - (void)updateSubAccessoryViewHidden {
-    if (self.subAccessoryView && self.subtitleLabel.text.length && self.style == FWNavigationTitleViewStyleVertical) {
+    if (self.subAccessoryView && self.subtitleLabel.text.length && self.style == FWMenuTitleViewStyleVertical) {
         self.subAccessoryView.hidden = NO;
     } else {
         self.subAccessoryView.hidden = YES;
@@ -942,7 +933,7 @@
 }
 
 - (CGSize)contentSize {
-    if (self.style == FWNavigationTitleViewStyleVertical) {
+    if (self.style == FWMenuTitleViewStyleVertical) {
         CGSize size = CGSizeZero;
         CGFloat firstLineWidth = [self firstLineWidthInVerticalStyle];
         CGFloat secondLineWidth = [self secondLineWidthInVerticalStyle];
@@ -993,7 +984,7 @@
     UIEdgeInsets titleEdgeInsets = self.titleEdgeInsetsIfShowingTitleLabel;
     UIEdgeInsets subtitleEdgeInsets = self.subtitleEdgeInsetsIfShowingSubtitleLabel;
     
-    if (self.style == FWNavigationTitleViewStyleVertical) {
+    if (self.style == FWMenuTitleViewStyleVertical) {
         CGFloat firstLineWidth = [self firstLineWidthInVerticalStyle];
         CGFloat firstLineMinX = 0;
         CGFloat firstLineMaxX = 0;
@@ -1129,9 +1120,9 @@
 
 @end
 
-#pragma mark - FWNavigationButton
+#pragma mark - FWMenuButton
 
-@interface FWNavigationButton()
+@interface FWMenuButton()
 
 @property (nonatomic, assign) BOOL isImageType;
 @property (nonatomic, strong) UIImage *highlightedImage;
@@ -1139,7 +1130,7 @@
 
 @end
 
-@implementation FWNavigationButton
+@implementation FWMenuButton
 
 - (instancetype)init
 {

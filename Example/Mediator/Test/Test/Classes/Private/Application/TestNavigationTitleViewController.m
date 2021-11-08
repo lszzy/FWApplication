@@ -8,11 +8,11 @@
 
 #import "TestNavigationTitleViewController.h"
 
-@interface TestNavigationTitleViewController () <FWTableViewController, FWNavigationTitleViewDelegate, FWPopupMenuDelegate>
+@interface TestNavigationTitleViewController () <FWTableViewController, FWMenuTitleViewDelegate, FWPopupMenuDelegate>
 
 @property(nonatomic, strong) UIToolbar *toolbar;
 @property(nonatomic, strong) FWNavigationView *navigationView;
-@property(nonatomic, strong) FWNavigationTitleView *titleView;
+@property(nonatomic, strong) FWMenuTitleView *titleView;
 @property(nonatomic, assign) UIControlContentHorizontalAlignment horizontalAlignment;
 
 @end
@@ -35,14 +35,14 @@
     self.navigationView.viewController = self;
     self.navigationView.navigationBar.fwForegroundColor = Theme.textColor;
     self.navigationView.navigationBar.fwBackgroundColor = Theme.barColor;
-    self.navigationView.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:[[FWNavigationButton alloc] initWithImage:FWIcon.backImage] block:^(id  _Nonnull sender) {
+    self.navigationView.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:[[FWMenuButton alloc] initWithImage:FWIcon.backImage] block:^(id  _Nonnull sender) {
         [FWRouter closeViewControllerAnimated:YES];
     }];
     self.navigationView.navigationItem.rightBarButtonItems = @[
-        [UIBarButtonItem fwBarItemWithObject:[[FWNavigationButton alloc] initWithImage:FWIcon.closeImage] block:^(id  _Nonnull sender) {
+        [UIBarButtonItem fwBarItemWithObject:[[FWMenuButton alloc] initWithImage:FWIcon.closeImage] block:^(id  _Nonnull sender) {
             [FWRouter closeViewControllerAnimated:YES];
         }],
-        [UIBarButtonItem fwBarItemWithObject:[[FWNavigationButton alloc] initWithImage:FWIcon.backImage] block:^(id  _Nonnull sender) {
+        [UIBarButtonItem fwBarItemWithObject:[[FWMenuButton alloc] initWithImage:FWIcon.backImage] block:^(id  _Nonnull sender) {
             [FWRouter closeViewControllerAnimated:YES];
         }],
     ];
@@ -70,7 +70,7 @@
     toolbar.items = @[leftItem, flexibleItem, rightItem];
     [toolbar sizeToFit];
     
-    FWNavigationTitleView *titleView = [[FWNavigationTitleView alloc] init];
+    FWMenuTitleView *titleView = [[FWMenuTitleView alloc] init];
     self.titleView = titleView;
     titleView.showsLoadingView = YES;
     self.navigationView.titleView = titleView;
@@ -149,8 +149,8 @@
             self.titleView.subtitle = self.titleView.subtitle ? nil : @"(副标题)";
             break;
         case 3:
-            self.titleView.style = self.titleView.style == FWNavigationTitleViewStyleHorizontal ? FWNavigationTitleViewStyleVertical : FWNavigationTitleViewStyleHorizontal;
-            self.titleView.subtitle = self.titleView.style == FWNavigationTitleViewStyleVertical ? @"(副标题)" : self.titleView.subtitle;
+            self.titleView.style = self.titleView.style == FWMenuTitleViewStyleHorizontal ? FWMenuTitleViewStyleVertical : FWMenuTitleViewStyleHorizontal;
+            self.titleView.subtitle = self.titleView.style == FWMenuTitleViewStyleVertical ? @"(副标题)" : self.titleView.subtitle;
             break;
         case 4:
         {
@@ -179,7 +179,7 @@
             self.titleView.showsLoadingPlaceholder = NO;
             self.titleView.title = @"加载中...";
             self.titleView.subtitle = nil;
-            self.titleView.style = FWNavigationTitleViewStyleHorizontal;
+            self.titleView.style = FWMenuTitleViewStyleHorizontal;
             self.titleView.accessoryImage = nil;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 self.titleView.showsLoadingPlaceholder = YES;
@@ -276,7 +276,7 @@
             cell.textLabel.text = self.titleView.subtitle ? @"去掉副标题" : @"显示副标题";
             break;
         case 3:
-            cell.textLabel.text = self.titleView.style == FWNavigationTitleViewStyleHorizontal ? @"切换为上下两行显示" : @"切换为水平一行显示";
+            cell.textLabel.text = self.titleView.style == FWMenuTitleViewStyleHorizontal ? @"切换为上下两行显示" : @"切换为水平一行显示";
             break;
         case 4:
             cell.textLabel.text = [self.tableData fwObjectAtIndex:indexPath.row];
@@ -295,9 +295,9 @@
     self.titleView.tintColor = [Theme.textColor colorWithAlphaComponent:progress];
 }
 
-#pragma mark - FWNavigationTitleViewDelegate
+#pragma mark - FWMenuTitleViewDelegate
 
-- (void)didChangedActive:(BOOL)active forTitleView:(FWNavigationTitleView *)titleView {
+- (void)didChangedActive:(BOOL)active forTitleView:(FWMenuTitleView *)titleView {
     if (!active) return;
     
     [FWPopupMenu showRelyOnView:titleView titles:@[@"菜单1", @"菜单2"] icons:nil menuWidth:120 otherSettings:^(FWPopupMenu *popupMenu) {
