@@ -79,7 +79,7 @@ class TestNavigationTitleLabel: UILabel, FWToolbarTitleViewProtocol {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return navigationView.height
+        return navigationView.toolbarHeight
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

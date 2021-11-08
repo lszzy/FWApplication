@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWToolbarMenuView;
 
 /**
- * 自定义工具栏视图，高度自动布局(总高度height)，隐藏时自动收起(高度0)；子类可继承
+ * 自定义工具栏视图，高度自动布局(总高度toolbarHeight)，可设置toolbarHidden隐藏(总高度0)；子类可继承
  *
  * 顶部：topView，高度为topHeight(默认0)，可设置topHidden隐藏
  * 中间：menuView，高度为menuHeight(默认FWToolBarHeight-安全区域高度)，可设置menuHidden隐藏
@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 背景图片视图，用于设置背景图片
 @property (nonatomic, strong, readonly) UIImageView *backgroundView;
-
 /// 顶部视图，延迟加载
 @property (nonatomic, strong, readonly) UIView *topView;
 /// 菜单视图，初始加载
@@ -40,8 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat menuHeight;
 /// 底部高度，默认安全区域高度
 @property (nonatomic, assign) CGFloat bottomHeight;
-/// 工具栏只读总高度，topHeight+menuHeight+bottomHeight，隐藏时为0
-@property (nonatomic, assign, readonly) CGFloat height;
+/// 工具栏总高度，topHeight+menuHeight+bottomHeight，隐藏时为0
+@property (nonatomic, assign, readonly) CGFloat toolbarHeight;
 
 /// 顶部栏是否隐藏，默认NO
 @property (nonatomic, assign) BOOL topHidden;
@@ -49,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL menuHidden;
 /// 底部栏是否隐藏，默认NO
 @property (nonatomic, assign) BOOL bottomHidden;
+/// 工具栏是否隐藏，默认NO，推荐使用(系统hidden切换时无动画)
+@property (nonatomic, assign) BOOL toolbarHidden;
 
 /// 动态隐藏顶部栏
 - (void)setTopHidden:(BOOL)hidden animated:(BOOL)animated;
@@ -57,14 +58,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// 动态隐藏底部栏
 - (void)setBottomHidden:(BOOL)hidden animated:(BOOL)animated;
 /// 动态隐藏工具栏
-- (void)setHidden:(BOOL)hidden animated:(BOOL)animated;
+- (void)setToolbarHidden:(BOOL)hidden animated:(BOOL)animated;
 
 @end
 
 #pragma mark - FWNavigationView
 
 /**
- * 自定义导航栏视图，继承FWToolbarView，高度自动布局(总高度height)，隐藏时自动收起(高度0)；自带titleView
+ * 自定义导航栏视图，继承FWToolbarView，高度自动布局(总高度toolbarHeight)，可设置toolbarHidden隐藏(总高度0)；自带titleView
  *
  * 顶部：topView，高度为topHeight(默认FWStatusBarHeight)，可设置topHidden隐藏
  * 中间：menuView，高度为menuHeight(默认FWNavigationBarHeight)，可设置menuHidden隐藏

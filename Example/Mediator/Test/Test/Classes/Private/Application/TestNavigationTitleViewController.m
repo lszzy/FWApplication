@@ -62,12 +62,12 @@
     FWWeakifySelf();
     self.toolbarView.menuView.leftButton = [FWToolbarButton buttonWithObject:@"取消" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self.toolbarView setHidden:YES animated:YES];
+        [self.toolbarView setToolbarHidden:YES animated:YES];
         [self fwShowMessageWithText:@"点击了取消"];
     }];
     self.toolbarView.menuView.rightButton = [FWToolbarButton buttonWithObject:@"确定" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self.toolbarView setHidden:YES animated:YES];
+        [self.toolbarView setToolbarHidden:YES animated:YES];
         [self fwShowMessageWithText:@"点击了确定"];
     }];
     [self.view addSubview:self.toolbarView];
@@ -208,7 +208,7 @@
         }
         case 10:
         {
-            [self.navigationView setHidden:!self.navigationView.hidden animated:YES];
+            [self.navigationView setToolbarHidden:!self.navigationView.toolbarHidden animated:YES];
             break;
         }
         case 11:
@@ -228,7 +228,7 @@
         }
         case 14:
         {
-            [self.toolbarView setHidden:!self.toolbarView.hidden animated:YES];
+            [self.toolbarView setToolbarHidden:!self.toolbarView.toolbarHidden animated:YES];
             break;
         }
             break;

@@ -66,14 +66,15 @@
 - (void)updateConstraints {
     [super updateConstraints];
     
-    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.hidden || self.topHidden ? 0 : self.topHeight];
-    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.hidden || self.bottomHidden ? 0 : self.bottomHeight];
-    [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.hidden || self.menuHidden ? 0 : self.menuHeight];
+    BOOL toolbarHidden = self.hidden || self.toolbarHidden;
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:toolbarHidden || self.topHidden ? 0 : self.topHeight];
+    [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:toolbarHidden || self.bottomHidden ? 0 : self.bottomHeight];
+    [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:toolbarHidden || self.menuHidden ? 0 : self.menuHeight];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
     CGFloat maxWidth = CGRectGetWidth(self.bounds) ?: UIScreen.mainScreen.bounds.size.width;
-    return CGSizeMake(MIN(size.width, maxWidth), self.height);
+    return CGSizeMake(MIN(size.width, maxWidth), self.toolbarHeight);
 }
 
 - (CGSize)intrinsicContentSize {
@@ -107,27 +108,30 @@
 }
 
 - (void)setTopHeight:(CGFloat)topHeight {
+    if (_topHeight == topHeight) return;
     _topHeight = topHeight;
     [self updateLayout:NO];
 }
 
 - (void)setMenuHeight:(CGFloat)menuHeight {
+    if (_menuHeight == menuHeight) return;
     _menuHeight = menuHeight;
     [self updateLayout:NO];
 }
 
 - (void)setBottomHeight:(CGFloat)bottomHeight {
+    if (_bottomHeight == bottomHeight) return;
     _bottomHeight = bottomHeight;
     [self updateLayout:NO];
 }
 
-- (CGFloat)height {
-    CGFloat height = 0;
-    if (self.hidden) return height;
-    if (!self.topHidden) height += self.topHeight;
-    if (!self.menuHidden) height += self.menuHeight;
-    if (!self.bottomHidden) height += self.bottomHeight;
-    return height;
+- (CGFloat)toolbarHeight {
+    CGFloat toolbarHeight = 0;
+    if (self.hidden || self.toolbarHidden) return toolbarHeight;
+    if (!self.topHidden) toolbarHeight += self.topHeight;
+    if (!self.menuHidden) toolbarHeight += self.menuHeight;
+    if (!self.bottomHidden) toolbarHeight += self.bottomHeight;
+    return toolbarHeight;
 }
 
 - (void)setTopHidden:(BOOL)hidden {
@@ -142,27 +146,37 @@
     [self setBottomHidden:hidden animated:NO];
 }
 
+- (void)setToolbarHidden:(BOOL)toolbarHidden {
+    [self setToolbarHidden:toolbarHidden animated:NO];
+}
+
 - (void)setHidden:(BOOL)hidden {
-    [self setHidden:hidden animated:NO];
+    if (self.hidden == hidden) return;
+    [super setHidden:hidden];
+    [self updateLayout:NO];
 }
 
 - (void)setTopHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (_topHidden == hidden) return;
     _topHidden = hidden;
     [self updateLayout:animated];
 }
 
 - (void)setMenuHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (_menuHidden == hidden) return;
     _menuHidden = hidden;
     [self updateLayout:animated];
 }
 
 - (void)setBottomHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (_bottomHidden == hidden) return;
     _bottomHidden = hidden;
     [self updateLayout:animated];
 }
 
-- (void)setHidden:(BOOL)hidden animated:(BOOL)animated {
-    [super setHidden:hidden];
+- (void)setToolbarHidden:(BOOL)hidden animated:(BOOL)animated {
+    if (_toolbarHidden == hidden) return;
+    _toolbarHidden = hidden;
     [self updateLayout:animated];
 }
 
