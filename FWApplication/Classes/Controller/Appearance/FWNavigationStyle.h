@@ -82,26 +82,6 @@ static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 /// 设置视图布局Bar延伸类型，None为不延伸(Bar不覆盖视图)，Top|Bottom为顶部|底部延伸，All为全部延伸
 @property (nonatomic, assign) UIRectEdge fwExtendedLayoutEdge;
 
-#pragma mark - Height
-
-/// 当前状态栏布局高度，导航栏隐藏时为0，推荐使用
-@property (nonatomic, assign, readonly) CGFloat fwStatusBarHeight;
-
-/// 当前导航栏布局高度，隐藏时为0，推荐使用
-@property (nonatomic, assign, readonly) CGFloat fwNavigationBarHeight;
-
-/// 当前顶部栏布局高度，导航栏隐藏时为0，推荐使用
-@property (nonatomic, assign, readonly) CGFloat fwTopBarHeight;
-
-/// 当前标签栏布局高度，隐藏时为0，推荐使用
-@property (nonatomic, assign, readonly) CGFloat fwTabBarHeight;
-
-/// 当前工具栏布局高度，隐藏时为0，推荐使用
-@property (nonatomic, assign, readonly) CGFloat fwToolBarHeight;
-
-/// 当前底部栏布局高度，包含标签栏和工具栏，隐藏时为0，推荐使用
-@property (nonatomic, assign, readonly) CGFloat fwBottomBarHeight;
-
 #pragma mark - Item
 
 /// 快捷设置导航栏标题文字或视图
