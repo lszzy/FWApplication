@@ -156,7 +156,7 @@
     _toolBarTintColor = UIColor.whiteColor;
     _showsDefaultLoading = YES;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(cancelItemClicked:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelButtonClick:)];
 }
 
 - (UIView *)backgroundView {
@@ -378,6 +378,11 @@
         imagePickerController = self.pickerControllerBlock();
     }
     if (imagePickerController) {
+        // 清空imagePickerController导航栏左侧按钮并添加默认按钮
+        if (imagePickerController.navigationItem.leftBarButtonItem) {
+            imagePickerController.navigationItem.leftBarButtonItem = nil;
+            imagePickerController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:imagePickerController action:@selector(handleCancelButtonClick:)];
+        }
         // 此处需要强引用imagePickerController，防止weak属性释放imagePickerController
         objc_setAssociatedObject(self, @selector(imagePickerController), imagePickerController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         self.imagePickerController = imagePickerController;
@@ -420,7 +425,7 @@
     [self pickAlbumsGroup:self.albumsArray[indexPath.row] animated:YES];
 }
 
-- (void)cancelItemClicked:(id)sender {
+- (void)handleCancelButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^(void) {
         if (self.albumControllerDelegate && [self.albumControllerDelegate respondsToSelector:@selector(albumControllerDidCancel:)]) {
             [self.albumControllerDelegate albumControllerDidCancel:self];
@@ -765,7 +770,7 @@
         _backButton = [[UIButton alloc] init];
         [_backButton setImage:FWAppBundle.navBackImage forState:UIControlStateNormal];
         [_backButton sizeToFit];
-        [_backButton addTarget:self action:@selector(handleCancelPreviewImage:) forControlEvents:UIControlEventTouchUpInside];
+        [_backButton addTarget:self action:@selector(handleCancelButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         _backButton.fwTouchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
         _backButton.fwDisabledAlpha = 0.3;
         _backButton.fwHighlightedAlpha = 0.5;
@@ -1150,7 +1155,7 @@
 
 #pragma mark - 按钮点击回调
 
-- (void)handleCancelPreviewImage:(UIButton *)button {
+- (void)handleCancelButtonClick:(UIButton *)button {
     if (self.navigationController) {
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -1788,7 +1793,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _titleView = titleView;
     titleView.delegate = self;
     self.navigationItem.titleView = titleView;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelPickerImage:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelButtonClick:)];
 }
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
@@ -2319,7 +2324,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
-- (void)handleCancelPickerImage:(id)sender {
+- (void)handleCancelButtonClick:(id)sender {
     [self dismissViewControllerAnimated:YES completion:^() {
         if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidCancel:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerDidCancel:self];
