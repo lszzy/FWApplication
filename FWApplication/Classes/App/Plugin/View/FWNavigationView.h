@@ -109,6 +109,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWToolbarTitleView
 
+/// 自定义titleView协议
+@protocol FWTitleViewProtocol <NSObject>
+
+@required
+/// 当前标题文字，自动兼容VC.title和navigationItem.title调用
+@property(nonatomic, copy, nullable) NSString *title;
+
+@end
+
 @class FWToolbarTitleView;
 @protocol FWIndicatorViewPlugin;
 
