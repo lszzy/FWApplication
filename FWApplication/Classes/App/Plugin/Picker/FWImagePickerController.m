@@ -7,6 +7,7 @@
  @updated    2020/9/7
  */
 
+#import "FWNavigationView.h"
 #import "FWImagePickerController.h"
 #import "FWImagePickerPluginImpl.h"
 #import "FWImageCropController.h"
@@ -17,8 +18,6 @@
 #import "FWEmptyPlugin.h"
 #import "FWToastPlugin.h"
 #import "FWAlertPlugin.h"
-#import "FWNavigationView.h"
-#import "FWNavigationStyle.h"
 #import "FWViewPlugin.h"
 #import "FWImagePlugin.h"
 #import "FWSwizzle.h"
@@ -157,10 +156,7 @@
     _toolBarTintColor = UIColor.whiteColor;
     _showsDefaultLoading = YES;
     
-    self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
-    self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
-    self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
-    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(cancelItemClicked:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(cancelItemClicked:)];
 }
 
@@ -187,12 +183,12 @@
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
     _toolBarBackgroundColor = toolBarBackgroundColor;
-    self.fwNavigationBarAppearance.backgroundColor = toolBarBackgroundColor;
+    self.navigationController.navigationBar.fwBackgroundColor = toolBarBackgroundColor;
 }
 
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
-    self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
+    self.navigationController.navigationBar.fwForegroundColor = toolBarTintColor;
 }
 
 - (void)setAssetsGroup:(FWAssetGroup *)assetsGroup {
@@ -239,7 +235,12 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.fwBackBarItem = FWAppBundle.navBackImage;
+    
+    if (self.navigationController.navigationBarHidden != NO) {
+        [self.navigationController setNavigationBarHidden:NO animated:animated];
+    }
+    self.navigationController.navigationBar.fwBackgroundColor = self.toolBarBackgroundColor;
+    self.navigationController.navigationBar.fwForegroundColor = self.toolBarTintColor;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -649,7 +650,6 @@
         
         _toolBarBackgroundColor = [UIColor colorWithRed:27/255.f green:27/255.f blue:27/255.f alpha:1.f];
         _toolBarTintColor = UIColor.whiteColor;
-        self.fwNavigationBarHidden = YES;
         
         _checkboxImage = FWAppBundle.pickerCheckImage;
         _checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
@@ -670,11 +670,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    if (self.navigationController.navigationBarHidden != YES) {
+        [self.navigationController setNavigationBarHidden:YES animated:animated];
+    }
+    
     if (!_singleCheckMode) {
         FWAsset *imageAsset = self.imagesAssetArray[self.imagePreviewView.currentImageIndex];
         self.checkboxButton.selected = [self.selectedImageAssetArray containsObject:imageAsset];
     }
-    
     [self updateOriginImageCheckboxButtonWithIndex:self.imagePreviewView.currentImageIndex];
     [self updateImageCountAndCollectionView:NO];
 }
@@ -1780,10 +1783,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _toolBarPaddingHorizontal = 16;
     _showsDefaultLoading = YES;
     
-    self.fwNavigationBarAppearance = [FWNavigationBarAppearance new];
-    self.fwNavigationBarAppearance.backgroundColor = self.toolBarBackgroundColor;
-    self.fwNavigationBarAppearance.foregroundColor = self.toolBarTintColor;
-    
     FWToolbarTitleView *titleView = [[FWToolbarTitleView alloc] init];
     _titleView = titleView;
     titleView.delegate = self;
@@ -1793,12 +1792,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
     _toolBarBackgroundColor = toolBarBackgroundColor;
-    self.fwNavigationBarAppearance.backgroundColor = toolBarBackgroundColor;
+    self.navigationController.navigationBar.fwBackgroundColor = toolBarBackgroundColor;
 }
 
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
-    self.fwNavigationBarAppearance.foregroundColor = toolBarTintColor;
+    self.navigationController.navigationBar.fwForegroundColor = toolBarTintColor;
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1820,8 +1819,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    // 由于被选中的图片 selectedImageAssetArray 是 property，所以可以由外部改变，
-    // 因此 viewWillAppear 时检查一下图片被选中的情况，并刷新 collectionView
+    if (self.navigationController.navigationBarHidden != NO) {
+        [self.navigationController setNavigationBarHidden:NO animated:animated];
+    }
+    self.navigationController.navigationBar.fwBackgroundColor = self.toolBarBackgroundColor;
+    self.navigationController.navigationBar.fwForegroundColor = self.toolBarTintColor;
+    
+    // 由于被选中的图片 selectedImageAssetArray 可以由外部改变，因此检查一下图片被选中的情况，并刷新 collectionView
     if (self.allowsMultipleSelection) {
         [self updateImageCountAndCheckLimited:YES];
     } else {

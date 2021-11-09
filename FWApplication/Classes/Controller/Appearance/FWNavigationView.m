@@ -247,16 +247,16 @@
 
 - (NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
-        return ((id<FWToolbarTitleViewProtocol>)self.titleView).title;
+    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
+        return ((id<FWTitleViewProtocol>)self.titleView).title;
     }
     return nil;
 }
 
 - (void)setTitle:(NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
-        ((id<FWToolbarTitleViewProtocol>)self.titleView).title = title;
+    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
+        ((id<FWTitleViewProtocol>)self.titleView).title = title;
     }
 }
 
@@ -345,7 +345,7 @@
 
 #pragma mark - FWToolbarTitleView
 
-@interface FWToolbarTitleView ()
+@interface FWToolbarTitleView () <FWTitleViewProtocol>
 
 @property(nonatomic, strong, readonly) UIView *contentView;
 @property(nonatomic, assign) CGSize titleLabelSize;
@@ -362,62 +362,6 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [self setDefaultAppearance];
-    });
-}
-
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        FWSwizzleClass(UINavigationBar, @selector(layoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            UIView *titleView = selfObject.topItem.titleView;
-            if (![titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
-                FWSwizzleOriginal();
-                return;
-            }
-            
-            CGFloat titleMaximumWidth = CGRectGetWidth(titleView.bounds);
-            CGSize titleViewSize = [titleView sizeThatFits:CGSizeMake(titleMaximumWidth, CGFLOAT_MAX)];
-            titleViewSize.height = ceil(titleViewSize.height);
-            
-            if (CGRectGetHeight(titleView.bounds) != titleViewSize.height) {
-                CGFloat titleViewMinY = FWFlatValue(CGRectGetMinY(titleView.frame) - ((titleViewSize.height - CGRectGetHeight(titleView.bounds)) / 2.0));
-                titleView.frame = CGRectMake(CGRectGetMinX(titleView.frame), titleViewMinY, MIN(titleMaximumWidth, titleViewSize.width), titleViewSize.height);
-            }
-            
-            if (CGRectGetWidth(titleView.bounds) != titleViewSize.width) {
-                CGRect titleFrame = titleView.frame;
-                titleFrame.size.width = titleViewSize.width;
-                titleView.frame = titleFrame;
-            }
-            
-            FWSwizzleOriginal();
-        }));
-        
-        FWSwizzleClass(UIViewController, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
-            FWSwizzleOriginal(title);
-            
-            if ([selfObject.navigationItem.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
-                ((id<FWToolbarTitleViewProtocol>)selfObject.navigationItem.titleView).title = title;
-            }
-        }));
-        
-        FWSwizzleClass(UINavigationItem, @selector(setTitle:), FWSwizzleReturn(void), FWSwizzleArgs(NSString *title), FWSwizzleCode({
-            FWSwizzleOriginal(title);
-            
-            if ([selfObject.titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
-                ((id<FWToolbarTitleViewProtocol>)selfObject.titleView).title = title;
-            }
-        }));
-        
-        FWSwizzleClass(UINavigationItem, @selector(setTitleView:), FWSwizzleReturn(void), FWSwizzleArgs(UIView<FWToolbarTitleViewProtocol> *titleView), FWSwizzleCode({
-            FWSwizzleOriginal(titleView);
-            
-            if ([titleView conformsToProtocol:@protocol(FWToolbarTitleViewProtocol)]) {
-                if (titleView.title.length <= 0) {
-                    titleView.title = selfObject.title;
-                }
-            }
-        }));
     });
 }
 

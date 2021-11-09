@@ -41,6 +41,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/*!
+ @brief 导航栏转场分类
+ */
+@interface UINavigationBar (FWBarTransition)
+
+/// 导航栏背景视图，显示背景色和背景图片等
+@property (nonatomic, readonly, nullable) UIView *fwBackgroundView;
+
+@end
+
 #pragma mark - UINavigationController+FWPopGesture
 
 /*!

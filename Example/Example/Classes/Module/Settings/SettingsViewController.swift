@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onOption() {
-        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? "导航栏不透明" : "导航栏半透明", Theme.isBarAppearance ? "禁用导航栏Appearance" : "启用导航栏Appearance", Theme.isExtendedBottom ? "控制器底部不延伸" : "控制器底部延伸", Theme.isInsetNever ? "滚动视图边距自适应" : "滚动视图边距不适应"]) { (index) in
+        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? "导航栏不透明" : "导航栏半透明", Theme.isExtendedBottom ? "控制器底部不延伸" : "控制器底部延伸", Theme.isInsetNever ? "滚动视图边距自适应" : "滚动视图边距不适应"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
@@ -152,10 +152,8 @@ class SettingsViewController: UIViewController, FWTableViewController {
             case 2:
                 Theme.isBarTranslucent = !Theme.isBarTranslucent
             case 3:
-                Theme.isBarAppearance = !Theme.isBarAppearance
-            case 4:
                 Theme.isExtendedBottom = !Theme.isExtendedBottom
-            case 5:
+            case 4:
                 Theme.isInsetNever = !Theme.isInsetNever
             default:
                 break

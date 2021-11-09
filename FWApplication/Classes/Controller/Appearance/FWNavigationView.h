@@ -109,16 +109,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWToolbarTitleView
 
-/// 自定义titleView协议
-@protocol FWToolbarTitleViewProtocol <NSObject>
-
-@required
-
-/// 当前标题文字，自动兼容VC.title和navigationItem.title调用
-@property(nonatomic, copy, nullable) NSString *title;
-
-@end
-
 @class FWToolbarTitleView;
 @protocol FWIndicatorViewPlugin;
 
@@ -158,7 +148,7 @@ typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
  *
  *  @see https://github.com/Tencent/QMUI_iOS
  */
-@interface FWToolbarTitleView : UIControl <FWToolbarTitleViewProtocol>
+@interface FWToolbarTitleView : UIControl
 
 /// 事件代理
 @property(nonatomic, weak, nullable) id<FWToolbarTitleViewDelegate> delegate;

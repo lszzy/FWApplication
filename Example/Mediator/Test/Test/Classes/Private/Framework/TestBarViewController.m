@@ -16,24 +16,20 @@
 
 @implementation TestBarSubViewController
 
-- (FWNavigationBarAppearance *)fwNavigationBarAppearance
-{
-    FWNavigationBarAppearance *appearance = [FWNavigationBarAppearance new];
-    appearance.isHidden = NO;
-    appearance.isTransparent = NO;
-    return appearance;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.fwForcePopGesture = YES;
-    if (self.index < 2) {
+    self.fwExtendedLayoutEdge = UIRectEdgeAll;
+    if (self.index < 1) {
         self.fwNavigationBarStyle = FWNavigationBarStyleDefault;
-    } else if (self.index < 4) {
+    } else if (self.index < 2) {
         self.fwNavigationBarStyle = FWNavigationBarStyleWhite;
+    } else if (self.index < 3) {
+        self.fwNavigationBarStyle = FWNavigationBarStyleTransparent;
     } else {
-        self.fwNavigationBarStyle = [[@[@(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleHidden)] fwRandomObject] integerValue];
+        self.fwNavigationBarStyle = [[@[@(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent), @(FWNavigationBarStyleTransparent + 1)] fwRandomObject] integerValue];
+        self.fwNavigationBarHidden = self.fwNavigationBarStyle == FWNavigationBarStyleTransparent + 1;
     }
     self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fwNavigationBarStyle)];
     
@@ -67,7 +63,6 @@ FWPropertyAssign(BOOL, hideToast);
 {
     [super viewDidLoad];
     
-    self.navigationController.navigationBar.fwBackgroundView.backgroundColor = Theme.backgroundColor;
     self.fwTabBarHidden = YES;
     [self fwObserveNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
     

@@ -8,7 +8,7 @@
 
 import FWApplication
 
-class TestNavigationTitleLabel: UILabel, FWToolbarTitleViewProtocol {
+class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     override init(frame: CGRect) {
         super.init(frame: frame)
         font = UIFont.boldSystemFont(ofSize: 17)
@@ -40,7 +40,7 @@ class TestNavigationTitleLabel: UILabel, FWToolbarTitleViewProtocol {
     }()
     
     override func renderInit() {
-        fwNavigationBarStyle = .hidden
+        fwNavigationBarHidden = true
     }
     
     override func renderView() {

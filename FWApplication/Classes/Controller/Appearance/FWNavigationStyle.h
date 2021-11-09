@@ -15,14 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 导航栏全局样式可扩展枚举
 typedef NSInteger FWNavigationBarStyle NS_TYPED_EXTENSIBLE_ENUM;
-/// 默认样式，不透明
-static const FWNavigationBarStyle FWNavigationBarStyleDefault     = 0;
-/// 隐藏样式，不显示
-static const FWNavigationBarStyle FWNavigationBarStyleHidden      = -1;
-/// 透明样式，全透明
-static const FWNavigationBarStyle FWNavigationBarStyleTransparent = 1;
-/// 磨砂样式，半透明，需edgesForExtendedLayout为Top|All
-static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
+/// 默认样式，应用可配置并扩展
+static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 
 /// 导航栏样式配置
 @interface FWNavigationBarAppearance : NSObject
@@ -34,6 +28,7 @@ static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 @property (nullable, nonatomic, strong) UIImage *shadowImage;
 @property (nonatomic, assign) BOOL isHidden;
 @property (nonatomic, assign) BOOL isTransparent;
+/// 是否半透明磨砂样式，需edgesForExtendedLayout为Top|All
 @property (nonatomic, assign) BOOL isTranslucent;
 @property (nullable, nonatomic, copy) void (^appearanceBlock)(UINavigationBar *navigationBar);
 
@@ -52,20 +47,20 @@ static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 
 #pragma mark - Bar
 
-/// 状态栏是否隐藏，默认NO，设置后才会生效
-@property (nonatomic, assign) BOOL fwStatusBarHidden;
-
 /// 状态栏样式，默认UIStatusBarStyleDefault，设置后才会生效
 @property (nonatomic, assign) UIStatusBarStyle fwStatusBarStyle;
 
-/// 导航栏是否隐藏，默认NO，设置后才会在viewWillAppear:自动应用生效
-@property (nonatomic, assign) BOOL fwNavigationBarHidden;
+/// 状态栏是否隐藏，默认NO，设置后才会生效
+@property (nonatomic, assign) BOOL fwStatusBarHidden;
+
+/// 当前导航栏设置，优先级高于style和hidden，设置后会在viewWillAppear:自动应用生效
+@property (nullable, nonatomic, strong) FWNavigationBarAppearance *fwNavigationBarAppearance;
 
 /// 当前导航栏样式，默认Default，设置后才会在viewWillAppear:自动应用生效
 @property (nonatomic, assign) FWNavigationBarStyle fwNavigationBarStyle;
 
-/// 当前导航栏设置，优先级高于style和hidden，设置后会在viewWillAppear:自动应用生效
-@property (nullable, nonatomic, strong) FWNavigationBarAppearance *fwNavigationBarAppearance;
+/// 导航栏是否隐藏，默认NO，设置后才会在viewWillAppear:自动应用生效
+@property (nonatomic, assign) BOOL fwNavigationBarHidden;
 
 /// 动态隐藏导航栏，如果当前已经viewWillAppear:时立即执行
 - (void)fwSetNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
@@ -127,140 +122,6 @@ static const FWNavigationBarStyle FWNavigationBarStyleTranslucent = 2;
 
 /// 设置导航栏返回按钮点击block事件，默认fwPopBackBarItem自动调用。逻辑同上
 @property (nonatomic, copy, nullable) BOOL (^fwBackBarBlock)(void);
-
-@end
-
-#pragma mark - UINavigationBar+FWStyle
-
-/*!
- @brief 导航栏视图分类，全局设置用[UINavigationBar appearance]
- */
-@interface UINavigationBar (FWStyle)
-
-/// 是否启用iOS13+样式，iOS15+必须启用，iOS13以下始终为NO。默认Xcode13+为YES，Xcode12及以下为NO
-@property (class, nonatomic, assign) BOOL fwAppearanceEnabled;
-
-/// 导航栏iOS13+样式对象，用于自定义样式
-@property (nonatomic, strong, readonly) UINavigationBarAppearance *fwAppearance API_AVAILABLE(ios(13.0));
-
-/// 手工更新导航栏样式
-- (void)fwUpdateAppearance API_AVAILABLE(ios(13.0));
-
-/// 设置返回按钮图片，包含图片和转场Mask图片
-@property (nonatomic, strong, nullable) UIImage *fwBackImage UI_APPEARANCE_SELECTOR;
-
-/// 导航栏是否半透明，需先于背景色设置，默认NO。注意启用iOS13+样式后，背景色需带有alpha时半透明才会生效
-@property (nonatomic, assign) BOOL fwIsTranslucent;
-
-/// 设置前景颜色，包含文字和按钮等
-@property (nonatomic, strong, nullable) UIColor *fwForegroundColor UI_APPEARANCE_SELECTOR;
-
-/// 单独设置标题颜色，nil时显示前景颜色
-@property (nonatomic, strong, nullable) UIColor *fwTitleColor UI_APPEARANCE_SELECTOR;
-
-/// 设置背景颜色(nil时透明)，兼容主题颜色
-@property (nonatomic, strong, nullable) UIColor *fwBackgroundColor UI_APPEARANCE_SELECTOR;
-
-/// 设置背景图片(nil时透明)，兼容主题图片
-@property (nonatomic, strong, nullable) UIImage *fwBackgroundImage UI_APPEARANCE_SELECTOR;
-
-/// 设置阴影图片(nil时透明)，兼容主题图片
-@property (nonatomic, strong, nullable) UIImage *fwShadowImage UI_APPEARANCE_SELECTOR;
-
-/// 设置透明背景并隐藏底部线条，自动清空主题背景
-- (void)fwSetBackgroundTransparent UI_APPEARANCE_SELECTOR;
-
-#pragma mark - View
-
-/// 导航栏内容视图，iOS11+才存在，显示item和titleView等
-@property (nonatomic, readonly, nullable) UIView *fwContentView;
-
-/// 导航栏背景视图，显示背景色和背景图片等
-@property (nonatomic, readonly, nullable) UIView *fwBackgroundView;
-
-/// 导航栏大标题视图，显示时才有值。如果要设置背景色，可使用fwBackgroundView.backgroundColor
-@property (nonatomic, readonly, nullable) UIView *fwLargeTitleView;
-
-/// 导航栏大标题高度，与是否隐藏无关
-@property (class, nonatomic, readonly, assign) CGFloat fwLargeTitleHeight;
-
-@end
-
-#pragma mark - UITabBar+FWStyle
-
-/*!
- @brief 标签栏视图分类，全局设置用[UITabBar appearance]
- */
-@interface UITabBar (FWStyle)
-
-/// 是否启用iOS13+样式，iOS15+必须启用，iOS13以下始终为NO。默认Xcode13+为YES，Xcode12及以下为NO
-@property (class, nonatomic, assign) BOOL fwAppearanceEnabled;
-
-/// 标签栏iOS13+样式对象，用于自定义样式
-@property (nonatomic, strong, readonly) UITabBarAppearance *fwAppearance API_AVAILABLE(ios(13.0));
-
-/// 手工更新标签栏样式
-- (void)fwUpdateAppearance API_AVAILABLE(ios(13.0));
-
-/// 标签栏是否半透明，需先于背景色设置，默认NO。注意启用iOS13+样式后，背景色需带有alpha时半透明才会生效
-@property (nonatomic, assign) BOOL fwIsTranslucent;
-
-/// 设置前景颜色，包含文字和按钮等
-@property (nonatomic, strong, nullable) UIColor *fwForegroundColor;
-
-/// 设置背景颜色，兼容主题颜色
-@property (nonatomic, strong, nullable) UIColor *fwBackgroundColor;
-
-/// 设置背景图片，兼容主题图片
-@property (nonatomic, strong, nullable) UIImage *fwBackgroundImage;
-
-/// 设置阴影图片(nil时透明)，兼容主题图片
-@property (nonatomic, strong, nullable) UIImage *fwShadowImage;
-
-@end
-
-#pragma mark - UIToolbar+FWStyle
-
-/*!
- @brief 工具栏视图分类，全局设置用[UIToolbar appearance]
- @discussion 工具栏高度建议用sizeToFit自动获取(示例44)，contentView为内容视图(示例44)，backgroundView为背景视图(示例78)
- */
-@interface UIToolbar (FWStyle)
-
-/// 是否启用iOS13+样式，iOS15+必须启用，iOS13以下始终为NO。默认Xcode13+为YES，Xcode12及以下为NO
-@property (class, nonatomic, assign) BOOL fwAppearanceEnabled;
-
-/// 工具栏iOS13+样式对象，用于自定义样式
-@property (nonatomic, strong, readonly) UIToolbarAppearance *fwAppearance API_AVAILABLE(ios(13.0));
-
-/// 手工更新工具栏样式
-- (void)fwUpdateAppearance API_AVAILABLE(ios(13.0));
-
-/// 工具栏是否半透明，需先于背景色设置，默认NO。注意启用iOS13+样式后，背景色需带有alpha时半透明才会生效
-@property (nonatomic, assign) BOOL fwIsTranslucent;
-
-/// 设置前景颜色，包含文字和按钮等
-@property (nonatomic, strong, nullable) UIColor *fwForegroundColor;
-
-/// 设置背景颜色，兼容主题颜色
-@property (nonatomic, strong, nullable) UIColor *fwBackgroundColor;
-
-/// 设置背景图片，兼容主题图片
-@property (nonatomic, strong, nullable) UIImage *fwBackgroundImage;
-
-/// 设置阴影图片(nil时透明)，兼容主题图片
-@property (nonatomic, strong, nullable) UIImage *fwShadowImage;
-
-#pragma mark - View
-
-/// 工具栏内容视图，iOS11+才存在，显示item等
-@property (nonatomic, readonly, nullable) UIView *fwContentView;
-
-/// 工具栏背景视图，显示背景色和背景图片等。如果标签栏同时显示，背景视图高度也会包含标签栏高度
-@property (nonatomic, readonly, nullable) UIView *fwBackgroundView;
-
-/// 自定义工具栏位置，调用后才生效，会自动设置delegate。Bottom时背景自动向下延伸，TopAttached时背景自动向上延伸
-@property (nonatomic, assign) UIBarPosition fwBarPosition;
 
 @end
 

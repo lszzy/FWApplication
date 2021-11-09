@@ -88,3 +88,45 @@
 }
 
 @end
+
+@implementation UINavigationBar (FWApplication)
+
+- (UIView *)fwContentView
+{
+    for (UIView *subview in self.subviews) {
+        if ([NSStringFromClass(subview.class) hasSuffix:@"ContentView"]) return subview;
+    }
+    return nil;
+}
+
+- (UIView *)fwLargeTitleView
+{
+    for (UIView *subview in self.subviews) {
+        if ([NSStringFromClass(subview.class) hasSuffix:@"LargeTitleView"]) return subview;
+    }
+    return nil;
+}
+
++ (CGFloat)fwLargeTitleHeight
+{
+    return 52;
+}
+
+@end
+
+@implementation UIToolbar (FWApplication)
+
+- (UIView *)fwContentView
+{
+    for (UIView *subview in self.subviews) {
+        if ([NSStringFromClass(subview.class) hasSuffix:@"ContentView"]) return subview;
+    }
+    return nil;
+}
+
+- (UIView *)fwBackgroundView
+{
+    return [self fwPerformGetter:@"_backgroundView"];
+}
+
+@end

@@ -83,7 +83,7 @@ import UIKit.UIGestureRecognizerSubclass
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fwNavigationBarStyle = .hidden
+        fwNavigationBarHidden = true
         fwForcePopGesture = true
         
         layout()

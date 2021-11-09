@@ -30,15 +30,12 @@
 
 @end
 
-@interface UINavigationBar (FWBarTransition)
-
-@property (nonatomic, assign) BOOL fwIsFakeBar;
-
-- (void)fwReplaceStyleWithNavigationBar:(UINavigationBar *)navigationBar;
-
-@end
-
 @implementation UINavigationBar (FWBarTransition)
+
+- (UIView *)fwBackgroundView
+{
+    return [self fwPerformGetter:@"_backgroundView"];
+}
 
 - (BOOL)fwIsFakeBar
 {
@@ -60,11 +57,11 @@
     self.titleTextAttributes = navigationBar.titleTextAttributes;
     self.largeTitleTextAttributes = navigationBar.largeTitleTextAttributes;
     
-    if (UINavigationBar.fwAppearanceEnabled) { if (@available(iOS 13.0, *)) {
+    if (@available(iOS 13.0, *)) {
         self.standardAppearance = navigationBar.standardAppearance;
         self.compactAppearance = navigationBar.standardAppearance;
         self.scrollEdgeAppearance = navigationBar.scrollEdgeAppearance;
-    }}
+    }
 }
 
 @end

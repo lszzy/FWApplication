@@ -14,9 +14,6 @@ import FWApplication
     @FWUserDefaultAnnotation("isBarTranslucent", defaultValue: false)
     public static var isBarTranslucent: Bool
     
-    @FWUserDefaultAnnotation("isBarAppearance", defaultValue: UINavigationBar.fwAppearanceEnabled)
-    public static var isBarAppearance: Bool
-    
     @FWUserDefaultAnnotation("isExtendedBottom", defaultValue: true)
     public static var isExtendedBottom: Bool
     
@@ -61,9 +58,6 @@ import FWApplication
     }
     
     public static func themeChanged() {
-        UINavigationBar.fwAppearanceEnabled = Theme.isBarAppearance
-        UITabBar.fwAppearanceEnabled = Theme.isBarAppearance
-        UIToolbar.fwAppearanceEnabled = Theme.isBarAppearance
         let defaultAppearance = FWNavigationBarAppearance()
         defaultAppearance.foregroundColor = Theme.textColor
         defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fwColor(withAlpha: 0.5) : Theme.barColor
