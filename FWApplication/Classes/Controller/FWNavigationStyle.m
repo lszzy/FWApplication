@@ -350,38 +350,14 @@
 
 - (void)setFwBackBarItem:(id)object
 {
-    // 系统导航栏
-    if (![object isKindOfClass:[UIImage class]]) {
-        UIBarButtonItem *backItem;
-        if (!object) {
-            backItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-        } else if ([object isKindOfClass:[UIBarButtonItem class]]) {
-            backItem = (UIBarButtonItem *)object;
-        } else {
-            backItem = [UIBarButtonItem fwBarItemWithObject:object target:nil action:nil];
-        }
+    if ([object isKindOfClass:[UIImage class]]) {
+        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.navigationController.navigationBar.fwBackImage = (UIImage *)object;
+    } else {
+        UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem fwBarItemWithObject:object ?: [UIImage new] target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
         self.navigationController.navigationBar.fwBackImage = nil;
-        return;
     }
-    
-    UIImage *indicatorImage = nil;
-    UIImage *image = (UIImage *)object;
-    if (image.size.width > 0 && image.size.height > 0) {
-        // 左侧偏移8个像素，和左侧按钮位置一致
-        UIEdgeInsets insets = UIEdgeInsetsMake(0, -8, 0, 0);
-        CGSize size = image.size;
-        size.width -= insets.left + insets.right;
-        size.height -= insets.top + insets.bottom;
-        CGRect rect = CGRectMake(-insets.left, -insets.top, image.size.width, image.size.height);
-        UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-        [image drawInRect:rect];
-        indicatorImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-    
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationController.navigationBar.fwBackImage = indicatorImage;
 }
 
 - (BOOL)fwPopBackBarItem
