@@ -28,8 +28,8 @@
     } else if (self.index < 3) {
         self.fwNavigationBarStyle = FWNavigationBarStyleTransparent;
     } else {
-        self.fwNavigationBarStyle = [[@[@(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent), @(FWNavigationBarStyleTransparent + 1)] fwRandomObject] integerValue];
-        self.fwNavigationBarHidden = self.fwNavigationBarStyle == FWNavigationBarStyleTransparent + 1;
+        self.fwNavigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)] fwRandomObject] integerValue];
+        self.fwNavigationBarHidden = self.fwNavigationBarStyle == -1;
     }
     self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fwNavigationBarStyle)];
     

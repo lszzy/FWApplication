@@ -26,9 +26,9 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 @property (nullable, nonatomic, strong) UIColor *backgroundColor;
 @property (nullable, nonatomic, strong) UIImage *backgroundImage;
 @property (nullable, nonatomic, strong) UIImage *shadowImage;
-@property (nonatomic, assign) BOOL isHidden;
+/// 是否全透明，需edgesForExtendedLayout为Top|All
 @property (nonatomic, assign) BOOL isTransparent;
-/// 是否半透明磨砂样式，需edgesForExtendedLayout为Top|All
+/// 是否半透明(磨砂)，需edgesForExtendedLayout为Top|All
 @property (nonatomic, assign) BOOL isTranslucent;
 @property (nullable, nonatomic, copy) void (^appearanceBlock)(UINavigationBar *navigationBar);
 
@@ -53,7 +53,7 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 /// 状态栏是否隐藏，默认NO，设置后才会生效
 @property (nonatomic, assign) BOOL fwStatusBarHidden;
 
-/// 当前导航栏设置，优先级高于style和hidden，设置后会在viewWillAppear:自动应用生效
+/// 当前导航栏设置，优先级高于style，设置后会在viewWillAppear:自动应用生效
 @property (nullable, nonatomic, strong) FWNavigationBarAppearance *fwNavigationBarAppearance;
 
 /// 当前导航栏样式，默认Default，设置后才会在viewWillAppear:自动应用生效

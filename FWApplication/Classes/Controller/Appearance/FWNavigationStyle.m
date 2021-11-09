@@ -178,24 +178,15 @@
     if (!self.navigationController || self.fwIsChild ||
         [self isKindOfClass:[UINavigationController class]]) return;
     
-    // fwNavigationBarHidden优先级高，设置即生效
+    // fwNavigationBarHidden设置即生效，动态切换导航栏不突兀，一般在viewWillAppear:中调用
     NSNumber *hidden = objc_getAssociatedObject(self, @selector(fwNavigationBarHidden));
-    // 获取当前用于显示的appearance
-    FWNavigationBarAppearance *appearance = [self fwCurrentNavigationBarAppearance];
-    if (!appearance) {
-        // 动态切换系统导航栏，动画不突兀，一般在viewWillAppear:中调用，立即生效
-        if (hidden && self.navigationController.navigationBarHidden != hidden.boolValue) {
-            [self.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
-        }
-        return;
-    } else {
-        // appearance.isHidden或fwNavigationBarHidden任意一个为YES都隐藏导航栏
-        BOOL isHidden = appearance.isHidden || hidden.boolValue;
-        if (self.navigationController.navigationBarHidden != isHidden) {
-            [self.navigationController setNavigationBarHidden:isHidden animated:animated];
-        }
+    if (hidden && self.navigationController.navigationBarHidden != hidden.boolValue) {
+        [self.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
     }
     
+    // 获取当前用于显示的appearance
+    FWNavigationBarAppearance *appearance = [self fwCurrentNavigationBarAppearance];
+    if (!appearance) return;
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
     if (appearance.isTransparent) [navigationBar fwSetBackgroundTransparent];
     if (appearance.isTranslucent != navigationBar.fwIsTranslucent) navigationBar.fwIsTranslucent = appearance.isTranslucent;
