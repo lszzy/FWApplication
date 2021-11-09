@@ -157,7 +157,6 @@
     _showsDefaultLoading = YES;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(cancelItemClicked:)];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(cancelItemClicked:)];
 }
 
 - (UIView *)backgroundView {
@@ -1787,6 +1786,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     _titleView = titleView;
     titleView.delegate = self;
     self.navigationItem.titleView = titleView;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navBackImage style:UIBarButtonItemStylePlain target:self action:@selector(handleBackPickerImage:)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:FWAppBundle.cancelButton style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelPickerImage:)];
 }
 
@@ -2072,6 +2072,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [self hideAlbumControllerAnimated:YES];
     };
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelPickerImage:)];
+    self.navigationItem.rightBarButtonItem = nil;
+    
     [self addChildViewController:albumController];
     [albumController didMoveToParentViewController:self];
     albumController.view.hidden = YES;
@@ -2315,6 +2318,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                                                                             previewMode:YES];
     if (self.imagePickerPreviewController) {
         [self.navigationController pushViewController:self.imagePickerPreviewController animated:YES];
+    }
+}
+
+- (void)handleBackPickerImage:(id)sender {
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
