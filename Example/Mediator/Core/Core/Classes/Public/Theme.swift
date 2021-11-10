@@ -92,6 +92,7 @@ extension Theme {
             viewController.edgesForExtendedLayout = Theme.isExtendedBottom ? .bottom : []
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
+            viewController.fwNavigationBarHidden = false
             viewController.fwNavigationBarStyle = .default
             viewController.fwForcePopGesture = true
         }
