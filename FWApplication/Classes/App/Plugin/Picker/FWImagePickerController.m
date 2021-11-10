@@ -554,11 +554,37 @@
 
 - (void)setDisabled:(BOOL)disabled {
     _disabled = disabled;
-    if (disabled) {
-        self.maskView.backgroundColor = self.disabledMaskColor;
-    } else {
-        self.maskView.backgroundColor = nil;
-    }
+    self.maskView.backgroundColor = disabled ? self.disabledMaskColor : nil;
+}
+
+- (void)setCheckedBorderColor:(UIColor *)checkedBorderColor {
+    _checkedBorderColor = checkedBorderColor;
+    self.maskView.layer.borderColor = self.checked ? checkedBorderColor.CGColor : nil;
+}
+
+- (void)setCheckedBorderWidth:(CGFloat)checkedBorderWidth {
+    _checkedBorderWidth = checkedBorderWidth;
+    self.maskView.layer.borderWidth = self.checked ? checkedBorderWidth : 0;
+}
+
+- (void)setDisabledMaskColor:(UIColor *)disabledMaskColor {
+    _disabledMaskColor = disabledMaskColor;
+    self.maskView.backgroundColor = self.disabled ? disabledMaskColor : nil;
+}
+
+- (void)setVideoDurationLabelFont:(UIFont *)videoDurationLabelFont {
+    _videoDurationLabelFont = videoDurationLabelFont;
+    self.videoDurationLabel.font = videoDurationLabelFont;
+}
+
+- (void)setVideoDurationLabelTextColor:(UIColor *)videoDurationLabelTextColor {
+    _videoDurationLabelTextColor = videoDurationLabelTextColor;
+    self.videoDurationLabel.textColor = videoDurationLabelTextColor;
+}
+
+- (void)setShowsVideoDurationLabel:(BOOL)showsVideoDurationLabel {
+    _showsVideoDurationLabel = showsVideoDurationLabel;
+    self.videoDurationLabel.hidden = !showsVideoDurationLabel || !_showsVideoIcon;
 }
 
 - (void)setEditedIconImage:(UIImage *)editedIconImage {
@@ -569,11 +595,6 @@
 - (void)setVideoIconImage:(UIImage *)videoIconImage {
     _videoIconImage = videoIconImage;
     [self updateIconImageView];
-}
-
-- (void)setShowsVideoDurationLabel:(BOOL)showsVideoDurationLabel {
-    _showsVideoDurationLabel = showsVideoDurationLabel;
-    self.videoDurationLabel.hidden = !showsVideoDurationLabel || !_showsVideoIcon;
 }
 
 - (void)initVideoDurationLabelIfNeeded {
@@ -1675,6 +1696,20 @@
     if (_selectable) {
         self.checkboxButton.hidden = !_selectable;
         [self updateCheckedIndexLabel];
+    }
+}
+
+- (void)setDisabledMaskColor:(UIColor *)disabledMaskColor {
+    _disabledMaskColor = disabledMaskColor;
+    if (_selectable) {
+        [self updateMaskView];
+    }
+}
+
+- (void)setCheckedMaskColor:(UIColor *)checkedMaskColor {
+    _checkedMaskColor = checkedMaskColor;
+    if (_selectable) {
+        [self updateMaskView];
     }
 }
 
