@@ -1474,10 +1474,10 @@
     [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
     [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
     [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
-    [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = [UIColor blackColor];
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = [UIColor whiteColor];
     [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
     [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
-    [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor whiteColor];
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelBackgroundColor = [UIColor colorWithRed:7/255.f green:193/255.f blue:96/255.f alpha:1.0];
     [FWImagePickerCollectionCell appearance].iconImageViewMargins = UIEdgeInsetsMake(5, 7, 5, 5);
     [FWImagePickerCollectionCell appearance].showsVideoDurationLabel = YES;
 }

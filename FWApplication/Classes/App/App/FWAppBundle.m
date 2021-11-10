@@ -123,8 +123,8 @@
     } else if ([name isEqualToString:@"fwPickerChecked"]) {
         CGSize size = CGSizeMake(20, 20);
         return [UIImage fwImageWithSize:size block:^(CGContextRef contextRef) {
-            UIColor *color = [UIColor colorWithRed:0 green:0 blue:0 alpha:1.0];
-            UIColor *fillColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
+            UIColor *color = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
+            UIColor *fillColor = [UIColor colorWithRed:7/255.f green:193/255.f blue:96/255.f alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGContextSetFillColorWithColor(contextRef, fillColor.CGColor);
             UIBezierPath *circle = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, size.width, size.width)];
