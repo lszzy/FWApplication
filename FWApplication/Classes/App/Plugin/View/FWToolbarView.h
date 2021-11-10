@@ -1,7 +1,7 @@
 /*!
- @header     FWNavigationView.h
+ @header     FWToolbarView.h
  @indexgroup FWApplication
- @brief      FWNavigationView
+ @brief      FWToolbarView
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/2/14
@@ -16,14 +16,20 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWToolbarMenuView;
 
 /**
- * 自定义工具栏视图，高度自动布局(总高度toolbarHeight)，可设置toolbarHidden隐藏(总高度0)；子类可继承
+ * 自定义工具栏视图，高度自动布局(总高度toolbarHeight)，可设置toolbarHidden隐藏(总高度0)
  *
- * 顶部：topView，高度为topHeight(默认0)，可设置topHidden隐藏
- * 中间：menuView，高度为menuHeight(默认FWToolBarHeight-安全区域高度)，可设置menuHidden隐藏
- * 底部：bottomView，高度为bottomHeight(默认安全区域高度)，可设置bottomHidden隐藏
+ * 根据toolbarPosition自动设置默认高度，可自定义，如下：
+ * 顶部：topView，高度为topHeight，可设置topHidden隐藏
+ * 中间：menuView，高度为menuHeight，可设置menuHidden隐藏
+ * 底部：bottomView，高度为bottomHeight，可设置bottomHidden隐藏
  */
 @interface FWToolbarView : UIView
 
+/// 指定工具栏位置并初始化，top|TopAttached时自带titleView
+- (instancetype)initWithToolbarPosition:(UIBarPosition)toolbarPosition;
+
+/// 工具栏位置，默认bottom，设置后会修改默认高度和titleView
+@property (nonatomic, assign) UIBarPosition toolbarPosition;
 /// 背景图片视图，用于设置背景图片
 @property (nonatomic, strong, readonly) UIImageView *backgroundView;
 /// 顶部视图，延迟加载
@@ -59,19 +65,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setBottomHidden:(BOOL)hidden animated:(BOOL)animated;
 /// 动态隐藏工具栏
 - (void)setToolbarHidden:(BOOL)hidden animated:(BOOL)animated;
-
-@end
-
-#pragma mark - FWNavigationView
-
-/**
- * 自定义导航栏视图，继承FWToolbarView，高度自动布局(总高度toolbarHeight)，可设置toolbarHidden隐藏(总高度0)；自带titleView
- *
- * 顶部：topView，高度为topHeight(默认FWStatusBarHeight)，可设置topHidden隐藏
- * 中间：menuView，高度为menuHeight(默认FWNavigationBarHeight)，可设置menuHidden隐藏
- * 底部：bottomView，高度为bottomHeight(默认0)，可设置bottomHidden隐藏
- */
-@interface FWNavigationView : FWToolbarView
 
 @end
 

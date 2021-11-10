@@ -10,7 +10,7 @@
 #import "FWImagePickerController.h"
 #import "FWImagePickerPluginImpl.h"
 #import "FWImageCropController.h"
-#import "FWNavigationView.h"
+#import "FWToolbarView.h"
 #import "FWAdaptive.h"
 #import "FWAppearance.h"
 #import "FWToolkit.h"

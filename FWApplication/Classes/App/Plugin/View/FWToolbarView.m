@@ -1,13 +1,13 @@
 /*!
- @header     FWNavigationView.m
+ @header     FWToolbarView.m
  @indexgroup FWApplication
- @brief      FWNavigationView
+ @brief      FWToolbarView
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2021/07/28
  */
 
-#import "FWNavigationView.h"
+#import "FWToolbarView.h"
 #import "FWViewPluginImpl.h"
 #import "FWAutoLayout.h"
 #import "FWSwizzle.h"
@@ -30,15 +30,21 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self didInitialize];
+        self.toolbarPosition = UIBarPositionBottom;
+    }
+    return self;
+}
+
+- (instancetype)initWithToolbarPosition:(UIBarPosition)toolbarPosition {
+    self = [super initWithFrame:CGRectZero];
+    if (self) {
+        [self didInitialize];
+        self.toolbarPosition = toolbarPosition;
     }
     return self;
 }
 
 - (void)didInitialize {
-    _topHeight = 0;
-    _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
-    _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
-    
     _backgroundView = [[UIImageView alloc] init];
     _backgroundView.clipsToBounds = YES;
     [self addSubview:self.backgroundView];
@@ -93,6 +99,35 @@
         [_topView fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:self.menuView];
     }
     return _topView;
+}
+
+- (void)setToolbarPosition:(UIBarPosition)toolbarPosition {
+    _toolbarPosition = toolbarPosition;
+    switch (toolbarPosition) {
+        case UIBarPositionBottom: {
+            _topHeight = 0;
+            _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
+            self.menuView.titleView = nil;
+            break;
+        }
+        case UIBarPositionTop:
+        case UIBarPositionTopAttached: {
+            _topHeight = FWStatusBarHeight;
+            _menuHeight = FWNavigationBarHeight;
+            _bottomHeight = 0;
+            self.menuView.titleView = [[FWToolbarTitleView alloc] init];
+            break;
+        }
+        default: {
+            _topHeight = 0;
+            _menuHeight = FWNavigationBarHeight;
+            _bottomHeight = 0;
+            self.menuView.titleView = nil;
+            break;
+        }
+    }
+    [self updateLayout:NO];
 }
 
 - (UIView *)bottomView {
@@ -178,23 +213,6 @@
     if (_toolbarHidden == hidden) return;
     _toolbarHidden = hidden;
     [self updateLayout:animated];
-}
-
-@end
-
-#pragma mark - FWNavigationView
-
-@implementation FWNavigationView
-
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.topHeight = FWStatusBarHeight;
-        self.menuHeight = FWNavigationBarHeight;
-        self.bottomHeight = 0;
-        self.menuView.titleView = [[FWToolbarTitleView alloc] init];
-    }
-    return self;
 }
 
 @end

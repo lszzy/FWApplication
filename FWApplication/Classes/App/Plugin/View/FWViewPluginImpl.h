@@ -9,7 +9,7 @@
 
 #import "FWViewPlugin.h"
 #import "FWIndicatorView.h"
-#import "FWNavigationView.h"
+#import "FWToolbarView.h"
 #import "FWProgressView.h"
 #import "FWAlertControllerImpl.h"
 #import "FWImagePluginImpl.h"

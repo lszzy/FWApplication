@@ -10,7 +10,7 @@
 
 @interface TestNavigationTitleViewController () <FWTableViewController, FWToolbarTitleViewDelegate, FWPopupMenuDelegate>
 
-@property(nonatomic, strong) FWNavigationView *navigationView;
+@property(nonatomic, strong) FWToolbarView *navigationView;
 @property(nonatomic, strong) FWToolbarTitleView *titleView;
 @property(nonatomic, assign) UIControlContentHorizontalAlignment horizontalAlignment;
 @property(nonatomic, strong) FWToolbarView *toolbarView;
@@ -31,7 +31,8 @@
 
 - (void)renderTableLayout
 {
-    self.navigationView = [[FWNavigationView alloc] init];
+    self.navigationView = [[FWToolbarView alloc] init];
+    self.navigationView.toolbarPosition = UIBarPositionTopAttached;
     self.navigationView.menuView.tintColor = Theme.textColor;
     self.navigationView.backgroundColor = Theme.barColor;
     self.titleView = self.navigationView.menuView.titleView;
