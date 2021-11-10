@@ -492,7 +492,7 @@
 
 + (void)setDefaultAppearance {
     [FWImagePickerPreviewCollectionCell appearance].imageViewInsets = UIEdgeInsetsZero;
-    [FWImagePickerPreviewCollectionCell appearance].checkedBorderColor = [UIColor whiteColor];
+    [FWImagePickerPreviewCollectionCell appearance].checkedBorderColor = [UIColor colorWithRed:7/255.f green:193/255.f blue:96/255.f alpha:1.0];
     [FWImagePickerPreviewCollectionCell appearance].checkedBorderWidth = 3;
     [FWImagePickerPreviewCollectionCell appearance].disabledMaskColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.8];
     [FWImagePickerPreviewCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
@@ -1169,6 +1169,7 @@
     NSInteger imageIndex = [self.imagesAssetArray indexOfObject:imageAsset];
     if (imageIndex != NSNotFound && self.imagePreviewView.currentImageIndex != imageIndex) {
         self.imagePreviewView.currentImageIndex = imageIndex;
+        [self updateOriginImageCheckboxButtonWithIndex:imageIndex];
     }
     
     [self updateCollectionViewCheckedIndex:indexPath.item];
