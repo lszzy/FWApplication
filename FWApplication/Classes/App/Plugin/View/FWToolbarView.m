@@ -29,8 +29,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self didInitialize];
-        self.toolbarPosition = UIBarPositionBottom;
+        [self didInitializeWithToolbarPosition:UIBarPositionBottom];
     }
     return self;
 }
@@ -38,20 +37,20 @@
 - (instancetype)initWithToolbarPosition:(UIBarPosition)toolbarPosition {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self didInitialize];
-        self.toolbarPosition = toolbarPosition;
+        [self didInitializeWithToolbarPosition:toolbarPosition];
     }
     return self;
 }
 
-- (void)didInitialize {
+- (void)didInitializeWithToolbarPosition:(UIBarPosition)toolbarPosition {
     _backgroundView = [[UIImageView alloc] init];
     _backgroundView.clipsToBounds = YES;
-    [self addSubview:self.backgroundView];
-    [self.backgroundView fwPinEdgesToSuperview];
-    
     _menuView = [[FWToolbarMenuView alloc] init];
+    self.toolbarPosition = toolbarPosition;
+
+    [self addSubview:self.backgroundView];
     [self addSubview:self.menuView];
+    [self.backgroundView fwPinEdgesToSuperview];
     [self.menuView fwPinEdgesToSuperviewHorizontal];
     [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.topHeight];
     [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.bottomHeight];
@@ -127,7 +126,8 @@
             break;
         }
     }
-    [self updateLayout:NO];
+    
+    if (self.menuView.superview) [self updateLayout:NO];
 }
 
 - (UIView *)bottomView {
