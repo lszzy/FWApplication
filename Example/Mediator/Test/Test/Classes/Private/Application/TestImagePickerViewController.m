@@ -43,6 +43,7 @@
     };
     FWImagePickerControllerImpl.sharedInstance.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
         FWImagePickerPreviewController *previewController = [[FWImagePickerPreviewController alloc] init];
+        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fwRandomObject fwAsBool];
         previewController.customCellBlock = ^(FWImagePickerPreviewCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
             cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
         };
