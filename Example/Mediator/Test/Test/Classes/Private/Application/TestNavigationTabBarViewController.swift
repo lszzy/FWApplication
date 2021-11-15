@@ -64,8 +64,8 @@ class TestNavigationTabBarChildController: TestViewController {
     
     private lazy var homeButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_home"), title: "首页")
+        result.imageView?.contentMode = .scaleAspectFit
         result.titleLabel?.font = FWFontRegular(10)
-        result.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: 2)
         result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 1
         return result
@@ -73,8 +73,8 @@ class TestNavigationTabBarChildController: TestViewController {
     
     private lazy var testButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_test"), title: "测试")
+        result.imageView?.contentMode = .scaleAspectFit
         result.titleLabel?.font = FWFontRegular(10)
-        result.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: 2)
         result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 2
         return result
@@ -82,8 +82,8 @@ class TestNavigationTabBarChildController: TestViewController {
     
     private lazy var settingsButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_settings"), title: "设置")
+        result.imageView?.contentMode = .scaleAspectFit
         result.titleLabel?.font = FWFontRegular(10)
-        result.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: 2)
         result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 3
         return result
@@ -111,14 +111,9 @@ class TestNavigationTabBarChildController: TestViewController {
     
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        let imageEdge: UIRectEdge = FWIsLandscape ? .left : .top
-        let imageSize = FWIsLandscape ? CGSize(width: 20, height: 20) : CGSize(width: 26, height: 26)
-        homeButton.fwSetImage(TestBundle.imageNamed("tabbar_home")?.fwImage(withScale: imageSize))
-        homeButton.fwSetImageEdge(imageEdge, spacing: 2)
-        testButton.fwSetImage(TestBundle.imageNamed("tabbar_test")?.fwImage(withScale: imageSize))
-        testButton.fwSetImageEdge(imageEdge, spacing: 2)
-        settingsButton.fwSetImage(TestBundle.imageNamed("tabbar_settings")?.fwImage(withScale: imageSize))
-        settingsButton.fwSetImageEdge(imageEdge, spacing: 2)
+        homeButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        testButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        settingsButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
     }
     
     override func renderView() {
