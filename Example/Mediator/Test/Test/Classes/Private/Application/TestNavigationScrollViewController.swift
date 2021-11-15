@@ -26,9 +26,9 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
 
 @objcMembers class TestNavigationScrollViewController: TestViewController, FWTableViewController {
     private lazy var navigationView: FWToolbarView = {
-        let navigationView = FWToolbarView(type: .navigation)
+        let navigationView = FWToolbarView(type: .navBar)
         navigationView.backgroundColor = Theme.barColor
-        navigationView.menuView.titleView = TestNavigationTitleLabel()
+        navigationView.menuView.centerButton = TestNavigationTitleLabel()
         navigationView.menuView.title = "我是很长很长要多长有多长长得不得了的按钮"
         navigationView.menuView.tintColor = Theme.textColor
         let leftButton = FWToolbarButton(image: FWIcon.backImage)

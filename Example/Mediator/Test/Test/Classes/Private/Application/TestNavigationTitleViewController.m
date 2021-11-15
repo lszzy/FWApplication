@@ -31,7 +31,7 @@
 
 - (void)renderTableLayout
 {
-    self.navigationView = [[FWToolbarView alloc] initWithType:FWToolbarViewTypeNavigation];
+    self.navigationView = [[FWToolbarView alloc] initWithType:FWToolbarViewTypeNavBar];
     self.navigationView.menuView.tintColor = Theme.textColor;
     self.navigationView.backgroundColor = Theme.barColor;
     self.titleView = self.navigationView.menuView.titleView;

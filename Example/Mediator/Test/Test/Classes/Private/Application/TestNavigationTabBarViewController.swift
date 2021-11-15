@@ -10,7 +10,7 @@ import FWApplication
 
 class TestNavigationTabBarChildController: TestViewController {
     private lazy var navigationView: FWToolbarView = {
-        let result = FWToolbarView(type: .navigation)
+        let result = FWToolbarView(type: .navBar)
         result.backgroundColor = Theme.barColor
         result.tintColor = Theme.textColor
         result.menuView.leftButton = FWToolbarButton(object: FWIcon.backImage, block: { sender in

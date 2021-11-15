@@ -15,13 +15,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 自定义工具栏视图类型枚举
 typedef NS_ENUM(NSInteger, FWToolbarViewType) {
-    /// 默认类型，含菜单和底部，无titleView
+    /// 默认工具栏，含菜单和底部，无titleView，自动兼容横屏
     FWToolbarViewTypeDefault = 0,
-    /// 导航栏类型，含顶部和菜单，自带titleView
-    FWToolbarViewTypeNavigation,
-    /// 标签栏类型，含菜单和底部，水平分割
+    /// 导航栏类型，含顶部和菜单，自带titleView，自动兼容横屏
+    FWToolbarViewTypeNavBar,
+    /// 标签栏类型，含菜单和底部，水平等分，自动兼容横屏
     FWToolbarViewTypeTabBar,
-    /// 自定义类型，无顶部和底部，可自定义
+    /// 自定义类型，无顶部和底部，初始高度44，需手工兼容横屏
     FWToolbarViewTypeCustom,
 };
 
@@ -82,15 +82,14 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 
 #pragma mark - FWToolbarMenuView
 
+@class FWToolbarTitleView;
+
 /**
  * 自定义工具栏菜单视图，支持完全自定义，默认最多只支持左右各两个按钮，如需更多按钮，请自行添加。
  *
  * 水平分割时，按钮水平等分；非水平分割时，左右侧间距为8，同系统一致
  */
 @interface FWToolbarMenuView : UIView
-
-/// 是否等宽布局(类似UITabBar)，不含安全区域；默认NO，左右布局(类似UIToolbar|UINavigationBar)
-@property (nonatomic, assign) BOOL equalWidth;
 
 /// 自定义左侧按钮，设置后才显示，非等分时左侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftButton;
@@ -107,8 +106,11 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 /// 自定义右侧按钮，设置后才显示，非等分时右侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightButton;
 
-/// 快捷访问标题视图，等同于centerButton
-@property (nonatomic, strong, nullable) __kindof UIView *titleView;
+/// 是否等宽布局(类似UITabBar)，不含安全区域；默认NO，左右布局(类似UIToolbar|UINavigationBar)
+@property (nonatomic, assign) BOOL equalWidth;
+
+/// 快捷访问FWToolbarTitleView标题视图，同centerButton
+@property (nonatomic, strong, nullable) FWToolbarTitleView *titleView;
 
 /// 快捷访问标题，titleView类型为FWToolbarTitleViewProtocol时才生效
 @property (nonatomic, copy, nullable) NSString *title;
@@ -125,9 +127,6 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 @property(nonatomic, copy, nullable) NSString *title;
 
 @end
-
-@class FWToolbarTitleView;
-@protocol FWIndicatorViewPlugin;
 
 /// 自定义titleView事件代理
 @protocol FWToolbarTitleViewDelegate <NSObject>
@@ -157,6 +156,8 @@ typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
     FWToolbarTitleViewStyleHorizontal = 0,
     FWToolbarTitleViewStyleVertical,
 };
+
+@protocol FWIndicatorViewPlugin;
 
 /**
  *  可作为导航栏标题控件，通过 navigationItem.titleView 来设置。也可当成单独的标题组件，脱离 UIViewController 使用

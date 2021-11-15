@@ -47,7 +47,9 @@
     _backgroundView = [[UIImageView alloc] init];
     _backgroundView.clipsToBounds = YES;
     _menuView = [[FWToolbarMenuView alloc] init];
-    [self layoutHeightWillChange:YES];
+    _menuView.equalWidth = (type == FWToolbarViewTypeTabBar);
+    _menuView.titleView = (type == FWToolbarViewTypeNavBar) ? [FWToolbarTitleView new] : nil;
+    [self updateHeight:YES];
 
     [self addSubview:self.backgroundView];
     [self addSubview:self.menuView];
@@ -58,35 +60,25 @@
     [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.menuHeight];
 }
 
-- (void)layoutHeightWillChange:(BOOL)layoutView {
+- (void)updateHeight:(BOOL)isFirst {
     switch (self.type) {
-        case FWToolbarViewTypeNavigation: {
+        case FWToolbarViewTypeNavBar: {
             _topHeight = FWStatusBarHeight;
             _menuHeight = FWNavigationBarHeight;
             _bottomHeight = 0;
-            if (layoutView) {
-                self.menuView.equalWidth = NO;
-                self.menuView.titleView = [[FWToolbarTitleView alloc] init];
-            }
             break;
         }
         case FWToolbarViewTypeTabBar: {
             _topHeight = 0;
             _menuHeight = FWTabBarHeight - UIScreen.fwSafeAreaInsets.bottom;
             _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
-            if (layoutView) {
-                self.menuView.equalWidth = YES;
-                self.menuView.titleView = nil;
-            }
             break;
         }
         case FWToolbarViewTypeCustom: {
-            _topHeight = 0;
-            _menuHeight = FWNavigationBarHeight;
-            _bottomHeight = 0;
-            if (layoutView) {
-                self.menuView.equalWidth = NO;
-                self.menuView.titleView = nil;
+            if (isFirst) {
+                _topHeight = 0;
+                _menuHeight = 44;
+                _bottomHeight = 0;
             }
             break;
         }
@@ -95,10 +87,6 @@
             _topHeight = 0;
             _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
             _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
-            if (layoutView) {
-                self.menuView.equalWidth = NO;
-                self.menuView.titleView = nil;
-            }
             break;
         }
     }
@@ -117,7 +105,7 @@
 
 - (void)safeAreaInsetsDidChange {
     [super safeAreaInsetsDidChange];
-    [self layoutHeightWillChange:NO];
+    [self updateHeight:NO];
     [self updateLayout:NO];
 }
 
@@ -259,13 +247,6 @@
     return self;
 }
 
-- (void)setEqualWidth:(BOOL)equalWidth
-{
-    if (equalWidth == _equalWidth) return;
-    _equalWidth = equalWidth;
-    [self setNeedsUpdateConstraints];
-}
-
 - (void)setLeftButton:(__kindof UIView *)leftButton
 {
     if (leftButton == _leftButton) return;
@@ -311,28 +292,38 @@
     [self setNeedsUpdateConstraints];
 }
 
-- (__kindof UIView *)titleView
+- (void)setEqualWidth:(BOOL)equalWidth
 {
-    return self.centerButton;
+    if (equalWidth == _equalWidth) return;
+    _equalWidth = equalWidth;
+    [self setNeedsUpdateConstraints];
 }
 
-- (void)setTitleView:(__kindof UIView *)titleView
+- (FWToolbarTitleView *)titleView
+{
+    if ([self.centerButton isKindOfClass:[FWToolbarTitleView class]]) {
+        return (FWToolbarTitleView *)self.centerButton;
+    }
+    return nil;
+}
+
+- (void)setTitleView:(FWToolbarTitleView *)titleView
 {
     self.centerButton = titleView;
 }
 
 - (NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
-        return ((id<FWTitleViewProtocol>)self.titleView).title;
+    if ([self.centerButton conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
+        return ((id<FWTitleViewProtocol>)self.centerButton).title;
     }
     return nil;
 }
 
 - (void)setTitle:(NSString *)title
 {
-    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
-        ((id<FWTitleViewProtocol>)self.titleView).title = title;
+    if ([self.centerButton conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
+        ((id<FWTitleViewProtocol>)self.centerButton).title = title;
     }
 }
 
