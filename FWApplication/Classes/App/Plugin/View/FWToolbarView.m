@@ -29,24 +29,24 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self didInitializeWithToolbarPosition:UIBarPositionBottom];
+        [self didInitializeWithType:FWToolbarViewTypeDefault];
     }
     return self;
 }
 
-- (instancetype)initWithToolbarPosition:(UIBarPosition)toolbarPosition {
+- (instancetype)initWithType:(FWToolbarViewType)type {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self didInitializeWithToolbarPosition:toolbarPosition];
+        [self didInitializeWithType:type];
     }
     return self;
 }
 
-- (void)didInitializeWithToolbarPosition:(UIBarPosition)toolbarPosition {
+- (void)didInitializeWithType:(FWToolbarViewType)type {
     _backgroundView = [[UIImageView alloc] init];
     _backgroundView.clipsToBounds = YES;
     _menuView = [[FWToolbarMenuView alloc] init];
-    self.toolbarPosition = toolbarPosition;
+    self.type = type;
 
     [self addSubview:self.backgroundView];
     [self addSubview:self.menuView];
@@ -88,6 +88,47 @@
 
 #pragma mark - Accessor
 
+- (void)setType:(FWToolbarViewType)type {
+    _type = type;
+    switch (type) {
+        case FWToolbarViewTypeNavigation: {
+            _topHeight = FWStatusBarHeight;
+            _menuHeight = FWNavigationBarHeight;
+            _bottomHeight = 0;
+            self.menuView.splitHorizontal = NO;
+            self.menuView.titleView = [[FWToolbarTitleView alloc] init];
+            break;
+        }
+        case FWToolbarViewTypeTabBar: {
+            _topHeight = 0;
+            _menuHeight = FWTabBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
+            self.menuView.splitHorizontal = YES;
+            self.menuView.titleView = nil;
+            break;
+        }
+        case FWToolbarViewTypeCustom: {
+            _topHeight = 0;
+            _menuHeight = FWNavigationBarHeight;
+            _bottomHeight = 0;
+            self.menuView.splitHorizontal = NO;
+            self.menuView.titleView = nil;
+            break;
+        }
+        case FWToolbarViewTypeDefault:
+        default: {
+            _topHeight = 0;
+            _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
+            self.menuView.splitHorizontal = NO;
+            self.menuView.titleView = nil;
+            break;
+        }
+    }
+    
+    if (self.menuView.superview) [self updateLayout:NO];
+}
+
 - (UIView *)topView {
     if (!_topView) {
         _topView = [[UIView alloc] init];
@@ -98,36 +139,6 @@
         [_topView fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:self.menuView];
     }
     return _topView;
-}
-
-- (void)setToolbarPosition:(UIBarPosition)toolbarPosition {
-    _toolbarPosition = toolbarPosition;
-    switch (toolbarPosition) {
-        case UIBarPositionBottom: {
-            _topHeight = 0;
-            _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
-            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
-            self.menuView.titleView = nil;
-            break;
-        }
-        case UIBarPositionTop:
-        case UIBarPositionTopAttached: {
-            _topHeight = FWStatusBarHeight;
-            _menuHeight = FWNavigationBarHeight;
-            _bottomHeight = 0;
-            self.menuView.titleView = [[FWToolbarTitleView alloc] init];
-            break;
-        }
-        default: {
-            _topHeight = 0;
-            _menuHeight = FWNavigationBarHeight;
-            _bottomHeight = 0;
-            self.menuView.titleView = nil;
-            break;
-        }
-    }
-    
-    if (self.menuView.superview) [self updateLayout:NO];
 }
 
 - (UIView *)bottomView {
@@ -236,6 +247,13 @@
     return self;
 }
 
+- (void)setSplitHorizontal:(BOOL)splitHorizontal
+{
+    if (splitHorizontal == _splitHorizontal) return;
+    _splitHorizontal = splitHorizontal;
+    [self setNeedsUpdateConstraints];
+}
+
 - (void)setLeftButton:(__kindof UIView *)leftButton
 {
     if (leftButton == _leftButton) return;
@@ -254,28 +272,13 @@
     [self setNeedsUpdateConstraints];
 }
 
-- (void)setTitleView:(__kindof UIView *)titleView
+- (void)setCenterButton:(__kindof UIView *)centerButton
 {
-    if (titleView == _titleView) return;
-    if (_titleView) [_titleView removeFromSuperview];
-    _titleView = titleView;
-    if (titleView) [self addSubview:titleView];
+    if (centerButton == _centerButton) return;
+    if (_centerButton) [_centerButton removeFromSuperview];
+    _centerButton = centerButton;
+    if (centerButton) [self addSubview:centerButton];
     [self setNeedsUpdateConstraints];
-}
-
-- (NSString *)title
-{
-    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
-        return ((id<FWTitleViewProtocol>)self.titleView).title;
-    }
-    return nil;
-}
-
-- (void)setTitle:(NSString *)title
-{
-    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
-        ((id<FWTitleViewProtocol>)self.titleView).title = title;
-    }
 }
 
 - (void)setRightMoreButton:(__kindof UIView *)rightMoreButton
@@ -294,6 +297,31 @@
     _rightButton = rightButton;
     if (rightButton) [self addSubview:rightButton];
     [self setNeedsUpdateConstraints];
+}
+
+- (__kindof UIView *)titleView
+{
+    return self.centerButton;
+}
+
+- (void)setTitleView:(__kindof UIView *)titleView
+{
+    self.centerButton = titleView;
+}
+
+- (NSString *)title
+{
+    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
+        return ((id<FWTitleViewProtocol>)self.titleView).title;
+    }
+    return nil;
+}
+
+- (void)setTitle:(NSString *)title
+{
+    if ([self.titleView conformsToProtocol:@protocol(FWTitleViewProtocol)]) {
+        ((id<FWTitleViewProtocol>)self.titleView).title = title;
+    }
 }
 
 - (void)updateConstraints
@@ -1067,8 +1095,8 @@
 - (instancetype)initWithTitle:(NSString *)title {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self setTitle:title forState:UIControlStateNormal];
         [self didInitialize];
+        [self setTitle:title forState:UIControlStateNormal];
         [self sizeToFit];
     }
     return self;
@@ -1077,8 +1105,8 @@
 - (instancetype)initWithImage:(UIImage *)image {
     self = [super initWithFrame:CGRectZero];
     if (self) {
-        [self setTitle:nil forState:UIControlStateNormal];
         [self didInitialize];
+        [self setTitle:nil forState:UIControlStateNormal];
         [self setImage:image forState:UIControlStateNormal];
         [self sizeToFit];
     }

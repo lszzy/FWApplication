@@ -13,6 +13,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWToolbarView
 
+/// 自定义工具栏视图类型枚举
+typedef NS_ENUM(NSInteger, FWToolbarViewType) {
+    /// 默认类型，含菜单和底部，无titleView
+    FWToolbarViewTypeDefault = 0,
+    /// 导航栏类型，含顶部和菜单，自带titleView
+    FWToolbarViewTypeNavigation,
+    /// 标签栏类型，含菜单和底部，水平分割
+    FWToolbarViewTypeTabBar,
+    /// 自定义类型，无顶部和底部，可自定义
+    FWToolbarViewTypeCustom,
+};
+
 @class FWToolbarMenuView;
 
 /**
@@ -25,11 +37,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface FWToolbarView : UIView
 
-/// 指定工具栏位置并初始化，top|TopAttached时自带titleView
-- (instancetype)initWithToolbarPosition:(UIBarPosition)toolbarPosition;
+/// 指定类型初始化，会设置默认高度和视图
+- (instancetype)initWithType:(FWToolbarViewType)type;
+/// 设置工具栏类型，会重置默认高度和视图，默认default
+@property (nonatomic, assign) FWToolbarViewType type;
 
-/// 工具栏位置，默认bottom，设置后会修改默认高度和titleView
-@property (nonatomic, assign) UIBarPosition toolbarPosition;
 /// 背景图片视图，用于设置背景图片
 @property (nonatomic, strong, readonly) UIImageView *backgroundView;
 /// 顶部视图，延迟加载
@@ -39,11 +51,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 底部视图，延迟加载
 @property (nonatomic, strong, readonly) UIView *bottomView;
 
-/// 顶部高度，默认0
+/// 顶部高度，根据类型初始化
 @property (nonatomic, assign) CGFloat topHeight;
-/// 菜单高度，默认FWToolBarHeight-安全区域高度
+/// 菜单高度，根据类型初始化
 @property (nonatomic, assign) CGFloat menuHeight;
-/// 底部高度，默认安全区域高度
+/// 底部高度，根据类型初始化
 @property (nonatomic, assign) CGFloat bottomHeight;
 /// 工具栏总高度，topHeight+menuHeight+bottomHeight，隐藏时为0
 @property (nonatomic, assign, readonly) CGFloat toolbarHeight;
@@ -71,32 +83,35 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWToolbarMenuView
 
 /**
- * 自定义工具栏菜单视图，支持完全自定义
+ * 自定义工具栏菜单视图，支持完全自定义，默认最多只支持左右各两个按钮，如需更多按钮，请自行添加。
  *
- * 默认最多只支持左右各两个按钮，如需更多按钮，请自行添加并布局即可
+ * 水平分割时，按钮水平等分；非水平分割时，左右侧间距为8，同系统一致
  */
 @interface FWToolbarMenuView : UIView
 
-/// 自定义返回按钮，自定义导航栏使用时会自动设置为左侧按钮
-@property (nonatomic, strong, nullable) __kindof UIView *backButton;
+/// 是否水平分割布局(类似UITabBar)，默认NO，水平左右布局(类似UIToolbar|UINavigationBar)
+@property (nonatomic, assign) BOOL splitHorizontal;
 
-/// 自定义左侧按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWToolbarButton
+/// 自定义左侧按钮，设置后才显示，非等分时左侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftButton;
 
-/// 自定义左侧更多按钮，设置后才显示，左侧间距为8，同系统一致。建议使用FWToolbarButton
+/// 自定义左侧更多按钮，设置后才显示，非等分时左侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftMoreButton;
 
-/// 自定义标题视图，居中显示，需支持自动布局，左右最大间距为0。建议使用FWToolbarTitleView
-@property (nonatomic, strong, nullable) __kindof UIView *titleView;
+/// 自定义居中按钮，设置后才显示，非等分时左右最大间距为0。建议使用FWToolbarTitleView或FWToolbarButton
+@property (nonatomic, strong, nullable) __kindof UIView *centerButton;
 
-/// 快速设置标题，titleView类型为FWToolbarTitleViewProtocol时才生效
-@property (nonatomic, copy, nullable) NSString *title;
-
-/// 自定义右侧更多按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWToolbarButton
+/// 自定义右侧更多按钮，设置后才显示，非等分时右侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightMoreButton;
 
-/// 自定义右侧按钮，设置后才显示，右侧间距为8，同系统一致。建议使用FWToolbarButton
+/// 自定义右侧按钮，设置后才显示，非等分时右侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *rightButton;
+
+/// 快捷访问标题视图，等同于centerButton
+@property (nonatomic, strong, nullable) __kindof UIView *titleView;
+
+/// 快捷访问标题，titleView类型为FWToolbarTitleViewProtocol时才生效
+@property (nonatomic, copy, nullable) NSString *title;
 
 @end
 
