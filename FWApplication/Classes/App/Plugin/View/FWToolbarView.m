@@ -43,10 +43,11 @@
 }
 
 - (void)didInitializeWithType:(FWToolbarViewType)type {
+    _type = type;
     _backgroundView = [[UIImageView alloc] init];
     _backgroundView.clipsToBounds = YES;
     _menuView = [[FWToolbarMenuView alloc] init];
-    self.type = type;
+    [self layoutHeightWillChange:YES];
 
     [self addSubview:self.backgroundView];
     [self addSubview:self.menuView];
@@ -55,6 +56,52 @@
     [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:self.topHeight];
     [self.menuView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.bottomHeight];
     [self.menuView fwSetDimension:NSLayoutAttributeHeight toSize:self.menuHeight];
+}
+
+- (void)layoutHeightWillChange:(BOOL)layoutView {
+    switch (self.type) {
+        case FWToolbarViewTypeNavigation: {
+            _topHeight = FWStatusBarHeight;
+            _menuHeight = FWNavigationBarHeight;
+            _bottomHeight = 0;
+            if (layoutView) {
+                self.menuView.equalWidth = NO;
+                self.menuView.titleView = [[FWToolbarTitleView alloc] init];
+            }
+            break;
+        }
+        case FWToolbarViewTypeTabBar: {
+            _topHeight = 0;
+            _menuHeight = FWTabBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
+            if (layoutView) {
+                self.menuView.equalWidth = YES;
+                self.menuView.titleView = nil;
+            }
+            break;
+        }
+        case FWToolbarViewTypeCustom: {
+            _topHeight = 0;
+            _menuHeight = FWNavigationBarHeight;
+            _bottomHeight = 0;
+            if (layoutView) {
+                self.menuView.equalWidth = NO;
+                self.menuView.titleView = nil;
+            }
+            break;
+        }
+        case FWToolbarViewTypeDefault:
+        default: {
+            _topHeight = 0;
+            _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
+            if (layoutView) {
+                self.menuView.equalWidth = NO;
+                self.menuView.titleView = nil;
+            }
+            break;
+        }
+    }
 }
 
 - (void)updateLayout:(BOOL)animated {
@@ -66,6 +113,12 @@
             [self.superview layoutIfNeeded];
         }];
     }
+}
+
+- (void)safeAreaInsetsDidChange {
+    [super safeAreaInsetsDidChange];
+    [self layoutHeightWillChange:NO];
+    [self updateLayout:NO];
 }
 
 - (void)updateConstraints {
@@ -87,47 +140,6 @@
 }
 
 #pragma mark - Accessor
-
-- (void)setType:(FWToolbarViewType)type {
-    _type = type;
-    switch (type) {
-        case FWToolbarViewTypeNavigation: {
-            _topHeight = FWStatusBarHeight;
-            _menuHeight = FWNavigationBarHeight;
-            _bottomHeight = 0;
-            self.menuView.splitHorizontal = NO;
-            self.menuView.titleView = [[FWToolbarTitleView alloc] init];
-            break;
-        }
-        case FWToolbarViewTypeTabBar: {
-            _topHeight = 0;
-            _menuHeight = FWTabBarHeight - UIScreen.fwSafeAreaInsets.bottom;
-            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
-            self.menuView.splitHorizontal = YES;
-            self.menuView.titleView = nil;
-            break;
-        }
-        case FWToolbarViewTypeCustom: {
-            _topHeight = 0;
-            _menuHeight = FWNavigationBarHeight;
-            _bottomHeight = 0;
-            self.menuView.splitHorizontal = NO;
-            self.menuView.titleView = nil;
-            break;
-        }
-        case FWToolbarViewTypeDefault:
-        default: {
-            _topHeight = 0;
-            _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
-            _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
-            self.menuView.splitHorizontal = NO;
-            self.menuView.titleView = nil;
-            break;
-        }
-    }
-    
-    if (self.menuView.superview) [self updateLayout:NO];
-}
 
 - (UIView *)topView {
     if (!_topView) {
@@ -247,10 +259,10 @@
     return self;
 }
 
-- (void)setSplitHorizontal:(BOOL)splitHorizontal
+- (void)setEqualWidth:(BOOL)equalWidth
 {
-    if (splitHorizontal == _splitHorizontal) return;
-    _splitHorizontal = splitHorizontal;
+    if (equalWidth == _equalWidth) return;
+    _equalWidth = equalWidth;
     [self setNeedsUpdateConstraints];
 }
 
@@ -324,6 +336,12 @@
     }
 }
 
+- (void)safeAreaInsetsDidChange
+{
+    [super safeAreaInsetsDidChange];
+    [self setNeedsUpdateConstraints];
+}
+
 - (void)updateConstraints
 {
     [super updateConstraints];
@@ -333,7 +351,7 @@
         self.subviewContraints = nil;
     }
     
-    if (self.splitHorizontal) {
+    if (self.equalWidth) {
         NSMutableArray *subviewButtons = [NSMutableArray array];
         if (self.leftButton) [subviewButtons addObject:self.leftButton];
         if (self.leftMoreButton) [subviewButtons addObject:self.leftMoreButton];
@@ -351,11 +369,11 @@
                 [subviewContraints addObject:[subviewButton fwPinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:previousButton]];
                 [subviewContraints addObject:[subviewButton fwMatchDimension:NSLayoutAttributeWidth toDimension:NSLayoutAttributeWidth ofView:previousButton]];
             } else {
-                [subviewContraints addObject:[subviewButton fwPinEdgeToSuperview:NSLayoutAttributeLeft]];
+                [subviewContraints addObject:[subviewButton fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:UIScreen.fwSafeAreaInsets.left]];
             }
             previousButton = subviewButton;
         }
-        [subviewContraints addObject:[previousButton fwPinEdgeToSuperview:NSLayoutAttributeRight]];
+        [subviewContraints addObject:[previousButton fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:UIScreen.fwSafeAreaInsets.right]];
         self.subviewContraints = subviewContraints;
     } else {
         NSMutableArray *subviewContraints = [NSMutableArray array];

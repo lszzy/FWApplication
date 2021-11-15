@@ -39,9 +39,9 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 
 /// 指定类型初始化，会设置默认高度和视图
 - (instancetype)initWithType:(FWToolbarViewType)type;
-/// 设置工具栏类型，会重置默认高度和视图，默认default
-@property (nonatomic, assign) FWToolbarViewType type;
 
+/// 当前工具栏类型，只读，默认default
+@property (nonatomic, assign, readonly) FWToolbarViewType type;
 /// 背景图片视图，用于设置背景图片
 @property (nonatomic, strong, readonly) UIImageView *backgroundView;
 /// 顶部视图，延迟加载
@@ -89,8 +89,8 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
  */
 @interface FWToolbarMenuView : UIView
 
-/// 是否水平分割布局(类似UITabBar)，默认NO，水平左右布局(类似UIToolbar|UINavigationBar)
-@property (nonatomic, assign) BOOL splitHorizontal;
+/// 是否等宽布局(类似UITabBar)，不含安全区域；默认NO，左右布局(类似UIToolbar|UINavigationBar)
+@property (nonatomic, assign) BOOL equalWidth;
 
 /// 自定义左侧按钮，设置后才显示，非等分时左侧间距为8。建议使用FWToolbarButton
 @property (nonatomic, strong, nullable) __kindof UIView *leftButton;
