@@ -277,6 +277,9 @@ typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
 /// 指定图片初始化，默认内间距：{8, 8, 8, 8}，可自定义
 - (instancetype)initWithImage:(nullable UIImage *)image;
 
+/// 指定图片和标题初始化，默认内间距：{8, 8, 8, 8}，可自定义
+- (instancetype)initWithImage:(nullable UIImage *)image title:(nullable NSString *)title;
+
 /// 使用指定对象创建按钮，支持UIImage|NSString(默认)，同时添加点击事件
 + (instancetype)buttonWithObject:(nullable id)object target:(nullable id)target action:(nullable SEL)action;
 

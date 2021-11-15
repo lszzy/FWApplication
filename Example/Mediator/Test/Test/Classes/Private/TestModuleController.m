@@ -136,6 +136,7 @@
               @[@"FWScrollViewController", @"TestControllerViewController"],
               @[@"FWToolbarView", @"TestNavigationTitleViewController"],
               @[@"FWToolbarView+Scroll", @"Test.TestNavigationScrollViewController"],
+              @[@"FWToolbarView+TabBar", @"Test.TestNavigationTabBarViewController"],
               @[@"FWTabBarController", @"TestTabBarViewController"],
               @[@"FWCache", @"TestCacheViewController"],
               @[@"FWAssetManager", @"Test.TestAssetViewController"],
