@@ -64,7 +64,6 @@ class TestNavigationTabBarChildController: TestViewController {
     
     private lazy var homeButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_home"), title: "首页")
-        result.imageView?.contentMode = .scaleAspectFit
         result.titleLabel?.font = FWFontRegular(10)
         result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 1
@@ -73,7 +72,6 @@ class TestNavigationTabBarChildController: TestViewController {
     
     private lazy var testButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_test"), title: "测试")
-        result.imageView?.contentMode = .scaleAspectFit
         result.titleLabel?.font = FWFontRegular(10)
         result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 2
@@ -82,7 +80,6 @@ class TestNavigationTabBarChildController: TestViewController {
     
     private lazy var settingsButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_settings"), title: "设置")
-        result.imageView?.contentMode = .scaleAspectFit
         result.titleLabel?.font = FWFontRegular(10)
         result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 3
@@ -111,8 +108,11 @@ class TestNavigationTabBarChildController: TestViewController {
     
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
+        homeButton.contentEdgeInsets = UIEdgeInsets(top: FWIsLandscape ? 2 : 8, left: 8, bottom: FWIsLandscape ? 2 : 8, right: 8)
         homeButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        testButton.contentEdgeInsets = homeButton.contentEdgeInsets
         testButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        settingsButton.contentEdgeInsets = homeButton.contentEdgeInsets
         settingsButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
     }
     

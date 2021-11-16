@@ -1166,6 +1166,7 @@
     self.contentMode = UIViewContentModeCenter;
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.adjustsTintColor = YES;
     self.adjustsImageWhenHighlighted = NO;
     self.adjustsImageWhenDisabled = NO;
