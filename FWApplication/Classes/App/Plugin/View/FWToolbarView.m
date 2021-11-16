@@ -1083,6 +1083,7 @@
 
 @property (nonatomic, strong) UIImage *highlightedImage;
 @property (nonatomic, strong) UIImage *disabledImage;
+@property (nonatomic, assign) BOOL isLandscape;
 
 @end
 
@@ -1219,11 +1220,17 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    UIEdgeInsets edgeInsets = self.contentEdgeInsets;
-    edgeInsets.top = FWIsLandscape ? 0 : 8;
-    edgeInsets.bottom = edgeInsets.top;
-    self.contentEdgeInsets = edgeInsets;
+    // 横竖屏方向改变时才修改默认contentEdgeInsets，方便项目使用
+    BOOL isLandscape = UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation);
+    if (isLandscape != self.isLandscape) {
+        self.isLandscape = isLandscape;
+        UIEdgeInsets edgeInsets = self.contentEdgeInsets;
+        edgeInsets.top = isLandscape ? 0 : 8;
+        edgeInsets.bottom = isLandscape ? 0 : 8;
+        self.contentEdgeInsets = edgeInsets;
+    }
     
+    // 处理navigationBar左侧第一个按钮和右侧第一个按钮位置，和系统一致
     UIView *navigationBar = nil;
     UIView *superView = self.superview;
     while (superView != nil) {
