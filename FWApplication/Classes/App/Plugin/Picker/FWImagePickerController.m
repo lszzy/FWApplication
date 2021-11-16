@@ -712,26 +712,30 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     self.topToolBarView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), FWTopBarHeight);
-    CGFloat topToolbarPaddingTop = UIScreen.fwSafeAreaInsets.top;
+    CGFloat topToolbarPaddingTop = self.view.safeAreaInsets.top;
     CGFloat topToolbarContentHeight = CGRectGetHeight(self.topToolBarView.bounds) - topToolbarPaddingTop;
-    self.backButton.fwOrigin = CGPointMake(16 + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
+    self.backButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
     if (!self.checkboxButton.hidden) {
         self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
     }
     
-    CGFloat bottomToolBarContentHeight = 44;
-    CGFloat bottomToolBarHeight = bottomToolBarContentHeight + self.view.safeAreaInsets.bottom;
+    CGFloat bottomToolBarHeight = FWToolBarHeight;
+    CGFloat bottomToolBarContentHeight = bottomToolBarHeight - self.view.safeAreaInsets.bottom;
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
     [self updateSendButtonLayout];
     
-    self.editButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
+    self.editButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
     if (self.showsEditButton) {
         self.originImageCheckboxButton.fwOrigin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     } else {
-        self.originImageCheckboxButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+        self.originImageCheckboxButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     }
     
     self.editCollectionView.frame = CGRectMake(0, CGRectGetMinY(self.bottomToolBarView.frame) - self.editCollectionViewHeight, CGRectGetWidth(self.view.bounds), self.editCollectionViewHeight);
+    UIEdgeInsets contentInset = UIEdgeInsetsMake(0, self.editCollectionView.safeAreaInsets.left, 0, self.editCollectionView.safeAreaInsets.right);
+    if (!UIEdgeInsetsEqualToEdgeInsets(self.editCollectionView.contentInset, contentInset)) {
+        self.editCollectionView.contentInset = contentInset;
+    }
 }
 
 - (BOOL)preferredNavigationBarHidden {
@@ -1383,9 +1387,9 @@
 }
 
 - (void)updateSendButtonLayout {
-    CGFloat bottomToolBarContentHeight = 44;
+    CGFloat bottomToolBarContentHeight = FWToolBarHeight - self.view.safeAreaInsets.bottom;
     [self.sendButton sizeToFit];
-    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
+    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
 }
 
 - (void)updateImageCountAndCollectionView:(BOOL)animated {
@@ -1882,7 +1886,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.allowsMultipleSelection) {
         operationToolBarViewHeight = FWToolBarHeight;
         self.operationToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - operationToolBarViewHeight, CGRectGetWidth(self.view.bounds), operationToolBarViewHeight);
-        self.previewButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal, (CGRectGetHeight(self.operationToolBarView.bounds) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
+        self.previewButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (CGRectGetHeight(self.operationToolBarView.bounds) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
         [self updateSendButtonLayout];
         operationToolBarViewHeight = CGRectGetHeight(self.operationToolBarView.frame);
     }
@@ -2484,7 +2488,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)updateSendButtonLayout {
     if (!self.allowsMultipleSelection) return;
     [self.sendButton sizeToFit];
-    self.sendButton.frame = CGRectMake(CGRectGetWidth(self.operationToolBarView.bounds) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame), (CGRectGetHeight(self.operationToolBarView.frame) - UIScreen.fwSafeAreaInsets.bottom - CGRectGetHeight(self.sendButton.frame)) / 2.0, CGRectGetWidth(self.sendButton.frame), CGRectGetHeight(self.sendButton.frame));
+    self.sendButton.frame = CGRectMake(CGRectGetWidth(self.operationToolBarView.bounds) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (CGRectGetHeight(self.operationToolBarView.frame) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.sendButton.frame)) / 2.0, CGRectGetWidth(self.sendButton.frame), CGRectGetHeight(self.sendButton.frame));
 }
 
 - (void)updateImageCountAndCheckLimited:(BOOL)reloadData {
