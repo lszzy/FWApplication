@@ -65,26 +65,19 @@
         case FWToolbarViewTypeNavBar: {
             _topHeight = FWStatusBarHeight;
             _menuHeight = FWNavigationBarHeight;
-            _bottomHeight = 0;
             break;
         }
         case FWToolbarViewTypeTabBar: {
-            _topHeight = 0;
             _menuHeight = FWTabBarHeight - UIScreen.fwSafeAreaInsets.bottom;
             _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
             break;
         }
         case FWToolbarViewTypeCustom: {
-            if (isFirst) {
-                _topHeight = 0;
-                _menuHeight = 44;
-                _bottomHeight = 0;
-            }
+            if (isFirst) _menuHeight = 44;
             break;
         }
         case FWToolbarViewTypeDefault:
         default: {
-            _topHeight = 0;
             _menuHeight = FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
             _bottomHeight = UIScreen.fwSafeAreaInsets.bottom;
             break;
@@ -1166,7 +1159,6 @@
     self.contentMode = UIViewContentModeCenter;
     self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
     self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.adjustsTintColor = YES;
     self.adjustsImageWhenHighlighted = NO;
     self.adjustsImageWhenDisabled = NO;
@@ -1227,6 +1219,11 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    UIEdgeInsets edgeInsets = self.contentEdgeInsets;
+    edgeInsets.top = FWIsLandscape ? 0 : 8;
+    edgeInsets.bottom = edgeInsets.top;
+    self.contentEdgeInsets = edgeInsets;
+    
     UIView *navigationBar = nil;
     UIView *superView = self.superview;
     while (superView != nil) {
@@ -1243,12 +1240,10 @@
         UIEdgeInsets edgeInsets = self.contentEdgeInsets;
         edgeInsets.left = 0;
         self.contentEdgeInsets = edgeInsets;
-        [self sizeToFit];
     } else if (CGRectGetMaxX(convertFrame) + 16 == CGRectGetWidth(navigationBar.bounds)) {
         UIEdgeInsets edgeInsets = self.contentEdgeInsets;
         edgeInsets.right = 0;
         self.contentEdgeInsets = edgeInsets;
-        [self sizeToFit];
     }
 }
 
