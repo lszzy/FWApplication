@@ -654,6 +654,7 @@
 
 @property(nonatomic, weak) FWImagePickerController *imagePickerController;
 @property(nonatomic, assign) NSInteger editCheckedIndex;
+@property(nonatomic, assign) BOOL shouldResetPreviewView;
 
 @end
 
@@ -929,6 +930,7 @@
     self.imagesAssetArray = imageAssetArray;
     self.selectedImageAssetArray = selectedImageAssetArray;
     self.imagePreviewView.currentImageIndex = currentImageIndex;
+    self.shouldResetPreviewView = YES;
     _singleCheckMode = singleCheckMode;
     _previewMode = previewMode;
     if (singleCheckMode) {
@@ -958,9 +960,15 @@
 }
 
 - (BOOL)imagePreviewView:(FWImagePreviewView *)imagePreviewView shouldResetZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
-    // 为了防止切换图片时产生闪烁，只重置videoPlayerItem，加载失败时需清空显示
-    zoomImageView.videoPlayerItem = nil;
-    return NO;
+    if (self.shouldResetPreviewView) {
+        // 刷新数据源时需重置zoomImageView，清空当前显示内容
+        self.shouldResetPreviewView = NO;
+        return YES;
+    } else {
+        // 为了防止切换图片时产生闪烁，快速切换时只重置videoPlayerItem，加载失败时需清空显示
+        zoomImageView.videoPlayerItem = nil;
+        return NO;
+    }
 }
 
 - (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView renderZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
