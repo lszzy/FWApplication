@@ -37,7 +37,7 @@
     FWImagePickerControllerImpl.sharedInstance.albumControllerBlock = ^FWImageAlbumController * _Nonnull{
         FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
         albumController.customCellBlock = ^(FWImageAlbumTableCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
-            cell.checkedMaskColor = [UIColor fwColorWithHex:0xFFFFFF alpha:0.15];
+            cell.checkedMaskColor = [UIColor fwColorWithHex:0xFFFFFF alpha:0.1];
         };
         return albumController;
     };
@@ -48,6 +48,17 @@
             cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
         };
         return previewController;
+    };
+    FWImagePickerControllerImpl.sharedInstance.cropControllerBlock = ^FWImageCropController * _Nonnull(UIImage * _Nonnull image) {
+        FWImageCropController *cropController = [[FWImageCropController alloc] initWithImage:image];
+        cropController.aspectRatioPickerButtonHidden = YES;
+        cropController.rotateButtonsHidden = YES;
+        cropController.toolbar.tintColor = UIColor.whiteColor;
+        [cropController.toolbar.cancelTextButton fwSetImage:FWIconImage(@"ion-android-close", 22)];
+        [cropController.toolbar.cancelTextButton setTitle:nil forState:UIControlStateNormal];
+        [cropController.toolbar.doneTextButton fwSetImage:FWIconImage(@"ion-android-done", 22)];
+        [cropController.toolbar.doneTextButton setTitle:nil forState:UIControlStateNormal];
+        return cropController;
     };
 }
 

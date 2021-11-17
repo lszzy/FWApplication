@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 自定义图片选取控制器句柄，默认nil时使用自带控制器
 @property (nonatomic, copy, nullable) FWImagePickerController * (^pickerControllerBlock)(void);
 
-/// 自定义图片裁剪控制器句柄，默认nil时使用自带控制器
+/// 自定义图片裁剪控制器句柄，预览控制器未自定义时生效，默认nil时使用自带控制器
 @property (nonatomic, copy, nullable) FWImageCropController * (^cropControllerBlock)(UIImage *image);
 
 /// 图片选取全局自定义句柄，show方法自动调用

@@ -119,7 +119,9 @@
         previewController = [[FWImagePickerPreviewController alloc] init];
     }
     previewController.showsEditButton = allowsEditing;
-    previewController.cropControllerBlock = self.cropControllerBlock;
+    if (!previewController.cropControllerBlock && self.cropControllerBlock) {
+        previewController.cropControllerBlock = self.cropControllerBlock;
+    }
     return previewController;
 }
 
