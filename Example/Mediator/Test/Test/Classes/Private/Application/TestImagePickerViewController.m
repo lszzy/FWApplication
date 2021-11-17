@@ -30,6 +30,7 @@
         pickerController.titleAccessoryImage = accessoryImage;
         
         pickerController.customCellBlock = ^(FWImagePickerCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
+            cell.showsCheckedIndexLabel = [@[@YES, @NO].fwRandomObject fwAsBool];
             cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
         };
         return pickerController;
@@ -52,7 +53,7 @@
     FWImagePickerControllerImpl.sharedInstance.cropControllerBlock = ^FWImageCropController * _Nonnull(UIImage * _Nonnull image) {
         FWImageCropController *cropController = [[FWImageCropController alloc] initWithImage:image];
         cropController.aspectRatioPickerButtonHidden = YES;
-        cropController.rotateButtonsHidden = YES;
+        cropController.cropView.backgroundColor = UIColor.blackColor;
         cropController.toolbar.tintColor = UIColor.whiteColor;
         [cropController.toolbar.cancelTextButton fwSetImage:FWIconImage(@"ion-android-close", 22)];
         [cropController.toolbar.cancelTextButton setTitle:nil forState:UIControlStateNormal];
