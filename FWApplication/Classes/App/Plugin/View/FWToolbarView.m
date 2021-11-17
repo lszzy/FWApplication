@@ -19,6 +19,12 @@
 
 #pragma mark - FWToolbarView
 
+@interface FWToolbarView ()
+
+@property (nonatomic, assign) BOOL isLandscape;
+
+@end
+
 @implementation FWToolbarView
 
 @synthesize topView = _topView;
@@ -98,7 +104,12 @@
 
 - (void)safeAreaInsetsDidChange {
     [super safeAreaInsetsDidChange];
-    [self updateHeight:NO];
+    
+    BOOL isLandscape = UIInterfaceOrientationIsLandscape(UIApplication.sharedApplication.statusBarOrientation);
+    if (isLandscape != self.isLandscape) {
+        self.isLandscape = isLandscape;
+        [self updateHeight:NO];
+    }
     [self updateLayout:NO];
 }
 
