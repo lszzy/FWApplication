@@ -1479,7 +1479,7 @@
     [FWImagePickerCollectionCell appearance].videoDurationLabelFont = [UIFont systemFontOfSize:12];
     [FWImagePickerCollectionCell appearance].videoDurationLabelTextColor = UIColor.whiteColor;
     [FWImagePickerCollectionCell appearance].videoDurationLabelMargins = UIEdgeInsetsMake(5, 5, 5, 7);
-    [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont systemFontOfSize:12];
+    [FWImagePickerCollectionCell appearance].checkedIndexLabelFont = [UIFont boldSystemFontOfSize:13];
     [FWImagePickerCollectionCell appearance].checkedIndexLabelTextColor = [UIColor whiteColor];
     [FWImagePickerCollectionCell appearance].checkedIndexLabelSize = CGSizeMake(20, 20);
     [FWImagePickerCollectionCell appearance].checkedIndexLabelMargins = UIEdgeInsetsMake(6, 6, 6, 6);
