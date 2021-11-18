@@ -139,7 +139,7 @@
         [self.tagCollectionView addTag:tagName withConfig:self.textTagConfig];
     }
     
-    FWMarqueeLabel *marqueeLabel = [FWMarqueeLabel fwLabelWithText:@"FWMarqueeLabel 会在添加到界面上后，并且文字超过 label 宽度时自动滚动" font:FWFontRegular(16) textColor:[Theme textColor]];
+    FWMarqueeLabel *marqueeLabel = [FWMarqueeLabel fwLabelWithFont:FWFontRegular(16) textColor:[Theme textColor] text:@"FWMarqueeLabel 会在添加到界面上后，并且文字超过 label 宽度时自动滚动"];
     [self.view addSubview:marqueeLabel];
     [marqueeLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:10];
     [marqueeLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:10];

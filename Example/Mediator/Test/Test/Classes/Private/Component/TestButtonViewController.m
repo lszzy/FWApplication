@@ -18,7 +18,7 @@
     [button fwAddTouchTarget:self action:@selector(onClick1:)];
     [self.view addSubview:button];
     
-    UILabel *label = [UILabel fwLabelWithText:@"View重复点击" font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"View重复点击"];
     label.textAlignment = NSTextAlignmentCenter;
     label.userInteractionEnabled = YES;
     label.frame = CGRectMake(200, 15, 150, 30);
@@ -30,7 +30,7 @@
     [button fwAddTouchTarget:self action:@selector(onClick3:)];
     [self.view addSubview:button];
     
-    label = [UILabel fwLabelWithText:@"View不可重复点击" font:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+    label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"View不可重复点击"];
     label.textAlignment = NSTextAlignmentCenter;
     label.userInteractionEnabled = YES;
     label.frame = CGRectMake(200, 60, 150, 30);
