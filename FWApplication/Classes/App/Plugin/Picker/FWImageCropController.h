@@ -147,7 +147,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
  */
 @property (nonnull, nonatomic, strong, readonly) FWImageCropToolbar *toolbar;
 
-/// 自定义工具栏高度，默认44
+/// 自定义工具栏高度，默认同系统
 @property (nonatomic, assign) CGFloat toolbarHeight;
 
 /**

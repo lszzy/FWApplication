@@ -66,7 +66,6 @@
         // Default initial behaviour
         _titleTopPadding = 14.0f;
         _aspectRatioPreset = FWImageCropAspectRatioPresetOriginal;
-        _toolbarHeight = 44.0f;
         _toolbarPosition = FWImageCropToolbarPositionBottom;
     }
     
@@ -239,16 +238,17 @@
     UIEdgeInsets insets = self.statusBarSafeInsets;
 
     CGRect frame = CGRectZero;
+    CGFloat toolbarHeight = self.toolbarHeight;
     if (!verticalLayout) { // In landscape laying out toolbar to the left
         frame.origin.x = insets.left;
         frame.origin.y = 0.0f;
-        frame.size.width = self.toolbarHeight;
+        frame.size.width = toolbarHeight;
         frame.size.height = CGRectGetHeight(self.view.frame);
     }
     else {
         frame.origin.x = 0.0f;
         frame.size.width = CGRectGetWidth(self.view.bounds);
-        frame.size.height = self.toolbarHeight;
+        frame.size.height = toolbarHeight;
 
         if (self.toolbarPosition == FWImageCropToolbarPositionBottom) {
             frame.origin.y = CGRectGetHeight(self.view.bounds) - (frame.size.height + insets.bottom);
@@ -277,10 +277,11 @@
 
     CGRect bounds = view.bounds;
     CGRect frame = CGRectZero;
+    CGFloat toolbarHeight = self.toolbarHeight;
 
     // Horizontal layout (eg landscape)
     if (!verticalLayout) {
-        frame.origin.x = self.toolbarHeight + insets.left;
+        frame.origin.x = toolbarHeight + insets.left;
         frame.size.width = CGRectGetWidth(bounds) - frame.origin.x;
         frame.size.height = CGRectGetHeight(bounds);
     }
@@ -290,9 +291,9 @@
 
         // Set Y and adjust for height
         if (self.toolbarPosition == FWImageCropToolbarPositionBottom) {
-            frame.size.height -= (insets.bottom + self.toolbarHeight);
+            frame.size.height -= (insets.bottom + toolbarHeight);
         } else if (self.toolbarPosition == FWImageCropToolbarPositionTop) {
-            frame.origin.y = self.toolbarHeight + insets.top;
+            frame.origin.y = toolbarHeight + insets.top;
             frame.size.height -= frame.origin.y;
         }
     }
@@ -923,6 +924,11 @@
     return self.cropView.imageCropFrame;
 }
 
+- (CGFloat)toolbarHeight
+{
+    return _toolbarHeight > 0 ? _toolbarHeight : FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+}
+
 - (BOOL)verticalLayout
 {
     return CGRectGetWidth(self.view.bounds) < CGRectGetHeight(self.view.bounds);
@@ -1512,7 +1518,7 @@ static const CGFloat kFWImageCropOverLayerCornerWidth = 20.0f;
         
         for (NSInteger i = 0; i < count; i++) {
             UIView *button = buttons[i];
-            CGFloat sameOffset = horizontally ? fabs(CGRectGetHeight(containerRect)-CGRectGetHeight(button.bounds)) : fabs(CGRectGetWidth(containerRect)-CGRectGetWidth(button.bounds));
+            CGFloat sameOffset = horizontally ? CGRectGetHeight(containerRect)-CGRectGetHeight(button.bounds) : CGRectGetWidth(containerRect)-CGRectGetWidth(button.bounds);
             CGFloat diffOffset = padding + i * (fixedSize + padding);
             CGPoint origin = horizontally ? CGPointMake(diffOffset, sameOffset) : CGPointMake(sameOffset, diffOffset);
             if (horizontally) {

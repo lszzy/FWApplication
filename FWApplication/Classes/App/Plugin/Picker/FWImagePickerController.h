@@ -192,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong) UIImage *checkboxCheckedImage;
 
 @property(nonatomic, strong, readonly) UIView *bottomToolBarView;
-/// 自定义底部工具栏高度，默认0同系统
+/// 自定义底部工具栏高度，默认同系统
 @property(nonatomic, assign) CGFloat bottomToolBarHeight;
 @property(nonatomic, strong, readonly) UIButton *sendButton;
 @property(nonatomic, strong, readonly) UIButton *editButton;
@@ -415,7 +415,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, readonly) UICollectionView *collectionView;
 
 @property(nonatomic, strong, readonly) UIView *operationToolBarView;
-/// 自定义工具栏高度，默认0同系统
+/// 自定义工具栏高度，默认同系统
 @property(nonatomic, assign) CGFloat operationToolBarHeight;
 @property(nonatomic, assign) CGFloat toolBarPaddingHorizontal;
 @property(nonatomic, strong, readonly) UIButton *previewButton;

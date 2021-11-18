@@ -720,7 +720,7 @@
         self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
     }
     
-    CGFloat bottomToolBarHeight = self.bottomToolBarHeight > 0 ? self.bottomToolBarHeight : FWToolBarHeight;
+    CGFloat bottomToolBarHeight = self.bottomToolBarHeight;
     CGFloat bottomToolBarContentHeight = bottomToolBarHeight - self.view.safeAreaInsets.bottom;
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
     [self updateSendButtonLayout];
@@ -830,6 +830,10 @@
         [_bottomToolBarView addSubview:self.originImageCheckboxButton];
     }
     return _bottomToolBarView;
+}
+
+- (CGFloat)bottomToolBarHeight {
+    return _bottomToolBarHeight > 0 ? _bottomToolBarHeight : FWToolBarHeight;
 }
 
 @synthesize editButton = _editButton;
@@ -1395,8 +1399,7 @@
 }
 
 - (void)updateSendButtonLayout {
-    CGFloat bottomToolBarHeight = self.bottomToolBarHeight > 0 ? self.bottomToolBarHeight : FWToolBarHeight;
-    CGFloat bottomToolBarContentHeight = bottomToolBarHeight - self.view.safeAreaInsets.bottom;
+    CGFloat bottomToolBarContentHeight = self.bottomToolBarHeight - self.view.safeAreaInsets.bottom;
     [self.sendButton sizeToFit];
     self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
 }
@@ -1893,7 +1896,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     
     CGFloat operationToolBarViewHeight = 0;
     if (self.allowsMultipleSelection) {
-        operationToolBarViewHeight = self.operationToolBarHeight > 0 ? self.operationToolBarHeight : FWToolBarHeight;
+        operationToolBarViewHeight = self.operationToolBarHeight;
         self.operationToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - operationToolBarViewHeight, CGRectGetWidth(self.view.bounds), operationToolBarViewHeight);
         self.previewButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (CGRectGetHeight(self.operationToolBarView.bounds) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
         [self updateSendButtonLayout];
@@ -2182,6 +2185,11 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [_operationToolBarView addSubview:self.previewButton];
     }
     return _operationToolBarView;
+}
+
+- (CGFloat)operationToolBarHeight {
+    if (!self.allowsMultipleSelection) return 0;
+    return _operationToolBarHeight > 0 ? _operationToolBarHeight : FWToolBarHeight;
 }
 
 @synthesize sendButton = _sendButton;
