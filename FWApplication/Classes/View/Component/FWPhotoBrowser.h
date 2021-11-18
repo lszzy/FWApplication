@@ -132,6 +132,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSArray *pictureUrls;
 
 /**
+ 自定义图片信息数组，默认未使用，可用于自定义内容展示，默认nil
+ */
+@property(nonatomic, copy, nullable) NSArray *pictureInfos;
+
+/**
  当前选中索引，默认0
  */
 @property (nonatomic, assign) NSInteger currentIndex;

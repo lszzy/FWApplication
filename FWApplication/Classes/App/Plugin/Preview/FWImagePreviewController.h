@@ -81,6 +81,8 @@ typedef NS_ENUM (NSUInteger, FWImagePreviewMediaType) {
 
 /// 图片数组，delegate不存在时调用，支持UIImage|PHLivePhoto|AVPlayerItem|NSURL|NSString等
 @property(nonatomic, copy, nullable) NSArray *imageURLs;
+/// 自定义图片信息数组，默认未使用，可用于自定义内容展示，默认nil
+@property(nonatomic, copy, nullable) NSArray *imageInfos;
 /// 占位图片句柄，仅imageURLs生效，默认nil
 @property(nonatomic, copy, nullable) UIImage * _Nullable (^placeholderImage)(NSInteger index);
 /// 是否自动播放video，默认NO

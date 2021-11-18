@@ -68,7 +68,7 @@ import FWApplication
             return
         }
         
-        fwShowImagePreview(withImageURLs: results, currentIndex: 0, sourceView: nil)
+        fwShowImagePreview(withImageURLs: results, imageInfos: nil, currentIndex: 0, sourceView: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

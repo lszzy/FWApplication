@@ -121,7 +121,7 @@ import FWApplication
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isAlbum {
-            fwShowImagePreview(withImageURLs: photos, currentIndex: indexPath.row) { [weak self] index in
+            fwShowImagePreview(withImageURLs: photos, imageInfos:nil, currentIndex: indexPath.row) { [weak self] index in
                 let cell = self?.tableView.cellForRow(at: IndexPath(row: index, section: 0))
                 return cell?.imageView
             } placeholderImage: { index in

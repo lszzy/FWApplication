@@ -967,6 +967,7 @@
 
 - (void)fwViewController:(UIViewController *)viewController
         showImagePreview:(NSArray *)imageURLs
+              imageInfos:(NSArray *)imageInfos
             currentIndex:(NSInteger)currentIndex
               sourceView:(id  _Nullable (^)(NSInteger))sourceView
         placeholderImage:(UIImage * _Nullable (^)(NSInteger))placeholderImage
@@ -981,6 +982,7 @@
     if (customBlock) customBlock(photoBrowser);
     
     photoBrowser.pictureUrls = imageURLs;
+    photoBrowser.pictureInfos = imageInfos;
     photoBrowser.currentIndex = currentIndex;
     UIView *fromView = sourceView ? sourceView(currentIndex) : nil;
     [photoBrowser showFromView:[fromView isKindOfClass:[UIView class]] ? fromView : nil];

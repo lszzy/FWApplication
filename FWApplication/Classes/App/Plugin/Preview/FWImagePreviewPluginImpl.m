@@ -25,6 +25,7 @@
 
 - (void)fwViewController:(UIViewController *)viewController
         showImagePreview:(NSArray *)imageURLs
+              imageInfos:(NSArray *)imageInfos
             currentIndex:(NSInteger)currentIndex
               sourceView:(id  _Nullable (^)(NSInteger))sourceView
         placeholderImage:(UIImage * _Nullable (^)(NSInteger))placeholderImage
@@ -49,6 +50,7 @@
     if (customBlock) customBlock(previewController);
     
     previewController.imagePreviewView.imageURLs = imageURLs;
+    previewController.imagePreviewView.imageInfos = imageInfos;
     previewController.imagePreviewView.currentImageIndex = currentIndex;
     [viewController presentViewController:previewController animated:YES completion:nil];
 }
