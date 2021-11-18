@@ -42,14 +42,14 @@
         previewController.presentingStyle = FWImagePreviewTransitioningStyleZoom;
     }
     
-    previewController.sourceImageView = sourceView;
     previewController.imagePreviewView.placeholderImage = placeholderImage;
-    previewController.imagePreviewView.imageURLs = imageURLs;
-    previewController.imagePreviewView.currentImageIndex = currentIndex;
     previewController.imagePreviewView.renderZoomImageView = renderBlock;
-    
+    previewController.sourceImageView = sourceView;
     if (self.customBlock) self.customBlock(previewController);
     if (customBlock) customBlock(previewController);
+    
+    previewController.imagePreviewView.imageURLs = imageURLs;
+    previewController.imagePreviewView.currentImageIndex = currentIndex;
     [viewController presentViewController:previewController animated:YES completion:nil];
 }
 

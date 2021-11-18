@@ -152,6 +152,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat imagesSpacing;
 
 /**
+ 当前页数发生变化回调，默认nil
+ */
+@property(nonatomic, copy, nullable) void (^pageIndexChanged)(NSInteger index);
+
+/**
  页数文字标签，只读，方便外部布局
  */
 @property (nonatomic, strong, readonly) UILabel *pageTextLabel;

@@ -156,6 +156,8 @@ extern const CGFloat FWImagePreviewCornerRadiusAutomaticDimension;
 /// 手势单击视频时是否退出预览模式，默认NO。仅对以 present 方式进入大图预览的场景有效。
 @property(nonatomic, assign) BOOL dismissingWhenTappedVideo;
 
+/// 当前页数发生变化回调，默认nil
+@property(nonatomic, copy, nullable) void (^pageIndexChanged)(NSInteger index);
 /// 是否显示页数标签，默认NO
 @property(nonatomic, assign) BOOL showsPageLabel;
 /// 页数标签，默认字号16、白色

@@ -915,6 +915,10 @@
     _pageTextLabel.text = [NSString stringWithFormat:@"%@ / %@", @(index + 1), @(self.picturesCount)];
     [_pageTextLabel sizeToFit];
     _pageTextLabel.center = self.pageTextCenter;
+    
+    if (self.pageIndexChanged) {
+        self.pageIndexChanged(index);
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -970,13 +974,14 @@
              customBlock:(void (^)(id _Nonnull))customBlock
 {
     FWPhotoBrowser *photoBrowser = [[FWPhotoBrowser alloc] init];
-    photoBrowser.pictureUrls = imageURLs;
-    photoBrowser.currentIndex = currentIndex;
     photoBrowser.placeholderImage = placeholderImage;
     photoBrowser.sourceImageView = sourceView;
     photoBrowser.loadPhotoBlock = renderBlock;
-    
+    if (self.customBlock) self.customBlock(photoBrowser);
     if (customBlock) customBlock(photoBrowser);
+    
+    photoBrowser.pictureUrls = imageURLs;
+    photoBrowser.currentIndex = currentIndex;
     UIView *fromView = sourceView ? sourceView(currentIndex) : nil;
     [photoBrowser showFromView:[fromView isKindOfClass:[UIView class]] ? fromView : nil];
 }

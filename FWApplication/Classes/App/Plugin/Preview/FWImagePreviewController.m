@@ -481,6 +481,10 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 - (void)updatePageLabel {
     self.pageLabel.text = [NSString stringWithFormat:@"%@ / %@", @(self.imagePreviewView.currentImageIndex + 1), @(self.imagePreviewView.imageCount)];
     [self.pageLabel sizeToFit];
+    
+    if (self.pageIndexChanged) {
+        self.pageIndexChanged(self.imagePreviewView.currentImageIndex);
+    }
 }
 
 #pragma mark - 动画

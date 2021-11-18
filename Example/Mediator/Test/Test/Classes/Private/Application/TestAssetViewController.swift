@@ -199,7 +199,60 @@ import FWApplication
                         }
                     }
                 }
-            } customBlock: { preview in
+            } customBlock: { [weak self] preview in
+                if let previewController = preview as? FWImagePreviewController {
+                    // 注意此处需要weak引用previewController，否则会产生循环引用
+                    previewController.pageIndexChanged = { [weak previewController] (index) in
+                        guard let controller = previewController else { return }
+                        var titleLabel: UILabel? = controller.view.viewWithTag(100) as? UILabel
+                        if titleLabel == nil {
+                            let label = UILabel.fwLabel(with: FWFontSize(16), textColor: UIColor.white)
+                            label.tag = 100
+                            titleLabel = label
+                            controller.view.addSubview(label)
+                            label.fwLayoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
+                        }
+                        
+                        guard let photo = self?.photos[index] else { return }
+                        var title = "image"
+                        if photo.assetType == .video {
+                            title = "video"
+                        } else if photo.assetType == .image {
+                            if photo.assetSubType == .livePhoto {
+                                title = "livePhoto"
+                            } else if photo.assetSubType == .GIF {
+                                title = "gif"
+                            }
+                        }
+                        titleLabel?.text = title
+                    }
+                } else if let photoBrowser = preview as? FWPhotoBrowser {
+                    // 注意此处需要weak引用photoBrowser，否则会产生循环引用
+                    photoBrowser.pageIndexChanged = { [weak photoBrowser] (index) in
+                        guard let photoBrowser = photoBrowser else { return }
+                        var titleLabel: UILabel? = photoBrowser.viewWithTag(100) as? UILabel
+                        if titleLabel == nil {
+                            let label = UILabel.fwLabel(with: FWFontSize(16), textColor: UIColor.white)
+                            label.tag = 100
+                            titleLabel = label
+                            photoBrowser.addSubview(label)
+                            label.fwLayoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
+                        }
+                        
+                        guard let photo = self?.photos[index] else { return }
+                        var title = "image"
+                        if photo.assetType == .video {
+                            title = "video"
+                        } else if photo.assetType == .image {
+                            if photo.assetSubType == .livePhoto {
+                                title = "livePhoto"
+                            } else if photo.assetSubType == .GIF {
+                                title = "gif"
+                            }
+                        }
+                        titleLabel?.text = title
+                    }
+                }
             }
         } else {
             let album = albums[indexPath.row]
