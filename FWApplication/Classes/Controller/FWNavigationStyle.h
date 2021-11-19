@@ -21,18 +21,29 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 /// 导航栏样式配置
 @interface FWNavigationBarAppearance : NSObject
 
-@property (nullable, nonatomic, strong) UIColor *foregroundColor;
-@property (nullable, nonatomic, strong) UIColor *titleColor;
-@property (nullable, nonatomic, strong) UIColor *backgroundColor;
-@property (nullable, nonatomic, strong) UIImage *backgroundImage;
-@property (nullable, nonatomic, strong) UIImage *shadowImage;
-/// 是否全透明，需edgesForExtendedLayout为Top|All
-@property (nonatomic, assign) BOOL isTransparent;
 /// 是否半透明(磨砂)，需edgesForExtendedLayout为Top|All
 @property (nonatomic, assign) BOOL isTranslucent;
+/// 前景色，包含标题和按钮
+@property (nullable, nonatomic, strong) UIColor *foregroundColor;
+/// 标题颜色，默认nil同前景色
+@property (nullable, nonatomic, strong) UIColor *titleColor;
+/// 背景色，后设置生效
+@property (nullable, nonatomic, strong) UIColor *backgroundColor;
+/// 背景图片，后设置生效
+@property (nullable, nonatomic, strong) UIImage *backgroundImage;
+/// 背景透明，需edgesForExtendedLayout为Top|All，后设置生效
+@property (nonatomic, assign) BOOL backgroundTransparent;
+/// 阴影颜色，后设置生效
+@property (nullable, nonatomic, strong) UIColor *shadowColor;
+/// 阴影图片，后设置生效
+@property (nullable, nonatomic, strong) UIImage *shadowImage;
+
+/// 自定义句柄，最后调用，可自定义样式
 @property (nullable, nonatomic, copy) void (^appearanceBlock)(UINavigationBar *navigationBar);
 
+/// 根据style获取全局appearance对象
 + (nullable FWNavigationBarAppearance *)appearanceForStyle:(FWNavigationBarStyle)style;
+/// 设置style对应全局appearance对象
 + (void)setAppearance:(nullable FWNavigationBarAppearance *)appearance forStyle:(FWNavigationBarStyle)style;
 
 @end

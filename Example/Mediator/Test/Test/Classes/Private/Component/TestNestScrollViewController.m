@@ -308,7 +308,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar fwSetBackgroundTransparent];
+    self.navigationController.navigationBar.fwBackgroundTransparent = YES;
 }
 
 - (void)onRefreshing

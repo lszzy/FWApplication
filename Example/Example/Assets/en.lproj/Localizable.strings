@@ -24,6 +24,8 @@
 "loginOptional" = "Login Optional";
 "normalTitles" = "Normal Titles";
 "largeTitles" = "Large Titles";
+"defaultTitles" = "Opaque Bar";
+"translucentTitles" = "Translucent Bar";
 "welcomeTitle" = "Do you know that I'm waiting for you?";
 "backTitle" = "Welcome back, dear";
 "logoutConfirm" = "Are you sure you want to log out?";

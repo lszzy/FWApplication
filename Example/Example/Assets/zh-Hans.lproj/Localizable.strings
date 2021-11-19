@@ -24,6 +24,8 @@
 "loginOptional" = "不需要登录";
 "normalTitles" = "非大标题";
 "largeTitles" = "大标题";
+"defaultTitles" = "不透明";
+"translucentTitles" = "半透明";
 "welcomeTitle" = "你知道我在等你吗？";
 "backTitle" = "欢迎回来，亲";
 "logoutConfirm" = "确定要退出当前账号吗?";

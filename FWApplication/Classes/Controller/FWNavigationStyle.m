@@ -188,10 +188,11 @@
     FWNavigationBarAppearance *appearance = [self fwCurrentNavigationBarAppearance];
     if (!appearance) return;
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    if (appearance.isTransparent) [navigationBar fwSetBackgroundTransparent];
     if (appearance.isTranslucent != navigationBar.fwIsTranslucent) navigationBar.fwIsTranslucent = appearance.isTranslucent;
+    if (appearance.backgroundTransparent) navigationBar.fwBackgroundTransparent = appearance.backgroundTransparent;
     if (appearance.backgroundColor) navigationBar.fwBackgroundColor = appearance.backgroundColor;
     if (appearance.backgroundImage) navigationBar.fwBackgroundImage = appearance.backgroundImage;
+    if (appearance.shadowColor) navigationBar.fwShadowColor = appearance.shadowColor;
     if (appearance.shadowImage) navigationBar.fwShadowImage = appearance.shadowImage;
     if (appearance.foregroundColor) navigationBar.fwForegroundColor = appearance.foregroundColor;
     if (appearance.titleColor) navigationBar.fwTitleColor = appearance.titleColor;

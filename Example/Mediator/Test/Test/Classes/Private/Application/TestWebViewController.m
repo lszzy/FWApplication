@@ -11,6 +11,7 @@
 @interface TestWebViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, assign) BOOL gobackDisabled;
+@property (nonatomic, assign) BOOL isExtendedBottom;
 
 @end
 
@@ -57,7 +58,8 @@
     
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    if (Theme.isExtendedBottom) {
+    self.isExtendedBottom = [@[@YES, @NO].fwRandomObject fwAsBool];
+    if (self.isExtendedBottom) {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame
     } else {
@@ -71,7 +73,7 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    if (Theme.isExtendedBottom || !self.fwIsLoaded) return;
+    if (self.isExtendedBottom || !self.fwIsLoaded) return;
     
     // 顶部延伸时，不需要减顶部栏高度
     CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fwTopBarHeight;

@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationController.navigationBar fwSetBackgroundTransparent];
+    self.navigationController.navigationBar.fwBackgroundTransparent = YES;
 }
 
 - (UITableViewStyle)renderTableStyle

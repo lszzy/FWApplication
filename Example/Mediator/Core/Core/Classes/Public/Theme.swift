@@ -14,12 +14,6 @@ import FWApplication
     @FWUserDefaultAnnotation("isBarTranslucent", defaultValue: false)
     public static var isBarTranslucent: Bool
     
-    @FWUserDefaultAnnotation("isExtendedBottom", defaultValue: true)
-    public static var isExtendedBottom: Bool
-    
-    @FWUserDefaultAnnotation("isInsetNever", defaultValue: false)
-    public static var isInsetNever: Bool
-    
     public static var backgroundColor: UIColor {
         UIColor.fwThemeLight(.white, dark: .black)
     }
@@ -68,7 +62,7 @@ import FWApplication
         whiteAppearance.isTranslucent = Theme.isBarTranslucent
         let transparentAppearance = FWNavigationBarAppearance()
         transparentAppearance.foregroundColor = Theme.textColor
-        transparentAppearance.isTransparent = true
+        transparentAppearance.backgroundTransparent = true
         FWNavigationBarAppearance.setAppearance(defaultAppearance, forStyle: .default)
         FWNavigationBarAppearance.setAppearance(whiteAppearance, forStyle: .white)
         FWNavigationBarAppearance.setAppearance(transparentAppearance, forStyle: .transparent)
@@ -89,7 +83,7 @@ extension Theme {
         UITableView.fwResetTableStyle()
         // 控制器样式设置
         FWViewControllerManager.sharedInstance.hookInit = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isExtendedBottom ? .bottom : []
+            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
             viewController.fwNavigationBarHidden = false
@@ -103,23 +97,8 @@ extension Theme {
             viewController.fwBackBarItem = FWIcon.backImage
             viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
-        
-        FWViewControllerManager.sharedInstance.hookScrollViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
-            viewController.scrollView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
-        }
         FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
-            viewController.tableView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
             viewController.tableView.backgroundColor = Theme.tableColor
-        }
-        FWViewControllerManager.sharedInstance.hookCollectionViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
-            viewController.collectionView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
-        }
-        FWViewControllerManager.sharedInstance.hookWebViewController = { viewController in
-            viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : (Theme.isExtendedBottom ? .bottom : [])
-            viewController.webView.scrollView.contentInsetAdjustmentBehavior = Theme.isInsetNever ? .never : .automatic
         }
     }
     
