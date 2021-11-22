@@ -59,8 +59,13 @@
     
     if (@available(iOS 13.0, *)) {
         self.standardAppearance = navigationBar.standardAppearance;
-        self.compactAppearance = navigationBar.standardAppearance;
+        self.compactAppearance = navigationBar.compactAppearance;
         self.scrollEdgeAppearance = navigationBar.scrollEdgeAppearance;
+        #if __IPHONE_15_0
+        if (@available(iOS 15.0, *)) {
+            self.compactScrollEdgeAppearance = navigationBar.compactScrollEdgeAppearance;
+        }
+        #endif
     }
 }
 
