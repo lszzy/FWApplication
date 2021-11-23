@@ -188,12 +188,23 @@
     FWNavigationBarAppearance *appearance = [self fwCurrentNavigationBarAppearance];
     if (!appearance) return;
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    if (appearance.isTranslucent != navigationBar.fwIsTranslucent) navigationBar.fwIsTranslucent = appearance.isTranslucent;
-    if (appearance.backgroundTransparent) navigationBar.fwBackgroundTransparent = appearance.backgroundTransparent;
-    if (appearance.backgroundColor) navigationBar.fwBackgroundColor = appearance.backgroundColor;
-    if (appearance.backgroundImage) navigationBar.fwBackgroundImage = appearance.backgroundImage;
-    if (appearance.shadowColor) navigationBar.fwShadowColor = appearance.shadowColor;
-    if (appearance.shadowImage) navigationBar.fwShadowImage = appearance.shadowImage;
+    if (appearance.isTranslucent != navigationBar.fwIsTranslucent) {
+        navigationBar.fwIsTranslucent = appearance.isTranslucent;
+    }
+    if (appearance.backgroundTransparent) {
+        navigationBar.fwBackgroundTransparent = appearance.backgroundTransparent;
+    } else if (appearance.backgroundImage) {
+        navigationBar.fwBackgroundImage = appearance.backgroundImage;
+    } else if (appearance.backgroundColor) {
+        navigationBar.fwBackgroundColor = appearance.backgroundColor;
+    }
+    if (appearance.shadowImage) {
+        navigationBar.fwShadowImage = appearance.shadowImage;
+    } else if (appearance.shadowColor) {
+        navigationBar.fwShadowColor = appearance.shadowColor;
+    } else {
+        navigationBar.fwShadowColor = nil;
+    }
     if (appearance.foregroundColor) navigationBar.fwForegroundColor = appearance.foregroundColor;
     if (appearance.titleColor) navigationBar.fwTitleColor = appearance.titleColor;
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);

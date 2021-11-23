@@ -240,6 +240,8 @@
     if (self.navigationController.navigationBarHidden != NO) {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
     }
+    self.navigationController.navigationBar.fwIsTranslucent = NO;
+    self.navigationController.navigationBar.fwShadowColor = nil;
     self.navigationController.navigationBar.fwBackgroundColor = self.toolBarBackgroundColor;
     self.navigationController.navigationBar.fwForegroundColor = self.toolBarTintColor;
 }
@@ -1880,6 +1882,8 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.navigationController.navigationBarHidden != NO) {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
     }
+    self.navigationController.navigationBar.fwIsTranslucent = NO;
+    self.navigationController.navigationBar.fwShadowColor = nil;
     self.navigationController.navigationBar.fwBackgroundColor = self.toolBarBackgroundColor;
     self.navigationController.navigationBar.fwForegroundColor = self.toolBarTintColor;
     

@@ -36,6 +36,7 @@ extension UITabBarController: UITabBarControllerDelegate {
     private func setupController() {
         delegate = self
         tabBar.fwIsTranslucent = Theme.isBarTranslucent
+        tabBar.fwShadowColor = nil
         tabBar.fwForegroundColor = Theme.textColor
         tabBar.fwBackgroundColor = Theme.isBarTranslucent ? Theme.barColor.fwColor(withAlpha: 0.5) : Theme.barColor
         
