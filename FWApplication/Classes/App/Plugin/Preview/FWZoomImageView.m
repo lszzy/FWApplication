@@ -188,6 +188,10 @@
     self.imageView.hidden = NO;
     
     [self revertZooming];
+    
+    if (self.customContentView) {
+        self.customContentView(self.imageView);
+    }
 }
 
 #pragma mark - Live Photo
@@ -220,6 +224,10 @@
     _livePhotoView.fwFrameApplyTransform = CGRectMake(0, 0, livePhoto.size.width, livePhoto.size.height);
     
     [self revertZooming];
+    
+    if (self.customContentView) {
+        self.customContentView(_livePhotoView);
+    }
 }
 
 - (void)initLivePhotoViewIfNeeded {
@@ -437,6 +445,10 @@
     }
     
     [self revertZooming];
+    
+    if (self.customContentView) {
+        self.customContentView(self.videoPlayerView);
+    }
 }
 
 - (void)handleCloseButton:(UIButton *)button {
