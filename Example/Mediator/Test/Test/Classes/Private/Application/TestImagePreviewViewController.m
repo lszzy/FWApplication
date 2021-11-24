@@ -44,12 +44,6 @@
     self.dismissTappedImage = YES;
     self.dismissTappedVideo = YES;
     
-    // 兼容binary/octet-stream MIMI Type
-    FWHTTPResponseSerializer *responseSerializer = [FWImageDownloader sharedDownloader].sessionManager.responseSerializer;
-    NSMutableSet *contentTypes = responseSerializer.acceptableContentTypes.mutableCopy;
-    [contentTypes addObject:@"binary/octet-stream"];
-    responseSerializer.acceptableContentTypes = contentTypes;
-    
     FWWeakifySelf();
     [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
@@ -132,7 +126,7 @@
                 tipLabel = [UILabel new];
                 tipLabel.tag = 102;
                 tipLabel.fwContentInset = UIEdgeInsetsMake(2, 8, 2, 8);
-                [tipLabel fwSetCornerRadius:12.5];
+                [tipLabel fwSetCornerRadius:FWFontRegular(12).lineHeight / 2 + 2];
                 tipLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
                 tipLabel.text = @"图片仅供参考";
                 tipLabel.font = FWFontRegular(12);
@@ -182,7 +176,9 @@
                     NSURL *url = [NSURL fwURLWithString:@"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"];
                     zoomImageView.videoPlayerItem = [AVPlayerItem playerItemWithURL:url];
                 } else if (index == 4) {
-                    [zoomImageView setImageURL:@"https://d19oqm46gevao9.cloudfront.net/s3_722a31aad88b11ea92e406d2db3b19c2.jpg" placeholderImage:nil];
+                    [zoomImageView setImageURL:@"http://via.placeholder.com/100x100.jpg" placeholderImage:nil];
+                } else if (index == 3) {
+                    [zoomImageView setImageURL:@"http://via.placeholder.com/2000x2000.jpg" placeholderImage:nil];
                 } else {
                     zoomImageView.image = self.images[index];
                 }
@@ -193,7 +189,9 @@
             NSURL *url = [NSURL fwURLWithString:@"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"];
             zoomImageView.videoPlayerItem = [AVPlayerItem playerItemWithURL:url];
         } else if (index == 4) {
-            [zoomImageView setImageURL:@"https://d19oqm46gevao9.cloudfront.net/s3_722a31aad88b11ea92e406d2db3b19c2.jpg" placeholderImage:nil];
+            [zoomImageView setImageURL:@"http://via.placeholder.com/100x100.jpg" placeholderImage:nil];
+        } else if (index == 3) {
+            [zoomImageView setImageURL:@"http://via.placeholder.com/2000x2000.jpg" placeholderImage:nil];
         } else {
             zoomImageView.image = self.images[index];
         }

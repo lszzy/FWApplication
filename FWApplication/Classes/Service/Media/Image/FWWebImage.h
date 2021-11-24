@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
 
 @class FWHTTPSessionManager;
 
-/// 图片下载器，默认解码scale为1，同SDWebImage
+/// 图片下载器
 @interface FWImageDownloader : NSObject
 
 @property (nonatomic, strong, nullable) id <FWImageRequestCache> imageCache;
