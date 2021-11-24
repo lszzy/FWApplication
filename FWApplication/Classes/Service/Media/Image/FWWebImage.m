@@ -309,7 +309,9 @@
 
 - (instancetype)initWithSessionConfiguration:(NSURLSessionConfiguration *)configuration {
     FWHTTPSessionManager *sessionManager = [[FWHTTPSessionManager alloc] initWithSessionConfiguration:configuration];
-    sessionManager.responseSerializer = [FWImageResponseSerializer serializer];
+    FWImageResponseSerializer *responseSerializer = [FWImageResponseSerializer serializer];
+    responseSerializer.imageScale = 1;
+    sessionManager.responseSerializer = responseSerializer;
 
     return [self initWithSessionManager:sessionManager
                  downloadPrioritization:FWImageDownloadPrioritizationFIFO
