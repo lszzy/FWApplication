@@ -98,7 +98,7 @@
         // 双击失败后才出发单击
         [singleTapGesture requireGestureRecognizerToFail:doubleTapGesture];
         
-        self.contentMode = UIViewContentModeCenter;
+        self.contentMode = UIViewContentModeScaleAspectFit;
     }
     return self;
 }

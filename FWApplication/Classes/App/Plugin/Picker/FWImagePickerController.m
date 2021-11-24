@@ -997,8 +997,7 @@
 
 - (void)requestImageForZoomImageView:(FWZoomImageView *)imageView withIndex:(NSInteger)index {
     // 如果是走 PhotoKit 的逻辑，那么这个 block 会被多次调用，并且第一次调用时返回的图片是一张小图，
-    // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里调整 contentMode 以防止图片大小跳动
-    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    // 拉取图片的过程中可能会多次返回结果，且图片尺寸越来越大，因此这里 contentMode为ScaleAspectFit 以防止图片大小跳动
     FWAsset *imageAsset = [self.imagesAssetArray objectAtIndex:index];
     if (imageAsset.editedImage) {
         imageView.image = imageAsset.editedImage;
