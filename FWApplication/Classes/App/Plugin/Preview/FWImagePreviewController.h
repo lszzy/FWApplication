@@ -92,6 +92,8 @@ typedef NS_ENUM (NSUInteger, FWImagePreviewMediaType) {
 @property(nonatomic, copy, nullable) void (^customZoomImageView)(FWZoomImageView *zoomImageView, NSInteger index);
 /// 自定义渲染zoomImageView句柄，cellForItem方法自动调用，优先级低于delegate
 @property(nonatomic, copy, nullable) void (^renderZoomImageView)(FWZoomImageView *zoomImageView, NSInteger index);
+/// 自定义内容视图句柄，内容显示完成自动调用，优先级低于delegate
+@property(nonatomic, copy, nullable) void (^customZoomContentView)(FWZoomImageView *zoomImageView, __kindof UIView *contentView);
 /// 获取当前正在查看的zoomImageView，若当前 index 对应的图片不可见（不处于可视区域），则返回 nil
 @property(nonatomic, weak, nullable, readonly) FWZoomImageView *currentZoomImageView;
 /// 获取某个 FWZoomImageView 所对应的 index，若当前的 zoomImageView 不可见，会返回NSNotFound

@@ -316,6 +316,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     }
 }
 
+- (void)zoomImageView:(FWZoomImageView *)imageView customContentView:(__kindof UIView *)contentView {
+    if ([self.delegate respondsToSelector:_cmd]) {
+        [self.delegate zoomImageView:imageView customContentView:contentView];
+    } else if (self.customZoomContentView) {
+        self.customZoomContentView(imageView, contentView);
+    }
+}
+
 - (BOOL)enabledZoomViewInZoomImageView:(FWZoomImageView *)imageView {
     if ([self.delegate respondsToSelector:_cmd]) {
         return [self.delegate enabledZoomViewInZoomImageView:imageView];

@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 在视频预览界面里，由于用户点击了空白区域或播放视频等导致了底部的视频工具栏被显示或隐藏
 - (void)zoomImageView:(FWZoomImageView *)imageView didHideVideoToolbar:(BOOL)didHide;
 
+/// 自定义内容视图代理方法，contentView根据显示内容不同而不同
+- (void)zoomImageView:(FWZoomImageView *)imageView customContentView:(__kindof UIView *)contentView;
+
 /// 是否支持缩放，默认为 YES
 - (BOOL)enabledZoomViewInZoomImageView:(FWZoomImageView *)zoomImageView;
 
@@ -84,9 +87,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 获取当前正在显示的图片/视频的容器
 @property(nonatomic, weak, nullable, readonly) __kindof UIView *contentView;
-
-/// 自定义contentView句柄，可添加自定义视图，显示视图时调用
-@property(nonatomic, copy, nullable) void (^customContentView)(__kindof UIView *contentView);
 
 /// 是否播放video时显示底部的工具栏，默认NO
 @property(nonatomic, assign) BOOL showsVideoToolbar;

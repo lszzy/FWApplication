@@ -189,8 +189,8 @@
     
     [self revertZooming];
     
-    if (self.customContentView) {
-        self.customContentView(self.imageView);
+    if ([self.delegate respondsToSelector:@selector(zoomImageView:customContentView:)]) {
+        [self.delegate zoomImageView:self customContentView:self.imageView];
     }
 }
 
@@ -225,8 +225,8 @@
     
     [self revertZooming];
     
-    if (self.customContentView) {
-        self.customContentView(_livePhotoView);
+    if ([self.delegate respondsToSelector:@selector(zoomImageView:customContentView:)]) {
+        [self.delegate zoomImageView:self customContentView:_livePhotoView];
     }
 }
 
@@ -446,8 +446,8 @@
     
     [self revertZooming];
     
-    if (self.customContentView) {
-        self.customContentView(self.videoPlayerView);
+    if ([self.delegate respondsToSelector:@selector(zoomImageView:customContentView:)]) {
+        [self.delegate zoomImageView:self customContentView:self.videoPlayerView];
     }
 }
 

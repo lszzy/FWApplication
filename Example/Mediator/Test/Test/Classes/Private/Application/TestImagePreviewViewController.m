@@ -123,25 +123,23 @@
         self.imagePreviewViewController.sourceImageView = ^UIView *(NSInteger index) {
             return weakSelf.floatLayoutView.subviews[index];
         };
-        self.imagePreviewViewController.imagePreviewView.customZoomImageView = ^(FWZoomImageView * _Nonnull zoomImageView, NSInteger index) {
-            zoomImageView.customContentView = ^(__kindof UIView * _Nonnull contentView) {
-                UIImageView *imageView = (UIImageView *)contentView;
-                if (![imageView isKindOfClass:[UIImageView class]]) return;
-                
-                UILabel *tipLabel = [imageView viewWithTag:102];
-                if (!tipLabel) {
-                    tipLabel = [UILabel new];
-                    tipLabel.tag = 102;
-                    tipLabel.fwContentInset = UIEdgeInsetsMake(2, 8, 2, 8);
-                    [tipLabel fwSetCornerRadius:12.5];
-                    tipLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
-                    tipLabel.text = @"图片仅供参考";
-                    tipLabel.font = FWFontRegular(12);
-                    tipLabel.textColor = [UIColor whiteColor];
-                    [imageView addSubview:tipLabel];
-                    tipLabel.fwLayoutChain.bottomWithInset(16).rightWithInset(16);
-                }
-            };
+        self.imagePreviewViewController.imagePreviewView.customZoomContentView = ^(FWZoomImageView * _Nonnull zoomImageView, __kindof UIView * _Nonnull contentView) {
+            UIImageView *imageView = (UIImageView *)contentView;
+            if (![imageView isKindOfClass:[UIImageView class]]) return;
+            
+            UILabel *tipLabel = [imageView viewWithTag:102];
+            if (!tipLabel) {
+                tipLabel = [UILabel new];
+                tipLabel.tag = 102;
+                tipLabel.fwContentInset = UIEdgeInsetsMake(2, 8, 2, 8);
+                [tipLabel fwSetCornerRadius:12.5];
+                tipLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+                tipLabel.text = @"图片仅供参考";
+                tipLabel.font = FWFontRegular(12);
+                tipLabel.textColor = [UIColor whiteColor];
+                [imageView addSubview:tipLabel];
+                tipLabel.fwLayoutChain.bottomWithInset(16).rightWithInset(16);
+            }
         };
         
         self.imagePreviewViewController.fwVisibleStateChanged = ^(FWImagePreviewController *viewController, FWViewControllerVisibleState visibleState) {
