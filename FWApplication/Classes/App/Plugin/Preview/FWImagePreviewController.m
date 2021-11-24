@@ -801,9 +801,11 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
                 sourceImageRect = [self.imagePreviewViewController.view convertRect:((NSValue *)sourceImageView).CGRectValue fromView:nil];
             }
         }
+        /*
+        // 限制sourceImageRect在显示区域内。由于支持自定义区域，此限制暂不需要
         if (!CGRectEqualToRect(sourceImageRect, CGRectZero) && !CGRectIntersectsRect(sourceImageRect, self.imagePreviewViewController.view.bounds)) {
             sourceImageRect = CGRectZero;
-        }
+        }*/
     }
     style = style == FWImagePreviewTransitioningStyleZoom && CGRectEqualToRect(sourceImageRect, CGRectZero) ? FWImagePreviewTransitioningStyleFade : style;// zoom 类型一定需要有个非 zero 的 sourceImageRect，否则不知道动画的起点/终点，所以当不存在 sourceImageRect 时强制改为用 fade 动画
     
