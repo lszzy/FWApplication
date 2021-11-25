@@ -41,6 +41,7 @@ typedef NS_OPTIONS(NSUInteger, FWWebImageOptions) {
         setImageURL:(nullable NSURL *)imageURL
         placeholder:(nullable UIImage *)placeholder
             options:(FWWebImageOptions)options
+            context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
          completion:(nullable void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
            progress:(nullable void (^)(double progress))progress;
 
@@ -50,6 +51,7 @@ typedef NS_OPTIONS(NSUInteger, FWWebImageOptions) {
 /// image下载网络图片插件方法，返回下载凭据
 - (nullable id)fwDownloadImage:(nullable NSURL *)imageURL
                        options:(FWWebImageOptions)options
+                       context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                     completion:(void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
                       progress:(nullable void (^)(double progress))progress;
 
@@ -112,6 +114,7 @@ FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name);
 /// 下载网络图片并返回下载凭据，指定option
 + (nullable id)fwDownloadImage:(nullable id)url
                        options:(FWWebImageOptions)options
+                       context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                     completion:(void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
                       progress:(nullable void (^)(double progress))progress;
 
@@ -149,6 +152,7 @@ FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name);
 - (void)fwSetImageWithURL:(nullable id)url
          placeholderImage:(nullable UIImage *)placeholderImage
                   options:(FWWebImageOptions)options
+                  context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                completion:(nullable void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
                  progress:(nullable void (^)(double progress))progress;
 

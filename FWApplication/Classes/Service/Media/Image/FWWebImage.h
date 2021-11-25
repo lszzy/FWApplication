@@ -103,6 +103,7 @@ typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
 
 - (nullable FWImageDownloadReceipt *)downloadImageForURL:(nullable id)url
                                                  options:(FWWebImageOptions)options
+                                                 context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                                                  success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse  * _Nullable response, UIImage *responseObject))success
                                                  failure:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse * _Nullable response, NSError *error))failure
                                                 progress:(nullable void (^)(NSProgress *downloadProgress))progress;
@@ -110,6 +111,7 @@ typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
 - (nullable FWImageDownloadReceipt *)downloadImageForURL:(nullable id)url
                                            withReceiptID:(NSUUID *)receiptID
                                                  options:(FWWebImageOptions)options
+                                                 context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                                                  success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse  * _Nullable response, UIImage *responseObject))success
                                                  failure:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse * _Nullable response, NSError *error))failure
                                                 progress:(nullable void (^)(NSProgress *downloadProgress))progress;
@@ -121,6 +123,7 @@ typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
 - (void)downloadImageForObject:(id)object
                       imageURL:(nullable id)imageURL
                        options:(FWWebImageOptions)options
+                       context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                    placeholder:(nullable void (^)(void))placeholder
                     completion:(nullable void (^)(UIImage * _Nullable image, BOOL isCache, NSError * _Nullable error))completion
                       progress:(nullable void (^)(double progress))progress;

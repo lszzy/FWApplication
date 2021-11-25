@@ -179,6 +179,8 @@
                     [zoomImageView setImageURL:@"http://via.placeholder.com/100x100.jpg" placeholderImage:nil];
                 } else if (index == 3) {
                     [zoomImageView setImageURL:@"http://via.placeholder.com/2000x2000.jpg" placeholderImage:nil];
+                } else if (index == 2) {
+                    [zoomImageView setImageURL:@"http://via.placeholder.com/100x2000.jpg" placeholderImage:nil];
                 } else {
                     zoomImageView.image = self.images[index];
                 }
@@ -192,6 +194,8 @@
             [zoomImageView setImageURL:@"http://via.placeholder.com/100x100.jpg" placeholderImage:nil];
         } else if (index == 3) {
             [zoomImageView setImageURL:@"http://via.placeholder.com/2000x2000.jpg" placeholderImage:nil];
+        } else if (index == 2) {
+            [zoomImageView setImageURL:@"http://via.placeholder.com/100x2000.jpg" placeholderImage:nil];
         } else {
             zoomImageView.image = self.images[index];
         }

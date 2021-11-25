@@ -365,15 +365,17 @@
 
 - (nullable FWImageDownloadReceipt *)downloadImageForURL:(id)url
                                                  options:(FWWebImageOptions)options
+                                                 context:(NSDictionary<FWImageCoderOptions,id> *)context
                                                  success:(void (^)(NSURLRequest * _Nonnull, NSHTTPURLResponse * _Nullable, UIImage * _Nonnull))success
                                                  failure:(void (^)(NSURLRequest * _Nonnull, NSHTTPURLResponse * _Nullable, NSError * _Nonnull))failure
                                                 progress:(nullable void (^)(NSProgress * _Nonnull))progress {
-    return [self downloadImageForURL:url withReceiptID:[NSUUID UUID] options:options success:success failure:failure progress:progress];
+    return [self downloadImageForURL:url withReceiptID:[NSUUID UUID] options:options context:context success:success failure:failure progress:progress];
 }
 
 - (nullable FWImageDownloadReceipt *)downloadImageForURL:(id)url
                                            withReceiptID:(nonnull NSUUID *)receiptID
                                                  options:(FWWebImageOptions)options
+                                                 context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                                                  success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse  * _Nullable response, UIImage *responseObject))success
                                                  failure:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse * _Nullable response, NSError *error))failure
                                                 progress:(nullable void (^)(NSProgress * _Nonnull))progress {
@@ -679,6 +681,7 @@
 - (void)downloadImageForObject:(id)object
                       imageURL:(id)url
                        options:(FWWebImageOptions)options
+                       context:(NSDictionary<FWImageCoderOptions, id> *)context
                    placeholder:(void (^)(void))placeholder
                     completion:(void (^)(UIImage * _Nullable, BOOL, NSError * _Nullable))completion
                       progress:(void (^)(double))progress
@@ -725,6 +728,7 @@
                    downloadImageForURL:urlRequest
                    withReceiptID:downloadID
                    options:options
+                   context:context
                    success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
                        __strong __typeof(weakSelf)strongSelf = weakSelf;
                        if ([[strongSelf activeImageDownloadReceipt:object].receiptID isEqual:downloadID]) {
@@ -816,6 +820,7 @@
         setImageURL:(NSURL *)imageURL
         placeholder:(UIImage *)placeholder
             options:(FWWebImageOptions)options
+            context:(NSDictionary<FWImageCoderOptions, id> *)context
          completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
            progress:(void (^)(double))progress
 {
@@ -823,7 +828,7 @@
         self.customBlock(imageView);
     }
     
-    [[FWImageDownloader sharedDownloader] downloadImageForObject:imageView imageURL:imageURL options:options placeholder:^{
+    [[FWImageDownloader sharedDownloader] downloadImageForObject:imageView imageURL:imageURL options:options context:context placeholder:^{
         imageView.image = placeholder;
     } completion:^(UIImage *image, BOOL isCache, NSError *error) {
         BOOL autoSetImage = image && (!(options & FWWebImageOptionAvoidSetImage) || !completion);
@@ -857,10 +862,11 @@
 
 - (id)fwDownloadImage:(NSURL *)imageURL
               options:(FWWebImageOptions)options
+              context:(NSDictionary<FWImageCoderOptions, id> *)context
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
              progress:(void (^)(double))progress
 {
-    return [[FWImageDownloader sharedDownloader] downloadImageForURL:imageURL options:options success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
+    return [[FWImageDownloader sharedDownloader] downloadImageForURL:imageURL options:options context:context success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull responseObject) {
         if (completion) {
             completion(responseObject, nil);
         }

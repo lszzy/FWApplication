@@ -159,16 +159,17 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
              progress:(void (^)(double))progress
 {
-    return [self fwDownloadImage:url options:0 completion:completion progress:progress];
+    return [self fwDownloadImage:url options:0 context:nil completion:completion progress:progress];
 }
 
 + (id)fwDownloadImage:(id)url
               options:(FWWebImageOptions)options
+              context:(NSDictionary<FWImageCoderOptions,id> *)context
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
              progress:(void (^)(double))progress
 {
     id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
-    if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwDownloadImage:options:completion:progress:)]) {
+    if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwDownloadImage:options:context:completion:progress:)]) {
         NSURL *imageURL = nil;
         if ([url isKindOfClass:[NSString class]] && [url length] > 0) {
             imageURL = [NSURL URLWithString:url];
@@ -181,7 +182,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
             imageURL = [url URL];
         }
         
-        return [imagePlugin fwDownloadImage:imageURL options:options completion:completion progress:progress];
+        return [imagePlugin fwDownloadImage:imageURL options:options context:context completion:completion progress:progress];
     }
     return nil;
 }
@@ -239,17 +240,18 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
          placeholderImage:(UIImage *)placeholderImage
                completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
 {
-    [self fwSetImageWithURL:url placeholderImage:placeholderImage options:0 completion:completion progress:nil];
+    [self fwSetImageWithURL:url placeholderImage:placeholderImage options:0 context:nil completion:completion progress:nil];
 }
 
 - (void)fwSetImageWithURL:(id)url
          placeholderImage:(UIImage *)placeholderImage
                   options:(FWWebImageOptions)options
+                  context:(NSDictionary<FWImageCoderOptions,id> *)context
                completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
                  progress:(void (^)(double))progress
 {
     id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
-    if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwImageView:setImageURL:placeholder:options:completion:progress:)]) {
+    if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwImageView:setImageURL:placeholder:options:context:completion:progress:)]) {
         NSURL *imageURL = nil;
         if ([url isKindOfClass:[NSString class]] && [url length] > 0) {
             imageURL = [NSURL URLWithString:url];
@@ -262,7 +264,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
             imageURL = [url URL];
         }
         
-        [imagePlugin fwImageView:self setImageURL:imageURL placeholder:placeholderImage options:options completion:completion progress:progress];
+        [imagePlugin fwImageView:self setImageURL:imageURL placeholder:placeholderImage options:options context:context completion:completion progress:progress];
     }
 }
 

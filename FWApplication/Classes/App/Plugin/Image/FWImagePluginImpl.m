@@ -74,6 +74,7 @@
         setImageURL:(NSURL *)imageURL
         placeholder:(UIImage *)placeholder
             options:(FWWebImageOptions)options
+            context:(NSDictionary<FWImageCoderOptions,id> *)context
          completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
            progress:(void (^)(double))progress
 {
@@ -87,7 +88,7 @@
     [imageView sd_setImageWithURL:imageURL
                  placeholderImage:placeholder
                           options:options | SDWebImageRetryFailed
-                          context:nil
+                          context:context
                          progress:progress ? ^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                             if (expectedSize > 0) {
                                 if ([NSThread isMainThread]) {
@@ -111,12 +112,14 @@
 
 - (id)fwDownloadImage:(NSURL *)imageURL
               options:(FWWebImageOptions)options
+              context:(NSDictionary<FWImageCoderOptions,id> *)context
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
              progress:(void (^)(double))progress
 {
     return [[SDWebImageManager sharedManager]
             loadImageWithURL:imageURL
             options:options | SDWebImageRetryFailed
+            context:context
             progress:(progress ? ^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                 if (expectedSize > 0) {
                     if ([NSThread isMainThread]) {

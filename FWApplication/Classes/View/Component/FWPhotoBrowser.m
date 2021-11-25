@@ -320,7 +320,7 @@
         self.progress = 0.01;
         // 优先使用插件，否则使用默认
         __weak __typeof__(self) self_weak_ = self;
-        [self.imageView fwSetImageWithURL:urlString placeholderImage:self.placeholderImage options:0 completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+        [self.imageView fwSetImageWithURL:urlString placeholderImage:self.placeholderImage options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
             __typeof__(self) self = self_weak_;
             [self showImage:image];
             self.progress = 1;
