@@ -52,6 +52,7 @@
 @synthesize videoPlayButton = _videoPlayButton;
 @synthesize videoCloseButton = _videoCloseButton;
 @synthesize progressView = _progressView;
+@synthesize minimumZoomScale = _minimumZoomScale;
 
 + (void)initialize {
     static dispatch_once_t onceToken;
@@ -69,14 +70,9 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-
-        self.maximumZoomScale = 2.0;
-        
         _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         self.scrollView.showsHorizontalScrollIndicator = NO;
         self.scrollView.showsVerticalScrollIndicator = NO;
-        self.scrollView.minimumZoomScale = 0;
-        self.scrollView.maximumZoomScale = self.maximumZoomScale;
         self.scrollView.delegate = self;
         self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         [self addSubview:self.scrollView];
@@ -251,9 +247,15 @@
     self.scrollView.maximumZoomScale = maximumZoomScale;
 }
 
-- (CGFloat)minimumZoomScale {
-    BOOL isLivePhoto = !!self.livePhoto;
+- (void)setMinimumZoomScale:(CGFloat)minimumZoomScale {
+    _minimumZoomScale = minimumZoomScale;
+    self.scrollView.minimumZoomScale = minimumZoomScale;
+}
 
+- (CGFloat)minimumZoomScale {
+    if (_minimumZoomScale > 0) return _minimumZoomScale;
+    
+    BOOL isLivePhoto = !!self.livePhoto;
     if (!self.image && !isLivePhoto && !self.videoPlayerItem) {
         return 1;
     }
@@ -268,19 +270,36 @@
         mediaSize = self.videoSize;
     }
     
-    CGFloat minScale = 1;
     CGFloat scaleX = CGRectGetWidth(viewport) / mediaSize.width;
     CGFloat scaleY = CGRectGetHeight(viewport) / mediaSize.height;
-    if (self.contentMode == UIViewContentModeScaleAspectFit) {
-        minScale = MIN(scaleX, scaleY);
-    } else if (self.contentMode == UIViewContentModeScaleAspectFill) {
-        minScale = MAX(scaleX, scaleY);
-    } else if (self.contentMode == UIViewContentModeCenter) {
-        if (scaleX >= 1 && scaleY >= 1) {
-            minScale = 1;
-        } else {
+    if (self.minimumZoomScaleBlock) {
+        return self.minimumZoomScaleBlock(CGSizeMake(scaleX, scaleY));
+    }
+    
+    CGFloat minScale = 1;
+    switch (self.contentMode) {
+        case UIViewContentModeScaleAspectFit: {
             minScale = MIN(scaleX, scaleY);
+            break;
         }
+        case UIViewContentModeScaleAspectFill: {
+            minScale = MAX(scaleX, scaleY);
+            break;
+        }
+        case UIViewContentModeCenter: {
+            if (scaleX >= 1 && scaleY >= 1) {
+                minScale = 1;
+            } else {
+                minScale = MIN(scaleX, scaleY);
+            }
+            break;
+        }
+        case UIViewContentModeScaleToFill: {
+            minScale = scaleX;
+            break;
+        }
+        default:
+            break;
     }
     return minScale;
 }
@@ -290,8 +309,17 @@
     
     BOOL enabledZoomImageView = [self enabledZoomImageView];
     CGFloat minimumZoomScale = [self minimumZoomScale];
-    CGFloat maximumZoomScale = enabledZoomImageView ? self.maximumZoomScale : minimumZoomScale;
-    maximumZoomScale = MAX(minimumZoomScale, maximumZoomScale);// 可能外部通过 contentMode = UIViewContentModeScaleAspectFit 的方式来让小图片撑满当前的 zoomImageView，所以算出来 minimumZoomScale 会很大（至少比 maximumZoomScale 大），所以这里要做一个保护
+    CGFloat maximumZoomScale = minimumZoomScale;
+    if (enabledZoomImageView) {
+        if (self.maximumZoomScaleBlock) {
+            maximumZoomScale = self.maximumZoomScaleBlock(minimumZoomScale);
+        } else if (self.maximumZoomScale > 0) {
+            maximumZoomScale = self.maximumZoomScale;
+        } else {
+            maximumZoomScale = MAX(minimumZoomScale * 2, 2);
+        }
+    }
+    
     CGFloat zoomScale = minimumZoomScale;
     BOOL shouldFireDidZoomingManual = zoomScale == self.scrollView.zoomScale;
     self.scrollView.panGestureRecognizer.enabled = enabledZoomImageView;
@@ -826,17 +854,13 @@
     }
     
     if ([self enabledZoomImageView]) {
-        // 如果图片被压缩了，则第一次放大到原图大小，第二次放大到最大倍数
+        // 默认第一次双击放大，再次双击还原，可通过zoomInScaleBlock自定义缩放效果
         if (self.scrollView.zoomScale >= self.scrollView.maximumZoomScale) {
             [self setZoomScale:self.scrollView.minimumZoomScale animated:YES];
         } else {
-            CGFloat newZoomScale = 0;
-            if (self.scrollView.zoomScale < 1) {
-                // 如果目前显示的大小比原图小，则放大到原图
-                newZoomScale = 1;
-            } else {
-                // 如果当前显示原图，则放大到最大的大小
-                newZoomScale = self.scrollView.maximumZoomScale;
+            CGFloat newZoomScale = self.scrollView.maximumZoomScale;
+            if (self.zoomInScaleBlock) {
+                newZoomScale = self.zoomInScaleBlock(self.scrollView);
             }
             
             CGRect zoomRect = CGRectZero;

@@ -42,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *  支持缩放查看静态图片、live photo、视频的控件
- *  默认显示完整图片或视频，可双击查看原始大小，再次双击查看放大后的大小，第三次双击恢复到初始大小。
+ *  默认显示完整图片或视频，可双击查看放大后的大小，再次双击恢复到初始大小。
  *
- *  支持通过修改 contentMode 来控制静态图片和 live photo 默认的显示模式，目前仅支持 UIViewContentModeCenter、UIViewContentModeScaleAspectFill、UIViewContentModeScaleAspectFit，默认为 UIViewContentModeScaleAspectFit。注意这里的显示模式是基于 viewportRect 而言的而非整个 zoomImageView
+ *  支持通过修改 contentMode 来控制静态图片和 live photo 默认的显示模式，目前仅支持 UIViewContentModeCenter、UIViewContentModeScaleAspectFill、UIViewContentModeScaleAspectFit、UIViewContentModeScaleToFill，默认为 UIViewContentModeScaleAspectFit。注意这里的显示模式是基于 viewportRect 而言的而非整个 zoomImageView
  *  FWZoomImageView 提供最基础的图片预览和缩放功能，其他功能请通过继承来实现。
  *
  *  @see https://github.com/Tencent/QMUI_iOS
@@ -63,7 +63,20 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property(nonatomic, assign) CGRect viewportRect;
 
+/// 最大缩放比率，默认0根据contentMode自动计算
 @property(nonatomic, assign) CGFloat maximumZoomScale;
+
+/// 最小缩率比率，默认0根据contentMode自动计算
+@property(nonatomic, assign) CGFloat minimumZoomScale;
+
+/// 自定义最大缩放比率句柄，默认nil时为最小比率*2且不小于2
+@property(nonatomic, copy, nullable) CGFloat (^maximumZoomScaleBlock)(CGFloat minimumZoomScale);
+
+/// 最定义最小缩放比率句柄，默认nil时根据contentMode自动计算
+@property(nonatomic, copy, nullable) CGFloat (^minimumZoomScaleBlock)(CGSize scaleSize);
+
+/// 自定义双击放大比率句柄，默认nil时直接放大到最大比率
+@property(nonatomic, copy, nullable) CGFloat (^zoomInScaleBlock)(UIScrollView *scrollView);
 
 @property(nonatomic, copy, nullable) NSObject<NSCopying> *reusedIdentifier;
 
