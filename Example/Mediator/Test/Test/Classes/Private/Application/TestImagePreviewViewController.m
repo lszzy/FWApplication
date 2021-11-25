@@ -10,6 +10,7 @@
 
 @interface TestImagePreviewViewController () <FWImagePreviewViewDelegate>
 
+@property(nonatomic, assign) BOOL usePlugin;
 @property(nonatomic, strong) FWImagePreviewController *imagePreviewViewController;
 @property(nonatomic, strong) NSArray<UIImage *> *images;
 @property(nonatomic, strong) FWFloatLayoutView *floatLayoutView;
@@ -47,6 +48,8 @@
     FWWeakifySelf();
     [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
+        NSString *pluginText = self.usePlugin ? @"不使用插件" : @"使用插件";
+        NSString *toggleText = @"切换预览插件";
         NSString *progressText = self.mockProgress ? @"关闭进度" : @"开启进度";
         NSString *fadeText = self.previewFade ? @"关闭渐变效果" : @"开启渐变效果";
         NSString *toolbarText = self.showsToolbar ? @"隐藏视频工具栏" : @"开启视频工具栏";
@@ -54,21 +57,31 @@
         NSString *dismissImageText = self.dismissTappedImage ? @"单击图片时不关闭" : @"单击图片时自动关闭";
         NSString *dismissVideoText = self.dismissTappedVideo ? @"单击视频时不关闭" : @"单击视频时自动关闭";
         NSString *closeText = self.showsClose ? @"隐藏视频关闭按钮" : @"开启视频关闭按钮";
-        [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[progressText, fadeText, toolbarText, autoText, dismissImageText, dismissVideoText, closeText] actionBlock:^(NSInteger index) {
+        [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[pluginText, toggleText, progressText, fadeText, toolbarText, autoText, dismissImageText, dismissVideoText, closeText] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             if (index == 0) {
-                self.mockProgress = !self.mockProgress;
+                self.usePlugin = !self.usePlugin;
             } else if (index == 1) {
-                self.previewFade = !self.previewFade;
+                id<FWImagePreviewPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWImagePreviewPlugin)];
+                if (plugin != nil) {
+                    [FWPluginManager unloadPlugin:@protocol(FWImagePreviewPlugin)];
+                    [FWPluginManager unregisterPlugin:@protocol(FWImagePreviewPlugin)];
+                } else {
+                    [FWPluginManager registerPlugin:@protocol(FWImagePreviewPlugin) withObject:FWPhotoBrowserPlugin.class];
+                }
             } else if (index == 2) {
-                self.showsToolbar = !self.showsToolbar;
+                self.mockProgress = !self.mockProgress;
             } else if (index == 3) {
-                self.autoplayVideo = !self.autoplayVideo;
+                self.previewFade = !self.previewFade;
             } else if (index == 4) {
-                self.dismissTappedImage = !self.dismissTappedImage;
+                self.showsToolbar = !self.showsToolbar;
             } else if (index == 5) {
-                self.dismissTappedVideo = !self.dismissTappedVideo;
+                self.autoplayVideo = !self.autoplayVideo;
             } else if (index == 6) {
+                self.dismissTappedImage = !self.dismissTappedImage;
+            } else if (index == 7) {
+                self.dismissTappedVideo = !self.dismissTappedVideo;
+            } else if (index == 8) {
                 self.showsClose = !self.showsClose;
             }
         }];
@@ -109,6 +122,15 @@
 }
 
 - (void)handleImageButtonEvent:(UIButton *)button {
+    if (self.usePlugin) {
+        NSInteger buttonIndex = [self.floatLayoutView.subviews indexOfObject:button];
+        __weak __typeof(self) weakSelf = self;
+        [self fwShowImagePreviewWithImageURLs:self.images imageInfos:nil currentIndex:buttonIndex sourceView:^id _Nullable(NSInteger index) {
+            return weakSelf.floatLayoutView.subviews[index];
+        }];
+        return;
+    }
+    
     if (!self.imagePreviewViewController) {
         self.imagePreviewViewController = [[FWImagePreviewController alloc] init];
         self.imagePreviewViewController.showsPageLabel = YES;
