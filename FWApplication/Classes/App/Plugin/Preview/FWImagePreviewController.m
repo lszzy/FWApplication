@@ -25,7 +25,7 @@
     if (self) {
         self.backgroundColor = UIColor.clearColor;
         
-        self.zoomImageView = [[FWZoomImageView alloc] init];
+        self.zoomImageView = [[FWZoomImageView alloc] initWithFrame:self.contentView.bounds];
         [self.contentView addSubview:self.zoomImageView];
     }
     return self;
@@ -33,7 +33,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.zoomImageView.fwFrameApplyTransform = self.contentView.bounds;
+    self.zoomImageView.frame = self.contentView.bounds;
 }
 
 @end
@@ -412,7 +412,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    self.imagePreviewView.fwFrameApplyTransform = self.view.bounds;
+    self.imagePreviewView.frame = self.view.bounds;
     
     if (self.pageLabel.text.length < 1 && self.imagePreviewView.imageCount > 0) {
         [self updatePageLabel];

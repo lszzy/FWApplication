@@ -182,7 +182,7 @@
     self.imageView.image = image;
     
     // 更新 imageView 的大小时，imageView 可能已经被缩放过，所以要应用当前的缩放
-    self.imageView.fwFrameApplyTransform = CGRectMake(0, 0, image.size.width, image.size.height);
+    self.imageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
     
     [self hideViews];
     self.imageView.hidden = NO;
@@ -221,7 +221,7 @@
     _livePhotoView.hidden = NO;
     
     // 更新 livePhotoView 的大小时，livePhotoView 可能已经被缩放过，所以要应用当前的缩放
-    _livePhotoView.fwFrameApplyTransform = CGRectMake(0, 0, livePhoto.size.width, livePhoto.size.height);
+    _livePhotoView.frame = CGRectMake(0, 0, livePhoto.size.width, livePhoto.size.height);
     
     [self revertZooming];
     
@@ -430,7 +430,7 @@
     [self initVideoRelatedViewsIfNeeded];
     _videoPlayerLayer.player = self.videoPlayer;
     // 更新 videoPlayerView 的大小时，videoView 可能已经被缩放过，所以要应用当前的缩放
-    self.videoPlayerView.fwFrameApplyTransform = CGRectMake(0, 0, self.videoSize.width, self.videoSize.height);
+    self.videoPlayerView.frame = CGRectMake(0, 0, self.videoSize.width, self.videoSize.height);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleVideoPlayToEndEvent) name:AVPlayerItemDidPlayToEndTimeNotification object:videoPlayerItem];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -1034,53 +1034,6 @@
         maxValue = MAX(height, maxValue);
     }];
     return maxValue;
-}
-
-@end
-
-#pragma mark - UIView+FWZoomImageView
-
-@implementation UIView (FWZoomImageView)
-
-- (CGRect)fwFrameApplyTransform
-{
-    return self.frame;
-}
-
-- (void)setFwFrameApplyTransform:(CGRect)fwFrameApplyTransform
-{
-    self.frame = [UIView fwRectApplyTransform:fwFrameApplyTransform transform:self.transform anchorPoint:self.layer.anchorPoint];
-}
-
-/// 计算目标点 targetPoint 围绕坐标点 coordinatePoint 通过 transform 之后此点的坐标。@see https://github.com/Tencent/QMUI_iOS
-+ (CGPoint)fwPointApplyTransform:(CGPoint)coordinatePoint targetPoint:(CGPoint)targetPoint transform:(CGAffineTransform)transform
-{
-    CGPoint p;
-    p.x = (targetPoint.x - coordinatePoint.x) * transform.a + (targetPoint.y - coordinatePoint.y) * transform.c + coordinatePoint.x;
-    p.y = (targetPoint.x - coordinatePoint.x) * transform.b + (targetPoint.y - coordinatePoint.y) * transform.d + coordinatePoint.y;
-    p.x += transform.tx;
-    p.y += transform.ty;
-    return p;
-}
-
-/// 系统的 CGRectApplyAffineTransform 只会按照 anchorPoint 为 (0, 0) 的方式去计算，但通常情况下我们面对的是 UIView/CALayer，它们默认的 anchorPoint 为 (.5, .5)，所以增加这个函数，在计算 transform 时可以考虑上 anchorPoint 的影响。@see https://github.com/Tencent/QMUI_iOS
-+ (CGRect)fwRectApplyTransform:(CGRect)rect transform:(CGAffineTransform)transform anchorPoint:(CGPoint)anchorPoint
-{
-    CGFloat width = CGRectGetWidth(rect);
-    CGFloat height = CGRectGetHeight(rect);
-    CGPoint oPoint = CGPointMake(rect.origin.x + width * anchorPoint.x, rect.origin.y + height * anchorPoint.y);
-    CGPoint top_left = [self fwPointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x, rect.origin.y) transform:transform];
-    CGPoint bottom_left = [self fwPointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x, rect.origin.y + height) transform:transform];
-    CGPoint top_right = [self fwPointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x + width, rect.origin.y) transform:transform];
-    CGPoint bottom_right = [self fwPointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x + width, rect.origin.y + height) transform:transform];
-    CGFloat minX = MIN(MIN(MIN(top_left.x, bottom_left.x), top_right.x), bottom_right.x);
-    CGFloat maxX = MAX(MAX(MAX(top_left.x, bottom_left.x), top_right.x), bottom_right.x);
-    CGFloat minY = MIN(MIN(MIN(top_left.y, bottom_left.y), top_right.y), bottom_right.y);
-    CGFloat maxY = MAX(MAX(MAX(top_left.y, bottom_left.y), top_right.y), bottom_right.y);
-    CGFloat newWidth = maxX - minX;
-    CGFloat newHeight = maxY - minY;
-    CGRect result = CGRectMake(minX, minY, newWidth, newHeight);
-    return result;
 }
 
 @end
