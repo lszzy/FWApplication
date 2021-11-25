@@ -24,6 +24,7 @@
 #import <TargetConditionals.h>
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import <objc/runtime.h>
 
 NSString * const FWURLResponseSerializationErrorDomain = @"site.wuyong.error.serialization.response";
 NSString * const FWNetworkingOperationFailingURLResponseErrorKey = @"site.wuyong.serialization.response.error.response";
@@ -100,6 +101,16 @@ id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
 }
 
 #pragma mark -
+
++ (void)setUserInfo:(NSDictionary *)userInfo forResponse:(NSURLResponse *)response {
+    if (!response) return;
+    objc_setAssociatedObject(response, @selector(userInfoForResponse:), userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
++ (NSDictionary *)userInfoForResponse:(NSURLResponse *)response {
+    if (!response) return nil;
+    return objc_getAssociatedObject(response, @selector(userInfoForResponse:));
+}
 
 - (BOOL)validateResponse:(NSHTTPURLResponse *)response
                     data:(NSData *)data

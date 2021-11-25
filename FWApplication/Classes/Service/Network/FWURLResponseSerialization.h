@@ -84,6 +84,16 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
 @property (nonatomic, copy, nullable) NSSet <NSString *> *acceptableContentTypes;
 
 /**
+ Sets a user info to be used for the specified response.
+ */
++ (void)setUserInfo:(nullable NSDictionary *)userInfo forResponse:(nullable NSURLResponse *)response;
+
+/**
+ Returns the user info of the specified response.
+ */
++ (nullable NSDictionary *)userInfoForResponse:(nullable NSURLResponse *)response;
+
+/**
  Validates the specified response and data.
 
  In its base implementation, this method checks for an acceptable status code and content type. Subclasses may wish to add other domain-specific checks.
