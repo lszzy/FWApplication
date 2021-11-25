@@ -14,7 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImagePlugin
 
 /// 本地图片解码编码选项，默认兼容SDWebImage
-typedef NSString * FWImageCoderOptions NS_TYPED_ENUM;
+typedef NSString * FWImageCoderOptions NS_EXTENSIBLE_STRING_ENUM;
+/// 图片解码scale选项，默认未指定时为1
+FOUNDATION_EXPORT FWImageCoderOptions const FWImageCoderOptionScaleFactor;
 
 /// 网络图片加载选项，默认兼容SDWebImage
 typedef NS_OPTIONS(NSUInteger, FWWebImageOptions) {

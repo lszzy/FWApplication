@@ -43,6 +43,8 @@
 
 - (UIImage *)fwImageDecode:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
+    NSNumber *scaleFactor = options[FWImageCoderOptionScaleFactor];
+    if (scaleFactor != nil) scale = [scaleFactor doubleValue];
     SDImageCoderMutableOptions *coderOptions = [[NSMutableDictionary alloc] init];
     coderOptions[SDImageCoderDecodeScaleFactor] = @(MAX(scale, 1));
     coderOptions[SDImageCoderDecodeFirstFrameOnly] = @(NO);

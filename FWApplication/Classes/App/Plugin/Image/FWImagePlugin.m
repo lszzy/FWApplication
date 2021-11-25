@@ -12,6 +12,8 @@
 #import "FWToolkit.h"
 #import <objc/runtime.h>
 
+FWImageCoderOptions const FWImageCoderOptionScaleFactor = @"imageScaleFactor";
+
 #pragma mark - UIImage+FWImagePlugin
 
 UIImage * FWImageNamed(NSString *name) {
@@ -127,7 +129,9 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
         return [imagePlugin fwImageDecode:data scale:scale options:options];
     }
     
-    return [UIImage imageWithData:data scale:scale];
+    NSNumber *scaleFactor = options[FWImageCoderOptionScaleFactor];
+    if (scaleFactor != nil) scale = [scaleFactor doubleValue];
+    return [UIImage imageWithData:data scale:MAX(scale, 1)];
 }
 
 + (NSData *)fwDataWithImage:(UIImage *)image

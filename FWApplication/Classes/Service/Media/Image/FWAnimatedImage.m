@@ -433,6 +433,8 @@ static SEL FWCGSVGDocumentSEL = NULL;
     if (data.length < 1) return nil;
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)data, NULL);
     if (!source) return nil;
+    NSNumber *scaleFactor = options[FWImageCoderOptionScaleFactor];
+    if (scaleFactor != nil) scale = MAX([scaleFactor doubleValue], 1);
     
     UIImage *animatedImage;
     size_t count = CGImageSourceGetCount(source);
