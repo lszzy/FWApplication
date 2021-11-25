@@ -12,7 +12,7 @@
 
 @property(nonatomic, assign) BOOL usePlugin;
 @property(nonatomic, strong) FWImagePreviewController *imagePreviewViewController;
-@property(nonatomic, strong) NSArray<UIImage *> *images;
+@property(nonatomic, strong) NSArray *images;
 @property(nonatomic, strong) FWFloatLayoutView *floatLayoutView;
 @property(nonatomic, strong) UILabel *tipsLabel;
 @property(nonatomic, assign) BOOL mockProgress;
@@ -32,10 +32,10 @@
         
         self.images = @[[TestBundle imageNamed:@"public_face"],
                         [TestBundle imageNamed:@"animation.png"],
-                        [TestBundle imageNamed:@"public_picture"],
-                        [TestBundle imageNamed:@"public_sunset"],
-                        [TestBundle imageNamed:@"public_test"],
-                        [TestBundle imageNamed:@"progressive.jpg"]];
+                        @"http://via.placeholder.com/100x2000.jpg",
+                        @"http://via.placeholder.com/2000x2000.jpg",
+                        @"http://via.placeholder.com/100x100.jpg",
+                        @"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"];
     }
     return self;
 }
@@ -89,10 +89,21 @@
     
     self.floatLayoutView = [[FWFloatLayoutView alloc] init];
     self.floatLayoutView.itemMargins = UIEdgeInsetsMake(UIScreen.fwPixelOne, UIScreen.fwPixelOne, 0, 0);
-    for (UIImage *image in self.images) {
+    for (id image in self.images) {
         UIButton *button = [[UIButton alloc] init];
         button.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        [button setImage:image forState:UIControlStateNormal];
+        if ([image isKindOfClass:[UIImage class]]) {
+            [button setImage:image forState:UIControlStateNormal];
+        } else if ([image isKindOfClass:[NSString class]]) {
+            NSString *imageUrl = (NSString *)image;
+            if ([image hasSuffix:@".mp4"]) {
+                [button setImage:[TestBundle imageNamed:@"public_icon"] forState:UIControlStateNormal];
+            } else {
+                [UIImage fwDownloadImage:imageUrl completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+                    [button setImage:image ?: [TestBundle imageNamed:@"public_icon"] forState:UIControlStateNormal];
+                } progress:nil];
+            }
+        }
         [button addTarget:self action:@selector(handleImageButtonEvent:) forControlEvents:UIControlEventTouchUpInside];
         [self.floatLayoutView addSubview:button];
     }
@@ -194,33 +205,11 @@
             
             zoomImageView.progress = progress;
             if (finished) {
-                if (index == 5) {
-                    NSURL *url = [NSURL fwURLWithString:@"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"];
-                    zoomImageView.videoPlayerItem = [AVPlayerItem playerItemWithURL:url];
-                } else if (index == 4) {
-                    [zoomImageView setImageURL:@"http://via.placeholder.com/100x100.jpg" placeholderImage:nil];
-                } else if (index == 3) {
-                    [zoomImageView setImageURL:@"http://via.placeholder.com/2000x2000.jpg" placeholderImage:nil];
-                } else if (index == 2) {
-                    [zoomImageView setImageURL:@"http://via.placeholder.com/100x2000.jpg" placeholderImage:nil];
-                } else {
-                    zoomImageView.image = self.images[index];
-                }
+                [zoomImageView setImageURL:self.images[index]];
             }
         }];
     } else {
-        if (index == 5) {
-            NSURL *url = [NSURL fwURLWithString:@"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"];
-            zoomImageView.videoPlayerItem = [AVPlayerItem playerItemWithURL:url];
-        } else if (index == 4) {
-            [zoomImageView setImageURL:@"http://via.placeholder.com/100x100.jpg" placeholderImage:nil];
-        } else if (index == 3) {
-            [zoomImageView setImageURL:@"http://via.placeholder.com/2000x2000.jpg" placeholderImage:nil];
-        } else if (index == 2) {
-            [zoomImageView setImageURL:@"http://via.placeholder.com/100x2000.jpg" placeholderImage:nil];
-        } else {
-            zoomImageView.image = self.images[index];
-        }
+        [zoomImageView setImageURL:self.images[index]];
     }
 }
 

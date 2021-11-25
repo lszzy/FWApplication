@@ -184,7 +184,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         self.renderZoomImageView(zoomView, indexPath.item);
     } else if (self.imageURLs.count > indexPath.item) {
         UIImage *placeholderImage = self.placeholderImage ? self.placeholderImage(indexPath.item) : nil;
-        [zoomView setImageURL:imageURL placeholderImage:placeholderImage];
+        [zoomView setImageURL:imageURL placeholderImage:placeholderImage completion:nil];
     }
     
     // 自动播放视频

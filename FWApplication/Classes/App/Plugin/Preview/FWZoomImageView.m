@@ -788,7 +788,11 @@
 
 #pragma mark - ImageURL
 
-- (void)setImageURL:(id)imageURL placeholderImage:(UIImage *)placeholderImage {
+- (void)setImageURL:(id)imageURL {
+    [self setImageURL:imageURL placeholderImage:nil completion:nil];
+}
+
+- (void)setImageURL:(id)imageURL placeholderImage:(UIImage *)placeholderImage completion:(void (^)(UIImage * _Nullable))completion {
     if ([imageURL isKindOfClass:[NSString class]]) {
         imageURL = [NSURL fwURLWithString:imageURL];
     }
@@ -807,6 +811,7 @@
             __typeof__(self) self = self_weak_;
             self.progress = 1;
             if (image) self.image = image;
+            if (completion) completion(image);
         } progress:^(double progress) {
             __typeof__(self) self = self_weak_;
             self.progress = progress;
@@ -814,15 +819,19 @@
     } else if ([imageURL isKindOfClass:[PHLivePhoto class]]) {
         self.progress = 1;
         self.livePhoto = (PHLivePhoto *)imageURL;
+        if (completion) completion(nil);
     } else if ([imageURL isKindOfClass:[AVPlayerItem class]]) {
         self.progress = 1;
         self.videoPlayerItem = (AVPlayerItem *)imageURL;
+        if (completion) completion(nil);
     } else if ([imageURL isKindOfClass:[UIImage class]]) {
         self.progress = 1;
         self.image = (UIImage *)imageURL;
+        if (completion) completion(self.image);
     } else {
         self.progress = 1;
         self.image = placeholderImage;
+        if (completion) completion(nil);
     }
 }
 
