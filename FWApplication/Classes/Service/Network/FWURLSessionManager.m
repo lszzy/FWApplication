@@ -206,8 +206,11 @@ didCompleteWithError:(NSError *)error
         });
     } else {
         dispatch_async(fw_url_session_manager_processing_queue(), ^{
-            NSDictionary *taskInfo = [FWURLSessionManager userInfoForTask:task];
-            if (taskInfo && task.response) [FWHTTPResponseSerializer setUserInfo:taskInfo forResponse:task.response];
+            NSDictionary *taskInfo = [self.manager userInfoForTask:task];
+            if (taskInfo && task.response && [manager.responseSerializer isKindOfClass:[FWHTTPResponseSerializer class]]) {
+                FWHTTPResponseSerializer *responseSerializer = (FWHTTPResponseSerializer *)manager.responseSerializer;
+                [responseSerializer setUserInfo:taskInfo forResponse:task.response];
+            }
             
             NSError *serializationError = nil;
             responseObject = [manager.responseSerializer responseObjectForResponse:task.response data:data error:&serializationError];
@@ -802,11 +805,11 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
     return [[self delegateForTask:task] downloadProgress];
 }
 
-+ (void)setUserInfo:(NSDictionary *)userInfo forTask:(NSURLSessionTask *)task {
+- (void)setUserInfo:(NSDictionary *)userInfo forTask:(NSURLSessionTask *)task {
     objc_setAssociatedObject(task, @selector(userInfoForTask:), userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-+ (NSDictionary *)userInfoForTask:(NSURLSessionTask *)task {
+- (NSDictionary *)userInfoForTask:(NSURLSessionTask *)task {
     return objc_getAssociatedObject(task, @selector(userInfoForTask:));
 }
 

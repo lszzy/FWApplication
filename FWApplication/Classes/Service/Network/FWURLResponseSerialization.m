@@ -102,12 +102,12 @@ id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
 
 #pragma mark -
 
-+ (void)setUserInfo:(NSDictionary *)userInfo forResponse:(NSURLResponse *)response {
+- (void)setUserInfo:(NSDictionary *)userInfo forResponse:(NSURLResponse *)response {
     if (!response) return;
     objc_setAssociatedObject(response, @selector(userInfoForResponse:), userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-+ (NSDictionary *)userInfoForResponse:(NSURLResponse *)response {
+- (NSDictionary *)userInfoForResponse:(NSURLResponse *)response {
     if (!response) return nil;
     return objc_getAssociatedObject(response, @selector(userInfoForResponse:));
 }
@@ -546,11 +546,11 @@ id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
 
 @interface UIImage ()
 
-+ (UIImage *)fwImageWithData:(NSData *)data scale:(CGFloat)scale;
++ (UIImage *)fwImageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary *)options;
 
 @end
 
-static UIImage * FWImageWithDataAtScale(NSData *data, CGFloat scale) {
+static UIImage * FWImageWithDataAtScale(NSData *data, CGFloat scale, NSDictionary *options) {
     if (!data || [data length] == 0) {
         return nil;
     }
@@ -560,14 +560,14 @@ static UIImage * FWImageWithDataAtScale(NSData *data, CGFloat scale) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         imageLock = [[NSLock alloc] init];
-        imageHook = [UIImage respondsToSelector:@selector(fwImageWithData:scale:)];
+        imageHook = [UIImage respondsToSelector:@selector(fwImageWithData:scale:options:)];
     });
     
     // Use hook method if exists
     if (imageHook) {
         UIImage *image = nil;
         [imageLock lock];
-        image = [UIImage fwImageWithData:data scale:scale];
+        image = [UIImage fwImageWithData:data scale:scale options:options];
         [imageLock unlock];
         
         return image;
@@ -585,13 +585,13 @@ static UIImage * FWImageWithDataAtScale(NSData *data, CGFloat scale) {
     return [[UIImage alloc] initWithCGImage:[image CGImage] scale:scale orientation:image.imageOrientation];
 }
 
-static UIImage * FWInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *response, NSData *data, CGFloat scale) {
+static UIImage * FWInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *response, NSData *data, CGFloat scale, NSDictionary *options) {
     if (!data || [data length] == 0) {
         return nil;
     }
     
     // Fix animated png bug
-    UIImage *image = FWImageWithDataAtScale(data, scale);
+    UIImage *image = FWImageWithDataAtScale(data, scale, options);
     if (image.images || !image) {
         return image;
     }
@@ -706,10 +706,11 @@ static UIImage * FWInflatedImageFromResponseWithDataAtScale(NSHTTPURLResponse *r
         }
     }
 
+    NSDictionary *options = [self userInfoForResponse:response];
     if (self.automaticallyInflatesResponseImage) {
-        return FWInflatedImageFromResponseWithDataAtScale((NSHTTPURLResponse *)response, data, self.imageScale);
+        return FWInflatedImageFromResponseWithDataAtScale((NSHTTPURLResponse *)response, data, self.imageScale, options);
     } else {
-        return FWImageWithDataAtScale(data, self.imageScale);
+        return FWImageWithDataAtScale(data, self.imageScale, options);
     }
 
     return nil;

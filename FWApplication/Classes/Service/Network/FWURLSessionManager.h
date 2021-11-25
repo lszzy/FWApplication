@@ -298,12 +298,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Sets a user info to be used for the specified task.
  */
-+ (void)setUserInfo:(nullable NSDictionary *)userInfo forTask:(NSURLSessionTask *)task;
+- (void)setUserInfo:(nullable NSDictionary *)userInfo forTask:(NSURLSessionTask *)task;
 
 /**
  Returns the user info of the specified task.
  */
-+ (nullable NSDictionary *)userInfoForTask:(NSURLSessionTask *)task;
+- (nullable NSDictionary *)userInfoForTask:(NSURLSessionTask *)task;
 
 ///-----------------------------------------
 /// @name Setting Session Delegate Callbacks

@@ -483,7 +483,7 @@
                        }];
         
         // Store the context for use when the request completes
-        if (context) [FWURLSessionManager setUserInfo:context forTask:createdTask];
+        if (context) [self.sessionManager setUserInfo:context forTask:createdTask];
 
         // 4) Store the response handler for use when the request completes
         FWImageDownloaderResponseHandler *handler = [[FWImageDownloaderResponseHandler alloc] initWithUUID:receiptID

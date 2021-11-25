@@ -86,12 +86,12 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
 /**
  Sets a user info to be used for the specified response.
  */
-+ (void)setUserInfo:(nullable NSDictionary *)userInfo forResponse:(nullable NSURLResponse *)response;
+- (void)setUserInfo:(nullable NSDictionary *)userInfo forResponse:(nullable NSURLResponse *)response;
 
 /**
  Returns the user info of the specified response.
  */
-+ (nullable NSDictionary *)userInfoForResponse:(nullable NSURLResponse *)response;
+- (nullable NSDictionary *)userInfoForResponse:(nullable NSURLResponse *)response;
 
 /**
  Validates the specified response and data.

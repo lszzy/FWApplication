@@ -428,8 +428,8 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
             url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fwCurrentTime)];
         }
-        [cell.systemView fwSetImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"] options:0 context:@{FWImageCoderOptionScaleFactor: @(2)} completion:nil progress:nil];
-        [cell.animatedView fwSetImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"] options:0 context:@{FWImageCoderOptionScaleFactor: @(2)} completion:nil progress:nil];
+        [cell.systemView fwSetImageWithURL:url];
+        [cell.animatedView fwSetImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     }
     return cell;
 }
