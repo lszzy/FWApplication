@@ -16,6 +16,8 @@
 @interface FWImagePreviewCell : UICollectionViewCell
 
 @property(nonatomic, strong) FWZoomImageView *zoomImageView;
+@property(nonatomic, assign) CGRect contentViewBounds;
+
 @end
 
 @implementation FWImagePreviewCell
@@ -24,7 +26,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = UIColor.clearColor;
-        
+
+        self.contentViewBounds = self.contentView.bounds;
         self.zoomImageView = [[FWZoomImageView alloc] initWithFrame:self.contentView.bounds];
         [self.contentView addSubview:self.zoomImageView];
     }
@@ -33,7 +36,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.zoomImageView.frame = self.contentView.bounds;
+    if (!CGRectEqualToRect(self.contentView.bounds, self.contentViewBounds)) {
+        self.contentViewBounds = self.contentView.bounds;
+        self.zoomImageView.frame = self.contentView.bounds;
+    }
 }
 
 @end

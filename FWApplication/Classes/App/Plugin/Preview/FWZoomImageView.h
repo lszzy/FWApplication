@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  支持缩放查看静态图片、live photo、视频的控件
  *  默认显示完整图片或视频，可双击查看放大后的大小，再次双击恢复到初始大小。
  *
- *  支持通过修改 contentMode 来控制静态图片和 live photo 默认的显示模式，目前仅支持 UIViewContentModeCenter、UIViewContentModeScaleAspectFill、UIViewContentModeScaleAspectFit、UIViewContentModeScaleToFill，默认为 UIViewContentModeScaleAspectFit。注意这里的显示模式是基于 viewportRect 而言的而非整个 zoomImageView
+ *  支持通过修改 contentMode 来控制静态图片和 live photo 默认的显示模式，目前仅支持 UIViewContentModeCenter、UIViewContentModeScaleAspectFill、UIViewContentModeScaleAspectFit、UIViewContentModeScaleToFill(仅宽度拉伸)，默认为 UIViewContentModeScaleAspectFit。注意这里的显示模式是基于 viewportRect 而言的而非整个 zoomImageView
  *  FWZoomImageView 提供最基础的图片预览和缩放功能，其他功能请通过继承来实现。
  *
  *  @see https://github.com/Tencent/QMUI_iOS
