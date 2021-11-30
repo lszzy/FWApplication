@@ -160,12 +160,19 @@
                 tipLabel.tag = 102;
                 tipLabel.fwContentInset = UIEdgeInsetsMake(2, 8, 2, 8);
                 [tipLabel fwSetCornerRadius:FWFontRegular(12).lineHeight / 2 + 2];
-                tipLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
+                tipLabel.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
                 tipLabel.text = @"图片仅供参考";
                 tipLabel.font = FWFontRegular(12);
                 tipLabel.textColor = [UIColor whiteColor];
                 [imageView addSubview:tipLabel];
-                tipLabel.fwLayoutChain.bottomWithInset(16).rightWithInset(16);
+                
+                // 图片仅供参考缩放后始终在图片右下角显示
+                [tipLabel sizeToFit];
+                CGFloat labelScale = 1.0 / zoomImageView.scrollView.zoomScale;
+                tipLabel.transform = CGAffineTransformMakeScale(labelScale, labelScale);
+                CGSize imageSize = zoomImageView.image.size;
+                CGSize labelSize = tipLabel.frame.size;
+                tipLabel.fwOrigin = CGPointMake(imageSize.width - 16 * labelScale - labelSize.width, imageSize.height - 16 * labelScale - labelSize.height);
             }
         };
         
@@ -193,6 +200,8 @@
 }
 
 - (void)imagePreviewView:(FWImagePreviewView *)imagePreviewView renderZoomImageView:(FWZoomImageView *)zoomImageView atIndex:(NSInteger)index {
+    // 强制宽度缩放模式
+    zoomImageView.contentMode = UIViewContentModeScaleToFill;
     zoomImageView.reusedIdentifier = @(index);
     zoomImageView.showsVideoToolbar = self.showsToolbar;
     zoomImageView.showsVideoCloseButton = self.showsClose;
