@@ -179,4 +179,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - UIView+FWZoomImageView
+
+@interface UIView (FWZoomImageView)
+
+/// 将要设置的frame按照view的anchorPoint(.5, .5)处理后再设置，而系统默认按照(0, 0)方式计算
+@property(nonatomic, assign) CGRect fwFrameApplyTransform;
+
+@end
+
 NS_ASSUME_NONNULL_END
