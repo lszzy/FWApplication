@@ -53,8 +53,20 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     }];
     [self.view addSubview:imageView];
     
+    UIImageView *assetView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 160, 50, 50)];
+    assetView.fwThemeAsset = [UIImageAsset fwThemeAsset:^UIImage * _Nullable(FWThemeStyle style) {
+        if (style == FWThemeStyleDark) {
+            return [TestBundle imageNamed:@"theme_image_dark"];
+        } else if (style == FWThemeStyleLight) {
+            return [TestBundle imageNamed:@"theme_image_light"];
+        } else {
+            return [[TestBundle imageNamed:@"theme_image_dark"] fwImageWithTintColor:[UIColor redColor]];
+        }
+    }];
+    [self.view addSubview:assetView];
+    
     CALayer *layer = [CALayer new];
-    layer.frame = CGRectMake(20, 160, 50, 50);
+    layer.frame = CGRectMake(20, 230, 50, 50);
     layer.fwThemeContext = self.view;
     layer.fwThemeBackgroundColor = [UIColor fwThemeColor:^UIColor * _Nonnull(FWThemeStyle style) {
         if (style == FWThemeStyleDark) {
@@ -68,7 +80,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     [self.view.layer addSublayer:layer];
     
     UILabel *themeLabel = [UILabel new];
-    themeLabel.frame = CGRectMake(20, 230, FWScreenWidth, 50);
+    themeLabel.frame = CGRectMake(20, 300, FWScreenWidth, 50);
     UIColor *textColor = [UIColor fwThemeColor:^UIColor * _Nonnull(FWThemeStyle style) {
         if (style == FWThemeStyleDark) {
             return [UIColor whiteColor];

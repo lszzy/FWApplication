@@ -143,11 +143,13 @@
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 370, 50, 50)];
-    imageView.fwThemeImage = [UIImage fwThemeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"] fwImageWithTintColor:[UIColor whiteColor]]];
+    imageView.fwThemeAsset = [UIImageAsset fwThemeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"] fwImageWithTintColor:[UIColor whiteColor]]];
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(90, 370, 50, 50)];
-    imageView.fwThemeImage = [UIImage fwThemeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"] fwImageWithTintColor:[UIColor yellowColor]]];
+    imageView.fwThemeAsset = [UIImageAsset fwThemeAsset:^UIImage * (FWThemeStyle style) {
+        return style == FWThemeStyleDark ? [[TestBundle imageNamed:@"tabbar_settings"] fwImageWithTintColor:[UIColor yellowColor]] : [TestBundle imageNamed:@"tabbar_settings"];
+    }];
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(160, 370, 50, 50)];
