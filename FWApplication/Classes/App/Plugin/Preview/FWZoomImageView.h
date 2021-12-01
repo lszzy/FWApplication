@@ -69,11 +69,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 最小缩率比率，默认0根据contentMode自动计算
 @property(nonatomic, assign) CGFloat minimumZoomScale;
 
-/// 自定义最大缩放比率句柄，默认nil时为最小比率*2且不小于2
-@property(nonatomic, copy, nullable) CGFloat (^maximumZoomScaleBlock)(CGFloat minimumZoomScale);
+/// 自定义最大缩放比率句柄，默认nil时根据contentMode自动计算
+@property(nonatomic, copy, nullable) CGFloat (^maximumZoomScaleBlock)(CGFloat scaleX, CGFloat scaleY);
 
 /// 最定义最小缩放比率句柄，默认nil时根据contentMode自动计算
-@property(nonatomic, copy, nullable) CGFloat (^minimumZoomScaleBlock)(CGSize scaleSize);
+@property(nonatomic, copy, nullable) CGFloat (^minimumZoomScaleBlock)(CGFloat scaleX, CGFloat scaleY);
 
 /// 自定义双击放大比率句柄，默认nil时直接放大到最大比率
 @property(nonatomic, copy, nullable) CGFloat (^zoomInScaleBlock)(UIScrollView *scrollView);

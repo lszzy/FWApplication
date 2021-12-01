@@ -52,6 +52,7 @@
 @synthesize videoPlayButton = _videoPlayButton;
 @synthesize videoCloseButton = _videoCloseButton;
 @synthesize progressView = _progressView;
+@synthesize maximumZoomScale = _maximumZoomScale;
 @synthesize minimumZoomScale = _minimumZoomScale;
 
 + (void)initialize {
@@ -252,6 +253,34 @@
     self.scrollView.minimumZoomScale = minimumZoomScale;
 }
 
+- (CGFloat)maximumZoomScale {
+    if (_maximumZoomScale > 0) return _maximumZoomScale;
+    
+    BOOL isLivePhoto = !!self.livePhoto;
+    if (!self.image && !isLivePhoto && !self.videoPlayerItem) {
+        return 1;
+    }
+    
+    CGRect viewport = [self finalViewportRect];
+    CGSize mediaSize = CGSizeZero;
+    if (self.image) {
+        mediaSize = self.image.size;
+    } else if (isLivePhoto) {
+        mediaSize = self.livePhoto.size;
+    } else if (self.videoPlayerItem) {
+        mediaSize = self.videoSize;
+    }
+    CGFloat scaleX = CGRectGetWidth(viewport) / mediaSize.width;
+    CGFloat scaleY = CGRectGetHeight(viewport) / mediaSize.height;
+    
+    if (self.maximumZoomScaleBlock) {
+        return self.maximumZoomScaleBlock(scaleX, scaleY);
+    }
+    
+    CGFloat minScale = [self minimumZoomScale];
+    return MAX(minScale * 2, 2);
+}
+
 - (CGFloat)minimumZoomScale {
     if (_minimumZoomScale > 0) return _minimumZoomScale;
     
@@ -269,11 +298,11 @@
     } else if (self.videoPlayerItem) {
         mediaSize = self.videoSize;
     }
-    
     CGFloat scaleX = CGRectGetWidth(viewport) / mediaSize.width;
     CGFloat scaleY = CGRectGetHeight(viewport) / mediaSize.height;
+    
     if (self.minimumZoomScaleBlock) {
-        return self.minimumZoomScaleBlock(CGSizeMake(scaleX, scaleY));
+        return self.minimumZoomScaleBlock(scaleX, scaleY);
     }
     
     CGFloat minScale = 1;
@@ -309,16 +338,7 @@
     
     BOOL enabledZoomImageView = [self enabledZoomImageView];
     CGFloat minimumZoomScale = [self minimumZoomScale];
-    CGFloat maximumZoomScale = minimumZoomScale;
-    if (enabledZoomImageView) {
-        if (self.maximumZoomScaleBlock) {
-            maximumZoomScale = self.maximumZoomScaleBlock(minimumZoomScale);
-        } else if (self.maximumZoomScale > 0) {
-            maximumZoomScale = self.maximumZoomScale;
-        } else {
-            maximumZoomScale = MAX(minimumZoomScale * 2, 2);
-        }
-    }
+    CGFloat maximumZoomScale = enabledZoomImageView ? [self maximumZoomScale] : minimumZoomScale;
     
     CGFloat zoomScale = minimumZoomScale;
     BOOL shouldFireDidZoomingManual = zoomScale == self.scrollView.zoomScale;

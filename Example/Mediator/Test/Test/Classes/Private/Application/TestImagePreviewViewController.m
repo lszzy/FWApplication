@@ -33,6 +33,7 @@
         self.images = @[[TestBundle imageNamed:@"public_face"],
                         [TestBundle imageNamed:@"animation.png"],
                         @"http://via.placeholder.com/100x2000.jpg",
+                        @"http://via.placeholder.com/2000x100.jpg",
                         @"http://via.placeholder.com/2000x2000.jpg",
                         @"http://via.placeholder.com/100x100.jpg",
                         @"http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4"];
@@ -166,13 +167,14 @@
                 tipLabel.textColor = [UIColor whiteColor];
                 [imageView addSubview:tipLabel];
                 
-                // 图片仅供参考缩放后始终在图片右下角显示
+                // 图片仅供参考缩放后始终在图片右下角显示，显示不下就隐藏
                 [tipLabel sizeToFit];
                 CGFloat labelScale = 1.0 / zoomImageView.scrollView.zoomScale;
                 tipLabel.transform = CGAffineTransformMakeScale(labelScale, labelScale);
                 CGSize imageSize = zoomImageView.image.size;
                 CGSize labelSize = tipLabel.frame.size;
                 tipLabel.fwOrigin = CGPointMake(imageSize.width - 16 * labelScale - labelSize.width, imageSize.height - 16 * labelScale - labelSize.height);
+                tipLabel.hidden = tipLabel.fwY < 0;
             }
         };
         
