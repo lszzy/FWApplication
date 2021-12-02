@@ -1870,6 +1870,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = self.collectionView.backgroundColor;
     [self.view addSubview:self.collectionView];
     if (self.allowsMultipleSelection) {
         [self.view addSubview:self.operationToolBarView];
@@ -1985,14 +1986,17 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         [self fwHideLoading];
     }
     self.isImagesAssetLoading = NO;
-    [self.collectionView reloadData];
     if (self.imagesAssetArray.count > 0) {
+        self.collectionView.hidden = YES;
+        [self.collectionView reloadData];
         self.hasScrollToInitialPosition = NO;
         [self.collectionView performBatchUpdates:^{
-        } completion:^(BOOL finished) {
             [self scrollToInitialPositionIfNeeded];
+        } completion:^(BOOL finished) {
+            self.collectionView.hidden = NO;
         }];
     } else {
+        [self.collectionView reloadData];
         if ([FWAssetManager authorizationStatus] == FWAssetAuthorizationStatusNotAuthorized) {
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerWillShowDenied:self];
