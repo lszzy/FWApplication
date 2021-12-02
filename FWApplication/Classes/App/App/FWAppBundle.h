@@ -51,8 +51,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (class, nonatomic, copy, readonly) NSString *previewButton;
 /// 多语言，原图，fwOriginal
 @property (class, nonatomic, copy, readonly) NSString *originalButton;
-/// 多语言，相册，fwAlbum
-@property (class, nonatomic, copy, readonly) NSString *albumButton;
+
+/// 多语言，相册，fwPickerAlbum
+@property (class, nonatomic, copy, readonly) NSString *pickerAlbumTitle;
+/// 多语言，无照片，fwPickerEmpty
+@property (class, nonatomic, copy, readonly) NSString *pickerEmptyTitle;
+/// 多语言，无权限，fwPickerDenied
+@property (class, nonatomic, copy, readonly) NSString *pickerDeniedTitle;
+/// 多语言，超出数量，fwPickerExceed
+@property (class, nonatomic, copy, readonly) NSString *pickerExceedTitle;
 
 @end
 

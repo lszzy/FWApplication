@@ -167,7 +167,10 @@
                 @"fwOriginal": @"原图",
                 @"fwEdit": @"编辑",
                 @"fwPreview": @"预览",
-                @"fwAlbum": @"相册",
+                @"fwPickerAlbum": @"相册",
+                @"fwPickerEmpty": @"无照片",
+                @"fwPickerDenied": @"请在iPhone的\"设置-隐私-照片\"选项中，允许%@访问你的照片",
+                @"fwPickerExceed": @"最多只能选择%@张图片",
             },
             @"zh-Hant": @{
                 @"fwDone": @"完成",
@@ -177,7 +180,10 @@
                 @"fwOriginal": @"原圖",
                 @"fwEdit": @"編輯",
                 @"fwPreview": @"預覽",
-                @"fwAlbum": @"相冊",
+                @"fwPickerAlbum": @"相冊",
+                @"fwPickerEmpty": @"無照片",
+                @"fwPickerDenied": @"請在iPhone的\"設置-隱私-相冊\"選項中，允許%@訪問你的照片",
+                @"fwPickerExceed": @"最多只能選擇%@張圖片",
             },
             @"en": @{
                 @"fwDone": @"Done",
@@ -187,7 +193,10 @@
                 @"fwOriginal": @"Original",
                 @"fwEdit": @"Edit",
                 @"fwPreview": @"Preview",
-                @"fwAlbum": @"Album",
+                @"fwPickerAlbum": @"Album",
+                @"fwPickerEmpty": @"No Photo",
+                @"fwPickerDenied": @"Please allow %@ to access your album in \"Settings\"->\"Privacy\"->\"Photos\"",
+                @"fwPickerExceed": @"Max count for selection: %@",
             },
             @"ja": @{
                 @"fwDone": @"完了",
@@ -197,7 +206,10 @@
                 @"fwOriginal": @"原図",
                 @"fwEdit": @"編集",
                 @"fwPreview": @"プレビュー",
-                @"fwAlbum": @"アルバム",
+                @"fwPickerAlbum": @"アルバム",
+                @"fwPickerEmpty": @"写真でない",
+                @"fwPickerDenied": @"%@があなたのアルバムにアクセスするには「設定」->「プライバシー」->「写真」",
+                @"fwPickerExceed": @"最大選択数: %@",
             },
             @"ms": @{
                 @"fwDone": @"Selesai",
@@ -207,7 +219,10 @@
                 @"fwOriginal": @"Asal",
                 @"fwEdit": @"Edit",
                 @"fwPreview": @"Pratonton",
-                @"fwAlbum": @"Imej",
+                @"fwPickerAlbum": @"Imej",
+                @"fwPickerEmpty": @"Tiada gambar",
+                @"fwPickerDenied": @"Izinkan %@ mengakses album anda di \"Tetapan\" -> \"Privasi\" -> \"Foto\"",
+                @"fwPickerExceed": @"Kiraan maksimum untuk pemilihan: %@",
             },
         };
     });
@@ -291,9 +306,24 @@
     return [self localizedString:@"fwOriginal"];
 }
 
-+ (NSString *)albumButton
++ (NSString *)pickerAlbumTitle
 {
-    return [self localizedString:@"fwAlbum"];
+    return [self localizedString:@"fwPickerAlbum"];
+}
+
++ (NSString *)pickerEmptyTitle
+{
+    return [self localizedString:@"fwPickerEmpty"];
+}
+
++ (NSString *)pickerDeniedTitle
+{
+    return [self localizedString:@"fwPickerDenied"];
+}
+
++ (NSString *)pickerExceedTitle
+{
+    return [self localizedString:@"fwPickerExceed"];
 }
 
 @end

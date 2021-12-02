@@ -212,7 +212,7 @@
     [super viewDidLoad];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationController.navigationBar.fwBackImage = FWAppBundle.navBackImage;
-    if (!self.title) self.title = FWAppBundle.albumButton;
+    if (!self.title) self.title = FWAppBundle.pickerAlbumTitle;
     [self.view addSubview:self.backgroundView];
     [self.view addSubview:self.tableView];
     
@@ -315,7 +315,7 @@
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowEmpty:)]) {
             [self.albumControllerDelegate albumControllerWillShowEmpty:self];
         } else {
-            [self fwShowEmptyViewWithText:@"空照片"];
+            [self fwShowEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
         }
     }
     
@@ -336,7 +336,7 @@
     } else {
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
-        NSString *tipText = [NSString stringWithFormat:@"请在设备的\"设置-隐私-照片\"选项中，允许%@访问你的手机相册", appName];
+        NSString *tipText = [NSString stringWithFormat:FWAppBundle.pickerDeniedTitle, appName];
         [self fwShowEmptyViewWithText:tipText];
     }
     
@@ -815,7 +815,7 @@
         [_checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
         [_checkboxButton sizeToFit];
         [_checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+        _checkboxButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         _checkboxButton.fwDisabledAlpha = 0.3;
         _checkboxButton.fwHighlightedAlpha = 0.5;
     }
@@ -843,7 +843,7 @@
     if (!_editButton) {
         _editButton = [[UIButton alloc] init];
         _editButton.hidden = !self.showsEditButton;
-        _editButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+        _editButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [_editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
         _editButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_editButton sizeToFit];
@@ -858,7 +858,7 @@
 - (UIButton *)sendButton {
     if (!_sendButton) {
         _sendButton = [[UIButton alloc] init];
-        _sendButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+        _sendButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
         _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_sendButton sizeToFit];
@@ -882,7 +882,7 @@
         [_originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
         [_originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
         [_originImageCheckboxButton sizeToFit];
-        _originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(6.0f, 6.0f, 6.0f, 6.0f);
+        _originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         _originImageCheckboxButton.fwDisabledAlpha = 0.3;
         _originImageCheckboxButton.fwHighlightedAlpha = 0.5;
         [_originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -1222,7 +1222,7 @@
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
                 [self.delegate imagePickerPreviewControllerWillShowExceed:self];
             } else {
-                [self fwShowAlertWithTitle:[NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)] message:nil cancel:@"我知道了" cancelBlock:nil];
+                [self fwShowAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
             }
             return;
         }
@@ -1524,7 +1524,7 @@
     [self.contentView addSubview:self.iconImageView];
     
     self.checkboxButton = [[UIButton alloc] init];
-    self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(6, 6, 6, 6);
+    self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
     self.checkboxButton.hidden = YES;
     [self.contentView addSubview:self.checkboxButton];
 }
@@ -2003,14 +2003,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             } else {
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
-                NSString *tipText = [NSString stringWithFormat:@"请在设备的\"设置-隐私-照片\"选项中，允许%@访问你的手机相册", appName];
+                NSString *tipText = [NSString stringWithFormat:FWAppBundle.pickerDeniedTitle, appName];
                 [self fwShowEmptyViewWithText:tipText];
             }
         } else {
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerWillShowEmpty:self];
             } else {
-                [self fwShowEmptyViewWithText:@"空照片"];
+                [self fwShowEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
             }
         }
     }
@@ -2296,7 +2296,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillShowExceed:self];
         } else {
-            [self fwShowAlertWithTitle:[NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)] message:nil cancel:@"我知道了" cancelBlock:nil];
+            [self fwShowAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
         }
         return;
     }
@@ -2433,7 +2433,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerWillShowExceed:self];
             } else {
-                [self fwShowAlertWithTitle:[NSString stringWithFormat:@"你最多只能选择%@张图片", @(self.maximumSelectImageCount)] message:nil cancel:@"我知道了" cancelBlock:nil];
+                [self fwShowAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
             }
             return;
         }
