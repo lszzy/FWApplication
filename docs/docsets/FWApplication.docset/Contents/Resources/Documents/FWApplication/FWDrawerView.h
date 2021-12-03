@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWDrawerView.h
  @indexgroup FWApplication
- @brief      FWDrawerView
+      FWDrawerView
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/11/14
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
-@brief 抽屉拖拽视图
+/**
+抽屉拖拽视图
 */
 @interface FWDrawerView : NSObject
 
@@ -66,16 +66,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 视图抽屉拖拽效果分类
+/**
+ 视图抽屉拖拽效果分类
  */
 @interface UIView (FWDrawerView)
 
 // 抽屉拖拽视图，绑定抽屉拖拽效果后才存在
 @property (nullable, nonatomic, strong) FWDrawerView *fwDrawerView;
 
-/*!
- @brief 设置抽屉拖拽效果。如果view为滚动视图，自动处理与滚动视图pan手势冲突的问题
+/**
+ 设置抽屉拖拽效果。如果view为滚动视图，自动处理与滚动视图pan手势冲突的问题
  
  @param direction 拖拽方向，如向上拖动视图时为Up，默认向上
  @param positions 抽屉位置，至少两级，相对于view父视图的originY位置
@@ -90,8 +90,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
-@brief 滚动视图纵向手势冲突无缝滑动分类，需允许同时识别多个手势
+/**
+滚动视图纵向手势冲突无缝滑动分类，需允许同时识别多个手势
 */
 @interface UIScrollView (FWDrawerView)
 

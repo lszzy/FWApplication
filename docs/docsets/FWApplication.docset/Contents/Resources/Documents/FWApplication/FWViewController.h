@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWViewController.h
  @indexgroup FWApplication
- @brief      FWViewController
+      FWViewController
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/27
@@ -18,8 +18,8 @@ static const FWViewControllerState FWViewControllerStateLoading = 1;
 static const FWViewControllerState FWViewControllerStateSuccess = 2;
 static const FWViewControllerState FWViewControllerStateFailure = 3;
 
-/*!
- @brief 视图控制器挂钩协议，可覆写
+/**
+ 视图控制器挂钩协议，可覆写
  */
 @protocol FWViewController <NSObject>
 
@@ -42,8 +42,8 @@ static const FWViewControllerState FWViewControllerStateFailure = 3;
 
 @end
 
-/*!
- @brief 视图控制器拦截器
+/**
+ 视图控制器拦截器
  */
 @interface FWViewControllerIntercepter : NSObject
 
@@ -60,13 +60,13 @@ static const FWViewControllerState FWViewControllerStateFailure = 3;
 @protocol FWCollectionViewController;
 @protocol FWWebViewController;
 
-/*!
- @brief 视图控制器管理器
- @discussion 框架默认未注册FWViewController协议拦截器，如需全局配置控制器，使用全局自定义block即可
+/**
+ 视图控制器管理器
+ @note 框架默认未注册FWViewController协议拦截器，如需全局配置控制器，使用全局自定义block即可
  */
 @interface FWViewControllerManager : NSObject
 
-/*! @brief 单例模式 */
+/** 单例模式 */
 @property (class, nonatomic, readonly) FWViewControllerManager *sharedInstance;
 
 /// 默认全局控制器init钩子句柄，init优先自动调用

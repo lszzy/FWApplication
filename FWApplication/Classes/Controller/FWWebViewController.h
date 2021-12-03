@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWWebViewController.h
  @indexgroup FWApplication
- @brief      FWWebViewController
+      FWWebViewController
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/8/28
@@ -19,8 +19,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief 网页视图控制器协议，可覆写
+/**
+ 网页视图控制器协议，可覆写
  */
 @protocol FWWebViewController <FWViewController, FWWebViewDelegate>
 
@@ -52,8 +52,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 管理器网页视图控制器分类
+/**
+ 管理器网页视图控制器分类
  */
 @interface FWViewControllerManager (FWWebViewController)
 

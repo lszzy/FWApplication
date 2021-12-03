@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWGridView.h
  @indexgroup FWApplication
- @brief      FWGridView
+      FWGridView
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/3
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief 网格视图
- @discussion 用于做九宫格布局，会将内部所有的 subview 根据指定的列数和行高，把每个 item（也即 subview） 拉伸到相同的大小。
+/**
+ 网格视图
+ @note 用于做九宫格布局，会将内部所有的 subview 根据指定的列数和行高，把每个 item（也即 subview） 拉伸到相同的大小。
  支持在 item 和 item 之间显示分隔线，分隔线支持虚线。
  注意分隔线是占位的，把 item 隔开，而不是盖在某个 item 上。
  

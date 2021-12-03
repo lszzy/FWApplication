@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWScrollViewController.h
  @indexgroup FWApplication
- @brief      FWScrollViewController
+      FWScrollViewController
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/27
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief 滚动视图控制器协议，可覆写
+/**
+ 滚动视图控制器协议，可覆写
  */
 @protocol FWScrollViewController <FWViewController>
 
@@ -32,8 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 管理器滚动视图控制器分类
+/**
+ 管理器滚动视图控制器分类
  */
 @interface FWViewControllerManager (FWScrollViewController)
 

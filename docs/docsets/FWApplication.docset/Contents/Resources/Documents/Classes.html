@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1902,7 +1902,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWAlertController</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/SPStore/SPAlertController">https://github.com/SPStore/SPAlertController</a>
+
+</div>
 
                         <a href="Classes/FWAlertController.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2058,7 +2063,7 @@
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWAlertControllerPlugin</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n"><a href="Protocols/FWAlertPlugin.html">FWAlertPlugin</a></span><span class="o">&gt;</span>
 
-<span class="cm">/*! @brief 单例模式 */</span>
+<span class="cm">/** 单例模式 */</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">FWAlertControllerPlugin</span> <span class="o">*</span><span class="n">sharedInstance</span><span class="p">;</span>
 
 <span class="c1">/// 弹窗自定义句柄，show方法自动调用</span>
@@ -2108,7 +2113,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>系统弹出框样式配置类，由于系统兼容性，建议优先使用FWAlertController</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    如果未自定义样式，显示效果和系统一致，不会产生任何影响；框架会先渲染actions动作再渲染cancel动作
+
+</div>
 
                         <a href="Classes/FWAlertAppearance.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2190,7 +2200,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>动图单帧对象</p>
 
                         <a href="Classes/FWImageFrame.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2259,9 +2269,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>@brief 框架内置应用Bundle类，应用可替换
-@discussion 如果主应用存在FWApplication.bundle或主Bundle内包含对应图片|多语言，则优先使用；否则使用框架默认实现。
-FWApplication所需本地化翻译如下：完成|关闭|确定|取消|原有，配置同App本地化一致即可，如zh-Hans|en等</p>
+                        <p>框架内置应用Bundle类，应用可替换</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    如果主应用存在FWApplication.bundle或主Bundle内包含对应图片|多语言，则优先使用；否则使用框架默认实现。
+FWApplication所需本地化翻译如下：完成|关闭|确定|取消|原有，配置同App本地化一致即可，如zh-Hans|en等
+
+</div>
 
                         <a href="Classes/FWAppBundle.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2289,7 +2303,7 @@ FWApplication所需本地化翻译如下：完成|关闭|确定|取消|原有，
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>框架应用统一配置类，应用可继承重写</p>
 
                         <a href="Classes/FWAppConfig.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2317,7 +2331,7 @@ FWApplication所需本地化翻译如下：完成|关闭|确定|取消|原有，
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>AppDelegate基类</p>
 
                         <a href="Classes/FWAppDelegate.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2530,12 +2544,14 @@ FWApplication所需本地化翻译如下：完成|关闭|确定|取消|原有，
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The FWAsyncLayer class is a subclass of CALayer used for render contents asynchronously.</p>
-
-<p>@discussion When the layer need update it&rsquo;s contents, it will ask the delegate
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>When the layer need update it&rsquo;s contents, it will ask the delegate
 for a async display task to render the contents in a background queue.</p>
-<div class="aside aside-see">
+
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
-    <a href="https://github.com/ibireme/YYAsyncLayer">https://github.com/ibireme/YYAsyncLayer</a>
+    <p><a href="https://github.com/ibireme/YYAsyncLayer">https://github.com/ibireme/YYAsyncLayer</a></p>
 
 </div>
 
@@ -2723,7 +2739,12 @@ It may be used in some multi-threaded situation.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWAttributedLabel</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/xiangwangfeng/M80AttributedLabel">https://github.com/xiangwangfeng/M80AttributedLabel</a>
+
+</div>
 
                         <a href="Classes/FWAttributedLabel.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2981,7 +3002,12 @@ It may be used in some multi-threaded situation.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWBannerView</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/gsdios/SDCycleScrollView">https://github.com/gsdios/SDCycleScrollView</a>
+
+</div>
 
                         <a href="Classes/FWBannerView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3139,7 +3165,12 @@ It may be used in some multi-threaded situation.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>弹幕管理器</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/w1531724247/OCBarrage">https://github.com/w1531724247/OCBarrage</a>
+
+</div>
 
                         <a href="Classes/FWBarrageManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3625,7 +3656,7 @@ the batch requests.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWCacheManager</p>
 
                         <a href="Classes/FWCacheManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3900,7 +3931,12 @@ the chain requests.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>本地数据库管理类</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/netyouli/WHC_ModelSqliteKit">https://github.com/netyouli/WHC_ModelSqliteKit</a>
+
+</div>
 
                         <a href="Classes/FWDatabase.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3928,7 +3964,7 @@ the chain requests.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>抽屉拖拽视图</p>
 
                         <a href="Classes/FWDrawerView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4085,7 +4121,17 @@ the chain requests.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>浮动布局视图</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>做类似 CSS 里的 float:left 的布局，自行使用 addSubview: 将子 View 添加进来即可。
+支持通过 <code>contentMode</code> 属性修改子 View 的对齐方式，目前仅支持 <code>UIViewContentModeLeft</code> 和 <code>UIViewContentModeRight</code>，默认为 <code>UIViewContentModeLeft</code></p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/Tencent/QMUI_iOS">https://github.com/Tencent/QMUI_iOS</a></p>
+
+</div>
 
                         <a href="Classes/FWFloatLayoutView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4113,7 +4159,18 @@ the chain requests.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>网格视图</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>用于做九宫格布局，会将内部所有的 subview 根据指定的列数和行高，把每个 item（也即 subview） 拉伸到相同的大小。
+支持在 item 和 item 之间显示分隔线，分隔线支持虚线。
+注意分隔线是占位的，把 item 隔开，而不是盖在某个 item 上。</p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/Tencent/QMUI_iOS">https://github.com/Tencent/QMUI_iOS</a></p>
+
+</div>
 
                         <a href="Classes/FWGridView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4175,7 +4232,12 @@ the chain requests.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWImageCropController</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/TimOliver/TOCropViewController">https://github.com/TimOliver/TOCropViewController</a>
+
+</div>
 
                         <a href="Classes/FWImageCropController.html" class="slightly-smaller">See more</a>
                       </div>
@@ -5377,7 +5439,28 @@ The minimum croping aspect ratio. If set, user is prevented from setting croppin
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWMarqueeLabel</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    简易的跑马灯 label 控件，在文字超过 label 可视区域时会自动开启跑马灯效果展示文字，文字滚动时是首尾连接的效果（参考播放音乐时系统锁屏界面顶部的音乐标题）。
+
+</div><div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    lineBreakMode 默认为 NSLineBreakByClipping（UILabel 默认值为 NSLineBreakByTruncatingTail）。
+
+</div><div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    textAlignment 暂不支持 NSTextAlignmentJustified 和 NSTextAlignmentNatural。
+
+</div><div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>会忽略 numberOfLines 属性，强制以 1 来展示。</p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/Tencent/QMUI_iOS">https://github.com/Tencent/QMUI_iOS</a></p>
+
+</div>
 
                         <a href="Classes/FWMarqueeLabel.html" class="slightly-smaller">See more</a>
                       </div>
@@ -5865,7 +5948,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWPageControl</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/TanguyAladenise/TAPageControl">https://github.com/TanguyAladenise/TAPageControl</a>
+
+</div>
 
                         <a href="Classes/FWPageControl.html" class="slightly-smaller">See more</a>
                       </div>
@@ -6312,7 +6400,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWPasscodeView</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/CRAnimation/CRBoxInputView">https://github.com/CRAnimation/CRBoxInputView</a>
+
+</div>
 
                         <a href="Classes/FWPasscodeView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -6353,7 +6446,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWPhotoBrowser</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/EnjoySR/ESPictureBrowser">https://github.com/EnjoySR/ESPictureBrowser</a>
+
+</div>
 
                         <a href="Classes/FWPhotoBrowser.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7289,7 +7387,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWPopupMenu</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/lyb5834/YBPopupMenu">https://github.com/lyb5834/YBPopupMenu</a>
+
+</div>
 
                         <a href="Classes/FWPopupMenu.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7358,7 +7461,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWQrcodeScanManager</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/kingsic/SGQRCode">https://github.com/kingsic/SGQRCode</a>
+
+</div>
 
                         <a href="Classes/FWQrcodeScanManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7386,7 +7494,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWQrcodeScanView</p>
 
                         <a href="Classes/FWQrcodeScanView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7468,7 +7576,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>下拉刷新视图，默认高度60</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    如果indicatorView为自定义指示器时会自动隐藏标题和箭头，仅显示指示器视图
+
+</div>
 
                         <a href="Classes/FWPullRefreshView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7509,7 +7622,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>上拉追加视图，默认高度60</p>
 
                         <a href="Classes/FWInfiniteScrollView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7571,7 +7684,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>SceneDelegate基类</p>
 
                         <a href="Classes/FWSceneDelegate.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7673,7 +7786,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>事件统计管理器</p>
 
                         <a href="Classes/FWStatisticalManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7701,7 +7814,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>事件统计对象</p>
 
                         <a href="Classes/FWStatisticalObject.html" class="slightly-smaller">See more</a>
                       </div>
@@ -7729,7 +7842,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWTagCollectionView</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/zekunyan/TTGTagCollectionView">https://github.com/zekunyan/TTGTagCollectionView</a>
+
+</div>
 
                         <a href="Classes/FWTagCollectionView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -8438,7 +8556,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>视图控制器拦截器</p>
 
                         <a href="Classes/FWViewControllerIntercepter.html" class="slightly-smaller">See more</a>
                       </div>
@@ -8466,7 +8584,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>视图控制器管理器</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    框架默认未注册FWViewController协议拦截器，如需全局配置控制器，使用全局自定义block即可
+
+</div>
 
                         <a href="Classes/FWViewControllerManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -8715,7 +8838,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>FWPanGestureRecognizer</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    自动处理与滚动视图pan手势在指定方向的冲突，默认设置delegate为自身。如果找到滚动视图则处理之，否则同父类
+
+</div>
 
                         <a href="Classes/FWPanGestureRecognizer.html" class="slightly-smaller">See more</a>
                       </div>
@@ -8907,7 +9035,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>WKWebView封装，默认实现进度条、JS弹窗、Cookie管理、自定义User-Agent等</p>
 
                         <a href="Classes/FWWebView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -8948,7 +9076,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>WKWebView管理Cookie</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/karosLi/KKJSBridge">https://github.com/karosLi/KKJSBridge</a>
+
+</div>
 
                         <a href="Classes/FWWebViewCookieManager.html" class="slightly-smaller">See more</a>
                       </div>
@@ -9040,7 +9173,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>WKWebView实现Javascript桥接器</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/marcuswestin/WebViewJavascriptBridge">https://github.com/marcuswestin/WebViewJavascriptBridge</a>
+
+</div>
 
                         <a href="Classes/FWWebViewJsBridge.html" class="slightly-smaller">See more</a>
                       </div>
@@ -9175,7 +9313,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>线程安全的可变数组，参考自YYKit</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/ibireme/YYKit">https://github.com/ibireme/YYKit</a>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -9215,7 +9358,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSAttributedString属性封装器</p>
 
                         <a href="Classes/FWAttributedOption.html" class="slightly-smaller">See more</a>
                       </div>
@@ -9256,7 +9399,12 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>线程安全的可变字典，参考自YYKit</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/ibireme/YYKit">https://github.com/ibireme/YYKit</a>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -9283,7 +9431,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>TableViewCell背景视图，处理section圆角、阴影等</p>
 
                         <a href="Classes/FWTableViewCellBackgroundView.html" class="slightly-smaller">See more</a>
                       </div>
@@ -9324,7 +9472,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>渐变View，无需设置渐变Layer的frame等，支持自动布局</p>
 
                         <a href="Classes/FWGradientView.html" class="slightly-smaller">See more</a>
                       </div>

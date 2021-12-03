@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWSceneDelegate.h
  @indexgroup FWApplication
- @brief      FWSceneDelegate
+      FWSceneDelegate
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/12
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief SceneDelegate基类
+/**
+ SceneDelegate基类
  */
 API_AVAILABLE(ios(13.0))
 @interface FWSceneDelegate : UIResponder <UIWindowSceneDelegate>

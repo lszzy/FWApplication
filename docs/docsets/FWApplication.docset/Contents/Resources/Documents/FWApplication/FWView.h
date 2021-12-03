@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWView.h
  @indexgroup FWApplication
- @brief      FWView
+      FWView
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/27
@@ -13,8 +13,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief 定义类事件名称
+/**
+ 定义类事件名称
  
  @param name 事件名称
  */
@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSString *)name; \
     + (NSString *)name;
 
-/*!
- @brief 定义类事件名称实现
+/**
+ 定义类事件名称实现
  
  @param name 事件名称
  */
@@ -33,8 +33,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSString *)name { return [[self class] name]; } \
     + (NSString *)name { return [NSString stringWithFormat:@"%@.%@.%s", @"event", NSStringFromClass([self class]), #name]; }
 
-/*!
- @brief FWViewDelegate
+/**
+ FWViewDelegate
  */
 @protocol FWViewDelegate <NSObject>
 
@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief UIView+FWView
+/**
+ UIView+FWView
  */
 @interface UIView (FWView)
 

@@ -17,7 +17,7 @@
     <a title="FWRequest Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -2092,10 +2092,13 @@ Default is -1, which means response is not actually saved as cache.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>This can be used as additional identifier that tells the cache needs updating.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The <code>description</code> string of this object will be used as an identifier to verify whether cache
+        is invalid. Using <code>NSArray</code> or <code>NSDictionary</code> as return value type is recommended. However,
+        If you intend to use your custom class type, make sure that <code>description</code> is correctly implemented.
 
-<p>@discussion The <code>description</code> string of this object will be used as an identifier to verify whether cache
-            is invalid. Using <code>NSArray</code> or <code>NSDictionary</code> as return value type is recommended. However,
-            If you intend to use your custom class type, make sure that <code>description</code> is correctly implemented.</p>
+</div>
 
                       </div>
                       <div class="declaration">

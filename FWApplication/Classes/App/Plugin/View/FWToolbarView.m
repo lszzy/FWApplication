@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWToolbarView.m
  @indexgroup FWApplication
- @brief      FWToolbarView
+      FWToolbarView
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2021/07/28

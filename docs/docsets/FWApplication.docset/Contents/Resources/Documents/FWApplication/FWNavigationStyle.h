@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWNavigationStyle.h
  @indexgroup FWApplication
- @brief      FWNavigationStyle
+      FWNavigationStyle
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/12/5
@@ -50,9 +50,9 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 
 #pragma mark - UIViewController+FWStyle
 
-/*!
- @brief 视图控制器样式分类，兼容系统导航栏和自定义导航栏(default和custom样式)
- @discussion 需要设置UIViewControllerBasedStatusBarAppearance为YES，视图控制器修改状态栏样式才会生效
+/**
+ 视图控制器样式分类，兼容系统导航栏和自定义导航栏(default和custom样式)
+ @note 需要设置UIViewControllerBasedStatusBarAppearance为YES，视图控制器修改状态栏样式才会生效
  */
 @interface UIViewController (FWStyle)
 

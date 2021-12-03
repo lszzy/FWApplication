@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Sqlite缓存
 @interface FWCacheSqlite : FWCacheAbstract
 
-/*! @brief 单例模式 */
+/** 单例模式 */
 @property (class, nonatomic, readonly) FWCacheSqlite *sharedInstance;
 
 /// 指定路径

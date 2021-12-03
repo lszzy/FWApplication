@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWPhotoBrowser.h
  @indexgroup FWApplication
- @brief      FWPhotoBrowser
+      FWPhotoBrowser
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/1/24
@@ -114,8 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief FWPhotoBrowser
+/**
+ FWPhotoBrowser
  
  @see https://github.com/EnjoySR/ESPictureBrowser
  */

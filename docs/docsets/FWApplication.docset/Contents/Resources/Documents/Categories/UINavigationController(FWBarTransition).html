@@ -17,7 +17,7 @@
     <a title="UINavigationController(FWBarTransition) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1836,7 +1836,20 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>优化导航栏转场动画闪烁的问题，默认关闭。全局启用后各个ViewController管理自己的导航栏样式，在viewDidLoad或viewViewAppear中设置即可</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>方案1：自己实现UINavigationController管理器；方案2：将原有导航栏设置透明，每个控制器添加一个NavigationBar充当导航栏；方案3：转场开始隐藏原有导航栏并添加假的NavigationBar，转场结束后还原。此处采用方案3。更多介绍：<a href="https://tech.meituan.com/2018/10/25/navigation-transition-solution-and-best-practice-in-meituan.html">https://tech.meituan.com/2018/10/25/navigation-transition-solution-and-best-practice-in-meituan.html</a></p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/MoZhouqi/KMNavigationBarTransition">https://github.com/MoZhouqi/KMNavigationBarTransition</a></p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/Tencent/QMUI_iOS">https://github.com/Tencent/QMUI_iOS</a></p>
+
+</div>
 
           </section>
           <section class="section task-group-section">

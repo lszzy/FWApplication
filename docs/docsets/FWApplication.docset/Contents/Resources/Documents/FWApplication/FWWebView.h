@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWWebView.h
  @indexgroup FWApplication
- @brief      FWWebView
+      FWWebView
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/3/17
@@ -28,8 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief WKWebView封装，默认实现进度条、JS弹窗、Cookie管理、自定义User-Agent等
+/**
+ WKWebView封装，默认实现进度条、JS弹窗、Cookie管理、自定义User-Agent等
  */
 @interface FWWebView : WKWebView
 
@@ -59,8 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWWebViewCookieManager
 
-/*!
-@brief WKWebView管理Cookie
+/**
+WKWebView管理Cookie
 
 @see https://github.com/karosLi/KKJSBridge
 */
@@ -126,8 +126,8 @@ typedef NSDictionary FWJsBridgeMessage;
 
 @end
 
-/*!
-@brief WKWebView实现Javascript桥接器
+/**
+WKWebView实现Javascript桥接器
 
 @see https://github.com/marcuswestin/WebViewJavascriptBridge
 */

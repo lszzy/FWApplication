@@ -158,7 +158,7 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 ///  This serialized response object. The actual type of this object is determined by
 ///  `FWResponseSerializerType`. Note this value can be nil if request failed.
 ///
-///  @discussion If `resumableDownloadPath` and DownloadTask is using, this value will
+///  @note If `resumableDownloadPath` and DownloadTask is using, this value will
 ///              be the path to which file is successfully saved (NSURL), or nil if request failed.
 @property (nonatomic, strong, readonly, nullable) id responseObject;
 
@@ -211,7 +211,7 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 
 ///  This value is used to perform resumable download request. Default is nil.
 ///
-///  @discussion NSURLSessionDownloadTask is used when this value is not nil.
+///  @note NSURLSessionDownloadTask is used when this value is not nil.
 ///              The exist file at the path will be removed before the request starts. If request succeed, file will
 ///              be saved to this path automatically, otherwise the response will be saved to `responseData`
 ///              and `responseString`. For this to work, server must support `Range` and response with
@@ -291,7 +291,7 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 
 ///  The URL path of request. This should only contain the path part of URL, e.g., /v1/user. See alse `baseUrl`.
 ///
-///  @discussion This will be concated with `baseUrl` using [NSURL URLWithString:relativeToURL].
+///  @note This will be concated with `baseUrl` using [NSURL URLWithString:relativeToURL].
 ///              Because of this, it is recommended that the usage should stick to rules stated above.
 ///              Otherwise the result URL may not be correctly formed. See also `URLString:relativeToURL`
 ///              for more information.
@@ -305,7 +305,7 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 
 ///  Request timeout interval. Default is 60s.
 ///
-///  @discussion When using `resumableDownloadPath`(NSURLSessionDownloadTask), the session seems to completely ignore
+///  @note When using `resumableDownloadPath`(NSURLSessionDownloadTask), the session seems to completely ignore
 ///              `timeoutInterval` property of `NSURLRequest`. One effective way to set timeout would be using
 ///              `timeoutIntervalForResource` of `NSURLSessionConfiguration`.
 - (NSTimeInterval)requestTimeoutInterval;

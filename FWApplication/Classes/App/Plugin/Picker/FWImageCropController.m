@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWImageCropController.m
  @indexgroup FWApplication
- @brief      FWImageCropController
+      FWImageCropController
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/6/22

@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWEmptyPlugin.h
  @indexgroup FWApplication
- @brief      FWEmptyPlugin
+      FWEmptyPlugin
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/3
@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- @brief 滚动视图空界面分类
+ 滚动视图空界面分类
  
  @see https://github.com/dzenbot/DZNEmptyDataSet
  */

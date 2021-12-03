@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIView+FWApplication.h
  @indexgroup FWApplication
- @brief      UIView+FWApplication
+      UIView+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/18
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIView+FWApplication
- @discussion 事件穿透实现方法：重写-hitTest:withEvent:方法，当为指定视图(如self)时返回nil排除即可
+/**
+ UIView+FWApplication
+ @note 事件穿透实现方法：重写-hitTest:withEvent:方法，当为指定视图(如self)时返回nil排除即可
  */
 @interface UIView (FWApplication)
 
@@ -101,23 +101,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Block
 
-/*!
- @brief 取消动画效果执行block
+/**
+ 取消动画效果执行block
  
  @param block 动画代码块
  */
 + (void)fwAnimateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block;
 
-/*!
- @brief 取消动画效果执行block
+/**
+ 取消动画效果执行block
  
  @param block 动画代码块
  @param completion 完成事件
  */
 + (void)fwAnimateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion;
 
-/*!
- @brief 执行block动画完成后执行指定回调
+/**
+ 执行block动画完成后执行指定回调
  
  @param block 动画代码块
  @param completion 完成事件
@@ -127,8 +127,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Animation
 
 /**
- @brief 添加UIView动画，使用默认动画参数
- @discussion 如果动画过程中需要获取进度，可通过添加CADisplayLink访问self.layer.presentationLayer获取，下同
+ 添加UIView动画，使用默认动画参数
+ @note 如果动画过程中需要获取进度，可通过添加CADisplayLink访问self.layer.presentationLayer获取，下同
  
  @param block      动画代码块
  @param completion 完成事件
@@ -137,7 +137,7 @@ NS_ASSUME_NONNULL_BEGIN
                      completion:(nullable void (^)(BOOL finished))completion;
 
 /**
- @brief 添加UIView动画
+ 添加UIView动画
  
  @param block      动画代码块
  @param duration   持续时间
@@ -343,8 +343,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWGradientView
 
-/*!
- @brief 渐变View，无需设置渐变Layer的frame等，支持自动布局
+/**
+ 渐变View，无需设置渐变Layer的frame等，支持自动布局
  */
 @interface FWGradientView : UIView
 
@@ -366,8 +366,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - CALayer+FWLayer
 
-/*!
-@brief CALayer+FWLayer
+/**
+CALayer+FWLayer
 */
 @interface CALayer (FWLayer)
 
@@ -380,8 +380,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - CAGradientLayer+FWLayer
 
-/*!
- @brief CAGradientLayer+FWLayer
+/**
+ CAGradientLayer+FWLayer
  */
 @interface CAGradientLayer (FWLayer)
 
@@ -405,8 +405,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UIView+FWLayer
 
-/*!
- @brief UIView+FWLayer
+/**
+ UIView+FWLayer
  */
 @interface UIView (FWLayer)
 
@@ -421,8 +421,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Bezier
 
-/*!
- @brief 绘制形状路径，需要在drawRect中调用
+/**
+ 绘制形状路径，需要在drawRect中调用
  
  @param bezierPath 绘制路径
  @param strokeWidth 绘制宽度
@@ -436,8 +436,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Gradient
 
-/*!
- @brief 绘制渐变颜色，需要在drawRect中调用，支持四个方向，默认向下Down
+/**
+ 绘制渐变颜色，需要在drawRect中调用，支持四个方向，默认向下Down
  
  @param rect 绘制区域
  @param colors 渐变颜色，CGColor数组，如：@[(__bridge id)[UIColor redColor].CGColor, (__bridge id)[UIColor blueColor].CGColor]
@@ -449,8 +449,8 @@ NS_ASSUME_NONNULL_BEGIN
                    locations:(nullable const CGFloat *)locations
                    direction:(UISwipeGestureRecognizerDirection)direction;
 
-/*!
- @brief 绘制渐变颜色，需要在drawRect中调用
+/**
+ 绘制渐变颜色，需要在drawRect中调用
  
  @param rect 绘制区域
  @param colors 渐变颜色，CGColor数组，如：@[(__bridge id)[UIColor redColor].CGColor, (__bridge id)[UIColor blueColor].CGColor]
@@ -507,8 +507,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Dash
 
-/*!
- @brief 添加虚线Layer
+/**
+ 添加虚线Layer
  
  @param rect 虚线区域，从中心绘制
  @param lineLength 虚线的宽度

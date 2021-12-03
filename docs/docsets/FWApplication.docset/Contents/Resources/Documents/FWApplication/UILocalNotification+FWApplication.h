@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UILocalNotification+FWApplication.h
  @indexgroup FWApplication
- @brief      UILocalNotification+FWApplication
+      UILocalNotification+FWApplication
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/9/4
@@ -12,8 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UNUserNotificationCenter+FWApplication
+/**
+ UNUserNotificationCenter+FWApplication
  */
 @interface UNUserNotificationCenter (FWApplication)
 

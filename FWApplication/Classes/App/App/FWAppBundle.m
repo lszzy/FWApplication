@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAppBundle.m
  @indexgroup FWApplication
- @brief      FWAppBundle
+      FWAppBundle
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/4/21

@@ -17,7 +17,7 @@
     <a title="NSAttributedString(FWApplication) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1836,7 +1836,12 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>NSAttributedString+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    注意iOS在后台运行时，如果调用NSAttributedString解析html会导致崩溃(如动态切换深色模式时在后台解析html)。解决方法是提前在前台解析好或者后台异步到下一个主线程RunLoop
+
+</div>
 
           </section>
           <section class="section task-group-section">

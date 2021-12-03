@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWAnimatedTransitionType
 
-/*!
- @brief 转场动画类型
+/**
+ 转场动画类型
  
  @const FWAnimatedTransitionTypeNone 转场未开始
  @const FWAnimatedTransitionTypePush push转场
@@ -158,9 +158,9 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
 
 #pragma mark - FWPanGestureRecognizer
 
-/*!
- @brief FWPanGestureRecognizer
- @discussion 自动处理与滚动视图pan手势在指定方向的冲突，默认设置delegate为自身。如果找到滚动视图则处理之，否则同父类
+/**
+ FWPanGestureRecognizer
+ @note 自动处理与滚动视图pan手势在指定方向的冲突，默认设置delegate为自身。如果找到滚动视图则处理之，否则同父类
  */
 @interface FWPanGestureRecognizer : UIPanGestureRecognizer
 

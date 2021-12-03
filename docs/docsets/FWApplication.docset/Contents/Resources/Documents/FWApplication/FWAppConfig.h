@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAppConfig.h
  @indexgroup FWApplication
- @brief      FWAppConfig
+      FWAppConfig
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/5/14
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief 框架应用统一配置类，应用可继承重写
+/**
+ 框架应用统一配置类，应用可继承重写
  */
 @interface FWAppConfig : NSObject
 

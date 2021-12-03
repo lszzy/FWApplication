@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIApplication+FWApplication.h
  @indexgroup FWApplication
- @brief      UIApplication+FWApplication
+      UIApplication+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/17
@@ -12,8 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIApplication+FWApplication
+/**
+ UIApplication+FWApplication
  */
 @interface UIApplication (FWApplication)
 

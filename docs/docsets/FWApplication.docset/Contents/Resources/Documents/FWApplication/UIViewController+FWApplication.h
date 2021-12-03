@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Present
 
-/*!
- @brief 全局适配iOS13默认present样式(系统Automatic)，仅当未自定义modalPresentationStyle时生效
+/**
+ 全局适配iOS13默认present样式(系统Automatic)，仅当未自定义modalPresentationStyle时生效
  */
 + (void)fwDefaultModalPresentationStyle:(UIModalPresentationStyle)style;
 

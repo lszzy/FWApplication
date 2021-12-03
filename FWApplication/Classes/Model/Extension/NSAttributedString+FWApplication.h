@@ -1,7 +1,7 @@
-/*!
+/**
  @header     NSAttributedString+FWApplication.h
  @indexgroup FWApplication
- @brief      NSAttributedString+FWApplication
+      NSAttributedString+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/25
@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWAttributedOption
 
-/*!
- @brief NSAttributedString属性封装器
+/**
+ NSAttributedString属性封装器
  */
 @interface FWAttributedOption : NSObject <NSCopying>
 
@@ -103,9 +103,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class FWThemeObject<__covariant ObjectType>;
 
-/*!
- @brief NSAttributedString+FWApplication
- @discussion 注意iOS在后台运行时，如果调用NSAttributedString解析html会导致崩溃(如动态切换深色模式时在后台解析html)。解决方法是提前在前台解析好或者后台异步到下一个主线程RunLoop
+/**
+ NSAttributedString+FWApplication
+ @note 注意iOS在后台运行时，如果调用NSAttributedString解析html会导致崩溃(如动态切换深色模式时在后台解析html)。解决方法是提前在前台解析好或者后台异步到下一个主线程RunLoop
  */
 @interface NSAttributedString (FWApplication)
 

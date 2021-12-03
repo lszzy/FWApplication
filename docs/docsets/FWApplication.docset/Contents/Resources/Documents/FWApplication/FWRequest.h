@@ -80,7 +80,7 @@ NS_ENUM(NSInteger) {
 
 ///  This can be used as additional identifier that tells the cache needs updating.
 ///
-///  @discussion The `description` string of this object will be used as an identifier to verify whether cache
+///  @note The `description` string of this object will be used as an identifier to verify whether cache
 ///              is invalid. Using `NSArray` or `NSDictionary` as return value type is recommended. However,
 ///              If you intend to use your custom class type, make sure that `description` is correctly implemented.
 - (nullable id)cacheSensitiveData;

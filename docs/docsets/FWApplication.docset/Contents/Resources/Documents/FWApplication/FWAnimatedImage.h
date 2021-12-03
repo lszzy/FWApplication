@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAnimatedImage.h
  @indexgroup FWApplication
- @brief      FWAnimatedImage
+      FWAnimatedImage
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/7
@@ -27,8 +27,8 @@ static const FWImageFormat FWImageFormatHEIF      = 6; //iOS13+
 static const FWImageFormat FWImageFormatPDF       = 7;
 static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 
-/*!
- @brief UIImage+FWAnimated
+/**
+ UIImage+FWAnimated
  
  @see https://github.com/SDWebImage/SDWebImage
  */
@@ -56,8 +56,8 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 #define kFWUTTypeHEICS ((__bridge CFStringRef)@"public.heics")
 #define kFWUTTypeWebP ((__bridge CFStringRef)@"org.webmproject.webp")
 
-/*!
- @brief NSData+FWAnimated
+/**
+ NSData+FWAnimated
  */
 @interface NSData (FWAnimated)
 
@@ -83,8 +83,8 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 
 #pragma mark - FWImageFrame
 
-/*!
- @brief 动图单帧对象
+/**
+ 动图单帧对象
  */
 @interface FWImageFrame : NSObject
 

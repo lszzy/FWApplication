@@ -17,7 +17,7 @@
     <a title="UIView(FWBadge) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1945,7 +1945,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>设置抽屉拖拽效果。如果view为滚动视图，自动处理与滚动视图pan手势冲突的问题</p>
 
                       </div>
                       <div class="declaration">
@@ -1959,6 +1959,65 @@
           <span class="nf">callback</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">CGFloat</span><span class="p">,</span> <span class="n">BOOL</span><span class="p">))</span><span class="nv">callback</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>direction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>拖拽方向，如向上拖动视图时为Up，默认向上</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>positions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>抽屉位置，至少两级，相对于view父视图的originY位置</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>kickbackHeight</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>回弹高度，拖拽小于该高度执行回弹</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>抽屉视图位移回调，参数为相对父视图的origin位置和是否拖拽完成的标记</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>抽屉拖拽视图</p>
                       </div>
                     </section>
                   </div>
@@ -3261,7 +3320,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>取消动画效果执行block</p>
 
                       </div>
                       <div class="declaration">
@@ -3271,6 +3330,25 @@
                           <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fwAnimateNoneWithBlock</span><span class="p">:(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">block</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>block</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>动画代码块</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -3288,7 +3366,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>取消动画效果执行block</p>
 
                       </div>
                       <div class="declaration">
@@ -3299,6 +3377,37 @@
                     <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>block</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>动画代码块</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成事件</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -3316,7 +3425,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>执行block动画完成后执行指定回调</p>
 
                       </div>
                       <div class="declaration">
@@ -3327,6 +3436,37 @@
                 <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>block</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>动画代码块</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成事件</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -3357,8 +3497,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>@brief 添加UIView动画，使用默认动画参数
-@discussion 如果动画过程中需要获取进度，可通过添加CADisplayLink访问self.layer.presentationLayer获取，下同</p>
+                        <p>添加UIView动画，使用默认动画参数</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>如果动画过程中需要获取进度，可通过添加CADisplayLink访问self.layer.presentationLayer获取，下同</p>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -3417,7 +3561,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>@brief 添加UIView动画</p>
+                        <p>添加UIView动画</p>
 
                       </div>
                       <div class="declaration">
@@ -4795,7 +4939,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>绘制形状路径，需要在drawRect中调用</p>
 
                       </div>
                       <div class="declaration">
@@ -4808,6 +4952,61 @@
                <span class="nf">fillColor</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIColor</span> <span class="o">*</span><span class="p">)</span><span class="nv">fillColor</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>bezierPath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>绘制路径</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>strokeWidth</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>绘制宽度</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>strokeColor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>绘制颜色</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>fillColor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>填充颜色</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -4838,7 +5037,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>绘制渐变颜色，需要在drawRect中调用，支持四个方向，默认向下Down</p>
 
                       </div>
                       <div class="declaration">
@@ -4851,6 +5050,61 @@
                    <span class="nf">direction</span><span class="p">:(</span><span class="n">UISwipeGestureRecognizerDirection</span><span class="p">)</span><span class="nv">direction</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rect</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>绘制区域</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>colors</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变颜色，CGColor数组，如：@[(<strong>bridge id)[UIColor redColor].CGColor, (</strong>bridge id)[UIColor blueColor].CGColor]</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>locations</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变位置，传NULL时均分，如：CGFloat locations[] = {0.0, 1.0};</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>direction</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变方向，自动计算startPoint和endPoint，支持四个方向，默认向下Down</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -4868,7 +5122,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>绘制渐变颜色，需要在drawRect中调用</p>
 
                       </div>
                       <div class="declaration">
@@ -4882,6 +5136,73 @@
                     <span class="nf">endPoint</span><span class="p">:(</span><span class="n">CGPoint</span><span class="p">)</span><span class="nv">endPoint</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rect</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>绘制区域</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>colors</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变颜色，CGColor数组，如：@[(<strong>bridge id)[UIColor redColor].CGColor, (</strong>bridge id)[UIColor blueColor].CGColor]</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>locations</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变位置，传NULL时均分，如：CGFloat locations[] = {0.0, 1.0};</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>startPoint</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变开始点，需要根据rect计算</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>endPoint</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>渐变结束点，需要根据rect计算</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -5123,7 +5444,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>添加虚线Layer</p>
 
                       </div>
                       <div class="declaration">
@@ -5136,6 +5457,65 @@
                           <span class="nf">lineColor</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">UIColor</span> <span class="o">*</span><span class="p">)</span><span class="nv">lineColor</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rect</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>虚线区域，从中心绘制</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lineLength</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>虚线的宽度</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lineSpacing</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>虚线的间距</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>lineColor</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>虚线的颜色</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>虚线Layer</p>
                       </div>
                     </section>
                   </div>

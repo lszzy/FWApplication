@@ -17,7 +17,7 @@
     <a title="PHPickerViewController(FWImagePickerPluginImpl) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1834,8 +1834,8 @@
                   
                   <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">PHPickerViewController</span> <span class="p">(</span><span class="nl">FWImagePickerPluginImpl</span><span class="p">)</span>
 
-<span class="cm">/*!
- @brief 快速创建多选照片选择器(仅图片)，自动设置delegate
+<span class="cm">/**
+ 快速创建多选照片选择器(仅图片)，自动设置delegate
  
  @param selectionLimit 最大选择数量
  @param completion 完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消
@@ -1844,9 +1844,9 @@
 <span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">fwPickerControllerWithSelectionLimit</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">selectionLimit</span>
                                           <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">UIImage</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">images</span><span class="p">,</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">PHPickerResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">results</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">cancel</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate
- @discussion 当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除
+<span class="cm">/**
+ 快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate
+ @note 当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除
  
  @param filterType 过滤类型，默认0同系统
  @param selectionLimit 最大选择数量
@@ -1859,8 +1859,8 @@
                                    <span class="nf">shouldDismiss</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">shouldDismiss</span>
                                       <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">PHPickerViewController</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">picker</span><span class="p">,</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">PHPickerResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">results</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">cancel</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
+<span class="cm">/**
+ 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
  
  @param cropController 自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
@@ -1892,7 +1892,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>快速创建多选照片选择器(仅图片)，自动设置delegate</p>
 
                       </div>
                       <div class="declaration">
@@ -1908,6 +1908,41 @@
                                       <span class="n">BOOL</span><span class="p">))</span><span class="n">completion</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>selectionLimit</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>最大选择数量</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>照片选择器</p>
                       </div>
                     </section>
                   </div>
@@ -1925,7 +1960,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除</p>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -1944,6 +1984,65 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filterType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>过滤类型，默认0同系统</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>selectionLimit</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>最大选择数量</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>shouldDismiss</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>是否先关闭照片选择器再回调，如果先关闭则回调参数1为nil</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成回调，主线程。参数1为照片选择器，2为对象数组(UIImage|PHLivePhoto|NSURL)，3为结果数组，4为是否取消</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>照片选择器</p>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1960,7 +2059,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑</p>
 
                       </div>
                       <div class="declaration">
@@ -1977,6 +2076,41 @@
                                                     <span class="n">BOOL</span><span class="p">))</span><span class="n">completion</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cropController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成回调，主线程。参数1为图片，2为结果信息，3为是否取消</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>照片选择器</p>
                       </div>
                     </section>
                   </div>

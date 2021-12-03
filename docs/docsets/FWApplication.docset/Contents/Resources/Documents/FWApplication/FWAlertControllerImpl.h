@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FWAlertControllerPlugin : NSObject <FWAlertPlugin>
 
-/*! @brief 单例模式 */
+/** 单例模式 */
 @property (class, nonatomic, readonly) FWAlertControllerPlugin *sharedInstance;
 
 /// 弹窗自定义句柄，show方法自动调用

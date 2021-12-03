@@ -17,7 +17,7 @@
     <a title="FWAsyncLayerDisplayTask Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1886,9 +1886,12 @@ It will be called on the main thread.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>This block is called to draw the layer&rsquo;s contents.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This block may be called on main thread or background thread,
+so is should be thread-safe.
 
-<p>@discussion This block may be called on main thread or background thread,
-so is should be thread-safe.</p>
+</div>
 
 <p>block param context:      A new bitmap content created by layer.
 block param size:         The content size (typically same as layer&rsquo;s bound size).

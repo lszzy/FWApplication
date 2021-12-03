@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAttributedLabel.h
  @indexgroup FWApplication
- @brief      FWAttributedLabel
+      FWAttributedLabel
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2020/07/22
@@ -45,8 +45,8 @@ typedef NS_OPTIONS(NSUInteger, FWAttributedAlignment) {
 
 #pragma mark - FWAttributedLabel
 
-/*!
- @brief FWAttributedLabel
+/**
+ FWAttributedLabel
  
  @see https://github.com/xiangwangfeng/M80AttributedLabel
  */

@@ -28,9 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UIAlertAction+FWAlert
 
-/*!
- @brief 系统弹出框动作分类，自定义属性
- @discussion 系统弹出动作title仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
+/**
+ 系统弹出框动作分类，自定义属性
+ @note 系统弹出动作title仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
 */
 @interface UIAlertAction (FWAlert)
 
@@ -44,9 +44,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UIAlertController+FWAlert
 
-/*!
- @brief 系统弹出框控制器分类，自定义样式
- @discussion 系统弹出框title和message仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
+/**
+ 系统弹出框控制器分类，自定义样式
+ @note 系统弹出框title和message仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
 */
 @interface UIAlertController (FWAlert)
 
@@ -63,9 +63,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWAlertAppearance
 
-/*!
- @brief 系统弹出框样式配置类，由于系统兼容性，建议优先使用FWAlertController
- @discussion 如果未自定义样式，显示效果和系统一致，不会产生任何影响；框架会先渲染actions动作再渲染cancel动作
+/**
+ 系统弹出框样式配置类，由于系统兼容性，建议优先使用FWAlertController
+ @note 如果未自定义样式，显示效果和系统一致，不会产生任何影响；框架会先渲染actions动作再渲染cancel动作
 */
 @interface FWAlertAppearance : NSObject
 

@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWPageControl.h
  @indexgroup FWApplication
- @brief      FWPageControl
+      FWPageControl
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/1/10
@@ -23,8 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief FWPageControl
+/**
+ FWPageControl
  
  @see https://github.com/TanguyAladenise/TAPageControl
  */

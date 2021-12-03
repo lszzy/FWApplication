@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAppDelegate.m
  @indexgroup FWApplication
- @brief      FWAppDelegate
+      FWAppDelegate
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/5/14

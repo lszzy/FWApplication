@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAppDelegate.h
  @indexgroup FWApplication
- @brief      FWAppDelegate
+      FWAppDelegate
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/5/14
@@ -14,8 +14,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief AppDelegate基类
+/**
+ AppDelegate基类
  */
 @interface FWAppDelegate : UIResponder <UIApplicationDelegate>
 

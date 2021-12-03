@@ -17,7 +17,7 @@
     <a title="FWTransaction Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1919,10 +1919,13 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Commit the trancaction to main runloop.</p>
-
-<p>@discussion It will perform the selector on the target once before main runloop&rsquo;s
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    It will perform the selector on the target once before main runloop&rsquo;s
 current loop sleep. If the same transaction (same target and same selector) has
-already commit to runloop in this loop, this method do nothing.</p>
+already commit to runloop in this loop, this method do nothing.
+
+</div>
 
                       </div>
                       <div class="declaration">

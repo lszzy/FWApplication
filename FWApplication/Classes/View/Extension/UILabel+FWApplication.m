@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UILabel+FWApplication.m
  @indexgroup FWApplication
- @brief      UILabel+FWApplication
+      UILabel+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/10/22

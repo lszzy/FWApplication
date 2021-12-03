@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWPasscodeView.h
  @indexgroup FWApplication
- @brief      FWPasscodeView
+      FWPasscodeView
  @author     wuyong
  @copyright  Copyright © 2021 wuyong.site. All rights reserved.
  @updated    2021/1/31
@@ -242,8 +242,8 @@ typedef NS_ENUM(NSInteger, FWPasscodeInputType) {
     FWPasscodeInputTypeRegex,
 };
 
-/*!
- @brief FWPasscodeView
+/**
+ FWPasscodeView
  
  @see https://github.com/CRAnimation/CRBoxInputView
  */

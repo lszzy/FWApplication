@@ -17,7 +17,7 @@
     <a title="UIImagePickerController(FWImagePickerPluginImpl) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1836,7 +1836,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>UIImagePickerController+FWImagePickerPluginImpl</p>
 
           </section>
           <section class="section task-group-section">
@@ -1855,7 +1855,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>快速创建单选照片选择器(仅图片)，自动设置delegate</p>
 
                       </div>
                       <div class="declaration">
@@ -1871,6 +1871,53 @@
                                                        <span class="n">BOOL</span><span class="p">))</span><span class="n">completion</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>选择器类型</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>allowsEditing</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>是否允许编辑</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成回调。参数1为图片，2为信息字典，3为是否取消</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>照片选择器，不支持的返回nil</p>
                       </div>
                     </section>
                   </div>
@@ -1888,7 +1935,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>快速创建单选照片选择器，可自定义dismiss流程，自动设置delegate</p>
 
                       </div>
                       <div class="declaration">
@@ -1908,6 +1955,77 @@
 
                         </div>
                       </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>选择器类型</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>filterType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>过滤类型，默认0同系统</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>allowsEditing</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>是否允许编辑</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>shouldDismiss</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>是否先关闭照片选择器再回调，如果先关闭则回调参数1为nil</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成回调。参数1为照片选择器，2为对象(UIImage|PHLivePhoto|NSURL)，3为信息字典，4为是否取消</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>照片选择器，不支持的返回nil</p>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -1924,7 +2042,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>快速创建单选照片选择器，使用自定义裁剪控制器编辑</p>
 
                       </div>
                       <div class="declaration">
@@ -1941,6 +2059,53 @@
                                                        <span class="n">BOOL</span><span class="p">))</span><span class="n">completion</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>sourceType</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>选择器类型</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>cropController</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>完成回调。参数1为图片，2为信息字典，3为是否取消</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>照片选择器，不支持的返回nil</p>
                       </div>
                     </section>
                   </div>

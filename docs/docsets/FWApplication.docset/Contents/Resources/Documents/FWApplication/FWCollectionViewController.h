@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWCollectionViewController.h
  @indexgroup FWApplication
- @brief      FWCollectionViewController
+      FWCollectionViewController
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/8/28
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief 集合视图控制器协议，可覆写
+/**
+ 集合视图控制器协议，可覆写
  */
 @protocol FWCollectionViewController <FWViewController, UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -35,8 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 管理器集合视图控制器分类
+/**
+ 管理器集合视图控制器分类
  */
 @interface FWViewControllerManager (FWCollectionViewController)
 

@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIBezierPath+FWApplication.h
  @indexgroup FWApplication
- @brief      UIBezierPath+FWApplication
+      UIBezierPath+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/18
@@ -17,8 +17,8 @@ FOUNDATION_EXPORT CGFloat FWRadianWithDegree(CGFloat degree);
 // 将弧度转换为角度(0~360)
 FOUNDATION_EXPORT CGFloat FWDegreeWithRadian(CGFloat radian);
 
-/*!
- @brief UIBezierPath+FWApplication
+/**
+ UIBezierPath+FWApplication
  */
 @interface UIBezierPath (FWApplication)
 

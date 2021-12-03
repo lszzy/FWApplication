@@ -1,7 +1,7 @@
-/*!
+/**
  @header     NSDate+FWApplication.h
  @indexgroup FWApplication
- @brief      NSDate+FWApplication
+      NSDate+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/17
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief NSDate+FWApplication
- @discussion NSDate默认GMT时区；NSTimeZone默认系统时区(可设置应用默认时区)；NSDateFormatter默认当前时区(可自定义)，格式化时自动修正NSDate时区(无需手工修正NSDate)；NSLocale默认当前语言环境
+/**
+ NSDate+FWApplication
+ @note NSDate默认GMT时区；NSTimeZone默认系统时区(可设置应用默认时区)；NSDateFormatter默认当前时区(可自定义)，格式化时自动修正NSDate时区(无需手工修正NSDate)；NSLocale默认当前语言环境
  */
 @interface NSDate (FWApplication)
 

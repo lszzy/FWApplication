@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 内存缓存
 @interface FWCacheMemory : FWCacheAbstract
 
-/*! @brief 单例模式 */
+/** 单例模式 */
 @property (class, nonatomic, readonly) FWCacheMemory *sharedInstance;
 
 @end

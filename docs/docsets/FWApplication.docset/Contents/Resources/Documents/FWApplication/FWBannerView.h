@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWBannerView.h
  @indexgroup FWApplication
- @brief      FWBannerView
+      FWBannerView
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/13
@@ -46,8 +46,8 @@ typedef NS_ENUM(NSInteger, FWBannerViewPageControlStyle) {
 
 @end
 
-/*!
- @brief FWBannerView
+/**
+ FWBannerView
  
  @see https://github.com/gsdios/SDCycleScrollView
  */

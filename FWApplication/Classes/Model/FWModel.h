@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWModel.h
  @indexgroup FWApplication
- @brief      FWModel
+      FWModel
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/9/26
@@ -80,84 +80,84 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief Model模型解析分类，参考自YYModel
+/**
+ Model模型解析分类，参考自YYModel
  
  @see https://github.com/ibireme/YYModel
  */
 @interface NSObject (FWModel)
 
-/*!
- @brief 从json创建对象，线程安全。NSDate会按照UTC时间解析，下同
+/**
+ 从json创建对象，线程安全。NSDate会按照UTC时间解析，下同
  
  @param json json对象，支持NSDictionary、NSString、NSData
  @return 实例对象，失败为nil
  */
 + (nullable instancetype)fwModelWithJson:(id)json;
 
-/*!
- @brief 从字典创建对象，线程安全
+/**
+ 从字典创建对象，线程安全
  
  @param dictionary 字典数据
  @return 实例对象，失败为nil
  */
 + (nullable instancetype)fwModelWithDictionary:(NSDictionary *)dictionary;
 
-/*!
- @brief 从json创建Model数组
+/**
+ 从json创建Model数组
  
  @param json json对象，支持NSDictionary、NSString、NSData
  @return Model数组
  */
 + (nullable NSArray *)fwModelArrayWithJson:(id)json;
 
-/*!
- @brief 从json创建Model字典
+/**
+ 从json创建Model字典
  
  @param json json对象，支持NSDictionary、NSString、NSData
  @return Model字典
  */
 + (nullable NSDictionary *)fwModelDictionaryWithJson:(id)json;
 
-/*!
- @brief 从json对象设置对象属性
+/**
+ 从json对象设置对象属性
  
  @param json json对象，支持NSDictionary、NSString、NSData
  @return 是否设置成功
  */
 - (BOOL)fwModelSetWithJson:(id)json;
 
-/*!
- @brief 从字典设置对象属性
+/**
+ 从字典设置对象属性
  
  @param dictionary 字典数据
  @return 是否设置成功
  */
 - (BOOL)fwModelSetWithDictionary:(NSDictionary *)dictionary;
 
-/*!
- @brief 转换为json对象
+/**
+ 转换为json对象
  
  @return json对象，如NSDictionary、NSArray，失败为nil
  */
 - (nullable id)fwModelToJsonObject;
 
-/*!
- @brief 转换为json字符串数据
+/**
+ 转换为json字符串数据
  
  @return NSData，失败为nil
  */
 - (nullable NSData *)fwModelToJsonData;
 
-/*!
- @brief 转换为json字符串
+/**
+ 转换为json字符串
  
  @return NSString，失败为nil
  */
 - (nullable NSString *)fwModelToJsonString;
 
-/*!
- @brief 从属性拷贝当前对象
+/**
+ 从属性拷贝当前对象
  
  @return 拷贝对象，失败为nil
  */

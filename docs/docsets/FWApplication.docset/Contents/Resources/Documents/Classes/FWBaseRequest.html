@@ -17,7 +17,7 @@
     <a title="FWBaseRequest Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -2088,9 +2088,12 @@ for constructing request. It&rsquo;s the base class of <code><a href="../Classes
                       <div class="abstract">
                         <p>This serialized response object. The actual type of this object is determined by
 <code><a href="../Enums/FWResponseSerializerType.html">FWResponseSerializerType</a></code>. Note this value can be nil if request failed.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)resumableDownloadPath">resumableDownloadPath</a></code> and DownloadTask is using, this value will
+        be the path to which file is successfully saved (NSURL), or nil if request failed.
 
-<p>@discussion If <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)resumableDownloadPath">resumableDownloadPath</a></code> and DownloadTask is using, this value will
-            be the path to which file is successfully saved (NSURL), or nil if request failed.</p>
+</div>
 
                       </div>
                       <div class="declaration">
@@ -2436,12 +2439,15 @@ this array will be automatically created. Default is nil.</p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>This value is used to perform resumable download request. Default is nil.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    NSURLSessionDownloadTask is used when this value is not nil.
+        The exist file at the path will be removed before the request starts. If request succeed, file will
+        be saved to this path automatically, otherwise the response will be saved to <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)responseData">responseData</a></code>
+        and <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)responseString">responseString</a></code>. For this to work, server must support <code>Range</code> and response with
+        proper <code>Last-Modified</code> and/or <code>Etag</code>. See <code>NSURLSessionDownloadTask</code> for more detail.
 
-<p>@discussion NSURLSessionDownloadTask is used when this value is not nil.
-            The exist file at the path will be removed before the request starts. If request succeed, file will
-            be saved to this path automatically, otherwise the response will be saved to <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)responseData">responseData</a></code>
-            and <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)responseString">responseString</a></code>. For this to work, server must support <code>Range</code> and response with
-            proper <code>Last-Modified</code> and/or <code>Etag</code>. See <code>NSURLSessionDownloadTask</code> for more detail.</p>
+</div>
 
                       </div>
                       <div class="declaration">
@@ -2989,14 +2995,17 @@ See also <code>requestUrl</code></p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The URL path of request. This should only contain the path part of URL, e.g., /v1/user. See alse <code>baseUrl</code>.</p>
-
-<p>@discussion This will be concated with <code>baseUrl</code> using [NSURL URLWithString:relativeToURL].
-            Because of this, it is recommended that the usage should stick to rules stated above.
-            Otherwise the result URL may not be correctly formed. See also <code>URLString:relativeToURL</code>
-            for more information.</p>
-<pre class="highlight objective_c"><code>        <span class="n">Additionally</span><span class="p">,</span> <span class="k">if</span> <span class="err">`</span><span class="n">requestUrl</span><span class="err">`</span> <span class="n">itself</span> <span class="n">is</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">URL</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used</span> <span class="n">as</span> <span class="n">the</span> <span class="n">result</span> <span class="n">URL</span> <span class="n">and</span>
-        <span class="err">`</span><span class="n">baseUrl</span><span class="err">`</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ignored</span><span class="p">.</span>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This will be concated with <code>baseUrl</code> using [NSURL URLWithString:relativeToURL].
+        Because of this, it is recommended that the usage should stick to rules stated above.
+        Otherwise the result URL may not be correctly formed. See also <code>URLString:relativeToURL</code>
+        for more information.</p>
+<pre class="highlight objective_c"><code>    <span class="n">Additionally</span><span class="p">,</span> <span class="k">if</span> <span class="err">`</span><span class="n">requestUrl</span><span class="err">`</span> <span class="n">itself</span> <span class="n">is</span> <span class="n">a</span> <span class="n">valid</span> <span class="n">URL</span><span class="p">,</span> <span class="n">it</span> <span class="n">will</span> <span class="n">be</span> <span class="n">used</span> <span class="n">as</span> <span class="n">the</span> <span class="n">result</span> <span class="n">URL</span> <span class="n">and</span>
+    <span class="err">`</span><span class="n">baseUrl</span><span class="err">`</span> <span class="n">will</span> <span class="n">be</span> <span class="n">ignored</span><span class="p">.</span>
 </code></pre>
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -3051,10 +3060,13 @@ See also <code>requestUrl</code></p>
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Request timeout interval. Default is 60s.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    When using <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)resumableDownloadPath">resumableDownloadPath</a></code>(NSURLSessionDownloadTask), the session seems to completely ignore
+        <code>timeoutInterval</code> property of <code>NSURLRequest</code>. One effective way to set timeout would be using
+        <code>timeoutIntervalForResource</code> of <code>NSURLSessionConfiguration</code>.
 
-<p>@discussion When using <code><a href="../Classes/FWBaseRequest.html#/c:objc(cs)FWBaseRequest(py)resumableDownloadPath">resumableDownloadPath</a></code>(NSURLSessionDownloadTask), the session seems to completely ignore
-            <code>timeoutInterval</code> property of <code>NSURLRequest</code>. One effective way to set timeout would be using
-            <code>timeoutIntervalForResource</code> of <code>NSURLSessionConfiguration</code>.</p>
+</div>
 
                       </div>
                       <div class="declaration">

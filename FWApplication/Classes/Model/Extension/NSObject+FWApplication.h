@@ -1,7 +1,7 @@
-/*!
+/**
  @header     NSObject+FWApplication.h
  @indexgroup FWApplication
- @brief      NSObject分类
+      NSObject分类
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018-05-15
@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Property
 
-/*!
- @brief 定义强引用属性
+/**
+ 定义强引用属性
  
  @param type 属性类型
  @param name 属性名称
@@ -22,8 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyStrong( type, name ) \
     @property (nonatomic, strong) type name;
 
-/*!
- @brief 定义弱引用属性
+/**
+ 定义弱引用属性
  
  @param type 属性类型
  @param name 属性名称
@@ -31,8 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyWeak( type, name )	\
     @property (nonatomic, weak) type name;
 
-/*!
- @brief 定义赋值属性
+/**
+ 定义赋值属性
  
  @param type 属性类型
  @param name 属性名称
@@ -40,8 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyAssign( type, name ) \
     @property (nonatomic, assign) type name;
 
-/*!
- @brief 定义拷贝属性
+/**
+ 定义拷贝属性
  
  @param type 属性类型
  @param name 属性名称
@@ -49,8 +49,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyCopy( type, name )	\
     @property (nonatomic, copy) type name;
 
-/*!
- @brief 定义只读属性
+/**
+ 定义只读属性
  
  @param type 属性类型
  @param name 属性名称
@@ -58,8 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyReadonly( type, name )	\
     @property (nonatomic, readonly) type name;
 
-/*!
- @brief 定义只读强引用属性
+/**
+ 定义只读强引用属性
  
  @param type 属性类型
  @param name 属性名称
@@ -67,8 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyStrongReadonly( type, name ) \
     @property (nonatomic, strong, readonly) type name;
 
-/*!
- @brief 定义只读弱引用属性
+/**
+ 定义只读弱引用属性
  
  @param type 属性类型
  @param name 属性名称
@@ -76,8 +76,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyWeakReadonly( type, name ) \
     @property (nonatomic, weak, readonly) type name;
 
-/*!
- @brief 定义只读赋值属性
+/**
+ 定义只读赋值属性
  
  @param type 属性类型
  @param name 属性名称
@@ -85,8 +85,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyAssignReadonly( type, name ) \
     @property (nonatomic, assign, readonly) type name;
 
-/*!
- @brief 定义只读拷贝属性
+/**
+ 定义只读拷贝属性
  
  @param type 属性类型
  @param name 属性名称
@@ -94,8 +94,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyCopyReadonly( type, name ) \
     @property (nonatomic, copy, readonly) type name;
 
-/*!
- @brief 自定义属性(如unsafe_unretained类似weak，但如果引用的对象被释放会造成野指针，再次访问会crash，weak会置为nil，不会crash)
+/**
+ 自定义属性(如unsafe_unretained类似weak，但如果引用的对象被释放会造成野指针，再次访问会crash，weak会置为nil，不会crash)
  
  @param type 属性类型
  @param name 属性名称
@@ -104,24 +104,24 @@ NS_ASSUME_NONNULL_BEGIN
 #define	FWPropertyCustom( type, name, ... ) \
     @property (nonatomic, __VA_ARGS__) type name;
 
-/*!
- @brief 定义属性基本实现
+/**
+ 定义属性基本实现
  
  @param name 属性名称
  */
 #define FWDefProperty( name ) \
     @synthesize name = _##name;
 
-/*!
- @brief 定义属性动态实现
+/**
+ 定义属性动态实现
  
  @param name 属性名称
  */
 #define FWDefDynamic( name ) \
     @dynamic name;
 
-/*!
- @brief 按存储策略定义动态属性实现
+/**
+ 按存储策略定义动态属性实现
  
  @parseOnly
  @param type 属性类型
@@ -144,8 +144,8 @@ NS_ASSUME_NONNULL_BEGIN
         } \
     }
 
-/*!
- @brief 定义强引用动态属性实现
+/**
+ 定义强引用动态属性实现
  
  @param type 属性类型
  @param name 属性名称
@@ -154,8 +154,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWDefDynamicStrong( type, name, setter ) \
     FWDefDynamicPolicy_( type, name, setter, OBJC_ASSOCIATION_RETAIN_NONATOMIC )
 
-/*!
- @brief 定义弱引用动态属性实现，注意可能会产生野指针
+/**
+ 定义弱引用动态属性实现，注意可能会产生野指针
  
  @param type 属性类型
  @param name 属性名称
@@ -179,8 +179,8 @@ NS_ASSUME_NONNULL_BEGIN
         } \
     }
 
-/*!
- @brief 定义赋值动态属性实现
+/**
+ 定义赋值动态属性实现
  
  @param type 属性类型
  @param name 属性名称
@@ -205,8 +205,8 @@ NS_ASSUME_NONNULL_BEGIN
         } \
     }
 
-/*!
- @brief 定义拷贝动态属性实现
+/**
+ 定义拷贝动态属性实现
  
  @param type 属性类型
  @param name 属性名称
@@ -217,8 +217,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Lazy
 
-/*!
- @brief 定义懒加载属性
+/**
+ 定义懒加载属性
  
  @param type 属性类型
  @param name 属性名称
@@ -226,8 +226,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWLazyProperty( type, name ) \
     @property (nonatomic, strong) type name;
 
-/*!
- @brief 定义懒加载属性实现
+/**
+ 定义懒加载属性实现
  
  @param type 属性类型
  @param name 属性名称
@@ -244,8 +244,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Static
 
-/*!
- @brief 定义静态属性
+/**
+ 定义静态属性
  
  @param name 属性名称
  */
@@ -253,8 +253,8 @@ NS_ASSUME_NONNULL_BEGIN
     @property (class, nonatomic, readonly) NSString * name; \
     @property (nonatomic, readonly) NSString * name;
 
-/*!
- @brief 定义静态属性实现
+/**
+ 定义静态属性实现
  
  @param name 属性名称
  */
@@ -263,8 +263,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSString *)name { return [[self class] name]; } \
     + (NSString *)name { return [NSString stringWithFormat:@"%s", #name]; }
 
-/*!
- @brief 定义静态属性实现，含前缀
+/**
+ 定义静态属性实现，含前缀
  
  @param name 属性名称
  @param prefix 属性前缀
@@ -274,8 +274,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSString *)name { return [[self class] name]; } \
     + (NSString *)name { return [NSString stringWithFormat:@"%@.%s", prefix, #name]; }
 
-/*!
- @brief 定义静态属性实现，含分组、前缀
+/**
+ 定义静态属性实现，含分组、前缀
  
  @param name 属性名称
  @param group 属性分组
@@ -286,8 +286,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSString *)name { return [[self class] name]; } \
     + (NSString *)name { return [NSString stringWithFormat:@"%@.%@.%s", group, prefix, #name]; }
 
-/*!
- @brief 定义静态NSInteger属性
+/**
+ 定义静态NSInteger属性
  
  @param name 属性名称
  */
@@ -295,8 +295,8 @@ NS_ASSUME_NONNULL_BEGIN
     @property (class, nonatomic, readonly) NSInteger name; \
     @property (nonatomic, readonly) NSInteger name;
 
-/*!
- @brief 定义静态NSInteger属性实现
+/**
+ 定义静态NSInteger属性实现
  
  @param name 属性名称
  @param value 属性值
@@ -306,8 +306,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSInteger)name { return [[self class] name]; } \
     + (NSInteger)name { return value; }
 
-/*!
- @brief 定义静态NSNumber属性
+/**
+ 定义静态NSNumber属性
  
  @param name 属性名称
  */
@@ -315,8 +315,8 @@ NS_ASSUME_NONNULL_BEGIN
     @property (class, nonatomic, readonly) NSNumber * name; \
     @property (nonatomic, readonly) NSNumber * name;
 
-/*!
- @brief 定义静态NSNumber属性实现
+/**
+ 定义静态NSNumber属性实现
  
  @param name 属性名称
  @param value 属性值
@@ -326,8 +326,8 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSNumber *)name { return [[self class] name]; } \
     + (NSNumber *)name { return @(value); }
 
-/*!
- @brief 定义静态字符串属性
+/**
+ 定义静态字符串属性
  
  @param name 属性名称
  */
@@ -335,8 +335,8 @@ NS_ASSUME_NONNULL_BEGIN
     @property (class, nonatomic, readonly) NSString * name; \
     @property (nonatomic, readonly) NSString * name;
 
-/*!
- @brief 定义静态字符串属性实现
+/**
+ 定义静态字符串属性实现
  
  @param name 属性名称
  @param value 属性值
@@ -434,9 +434,9 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWUnlock( lock ) \
     dispatch_semaphore_signal(lock);
 
-/*!
- @brief NSObject分类
- @discussion 可使用NS_UNAVAILABLE标记方法不可用，NS_DESIGNATED_INITIALIZER标记默认init方法。
+/**
+ NSObject分类
+ @note 可使用NS_UNAVAILABLE标记方法不可用，NS_DESIGNATED_INITIALIZER标记默认init方法。
  注意load可能被子类super调用导致调用多次，需dispatch_once避免；而initialize如果子类不实现，默认会调用父类initialize，也会导致调用多次，可判断class或dispatch_once避免
  */
 @interface NSObject (FWApplication)

@@ -69,8 +69,8 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
 @protocol FWAlertControllerDelegate;
 
-/*!
- @brief FWAlertController
+/**
+ FWAlertController
 
  @see https://github.com/SPStore/SPAlertController
  */

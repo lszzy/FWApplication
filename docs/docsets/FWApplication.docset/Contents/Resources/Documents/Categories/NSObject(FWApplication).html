@@ -17,7 +17,7 @@
     <a title="NSObject(FWApplication) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1836,7 +1836,13 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>NSObject分类</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    可使用NS_UNAVAILABLE标记方法不可用，NS_DESIGNATED_INITIALIZER标记默认init方法。
+注意load可能被子类super调用导致调用多次，需dispatch_once避免；而initialize如果子类不实现，默认会调用父类initialize，也会导致调用多次，可判断class或dispatch_once避免
+
+</div>
 
           </section>
           <section class="section task-group-section">

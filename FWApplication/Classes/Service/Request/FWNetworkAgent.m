@@ -239,7 +239,7 @@
                 request.requestTask.priority = NSURLSessionTaskPriorityLow;
                 break;
             case FWRequestPriorityDefault:
-                /*!!fall through*/
+                /**!fall through*/
             default:
                 request.requestTask.priority = NSURLSessionTaskPriorityDefault;
                 break;

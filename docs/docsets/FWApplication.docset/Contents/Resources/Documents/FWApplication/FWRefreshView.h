@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWRefreshView.h
  @indexgroup FWApplication
- @brief      FWRefreshView
+      FWRefreshView
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/10/16
@@ -22,9 +22,9 @@ typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
 
 @protocol FWIndicatorViewPlugin;
 
-/*!
- @brief 下拉刷新视图，默认高度60
- @discussion 如果indicatorView为自定义指示器时会自动隐藏标题和箭头，仅显示指示器视图
+/**
+ 下拉刷新视图，默认高度60
+ @note 如果indicatorView为自定义指示器时会自动隐藏标题和箭头，仅显示指示器视图
 */
 @interface FWPullRefreshView : UIView
 
@@ -55,8 +55,8 @@ typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
 
 @end
 
-/*!
- @brief UIScrollView+FWPullRefresh
+/**
+ UIScrollView+FWPullRefresh
  
  @see https://github.com/samvermette/SVPullToRefresh
  */
@@ -81,8 +81,8 @@ typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
     FWInfiniteScrollStateAll = 10
 };
 
-/*!
- @brief 上拉追加视图，默认高度60
+/**
+ 上拉追加视图，默认高度60
  */
 @interface FWInfiniteScrollView : UIView
 
@@ -106,8 +106,8 @@ typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
 
 @end
 
-/*!
- @brief UIScrollView+FWInfiniteScroll
+/**
+ UIScrollView+FWInfiniteScroll
  
  @see https://github.com/samvermette/SVPullToRefresh
  */

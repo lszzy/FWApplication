@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWImagePlugin.h
  @indexgroup FWApplication
- @brief      FWImagePlugin
+      FWImagePlugin
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/11/30
@@ -74,8 +74,8 @@ typedef NS_OPTIONS(NSUInteger, FWWebImageOptions) {
 /// 根据名称加载UIImage，优先加载图片文件(无缓存)，文件不存在时尝试系统imageNamed方式(有缓存)
 FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name);
 
-/*!
- @brief UIImage+FWImagePlugin
+/**
+ UIImage+FWImagePlugin
  */
 @interface UIImage (FWImagePlugin)
 
@@ -125,8 +125,8 @@ FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name);
 
 #pragma mark - UIImageView+FWImagePlugin
 
-/*!
- @brief UIImageView+FWImagePlugin
+/**
+ UIImageView+FWImagePlugin
  */
 @interface UIImageView (FWImagePlugin)
 

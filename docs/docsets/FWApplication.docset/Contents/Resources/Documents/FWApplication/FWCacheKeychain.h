@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Keychain缓存
 @interface FWCacheKeychain : FWCacheAbstract
 
-/*! @brief 单例模式 */
+/** 单例模式 */
 @property (class, nonatomic, readonly) FWCacheKeychain *sharedInstance;
 
 /// 分组对象

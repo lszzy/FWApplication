@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWCacheManager.h
  @indexgroup FWApplication
- @brief      FWCacheManager
+      FWCacheManager
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/26
@@ -28,8 +28,8 @@ static const FWCacheType FWCacheTypeFile = 4;
 /// Sqlite数据库缓存
 static const FWCacheType FWCacheTypeSqlite = 5;
 
-/*!
- @brief FWCacheManager
+/**
+ FWCacheManager
  */
 @interface FWCacheManager : NSObject
 

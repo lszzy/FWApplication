@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIControl+FWApplication.h
  @indexgroup FWApplication
- @brief      UIControl+FWApplication
+      UIControl+FWApplication
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/6/21
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIControl+FWApplication
- @discussion 防重复点击可以手工控制enabled或userInteractionEnabled，如request开始时禁用，结束时启用等
+/**
+ UIControl+FWApplication
+ @note 防重复点击可以手工控制enabled或userInteractionEnabled，如request开始时禁用，结束时启用等
  */
 @interface UIControl (FWApplication)
 

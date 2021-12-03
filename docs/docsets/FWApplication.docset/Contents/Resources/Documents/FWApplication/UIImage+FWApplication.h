@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIImage+FWApplication.h
  @indexgroup FWApplication
- @brief      UIImage+FWApplication
+      UIImage+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/19
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIImage+FWApplication
- @discussion 注意CGContextDrawImage如果图片尺寸太大会导致内存不足闪退(如高斯模糊效果)，建议先压缩再调用
+/**
+ UIImage+FWApplication
+ @note 注意CGContextDrawImage如果图片尺寸太大会导致内存不足闪退(如高斯模糊效果)，建议先压缩再调用
  */
 @interface UIImage (FWApplication)
 
@@ -59,8 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Gradient
 
-/*!
- @brief 创建渐变颜色UIImage，支持四个方向，默认向下Down
+/**
+ 创建渐变颜色UIImage，支持四个方向，默认向下Down
  
  @param size 图片大小
  @param colors 渐变颜色，CGColor数组，如：@[(__bridge id)[UIColor redColor].CGColor, (__bridge id)[UIColor blueColor].CGColor]
@@ -73,8 +73,8 @@ NS_ASSUME_NONNULL_BEGIN
                                     locations:(nullable const CGFloat *)locations
                                     direction:(UISwipeGestureRecognizerDirection)direction;
 
-/*!
- @brief 创建渐变颜色UIImage
+/**
+ 创建渐变颜色UIImage
  
  @param size 图片大小
  @param colors 渐变颜色，CGColor数组，如：@[(__bridge id)[UIColor redColor].CGColor, (__bridge id)[UIColor blueColor].CGColor]

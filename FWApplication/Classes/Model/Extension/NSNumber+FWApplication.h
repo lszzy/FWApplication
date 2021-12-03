@@ -1,7 +1,7 @@
-/*!
+/**
  @header     NSNumber+FWApplication.h
  @indexgroup FWApplication
- @brief      NSNumber+FWApplication
+      NSNumber+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/18
@@ -17,8 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWClamp( min, x, max ) \
     (x < min ? min : (x > max ? max : x))
 
-/*!
- @brief NSNumber+FWApplication
+/**
+ NSNumber+FWApplication
  */
 @interface NSNumber (FWApplication)
 

@@ -10,9 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIScrollView分类
- @discussion 添加顶部下拉图片时，只需将该子view添加到scrollView最底层(如frame方式添加inset视图)，再实现效果即可。
+/**
+ UIScrollView分类
+ @note 添加顶部下拉图片时，只需将该子view添加到scrollView最底层(如frame方式添加inset视图)，再实现效果即可。
  */
 @interface UIScrollView (FWApplication)
 
@@ -78,8 +78,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Hover
 
-/*!
- @brief 设置自动布局视图悬停到指定父视图固定位置，在scrollViewDidScroll:中调用即可
+/**
+ 设置自动布局视图悬停到指定父视图固定位置，在scrollViewDidScroll:中调用即可
  
  @param view 需要悬停的视图，须占满fromSuperview
  @param fromSuperview 起始的父视图，须是scrollView的子视图
@@ -96,9 +96,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UIGestureRecognizer+FWApplication
 
-/*!
- @brief UIGestureRecognizer+FWApplication
- @discussion gestureRecognizerShouldBegin：是否继续进行手势识别，默认YES
+/**
+ UIGestureRecognizer+FWApplication
+ @note gestureRecognizerShouldBegin：是否继续进行手势识别，默认YES
     shouldRecognizeSimultaneouslyWithGestureRecognizer: 是否支持多手势触发。默认NO
     shouldRequireFailureOfGestureRecognizer：是否otherGestureRecognizer触发失败时，才开始触发gestureRecognizer。返回YES，第一个手势失败
     shouldBeRequiredToFailByGestureRecognizer：在otherGestureRecognizer识别其手势之前，是否gestureRecognizer必须触发失败。返回YES，第二个手势失败
@@ -116,8 +116,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief UIPanGestureRecognizer+FWApplication
+/**
+ UIPanGestureRecognizer+FWApplication
  */
 @interface UIPanGestureRecognizer (FWApplication)
 

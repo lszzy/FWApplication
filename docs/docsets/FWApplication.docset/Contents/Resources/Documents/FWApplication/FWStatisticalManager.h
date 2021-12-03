@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWStatisticalManager.h
  @indexgroup FWApplication
- @brief      FWStatisticalManager
+      FWStatisticalManager
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/2/4
@@ -24,8 +24,8 @@ typedef void (^FWStatisticalBlock)(FWStatisticalObject *object);
 /// 统计回调block，参数cell为表格子cell，indexPath为表格子cell所在位置
 typedef void (^FWStatisticalCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath);
 
-/*!
- @brief 事件统计管理器
+/**
+ 事件统计管理器
  */
 @interface FWStatisticalManager : NSObject
 
@@ -46,8 +46,8 @@ typedef void (^FWStatisticalCallback)(__kindof UIView * _Nullable cell, NSIndexP
 
 @end
 
-/*!
- @brief 事件统计对象
+/**
+ 事件统计对象
  */
 @interface FWStatisticalObject : NSObject
 
@@ -76,8 +76,8 @@ typedef void (^FWStatisticalCallback)(__kindof UIView * _Nullable cell, NSIndexP
 
 @end
 
-/*!
- @brief 自定义统计实现代理
+/**
+ 自定义统计实现代理
  */
 @protocol FWStatisticalDelegate <NSObject>
 
@@ -96,8 +96,8 @@ typedef void (^FWStatisticalCallback)(__kindof UIView * _Nullable cell, NSIndexP
 
 #pragma mark - UIView+FWStatistical
 
-/*!
- @brief Click点击统计
+/**
+ Click点击统计
  */
 @interface UIView (FWStatistical)
 
@@ -121,8 +121,8 @@ typedef void (^FWStatisticalCallback)(__kindof UIView * _Nullable cell, NSIndexP
 
 #pragma mark - UIView+FWExposure
 
-/*!
- @brief Exposure曝光统计
+/**
+ Exposure曝光统计
  */
 @interface UIView (FWExposure)
 

@@ -17,7 +17,7 @@
     <a title="Categories  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1945,7 +1945,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UILabel+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    注意UILabel的lineBreakMode默认值为TruncatingTail，如设置numberOfLines为0时，需显示修改lineBreakMode值；
+自动布局时，可设置preferredMaxLayoutWidth，从而通过intrinsicContentSize获取多行Label的高度
+
+</div>
 
                         <a href="Categories/UILabel%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2241,7 +2247,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>系统弹出框动作分类，自定义属性</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    系统弹出动作title仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
+
+</div>
 
                         <a href="Categories/UIAlertAction%28FWAlert%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2282,7 +2293,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>系统弹出框控制器分类，自定义样式</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    系统弹出框title和message仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
+
+</div>
 
                         <a href="Categories/UIAlertController%28FWAlert%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2323,7 +2339,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIImage+FWAnimated</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/SDWebImage/SDWebImage">https://github.com/SDWebImage/SDWebImage</a>
+
+</div>
 
                         <a href="Categories/UIImage%28FWAnimated%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2364,7 +2385,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSData+FWAnimated</p>
 
                         <a href="Categories/NSData%28FWAnimated%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2721,7 +2742,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>滚动视图纵向手势冲突无缝滑动分类，需允许同时识别多个手势</p>
 
                         <a href="Categories/UIScrollView%28FWDrawerView%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2762,7 +2783,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>@brief 滚动视图空界面分类</p>
+                        <p>滚动视图空界面分类</p>
 <div class="aside aside-see">
     <p class="aside-title">See</p>
     <a href="https://github.com/dzenbot/DZNEmptyDataSet">https://github.com/dzenbot/DZNEmptyDataSet</a>
@@ -2898,7 +2919,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIImagePickerController+FWImagePickerPluginImpl</p>
 
                         <a href="Categories/UIImagePickerController%28FWImagePickerPluginImpl%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -2949,8 +2970,8 @@
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">PHPickerViewController</span> <span class="p">(</span><span class="nl">FWImagePickerPluginImpl</span><span class="p">)</span>
 
-<span class="cm">/*!
- @brief 快速创建多选照片选择器(仅图片)，自动设置delegate
+<span class="cm">/**
+ 快速创建多选照片选择器(仅图片)，自动设置delegate
  
  @param selectionLimit 最大选择数量
  @param completion 完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消
@@ -2959,9 +2980,9 @@
 <span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">fwPickerControllerWithSelectionLimit</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">selectionLimit</span>
                                           <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">UIImage</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">images</span><span class="p">,</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">PHPickerResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">results</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">cancel</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate
- @discussion 当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除
+<span class="cm">/**
+ 快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate
+ @note 当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除
  
  @param filterType 过滤类型，默认0同系统
  @param selectionLimit 最大选择数量
@@ -2974,8 +2995,8 @@
                                    <span class="nf">shouldDismiss</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">shouldDismiss</span>
                                       <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">PHPickerViewController</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">picker</span><span class="p">,</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">PHPickerResult</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">results</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">cancel</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
+<span class="cm">/**
+ 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
  
  @param cropController 自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
@@ -3027,13 +3048,13 @@
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">PHPhotoLibrary</span> <span class="p">(</span><span class="nl">FWImagePickerPluginImpl</span><span class="p">)</span>
 
-<span class="cm">/*!
- @brief 图片选择器选择视频时临时文件存放目录，使用完成后需自行删除
+<span class="cm">/**
+ 图片选择器选择视频时临时文件存放目录，使用完成后需自行删除
  */</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fwPickerControllerVideoCachePath</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建照片选择器(仅图片)
+<span class="cm">/**
+ 快速创建照片选择器(仅图片)
  
  @param selectionLimit 最大选择数量，iOS14以下只支持单选
  @param allowsEditing 是否允许编辑，仅iOS14以下支持编辑
@@ -3044,8 +3065,8 @@
                                                                <span class="nf">allowsEditing</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">allowsEditing</span>
                                                                   <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">UIImage</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">images</span><span class="p">,</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">results</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">cancel</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建照片选择器，可自定义dismiss流程
+<span class="cm">/**
+ 快速创建照片选择器，可自定义dismiss流程
  
  @param filterType 过滤类型，默认0同系统
  @param selectionLimit 最大选择数量，iOS14以下只支持单选
@@ -3060,8 +3081,8 @@
                                                            <span class="nf">shouldDismiss</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">shouldDismiss</span>
                                                               <span class="nf">completion</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">__kindof</span> <span class="n">UIViewController</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="n">picker</span><span class="p">,</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">objects</span><span class="p">,</span> <span class="n">NSArray</span> <span class="o">*</span><span class="n">results</span><span class="p">,</span> <span class="n">BOOL</span> <span class="n">cancel</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span>
 
-<span class="cm">/*!
- @brief 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
+<span class="cm">/**
+ 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
  
  @param cropController 自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
@@ -3103,7 +3124,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIImage+FWImagePlugin</p>
 
                         <a href="Categories/UIImage%28FWImagePlugin%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3144,7 +3165,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIImageView+FWImagePlugin</p>
 
                         <a href="Categories/UIImageView%28FWImagePlugin%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3172,7 +3193,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Model模型解析分类，参考自YYModel</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/ibireme/YYModel">https://github.com/ibireme/YYModel</a>
+
+</div>
 
                         <a href="Categories/NSObject%28FWModel%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3213,7 +3239,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>优化导航栏转场动画闪烁的问题，默认关闭。全局启用后各个ViewController管理自己的导航栏样式，在viewDidLoad或viewViewAppear中设置即可</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>方案1：自己实现UINavigationController管理器；方案2：将原有导航栏设置透明，每个控制器添加一个NavigationBar充当导航栏；方案3：转场开始隐藏原有导航栏并添加假的NavigationBar，转场结束后还原。此处采用方案3。更多介绍：<a href="https://tech.meituan.com/2018/10/25/navigation-transition-solution-and-best-practice-in-meituan.html">https://tech.meituan.com/2018/10/25/navigation-transition-solution-and-best-practice-in-meituan.html</a></p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/MoZhouqi/KMNavigationBarTransition">https://github.com/MoZhouqi/KMNavigationBarTransition</a></p>
+
+</div><div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p><a href="https://github.com/Tencent/QMUI_iOS">https://github.com/Tencent/QMUI_iOS</a></p>
+
+</div>
 
                         <a href="Categories/UINavigationController%28FWBarTransition%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3241,7 +3280,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>导航栏转场分类</p>
 
                         <a href="Categories/UINavigationBar%28FWBarTransition%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3282,7 +3321,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>导航栏全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/forkingdog/FDFullscreenPopGesture">https://github.com/forkingdog/FDFullscreenPopGesture</a>
+
+</div>
 
                         <a href="Categories/UINavigationController%28FWPopGesture%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3364,7 +3408,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIScrollView+FWPullRefresh</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/samvermette/SVPullToRefresh">https://github.com/samvermette/SVPullToRefresh</a>
+
+</div>
 
                         <a href="Categories/UIScrollView%28FWPullRefresh%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3405,7 +3454,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIScrollView+FWInfiniteScroll</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <a href="https://github.com/samvermette/SVPullToRefresh">https://github.com/samvermette/SVPullToRefresh</a>
+
+</div>
 
                         <a href="Categories/UIScrollView%28FWInfiniteScroll%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3668,7 +3722,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSArray分类</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    如果需要数组weak引用元素，使用[NSValue valueWithNonretainedObject:object]即可
+
+</div>
 
                         <a href="Categories/NSArray%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3709,7 +3768,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSMutableArray分类</p>
 
                         <a href="Categories/NSMutableArray%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3750,7 +3809,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSAttributedString+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    注意iOS在后台运行时，如果调用NSAttributedString解析html会导致崩溃(如动态切换深色模式时在后台解析html)。解决方法是提前在前台解析好或者后台异步到下一个主线程RunLoop
+
+</div>
 
                         <a href="Categories/NSAttributedString%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3778,7 +3842,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSBundle+FWApplication</p>
 
                         <a href="Categories/NSBundle%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3806,7 +3870,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSData+FWApplication</p>
 
                         <a href="Categories/NSData%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3834,7 +3898,12 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSDate+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    NSDate默认GMT时区；NSTimeZone默认系统时区(可设置应用默认时区)；NSDateFormatter默认当前时区(可自定义)，格式化时自动修正NSDate时区(无需手工修正NSDate)；NSLocale默认当前语言环境
+
+</div>
 
                         <a href="Categories/NSDate%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3862,7 +3931,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSDictionary分类</p>
 
                         <a href="Categories/NSDictionary%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3904,7 +3973,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSFileManager+FWApplication</p>
 
                         <a href="Categories/NSFileManager%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3932,7 +4001,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSNumber+FWApplication</p>
 
                         <a href="Categories/NSNumber%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -3973,7 +4042,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSObject分类</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    可使用NS_UNAVAILABLE标记方法不可用，NS_DESIGNATED_INITIALIZER标记默认init方法。
+注意load可能被子类super调用导致调用多次，需dispatch_once避免；而initialize如果子类不实现，默认会调用父类initialize，也会导致调用多次，可判断class或dispatch_once避免
+
+</div>
 
                         <a href="Categories/NSObject%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4001,7 +4076,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSString+FWApplication</p>
 
                         <a href="Categories/NSString%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4143,7 +4218,12 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>NSURL+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    第三方URL生成器，可先判断canOpenURL，再openURL，需添加对应URL SCHEME到LSApplicationQueriesSchemes配置数组
+
+</div>
 
                         <a href="Categories/NSURL%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4171,7 +4251,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIApplication+FWApplication</p>
 
                         <a href="Categories/UIApplication%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4199,7 +4279,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIBezierPath+FWApplication</p>
 
                         <a href="Categories/UIBezierPath%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4227,7 +4307,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIButton+FWApplication</p>
 
                         <a href="Categories/UIButton%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4288,7 +4368,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIColor+FWApplication</p>
 
                         <a href="Categories/UIColor%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4316,7 +4396,12 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIControl+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    防重复点击可以手工控制enabled或userInteractionEnabled，如request开始时禁用，结束时启用等
+
+</div>
 
                         <a href="Categories/UIControl%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4344,7 +4429,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIDevice+FWApplication</p>
 
                         <a href="Categories/UIDevice%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4372,7 +4457,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIFont+FWApplication</p>
 
                         <a href="Categories/UIFont%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4400,7 +4485,12 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIImage+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    注意CGContextDrawImage如果图片尺寸太大会导致内存不足闪退(如高斯模糊效果)，建议先压缩再调用
+
+</div>
 
                         <a href="Categories/UIImage%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4456,7 +4546,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UNUserNotificationCenter+FWApplication</p>
 
                         <a href="Categories/UNUserNotificationCenter%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4559,7 +4649,12 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIScrollView分类</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    添加顶部下拉图片时，只需将该子view添加到scrollView最底层(如frame方式添加inset视图)，再实现效果即可。
+
+</div>
 
                         <a href="Categories/UIScrollView%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4600,7 +4695,15 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIGestureRecognizer+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    gestureRecognizerShouldBegin：是否继续进行手势识别，默认YES
+shouldRecognizeSimultaneouslyWithGestureRecognizer: 是否支持多手势触发。默认NO
+shouldRequireFailureOfGestureRecognizer：是否otherGestureRecognizer触发失败时，才开始触发gestureRecognizer。返回YES，第一个手势失败
+shouldBeRequiredToFailByGestureRecognizer：在otherGestureRecognizer识别其手势之前，是否gestureRecognizer必须触发失败。返回YES，第二个手势失败
+
+</div>
 
                         <a href="Categories/UIGestureRecognizer%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4628,7 +4731,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UIPanGestureRecognizer+FWApplication</p>
 
                         <a href="Categories/UIPanGestureRecognizer%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4656,7 +4759,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UISearchBar+FWApplication</p>
 
                         <a href="Categories/UISearchBar%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4684,7 +4787,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>UISwitch+FWApplication</p>
 
                         <a href="Categories/UISwitch%28FWApplication%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4787,7 +4890,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>CALayer+FWLayer</p>
 
                         <a href="Categories/CALayer%28FWLayer%29.html" class="slightly-smaller">See more</a>
                       </div>
@@ -4828,7 +4931,7 @@ $       匹配字符串的结束</li>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>CAGradientLayer+FWLayer</p>
 
                         <a href="Categories/CAGradientLayer%28FWLayer%29.html" class="slightly-smaller">See more</a>
                       </div>

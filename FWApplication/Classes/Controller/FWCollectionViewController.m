@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWCollectionViewController.m
  @indexgroup FWApplication
- @brief      FWCollectionViewController
+      FWCollectionViewController
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/8/28

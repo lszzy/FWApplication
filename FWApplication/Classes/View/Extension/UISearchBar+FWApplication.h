@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UISearchBar+FWApplication.h
  @indexgroup FWApplication
- @brief      UISearchBar+FWApplication
+      UISearchBar+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/10/15
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UISearchBar+FWApplication
+/**
+ UISearchBar+FWApplication
  */
 @interface UISearchBar (FWApplication)
 

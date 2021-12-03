@@ -74,8 +74,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 本地数据库管理类
+/**
+ 本地数据库管理类
  
  @see https://github.com/netyouli/WHC_ModelSqliteKit
  */

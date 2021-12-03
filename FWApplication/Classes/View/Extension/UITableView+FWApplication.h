@@ -55,8 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief TableViewCell背景视图，处理section圆角、阴影等
+/**
+ TableViewCell背景视图，处理section圆角、阴影等
  */
 @interface FWTableViewCellBackgroundView : UIView
 
@@ -71,9 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief UITableViewCell+FWBackgroundView
- @discussion backgroundView不会影响contentView布局等，如果设置了contentInset，注意布局时留出对应间距
+/**
+ UITableViewCell+FWBackgroundView
+ @note backgroundView不会影响contentView布局等，如果设置了contentInset，注意布局时留出对应间距
  */
 @interface UITableViewCell (FWBackgroundView)
 
@@ -84,14 +84,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UITableView+FWTemplateLayout
 
-/*!
- @brief 表格自动计算并缓存cell高度分类，布局必须完整，系统方案实现
+/**
+ 表格自动计算并缓存cell高度分类，布局必须完整，系统方案实现
  */
 @interface UITableView (FWTemplateLayout)
 
-/*!
- @brief 单独启用或禁用高度估算
- @discussion 启用高度估算，需要子视图布局完整，无需实现heightForRow方法；禁用高度估算(iOS11默认启用，会先cellForRow再heightForRow)
+/**
+ 单独启用或禁用高度估算
+ @note 启用高度估算，需要子视图布局完整，无需实现heightForRow方法；禁用高度估算(iOS11默认启用，会先cellForRow再heightForRow)
  
  @param enabled 是否启用
  */

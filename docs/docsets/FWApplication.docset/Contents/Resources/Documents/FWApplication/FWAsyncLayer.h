@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWAsyncLayer.h
  @indexgroup FWApplication
- @brief      FWAsyncLayer
+      FWAsyncLayer
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/28
@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  The FWAsyncLayer class is a subclass of CALayer used for render contents asynchronously.
  
- @discussion When the layer need update it's contents, it will ask the delegate
+ @note When the layer need update it's contents, it will ask the delegate
  for a async display task to render the contents in a background queue.
  
  @see https://github.com/ibireme/YYAsyncLayer
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  This block is called to draw the layer's contents.
  
- @discussion This block may be called on main thread or background thread,
+ @note This block may be called on main thread or background thread,
  so is should be thread-safe.
  
  block param context:      A new bitmap content created by layer.
@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Commit the trancaction to main runloop.
  
- @discussion It will perform the selector on the target once before main runloop's
+ @note It will perform the selector on the target once before main runloop's
  current loop sleep. If the same transaction (same target and same selector) has
  already commit to runloop in this loop, this method do nothing.
  */

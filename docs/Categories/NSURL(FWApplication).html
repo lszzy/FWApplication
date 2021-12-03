@@ -17,7 +17,7 @@
     <a title="NSURL(FWApplication) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1836,7 +1836,12 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>NSURL+FWApplication</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    第三方URL生成器，可先判断canOpenURL，再openURL，需添加对应URL SCHEME到LSApplicationQueriesSchemes配置数组
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -1864,7 +1869,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>生成苹果地图地址外部URL</p>
 
                       </div>
                       <div class="declaration">
@@ -1876,6 +1881,41 @@
                                             <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>addr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>显示地址，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>可选附加参数，如@{@&ldquo;ll&rdquo;: @&ldquo;latitude,longitude&rdquo;, @&ldquo;z&rdquo;: @&ldquo;14&rdquo;}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>NSURL</p>
                       </div>
                     </section>
                   </div>
@@ -1893,7 +1933,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>生成苹果地图导航外部URL</p>
 
                       </div>
                       <div class="declaration">
@@ -1906,6 +1946,53 @@
                                              <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>saddr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航起始点，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>daddr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航结束点，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>可选附加参数，如@{@&ldquo;ll&rdquo;: @&ldquo;latitude,longitude&rdquo;, @&ldquo;z&rdquo;: @&ldquo;14&rdquo;}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>NSURL</p>
                       </div>
                     </section>
                   </div>
@@ -1923,7 +2010,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>生成谷歌地图外部URL，URL SCHEME为：comgooglemaps</p>
 
                       </div>
                       <div class="declaration">
@@ -1935,6 +2022,41 @@
                                              <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>addr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>显示地址，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>可选附加参数，如@{@&ldquo;center&rdquo;: @&ldquo;latitude,longitude&rdquo;, @&ldquo;zoom&rdquo;: @&ldquo;14&rdquo;}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>NSURL</p>
                       </div>
                     </section>
                   </div>
@@ -1952,7 +2074,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>生成谷歌地图导航外部URL，URL SCHEME为：comgooglemaps</p>
 
                       </div>
                       <div class="declaration">
@@ -1966,6 +2088,65 @@
                                               <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>saddr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航起始点，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>daddr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航结束点，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航模式，支持driving|transit|bicycling|walking，默认driving</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>可选附加参数，如@{@&ldquo;center&rdquo;: @&ldquo;latitude,longitude&rdquo;, @&ldquo;zoom&rdquo;: @&ldquo;14&rdquo;, @&ldquo;dirflg&rdquo;: @&ldquo;t,h&rdquo;}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>NSURL</p>
                       </div>
                     </section>
                   </div>
@@ -1983,7 +2164,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>生成百度地图外部URL，URL SCHEME为：baidumap</p>
 
                       </div>
                       <div class="declaration">
@@ -1995,6 +2176,41 @@
                                             <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>addr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>显示地址，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>可选附加参数，如@{@&ldquo;src&rdquo;: @&ldquo;app&rdquo;, @&ldquo;zoom&rdquo;: @&ldquo;14&rdquo;, @&ldquo;coord_type&rdquo;: @&ldquo;默认gcj02|wgs84|bd09ll&rdquo;}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>NSURL</p>
                       </div>
                     </section>
                   </div>
@@ -2012,7 +2228,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>生成百度地图导航外部URL，URL SCHEME为：baidumap</p>
 
                       </div>
                       <div class="declaration">
@@ -2026,6 +2242,65 @@
                                              <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nv">options</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>saddr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航起始点，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>daddr</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航结束点，格式latitude,longitude或搜索地址</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>导航模式，支持driving|transit|navigation|riding|walking，默认driving</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>options</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>可选附加参数，如@{@&ldquo;src&rdquo;: @&ldquo;app&rdquo;, @&ldquo;zoom&rdquo;: @&ldquo;14&rdquo;, @&ldquo;coord_type&rdquo;: @&ldquo;默认gcj02|wgs84|bd09ll&rdquo;}</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>NSURL</p>
                       </div>
                     </section>
                   </div>

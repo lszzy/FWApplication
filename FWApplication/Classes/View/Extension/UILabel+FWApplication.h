@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UILabel+FWApplication.h
  @indexgroup FWApplication
- @brief      UILabel+FWApplication
+      UILabel+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/10/22
@@ -11,9 +11,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UILabel+FWApplication
- @discussion 注意UILabel的lineBreakMode默认值为TruncatingTail，如设置numberOfLines为0时，需显示修改lineBreakMode值；
+/**
+ UILabel+FWApplication
+ @note 注意UILabel的lineBreakMode默认值为TruncatingTail，如设置numberOfLines为0时，需显示修改lineBreakMode值；
     自动布局时，可设置preferredMaxLayoutWidth，从而通过intrinsicContentSize获取多行Label的高度
  */
 @interface UILabel (FWApplication)

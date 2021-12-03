@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIControl+FWApplication.m
  @indexgroup FWApplication
- @brief      UIControl+FWApplication
+      UIControl+FWApplication
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/6/21

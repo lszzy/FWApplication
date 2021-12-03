@@ -17,7 +17,7 @@
     <a title="NSArray(FWApplication) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1836,7 +1836,12 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>NSArray分类</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    如果需要数组weak引用元素，使用[NSValue valueWithNonretainedObject:object]即可
+
+</div>
 
           </section>
           <section class="section task-group-section">
@@ -1855,7 +1860,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>从数组中按照权重随机取出对象，如@[@&ldquo;a&rdquo;, @&ldquo;b&rdquo;, @&ldquo;c&rdquo;]按照@[@0, @8, @02]大概率取出@&ldquo;b&quot;，不会取出@&quot;a&rdquo;</p>
 
                       </div>
                       <div class="declaration">
@@ -1865,6 +1870,29 @@
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">ObjectType</span><span class="p">)</span><span class="nf">fwRandomObject</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">weights</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>weights</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>权重数组，按整数计算</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>随机对象</p>
                       </div>
                     </section>
                   </div>
@@ -1882,7 +1910,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>获取翻转后的新数组</p>
 
                       </div>
                       <div class="declaration">
@@ -1892,6 +1920,10 @@
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ObjectType</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">fwReverseArray</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>翻转后的数组</p>
                       </div>
                     </section>
                   </div>
@@ -1909,7 +1941,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>获取打乱后的新数组</p>
 
                       </div>
                       <div class="declaration">
@@ -1919,6 +1951,10 @@
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ObjectType</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">fwShuffleArray</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>打乱后的数组</p>
                       </div>
                     </section>
                   </div>
@@ -1936,7 +1972,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>数组中是否含有NSNull值</p>
 
                       </div>
                       <div class="declaration">
@@ -1946,6 +1982,10 @@
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fwIncludeNull</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>是否含有NSNull</p>
                       </div>
                     </section>
                   </div>
@@ -1963,7 +2003,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>递归移除数组中NSNull值</p>
 
                       </div>
                       <div class="declaration">
@@ -1973,6 +2013,10 @@
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ObjectType</span><span class="o">&gt;</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">fwRemoveNull</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>不含NSNull的数组</p>
                       </div>
                     </section>
                   </div>
@@ -1990,7 +2034,9 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>移除数组中NSNull值</p>
+
+<p>@praram recursive 是否递归</p>
 
                       </div>
                       <div class="declaration">
@@ -2000,6 +2046,10 @@
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">ObjectType</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nf">fwRemoveNullRecursive</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">recursive</span><span class="p">;</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>不含NSNull的数组</p>
                       </div>
                     </section>
                   </div>

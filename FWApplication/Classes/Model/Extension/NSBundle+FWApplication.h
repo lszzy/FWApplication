@@ -1,7 +1,7 @@
-/*!
+/**
  @header     NSBundle+FWApplication.h
  @indexgroup FWApplication
- @brief      NSBundle分类
+      NSBundle分类
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018-09-17
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
-@brief NSBundle+FWApplication
+/**
+NSBundle+FWApplication
 */
 @interface NSBundle (FWApplication)
 

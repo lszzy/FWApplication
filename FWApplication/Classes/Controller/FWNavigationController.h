@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWNavigationController.h
  @indexgroup FWApplication
- @brief      FWNavigationController
+      FWNavigationController
  @author     wuyong
  @copyright  Copyright © 2019 wuyong.site. All rights reserved.
  @updated    2019/2/14
@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UINavigationController+FWBarTransition
 
-/*!
- @brief 优化导航栏转场动画闪烁的问题，默认关闭。全局启用后各个ViewController管理自己的导航栏样式，在viewDidLoad或viewViewAppear中设置即可
- @discussion 方案1：自己实现UINavigationController管理器；方案2：将原有导航栏设置透明，每个控制器添加一个NavigationBar充当导航栏；方案3：转场开始隐藏原有导航栏并添加假的NavigationBar，转场结束后还原。此处采用方案3。更多介绍：https://tech.meituan.com/2018/10/25/navigation-transition-solution-and-best-practice-in-meituan.html
+/**
+ 优化导航栏转场动画闪烁的问题，默认关闭。全局启用后各个ViewController管理自己的导航栏样式，在viewDidLoad或viewViewAppear中设置即可
+ @note 方案1：自己实现UINavigationController管理器；方案2：将原有导航栏设置透明，每个控制器添加一个NavigationBar充当导航栏；方案3：转场开始隐藏原有导航栏并添加假的NavigationBar，转场结束后还原。此处采用方案3。更多介绍：https://tech.meituan.com/2018/10/25/navigation-transition-solution-and-best-practice-in-meituan.html
  
  @see https://github.com/MoZhouqi/KMNavigationBarTransition
  @see https://github.com/Tencent/QMUI_iOS
@@ -30,9 +30,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 视图控制器导航栏转场分类。可设置部分界面不需要自定义转场
- @discussion 如果导航栏push/pop存在黑影(tab.nav.push|present.nav.push|nav.push)，可在对应控制器的viewDidLoad设置视图背景色为白色(tab.view|present.nav.view|vc.view)。
+/**
+ 视图控制器导航栏转场分类。可设置部分界面不需要自定义转场
+ @note 如果导航栏push/pop存在黑影(tab.nav.push|present.nav.push|nav.push)，可在对应控制器的viewDidLoad设置视图背景色为白色(tab.view|present.nav.view|vc.view)。
  */
 @interface UIViewController (FWBarTransition)
 
@@ -41,8 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 导航栏转场分类
+/**
+ 导航栏转场分类
  */
 @interface UINavigationBar (FWBarTransition)
 
@@ -53,8 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UINavigationController+FWPopGesture
 
-/*!
- @brief 导航栏全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法
+/**
+ 导航栏全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法
  @see https://github.com/forkingdog/FDFullscreenPopGesture
  */
 @interface UINavigationController (FWPopGesture)
@@ -70,8 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/*!
- @brief 控制器全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法
+/**
+ 控制器全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法
  */
 @interface UIViewController (FWPopGesture)
 

@@ -17,7 +17,7 @@
     <a title="FWHTTPRequestSerializer Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (54% documented)</p>
+        <p><a href="../index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -2093,10 +2093,12 @@
 
 <ul>
 <li><code>Accept-Language</code> with the contents of <code>NSLocale +preferredLanguages</code></li>
-<li><code>User-Agent</code> with the contents of various bundle identifiers and OS designations</li>
-</ul>
+<li><p><code>User-Agent</code> with the contents of various bundle identifiers and OS designations</p></li>
+</ul><div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>To add or remove default request headers, use <code>setValue:forHTTPHeaderField:</code>.</p>
 
-<p>@discussion To add or remove default request headers, use <code>setValue:forHTTPHeaderField:</code>.</p>
+</div>
 
                       </div>
                       <div class="declaration">
@@ -2698,11 +2700,13 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Creates an <code>NSMutableURLRequest</code> by removing the <code>HTTPBodyStream</code> from a request, and asynchronously writing its contents into the specified file, invoking the completion handler when finished.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>There is a bug in <code>NSURLSessionTask</code> that causes requests to not send a <code>Content-Length</code> header when streaming contents from an HTTP body, which is notably problematic when interacting with the Amazon S3 webservice. As a workaround, this method takes a request constructed with <code>multipartFormRequestWithMethod:URLString:parameters:constructingBodyWithBlock:error:</code>, or any other request with an <code>HTTPBodyStream</code>, writes the contents to the specified file and returns a copy of the original request with the <code>HTTPBodyStream</code> property set to <code>nil</code>. From here, the file can either be passed to <code>FWURLSessionManager -uploadTaskWithRequest:fromFile:progress:completionHandler:</code>, or have its contents read into an <code>NSData</code> that&rsquo;s assigned to the <code>HTTPBody</code> property of the request.</p>
 
-<p>@discussion There is a bug in <code>NSURLSessionTask</code> that causes requests to not send a <code>Content-Length</code> header when streaming contents from an HTTP body, which is notably problematic when interacting with the Amazon S3 webservice. As a workaround, this method takes a request constructed with <code>multipartFormRequestWithMethod:URLString:parameters:constructingBodyWithBlock:error:</code>, or any other request with an <code>HTTPBodyStream</code>, writes the contents to the specified file and returns a copy of the original request with the <code>HTTPBodyStream</code> property set to <code>nil</code>. From here, the file can either be passed to <code>FWURLSessionManager -uploadTaskWithRequest:fromFile:progress:completionHandler:</code>, or have its contents read into an <code>NSData</code> that&rsquo;s assigned to the <code>HTTPBody</code> property of the request.</p>
-<div class="aside aside-see">
+</div><div class="aside aside-see">
     <p class="aside-title">See</p>
-    <a href="https://github.com/AFNetworking/AFNetworking/issues/1398">https://github.com/AFNetworking/AFNetworking/issues/1398</a>
+    <p><a href="https://github.com/AFNetworking/AFNetworking/issues/1398">https://github.com/AFNetworking/AFNetworking/issues/1398</a></p>
 
 </div>
 

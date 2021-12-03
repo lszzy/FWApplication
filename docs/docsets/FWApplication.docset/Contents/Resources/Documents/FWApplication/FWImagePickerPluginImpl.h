@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWImagePickerPluginImpl.h
  @indexgroup FWApplication
- @brief      FWImagePickerPluginImpl
+      FWImagePickerPluginImpl
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/22
@@ -17,13 +17,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - UIImagePickerController+FWImagePickerPluginImpl
 
-/*!
- @brief UIImagePickerController+FWImagePickerPluginImpl
+/**
+ UIImagePickerController+FWImagePickerPluginImpl
  */
 @interface UIImagePickerController (FWImagePickerPluginImpl)
 
-/*!
- @brief 快速创建单选照片选择器(仅图片)，自动设置delegate
+/**
+ 快速创建单选照片选择器(仅图片)，自动设置delegate
  
  @param sourceType 选择器类型
  @param allowsEditing 是否允许编辑
@@ -34,8 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
                                             allowsEditing:(BOOL)allowsEditing
                                                completion:(void (^)(UIImage * _Nullable image, NSDictionary * _Nullable info, BOOL cancel))completion;
 
-/*!
- @brief 快速创建单选照片选择器，可自定义dismiss流程，自动设置delegate
+/**
+ 快速创建单选照片选择器，可自定义dismiss流程，自动设置delegate
  
  @param sourceType 选择器类型
  @param filterType 过滤类型，默认0同系统
@@ -50,8 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
                                             shouldDismiss:(BOOL)shouldDismiss
                                                completion:(void (^)(UIImagePickerController * _Nullable picker, id _Nullable object, NSDictionary * _Nullable info, BOOL cancel))completion;
 
-/*!
- @brief 快速创建单选照片选择器，使用自定义裁剪控制器编辑
+/**
+ 快速创建单选照片选择器，使用自定义裁剪控制器编辑
  
  @param sourceType 选择器类型
  @param cropController 自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器
@@ -69,8 +69,8 @@ NS_ASSUME_NONNULL_BEGIN
 API_AVAILABLE(ios(14.0))
 @interface PHPickerViewController (FWImagePickerPluginImpl)
 
-/*!
- @brief 快速创建多选照片选择器(仅图片)，自动设置delegate
+/**
+ 快速创建多选照片选择器(仅图片)，自动设置delegate
  
  @param selectionLimit 最大选择数量
  @param completion 完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消
@@ -79,9 +79,9 @@ API_AVAILABLE(ios(14.0))
 + (instancetype)fwPickerControllerWithSelectionLimit:(NSInteger)selectionLimit
                                           completion:(void (^)(NSArray<UIImage *> *images, NSArray<PHPickerResult *> *results, BOOL cancel))completion;
 
-/*!
- @brief 快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate
- @discussion 当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除
+/**
+ 快速创建多选照片选择器，可自定义dismiss流程，自动设置delegate
+ @note 当选择视频时，completion回调对象为NSURL临时文件路径，使用完毕后可手工删除或等待系统自动删除
  
  @param filterType 过滤类型，默认0同系统
  @param selectionLimit 最大选择数量
@@ -94,8 +94,8 @@ API_AVAILABLE(ios(14.0))
                                    shouldDismiss:(BOOL)shouldDismiss
                                       completion:(void (^)(PHPickerViewController * _Nullable picker, NSArray *objects, NSArray<PHPickerResult *> *results, BOOL cancel))completion;
 
-/*!
- @brief 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
+/**
+ 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
  
  @param cropController 自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
@@ -110,13 +110,13 @@ API_AVAILABLE(ios(14.0))
 
 @interface PHPhotoLibrary (FWImagePickerPluginImpl)
 
-/*!
- @brief 图片选择器选择视频时临时文件存放目录，使用完成后需自行删除
+/**
+ 图片选择器选择视频时临时文件存放目录，使用完成后需自行删除
  */
 @property (class, nonatomic, copy, readonly) NSString *fwPickerControllerVideoCachePath;
 
-/*!
- @brief 快速创建照片选择器(仅图片)
+/**
+ 快速创建照片选择器(仅图片)
  
  @param selectionLimit 最大选择数量，iOS14以下只支持单选
  @param allowsEditing 是否允许编辑，仅iOS14以下支持编辑
@@ -127,8 +127,8 @@ API_AVAILABLE(ios(14.0))
                                                                allowsEditing:(BOOL)allowsEditing
                                                                   completion:(void (^)(NSArray<UIImage *> *images, NSArray *results, BOOL cancel))completion;
 
-/*!
- @brief 快速创建照片选择器，可自定义dismiss流程
+/**
+ 快速创建照片选择器，可自定义dismiss流程
  
  @param filterType 过滤类型，默认0同系统
  @param selectionLimit 最大选择数量，iOS14以下只支持单选
@@ -143,8 +143,8 @@ API_AVAILABLE(ios(14.0))
                                                            shouldDismiss:(BOOL)shouldDismiss
                                                               completion:(void (^)(__kindof UIViewController * _Nullable picker, NSArray *objects, NSArray *results, BOOL cancel))completion;
 
-/*!
- @brief 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
+/**
+ 快速创建单选照片选择器(仅图片)，使用自定义裁剪控制器编辑
  
  @param cropController 自定义裁剪控制器句柄，nil时自动创建默认裁剪控制器
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消

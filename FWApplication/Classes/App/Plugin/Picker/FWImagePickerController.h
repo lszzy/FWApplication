@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWImagePickerController.h
  @indexgroup FWApplication
- @brief      FWImagePickerController
+      FWImagePickerController
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/7

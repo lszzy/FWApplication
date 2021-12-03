@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWImageCropController.h
  @indexgroup FWApplication
- @brief      FWImageCropController
+      FWImageCropController
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/6/22
@@ -96,8 +96,8 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 @end
 
-/*!
- @brief FWImageCropController
+/**
+ FWImageCropController
 
  @see https://github.com/TimOliver/TOCropViewController
  */

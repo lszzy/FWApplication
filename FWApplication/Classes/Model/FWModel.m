@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWModel.m
  @indexgroup FWApplication
- @brief      FWModel
+      FWModel
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/9/26
@@ -650,7 +650,7 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
 
 /**
  Get number from property.
- @discussion Caller should hold strong reference to the parameters before this function returns.
+ @note Caller should hold strong reference to the parameters before this function returns.
  @param model Should not be nil.
  @param meta  Should not be nil, meta.isCNumber should be YES, meta.getter should not be nil.
  @return A number object, or nil if failed.
@@ -706,7 +706,7 @@ static force_inline NSNumber *FWModelCreateNumberFromProperty(__unsafe_unretaine
 
 /**
  Set number to property.
- @discussion Caller should hold strong reference to the parameters before this function returns.
+ @note Caller should hold strong reference to the parameters before this function returns.
  @param model Should not be nil.
  @param num   Can be nil.
  @param meta  Should not be nil, meta.isCNumber should be YES, meta.setter should not be nil.
@@ -772,7 +772,7 @@ static force_inline void FWModelSetNumberToProperty(__unsafe_unretained id model
 /**
  Set value to model with a property meta.
  
- @discussion Caller should hold strong reference to the parameters before this function returns.
+ @note Caller should hold strong reference to the parameters before this function returns.
  
  @param model Should not be nil.
  @param value Should not be nil, but can be NSNull.

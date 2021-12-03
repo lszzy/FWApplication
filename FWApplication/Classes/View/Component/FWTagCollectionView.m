@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWTagCollectionView.m
  @indexgroup FWApplication
- @brief      FWTagCollectionView
+      FWTagCollectionView
  @author     wuyong
  @copyright  Copyright © 2018 wuyong.site. All rights reserved.
  @updated    2018/12/13

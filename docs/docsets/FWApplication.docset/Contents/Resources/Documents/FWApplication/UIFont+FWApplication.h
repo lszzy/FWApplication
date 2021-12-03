@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIFont+FWApplication.h
  @indexgroup FWApplication
- @brief      UIFont+FWApplication
+      UIFont+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/19
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIFont+FWApplication
+/**
+ UIFont+FWApplication
  */
 @interface UIFont (FWApplication)
 

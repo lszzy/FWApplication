@@ -1,7 +1,7 @@
-/*!
+/**
  @header     FWBarrageView.h
  @indexgroup FWApplication
- @brief      FWBarrageView
+      FWBarrageView
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/6/6
@@ -74,8 +74,8 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 #pragma mark - FWBarrageManager
 
-/*!
- @brief 弹幕管理器
+/**
+ 弹幕管理器
  
  @see https://github.com/w1531724247/OCBarrage
  */

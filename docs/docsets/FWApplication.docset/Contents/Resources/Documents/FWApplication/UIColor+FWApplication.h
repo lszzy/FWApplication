@@ -1,7 +1,7 @@
-/*!
+/**
  @header     UIColor+FWApplication.h
  @indexgroup FWApplication
- @brief      UIColor+FWApplication
+      UIColor+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/18
@@ -11,8 +11,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/*!
- @brief UIColor+FWApplication
+/**
+ UIColor+FWApplication
  */
 @interface UIColor (FWApplication)
 
@@ -40,8 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Gradient
 
-/*!
- @brief 创建渐变颜色，支持四个方向，默认向下Down
+/**
+ 创建渐变颜色，支持四个方向，默认向下Down
  
  @param size 渐变尺寸，非渐变边可以设置为1。如CGSizeMake(1, 50)
  @param colors 渐变颜色，CGColor数组，如：@[(__bridge id)[UIColor redColor].CGColor, (__bridge id)[UIColor blueColor].CGColor]
@@ -54,8 +54,8 @@ NS_ASSUME_NONNULL_BEGIN
                            locations:(nullable const CGFloat *)locations
                            direction:(UISwipeGestureRecognizerDirection)direction;
 
-/*!
- @brief 创建渐变颜色
+/**
+ 创建渐变颜色
  
  @param size 渐变尺寸，非渐变边可以设置为1。如CGSizeMake(1, 50)
  @param colors 渐变颜色，CGColor数组，如：@[(__bridge id)[UIColor redColor].CGColor, (__bridge id)[UIColor blueColor].CGColor]
