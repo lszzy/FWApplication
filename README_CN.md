@@ -31,6 +31,9 @@ iOS应用框架，方便iOS开发，兼容OC和Swift。
 	  # pod 'FWApplication', :subspecs => ['FWApplication', 'SDWebImage']
 	end
 
+## [Api文档](https://fwapplication.wuyong.site)
+文档位于docs文件夹，浏览器打开index.html即可，也可运行docs.sh自动生成Api文档。
+
 ## [更新日志](CHANGELOG_CN.md)
 由于本框架一直在升级优化和扩展新功能，各版本Api可能会有些许变动，如果升级新版本时编译报错，解决方案如下：
 
