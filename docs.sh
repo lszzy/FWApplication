@@ -9,7 +9,7 @@ mkdir "docs/$framework_name"
 umbrella_name="$framework_name-umbrella.h"
 umbrella_path=Example/Pods/Target\ Support\ Files
 cp "$umbrella_path/$framework_name/$umbrella_name" "docs/$framework_name/"
-find FWApplication/Classes -type f ! -regex '*.h' -name '*.h' \
+find "$framework_name/Classes" -type f ! -regex '*.h' -name '*.h' \
     -exec cp {} "docs/$framework_name/" \;
 
 sourcekitten doc -- -project _Pods.xcodeproj -target $framework_name > "docs/$framework_name/swift.json"
