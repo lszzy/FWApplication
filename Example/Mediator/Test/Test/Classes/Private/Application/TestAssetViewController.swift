@@ -39,16 +39,6 @@ import FWApplication
     }
     
     private func loadPhotos() {
-        fwSetRightBarItem("切换") { sender in
-            let plugin = FWPluginManager.loadPlugin(FWImagePreviewPlugin.self)
-            if plugin != nil {
-                FWPluginManager.unloadPlugin(FWImagePreviewPlugin.self)
-                FWPluginManager.unregisterPlugin(FWImagePreviewPlugin.self)
-            } else {
-                FWPluginManager.registerPlugin(FWImagePreviewPlugin.self, with: FWPhotoBrowserPlugin.self)
-            }
-        }
-        
         fwShowLoading()
         DispatchQueue.global().async { [weak self] in
             self?.album.enumerateAssets(withOptions: .reverse, using: { asset in
@@ -166,38 +156,6 @@ import FWApplication
                             }
                         }
                     }
-                } else if let photoView = view as? FWPhotoView {
-                    if photo.assetSubType == .GIF {
-                        photo.requestImageData { data, info, _, _ in
-                            photoView.urlString = UIImage.fwImage(with:data)
-                        }
-                    } else if photo.assetSubType == .livePhoto {
-                        photo.requestLivePhoto { livePhoto, info, finished in
-                            photoView.urlString = livePhoto
-                        } withProgressHandler: { progress, error, stop, info in
-                            DispatchQueue.main.async {
-                                photoView.progress = CGFloat(progress)
-                            }
-                        }
-                    } else if photo.assetType == .video {
-                        photo.requestPlayerItem { playerItem, info in
-                            photoView.urlString = playerItem
-                        } withProgressHandler: { progress, error, stop, info in
-                            DispatchQueue.main.async {
-                                photoView.progress = CGFloat(progress)
-                            }
-                        }
-                    } else {
-                        photoView.progress = 0.01
-                        photo.requestPreviewImage { image, info, finished in
-                            photoView.progress = 1
-                            photoView.urlString = image
-                        } withProgressHandler: { progress, error, stop, info in
-                            DispatchQueue.main.async {
-                                photoView.progress = CGFloat(progress)
-                            }
-                        }
-                    }
                 }
             } customBlock: { [weak self] preview in
                 if let previewController = preview as? FWImagePreviewController {
@@ -210,32 +168,6 @@ import FWApplication
                             label.tag = 100
                             titleLabel = label
                             controller.view.addSubview(label)
-                            label.fwLayoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
-                        }
-                        
-                        guard let photo = self?.photos[index] else { return }
-                        var title = "image"
-                        if photo.assetType == .video {
-                            title = "video"
-                        } else if photo.assetType == .image {
-                            if photo.assetSubType == .livePhoto {
-                                title = "livePhoto"
-                            } else if photo.assetSubType == .GIF {
-                                title = "gif"
-                            }
-                        }
-                        titleLabel?.text = title
-                    }
-                } else if let photoBrowser = preview as? FWPhotoBrowser {
-                    // 注意此处需要weak引用photoBrowser，否则会产生循环引用
-                    photoBrowser.pageIndexChanged = { [weak photoBrowser] (index) in
-                        guard let photoBrowser = photoBrowser else { return }
-                        var titleLabel: UILabel? = photoBrowser.viewWithTag(100) as? UILabel
-                        if titleLabel == nil {
-                            let label = UILabel.fwLabel(with: FWFontSize(16), textColor: UIColor.white)
-                            label.tag = 100
-                            titleLabel = label
-                            photoBrowser.addSubview(label)
                             label.fwLayoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
                         }
                         

@@ -132,9 +132,8 @@
 
 @end
 
-@interface TestTableLayoutViewController () <FWTableViewController, FWPhotoBrowserDelegate>
+@interface TestTableLayoutViewController () <FWTableViewController>
 
-@property (nonatomic, strong) FWPhotoBrowser *photoBrowser;
 @property (nonatomic, assign) BOOL isShort;
 
 @end
@@ -336,159 +335,26 @@
     [[FWImageDownloader defaultInstance].imageCache removeAllImages];
     [[FWImageDownloader defaultURLCache] removeAllCachedResponses];
     
-    // 初始化浏览器
-    if (!self.photoBrowser) {
-        FWPhotoBrowser *photoBrowser = [FWPhotoBrowser new];
-        self.photoBrowser = photoBrowser;
-        photoBrowser.delegate = self;
-        photoBrowser.pictureUrls = @[
-                                     @"http://ww2.sinaimg.cn/bmiddle/9ecab84ejw1emgd5nd6eaj20c80c8q4a.jpg",
-                                     @"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif",
-                                     @"http://ww4.sinaimg.cn/bmiddle/9e9cb0c9jw1ep7nlyu8waj20c80kptae.jpg",
-                                     [TestBundle imageNamed:@"public_picture"],
-                                     @"http://www.ioncannon.net/wp-content/uploads/2011/06/test2.webp",
-                                     @"http://littlesvr.ca/apng/images/SteamEngine.webp",
-                                     @"https://pic3.zhimg.com/b471eb23a_im.jpg",
-                                     @"http://ww4.sinaimg.cn/bmiddle/8e88b0c1gw1e9lpr4nndfj20gy0o9q6i.jpg",
-                                     [TestBundle imageNamed:@"public_icon"],
-                                     @"http://ww3.sinaimg.cn/bmiddle/8e88b0c1gw1e9lpr57tn9j20gy0obn0f.jpg",
-                                     @"http://ww2.sinaimg.cn/bmiddle/677febf5gw1erma104rhyj20k03dz16y.jpg",
-                                     [TestBundle imageNamed:@"test.gif"],
-                                     @"http://ww4.sinaimg.cn/bmiddle/677febf5gw1erma1g5xd0j20k0esa7wj.jpg"
-                                     ];
-        photoBrowser.longPressBlock = ^(NSInteger index) {
-            NSLog(@"%zd", index);
-        };
-    }
-    
+    // 设置图片浏览
+    NSArray *pictureUrls = @[
+        @"http://ww2.sinaimg.cn/bmiddle/9ecab84ejw1emgd5nd6eaj20c80c8q4a.jpg",
+        @"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif",
+        @"http://ww4.sinaimg.cn/bmiddle/9e9cb0c9jw1ep7nlyu8waj20c80kptae.jpg",
+        [TestBundle imageNamed:@"public_picture"],
+        @"http://www.ioncannon.net/wp-content/uploads/2011/06/test2.webp",
+        @"http://littlesvr.ca/apng/images/SteamEngine.webp",
+        @"https://pic3.zhimg.com/b471eb23a_im.jpg",
+        @"http://ww4.sinaimg.cn/bmiddle/8e88b0c1gw1e9lpr4nndfj20gy0o9q6i.jpg",
+        [TestBundle imageNamed:@"public_icon"],
+        @"http://ww3.sinaimg.cn/bmiddle/8e88b0c1gw1e9lpr57tn9j20gy0obn0f.jpg",
+        @"http://ww2.sinaimg.cn/bmiddle/677febf5gw1erma104rhyj20k03dz16y.jpg",
+        [TestBundle imageNamed:@"test.gif"],
+        @"http://ww4.sinaimg.cn/bmiddle/677febf5gw1erma1g5xd0j20k0esa7wj.jpg"
+    ];
     // 设置打开Index
     NSString *fromImageUrl = [cell.object.imageUrl stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-    NSInteger currentIndex = [self.photoBrowser.pictureUrls indexOfObject:fromImageUrl];
-    self.photoBrowser.currentIndex = currentIndex != NSNotFound ? currentIndex : 0;
-    [self photoBrowser:self.photoBrowser scrollToIndex:self.photoBrowser.currentIndex];
-    // [self.photoBrowser showFromView:cell.myImageView];
-    [self.photoBrowser show];
-}
-
-#pragma mark - FWPhotoBrowserDelegate
-
-/*
-- (UIView *)photoBrowser:(FWPhotoBrowser *)photoBrowser viewForIndex:(NSInteger)index {
-    return self.fromView;
-}*/
-
-/*
- - (CGSize)photoBrowser:(FWPhotoBrowser *)photoBrowser imageSizeForIndex:(NSInteger)index {
- 
- ESPictureModel *model = self.pictureModels[index];
- CGSize size = CGSizeMake(model.width, model.height);
- return size;
- }*/
-
-/*
- - (UIImage *)photoBrowser:(FWPhotoBrowser *)photoBrowser placeholderImageForIndex:(NSInteger)index {
- return [TestBundle imageNamed:@"public_icon"];
- }*/
-
-/*
-- (id)photoBrowser:(FWPhotoBrowser *)photoBrowser photoUrlForIndex:(NSInteger)index {
-    return self.browserImages[index];
-}*/
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser startLoadPhotoView:(FWPhotoView *)photoView {
-    // 创建可重用子视图
-    UIButton *button = [photoView viewWithTag:101];
-    if (!button) {
-        button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.tag = 101;
-        button.hidden = YES;
-        [button setTitle:@"保存" forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [button fwAddTouchTarget:self action:@selector(onSaveImage:)];
-        // 添加到phtoView，默认会滚动。也可固定位置添加到photoBrowser
-        [photoView addSubview:button];
-        // 布局必须相对于父视图，如photoBrowser，才能固定。默认会滚动
-        [button fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeTop ofView:photoBrowser withOffset:FWStatusBarHeight];
-        [button fwPinEdge:NSLayoutAttributeRight toEdge:NSLayoutAttributeRight ofView:photoBrowser withOffset:-15];
-        [button fwSetDimensionsToSize:CGSizeMake(80, FWNavigationBarHeight)];
-    }
-    
-    // 仅供参考视图
-    UILabel *tipLabel = [photoView.imageView viewWithTag:102];
-    if (!tipLabel) {
-        tipLabel = [UILabel new];
-        tipLabel.tag = 102;
-        tipLabel.hidden = YES;
-        tipLabel.fwContentInset = UIEdgeInsetsMake(2, 8, 2, 8);
-        [tipLabel fwSetCornerRadius:12.5];
-        tipLabel.backgroundColor = [[UIColor grayColor] colorWithAlphaComponent:0.5];
-        tipLabel.text = @"图片仅供参考";
-        tipLabel.font = FWFontRegular(12);
-        tipLabel.textColor = [UIColor whiteColor];
-        [photoView.imageView addSubview:tipLabel];
-        tipLabel.fwLayoutChain.bottomWithInset(16).rightWithInset(16);
-    }
-}
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser finishLoadPhotoView:(FWPhotoView *)photoView {
-    UIButton *button = [photoView viewWithTag:101];
-    button.hidden = !photoView.imageLoaded;
-    
-    UILabel *tipLabel = [photoView.imageView viewWithTag:102];
-    tipLabel.hidden = !photoView.imageLoaded;
-}
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser scrollToIndex:(NSInteger)index {
-    // 创建标题Label
-    UILabel *label = [photoBrowser viewWithTag:103];
-    if (!label) {
-        label = [UILabel new];
-        label.tag = 103;
-        label.alpha = 0;
-        label.textColor = [UIColor whiteColor];
-        [photoBrowser addSubview:label];
-        [label fwAlignAxis:NSLayoutAttributeCenterX toView:photoBrowser];
-        [label fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:photoBrowser.pageTextLabel withOffset:-20];
-    }
-    
-    id urlString = [photoBrowser.pictureUrls fwObjectAtIndex:index];
-    if ([urlString isKindOfClass:[NSString class]]) {
-        label.text = FWSafeURL(urlString).pathComponents.lastObject;
-    } else {
-        label.text = FWSafeString(@([urlString hash]));
-    }
-}
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser willShowPhotoView:(FWPhotoView *)photoView {
-    UILabel *label = [photoBrowser viewWithTag:103];
-    label.alpha = 1;
-    
-    UIButton *button = [photoView viewWithTag:101];
-    button.alpha = 1;
-    UILabel *tipLabel = [photoView.imageView viewWithTag:102];
-    tipLabel.alpha = 1;
-}
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser willDismissPhotoView:(FWPhotoView *)photoView {
-    UILabel *label = [photoBrowser viewWithTag:103];
-    label.alpha = 0;
-
-    UIButton *button = [photoView viewWithTag:101];
-    button.alpha = 0;
-    UILabel *tipLabel = [photoView.imageView viewWithTag:102];
-    tipLabel.alpha = 0;
-}
-
-#pragma mark - Action
-
-- (void)onSaveImage:(UIButton *)button {
-    FWPhotoView *photoView = (FWPhotoView *)button.superview;
-    UIImage *image = photoView.imageView.image;
-    FWWeakifySelf();
-    [image fwSaveImageWithBlock:^(NSError * _Nonnull error) {
-        FWStrongifySelf();
-        [self fwShowAlertWithTitle:(error ? @"保存失败" : @"保存成功") message:nil cancel:nil cancelBlock:nil];
-    }];
+    NSInteger currentIndex = [pictureUrls indexOfObject:fromImageUrl];
+    [self fwShowImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:currentIndex != NSNotFound ? currentIndex : 0 sourceView:nil];
 }
 
 @end

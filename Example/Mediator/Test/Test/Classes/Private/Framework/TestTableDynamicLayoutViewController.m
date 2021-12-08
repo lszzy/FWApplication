@@ -158,9 +158,7 @@ static BOOL isExpanded = NO;
 
 @end
 
-@interface TestTableDynamicLayoutViewController () <FWTableViewController, FWPhotoBrowserDelegate>
-
-@property (nonatomic, strong) FWPhotoBrowser *photoBrowser;
+@interface TestTableDynamicLayoutViewController () <FWTableViewController>
 
 @end
 
@@ -417,16 +415,6 @@ static BOOL isExpanded = NO;
     [[FWImageDownloader defaultInstance].imageCache removeAllImages];
     [[FWImageDownloader defaultURLCache] removeAllCachedResponses];
     
-    // 初始化浏览器
-    if (!self.photoBrowser) {
-        FWPhotoBrowser *photoBrowser = [FWPhotoBrowser new];
-        self.photoBrowser = photoBrowser;
-        photoBrowser.delegate = self;
-        photoBrowser.longPressBlock = ^(NSInteger index) {
-            NSLog(@"%zd", index);
-        };
-    }
-    
     NSMutableArray *pictureUrls = [NSMutableArray array];
     NSInteger count = 0;
     for (TestTableDynamicLayoutObject *object in self.tableData) {
@@ -438,75 +426,12 @@ static BOOL isExpanded = NO;
             [pictureUrls addObject:[TestBundle imageNamed:object.imageUrl]];
         }
     }
-    self.photoBrowser.pictureUrls = pictureUrls;
-    self.photoBrowser.currentIndex = indexPath.row;
-    [self.photoBrowser showFromView:cell.myImageView];
-}
-
-#pragma mark - FWPhotoBrowserDelegate
-
-- (UIView *)photoBrowser:(FWPhotoBrowser *)photoBrowser viewForIndex:(NSInteger)index {
-    TestTableDynamicLayoutCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-    return cell.myImageView;
-}
-
-/*
- - (CGSize)photoBrowser:(FWPhotoBrowser *)photoBrowser imageSizeForIndex:(NSInteger)index {
- 
- ESPictureModel *model = self.pictureModels[index];
- CGSize size = CGSizeMake(model.width, model.height);
- return size;
- }*/
-
-/*
- - (UIImage *)photoBrowser:(FWPhotoBrowser *)photoBrowser placeholderImageForIndex:(NSInteger)index {
- return [TestBundle imageNamed:@"public_icon"];
- }*/
-
-/*
-- (id)photoBrowser:(FWPhotoBrowser *)photoBrowser photoUrlForIndex:(NSInteger)index {
-    return self.browserImages[index];
-}*/
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser startLoadPhotoView:(FWPhotoView *)photoView {
-    // 创建可重用子视图
-    UIButton *button = [photoView viewWithTag:101];
-    if (!button) {
-        button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.tag = 101;
-        [button setTitle:@"保存" forState:UIControlStateNormal];
-        [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
-        [button fwAddTouchTarget:self action:@selector(onSaveImage:)];
-        // 添加到phtoView，默认会滚动。也可固定位置添加到photoBrowser
-        [photoView addSubview:button];
-        // 布局必须相对于父视图，如photoBrowser，才能固定。默认会滚动
-        [button fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeTop ofView:photoBrowser withOffset:FWStatusBarHeight];
-        [button fwPinEdge:NSLayoutAttributeRight toEdge:NSLayoutAttributeRight ofView:photoBrowser withOffset:-15];
-        [button fwSetDimensionsToSize:CGSizeMake(80, FWNavigationBarHeight)];
-    }
     
-    // 默认隐藏按钮
-    button.hidden = YES;
-}
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser finishLoadPhotoView:(FWPhotoView *)photoView {
-    UIButton *button = [photoView viewWithTag:101];
-    button.hidden = !photoView.imageLoaded;
-}
-
-- (void)photoBrowser:(FWPhotoBrowser *)photoBrowser scrollToIndex:(NSInteger)index {
-    NSLog(@"%ld", index);
-}
-
-#pragma mark - Action
-
-- (void)onSaveImage:(UIButton *)button {
-    FWPhotoView *photoView = (FWPhotoView *)button.superview;
-    UIImage *image = photoView.imageView.image;
     FWWeakifySelf();
-    [image fwSaveImageWithBlock:^(NSError * _Nonnull error) {
+    [self fwShowImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:indexPath.row sourceView:^id _Nullable(NSInteger index) {
         FWStrongifySelf();
-        [self fwShowAlertWithTitle:(error ? @"保存失败" : @"保存成功") message:nil cancel:nil cancelBlock:nil];
+        TestTableDynamicLayoutCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+        return cell.myImageView;
     }];
 }
 
