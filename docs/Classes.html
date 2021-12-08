@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
+        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (57% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -624,15 +624,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWPasscodeView.html">FWPasscodeView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPhotoBrowserPlugin.html">FWPhotoBrowserPlugin</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPhotoView.html">FWPhotoView</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWPlayerCacheAction.html">FWPlayerCacheAction</a>
@@ -1497,12 +1488,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWPagingViewListViewDelegate.html">FWPagingViewListViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPhotoBrowserDelegate.html">FWPhotoBrowserDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPhotoViewDelegate.html">FWPhotoViewDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWPlayerCacheDownloaderDelegate.html">FWPlayerCacheDownloaderDelegate</a>
@@ -6424,183 +6409,6 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWPhotoBrowser"></a>
-                <a name="//apple_ref/swift/Section/FWPhotoBrowser" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPhotoBrowser"></a>
-                  <h3 class="section-name"><span>FWPhotoBrowser</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPhotoBrowser"></a>
-                    <a name="//apple_ref/swift/Class/FWPhotoBrowser" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPhotoBrowser">FWPhotoBrowser</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>FWPhotoBrowser</p>
-<div class="aside aside-see">
-    <p class="aside-title">See</p>
-    <a href="https://github.com/EnjoySR/ESPictureBrowser">https://github.com/EnjoySR/ESPictureBrowser</a>
-
-</div>
-
-                        <a href="Classes/FWPhotoBrowser.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWPhotoBrowser</span> <span class="p">:</span> <span class="nc">UIView</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/FWPhotoView"></a>
-                <a name="//apple_ref/swift/Section/FWPhotoView" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPhotoView"></a>
-                  <h3 class="section-name"><span>FWPhotoView</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPhotoView"></a>
-                    <a name="//apple_ref/swift/Class/FWPhotoView" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPhotoView">FWPhotoView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWPhotoView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWPhotoView</span> <span class="p">:</span> <span class="nc">UIScrollView</span>
-
-<span class="c1">// 当前视图所在的索引</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">NSInteger</span> <span class="n">index</span><span class="p">;</span>
-<span class="c1">// 图片的大小</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">CGSize</span> <span class="n">pictureSize</span><span class="p">;</span>
-<span class="c1">// 显示的默认图片</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">UIImage</span> <span class="o">*</span><span class="n">placeholderImage</span><span class="p">;</span>
-<span class="c1">// 图片的地址，支持NSString、NSURL、UIImage、PHLivePhoto、AVPlayerItem</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span> <span class="n">urlString</span><span class="p">;</span>
-<span class="c1">// 图片是否加载成功，加载成功可获取imageView.image</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">imageLoaded</span><span class="p">;</span>
-<span class="c1">// 当前图片加载进度</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">CGFloat</span> <span class="n">progress</span><span class="p">;</span>
-<span class="c1">// 当前显示进度的控件，可自定义</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">UIView</span><span class="o">&lt;</span><span class="n"><a href="Protocols/FWProgressViewPlugin.html">FWProgressViewPlugin</a></span><span class="o">&gt;</span> <span class="o">*</span><span class="n">progressView</span><span class="p">;</span>
-<span class="c1">// 当前显示图片的控件</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">UIImageView</span> <span class="o">*</span><span class="n">imageView</span><span class="p">;</span>
-<span class="c1">// 显示livePhoto的控件</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">PHLivePhotoView</span> <span class="o">*</span><span class="n">livePhotoView</span><span class="p">;</span>
-<span class="c1">// 显示video的控件</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">UIView</span> <span class="o">*</span><span class="n">videoPlayerView</span><span class="p">;</span>
-<span class="c1">// 显示video的layer</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">AVPlayerLayer</span> <span class="o">*</span><span class="n">videoPlayerLayer</span><span class="p">;</span>
-<span class="c1">// 自定义video播放按钮</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">UIButton</span> <span class="o">*</span><span class="n">videoPlayButton</span><span class="p">;</span>
-<span class="c1">// 是否自动播放video，默认NO</span>
-<span class="k">@property</span><span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">autoplayVideo</span><span class="p">;</span>
-<span class="c1">// 图片事件代理</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">weak</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="Protocols/FWPhotoViewDelegate.html">FWPhotoViewDelegate</a></span><span class="o">&gt;</span> <span class="n">pictureDelegate</span><span class="p">;</span>
-
-<span class="cm">/**
- 动画显示
- 
- @param rect            从哪个位置开始做动画
- @param animationBlock  附带的动画信息
- @param completionBlock 结束的回调
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">animationShowWithFromRect</span><span class="p">:(</span><span class="n">CGRect</span><span class="p">)</span><span class="nv">rect</span> <span class="nf">animationBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">animationBlock</span> <span class="nf">completionBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completionBlock</span><span class="p">;</span>
-
-<span class="cm">/**
- 动画消失
- 
- @param rect            回到哪个位置
- @param animationBlock  附带的动画信息
- @param completionBlock 结束的回调
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">animationDismissWithToRect</span><span class="p">:(</span><span class="n">CGRect</span><span class="p">)</span><span class="nv">rect</span> <span class="nf">animationBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">animationBlock</span> <span class="nf">completionBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span><span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completionBlock</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/FWPhotoBrowserPlugin"></a>
-                <a name="//apple_ref/swift/Section/FWPhotoBrowserPlugin" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPhotoBrowserPlugin"></a>
-                  <h3 class="section-name"><span>FWPhotoBrowserPlugin</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPhotoBrowserPlugin"></a>
-                    <a name="//apple_ref/swift/Class/FWPhotoBrowserPlugin" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPhotoBrowserPlugin">FWPhotoBrowserPlugin</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>FWPhotoBrowser图片预览插件</p>
-
-                        <a href="Classes/FWPhotoBrowserPlugin.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWPhotoBrowserPlugin</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n"><a href="Protocols/FWImagePreviewPlugin.html">FWImagePreviewPlugin</a></span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
                 <a name="/FWPlayerCacheLoaderManager"></a>
                 <a name="//apple_ref/swift/Section/FWPlayerCacheLoaderManager" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -10426,7 +10234,7 @@ MARK: UITabBarItem properties
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2021-12-03)</p>
+          <p>&copy; 2021 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2021-12-08)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

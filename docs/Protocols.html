@@ -17,7 +17,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (58% documented)</p>
+        <p><a href="index.html">FWApplication 1.0.0 Docs</a> (57% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -624,15 +624,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWPasscodeView.html">FWPasscodeView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPhotoBrowserPlugin.html">FWPhotoBrowserPlugin</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPhotoView.html">FWPhotoView</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWPlayerCacheAction.html">FWPlayerCacheAction</a>
@@ -1497,12 +1488,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWPagingViewListViewDelegate.html">FWPagingViewListViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPhotoBrowserDelegate.html">FWPhotoBrowserDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPhotoViewDelegate.html">FWPhotoViewDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWPlayerCacheDownloaderDelegate.html">FWPlayerCacheDownloaderDelegate</a>
@@ -3558,189 +3543,6 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWPhotoBrowser"></a>
-                <a name="//apple_ref/swift/Section/FWPhotoBrowser" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPhotoBrowser"></a>
-                  <h3 class="section-name"><span>FWPhotoBrowser</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(pl)FWPhotoBrowserDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPhotoBrowserDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)FWPhotoBrowserDelegate">FWPhotoBrowserDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/FWPhotoBrowserDelegate.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">FWPhotoBrowserDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-
-<span class="k">@optional</span>
-
-<span class="cm">/**
- 获取对应索引的高质量图片地址字符串或UIImage
- 
- @param photoBrowser 图片浏览器
- @param index          索引
- 
- @return 图片的 url 字符串或UIImage
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">photoUrlForIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-
-<span class="cm">/**
- 手工加载对应索引的高质量图片地址字符串或UIImage
- 
- @param photoBrowser 图片浏览器
- @param index          索引
- @param photoView 图片视图，异步完成后设置urlString即可
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">loadPhotoForIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">index</span> <span class="nf">photoView</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="cm">/**
- 获取对应索引的视图或相对于window的位置NSValue
- 
- @param photoBrowser 图片浏览器
- @param index          索引
- 
- @return 视图或位置NSValue
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">viewForIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-
-<span class="cm">/**
- 获取对应索引的图片大小
- 
- @param photoBrowser 图片浏览器
- @param index          索引
- 
- @return 图片大小
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">CGSize</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">imageSizeForIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-
-<span class="cm">/**
- 获取对应索引默认图片，可以是占位图片，可以是缩略图
- 
- @param photoBrowser 图片浏览器
- @param index          索引
- 
- @return 图片
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">placeholderImageForIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-
-<span class="cm">/**
- 滚动到指定页时会调用该方法
- 
- @param photoBrowser 图片浏览器
- @param index          索引
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">scrollToIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">index</span><span class="p">;</span>
-
-<span class="cm">/**
- 图片视图开始加载回调，可自定义子视图等。注意photoView可重用
- 
- @param photoBrowser 图片浏览器
- @param photoView 图片视图，索引为index属性
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">startLoadPhotoView</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="cm">/**
- 图片视图加载完成回调，图片加载失败时也会回调。视图加载成功时，可通过imageView获取图片。注意photoView可重用
- 
- @param photoBrowser 图片浏览器
- @param photoView 图片视图，索引为index属性
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">finishLoadPhotoView</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="cm">/**
- 图片视图将要显示回调，可用来处理自定义视图动画效果。注意photoView可重用
- 
- @param photoBrowser 图片浏览器
- @param photoView 图片视图，索引为index属性
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">willShowPhotoView</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="cm">/**
- 图片视图将要隐藏回调，可用来处理自定义视图动画效果。注意photoView可重用
- 
- @param photoBrowser 图片浏览器
- @param photoView 图片视图，索引为index属性
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoBrowser</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoBrowser.html">FWPhotoBrowser</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoBrowser</span> <span class="nf">willDismissPhotoView</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/FWPhotoView"></a>
-                <a name="//apple_ref/swift/Section/FWPhotoView" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPhotoView"></a>
-                  <h3 class="section-name"><span>FWPhotoView</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(pl)FWPhotoViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPhotoViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)FWPhotoViewDelegate">FWPhotoViewDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Protocols/FWPhotoViewDelegate.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">FWPhotoViewDelegate</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoViewClicked</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoView</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span> <span class="nf">scale</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">scale</span><span class="p">;</span>
-
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">photoViewLoaded</span><span class="p">:(</span><span class="n"><a href="Classes/FWPhotoView.html">FWPhotoView</a></span> <span class="o">*</span><span class="p">)</span><span class="nv">photoView</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
                 <a name="/FWPlayerCacheLoaderManager"></a>
                 <a name="//apple_ref/swift/Section/FWPlayerCacheLoaderManager" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -5494,7 +5296,7 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2021-12-03)</p>
+          <p>&copy; 2021 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2021-12-08)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
