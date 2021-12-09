@@ -10712,245 +10712,245 @@
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 23,
+      "line": 22,
       "symbol": "FWImageCache.-addImage:withIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 25,
+      "line": 24,
       "symbol": "FWImageCache.-removeImageWithIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 27,
+      "line": 26,
       "symbol": "FWImageCache.-removeAllImages",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 29,
+      "line": 28,
       "symbol": "FWImageCache.-imageWithIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 35,
+      "line": 34,
       "symbol": "FWImageRequestCache.-shouldCacheImage:forRequest:withAdditionalIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 37,
+      "line": 36,
       "symbol": "FWImageRequestCache.-addImage:forRequest:withAdditionalIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 39,
+      "line": 38,
       "symbol": "FWImageRequestCache.-removeImageforRequest:withAdditionalIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 41,
+      "line": 40,
       "symbol": "FWImageRequestCache.-imageforRequest:withAdditionalIdentifier:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 48,
+      "line": 47,
       "symbol": "FWAutoPurgingImageCache.memoryCapacity",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 50,
+      "line": 49,
       "symbol": "FWAutoPurgingImageCache.preferredMemoryUsageAfterPurge",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 52,
+      "line": 51,
       "symbol": "FWAutoPurgingImageCache.memoryUsage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 54,
+      "line": 53,
       "symbol": "FWAutoPurgingImageCache.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 56,
+      "line": 55,
       "symbol": "FWAutoPurgingImageCache.-initWithMemoryCapacity:preferredMemoryCapacity:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 62,
+      "line": 61,
       "symbol": "FWImageDownloadPrioritization",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 62,
+      "line": 61,
       "symbol": "FWImageDownloadPrioritization",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 63,
+      "line": 62,
       "symbol": "FWImageDownloadPrioritization.FWImageDownloadPrioritizationFIFO",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 64,
+      "line": 63,
       "symbol": "FWImageDownloadPrioritization.FWImageDownloadPrioritizationLIFO",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 70,
+      "line": 69,
       "symbol": "FWImageDownloadReceipt.task",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 72,
+      "line": 71,
       "symbol": "FWImageDownloadReceipt.receiptID",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 81,
+      "line": 80,
       "symbol": "FWImageDownloader.imageCache",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 83,
+      "line": 82,
       "symbol": "FWImageDownloader.sessionManager",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 85,
+      "line": 84,
       "symbol": "FWImageDownloader.downloadPrioritization",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 87,
+      "line": 86,
       "symbol": "FWImageDownloader.sharedDownloader",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 89,
+      "line": 88,
       "symbol": "FWImageDownloader.+defaultInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 91,
+      "line": 90,
       "symbol": "FWImageDownloader.+defaultURLCache",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 93,
+      "line": 92,
       "symbol": "FWImageDownloader.+defaultURLSessionConfiguration",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 95,
+      "line": 94,
       "symbol": "FWImageDownloader.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 97,
+      "line": 96,
       "symbol": "FWImageDownloader.-initWithSessionConfiguration:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 99,
+      "line": 98,
       "symbol": "FWImageDownloader.-initWithSessionManager:downloadPrioritization:maximumActiveDownloads:imageCache:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 104,
+      "line": 103,
       "symbol": "FWImageDownloader.-downloadImageForURL:options:context:success:failure:progress:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 111,
+      "line": 110,
       "symbol": "FWImageDownloader.-downloadImageForURL:withReceiptID:options:context:success:failure:progress:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 119,
+      "line": 118,
       "symbol": "FWImageDownloader.-cancelTaskForImageDownloadReceipt:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 121,
+      "line": 120,
       "symbol": "FWImageDownloader.-imageURLForObject:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 123,
+      "line": 122,
       "symbol": "FWImageDownloader.-downloadImageForObject:imageURL:options:context:placeholder:completion:progress:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebImage.h",
-      "line": 131,
+      "line": 130,
       "symbol": "FWImageDownloader.-cancelImageDownloadTask:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
