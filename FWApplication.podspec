@@ -45,7 +45,7 @@ Pod::Spec.new do |s|
   s.subspec 'Service' do |ss|
     ss.library = 'sqlite3'
     ss.source_files = 'FWApplication/Classes/Service/**/*.{h,m,swift}'
-    ss.dependency 'FWFramework'
+    ss.dependency 'FWApplication/App'
   end
 
   s.subspec 'SDWebImage' do |ss|
