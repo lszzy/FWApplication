@@ -1,0 +1,13 @@
+/*
+  strings
+  FWApplication
+
+  Created by wuyong on 2021/5/26.
+  Copyright © 2021 wuyong.site. All rights reserved.
+*/
+
+"fwDone" = "完了";
+"fwClose" = "閉める";
+"fwConfirm" = "確認";
+"fwCancel" = "戻る";
+"fwOriginal" = "オリジナル";
