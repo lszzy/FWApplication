@@ -10,6 +10,7 @@
 #import "FWImagePickerPlugin.h"
 #import "FWImagePickerPluginImpl.h"
 #import "FWPlugin.h"
+#import "FWNavigation.h"
 #import "FWToolkit.h"
 
 #pragma mark - FWImagePickerPluginController
@@ -76,6 +77,9 @@
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImageCameraWithAllowsEditing:allowsEditing
                                   completion:completion];
 }
@@ -86,6 +90,9 @@
                              completion:(void (^)(id _Nullable, id _Nullable, BOOL))completion
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImageCameraWithFilterType:filterType
                             allowsEditing:allowsEditing
                               customBlock:customBlock
@@ -96,6 +103,9 @@
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImagePickerWithAllowsEditing:allowsEditing
                                   completion:completion];
 }
@@ -105,6 +115,9 @@
                                  completion:(void (^)(NSArray<UIImage *> * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImagePickerWithSelectionLimit:selectionLimit
                                 allowsEditing:allowsEditing
                                    completion:completion];
@@ -117,6 +130,9 @@
                              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImagePickerWithFilterType:filterType
                            selectionLimit:selectionLimit
                             allowsEditing:allowsEditing
