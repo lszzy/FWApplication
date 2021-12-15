@@ -28853,7 +28853,7 @@
         "key.doc.comment" : "视图显示骨架屏扩展",
         "key.doclength" : 32,
         "key.docoffset" : 35787,
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UIView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UIView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UIView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIResponder\">UIResponder<\/ref.class>, <ref.protocol usr=\"c:objc(pl)NSCoding\">NSCoding<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIAppearance\">UIAppearance<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIAppearanceContainer\">UIAppearanceContainer<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIDynamicItem\">UIDynamicItem<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UITraitEnvironment\">UITraitEnvironment<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UICoordinateSpace\">UICoordinateSpace<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIFocusItem\">UIFocusItem<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIFocusItemContainer\">UIFocusItemContainer<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)CALayerDelegate\">CALayerDelegate<\/ref.protocol><\/decl.class>",
         "key.is_system" : true,
         "key.kind" : "source.lang.swift.decl.extension",
@@ -29197,7 +29197,7 @@
         "key.doc.comment" : "控制器显示骨架屏扩展",
         "key.doclength" : 35,
         "key.docoffset" : 38027,
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UIViewController.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UIViewController.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UIViewController<\/decl.name> : <ref.class usr=\"c:objc(cs)UIResponder\">UIResponder<\/ref.class>, <ref.protocol usr=\"c:objc(pl)NSCoding\">NSCoding<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIAppearanceContainer\">UIAppearanceContainer<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UITraitEnvironment\">UITraitEnvironment<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIContentContainer\">UIContentContainer<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIFocusEnvironment\">UIFocusEnvironment<\/ref.protocol><\/decl.class>",
         "key.is_system" : true,
         "key.kind" : "source.lang.swift.decl.extension",
@@ -29477,7 +29477,7 @@
             "key.offset" : 38934
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UILabel.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UILabel.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UILabel<\/decl.name> : <ref.class usr=\"c:objc(cs)UIView\">UIView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)NSCoding\">NSCoding<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIContentSizeCategoryAdjusting\">UIContentSizeCategoryAdjusting<\/ref.protocol><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -29587,7 +29587,7 @@
             "key.offset" : 39450
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITextView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITextView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UITextView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIScrollView\">UIScrollView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)UITextInput\">UITextInput<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIContentSizeCategoryAdjusting\">UIContentSizeCategoryAdjusting<\/ref.protocol><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -29697,7 +29697,7 @@
             "key.offset" : 40052
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UITableView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIScrollView\">UIScrollView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)NSCoding\">NSCoding<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIDataSourceTranslating\">UIDataSourceTranslating<\/ref.protocol><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -29915,7 +29915,7 @@
             "key.offset" : 41147
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UICollectionView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIScrollView\">UIScrollView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)UIDataSourceTranslating\">UIDataSourceTranslating<\/ref.protocol><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -30133,7 +30133,7 @@
             "key.offset" : 43238
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableViewCell.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableViewCell.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UITableViewCell<\/decl.name> : <ref.class usr=\"c:objc(cs)UIView\">UIView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)NSCoding\">NSCoding<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIGestureRecognizerDelegate\">UIGestureRecognizerDelegate<\/ref.protocol><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -30224,7 +30224,7 @@
             "key.offset" : 43487
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableViewHeaderFooterView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableViewHeaderFooterView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UITableViewHeaderFooterView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIView\">UIView<\/ref.class><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -30315,7 +30315,7 @@
             "key.offset" : 43730
           }
         ],
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionViewCell.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionViewCell.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UICollectionReusableView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIView\">UIView<\/ref.class><\/decl.class>",
         "key.inheritedtypes" : [
           {
@@ -30399,7 +30399,7 @@
         "key.doc.comment" : "UICollectionViewCell骨架屏视图代理扩展",
         "key.doclength" : 52,
         "key.docoffset" : 43869,
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionViewCell.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionViewCell.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UICollectionViewCell<\/decl.name> : <ref.class usr=\"c:objc(cs)UICollectionReusableView\">UICollectionReusableView<\/ref.class><\/decl.class>",
         "key.is_system" : true,
         "key.kind" : "source.lang.swift.decl.extension",
@@ -32298,7 +32298,7 @@
         "key.bodyoffset" : 11023,
         "key.column" : 12,
         "key.decl_lang" : "source.lang.objc",
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UICollectionView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UICollectionView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIScrollView\">UIScrollView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)UIDataSourceTranslating\">UIDataSourceTranslating<\/ref.protocol><\/decl.class>",
         "key.is_system" : true,
         "key.kind" : "source.lang.swift.decl.extension",
@@ -34616,7 +34616,7 @@
         "key.bodyoffset" : 10149,
         "key.column" : 12,
         "key.decl_lang" : "source.lang.objc",
-        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.0.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableView.h",
+        "key.filepath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/iPhoneOS.platform\/Developer\/SDKs\/iPhoneOS15.2.sdk\/System\/Library\/Frameworks\/UIKit.framework\/Headers\/UITableView.h",
         "key.fully_annotated_decl" : "<decl.class><syntaxtype.attribute.builtin><syntaxtype.attribute.name>@<ref.class usr=\"s:ScM\">MainActor<\/ref.class><\/syntaxtype.attribute.name><\/syntaxtype.attribute.builtin> <syntaxtype.keyword>class<\/syntaxtype.keyword> <decl.name>UITableView<\/decl.name> : <ref.class usr=\"c:objc(cs)UIScrollView\">UIScrollView<\/ref.class>, <ref.protocol usr=\"c:objc(pl)NSCoding\">NSCoding<\/ref.protocol>, <ref.protocol usr=\"c:objc(pl)UIDataSourceTranslating\">UIDataSourceTranslating<\/ref.protocol><\/decl.class>",
         "key.is_system" : true,
         "key.kind" : "source.lang.swift.decl.extension",
