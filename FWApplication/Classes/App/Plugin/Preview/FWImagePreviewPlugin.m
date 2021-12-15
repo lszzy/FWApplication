@@ -10,6 +10,7 @@
 #import "FWImagePreviewPlugin.h"
 #import "FWImagePreviewPluginImpl.h"
 #import "FWPlugin.h"
+#import "FWNavigation.h"
 #import "FWToolkit.h"
 
 #pragma mark - FWImagePreviewPluginController
@@ -56,6 +57,9 @@
                              sourceView:(id  _Nullable (^)(NSInteger))sourceView
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos
                              currentIndex:currentIndex
@@ -71,6 +75,9 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos
                              currentIndex:currentIndex

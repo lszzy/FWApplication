@@ -2308,9 +2308,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     [self initPreviewViewControllerIfNeeded];
     if (!self.allowsMultipleSelection) {
         // 单选的情况下
-        [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:@[imageAsset].mutableCopy
+        [self.imagePickerPreviewController updateImagePickerPreviewViewWithImagesAssetArray:self.previewScrollDisabled ? @[imageAsset].mutableCopy : self.imagesAssetArray
                                                                     selectedImageAssetArray:self.selectedImageAssetArray
-                                                                          currentImageIndex:0
+                                                                          currentImageIndex:self.previewScrollDisabled ? 0 : indexPath.item
                                                                             singleCheckMode:YES
                                                                                 previewMode:NO];
     } else {

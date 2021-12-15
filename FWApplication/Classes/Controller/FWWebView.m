@@ -113,7 +113,7 @@
         return;
     }
     
-    [webView.fwViewController fwShowAlertWithTitle:nil message:message cancel:nil cancelBlock:^{
+    [webView fwShowAlertWithTitle:nil message:message cancel:nil cancelBlock:^{
         completionHandler();
     }];
 }
@@ -125,7 +125,7 @@
         return;
     }
     
-    [webView.fwViewController fwShowConfirmWithTitle:nil message:message cancel:nil confirm:nil confirmBlock:^{
+    [webView fwShowConfirmWithTitle:nil message:message cancel:nil confirm:nil confirmBlock:^{
         completionHandler(YES);
     } cancelBlock:^{
         completionHandler(NO);
@@ -139,7 +139,7 @@
         return;
     }
     
-    [webView.fwViewController fwShowPromptWithTitle:nil message:prompt cancel:nil confirm:nil promptBlock:^(UITextField *textField) {
+    [webView fwShowPromptWithTitle:nil message:prompt cancel:nil confirm:nil promptBlock:^(UITextField *textField) {
         textField.text = defaultText;
     } confirmBlock:^(NSString *text) {
         completionHandler(text);

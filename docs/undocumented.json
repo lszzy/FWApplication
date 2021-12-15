@@ -6708,98 +6708,98 @@
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 497,
+      "line": 500,
       "symbol": "FWImagePickerCollectionCell.editedIconImage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 498,
+      "line": 501,
       "symbol": "FWImagePickerCollectionCell.videoIconImage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 499,
+      "line": 502,
       "symbol": "FWImagePickerCollectionCell.iconImageViewMargins",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 516,
+      "line": 519,
       "symbol": "FWImagePickerCollectionCell.contentImageView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 517,
+      "line": 520,
       "symbol": "FWImagePickerCollectionCell.checkboxButton",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 518,
+      "line": 521,
       "symbol": "FWImagePickerCollectionCell.videoDurationLabel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 519,
+      "line": 522,
       "symbol": "FWImagePickerCollectionCell.checkedIndexLabel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 521,
+      "line": 524,
       "symbol": "FWImagePickerCollectionCell.selectable",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 522,
+      "line": 525,
       "symbol": "FWImagePickerCollectionCell.checked",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 523,
+      "line": 526,
       "symbol": "FWImagePickerCollectionCell.disabled",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 524,
+      "line": 527,
       "symbol": "FWImagePickerCollectionCell.checkedIndex",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 525,
+      "line": 528,
       "symbol": "FWImagePickerCollectionCell.downloadStatus",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 526,
+      "line": 529,
       "symbol": "FWImagePickerCollectionCell.assetIdentifier",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePickerController.h",
-      "line": 528,
+      "line": 531,
       "symbol": "FWImagePickerCollectionCell.-renderWithAsset:referenceSize:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"

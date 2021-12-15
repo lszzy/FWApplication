@@ -435,8 +435,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当前被选择的图片对应的 FWAsset 对象数组
 @property(nullable, nonatomic, strong, readonly) NSMutableArray<FWAsset *> *selectedImageAssetArray;
 
-/// 是否允许图片多选，默认为 YES。如果为 NO，则不显示 checkbox 和底部工具栏。
+/// 是否允许图片多选，默认为 YES。如果为 NO，则不显示 checkbox 和底部工具栏
 @property(nonatomic, assign) BOOL allowsMultipleSelection;
+
+/// 是否禁用预览时左右滚动，默认NO。如果为YES，单选时不能左右滚动切换图片
+@property(nonatomic, assign) BOOL previewScrollDisabled;
 
 /// 最多可以选择的图片数，默认为9
 @property(nonatomic, assign) NSUInteger maximumSelectImageCount;

@@ -9,6 +9,7 @@
 #import "FWAlertPlugin.h"
 #import "FWAlertPluginImpl.h"
 #import "FWPlugin.h"
+#import "FWNavigation.h"
 #import "FWToolkit.h"
 #import "FWAppBundle.h"
 
@@ -248,6 +249,9 @@
                      message:(id)message
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowAlertWithTitle:title
                        message:message];
 }
@@ -258,6 +262,9 @@
                  cancelBlock:(void (^)(void))cancelBlock
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowAlertWithTitle:title
                        message:message
                         cancel:cancel
@@ -273,6 +280,9 @@
                     priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowAlertWithTitle:title
                        message:message
                         cancel:cancel
@@ -289,6 +299,9 @@
                   confirmBlock:(void (^)(void))confirmBlock
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowConfirmWithTitle:title
                          message:message
                           cancel:cancel
@@ -305,6 +318,9 @@
                       priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowConfirmWithTitle:title
                          message:message
                           cancel:cancel
@@ -321,6 +337,9 @@
                  confirmBlock:(void (^)(NSString *))confirmBlock
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowPromptWithTitle:title
                         message:message
                          cancel:cancel
@@ -338,6 +357,9 @@
                      priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowPromptWithTitle:title
                         message:message
                          cancel:cancel
@@ -359,6 +381,9 @@
                      priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowPromptWithTitle:title
                         message:message
                          cancel:cancel
@@ -377,6 +402,9 @@
                  actionBlock:(void (^)(NSInteger))actionBlock
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowSheetWithTitle:title
                        message:message
                         cancel:cancel
@@ -393,6 +421,9 @@
                     priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowSheetWithTitle:title
                        message:message
                         cancel:cancel
@@ -415,6 +446,9 @@
                     priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fwViewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fwMainWindow.fwTopPresentedController;
+    }
     [ctrl fwShowAlertWithStyle:style
                          title:title
                        message:message
