@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.2] - 2021-12-16
+
+### Added
+
+* The picture picker adds a fixed number of picture columns parameter
+
 ## [1.0.1] - 2021-12-15
 
 ### Added
