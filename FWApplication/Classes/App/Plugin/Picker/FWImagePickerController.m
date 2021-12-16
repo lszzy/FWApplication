@@ -2032,12 +2032,15 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (CGSize)referenceImageSize {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.bounds);
     CGFloat collectionViewContentSpacing = collectionViewWidth - (self.collectionView.contentInset.left + self.collectionView.contentInset.right) - (self.collectionViewLayout.sectionInset.left + self.collectionViewLayout.sectionInset.right);
-    NSInteger columnCount = floor(collectionViewContentSpacing / self.minimumImageWidth);
     CGFloat referenceImageWidth = self.minimumImageWidth;
-    BOOL isSpacingEnoughWhenDisplayInMinImageSize = (self.minimumImageWidth + self.collectionViewLayout.minimumInteritemSpacing) * columnCount - self.collectionViewLayout.minimumInteritemSpacing <= collectionViewContentSpacing;
-    if (!isSpacingEnoughWhenDisplayInMinImageSize) {
-        // 算上图片之间的间隙后发现其实还是放不下啦，所以得把列数减少，然后放大图片以撑满剩余空间
-        columnCount -= 1;
+    NSInteger columnCount = self.imageColumnCount;
+    if (columnCount < 1) {
+        columnCount = floor(collectionViewContentSpacing / self.minimumImageWidth);
+        BOOL isSpacingEnoughWhenDisplayInMinImageSize = (self.minimumImageWidth + self.collectionViewLayout.minimumInteritemSpacing) * columnCount - self.collectionViewLayout.minimumInteritemSpacing <= collectionViewContentSpacing;
+        if (!isSpacingEnoughWhenDisplayInMinImageSize) {
+            // 算上图片之间的间隙后发现其实还是放不下啦，所以得把列数减少，然后放大图片以撑满剩余空间
+            columnCount -= 1;
+        }
     }
     referenceImageWidth = floor((collectionViewContentSpacing - self.collectionViewLayout.minimumInteritemSpacing * (columnCount - 1)) / columnCount);
     return CGSizeMake(referenceImageWidth, referenceImageWidth);
@@ -2045,6 +2048,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)setMinimumImageWidth:(CGFloat)minimumImageWidth {
     _minimumImageWidth = minimumImageWidth;
+    [self referenceImageSize];
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
+- (void)setImageColumnCount:(NSInteger)imageColumnCount {
+    _imageColumnCount = imageColumnCount;
     [self referenceImageSize];
     [self.collectionView.collectionViewLayout invalidateLayout];
 }
