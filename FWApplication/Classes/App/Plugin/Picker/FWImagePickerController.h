@@ -410,6 +410,8 @@ NS_ASSUME_NONNULL_BEGIN
  * @warning collectionViewLayout 和 collectionView 可能有设置 sectionInsets 和 contentInsets，所以设置几行不可以简单的通过 screenWdith / columnCount 来获得
  */
 @property(nonatomic, assign) CGFloat minimumImageWidth;
+/// 图片显示列数，默认0使用minimumImageWidth自动计算，指定后固定列数
+@property(nonatomic, assign) NSInteger imageColumnCount;
 
 @property(nonatomic, strong, readonly) UICollectionViewFlowLayout *collectionViewLayout;
 @property(nonatomic, strong, readonly) UICollectionView *collectionView;
