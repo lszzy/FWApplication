@@ -814,7 +814,11 @@
 
 - (void)setImageURL:(id)imageURL placeholderImage:(UIImage *)placeholderImage completion:(void (^)(UIImage * _Nullable))completion {
     if ([imageURL isKindOfClass:[NSString class]]) {
-        imageURL = [NSURL fwURLWithString:imageURL];
+        if ([imageURL isAbsolutePath]) {
+            imageURL = [NSURL fileURLWithPath:imageURL];
+        } else {
+            imageURL = [NSURL fwURLWithString:imageURL];
+        }
     }
     if ([imageURL isKindOfClass:[NSURL class]]) {
         // 默认只判断几种视频格式，不使用缓存，如果不满足需求，自行生成AVPlayerItem即可
