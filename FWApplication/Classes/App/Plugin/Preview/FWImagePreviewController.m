@@ -156,10 +156,6 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         }
     } else if (self.imageURLs.count > indexPath.item) {
         imageURL = self.imageURLs[indexPath.item];
-        if ([imageURL isKindOfClass:[NSURL class]]) {
-            imageURL = ((NSURL *)imageURL).absoluteString;
-        }
-        
         if ([imageURL isKindOfClass:[PHLivePhoto class]]) {
             identifier = kLivePhotoCellIdentifier;
         } else if ([imageURL isKindOfClass:[AVPlayerItem class]]) {

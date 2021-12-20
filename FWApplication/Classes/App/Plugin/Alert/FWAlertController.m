@@ -26,6 +26,7 @@
     self = [super init];
     if (self) {
         _lineWidth = (1.0 / [UIScreen mainScreen].scale);
+        _cancelLineWidth = 8.0;
         _contentInsets = UIEdgeInsetsMake(20, 15, 20, 15);
         _actionHeight = 55.0;
         _actionFont = [UIFont systemFontOfSize:18];
@@ -822,7 +823,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         NSMutableArray *cancelActionLineConstraints = [NSMutableArray array];
         [cancelActionLineConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[cancelActionLine]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cancelActionLine)]];
         [cancelActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:cancelActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:cancelView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0]];
-        [cancelActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:cancelActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:8.0]];
+        [cancelActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:cancelActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:FWAlertControllerAppearance.appearance.cancelLineWidth]];
         [NSLayoutConstraint activateConstraints:cancelActionLineConstraints];
     }
     

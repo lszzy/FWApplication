@@ -216,6 +216,7 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 @interface FWAlertControllerAppearance : NSObject
 + (instancetype)appearance;
 @property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, assign) CGFloat cancelLineWidth;
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
 @property (nonatomic, assign) CGFloat actionHeight;
 @property (nonatomic, strong) UIFont *actionFont;
