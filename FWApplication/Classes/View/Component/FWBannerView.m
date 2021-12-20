@@ -817,7 +817,7 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
     NSString *imagePath = self.imagePathsGroup[itemIndex];
     
     if (!self.onlyDisplayText && [imagePath isKindOfClass:[NSString class]]) {
-        if ([imagePath.lowercaseString hasPrefix:@"http"]) {
+        if ([imagePath.lowercaseString hasPrefix:@"http"] || [imagePath.lowercaseString hasPrefix:@"data:"]) {
             [cell.imageView fwSetImageWithURL:imagePath placeholderImage:self.placeholderImage];
         } else {
             UIImage *image = [UIImage fwImageNamed:imagePath];

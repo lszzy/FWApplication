@@ -151,9 +151,9 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 @property(nonatomic, readonly) FWAlertControllerStyle preferredStyle;
 @property(nonatomic, readonly) FWAlertAnimationType animationType;
 
-/** 设置action与下一个action之间的间距, action仅限于非取消样式，必须在'-addAction:'之后设置 */
-- (void)setCustomSpacing:(CGFloat)spacing afterAction:(FWAlertAction *)action;
-- (CGFloat)customSpacingAfterAction:(FWAlertAction *)action;
+/** 设置action与下一个action之间的间距, action仅限于非取消样式，必须在'-addAction:'之后设置，nil时设置header与action间距 */
+- (void)setCustomSpacing:(CGFloat)spacing afterAction:(nullable FWAlertAction *)action;
+- (CGFloat)customSpacingAfterAction:(nullable FWAlertAction *)action;
 
 /** 设置蒙层的外观样式,可通过alpha调整透明度 */
 - (void)setBackgroundViewAppearanceStyle:(UIBlurEffectStyle)style alpha:(CGFloat)alpha;
@@ -216,6 +216,7 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 @interface FWAlertControllerAppearance : NSObject
 + (instancetype)appearance;
 @property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, assign) CGFloat cancelLineWidth;
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
 @property (nonatomic, assign) CGFloat actionHeight;
 @property (nonatomic, strong) UIFont *actionFont;

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3] - 2021-12-20
+
+### Added
+
+* Picture browser supports local picture path
+* Added spacing configuration for custom pop-up plugins
+
 ## [1.0.2] - 2021-12-16
 
 ### Added
