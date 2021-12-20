@@ -924,6 +924,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 @property (nonatomic, strong) UIView *customActionSequenceView;
 @property (nonatomic, strong) UIView *componentView;
 @property (nonatomic, assign) CGSize customViewSize;
+@property (nonatomic, assign) CGFloat customHeaderSpacing;
 @property (nonatomic, weak) FWInterfaceActionItemSeparatorView *headerActionLine;
 @property (nonatomic, strong) NSMutableArray *headerActionLineConstraints;
 @property (nonatomic, weak) FWInterfaceActionItemSeparatorView *componentActionLine;
@@ -1101,7 +1102,10 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 }
 
 - (void)setCustomSpacing:(CGFloat)spacing afterAction:(FWAlertAction *)action {
-    if (action == nil) return;
+    if (action == nil) {
+        self.customHeaderSpacing = spacing;
+        return;
+    }
     if (action.style == FWAlertActionStyleCancel) {
         NSLog(@"*** warning in -[FWAlertController setCustomSpacing:afterAction:]: 'the -action must not be a action with FWAlertActionStyleCancel style'");
     } else if (![self.otherActions containsObject:action]) {
@@ -1113,6 +1117,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 }
 
 - (CGFloat)customSpacingAfterAction:(FWAlertAction *)action {
+    if (action == nil) {
+        return self.customHeaderSpacing;
+    }
     if ([self.otherActions containsObject:action]) {
         NSInteger index = [self.otherActions indexOfObject:action];
         return [self.actionSequenceView customSpacingAfterActionIndex:index];
@@ -1373,7 +1380,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!self.componentView.superview) {
         [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:actionSequenceView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     }
-    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:FWAlertControllerAppearance.appearance.lineWidth]];
+    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.customHeaderSpacing > 0 ? self.customHeaderSpacing : FWAlertControllerAppearance.appearance.lineWidth]];
 
     [NSLayoutConstraint activateConstraints:headerActionLineConstraints];
     self.headerActionLineConstraints = headerActionLineConstraints;
