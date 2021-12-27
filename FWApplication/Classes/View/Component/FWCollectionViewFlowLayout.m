@@ -644,3 +644,270 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 }
 
 @end
+
+#pragma mark - FWCollectionViewAlignLayout
+
+@interface FWCollectionViewAlignLayout ()
+
+@property (nonatomic, strong) NSMutableDictionary *cachedFrame;
+
+@end
+
+@implementation FWCollectionViewAlignLayout (attributes)
+
+- (CGFloat)fw_minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]) {
+        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        return [delegate collectionView:self.collectionView layout:self minimumInteritemSpacingForSectionAtIndex:section];
+    } else {
+        return self.minimumInteritemSpacing;
+    }
+}
+
+- (UIEdgeInsets)fw_insetForSectionAtIndex:(NSInteger)section {
+    if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
+        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        return [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
+    } else {
+        return self.sectionInset;
+    }
+}
+
+- (FWCollectionViewItemsHorizontalAlignment)fw_itemsHorizontalAlignmentForSectionAtIndex:(NSInteger)section {
+    if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsHorizontalAlignmentInSection:)]) {
+        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        return [delegate collectionView:self.collectionView layout:self itemsHorizontalAlignmentInSection:section];
+    } else {
+        return self.itemsHorizontalAlignment;
+    }
+}
+
+- (FWCollectionViewItemsVerticalAlignment)fw_itemsVerticalAlignmentForSectionAtIndex:(NSInteger)section {
+    if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsVerticalAlignmentInSection:)]) {
+        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        return [delegate collectionView:self.collectionView layout:self itemsVerticalAlignmentInSection:section];
+    } else {
+        return self.itemsVerticalAlignment;
+    }
+}
+
+- (FWCollectionViewItemsDirection)fw_itemsDirectionForSectionAtIndex:(NSInteger)section {
+    if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsDirectionInSection:)]) {
+        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        return [delegate collectionView:self.collectionView layout:self itemsDirectionInSection:section];
+    } else {
+        return self.itemsDirection;
+    }
+}
+
+@end
+
+@implementation FWCollectionViewAlignLayout (line)
+
+- (BOOL)fw_isLineStartAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.item == 0) {
+        return YES;
+    }
+    NSIndexPath *currentIndexPath = indexPath;
+    NSIndexPath *previousIndexPath = indexPath.item == 0 ? nil : [NSIndexPath indexPathForItem:indexPath.item - 1 inSection:indexPath.section];
+
+    UICollectionViewLayoutAttributes *currentAttributes = [super layoutAttributesForItemAtIndexPath:currentIndexPath];
+    UICollectionViewLayoutAttributes *previousAttributes = previousIndexPath ? [super layoutAttributesForItemAtIndexPath:previousIndexPath] : nil;
+    CGRect currentFrame = currentAttributes.frame;
+    CGRect previousFrame = previousAttributes ? previousAttributes.frame : CGRectZero;
+
+    UIEdgeInsets insets = [self fw_insetForSectionAtIndex:currentIndexPath.section];
+    CGRect currentLineFrame = CGRectMake(insets.left, currentFrame.origin.y, CGRectGetWidth(self.collectionView.frame), currentFrame.size.height);
+    CGRect previousLineFrame = CGRectMake(insets.left, previousFrame.origin.y, CGRectGetWidth(self.collectionView.frame), previousFrame.size.height);
+
+    return !CGRectIntersectsRect(currentLineFrame, previousLineFrame);
+}
+
+- (NSArray *)fw_lineAttributesArrayWithStartAttributes:(UICollectionViewLayoutAttributes *)startAttributes {
+    NSMutableArray *lineAttributesArray = [[NSMutableArray alloc] init];
+    [lineAttributesArray addObject:startAttributes];
+    NSInteger itemCount = [self.collectionView numberOfItemsInSection:startAttributes.indexPath.section];
+    UIEdgeInsets insets = [self fw_insetForSectionAtIndex:startAttributes.indexPath.section];
+    NSInteger index = startAttributes.indexPath.item;
+    BOOL isLineEnd = index == itemCount - 1;
+    while (!isLineEnd) {
+        index++;
+        if (index == itemCount)
+            break;
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:index inSection:startAttributes.indexPath.section];
+        UICollectionViewLayoutAttributes *nextAttributes = [super layoutAttributesForItemAtIndexPath:nextIndexPath];
+        CGRect nextLineFrame = CGRectMake(insets.left, nextAttributes.frame.origin.y, CGRectGetWidth(self.collectionView.frame), nextAttributes.frame.size.height);
+        isLineEnd = !CGRectIntersectsRect(startAttributes.frame, nextLineFrame);
+        if (isLineEnd)
+            break;
+        [lineAttributesArray addObject:nextAttributes];
+    }
+    return lineAttributesArray;
+}
+
+@end
+
+@implementation FWCollectionViewAlignLayout (alignment)
+
+- (void)fw_cacheTheItemFrame:(CGRect)frame forIndexPath:(NSIndexPath *)indexPath {
+    self.cachedFrame[indexPath] = @(frame);
+}
+
+- (NSValue *)fw_cachedItemFrameAtIndexPath:(NSIndexPath *)indexPath {
+    return self.cachedFrame[indexPath];
+}
+
+- (void)fw_calculateAndCacheFrameForItemAttributesArray:(NSArray<UICollectionViewLayoutAttributes *> *)array {
+    NSInteger section = [array firstObject].indexPath.section;
+
+    //******************** 相关布局属性 ********************//
+    FWCollectionViewItemsHorizontalAlignment horizontalAlignment = [self fw_itemsHorizontalAlignmentForSectionAtIndex:section];
+    FWCollectionViewItemsVerticalAlignment verticalAlignment = [self fw_itemsVerticalAlignmentForSectionAtIndex:section];
+    FWCollectionViewItemsDirection direction = [self fw_itemsDirectionForSectionAtIndex:section];
+    BOOL isR2L = direction == FWCollectionViewItemsDirectionRTL;
+    UIEdgeInsets sectionInsets = [self fw_insetForSectionAtIndex:section];
+    CGFloat minimumInteritemSpacing = [self fw_minimumInteritemSpacingForSectionAtIndex:section];
+    UIEdgeInsets contentInsets = self.collectionView.contentInset;
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    NSMutableArray *widthArray = [[NSMutableArray alloc] init];
+    for (UICollectionViewLayoutAttributes *attr in array) {
+        [widthArray addObject:@(CGRectGetWidth(attr.frame))];
+    }
+    CGFloat totalWidth = [[widthArray valueForKeyPath:@"@sum.self"] floatValue];
+    NSInteger totalCount = array.count;
+    CGFloat extra = collectionViewWidth - totalWidth - contentInsets.left - contentInsets.right - sectionInsets.left - sectionInsets.right - minimumInteritemSpacing * (totalCount - 1);
+
+    //******************** 竖直方向位置(origin.y)，用于竖直方向对齐方式计算 ********************//
+    CGFloat tempOriginY = 0.f;
+    NSArray *frameValues = [array valueForKeyPath:@"frame"];
+    if (verticalAlignment == FWCollectionViewItemsVerticalAlignmentTop) {
+        tempOriginY = CGFLOAT_MAX;
+        for (NSValue *frameValue in frameValues) {
+            tempOriginY = MIN(tempOriginY, CGRectGetMinY([frameValue CGRectValue]));
+        }
+    } else if (verticalAlignment == FWCollectionViewItemsVerticalAlignmentBottom) {
+        tempOriginY = CGFLOAT_MIN;
+        for (NSValue *frameValue in frameValues) {
+            tempOriginY = MAX(tempOriginY, CGRectGetMaxY([frameValue CGRectValue]));
+        }
+    }
+
+    //******************** 计算起点及间距 ********************//
+    CGFloat start = 0.f, space = 0.f;
+    switch (horizontalAlignment) {
+        case FWCollectionViewItemsHorizontalAlignmentLeft: {
+            start = isR2L ? (collectionViewWidth - totalWidth - contentInsets.left - contentInsets.right - sectionInsets.left - minimumInteritemSpacing * (totalCount - 1)) : sectionInsets.left;
+            space = minimumInteritemSpacing;
+        } break;
+
+        case FWCollectionViewItemsHorizontalAlignmentCenter: {
+            CGFloat rest = extra / 2.f;
+            start = isR2L ? sectionInsets.right + rest : sectionInsets.left + rest;
+            space = minimumInteritemSpacing;
+        } break;
+
+        case FWCollectionViewItemsHorizontalAlignmentRight: {
+            start = isR2L ? sectionInsets.right : (collectionViewWidth - totalWidth - contentInsets.left - contentInsets.right - sectionInsets.right - minimumInteritemSpacing * (totalCount - 1));
+            space = minimumInteritemSpacing;
+        } break;
+
+        case FWCollectionViewItemsHorizontalAlignmentFlow: {
+            BOOL isEnd = array.lastObject.indexPath.item == [self.collectionView numberOfItemsInSection:section] - 1;
+            start = isR2L ? sectionInsets.right : sectionInsets.left;
+            space = isEnd ? minimumInteritemSpacing : (collectionViewWidth - totalWidth - contentInsets.left - contentInsets.right - sectionInsets.left - sectionInsets.right) / (totalCount - 1);
+        } break;
+
+        case FWCollectionViewItemsHorizontalAlignmentFlowFilled: {
+            start = isR2L ? sectionInsets.right : sectionInsets.left;
+            space = minimumInteritemSpacing;
+        } break;
+
+        default:
+            break;
+    }
+
+    //******************** 计算并缓存 frame ********************//
+    CGFloat lastMaxX = 0.f;
+    for (int i = 0; i < widthArray.count; i++) {
+        CGRect frame = array[i].frame;
+        CGFloat width = [widthArray[i] floatValue];
+        if (horizontalAlignment == FWCollectionViewItemsHorizontalAlignmentFlowFilled) {
+            width += extra / (totalWidth / width);
+        }
+        CGFloat originX = 0.f;
+        if (isR2L) {
+            originX = i == 0 ? collectionViewWidth - start - contentInsets.right - contentInsets.left - width : lastMaxX - space - width;
+            lastMaxX = originX;
+        } else {
+            originX = i == 0 ? start : lastMaxX + space;
+            lastMaxX = originX + width;
+        }
+        CGFloat originY;
+        if (verticalAlignment == FWCollectionViewItemsVerticalAlignmentBottom) {
+            originY = tempOriginY - CGRectGetHeight(frame);
+        } else if (verticalAlignment == FWCollectionViewItemsVerticalAlignmentCenter) {
+            originY = frame.origin.y;
+        } else {
+            originY = tempOriginY;
+        }
+        frame.origin.x = originX;
+        frame.origin.y = originY;
+        frame.size.width = width;
+        [self fw_cacheTheItemFrame:frame forIndexPath:array[i].indexPath];
+    }
+}
+
+@end
+
+@implementation FWCollectionViewAlignLayout
+
+- (void)prepareLayout {
+    [super prepareLayout];
+    self.cachedFrame = @{}.mutableCopy;
+}
+
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    NSArray *originalAttributes = [super layoutAttributesForElementsInRect:rect];
+    NSMutableArray *updatedAttributes = originalAttributes.mutableCopy;
+    for (UICollectionViewLayoutAttributes *attributes in originalAttributes) {
+        if (!attributes.representedElementKind || attributes.representedElementCategory == UICollectionElementCategoryCell) {
+            NSUInteger index = [updatedAttributes indexOfObject:attributes];
+            updatedAttributes[index] = [self layoutAttributesForItemAtIndexPath:attributes.indexPath];
+        }
+    }
+    return updatedAttributes;
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    // This is likely occurring because the flow layout subclass FWCollectionViewAlignLayout is modifying attributes returned by UICollectionViewFlowLayout without copying them
+    UICollectionViewLayoutAttributes *currentAttributes = [[super layoutAttributesForItemAtIndexPath:indexPath] copy];
+
+    // 获取缓存的当前 indexPath 的 item frame value
+    NSValue *frameValue = [self fw_cachedItemFrameAtIndexPath:indexPath];
+    // 如果没有缓存的 item frame value，则计算并缓存然后获取
+    if (!frameValue) {
+        // 判断是否为一行中的首个
+        BOOL isLineStart = [self fw_isLineStartAtIndexPath:indexPath];
+        // 如果是一行中的首个
+        if (isLineStart) {
+            // 获取当前行的所有 UICollectionViewLayoutAttributes
+            NSArray *line = [self fw_lineAttributesArrayWithStartAttributes:currentAttributes];
+            if (line.count) {
+                // 计算并缓存当前行的所有 UICollectionViewLayoutAttributes frame
+                [self fw_calculateAndCacheFrameForItemAttributesArray:line];
+            }
+        }
+        // 获取位于当前 indexPath 的 item frame
+        frameValue = [self fw_cachedItemFrameAtIndexPath:indexPath];
+    }
+    if (frameValue) {
+        // 设置缓存的当前 indexPath 的 item frame
+        CGRect frame = [frameValue CGRectValue];
+        // 获取当前 indexPath 的 item frame 后修改当前 layoutAttributes.frame
+        currentAttributes.frame = frame;
+    }
+    
+    return currentAttributes;
+}
+
+@end

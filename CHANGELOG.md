@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.4] - 2021-12-27
+
+### Added
+
+* Added FWCollectionViewAlignLayout component
+
 ## [1.0.3] - 2021-12-20
 
 ### Added

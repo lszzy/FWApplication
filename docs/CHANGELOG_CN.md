@@ -1,5 +1,11 @@
 # 更新日志
 
+## [1.0.4] - 2021-12-27
+
+### Added
+
+* 新增FWCollectionViewAlignLayout组件
+
 ## [1.0.3] - 2021-12-20
 
 ### Added

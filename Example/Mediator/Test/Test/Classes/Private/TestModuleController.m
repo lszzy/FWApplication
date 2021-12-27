@@ -175,6 +175,7 @@
               @[@"FWSegmentedControl", @"TestSegmentViewController"],
               @[@"FWTableView", @"TestTableCreateViewController"],
               @[@"FWCollectionView", @"TestCollectionCreateViewController"],
+              @[@"FWCollectionViewAlignLayout", @"TestCollectionAlignLayoutController"],
               @[@"FWBannerView", @"TestBannerViewController"],
               @[@"FWBarrageView", @"TestBarrageViewController"],
               @[@"FWGridView", @"TestGridViewController"],
