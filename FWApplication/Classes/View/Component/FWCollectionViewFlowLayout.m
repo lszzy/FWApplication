@@ -7,6 +7,117 @@
 
 #import "FWCollectionViewFlowLayout.h"
 #import "tgmath.h"
+#import <objc/runtime.h>
+
+#pragma mark - FWCollectionViewSectionConfig
+
+static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKind";
+
+@implementation FWCollectionViewSectionConfig
+
+@end
+
+@interface FWCollectionViewLayoutAttributes : UICollectionViewLayoutAttributes
+
+@property (nonatomic, strong) FWCollectionViewSectionConfig *sectionConfig;
+
+@end
+
+@implementation FWCollectionViewLayoutAttributes
+
+@end
+
+@interface FWCollectionViewReusableView : UICollectionReusableView
+
+@end
+
+@implementation FWCollectionViewReusableView
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super applyLayoutAttributes:layoutAttributes];
+    if (![layoutAttributes isKindOfClass:[FWCollectionViewLayoutAttributes class]]) return;
+    FWCollectionViewSectionConfig *sectionConfig = ((FWCollectionViewLayoutAttributes *)layoutAttributes).sectionConfig;
+    if (!sectionConfig) return;
+    
+    self.backgroundColor = sectionConfig.backgroundColor;
+    if (sectionConfig.customBlock) {
+        sectionConfig.customBlock(self);
+    }
+}
+
+@end
+
+@interface UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
+
+@property (nonatomic, strong, readonly) NSMutableArray *fwSectionConfigAttributes;
+
+@end
+
+@implementation UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
+
+- (NSMutableArray *)fwSectionConfigAttributes {
+    NSMutableArray *attributes = objc_getAssociatedObject(self, _cmd);
+    if (!attributes) {
+        attributes = [NSMutableArray array];
+        objc_setAssociatedObject(self, _cmd, attributes, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return attributes;
+}
+
+- (void)fwSectionConfigPrepareLayout {
+    if (![self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:configForSectionAtIndex:)]) return;
+    [self registerClass:[FWCollectionViewReusableView class] forDecorationViewOfKind:FWCollectionViewElementKind];
+    [self.fwSectionConfigAttributes removeAllObjects];
+    id<FWCollectionViewDelegateFlowLayout> delegate = (id<FWCollectionViewDelegateFlowLayout>)self.collectionView.delegate;
+    NSUInteger sectionCount = [self.collectionView numberOfSections];
+    for (NSUInteger section = 0; section < sectionCount; section++) {
+        NSUInteger itemCount = [self.collectionView numberOfItemsInSection:section];
+        if (itemCount < 1) continue;
+        
+        CGRect sectionFrame = CGRectZero;
+        for (NSUInteger index = 0; index < itemCount; index++) {
+            UICollectionViewLayoutAttributes *itemAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:section]];
+            if (itemAttr) sectionFrame = CGRectUnion(sectionFrame, itemAttr.frame);
+        }
+        if (CGRectIsEmpty(sectionFrame)) continue;
+        
+        UIEdgeInsets sectionInset = self.sectionInset;
+        if ([delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
+            UIEdgeInsets inset = [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
+            if (!UIEdgeInsetsEqualToEdgeInsets(inset, sectionInset)) {
+                sectionInset = inset;
+            }
+        }
+        
+        sectionFrame.origin.x -= sectionInset.left;
+        sectionFrame.origin.y -= sectionInset.top;
+        if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
+            sectionFrame.size.width += sectionInset.left + sectionInset.right;
+            sectionFrame.size.height = self.collectionView.frame.size.height;
+        } else {
+            sectionFrame.size.width = self.collectionView.frame.size.width;
+            sectionFrame.size.height += sectionInset.top + sectionInset.bottom;
+        }
+        
+        FWCollectionViewLayoutAttributes *attributes = [FWCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:FWCollectionViewElementKind withIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
+        attributes.frame = sectionFrame;
+        attributes.zIndex = -1;
+        attributes.sectionConfig = [delegate collectionView:self.collectionView layout:self configForSectionAtIndex:section];
+        [self.fwSectionConfigAttributes addObject:attributes];
+    }
+}
+
+- (NSArray<UICollectionViewLayoutAttributes *> *)fwSectionConfigLayoutAttributesForElementsInRect:(CGRect)rect {
+    NSMutableArray *attrs = [NSMutableArray array];
+    for (UICollectionViewLayoutAttributes *attr in self.fwSectionConfigAttributes) {
+        if (CGRectIntersectsRect(rect, attr.frame)) {
+            [attrs addObject:attr];
+        }
+    }
+    return [attrs copy];
+}
+
+@end
 
 #pragma mark - FWCollectionViewFlowLayout
 
@@ -20,65 +131,66 @@
 
 #pragma mark - Methods to Override
 
-- (void)prepareLayout
-{
+- (void)prepareLayout {
     [super prepareLayout];
-    if (!self.itemRenderVertical || self.columnCount < 1 || self.rowCount < 1) return;
+    [self fwSectionConfigPrepareLayout];
     
-    self.allAttributes = [NSMutableArray array];
-    NSUInteger sectionCount = [self.collectionView numberOfSections];
-    for (NSUInteger section = 0; section < sectionCount; section++) {
-        NSUInteger itemCount = [self.collectionView numberOfItemsInSection:section];
-        for (NSUInteger item = 0; item < itemCount; item++) {
-            UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:section]];
-            [self.allAttributes addObject:attributes];
-        }
-    }
-}
-
-- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (!self.itemRenderVertical || self.columnCount < 1 || self.rowCount < 1) {
-        return [super layoutAttributesForItemAtIndexPath:indexPath];
-    }
-    
-    NSUInteger page = indexPath.item / (self.columnCount * self.rowCount);
-    NSUInteger x = indexPath.item % self.columnCount + page * self.columnCount;
-    NSUInteger y = indexPath.item / self.columnCount - page * self.rowCount;
-    NSInteger item = x * self.rowCount + y;
-    UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:indexPath.section]];
-    attributes.indexPath = indexPath;
-    return attributes;
-}
-
-- (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect
-{
-    NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
-    if (!self.itemRenderVertical || self.columnCount < 1 || self.rowCount < 1) {
-        return attributes;
-    }
-    
-    NSMutableArray *newAttributes = [NSMutableArray array];
-    for (UICollectionViewLayoutAttributes *attribute in attributes) {
-        if (attribute.representedElementCategory != UICollectionElementCategoryCell) {
-            [newAttributes addObject:attribute];
-            continue;
-        }
-        for (UICollectionViewLayoutAttributes *newAttribute in self.allAttributes) {
-            if (attribute.indexPath.section == newAttribute.indexPath.section &&
-                attribute.indexPath.item == newAttribute.indexPath.item) {
-                [newAttributes addObject:newAttribute];
-                break;
+    if (self.itemRenderVertical && self.columnCount > 0 && self.rowCount > 0) {
+        self.allAttributes = [NSMutableArray array];
+        NSUInteger sectionCount = [self.collectionView numberOfSections];
+        for (NSUInteger section = 0; section < sectionCount; section++) {
+            NSUInteger itemCount = [self.collectionView numberOfItemsInSection:section];
+            for (NSUInteger item = 0; item < itemCount; item++) {
+                UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:section]];
+                [self.allAttributes addObject:attributes];
             }
         }
     }
-    return newAttributes;
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.itemRenderVertical && self.columnCount > 0 && self.rowCount > 0) {
+        NSUInteger page = indexPath.item / (self.columnCount * self.rowCount);
+        NSUInteger x = indexPath.item % self.columnCount + page * self.columnCount;
+        NSUInteger y = indexPath.item / self.columnCount - page * self.rowCount;
+        NSInteger item = x * self.rowCount + y;
+        UICollectionViewLayoutAttributes *attributes = [super layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:indexPath.section]];
+        attributes.indexPath = indexPath;
+        return attributes;
+    }
+    
+    return [super layoutAttributesForItemAtIndexPath:indexPath];
+}
+
+- (NSArray<UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
+    NSMutableArray *newAttributes = [NSMutableArray array];
+    NSArray *attributes = [super layoutAttributesForElementsInRect:rect];
+    if (self.itemRenderVertical && self.columnCount > 0 && self.rowCount > 0) {
+        for (UICollectionViewLayoutAttributes *attribute in attributes) {
+            if (attribute.representedElementCategory != UICollectionElementCategoryCell) {
+                [newAttributes addObject:attribute];
+                continue;
+            }
+            for (UICollectionViewLayoutAttributes *newAttribute in self.allAttributes) {
+                if (attribute.indexPath.section == newAttribute.indexPath.section &&
+                    attribute.indexPath.item == newAttribute.indexPath.item) {
+                    [newAttributes addObject:newAttribute];
+                    break;
+                }
+            }
+        }
+    } else {
+        if (attributes) newAttributes = [attributes mutableCopy];
+    }
+    
+    NSArray *sectionAttributes = [self fwSectionConfigLayoutAttributesForElementsInRect:rect];
+    [newAttributes addObjectsFromArray:sectionAttributes];
+    return [newAttributes copy];
 }
 
 #pragma mark - Public Methods
 
-- (NSInteger)itemRenderCount:(NSInteger)itemCount
-{
+- (NSInteger)itemRenderCount:(NSInteger)itemCount {
     if (self.columnCount < 1 || self.rowCount < 1) {
         return itemCount;
     }
@@ -88,8 +200,7 @@
     return page * pageCount;
 }
 
-- (NSIndexPath *)verticalIndexPath:(NSIndexPath *)indexPath
-{
+- (NSIndexPath *)verticalIndexPath:(NSIndexPath *)indexPath {
     if (self.columnCount < 1 || self.rowCount < 1) {
         return indexPath;
     }
@@ -653,11 +764,11 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 @end
 
-@implementation FWCollectionViewAlignLayout (attributes)
+@implementation FWCollectionViewAlignLayout
 
 - (CGFloat)fw_minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]) {
-        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self minimumInteritemSpacingForSectionAtIndex:section];
     } else {
         return self.minimumInteritemSpacing;
@@ -666,7 +777,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 - (UIEdgeInsets)fw_insetForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
-        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
     } else {
         return self.sectionInset;
@@ -675,7 +786,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 - (FWCollectionViewItemsHorizontalAlignment)fw_itemsHorizontalAlignmentForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsHorizontalAlignmentInSection:)]) {
-        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self itemsHorizontalAlignmentInSection:section];
     } else {
         return self.itemsHorizontalAlignment;
@@ -684,7 +795,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 - (FWCollectionViewItemsVerticalAlignment)fw_itemsVerticalAlignmentForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsVerticalAlignmentInSection:)]) {
-        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self itemsVerticalAlignmentInSection:section];
     } else {
         return self.itemsVerticalAlignment;
@@ -693,16 +804,12 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 - (FWCollectionViewItemsDirection)fw_itemsDirectionForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsDirectionInSection:)]) {
-        id<FWCollectionViewAlignLayoutDelegate> delegate = (id<FWCollectionViewAlignLayoutDelegate>) self.collectionView.delegate;
+        id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self itemsDirectionInSection:section];
     } else {
         return self.itemsDirection;
     }
 }
-
-@end
-
-@implementation FWCollectionViewAlignLayout (line)
 
 - (BOOL)fw_isLineStartAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item == 0) {
@@ -744,10 +851,6 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
     return lineAttributesArray;
 }
-
-@end
-
-@implementation FWCollectionViewAlignLayout (alignment)
 
 - (void)fw_cacheTheItemFrame:(CGRect)frame forIndexPath:(NSIndexPath *)indexPath {
     self.cachedFrame[indexPath] = @(frame);
@@ -857,24 +960,25 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
 }
 
-@end
-
-@implementation FWCollectionViewAlignLayout
+#pragma mark - Public
 
 - (void)prepareLayout {
     [super prepareLayout];
+    [self fwSectionConfigPrepareLayout];
     self.cachedFrame = @{}.mutableCopy;
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSArray *originalAttributes = [super layoutAttributesForElementsInRect:rect];
-    NSMutableArray *updatedAttributes = originalAttributes.mutableCopy;
+    NSMutableArray *updatedAttributes = originalAttributes ? originalAttributes.mutableCopy : [NSMutableArray array];
     for (UICollectionViewLayoutAttributes *attributes in originalAttributes) {
         if (!attributes.representedElementKind || attributes.representedElementCategory == UICollectionElementCategoryCell) {
             NSUInteger index = [updatedAttributes indexOfObject:attributes];
             updatedAttributes[index] = [self layoutAttributesForItemAtIndexPath:attributes.indexPath];
         }
     }
+    NSArray *sectionAttributes = [self fwSectionConfigLayoutAttributesForElementsInRect:rect];
+    [updatedAttributes addObjectsFromArray:sectionAttributes];
     return updatedAttributes;
 }
 

@@ -148,7 +148,7 @@
 
 @end
 
-@interface TestCollectionAlignLayoutController ()<UICollectionViewDataSource, FWCollectionViewAlignLayoutDelegate, FWCollectionViewController>
+@interface TestCollectionAlignLayoutController ()<UICollectionViewDataSource, FWCollectionViewDelegateAlignLayout, FWCollectionViewController>
 
 @property (nonatomic, copy) NSArray<JQSectionModel *> *data;
 
@@ -232,6 +232,12 @@ static NSString *const kFooterReuseIdentifier = @"kFooterReuseIdentifier";
 
 - (FWCollectionViewItemsDirection)collectionView:(UICollectionView *)collectionView layout:(FWCollectionViewAlignLayout *)layout itemsDirectionInSection:(NSInteger)section {
     return self.data[section].direction;
+}
+
+- (FWCollectionViewSectionConfig *)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)layout configForSectionAtIndex:(NSInteger)section {
+    FWCollectionViewSectionConfig *config = [FWCollectionViewSectionConfig new];
+    config.backgroundColor = UIColor.fwRandomColor;
+    return config;
 }
 
 #pragma mark - getter

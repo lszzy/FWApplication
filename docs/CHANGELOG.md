@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0] - 2021-12-28
+
+### Added
+
+* UICollectionViewFlowLayout supports section background settings
+* Added FWCollectionViewAlignLayout component
+
 ## [1.0.4] - 2021-12-27
 
 ### Added
