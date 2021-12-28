@@ -9,6 +9,47 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#pragma mark - FWCollectionViewSectionConfig
+
+/**
+ 通用布局section配置类
+ */
+@interface FWCollectionViewSectionConfig : NSObject
+
+/// 自定义section背景色，默认nil
+@property (nonatomic, strong, nullable) UIColor *backgroundColor;
+/// 自定义section句柄，可用于处理边框、圆角、阴影等其他效果
+@property (nonatomic, copy, nullable) void (^customBlock)(UICollectionReusableView *reusableView);
+
+@end
+
+/**
+ 通用布局section配置协议
+ */
+@protocol FWCollectionViewDelegateFlowLayout <UICollectionViewDelegateFlowLayout>
+@optional
+
+/// 自定义section配置可选代理方法
+/// @param collectionView UICollectionView对象
+/// @param layout 布局对象
+/// @param section section
+- (nullable FWCollectionViewSectionConfig *)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)layout configForSectionAtIndex:(NSInteger)section;
+
+@end
+
+/**
+ 通用布局section配置分类
+ */
+@interface UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
+
+/// 初始化布局section配置，在prepareLayout调用即可
+- (void)fwSectionConfigPrepareLayout;
+
+/// 获取布局section属性，在layoutAttributesForElementsInRect:调用并添加即可
+- (NSArray<UICollectionViewLayoutAttributes *> *)fwSectionConfigLayoutAttributesForElementsInRect:(CGRect)rect;
+
+@end
+
 #pragma mark - FWCollectionViewFlowLayout
 
 /**
@@ -371,7 +412,7 @@ typedef NS_ENUM(NSInteger, FWCollectionViewItemsDirection) {
 
 /// 扩展 UICollectionViewDelegateFlowLayout/NSCollectionViewDelegateFlowLayout 协议，
 /// 添加设置水平、竖直方向的对齐方式以及 items 排布方向协议方法
-@protocol FWCollectionViewAlignLayoutDelegate <UICollectionViewDelegateFlowLayout>
+@protocol FWCollectionViewDelegateAlignLayout <FWCollectionViewDelegateFlowLayout>
 
 @optional
 

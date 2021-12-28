@@ -82,7 +82,7 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestCollectionViewController: UIViewController, FWCollectionViewController, UICollectionViewDelegateFlowLayout {
+@objcMembers class SwiftTestCollectionViewController: UIViewController, FWCollectionViewController, FWCollectionViewDelegateFlowLayout {
     lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.layer.masksToBounds = true
@@ -148,7 +148,19 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.contentView.backgroundColor = collectionData.fwObject(at: indexPath.item) as? UIColor
+        var label = cell.contentView.viewWithTag(100) as? UILabel
+        if label == nil {
+            let textLabel = UILabel.fwLabel(with: .systemFont(ofSize: 16), textColor: .white)
+            label = textLabel
+            textLabel.tag = 100
+            cell.contentView.addSubview(textLabel)
+            textLabel.fwLayoutChain.center()
+        }
+        if indexPath.item < collectionData.count {
+            label?.text = "\(indexPath.section) : \(indexPath.item)"
+        } else {
+            label?.text = nil
+        }
         return cell
     }
     
@@ -156,6 +168,12 @@ import FWApplication
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "view", for: indexPath)
         view.backgroundColor = UIColor.fwRandom
         return view
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> FWCollectionViewSectionConfig? {
+        let sectionConfig = FWCollectionViewSectionConfig()
+        sectionConfig.backgroundColor = UIColor.fwRandom
+        return sectionConfig
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -176,6 +194,7 @@ import FWApplication
         }
     }
     
+    /*
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetTotal = FWClamp(0, scrollView.fwContentOffsetX / FWScreenWidth, 3)
         let offsetPercent = offsetTotal - CGFloat(Int(offsetTotal))
@@ -186,7 +205,7 @@ import FWApplication
             contentHeight = 80 + (120 * offsetPercent)
         }
         contentView.fwLayoutChain.height(contentHeight)
-    }
+    }*/
 }
 
 @objcMembers class SwiftTestScrollViewController: UIViewController, FWScrollViewController {
