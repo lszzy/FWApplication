@@ -74,8 +74,13 @@ static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKi
         NSUInteger itemCount = [self.collectionView numberOfItemsInSection:section];
         if (itemCount < 1) continue;
         
-        UICollectionViewLayoutAttributes *firstAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-        UICollectionViewLayoutAttributes *lastAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemCount - 1 inSection:section]];
+        CGRect sectionFrame = CGRectZero;
+        for (NSUInteger index = 0; index < itemCount; index++) {
+            UICollectionViewLayoutAttributes *itemAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:section]];
+            if (itemAttr) sectionFrame = CGRectUnion(sectionFrame, itemAttr.frame);
+        }
+        if (CGRectIsEmpty(sectionFrame)) continue;
+        
         UIEdgeInsets sectionInset = self.sectionInset;
         if ([delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
             UIEdgeInsets inset = [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
@@ -84,13 +89,12 @@ static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKi
             }
         }
         
-        CGRect sectionFrame = CGRectUnion(firstAttr.frame, lastAttr.frame);
         sectionFrame.origin.x -= sectionInset.left;
         sectionFrame.origin.y -= sectionInset.top;
         if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
             sectionFrame.size.width += sectionInset.left + sectionInset.right;
             sectionFrame.size.height = self.collectionView.frame.size.height;
-        }else{
+        } else {
             sectionFrame.size.width = self.collectionView.frame.size.width;
             sectionFrame.size.height += sectionInset.top + sectionInset.bottom;
         }
