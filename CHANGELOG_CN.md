@@ -1,5 +1,12 @@
 # 更新日志
 
+## [1.1.0] - 2021-12-28
+
+### Added
+
+* UICollectionViewFlowLayout支持section背景设置
+* 新增FWCollectionViewAlignLayout组件
+
 ## [1.0.4] - 2021-12-27
 
 ### Added
