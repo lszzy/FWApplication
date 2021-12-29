@@ -113,7 +113,6 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 - (void)setFwStatisticalClick:(FWStatisticalObject *)fwStatisticalClick
 {
     objc_setAssociatedObject(self, @selector(fwStatisticalClick), fwStatisticalClick, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     [self fwStatisticalClickRegister];
 }
 
@@ -125,7 +124,6 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 - (void)setFwStatisticalClickBlock:(FWStatisticalBlock)fwStatisticalClickBlock
 {
     objc_setAssociatedObject(self, @selector(fwStatisticalClickBlock), fwStatisticalClickBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    
     [self fwStatisticalClickRegister];
 }
 
@@ -198,9 +196,6 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 - (void)fwStatisticalClickCellRegister
 {
     if (!self.superview) return;
-    if ([objc_getAssociatedObject(self, _cmd) boolValue]) return;
-    objc_setAssociatedObject(self, _cmd, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     UIView *proxyView = nil;
     if ([self conformsToProtocol:@protocol(FWStatisticalDelegate)] &&
         [self respondsToSelector:@selector(statisticalCellProxyView)]) {
@@ -257,7 +252,6 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 - (void)setFwStatisticalChanged:(FWStatisticalObject *)fwStatisticalChanged
 {
     objc_setAssociatedObject(self, @selector(fwStatisticalChanged), fwStatisticalChanged, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     [self fwStatisticalChangedRegister];
 }
 
@@ -269,7 +263,6 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 - (void)setFwStatisticalChangedBlock:(FWStatisticalBlock)fwStatisticalChangedBlock
 {
     objc_setAssociatedObject(self, @selector(fwStatisticalChangedBlock), fwStatisticalChangedBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    
     [self fwStatisticalChangedRegister];
 }
 
@@ -329,40 +322,31 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UIView, @selector(setFrame:), FWSwizzleReturn(void), FWSwizzleArgs(CGRect frame), FWSwizzleCode({
             FWSwizzleOriginal(frame);
-            
             [selfObject fwStatisticalExposureUpdate];
         }));
         FWSwizzleClass(UIView, @selector(setHidden:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL hidden), FWSwizzleCode({
             FWSwizzleOriginal(hidden);
-            
             [selfObject fwStatisticalExposureUpdate];
         }));
         FWSwizzleClass(UIView, @selector(setAlpha:), FWSwizzleReturn(void), FWSwizzleArgs(CGFloat alpha), FWSwizzleCode({
             FWSwizzleOriginal(alpha);
-            
             [selfObject fwStatisticalExposureUpdate];
         }));
         FWSwizzleClass(UIView, @selector(setBounds:), FWSwizzleReturn(void), FWSwizzleArgs(CGRect bounds), FWSwizzleCode({
             FWSwizzleOriginal(bounds);
-            
             [selfObject fwStatisticalExposureUpdate];
         }));
         FWSwizzleClass(UIView, @selector(didMoveToWindow), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             FWSwizzleOriginal();
-            
-            if (![selfObject fwStatisticalExposureIsRegistered]) return;
-            [NSObject cancelPreviousPerformRequestsWithTarget:selfObject selector:@selector(fwStatisticalExposureCalculate) object:nil];
-            [selfObject performSelector:@selector(fwStatisticalExposureUpdate) withObject:nil afterDelay:0 inModes:@[FWStatisticalManager.sharedInstance.runLoopMode]];
+            [selfObject fwStatisticalExposureUpdate];
         }));
         
         FWSwizzleClass(UITableView, @selector(reloadData), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             FWSwizzleOriginal();
-            
             [selfObject fwStatisticalExposureUpdate];
         }));
         FWSwizzleClass(UICollectionView, @selector(reloadData), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             FWSwizzleOriginal();
-            
             [selfObject fwStatisticalExposureUpdate];
         }));
         FWSwizzleClass(UITableViewCell, @selector(didMoveToSuperview), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
@@ -398,7 +382,6 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 - (void)setFwStatisticalExposure:(FWStatisticalObject *)fwStatisticalExposure
 {
     objc_setAssociatedObject(self, @selector(fwStatisticalExposure), fwStatisticalExposure, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     [self fwStatisticalExposureRegister];
 }
 
@@ -410,11 +393,15 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 - (void)setFwStatisticalExposureBlock:(FWStatisticalBlock)fwStatisticalExposureBlock
 {
     objc_setAssociatedObject(self, @selector(fwStatisticalExposureBlock), fwStatisticalExposureBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    
     [self fwStatisticalExposureRegister];
 }
 
 #pragma mark - Accessor
+
+- (BOOL)fwStatisticalExposureIsRegistered
+{
+    return [objc_getAssociatedObject(self, @selector(fwStatisticalExposureIsRegistered)) boolValue];
+}
 
 - (BOOL)fwStatisticalExposureIsProxy
 {
@@ -556,18 +543,11 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     }
 }
 
-- (BOOL)fwStatisticalExposureIsRegistered
-{
-    if (![objc_getAssociatedObject(self, @selector(fwStatisticalExposureIsRegistered)) boolValue]) return NO;
-    if ([self isKindOfClass:[UITableViewCell class]] || [self isKindOfClass:[UICollectionViewCell class]]) return NO;
-    return YES;
-}
-
 #pragma mark - Private
 
 - (void)fwStatisticalExposureRegister
 {
-    if ([objc_getAssociatedObject(self, @selector(fwStatisticalExposureIsRegistered)) boolValue]) return;
+    if ([self fwStatisticalExposureIsRegistered]) return;
     objc_setAssociatedObject(self, @selector(fwStatisticalExposureIsRegistered), @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if ([self isKindOfClass:[UITableViewCell class]] || [self isKindOfClass:[UICollectionViewCell class]]) {
         [self fwStatisticalExposureCellRegister];
@@ -587,9 +567,6 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 - (void)fwStatisticalExposureCellRegister
 {
     if (!self.superview) return;
-    if ([objc_getAssociatedObject(self, _cmd) boolValue]) return;
-    objc_setAssociatedObject(self, _cmd, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     UIView *proxyView = nil;
     if ([self conformsToProtocol:@protocol(FWStatisticalDelegate)] &&
         [self respondsToSelector:@selector(statisticalCellProxyView)]) {
@@ -607,6 +584,13 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     
     UIViewController *viewController = self.fwViewController;
     if (viewController && (!viewController.view.window || viewController.presentedViewController)) return;
+    
+    [self fwStatisticalExposureRecursive];
+}
+
+- (void)fwStatisticalExposureRecursive
+{
+    if (![self fwStatisticalExposureIsRegistered]) return;
 
     if (self.fwStatisticalExposure || self.fwStatisticalExposureBlock || [self fwStatisticalExposureIsProxy]) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(fwStatisticalExposureCalculate) object:nil];
@@ -614,18 +598,14 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     }
     
     [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
-        [obj fwStatisticalExposureUpdate];
+        [obj fwStatisticalExposureRecursive];
     }];
 }
 
 - (void)fwStatisticalExposureCalculate
 {
-    if ([self isKindOfClass:[UITableView class]]) {
-        [((UITableView *)self).visibleCells enumerateObjectsUsingBlock:^(__kindof UITableViewCell *obj, NSUInteger idx, BOOL *stop) {
-            [obj setFwStatisticalExposureState];
-        }];
-    } else if ([self isKindOfClass:[UICollectionView class]]) {
-        [((UICollectionView *)self).visibleCells enumerateObjectsUsingBlock:^(__kindof UICollectionViewCell *obj, NSUInteger idx, BOOL *stop) {
+    if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]]) {
+        [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
             [obj setFwStatisticalExposureState];
         }];
     } else {
