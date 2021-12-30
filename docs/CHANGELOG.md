@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.1] - 2021-12-30
+
+### Changed
+
+* Refactored FWStatisticalManager click and exposure buried point statistics implementation plan
+* Unified Changed burying point is Click burying point statistics
+* Support custom click and exposure buried point events, support exposure time
+
 ## [1.1.0] - 2021-12-28
 
 ### Added
