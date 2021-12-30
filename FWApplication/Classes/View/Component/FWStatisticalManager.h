@@ -43,6 +43,9 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /// 设置运行模式，默认Default快速滚动时不计算曝光
 @property (nonatomic, copy) NSRunLoopMode runLoopMode;
 
+/// 是否部分可见时触发曝光，默认NO，仅视图完全可见时才触发曝光
+@property (nonatomic, assign) BOOL exposurePartly;
+
 /// 设置全局事件处理器
 @property (nonatomic, copy, nullable) FWStatisticalBlock globalHandler;
 
