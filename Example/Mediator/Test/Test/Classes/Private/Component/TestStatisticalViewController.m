@@ -235,7 +235,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     // Click
     self.testView.fwStatisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_view" object:@"view"];
     self.testButton.fwStatisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_button" object:@"button"];
-    self.testSwitch.fwStatisticalChanged = [[FWStatisticalObject alloc] initWithName:@"click_switch" object:@"switch"];
+    self.testSwitch.fwStatisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_switch" object:@"switch"];
     self.tableView.fwStatisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_tableView" object:@"table"];
     self.bannerView.fwStatisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_banner" object:@"banner"];
     self.segmentedControl.fwStatisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_segment" object:@"segment"];

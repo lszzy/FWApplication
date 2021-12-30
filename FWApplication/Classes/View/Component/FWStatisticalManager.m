@@ -73,6 +73,9 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 @property (nonatomic, weak, nullable) __kindof UIView *view;
 @property (nonatomic, strong, nullable) NSIndexPath *indexPath;
 @property (nonatomic, assign) NSInteger triggerCount;
+@property (nonatomic, assign) NSTimeInterval triggerDuration;
+@property (nonatomic, assign) NSTimeInterval totalDuration;
+@property (nonatomic, assign) BOOL triggerFinished;
 
 @end
 
@@ -148,7 +151,7 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
         __weak __typeof__(self) self_weak_ = self;
         [(id<FWStatisticalDelegate>)self statisticalClickWithCallback:^(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath) {
             __typeof__(self) self = self_weak_;
-            [self fwStatisticalClickHandler:cell indexPath:indexPath];
+            [self fwStatisticalTriggerClick:cell indexPath:indexPath];
         }];
         return;
     }
@@ -160,7 +163,7 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
             if (![selfObject fwIsSwizzleMethod:@selector(tableView:didSelectRowAtIndexPath:) identifier:@"FWStatisticalManager"]) return;
             if (![tableView fwStatisticalClickIsRegistered]) return;
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            [tableView fwStatisticalClickHandler:cell indexPath:indexPath];
+            [tableView fwStatisticalTriggerClick:cell indexPath:indexPath];
         }));
         return;
     }
@@ -172,22 +175,32 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
             if (![selfObject fwIsSwizzleMethod:@selector(collectionView:didSelectItemAtIndexPath:) identifier:@"FWStatisticalManager"]) return;
             if (![collectionView fwStatisticalClickIsRegistered]) return;
             UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-            [collectionView fwStatisticalClickHandler:cell indexPath:indexPath];
+            [collectionView fwStatisticalTriggerClick:cell indexPath:indexPath];
         }));
         return;
     }
     
     if ([self isKindOfClass:[UIControl class]]) {
+        UIControlEvents controlEvents = UIControlEventTouchUpInside;
+        if ([self isKindOfClass:[UIDatePicker class]] ||
+            [self isKindOfClass:[UIPageControl class]] ||
+            [self isKindOfClass:[UISegmentedControl class]] ||
+            [self isKindOfClass:[UISlider class]] ||
+            [self isKindOfClass:[UIStepper class]] ||
+            [self isKindOfClass:[UISwitch class]] ||
+            [self isKindOfClass:[UITextField class]]) {
+            controlEvents = UIControlEventValueChanged;
+        }
         [(UIControl *)self fwAddBlock:^(UIControl *sender) {
-            [sender fwStatisticalClickHandler:nil indexPath:nil];
-        } forControlEvents:UIControlEventTouchUpInside];
+            [sender fwStatisticalTriggerClick:nil indexPath:nil];
+        } forControlEvents:controlEvents];
         return;
     }
     
     for (UIGestureRecognizer *gesture in self.gestureRecognizers) {
         if ([gesture isKindOfClass:[UITapGestureRecognizer class]]) {
             [gesture fwAddBlock:^(UIGestureRecognizer *sender) {
-                [sender.view fwStatisticalClickHandler:nil indexPath:nil];
+                [sender.view fwStatisticalTriggerClick:nil indexPath:nil];
             }];
         }
     }
@@ -219,12 +232,13 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
     return triggerCount;
 }
 
-- (void)fwStatisticalClickHandler:(UIView *)cell indexPath:(NSIndexPath *)indexPath
+- (void)fwStatisticalTriggerClick:(UIView *)cell indexPath:(NSIndexPath *)indexPath
 {
     FWStatisticalObject *object = cell.fwStatisticalClick ?: self.fwStatisticalClick;
     if (!object) object = [FWStatisticalObject new];
     object.view = self;
     object.indexPath = indexPath;
+    object.triggerFinished = YES;
     if (object.triggerIgnored) return;
     NSInteger triggerCount = [self fwStatisticalClickCount:indexPath];
     if (triggerCount > 1 && object.triggerOnce) return;
@@ -236,68 +250,6 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
         self.fwStatisticalClickBlock(object);
     }
     if (cell.fwStatisticalClick || self.fwStatisticalClick) {
-        [[FWStatisticalManager sharedInstance] handleEvent:object];
-    }
-}
-
-@end
-
-@implementation UIControl (FWStatistical)
-
-- (FWStatisticalObject *)fwStatisticalChanged
-{
-    return objc_getAssociatedObject(self, @selector(fwStatisticalChanged));
-}
-
-- (void)setFwStatisticalChanged:(FWStatisticalObject *)fwStatisticalChanged
-{
-    objc_setAssociatedObject(self, @selector(fwStatisticalChanged), fwStatisticalChanged, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self fwStatisticalChangedRegister];
-}
-
-- (FWStatisticalBlock)fwStatisticalChangedBlock
-{
-    return objc_getAssociatedObject(self, @selector(fwStatisticalChangedBlock));
-}
-
-- (void)setFwStatisticalChangedBlock:(FWStatisticalBlock)fwStatisticalChangedBlock
-{
-    objc_setAssociatedObject(self, @selector(fwStatisticalChangedBlock), fwStatisticalChangedBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self fwStatisticalChangedRegister];
-}
-
-#pragma mark - Private
-
-- (void)fwStatisticalChangedRegister
-{
-    if (objc_getAssociatedObject(self, _cmd) != nil) return;
-    objc_setAssociatedObject(self, _cmd, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
-    [self fwAddBlock:^(UIControl *sender) {
-        [sender fwStatisticalChangedHandler];
-    } forControlEvents:UIControlEventValueChanged];
-}
-
-- (NSInteger)fwStatisticalChangedCount
-{
-    NSInteger triggerCount = [objc_getAssociatedObject(self, _cmd) integerValue] + 1;
-    objc_setAssociatedObject(self, _cmd, @(triggerCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    return triggerCount;
-}
-
-- (void)fwStatisticalChangedHandler
-{
-    FWStatisticalObject *object = self.fwStatisticalChanged ?: [FWStatisticalObject new];
-    object.view = self;
-    if (object.triggerIgnored) return;
-    NSInteger triggerCount = [self fwStatisticalChangedCount];
-    if (triggerCount > 1 && object.triggerOnce) return;
-    object.triggerCount = triggerCount;
-    
-    if (self.fwStatisticalChangedBlock) {
-        self.fwStatisticalChangedBlock(object);
-    }
-    if (self.fwStatisticalChanged) {
         [[FWStatisticalManager sharedInstance] handleEvent:object];
     }
 }
