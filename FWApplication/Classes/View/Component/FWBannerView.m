@@ -234,8 +234,8 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
 @property (nonatomic, weak) NSTimer *timer;
 @property (nonatomic, assign) NSInteger totalItemsCount;
 @property (nonatomic, weak) UIControl *pageControl;
-@property (nonatomic, copy) FWStatisticalCallback clickCallback;
-@property (nonatomic, copy) FWStatisticalCallback exposureCallback;
+@property (nonatomic, copy) FWStatisticalClickCallback clickCallback;
+@property (nonatomic, copy) FWStatisticalExposureCallback exposureCallback;
 
 @end
 
@@ -954,12 +954,12 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
 
 #pragma mark - FWStatisticalDelegate
 
-- (void)statisticalClickWithCallback:(FWStatisticalCallback)callback
+- (void)statisticalClickWithCallback:(FWStatisticalClickCallback)callback
 {
     self.clickCallback = callback;
 }
 
-- (void)statisticalExposureWithCallback:(FWStatisticalCallback)callback
+- (void)statisticalExposureWithCallback:(FWStatisticalExposureCallback)callback
 {
     self.exposureCallback = callback;
     
@@ -972,7 +972,7 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
     
     NSInteger itemIndex = [_flowLayout currentPage];
     UICollectionViewCell *cell = [self.mainView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:itemIndex inSection:0]];
-    self.exposureCallback(cell, [NSIndexPath indexPathForRow:[self pageControlIndexWithCurrentCellIndex:itemIndex] inSection:0]);
+    self.exposureCallback(cell, [NSIndexPath indexPathForRow:[self pageControlIndexWithCurrentCellIndex:itemIndex] inSection:0], 0);
 }
 
 @end

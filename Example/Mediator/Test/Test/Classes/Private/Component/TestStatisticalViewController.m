@@ -208,7 +208,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
         }
     }];
     
-    NSArray *imageUrls = @[@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg", [TestBundle imageNamed:@"public_picture"], @"http://www.ioncannon.net/wp-content/uploads/2011/06/test2.webp", @"http://littlesvr.ca/apng/images/SteamEngine.webp", @"not_found.jpg", @"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif"];
+    NSArray *imageUrls = @[@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg", [TestBundle imageNamed:@"public_picture"], @"http://kvm.wuyong.site/images/images/animation.png", @"http://littlesvr.ca/apng/images/SteamEngine.webp", @"not_found.jpg", @"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif"];
     self.bannerView.imageURLStringsGroup = imageUrls;
     NSArray *sectionTitles = @[@"Section0", @"Section1", @"Section2", @"Section3", @"Section4", @"Section5", @"Section6", @"Section7", @"Section8"];
     self.segmentedControl.sectionTitles = sectionTitles;
@@ -223,12 +223,12 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     FWWeakifySelf();
     [FWStatisticalManager sharedInstance].globalHandler = ^(FWStatisticalObject *object) {
         BOOL isExposure = [object.name containsString:@"exposure"] ? YES : NO;
-        NSString *type = isExposure ? @"曝光" : ([object.view isKindOfClass:[UISwitch class]] ? @"改变" : @"点击");
+        NSString *type = isExposure ? @"曝光" : @"点击";
         if (isExposure) {
-            FWLogDebug(@"%@%@通知: \nindexPath: %@\ncount: %@\nname: %@\nobject: %@\nuserInfo: %@", NSStringFromClass(object.view.class), type, [NSString stringWithFormat:@"%@.%@", @(object.indexPath.section), @(object.indexPath.row)], @(object.triggerCount), object.name, object.object, object.userInfo);
+            FWLogDebug(@"%@%@通知: \nindexPath: %@\ncount: %@\nname: %@\nobject: %@\nuserInfo: %@\nduration: %@\ntotalDuration: %@", NSStringFromClass(object.view.class), type, [NSString stringWithFormat:@"%@.%@", @(object.indexPath.section), @(object.indexPath.row)], @(object.triggerCount), object.name, object.object, object.userInfo, @(object.triggerDuration), @(object.totalDuration));
         } else {
             FWStrongifySelf();
-            [self showToast:[NSString stringWithFormat:@"%@%@事件: \nindexPath: %@\ncount: %@\nname: %@\nobject: %@\nuserInfo: %@", NSStringFromClass(object.view.class), [object.view isKindOfClass:[UISwitch class]] ? @"改变" : @"点击", [NSString stringWithFormat:@"%@.%@", @(object.indexPath.section), @(object.indexPath.row)], @(object.triggerCount), object.name, object.object, object.userInfo]];
+            [self showToast:[NSString stringWithFormat:@"%@%@事件: \nindexPath: %@\ncount: %@\nname: %@\nobject: %@\nuserInfo: %@", NSStringFromClass(object.view.class), type, [NSString stringWithFormat:@"%@.%@", @(object.indexPath.section), @(object.indexPath.row)], @(object.triggerCount), object.name, object.object, object.userInfo]];
         }
     };
     

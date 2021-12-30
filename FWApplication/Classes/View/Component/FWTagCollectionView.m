@@ -15,8 +15,8 @@
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, assign) BOOL needsLayoutTagViews;
 @property (nonatomic, assign) NSUInteger actualNumberOfLines;
-@property (nonatomic, copy) FWStatisticalCallback clickCallback;
-@property (nonatomic, copy) FWStatisticalCallback exposureCallback;
+@property (nonatomic, copy) FWStatisticalClickCallback clickCallback;
+@property (nonatomic, copy) FWStatisticalExposureCallback exposureCallback;
 @property (nonatomic, copy) NSArray<NSNumber *> *exposureIndexes;
 @end
 
@@ -504,11 +504,11 @@
 
 #pragma mark - FWStatisticalDelegate
 
-- (void)statisticalClickWithCallback:(FWStatisticalCallback)callback {
+- (void)statisticalClickWithCallback:(FWStatisticalClickCallback)callback {
     self.clickCallback = callback;
 }
 
-- (void)statisticalExposureWithCallback:(FWStatisticalCallback)callback {
+- (void)statisticalExposureWithCallback:(FWStatisticalExposureCallback)callback {
     self.exposureCallback = callback;
     
     [self statisticalExposureDidChange];
@@ -523,7 +523,7 @@
     [_containerView.subviews enumerateObjectsUsingBlock:^(__kindof UIView *obj, NSUInteger idx, BOOL *stop) {
         [exposureIndexes addObject:@(obj.hash)];
         if (![previousIndexes containsObject:@(obj.hash)]) {
-            self.exposureCallback(nil, [NSIndexPath indexPathForRow:idx inSection:0]);
+            self.exposureCallback(nil, [NSIndexPath indexPathForRow:idx inSection:0], 0);
         }
     }];
     self.exposureIndexes = [exposureIndexes copy];
@@ -1300,11 +1300,11 @@
 
 #pragma mark - FWStatisticalDelegate
 
-- (void)statisticalClickWithCallback:(FWStatisticalCallback)callback {
+- (void)statisticalClickWithCallback:(FWStatisticalClickCallback)callback {
     [self.tagCollectionView statisticalClickWithCallback:callback];
 }
 
-- (void)statisticalExposureWithCallback:(FWStatisticalCallback)callback {
+- (void)statisticalExposureWithCallback:(FWStatisticalExposureCallback)callback {
     [self.tagCollectionView statisticalExposureWithCallback:callback];
 }
 
