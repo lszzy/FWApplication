@@ -37,8 +37,8 @@ NSUInteger FWSegmentedControlNoSegment = (NSUInteger)-1;
 @property (nonatomic, strong) NSMutableArray *accessibilityElements;
 @property (nonatomic, strong) NSMutableArray *titleBackgroundLayers;
 
-@property (nonatomic, copy) FWStatisticalCallback clickCallback;
-@property (nonatomic, copy) FWStatisticalCallback exposureCallback;
+@property (nonatomic, copy) FWStatisticalClickCallback clickCallback;
+@property (nonatomic, copy) FWStatisticalExposureCallback exposureCallback;
 @property (nonatomic, copy) NSArray<NSNumber *> *exposureIndexes;
 
 @end
@@ -1199,11 +1199,11 @@ NSUInteger FWSegmentedControlNoSegment = (NSUInteger)-1;
 
 #pragma mark - FWStatisticalDelegate
 
-- (void)statisticalClickWithCallback:(FWStatisticalCallback)callback {
+- (void)statisticalClickWithCallback:(FWStatisticalClickCallback)callback {
     self.clickCallback = callback;
 }
 
-- (void)statisticalExposureWithCallback:(FWStatisticalCallback)callback {
+- (void)statisticalExposureWithCallback:(FWStatisticalExposureCallback)callback {
     self.exposureCallback = callback;
     
     [self statisticalExposureDidChange];
@@ -1235,7 +1235,7 @@ NSUInteger FWSegmentedControlNoSegment = (NSUInteger)-1;
         if (currentMin >= visibleMin && currentMax <= visibleMax) {
             [exposureIndexes addObject:@(i)];
             if (![previousIndexes containsObject:@(i)]) {
-                self.exposureCallback(nil, [NSIndexPath indexPathForRow:i inSection:0]);
+                self.exposureCallback(nil, [NSIndexPath indexPathForRow:i inSection:0], 0);
             }
         }
         currentMin = currentMax;
