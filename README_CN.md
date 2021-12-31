@@ -15,7 +15,7 @@ iOS应用框架，方便iOS开发，兼容OC和Swift。
 本框架所有Swizzle默认不会生效，不会对现有项目产生影响，需要手工开启或调用才会生效。本库已经在正式项目使用，后续也会一直维护扩展，欢迎大家使用并提出宝贵意见，共同成长。
 
 ## 安装教程
-推荐使用CocoaPods安装，自动管理依赖。如需手工导入请参考Example项目配置。
+推荐使用CocoaPods或Swift Package Manager安装，自动管理依赖。如需手工导入请参考Example项目配置。
 
 ### CocoaPods
 本框架支持CocoaPods，Podfile示例：
@@ -28,11 +28,23 @@ iOS应用框架，方便iOS开发，兼容OC和Swift。
 	  pod 'FWApplication'
 	  
 	  # 引入指定子模块，子模块列表详见podspec文件
-	  # pod 'FWApplication', :subspecs => ['FWApplication', 'SDWebImage']
+	  # pod 'FWApplication', :subspecs => ['FWApplication', 'Compatible', 'SDWebImage']
 	end
+	
+### Swift Package Manager
+本框架支持Swift Package Manager，添加并勾选所需模块即可，Package示例：
+
+	https://github.com/lszzy/FWApplication.git
+	
+	# 勾选并引入默认子模块
+	import FWApplication
+	
+	# 勾选并引入指定子模块，子模块列表详见Package.swift文件
+	import FWApplicationCompatible
+	import FWApplicationSDWebImage
 
 ## [Api文档](https://fwapplication.wuyong.site)
-文档位于docs文件夹，浏览器打开index.html即可，也可运行docs.sh自动生成Api文档。
+文档位于Document文件夹，浏览器打开index.html即可，也可运行Document.sh自动生成Api文档。
 
 ## [更新日志](CHANGELOG_CN.md)
 由于本框架一直在升级优化和扩展新功能，各版本Api可能会有些许变动，如果升级新版本时编译报错，解决方案如下：

@@ -15,7 +15,7 @@ iOS application framework, convenient for iOS development, compatible with OC an
 All Swizzles in this framework will not take effect by default and will not affect existing projects. They need to be manually opened or invoked to take effect. This library has been used in formal projects, and will continue to be maintained and expanded in the future. Everyone is welcome to use and provide valuable comments to grow together.
 
 ## Installation
-It is recommended to use CocoaPods to install and automatically manage dependencies. For manual import, please refer to Example project configuration.
+It is recommended to use CocoaPods or Swift Package Manager to install and automatically manage dependencies. For manual import, please refer to Example project configuration.
 
 ### CocoaPods
 This framework supports CocoaPods, Podfile example:
@@ -28,11 +28,23 @@ This framework supports CocoaPods, Podfile example:
 	  pod 'FWApplication'
 	  
 	  # Import the specified subspecs, see the podspec file for the list of subspecs
-	  # pod 'FWApplication', :subspecs => ['FWApplication', 'SDWebImage']
+	  # pod 'FWApplication', :subspecs => ['FWApplication', 'Compatible', 'SDWebImage']
 	end
 
+### Swift Package Manager
+This framework supports Swift Package Manager, just add and check the required modules, Package example:
+
+	https://github.com/lszzy/FWApplication.git
+	
+	# Check and import the default submodule
+	import FWApplication
+	
+	# Check and import the specified sub-modules, see the Package.swift file for the list of sub-modules
+	import FWApplicationCompatible
+	import FWApplicationSDWebImage
+
 ## [Api](https://fwapplication.wuyong.site)
-The document is located in the docs folder, just open index.html in the browser, or run docs.sh to automatically generate the Api document.
+The document is located in the Document folder, just open index.html in the browser, or run Document.sh to automatically generate the Api document.
 
 ## [Changelog](CHANGELOG.md)
 As this framework is constantly upgrading, optimizing and expanding new functions, the Api of each version may be slightly changed. If a compilation error is reported when the new version is upgraded, the solution is as follows:

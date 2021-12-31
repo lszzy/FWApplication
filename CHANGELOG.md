@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0] - 2021-12-31
+
+### Added
+* Refactored Pod sub-module, split OC and Swift code
+* Support Swift Package Manager
+* Added FWStatisticalObject to determine exposure and completion attributes
+
 ## [1.1.1] - 2021-12-30
 
 ### Changed
