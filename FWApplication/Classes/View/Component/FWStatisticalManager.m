@@ -78,6 +78,8 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 @property (nonatomic, assign) NSInteger triggerCount;
 @property (nonatomic, assign) NSTimeInterval triggerDuration;
 @property (nonatomic, assign) NSTimeInterval totalDuration;
+@property (nonatomic, assign) BOOL isExposure;
+@property (nonatomic, assign) BOOL isFinished;
 
 @end
 
@@ -258,6 +260,8 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
     object.view = self;
     object.indexPath = indexPath;
     object.triggerCount = triggerCount;
+    object.isExposure = NO;
+    object.isFinished = YES;
     
     if (cell.fwStatisticalClickBlock) {
         cell.fwStatisticalClickBlock(object);
@@ -626,6 +630,8 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     object.triggerCount = triggerCount;
     object.triggerDuration = duration;
     object.totalDuration = [self fwStatisticalExposureDuration:duration indexPath:indexPath];
+    object.isExposure = YES;
+    object.isFinished = duration > 0;
     
     if (cell.fwStatisticalExposureBlock) {
         cell.fwStatisticalExposureBlock(object);

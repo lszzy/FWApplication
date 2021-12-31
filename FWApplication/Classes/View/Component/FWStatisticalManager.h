@@ -24,12 +24,14 @@ typedef void (^FWStatisticalBlock)(FWStatisticalObject *object);
 /// 统计点击回调block，参数cell为表格子cell，indexPath为表格子cell所在位置
 typedef void (^FWStatisticalClickCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath);
 
-/// 统计曝光回调block，参数cell为表格子cell，indexPath为表格子cell所在位置，duration为曝光时长
+/// 统计曝光回调block，参数cell为表格子cell，indexPath为表格子cell所在位置，duration为曝光时长(0表示开始)
 typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath, NSTimeInterval duration);
 
 /**
  事件统计管理器
- @note 视图从不可见变为完全可见时触发曝光事件，暂不支持曝光时长统计，可自行实现。
+ @note 视图从不可见变为可见时曝光开始，触发曝光开始事件(triggerDuration为0)；
+ 视图从可见到不可见时曝光结束，视为一次曝光，触发曝光结束事件(triggerDuration大于0)并统计曝光时长。
+ 目前暂未实现曝光时长统计，仅触发开始事件用于统计次数，可自行处理时长统计，注意应用退后台时不计曝光时间。
  默认运行模式时，视图快速滚动不计算曝光，可配置runLoopMode快速滚动时也计算曝光
  */
 @interface FWStatisticalManager : NSObject
@@ -70,18 +72,21 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 @property (nonatomic, weak, readonly, nullable) __kindof UIView *view;
 /// 事件来源位置，触发时自动赋值
 @property (nonatomic, strong, readonly, nullable) NSIndexPath *indexPath;
-
 /// 事件触发次数，触发时自动赋值
 @property (nonatomic, assign, readonly) NSInteger triggerCount;
-/// 事件触发单次时长，仅曝光支持，触发时自动赋值
+/// 事件触发单次时长，0表示曝光开始，仅曝光支持，触发时自动赋值
 @property (nonatomic, assign, readonly) NSTimeInterval triggerDuration;
 /// 事件触发总时长，仅曝光支持，触发时自动赋值
 @property (nonatomic, assign, readonly) NSTimeInterval totalDuration;
+/// 是否是曝光事件，默认NO为点击事件
+@property (nonatomic, assign, readonly) BOOL isExposure;
+/// 事件是否完成，注意曝光会触发两次，第一次为NO曝光开始，第二次为YES曝光结束
+@property (nonatomic, assign, readonly) BOOL isFinished;
+
 /// 是否事件仅触发一次，默认NO
 @property (nonatomic, assign) BOOL triggerOnce;
 /// 是否忽略事件触发，默认NO
 @property (nonatomic, assign) BOOL triggerIgnored;
-
 /// 曝光遮挡视图，被遮挡时不计曝光
 @property (nonatomic, weak, nullable) UIView *shieldView;
 /// 曝光遮挡视图句柄，被遮挡时不计曝光
@@ -106,7 +111,7 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /// 自定义点击事件统计方式(单次)，仅注册时调用一次，点击触发时必须调用callback。参数cell为表格子cell，indexPath为表格子cell所在位置
 - (void)statisticalClickWithCallback:(FWStatisticalClickCallback)callback;
 
-/// 自定义曝光事件统计方式(多次)，当视图绑定曝光、完全曝光时会调用，曝光触发时必须调用callback。参数cell为表格子cell，indexPath为表格子cell所在位置，duration为曝光时长
+/// 自定义曝光事件统计方式(多次)，当视图绑定曝光、完全曝光时会调用，曝光触发时必须调用callback。参数cell为表格子cell，indexPath为表格子cell所在位置，duration为曝光时长(0表示开始)
 - (void)statisticalExposureWithCallback:(FWStatisticalExposureCallback)callback;
 
 /// 自定义cell事件代理视图，仅cell生效。默认为所在tableView|collectionView，如果不同，实现此方法即可
@@ -145,7 +150,7 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /// 绑定统计曝光事件，仅触发回调
 @property (nullable, nonatomic, copy) FWStatisticalBlock fwStatisticalExposureBlock;
 
-/// 手工触发统计曝光事件，更新曝光次数和时长，列表可指定cell和位置，duration为单次曝光时长，可重复触发
+/// 手工触发统计曝光事件，更新曝光次数和时长，列表可指定cell和位置，duration为单次曝光时长(0表示开始)，可重复触发
 - (void)fwStatisticalTriggerExposure:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath duration:(NSTimeInterval)duration;
 
 @end
