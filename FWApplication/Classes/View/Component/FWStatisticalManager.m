@@ -392,7 +392,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
         __weak __typeof__(self) self_weak_ = self;
         [(id<FWStatisticalDelegate>)self statisticalExposureWithCallback:^(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath, NSTimeInterval duration) {
             __typeof__(self) self = self_weak_;
-            if ([self fwStatisticalExposureState] == FWStatisticalExposureStateFully) {
+            if ([self fwStatisticalExposureFullyState:[self fwStatisticalExposureState]]) {
                 [self fwStatisticalTriggerExposure:cell indexPath:indexPath duration:duration];
             }
         }];
@@ -478,9 +478,9 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     FWStatisticalExposureState state = [self fwStatisticalExposureState];
     if (state == oldState && !identifierChanged) return;
     objc_setAssociatedObject(self, @selector(fwStatisticalExposureState), @(state), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    BOOL isFully = [self fwStatisticalExposureIsFully];
     
-    if (state == FWStatisticalExposureStateFully && (!isFully || identifierChanged)) {
+    if ([self fwStatisticalExposureFullyState:state] &&
+        (![self fwStatisticalExposureIsFully] || identifierChanged)) {
         [self setFwStatisticalExposureIsFully:YES];
         if ([self fwStatisticalExposureCustom]) {
         } else if ([self isKindOfClass:[UITableViewCell class]]) {
@@ -493,6 +493,15 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     } else if (state == FWStatisticalExposureStateNone || identifierChanged) {
         [self setFwStatisticalExposureIsFully:NO];
     }
+}
+
+- (BOOL)fwStatisticalExposureFullyState:(FWStatisticalExposureState)state
+{
+    BOOL isFullyState = (state == FWStatisticalExposureStateFully);
+    if (!isFullyState && FWStatisticalManager.sharedInstance.exposurePartly) {
+        isFullyState = (state == FWStatisticalExposureStatePartly);
+    }
+    return isFullyState;
 }
 
 #pragma mark - Private
