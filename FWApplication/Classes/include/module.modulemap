@@ -1,0 +1,6 @@
+
+module FWApplication {
+    umbrella header "FWApplication/FWApplication.h"
+    export *
+    module * { export * }
+}

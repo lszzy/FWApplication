@@ -66,7 +66,7 @@
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     FWAuthorizeType type = [[rowData objectAtIndex:1] integerValue];
     
-    FWAuthorizeManager *manager = [FWAuthorizeManager managerWithType:type];
+    id<FWAuthorizeProtocol> manager = [FWAuthorizeManager managerWithType:type];
     FWAuthorizeStatus status = manager.authorizeStatus;
     NSString *typeText = [rowData objectAtIndex:0];
     BOOL canSelect = NO;
@@ -91,7 +91,7 @@
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     FWAuthorizeType type = [[rowData objectAtIndex:1] integerValue];
     
-    FWAuthorizeManager *manager = [FWAuthorizeManager managerWithType:type];
+    id<FWAuthorizeProtocol> manager = [FWAuthorizeManager managerWithType:type];
     if (manager.authorizeStatus == FWAuthorizeStatusNotDetermined) {
         FWWeakifySelf();
         [manager authorize:^(FWAuthorizeStatus status) {

@@ -1,0 +1,1 @@
+../../FWApplication/App/Plugin/Picker/FWAssetManager.h

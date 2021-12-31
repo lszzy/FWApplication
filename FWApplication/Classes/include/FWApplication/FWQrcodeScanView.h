@@ -1,0 +1,1 @@
+../../FWApplication/View/Component/FWQrcodeScanView.h
