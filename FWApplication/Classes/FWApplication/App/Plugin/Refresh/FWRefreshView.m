@@ -9,9 +9,9 @@
 
 #import "FWRefreshView.h"
 #import "FWViewPlugin.h"
-#import "FWMessage.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWPullRefreshArrowView
 

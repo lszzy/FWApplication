@@ -8,14 +8,9 @@
  */
 
 #import "FWWebView.h"
-#import "FWAutoLayout.h"
 #import "FWAlertPlugin.h"
-#import "FWSwizzle.h"
-#import "FWMessage.h"
-#import "FWEncode.h"
-#import "FWProxy.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWWebView
 

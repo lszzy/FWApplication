@@ -8,11 +8,8 @@
  */
 
 #import "UISearchBar+FWApplication.h"
-#import "FWSwizzle.h"
-#import "FWMessage.h"
-#import "FWAdaptive.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UISearchBar (FWApplication)
 

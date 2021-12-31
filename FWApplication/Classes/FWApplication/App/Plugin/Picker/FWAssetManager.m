@@ -8,8 +8,8 @@
  */
 
 #import "FWAssetManager.h"
-#import "FWSwizzle.h"
 #import <CoreServices/UTCoreTypes.h>
+@import FWFramework;
 
 #pragma mark - FWAsset
 

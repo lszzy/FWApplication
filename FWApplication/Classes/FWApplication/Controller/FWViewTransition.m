@@ -7,9 +7,8 @@
 //
 
 #import "FWViewTransition.h"
-#import "FWAutoLayout.h"
-#import "FWUIKit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWAnimatedTransition
 

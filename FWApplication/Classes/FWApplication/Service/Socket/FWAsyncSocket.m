@@ -29,7 +29,7 @@
 #import <sys/un.h>
 #import <unistd.h>
 
-#import "FWLog.h"
+@import FWFramework;
 
 #define LogError(frmt, ...)     FWLogError(frmt, ##__VA_ARGS__)
 #define LogWarn(frmt, ...)      FWLogWarn(frmt, ##__VA_ARGS__)

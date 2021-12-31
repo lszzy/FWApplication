@@ -7,10 +7,8 @@
 //
 
 #import "FWAlertPluginImpl.h"
-#import "FWSwizzle.h"
-#import "FWMessage.h"
-#import "FWProxy.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - UIViewController+FWAlertPriority
 

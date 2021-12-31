@@ -9,9 +9,8 @@
 
 #import "FWToastPlugin.h"
 #import "FWToastPluginImpl.h"
-#import "FWPlugin.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWToastPluginView
 

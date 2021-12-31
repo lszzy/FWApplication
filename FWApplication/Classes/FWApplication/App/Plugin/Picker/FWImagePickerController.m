@@ -11,18 +11,14 @@
 #import "FWImagePickerPluginImpl.h"
 #import "FWImageCropController.h"
 #import "FWToolbarView.h"
-#import "FWAdaptive.h"
-#import "FWAppearance.h"
-#import "FWToolkit.h"
-#import "FWBlock.h"
 #import "FWEmptyPlugin.h"
 #import "FWToastPlugin.h"
 #import "FWAlertPlugin.h"
 #import "FWViewPlugin.h"
 #import "FWImagePlugin.h"
-#import "FWSwizzle.h"
 #import "FWAppBundle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWImageAlbumTableCell
 

@@ -8,7 +8,7 @@
 // Github <https://github.com/netyouli/WHC_ModelSqliteKit>
 
 #import "FWDatabase.h"
-#import "FWLog.h"
+@import FWFramework;
 #import <objc/runtime.h>
 #import <objc/message.h>
 #import <CommonCrypto/CommonDigest.h>

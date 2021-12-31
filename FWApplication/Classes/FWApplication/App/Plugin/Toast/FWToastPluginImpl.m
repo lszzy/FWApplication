@@ -8,7 +8,7 @@
  */
 
 #import "FWToastPluginImpl.h"
-#import "FWAutoLayout.h"
+@import FWFramework;
 
 #pragma mark - FWToastPluginImpl
 

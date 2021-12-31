@@ -9,7 +9,7 @@
 
 #import "FWSDWebImagePlugin.h"
 #import "FWImagePlugin.h"
-#import "FWPlugin.h"
+@import FWFramework;
 @import SDWebImage;
 
 @interface FWSDWebImagePlugin () <FWImagePlugin>

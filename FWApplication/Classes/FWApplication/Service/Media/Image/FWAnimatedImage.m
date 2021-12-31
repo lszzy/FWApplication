@@ -8,11 +8,11 @@
  */
 
 #import "FWAnimatedImage.h"
-#import "FWToolkit.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <ImageIO/ImageIO.h>
 #import <dlfcn.h>
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - UIImage+FWAnimated
 

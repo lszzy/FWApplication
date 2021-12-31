@@ -8,9 +8,9 @@
  */
 
 #import "FWWebImage.h"
-#import "FWPlugin.h"
 #import "FWHTTPSessionManager.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWAutoPurgingImageCache
 

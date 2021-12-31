@@ -9,9 +9,7 @@
 
 #import "FWImagePickerPlugin.h"
 #import "FWImagePickerPluginImpl.h"
-#import "FWPlugin.h"
-#import "FWNavigation.h"
-#import "FWToolkit.h"
+@import FWFramework;
 
 #pragma mark - FWImagePickerPluginController
 

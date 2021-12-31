@@ -9,9 +9,9 @@
 
 #import "FWImagePickerPluginImpl.h"
 #import "FWImageCropController.h"
-#import "FWEncode.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWImagePickerControllerDelegate
 

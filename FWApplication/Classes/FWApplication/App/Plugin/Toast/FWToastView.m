@@ -9,8 +9,7 @@
 
 #import "FWToastView.h"
 #import "FWViewPlugin.h"
-#import "FWAutoLayout.h"
-#import "FWBlock.h"
+@import FWFramework;
 
 #pragma mark - FWToastView
 

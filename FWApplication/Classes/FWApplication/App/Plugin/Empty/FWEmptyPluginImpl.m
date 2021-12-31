@@ -8,8 +8,7 @@
  */
 
 #import "FWEmptyPluginImpl.h"
-#import "FWAutoLayout.h"
-#import "FWBlock.h"
+@import FWFramework;
 
 #pragma mark - FWEmptyPluginImpl
 

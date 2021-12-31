@@ -8,8 +8,8 @@
  */
 
 #import "UIControl+FWApplication.h"
-#import "FWSwizzle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UIControl (FWApplication)
 

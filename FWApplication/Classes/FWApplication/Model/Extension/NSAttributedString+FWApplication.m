@@ -8,9 +8,7 @@
  */
 
 #import "NSAttributedString+FWApplication.h"
-#import "FWAppearance.h"
-#import "FWToolkit.h"
-#import "FWTheme.h"
+@import FWFramework;
 
 #pragma mark - FWAttributedOption
 

@@ -7,7 +7,7 @@
 //
 
 #import "FWAlertController.h"
-#import "FWAdaptive.h"
+@import FWFramework;
 
 #pragma mark ---------------------------- FWAlertControllerAppearance begin --------------------------------
 

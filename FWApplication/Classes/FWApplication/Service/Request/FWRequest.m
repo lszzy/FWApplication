@@ -24,7 +24,7 @@
 #import "FWNetworkConfig.h"
 #import "FWRequest.h"
 #import "FWNetworkPrivate.h"
-#import "FWEncode.h"
+@import FWFramework;
 
 #ifndef NSFoundationVersionNumber_iOS_8_0
 #define NSFoundationVersionNumber_With_QoS_Available 1140.11

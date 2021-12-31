@@ -8,11 +8,11 @@
  */
 
 #import "UIImage+FWApplication.h"
-#import "FWToolkit.h"
 #import "UIBezierPath+FWApplication.h"
 #import <CoreText/CoreText.h>
 #import <Accelerate/Accelerate.h>
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UIImage (FWApplication)
 

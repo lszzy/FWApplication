@@ -9,12 +9,9 @@
 
 #import "FWZoomImageView.h"
 #import "FWAppBundle.h"
-#import "FWAutoLayout.h"
-#import "FWAdaptive.h"
-#import "FWEncode.h"
-#import "FWToolkit.h"
 #import "FWViewPlugin.h"
 #import "FWImagePlugin.h"
+@import FWFramework;
 
 #pragma mark - FWZoomImageVideoPlayerView
 

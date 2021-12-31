@@ -16,13 +16,16 @@ let package = Package(
             targets: ["FWApplication", "FWApplicationCompatible"]),
         .library(
             name: "FWApplicationSDWebImage",
-            targets: ["FWApplication", "FWApplicationSDWebImage"]),
+            targets: ["FWApplication", "FWApplicationSDWebImage"])
     ],
     dependencies: [
+        .package(url: "https://github.com/lszzy/FWFramework.git", from: "2.1.0"),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.9.0"),
     ],
     targets: [
         .target(
             name: "FWApplication",
+            dependencies: ["FWFramework"],
             path: "FWApplication/Classes",
             sources: [
                 "FWApplication/App",
@@ -53,7 +56,7 @@ let package = Package(
             ]),
         .target(
             name: "FWApplicationSDWebImage",
-            dependencies: ["FWApplication"],
+            dependencies: ["FWApplication", "SDWebImage"],
             path: "FWApplication/Classes/Module/SDWebImage",
             cSettings: [
                 .define("FWApplicationSPM", to: "1")

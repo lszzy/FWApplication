@@ -9,13 +9,8 @@
 
 #import "FWToolbarView.h"
 #import "FWViewPluginImpl.h"
-#import "FWAutoLayout.h"
-#import "FWSwizzle.h"
-#import "FWToolkit.h"
-#import "FWAdaptive.h"
-#import "FWBlock.h"
-#import "FWNavigation.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWToolbarView
 

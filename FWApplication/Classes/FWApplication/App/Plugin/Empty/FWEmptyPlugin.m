@@ -9,11 +9,8 @@
 
 #import "FWEmptyPlugin.h"
 #import "FWEmptyPluginImpl.h"
-#import "FWPlugin.h"
-#import "FWProxy.h"
-#import "FWSwizzle.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWEmptyPluginView
 

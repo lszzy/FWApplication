@@ -8,11 +8,8 @@
  */
 
 #import "FWWebViewController.h"
-#import "FWMessage.h"
-#import "FWAutoLayout.h"
-#import "FWBlock.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWViewControllerManager+FWWebViewController
 

@@ -7,8 +7,8 @@
 //
 
 #import "UITextField+FWApplication.h"
-#import "FWSwizzle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - UITextField+FWApplication
 

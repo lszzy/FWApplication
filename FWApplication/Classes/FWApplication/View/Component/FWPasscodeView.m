@@ -8,8 +8,8 @@
  */
 
 #import "FWPasscodeView.h"
-#import "FWAutoLayout.h"
 #import "UITextField+FWApplication.h"
+@import FWFramework;
 
 @implementation FWPasscodeFlowLayout
 

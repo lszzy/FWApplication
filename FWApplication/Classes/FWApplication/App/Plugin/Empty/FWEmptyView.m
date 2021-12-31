@@ -9,8 +9,8 @@
 
 #import "FWEmptyView.h"
 #import "FWViewPlugin.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWEmptyView
 

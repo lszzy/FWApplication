@@ -8,8 +8,8 @@
  */
 
 #import "UINavigationController+FWApplication.h"
-#import "FWSwizzle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UINavigationController (FWApplication)
 

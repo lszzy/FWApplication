@@ -8,8 +8,8 @@
  */
 
 #import "FWPlayerCache.h"
-#import "FWEncode.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+@import FWFramework;
 
 #pragma mark - FWPlayerCacheLoaderManager
 

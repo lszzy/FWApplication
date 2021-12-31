@@ -8,8 +8,8 @@
  */
 
 #import "FWViewController.h"
-#import "FWSwizzle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - UIViewController+FWViewController
 

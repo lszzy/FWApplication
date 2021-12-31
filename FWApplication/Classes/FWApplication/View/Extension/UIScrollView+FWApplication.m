@@ -7,9 +7,8 @@
 //
 
 #import "UIScrollView+FWApplication.h"
-#import "FWAutoLayout.h"
-#import "FWSwizzle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UIScrollView (FWApplication)
 

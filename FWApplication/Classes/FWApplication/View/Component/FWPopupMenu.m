@@ -8,8 +8,7 @@
  */
 
 #import "FWPopupMenu.h"
-#import "FWAdaptive.h"
-#import "FWNavigation.h"
+@import FWFramework;
 
 #pragma mark - FWPopupMenuPath
 

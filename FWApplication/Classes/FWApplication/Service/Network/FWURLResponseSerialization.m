@@ -20,11 +20,11 @@
 // THE SOFTWARE.
 
 #import "FWURLResponseSerialization.h"
-#import "FWEncode.h"
 #import <TargetConditionals.h>
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
 #import <objc/runtime.h>
+@import FWFramework;
 
 NSString * const FWURLResponseSerializationErrorDomain = @"site.wuyong.error.serialization.response";
 NSString * const FWNetworkingOperationFailingURLResponseErrorKey = @"site.wuyong.serialization.response.error.response";

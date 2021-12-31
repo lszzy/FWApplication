@@ -8,8 +8,8 @@
  */
 
 #import "FWView.h"
-#import "FWProxy.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UIView (FWView)
 

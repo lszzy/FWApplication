@@ -8,9 +8,8 @@
  */
 
 #import "FWImagePlugin.h"
-#import "FWPlugin.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 FWImageCoderOptions const FWImageCoderOptionScaleFactor = @"imageScaleFactor";
 

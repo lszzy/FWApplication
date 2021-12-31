@@ -10,10 +10,8 @@
 #import "FWStatisticalManager.h"
 #import "UITableView+FWApplication.h"
 #import "UICollectionView+FWApplication.h"
-#import "FWSwizzle.h"
-#import "FWBlock.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWStatistical
 

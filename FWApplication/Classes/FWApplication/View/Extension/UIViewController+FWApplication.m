@@ -7,10 +7,8 @@
 //
 
 #import "UIViewController+FWApplication.h"
-#import "FWAutoLayout.h"
-#import "FWSwizzle.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - UIViewController+FWApplication
 

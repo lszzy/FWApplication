@@ -9,8 +9,8 @@
 
 #import "UIView+FWApplication.h"
 #import "UIBezierPath+FWApplication.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UIView (FWApplication)
 

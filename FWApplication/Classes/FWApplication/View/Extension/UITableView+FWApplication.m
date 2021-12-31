@@ -7,9 +7,8 @@
 //
 
 #import "UITableView+FWApplication.h"
-#import "FWDynamicLayout.h"
-#import "FWAutoLayout.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 @implementation UITableView (FWApplication)
 

@@ -8,10 +8,8 @@
 
 #import "FWAlertPlugin.h"
 #import "FWAlertPluginImpl.h"
-#import "FWPlugin.h"
-#import "FWNavigation.h"
-#import "FWToolkit.h"
 #import "FWAppBundle.h"
+@import FWFramework;
 
 #pragma mark - FWAlertPluginController
 

@@ -7,10 +7,8 @@
 //
 
 #import "FWBadgeView.h"
-#import "FWAutoLayout.h"
-#import "FWMessage.h"
-#import "FWSwizzle.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWBadgeView
 

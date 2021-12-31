@@ -8,8 +8,7 @@
  */
 
 #import "FWImagePreviewController.h"
-#import "FWAdaptive.h"
-#import "FWToolkit.h"
+@import FWFramework;
 
 #pragma mark - FWImagePreviewView
 

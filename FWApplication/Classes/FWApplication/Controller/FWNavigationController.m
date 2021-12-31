@@ -9,9 +9,8 @@
 
 #import "FWNavigationController.h"
 #import "FWNavigationStyle.h"
-#import "FWSwizzle.h"
-#import "FWProxy.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - UINavigationController+FWBarTransition
 

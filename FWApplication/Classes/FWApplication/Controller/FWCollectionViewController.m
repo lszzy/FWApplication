@@ -8,9 +8,8 @@
  */
 
 #import "FWCollectionViewController.h"
-#import "FWAutoLayout.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWViewControllerManager+FWCollectionViewController
 

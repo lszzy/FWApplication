@@ -9,7 +9,7 @@
 
 #import "FWViewPlugin.h"
 #import "FWViewPluginImpl.h"
-#import "FWPlugin.h"
+@import FWFramework;
 
 #pragma mark - UIView+FWViewPlugin
 

@@ -8,12 +8,12 @@
  */
 
 #import "UIDevice+FWApplication.h"
-#import "FWKeychain.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <net/if.h>
+@import FWFramework;
 
 static NSString *fwStaticDeviceUUID = nil;
 

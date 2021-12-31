@@ -7,8 +7,8 @@
 //
 
 #import "FWAlertControllerImpl.h"
-#import "FWMessage.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWAlertControllerPlugin
 

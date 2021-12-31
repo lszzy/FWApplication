@@ -9,9 +9,7 @@
 
 #import "FWImagePreviewPlugin.h"
 #import "FWImagePreviewPluginImpl.h"
-#import "FWPlugin.h"
-#import "FWNavigation.h"
-#import "FWToolkit.h"
+@import FWFramework;
 
 #pragma mark - FWImagePreviewPluginController
 

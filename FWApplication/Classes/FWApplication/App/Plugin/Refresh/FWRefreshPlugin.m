@@ -9,7 +9,7 @@
 
 #import "FWRefreshPlugin.h"
 #import "FWRefreshPluginImpl.h"
-#import "FWPlugin.h"
+@import FWFramework;
 
 #pragma mark - UIScrollView+FWRefreshPlugin
 

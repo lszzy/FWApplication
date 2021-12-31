@@ -8,8 +8,8 @@
  */
 
 #import "FWDrawerView.h"
-#import "FWToolkit.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWDrawerView
 

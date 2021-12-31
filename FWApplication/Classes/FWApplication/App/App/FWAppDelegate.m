@@ -8,7 +8,7 @@
  */
 
 #import "FWAppDelegate.h"
-#import "FWMediator.h"
+@import FWFramework;
 
 #define FWSafeArgument(obj) obj ? obj : [NSNull null]
 
