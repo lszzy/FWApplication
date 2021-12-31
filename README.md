@@ -44,7 +44,7 @@ This framework supports Swift Package Manager, just add and check the required m
 	import FWApplicationSDWebImage
 
 ## [Api](https://fwapplication.wuyong.site)
-The document is located in the Document folder, just open index.html in the browser, or run Document.sh to automatically generate the Api document.
+The document is located in the docs folder, just open index.html in the browser, or run docs.sh to automatically generate the Api document.
 
 ## [Changelog](CHANGELOG.md)
 As this framework is constantly upgrading, optimizing and expanding new functions, the Api of each version may be slightly changed. If a compilation error is reported when the new version is upgraded, the solution is as follows:
