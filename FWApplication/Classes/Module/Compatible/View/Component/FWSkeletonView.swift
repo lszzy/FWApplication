@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import FWFramework
+#if FWApplicationSPM
+import FWApplication
+#endif
 
 // MARK: - FWSkeletonAnimation
 

@@ -6,7 +6,10 @@
 //  Copyright © 2020 wuyong.site. All rights reserved.
 //
 
-import Foundation
+import UIKit
+#if FWApplicationSPM
+import FWApplication
+#endif
 
 extension FWCollectionViewController where Self: UIViewController {
     /// 集合视图，默认不显示滚动条

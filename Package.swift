@@ -57,8 +57,8 @@ let package = Package(
                 .headerSearchPath("FWApplication/Service/Request"),
                 .headerSearchPath("FWApplication/Service/Socket"),
                 .headerSearchPath("FWApplication/View"),
-                .headerSearchPath("FWApplication/Component"),
-                .headerSearchPath("FWApplication/Extension"),
+                .headerSearchPath("FWApplication/View/Component"),
+                .headerSearchPath("FWApplication/View/Extension"),
                 .headerSearchPath("include")
             ]),
         .target(

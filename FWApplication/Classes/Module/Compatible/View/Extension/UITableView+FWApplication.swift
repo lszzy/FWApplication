@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if FWApplicationSPM
+import FWApplication
+#endif
 
 /// 便捷表格视图代理
 @objcMembers open class FWTableViewDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {

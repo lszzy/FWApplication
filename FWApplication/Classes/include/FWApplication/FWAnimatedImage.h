@@ -1,1 +1,1 @@
-../../FWApplication/Service/Media/Image/FWAnimatedImage.h
+../../FWApplication/Service/Media/FWAnimatedImage.h

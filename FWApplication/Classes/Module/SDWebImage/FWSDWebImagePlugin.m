@@ -8,9 +8,13 @@
  */
 
 #import "FWSDWebImagePlugin.h"
-#import "FWImagePlugin.h"
 @import FWFramework;
 @import SDWebImage;
+#if FWApplicationSPM
+@import FWApplication;
+#else
+#import "FWImagePlugin.h"
+#endif
 
 @interface FWSDWebImagePlugin () <FWImagePlugin>
 

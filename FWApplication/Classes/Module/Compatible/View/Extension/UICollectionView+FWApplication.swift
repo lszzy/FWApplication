@@ -7,6 +7,9 @@
 //
 
 import UIKit
+#if FWApplicationSPM
+import FWApplication
+#endif
 
 /// 便捷集合视图代理
 @objcMembers open class FWCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
