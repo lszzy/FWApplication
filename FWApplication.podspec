@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     # ss.resource_bundles = { 'FWApplication' => ['FWApplication/Assets/**/*.*'] }
     ss.source_files = 'FWApplication/Classes/FWApplication/**/*.{h,m,swift}'
     ss.library = 'sqlite3'
-    ss.dependency 'FWFramework'
+    ss.dependency 'FWFramework', "~> 2.1"
   end
 
   s.subspec 'Compatible' do |ss|
