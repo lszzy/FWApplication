@@ -7,6 +7,7 @@
  @updated    2018/12/26
  */
 
+#import <Foundation/Foundation.h>
 #import "FWCacheMemory.h"
 #import "FWCacheUserDefaults.h"
 #import "FWCacheKeychain.h"

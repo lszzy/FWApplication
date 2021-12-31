@@ -9,7 +9,6 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
-#import "Foundation+FWApplication.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

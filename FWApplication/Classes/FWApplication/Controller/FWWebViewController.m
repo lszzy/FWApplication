@@ -8,6 +8,7 @@
  */
 
 #import "FWWebViewController.h"
+#import "FWNavigationController.h"
 #import <objc/runtime.h>
 @import FWFramework;
 
