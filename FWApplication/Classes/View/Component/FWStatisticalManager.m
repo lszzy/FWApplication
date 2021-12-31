@@ -70,8 +70,11 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 
 @interface FWStatisticalObject ()
 
-@property (nonatomic, weak, nullable) __kindof UIView *view;
-@property (nonatomic, strong, nullable) NSIndexPath *indexPath;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, strong) id object;
+@property (nonatomic, copy) NSDictionary *userInfo;
+@property (nonatomic, weak) __kindof UIView *view;
+@property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, assign) NSInteger triggerCount;
 @property (nonatomic, assign) NSTimeInterval triggerDuration;
 @property (nonatomic, assign) NSTimeInterval totalDuration;
@@ -99,6 +102,19 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
         _userInfo = [userInfo copy];
     }
     return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    FWStatisticalObject *object = [[[self class] allocWithZone:zone] init];
+    object.name = [self.name copy];
+    object.object = self.object;
+    object.userInfo = [self.userInfo copy];
+    object.triggerOnce = self.triggerOnce;
+    object.triggerIgnored = self.triggerIgnored;
+    object.shieldView = self.shieldView;
+    object.shieldViewBlock = self.shieldViewBlock;
+    return object;
 }
 
 @end
@@ -403,8 +419,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 
 - (FWStatisticalExposureState)fwStatisticalExposureState
 {
-    if (self == nil || self.hidden || self.alpha <= 0.01 || !self.window ||
-        self.bounds.size.width == 0 || self.bounds.size.height == 0) {
+    if (!self.fwIsViewVisible) {
         return FWStatisticalExposureStateNone;
     }
     
@@ -417,8 +432,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     UIView *superview = self.superview;
     BOOL superviewHidden = NO;
     while (superview && superview != targetView) {
-        if (superview.hidden || superview.alpha <= 0.01 ||
-            superview.bounds.size.width == 0 || superview.bounds.size.height == 0) {
+        if (!superview.fwIsViewVisible) {
             superviewHidden = YES;
             break;
         }
@@ -449,8 +463,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     } else if (self.fwStatisticalExposure.shieldViewBlock) {
         shieldView = self.fwStatisticalExposure.shieldViewBlock();
     }
-    if (!shieldView || shieldView.hidden || shieldView.alpha <= 0.01 ||
-        shieldView.bounds.size.width == 0 || shieldView.bounds.size.height == 0) {
+    if (!shieldView || !shieldView.fwIsViewVisible) {
         return state;
     }
     CGRect shieldRect = [shieldView convertRect:shieldView.bounds toView:targetView];

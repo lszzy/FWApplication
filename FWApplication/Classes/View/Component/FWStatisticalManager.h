@@ -57,7 +57,7 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /**
  事件统计对象
  */
-@interface FWStatisticalObject : NSObject
+@interface FWStatisticalObject : NSObject <NSCopying>
 
 /// 事件绑定名称，未绑定时为空
 @property (nonatomic, copy, readonly, nullable) NSString *name;
