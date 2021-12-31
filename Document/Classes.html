@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 1.1.1 Docs</a> (58% documented)</p>
+        <p><a href="index.html">FWApplication 1.2.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -5224,34 +5224,6 @@ The minimum croping aspect ratio. If set, user is prevented from setting croppin
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWSDWebImagePlugin"></a>
-                    <a name="//apple_ref/swift/Class/FWSDWebImagePlugin" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWSDWebImagePlugin">FWSDWebImagePlugin</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>SDWebImage图片插件，启用Component_SDWebImage组件后生效</p>
-
-                        <a href="Classes/FWSDWebImagePlugin.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWSDWebImagePlugin</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n"><a href="Protocols/FWImagePlugin.html">FWImagePlugin</a></span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -7608,6 +7580,34 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:objc(cs)FWSDWebImagePlugin"></a>
+                    <a name="//apple_ref/swift/Class/FWSDWebImagePlugin" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWSDWebImagePlugin">FWSDWebImagePlugin</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SDWebImage图片插件，启用SDWebImage子模块后生效</p>
+
+                        <a href="Classes/FWSDWebImagePlugin.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWSDWebImagePlugin</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:objc(cs)FWSceneDelegate"></a>
                     <a name="//apple_ref/swift/Class/FWSceneDelegate" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)FWSceneDelegate">FWSceneDelegate</a>
@@ -7723,7 +7723,9 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                         <p>事件统计管理器</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    视图从不可见变为完全可见时触发曝光事件，暂不支持曝光时长统计，可自行实现。
+    视图从不可见变为可见时曝光开始，触发曝光开始事件(triggerDuration为0)；
+视图从可见到不可见时曝光结束，视为一次曝光，触发曝光结束事件(triggerDuration大于0)并统计曝光时长。
+目前暂未实现曝光时长统计，仅触发开始事件用于统计次数，可自行处理时长统计，注意应用退后台时不计曝光时间。
 默认运行模式时，视图快速滚动不计算曝光，可配置runLoopMode快速滚动时也计算曝光
 
 </div>
@@ -7762,7 +7764,7 @@ cache control policy controlled by <code>Cache-Control</code>, <code>Last-Modifi
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWStatisticalObject</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">FWStatisticalObject</span> <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n">NSCopying</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -10366,7 +10368,7 @@ MARK: UITabBarItem properties
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2021 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2021-12-30)</p>
+          <p>&copy; 2021 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2021-12-31)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

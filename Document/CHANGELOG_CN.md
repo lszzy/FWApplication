@@ -1,5 +1,12 @@
 # 更新日志
 
+## [1.2.0] - 2021-12-31
+
+### Added
+* 重构Pod子模块，拆分OC和Swift代码
+* 支持Swift Package Manager
+* 新增FWStatisticalObject判断曝光和完成属性
+
 ## [1.1.1] - 2021-12-30
 
 ### Changed

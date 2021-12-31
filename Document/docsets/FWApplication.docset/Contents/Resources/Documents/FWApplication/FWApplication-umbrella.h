@@ -23,7 +23,6 @@
 #import "FWEmptyPluginImpl.h"
 #import "FWEmptyView.h"
 #import "FWImagePlugin.h"
-#import "FWImagePluginImpl.h"
 #import "FWAssetManager.h"
 #import "FWImageCropController.h"
 #import "FWImagePickerController.h"
@@ -75,10 +74,10 @@
 #import "FWCacheSqlite.h"
 #import "FWCacheUserDefaults.h"
 #import "FWDatabase.h"
-#import "FWAudioPlayer.h"
 #import "FWAnimatedImage.h"
-#import "FWWebImage.h"
+#import "FWAudioPlayer.h"
 #import "FWPlayerCache.h"
+#import "FWWebImage.h"
 #import "FWHTTPSessionManager.h"
 #import "FWNetworkReachabilityManager.h"
 #import "FWOAuth2Manager.h"
@@ -139,6 +138,7 @@
 #import "UIViewController+FWApplication.h"
 #import "UIWindow+FWApplication.h"
 #import "FWView.h"
+#import "FWSDWebImagePlugin.h"
 
 FOUNDATION_EXPORT double FWApplicationVersionNumber;
 FOUNDATION_EXPORT const unsigned char FWApplicationVersionString[];

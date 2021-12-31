@@ -16,7 +16,7 @@ find "$framework_name/Classes" -type f ! -regex '*.h' -name '*.h' \
 
 sourcekitten doc -- -project _Pods.xcodeproj -target $framework_name > "Document/$framework_name/swift.json"
 sourcekitten doc --objc "Document/$framework_name/$umbrella_name" -- -x objective-c -isysroot $(xcrun --show-sdk-path --sdk iphonesimulator) -I $(pwd) -fmodules > "Document/$framework_name/objc.json"
-jazzy --sourcekitten-sourcefile "Document/$framework_name/swift.json","Document/$framework_name/objc.json"
+jazzy --output Document --sourcekitten-sourcefile "Document/$framework_name/swift.json","Document/$framework_name/objc.json"
 
 rm -rf "Document/$framework_name"
 cp *.md Document/
