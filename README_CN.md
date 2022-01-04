@@ -7,7 +7,7 @@
 
 # [FWFramework](https://github.com/lszzy/FWFramework)
 
-# [English](README.md)
+# [English](https://github.com/lszzy/FWApplication/blob/main/README.md)
 
 ## 帮助文档
 iOS应用框架，方便iOS开发，兼容OC和Swift。
@@ -46,7 +46,7 @@ iOS应用框架，方便iOS开发，兼容OC和Swift。
 ## [Api文档](https://fwapplication.wuyong.site)
 文档位于docs文件夹，浏览器打开index.html即可，也可运行docs.sh自动生成Api文档。
 
-## [更新日志](CHANGELOG_CN.md)
+## [更新日志](https://github.com/lszzy/FWApplication/blob/main/CHANGELOG_CN.md)
 由于本框架一直在升级优化和扩展新功能，各版本Api可能会有些许变动，如果升级新版本时编译报错，解决方案如下：
 
 	1. 改为指定pod版本号引入即可，推荐方式，不影响项目进度，有空才升级到新版本，示例：pod 'FWApplication', '1.0.0'
