@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.2.1] - 2022-01-11
+
+### Fixed
+* Fix the problem that Swift cannot access the appearance singleton method
+
 ## [1.2.0] - 2021-12-31
 
 ### Added

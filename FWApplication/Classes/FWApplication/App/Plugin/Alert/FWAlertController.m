@@ -13,7 +13,7 @@
 
 @implementation FWAlertControllerAppearance
 
-+ (instancetype)appearance {
++ (FWAlertControllerAppearance *)appearance {
     static FWAlertControllerAppearance *appearance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
