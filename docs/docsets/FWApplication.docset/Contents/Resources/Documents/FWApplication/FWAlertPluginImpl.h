@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FWAlertAppearance : NSObject
 
 // 单例模式，统一设置样式
-+ (instancetype)appearance;
+@property (class, nonatomic, readonly) FWAlertAppearance *appearance;
 
 // 自定义首选动作句柄，默认nil，跟随系统
 @property (nonatomic, copy, nullable) id _Nullable (^preferredActionBlock)(id alertController);
