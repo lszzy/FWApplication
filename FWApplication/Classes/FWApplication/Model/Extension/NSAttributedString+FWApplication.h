@@ -92,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat lineSpacingMultiplier;
 
 // Appearance，统一设置样式
-+ (instancetype)appearance;
+@property (class, nonatomic, readonly) FWAttributedOption *appearance;
 
 // 转换为属性字典
 - (NSDictionary<NSAttributedStringKey, id> *)toDictionary;

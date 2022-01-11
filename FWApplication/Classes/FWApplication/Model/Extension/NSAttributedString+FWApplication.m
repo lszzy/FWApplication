@@ -20,7 +20,7 @@
 
 #pragma mark - Lifecycle
 
-+ (instancetype)appearance
++ (FWAttributedOption *)appearance
 {
     return [FWAppearance appearanceForClass:[self class]];
 }

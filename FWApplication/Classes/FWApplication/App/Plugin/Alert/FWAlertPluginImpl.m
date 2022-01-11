@@ -323,12 +323,12 @@
 
 @implementation FWAlertAppearance
 
-+ (instancetype)appearance
++ (FWAlertAppearance *)appearance
 {
     static FWAlertAppearance *appearance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        appearance = [[self alloc] init];
+        appearance = [[FWAlertAppearance alloc] init];
     });
     return appearance;
 }
