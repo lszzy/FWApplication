@@ -10,57 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - UIViewController+FWAlertPriority
-
-// 视图控制器弹窗优先级分类，支持优先级
-@interface UIViewController (FWAlertPriority)
-
-// 启用弹出框优先级，未启用不生效
-@property (nonatomic, assign) BOOL fwAlertPriorityEnabled;
-
-// 设置弹出优先级，默认普通
-@property (nonatomic, assign) FWAlertPriority fwAlertPriority;
-
-// 设置弹出框在指定控制器中按照优先级显示
-- (void)fwAlertPriorityPresentIn:(UIViewController *)viewController;
-
-@end
-
-#pragma mark - UIAlertAction+FWAlert
-
-/**
- 系统弹出框动作分类，自定义属性
- @note 系统弹出动作title仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
-*/
-@interface UIAlertAction (FWAlert)
-
-// 快速创建弹出动作，title仅支持NSString
-+ (instancetype)fwActionWithObject:(nullable id)object style:(UIAlertActionStyle)style handler:(void (^ __nullable)(UIAlertAction *action))handler;
-
-// 指定标题颜色
-@property (nonatomic, strong, nullable) UIColor *fwTitleColor;
-
-@end
-
-#pragma mark - UIAlertController+FWAlert
-
-/**
- 系统弹出框控制器分类，自定义样式
- @note 系统弹出框title和message仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
-*/
-@interface UIAlertController (FWAlert)
-
-// 快速创建弹出控制器，title和message仅支持NSString
-+ (instancetype)fwAlertControllerWithTitle:(nullable id)title message:(nullable id)message preferredStyle:(UIAlertControllerStyle)preferredStyle;
-
-// 设置属性标题
-@property (nonatomic, copy, nullable) NSAttributedString *fwAttributedTitle;
-
-// 设置属性消息
-@property (nonatomic, copy, nullable) NSAttributedString *fwAttributedMessage;
-
-@end
-
 #pragma mark - FWAlertAppearance
 
 /**
@@ -98,6 +47,69 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) UIColor *destructiveActionColor;
 // 禁用动作颜色，仅全局生效，默认nil
 @property (nonatomic, strong, nullable) UIColor *disabledActionColor;
+
+@end
+
+#pragma mark - UIViewController+FWAlertPriority
+
+// 视图控制器弹窗优先级分类，支持优先级
+@interface UIViewController (FWAlertPriority)
+
+// 启用弹出框优先级，未启用不生效
+@property (nonatomic, assign) BOOL fwAlertPriorityEnabled;
+
+// 设置弹出优先级，默认普通
+@property (nonatomic, assign) FWAlertPriority fwAlertPriority;
+
+// 设置弹出框在指定控制器中按照优先级显示
+- (void)fwAlertPriorityPresentIn:(UIViewController *)viewController;
+
+@end
+
+#pragma mark - UIAlertAction+FWAlert
+
+/**
+ 系统弹出框动作分类，自定义属性
+ @note 系统弹出动作title仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
+*/
+@interface UIAlertAction (FWAlert)
+
+// 快速创建弹出动作，title仅支持NSString
++ (instancetype)fwActionWithObject:(nullable id)object style:(UIAlertActionStyle)style handler:(void (^ __nullable)(UIAlertAction *action))handler;
+
+// 快速创建弹出动作，title仅支持NSString，支持appearance
++ (instancetype)fwActionWithObject:(nullable id)object style:(UIAlertActionStyle)style appearance:(nullable FWAlertAppearance *)appearance handler:(void (^ __nullable)(UIAlertAction *action))handler;
+
+// 自定义样式，默认为样式单例
+@property (nonatomic, strong, readonly) FWAlertAppearance *fwAlertAppearance;
+
+// 指定标题颜色
+@property (nonatomic, strong, nullable) UIColor *fwTitleColor;
+
+@end
+
+#pragma mark - UIAlertController+FWAlert
+
+/**
+ 系统弹出框控制器分类，自定义样式
+ @note 系统弹出框title和message仅支持NSString，如果需要支持NSAttributedString等，请使用FWAlertController
+*/
+@interface UIAlertController (FWAlert)
+
+// 快速创建弹出控制器，title和message仅支持NSString
++ (instancetype)fwAlertControllerWithTitle:(nullable id)title message:(nullable id)message preferredStyle:(UIAlertControllerStyle)preferredStyle;
+
+// 快速创建弹出控制器，title和message仅支持NSString，支持自定义样式
++ (instancetype)fwAlertControllerWithTitle:(nullable id)title message:(nullable id)message preferredStyle:(UIAlertControllerStyle)preferredStyle appearance:(nullable FWAlertAppearance *)appearance;
+
+// 自定义样式，默认为样式单例
+@property (nonatomic, strong, readonly) FWAlertAppearance *fwAlertAppearance;
+
+// 设置属性标题
+@property (nonatomic, copy, nullable) NSAttributedString *fwAttributedTitle;
+
+// 设置属性消息
+@property (nonatomic, copy, nullable) NSAttributedString *fwAttributedMessage;
 
 @end
 

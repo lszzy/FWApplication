@@ -26,19 +26,19 @@
 - (void)setFwIsPreferred:(BOOL)fwIsPreferred
 {
     objc_setAssociatedObject(self, @selector(fwIsPreferred), @(fwIsPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    if (self.attributedTitle || self.title.length < 1 || !FWAlertAppearance.appearance.actionEnabled) return;
+    if (self.attributedTitle || self.title.length < 1 || !self.alertAppearance.actionEnabled) return;
     
     UIColor *titleColor = nil;
     if (!self.enabled) {
-        titleColor = FWAlertAppearance.appearance.disabledActionColor;
+        titleColor = self.alertAppearance.disabledActionColor;
     } else if (fwIsPreferred) {
-        titleColor = FWAlertAppearance.appearance.preferredActionColor;
+        titleColor = self.alertAppearance.preferredActionColor;
     } else if (self.style == UIAlertActionStyleDestructive) {
-        titleColor = FWAlertAppearance.appearance.destructiveActionColor;
+        titleColor = self.alertAppearance.destructiveActionColor;
     } else if (self.style == UIAlertActionStyleCancel) {
-        titleColor = FWAlertAppearance.appearance.cancelActionColor;
+        titleColor = self.alertAppearance.cancelActionColor;
     } else {
-        titleColor = FWAlertAppearance.appearance.actionColor;
+        titleColor = self.alertAppearance.actionColor;
     }
     if (titleColor) self.titleColor = titleColor;
 }
@@ -106,8 +106,8 @@
     }
     
     // 添加首选按钮
-    if (FWAlertAppearance.appearance.preferredActionBlock && alertController.actions.count > 0) {
-        FWAlertAction *preferredAction = FWAlertAppearance.appearance.preferredActionBlock(alertController);
+    if (alertController.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
+        FWAlertAction *preferredAction = alertController.alertAppearance.preferredActionBlock(alertController);
         if (preferredAction) {
             alertController.preferredAction = preferredAction;
         }
@@ -154,8 +154,8 @@
     }
     
     // 添加首选按钮
-    if (FWAlertAppearance.appearance.preferredActionBlock && alertController.actions.count > 0) {
-        FWAlertAction *preferredAction = FWAlertAppearance.appearance.preferredActionBlock(alertController);
+    if (alertController.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
+        FWAlertAction *preferredAction = alertController.alertAppearance.preferredActionBlock(alertController);
         if (preferredAction) {
             alertController.preferredAction = preferredAction;
         }
@@ -177,31 +177,33 @@
     NSAttributedString *attributedMessage = [message isKindOfClass:[NSAttributedString class]] ? message : nil;
     FWAlertController *alertController = [FWAlertController alertControllerWithTitle:(attributedTitle ? nil : title)
                                                                              message:(attributedMessage ? nil : message)
-                                                                      preferredStyle:preferredStyle];
+                                                                      preferredStyle:preferredStyle
+                                                                       animationType:FWAlertAnimationTypeDefault
+                                                                          appearance:self.customAppearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
     if (attributedTitle) {
         alertController.attributedTitle = attributedTitle;
-    } else if (alertController.title.length > 0 && FWAlertAppearance.appearance.controllerEnabled) {
+    } else if (alertController.title.length > 0 && alertController.alertAppearance.controllerEnabled) {
         NSMutableDictionary *titleAttributes = [NSMutableDictionary new];
-        if (FWAlertAppearance.appearance.titleFont) {
-            titleAttributes[NSFontAttributeName] = FWAlertAppearance.appearance.titleFont;
+        if (alertController.alertAppearance.titleFont) {
+            titleAttributes[NSFontAttributeName] = alertController.alertAppearance.titleFont;
         }
-        if (FWAlertAppearance.appearance.titleColor) {
-            titleAttributes[NSForegroundColorAttributeName] = FWAlertAppearance.appearance.titleColor;
+        if (alertController.alertAppearance.titleColor) {
+            titleAttributes[NSForegroundColorAttributeName] = alertController.alertAppearance.titleColor;
         }
         alertController.attributedTitle = [[NSAttributedString alloc] initWithString:alertController.title attributes:titleAttributes];
     }
     
     if (attributedMessage) {
         alertController.attributedMessage = attributedMessage;
-    } else if (alertController.message.length > 0 && FWAlertAppearance.appearance.controllerEnabled) {
+    } else if (alertController.message.length > 0 && alertController.alertAppearance.controllerEnabled) {
         NSMutableDictionary *messageAttributes = [NSMutableDictionary new];
-        if (FWAlertAppearance.appearance.messageFont) {
-            messageAttributes[NSFontAttributeName] = FWAlertAppearance.appearance.messageFont;
+        if (alertController.alertAppearance.messageFont) {
+            messageAttributes[NSFontAttributeName] = alertController.alertAppearance.messageFont;
         }
-        if (FWAlertAppearance.appearance.messageColor) {
-            messageAttributes[NSForegroundColorAttributeName] = FWAlertAppearance.appearance.messageColor;
+        if (alertController.alertAppearance.messageColor) {
+            messageAttributes[NSForegroundColorAttributeName] = alertController.alertAppearance.messageColor;
         }
         alertController.attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
@@ -220,7 +222,8 @@
 {
     FWAlertController *alertController = [FWAlertController alertControllerWithCustomHeaderView:headerView
                                                                                  preferredStyle:preferredStyle
-                                                                                  animationType:FWAlertAnimationTypeDefault];
+                                                                                  animationType:FWAlertAnimationTypeDefault
+                                                                                     appearance:self.customAppearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
     [alertController fwObserveProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
