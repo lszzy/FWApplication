@@ -109,6 +109,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 单例模式对象
 @property (class, nonatomic, readonly) FWAlertPluginImpl *sharedInstance;
 
+/// 弹窗自定义样式，nil时使用单例
+@property (nonatomic, strong, nullable) FWAlertAppearance *customAppearance;
+
 /// 弹窗自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(UIAlertController *alertController);
 
