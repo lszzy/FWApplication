@@ -241,6 +241,7 @@
     NSAttributedString *attributedTitle = [object isKindOfClass:[NSAttributedString class]] ? object : nil;
     FWAlertAction *alertAction = [FWAlertAction actionWithTitle:(attributedTitle ? nil : object)
                                                           style:style
+                                                     appearance:self.customAppearance
                                                          handler:handler];
     
     if (attributedTitle) {
