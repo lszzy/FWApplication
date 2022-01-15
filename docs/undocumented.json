@@ -1,1946 +1,1946 @@
 {
   "warnings": [
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 82,
       "symbol": "FWTabBarController.tabBar(_:didSelect:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 98,
       "symbol": "FWTabBarController.tabBar(_:willBeginCustomizing:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 104,
       "symbol": "FWTabBarController.tabBar(_:didEndCustomizing:changed:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 142,
       "symbol": "FWTabBarItemPositioning.automatic",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 144,
       "symbol": "FWTabBarItemPositioning.fill",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 146,
       "symbol": "FWTabBarItemPositioning.centered",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 148,
       "symbol": "FWTabBarItemPositioning.fillExcludeSeparator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 150,
       "symbol": "FWTabBarItemPositioning.fillIncludeSeparator",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 219,
       "symbol": "FWTabBar.items",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 225,
       "symbol": "FWTabBar.isEditing",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 233,
       "symbol": "FWTabBar.setItems(_:animated:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 238,
       "symbol": "FWTabBar.beginCustomizingItems(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 243,
       "symbol": "FWTabBar.endCustomizing(animated:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 248,
       "symbol": "FWTabBar.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 253,
       "symbol": "FWTabBar.point(inside:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 657,
       "symbol": "FWTabBarItem.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 661,
       "symbol": "FWTabBarItem.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 708,
       "symbol": "FWTabBarItemContentMode",
       "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 710,
       "symbol": "FWTabBarItemContentMode.alwaysOriginal",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 712,
       "symbol": "FWTabBarItemContentMode.alwaysTemplate",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 716,
       "symbol": "FWTabBarItemContentView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 836,
       "symbol": "FWTabBarItemContentView.imageView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 842,
       "symbol": "FWTabBarItemContentView.titleLabel",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 900,
       "symbol": "FWTabBarItemContentView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 912,
       "symbol": "FWTabBarItemContentView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 916,
       "symbol": "FWTabBarItemContentView.updateDisplay()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 934,
       "symbol": "FWTabBarItemContentView.updateLayout()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1093,
       "symbol": "FWTabBarItemContentView.selectAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1097,
       "symbol": "FWTabBarItemContentView.deselectAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1101,
       "symbol": "FWTabBarItemContentView.reselectAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1105,
       "symbol": "FWTabBarItemContentView.highlightAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1109,
       "symbol": "FWTabBarItemContentView.dehighlightAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1113,
       "symbol": "FWTabBarItemContentView.badgeChangedAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1119,
       "symbol": "FWTabBarItemMoreContentView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1121,
       "symbol": "FWTabBarItemMoreContentView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1128,
       "symbol": "FWTabBarItemMoreContentView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1132,
       "symbol": "FWTabBarItemMoreContentView.systemMore(highlighted:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1169,
       "symbol": "FWTabBarItemBadgeView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1212,
       "symbol": "FWTabBarItemBadgeView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1219,
       "symbol": "FWTabBarItemBadgeView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Controller/FWTabBarController.swift",
       "line": 1244,
       "symbol": "FWTabBarItemBadgeView.sizeThatFits(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 18,
       "symbol": "FWVideoPlayerDelegate.playerReady(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 19,
       "symbol": "FWVideoPlayerDelegate.playerPlaybackStateDidChange(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 20,
       "symbol": "FWVideoPlayerDelegate.playerBufferingStateDidChange(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 21,
       "symbol": "FWVideoPlayerDelegate.playerBufferTimeDidChange(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 22,
       "symbol": "FWVideoPlayerDelegate.player(_:didFailWithError:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 27,
       "symbol": "FWVideoPlayerPlaybackDelegate.playerCurrentTimeDidChange(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 28,
       "symbol": "FWVideoPlayerPlaybackDelegate.playerPlaybackWillStartFromBeginning(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 29,
       "symbol": "FWVideoPlayerPlaybackDelegate.playerPlaybackDidEnd(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 30,
       "symbol": "FWVideoPlayerPlaybackDelegate.playerPlaybackWillLoop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 31,
       "symbol": "FWVideoPlayerPlaybackDelegate.playerPlaybackDidLoop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 36,
       "symbol": "FWVideoPlayerPlaybackState.stopped",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 37,
       "symbol": "FWVideoPlayerPlaybackState.playing",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 38,
       "symbol": "FWVideoPlayerPlaybackState.paused",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 39,
       "symbol": "FWVideoPlayerPlaybackState.failed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 44,
       "symbol": "FWVideoPlayerBufferingState.unknown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 45,
       "symbol": "FWVideoPlayerBufferingState.ready",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 46,
       "symbol": "FWVideoPlayerBufferingState.delayed",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 141,
       "symbol": "FWVideoPlayer.isPlayingVideo",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 242,
       "symbol": "FWVideoPlayer.player",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 249,
       "symbol": "FWVideoPlayer.playerView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 291,
       "symbol": "FWVideoPlayer.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 295,
       "symbol": "FWVideoPlayer.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 299,
       "symbol": "FWVideoPlayer.init(nibName:bundle:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 317,
       "symbol": "FWVideoPlayer.loadView()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 323,
       "symbol": "FWVideoPlayer.viewDidLoad()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 338,
       "symbol": "FWVideoPlayer.viewDidDisappear(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 808,
       "symbol": "FWVideoPlayerView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 810,
       "symbol": "FWVideoPlayerView.layerClass",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 816,
       "symbol": "FWVideoPlayerView.playerLayer",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 822,
       "symbol": "FWVideoPlayerView.player",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 832,
       "symbol": "FWVideoPlayerView.playerBackgroundColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 844,
       "symbol": "FWVideoPlayerView.playerFillMode",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 853,
       "symbol": "FWVideoPlayerView.isReadyForDisplay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 859,
       "symbol": "FWVideoPlayerView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/Service/Media/FWVideoPlayer.swift",
       "line": 865,
       "symbol": "FWVideoPlayerView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 18,
       "symbol": "FWPagingListContainerType.scrollView",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 19,
       "symbol": "FWPagingListContainerType.collectionView",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 23,
       "symbol": "FWPagingViewListViewDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 52,
       "symbol": "FWPagingListContainerViewDataSource",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 89,
       "symbol": "FWPagingListContainerView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 90,
       "symbol": "FWPagingListContainerView.type",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 91,
       "symbol": "FWPagingListContainerView.dataSource",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 92,
       "symbol": "FWPagingListContainerView.scrollView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 93,
       "symbol": "FWPagingListContainerView.isCategoryNestPagingEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 112,
       "symbol": "FWPagingListContainerView.listCellBackgroundColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 126,
       "symbol": "FWPagingListContainerView.init(dataSource:type:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 134,
       "symbol": "FWPagingListContainerView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 138,
       "symbol": "FWPagingListContainerView.commonInit()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 197,
       "symbol": "FWPagingListContainerView.willMove(toSuperview:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 209,
       "symbol": "FWPagingListContainerView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 239,
       "symbol": "FWPagingListContainerView.contentScrollView()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 243,
       "symbol": "FWPagingListContainerView.scrolling(from:to:percent:selectedIndex:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 246,
       "symbol": "FWPagingListContainerView.didClickSelectedItem(at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 260,
       "symbol": "FWPagingListContainerView.reloadData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 431,
       "symbol": "FWPagingListContainerView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 432,
       "symbol": "FWPagingListContainerView.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 437,
       "symbol": "FWPagingListContainerView.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 453,
       "symbol": "FWPagingListContainerView.collectionView(_:layout:sizeForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 457,
       "symbol": "FWPagingListContainerView.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 504,
       "symbol": "FWPagingListContainerView.scrollViewDidEndDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 517,
       "symbol": "FWPagingListContainerView.scrollViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 521,
       "symbol": "FWPagingListContainerView.scrollViewDidEndDragging(_:willDecelerate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 527,
       "symbol": "FWPagingListContainerView.scrollViewDidEndScrollingAnimation(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 605,
       "symbol": "FWPagingMainTableViewGestureDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 607,
       "symbol": "FWPagingMainTableViewGestureDelegate.mainTableViewGestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 611,
       "symbol": "FWPagingMainTableView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 612,
       "symbol": "FWPagingMainTableView.gestureDelegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 614,
       "symbol": "FWPagingMainTableView.gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 625,
       "symbol": "FWPagingViewDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 645,
       "symbol": "FWPagingViewDelegate.pagingView(_:mainTableViewDidScroll:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 646,
       "symbol": "FWPagingViewDelegate.pagingView(_:mainTableViewWillBeginDragging:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 647,
       "symbol": "FWPagingViewDelegate.pagingView(_:mainTableViewDidEndDragging:willDecelerate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 648,
       "symbol": "FWPagingViewDelegate.pagingView(_:mainTableViewDidEndDecelerating:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 649,
       "symbol": "FWPagingViewDelegate.pagingView(_:mainTableViewDidEndScrollingAnimation:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 675,
       "symbol": "FWPagingView.mainTableView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 676,
       "symbol": "FWPagingView.listContainerView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 681,
       "symbol": "FWPagingView.isListHorizontalScrollEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 688,
       "symbol": "FWPagingView.currentScrollingListView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 689,
       "symbol": "FWPagingView.currentList",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 696,
       "symbol": "FWPagingView.init(delegate:listContainerType:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 720,
       "symbol": "FWPagingView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 729,
       "symbol": "FWPagingView.reloadData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 741,
       "symbol": "FWPagingView.resizeTableHeaderViewHeight(animatable:duration:curve:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 767,
       "symbol": "FWPagingView.preferredProcessListViewDidScroll(scrollView:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 784,
       "symbol": "FWPagingView.preferredProcessMainTableViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 837,
       "symbol": "FWPagingView.mainTableViewMaxContentOffsetY()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 842,
       "symbol": "FWPagingView.setMainTableViewToMaxContentOffsetY()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 846,
       "symbol": "FWPagingView.minContentOffsetYInListScrollView(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 850,
       "symbol": "FWPagingView.setListScrollViewToMinContentOffsetY(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 865,
       "symbol": "FWPagingView.scrollToIndex(_:animated:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 874,
       "symbol": "FWPagingView.tableView(_:numberOfRowsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 878,
       "symbol": "FWPagingView.tableView(_:heightForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 882,
       "symbol": "FWPagingView.tableView(_:cellForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 895,
       "symbol": "FWPagingView.tableView(_:heightForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 899,
       "symbol": "FWPagingView.tableView(_:viewForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 905,
       "symbol": "FWPagingView.tableView(_:heightForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 909,
       "symbol": "FWPagingView.tableView(_:viewForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 915,
       "symbol": "FWPagingView.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 933,
       "symbol": "FWPagingView.scrollViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 939,
       "symbol": "FWPagingView.scrollViewDidEndDragging(_:willDecelerate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 946,
       "symbol": "FWPagingView.scrollViewDidEndDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 958,
       "symbol": "FWPagingView.scrollViewDidEndScrollingAnimation(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 997,
       "symbol": "FWPagingView.listContainerViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1001,
       "symbol": "FWPagingView.listContainerViewDidEndScrolling(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1005,
       "symbol": "FWPagingView.listContainerView(_:listDidAppearAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1021,
       "symbol": "FWPagingListRefreshView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1023,
       "symbol": "FWPagingListRefreshView.listScrollViewPinContentInsetBlock",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1027,
       "symbol": "FWPagingListRefreshView.init(delegate:listContainerType:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1033,
       "symbol": "FWPagingListRefreshView.preferredProcessMainTableViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1068,
       "symbol": "FWPagingListRefreshView.preferredProcessListViewDidScroll(scrollView:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1102,
       "symbol": "FWPagingListRefreshView.minContentOffsetYInListScrollView(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1110,
       "symbol": "FWPagingListRefreshView.setListScrollViewToMinContentOffsetY(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1119,
       "symbol": "FWPagingSmoothViewListViewDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1124,
       "symbol": "FWPagingSmoothViewListViewDelegate.listDidAppear()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1125,
       "symbol": "FWPagingSmoothViewListViewDelegate.listDidDisappear()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1129,
       "symbol": "FWPagingSmoothViewDataSource",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1147,
       "symbol": "FWPagingSmoothViewDelegate",
       "symbol_kind": "source.lang.swift.decl.protocol",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1148,
       "symbol": "FWPagingSmoothViewDelegate.pagingSmoothViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1152,
       "symbol": "FWPagingSmoothView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1153,
       "symbol": "FWPagingSmoothView.listDict",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1154,
       "symbol": "FWPagingSmoothView.listCollectionView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1155,
       "symbol": "FWPagingSmoothView.defaultSelectedIndex",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1156,
       "symbol": "FWPagingSmoothView.delegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1179,
       "symbol": "FWPagingSmoothView.init(dataSource:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1202,
       "symbol": "FWPagingSmoothView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1206,
       "symbol": "FWPagingSmoothView.reloadData()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1247,
       "symbol": "FWPagingSmoothView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1301,
       "symbol": "FWPagingSmoothView.observeValue(forKeyPath:of:change:context:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1374,
       "symbol": "FWPagingSmoothView",
       "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1375,
       "symbol": "FWPagingSmoothView.collectionView(_:layout:sizeForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1379,
       "symbol": "FWPagingSmoothView.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1384,
       "symbol": "FWPagingSmoothView.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1420,
       "symbol": "FWPagingSmoothView.collectionView(_:willDisplay:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1424,
       "symbol": "FWPagingSmoothView.collectionView(_:didEndDisplaying:forItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1428,
       "symbol": "FWPagingSmoothView.scrollViewDidScroll(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1447,
       "symbol": "FWPagingSmoothView.scrollViewDidEndDragging(_:willDecelerate:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1454,
       "symbol": "FWPagingSmoothView.scrollViewDidEndDecelerating(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1461,
       "symbol": "FWPagingSmoothCollectionView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWPagingView.swift",
       "line": 1463,
       "symbol": "FWPagingSmoothCollectionView.gestureRecognizer(_:shouldReceive:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 32,
       "symbol": "FWSignatureView.delegate",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 35,
       "symbol": "FWSignatureView.strokeWidth",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 41,
       "symbol": "FWSignatureView.strokeColor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 50,
       "symbol": "FWSignatureView.containsSignature",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 66,
       "symbol": "FWSignatureView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 74,
       "symbol": "FWSignatureView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 83,
       "symbol": "FWSignatureView.draw(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 89,
       "symbol": "FWSignatureView.touchesBegan(_:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 101,
       "symbol": "FWSignatureView.touchesMoved(_:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 121,
       "symbol": "FWSignatureView.touchesEnded(_:with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 136,
       "symbol": "FWSignatureView.gestureRecognizerShouldBegin(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 144,
       "symbol": "FWSignatureView.clear()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 150,
       "symbol": "FWSignatureView.getSignature(scale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 161,
       "symbol": "FWSignatureView.getCroppedSignature(scale:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 180,
       "symbol": "FWSignatureView.getPDFSignature()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 214,
       "symbol": "FWSignatureDelegate.didStart(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSignatureView.swift",
       "line": 215,
       "symbol": "FWSignatureDelegate.didFinish(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 19,
       "symbol": "FWSkeletonAnimationProtocol.skeletonAnimationStart(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 20,
       "symbol": "FWSkeletonAnimationProtocol.skeletonAnimationStop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 35,
       "symbol": "FWSkeletonAnimationDirection.right",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 36,
       "symbol": "FWSkeletonAnimationDirection.left",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 37,
       "symbol": "FWSkeletonAnimationDirection.down",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 38,
       "symbol": "FWSkeletonAnimationDirection.up",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 45,
       "symbol": "FWSkeletonAnimation.shimmer",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 46,
       "symbol": "FWSkeletonAnimation.solid",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 47,
       "symbol": "FWSkeletonAnimation.scale",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 49,
       "symbol": "FWSkeletonAnimation.fromValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 50,
       "symbol": "FWSkeletonAnimation.toValue",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 51,
       "symbol": "FWSkeletonAnimation.colors",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 52,
       "symbol": "FWSkeletonAnimation.duration",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 53,
       "symbol": "FWSkeletonAnimation.delay",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 54,
       "symbol": "FWSkeletonAnimation.repeatCount",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 55,
       "symbol": "FWSkeletonAnimation.direction",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 61,
       "symbol": "FWSkeletonAnimation.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 66,
       "symbol": "FWSkeletonAnimation.init(type:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 96,
       "symbol": "FWSkeletonAnimation.copy(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 108,
       "symbol": "FWSkeletonAnimation.mutableCopy(with:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 122,
       "symbol": "FWSkeletonAnimation.skeletonAnimationStart(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 199,
       "symbol": "FWSkeletonAnimation.skeletonAnimationStop(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 259,
       "symbol": "FWSkeletonView.layerClass",
       "symbol_kind": "source.lang.swift.decl.var.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 263,
       "symbol": "FWSkeletonView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 268,
       "symbol": "FWSkeletonView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 329,
       "symbol": "FWSkeletonLabel.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 390,
       "symbol": "FWSkeletonLayout.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 394,
       "symbol": "FWSkeletonLayout.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 605,
       "symbol": "FWSkeletonTableView.init(style:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 614,
       "symbol": "FWSkeletonTableView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 618,
       "symbol": "FWSkeletonTableView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 630,
       "symbol": "FWSkeletonTableView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 640,
       "symbol": "FWSkeletonTableView.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 645,
       "symbol": "FWSkeletonTableView.tableView(_:numberOfRowsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 653,
       "symbol": "FWSkeletonTableView.tableView(_:cellForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 677,
       "symbol": "FWSkeletonTableView.tableView(_:heightForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 681,
       "symbol": "FWSkeletonTableView.tableView(_:viewForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 704,
       "symbol": "FWSkeletonTableView.tableView(_:heightForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 708,
       "symbol": "FWSkeletonTableView.tableView(_:viewForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 731,
       "symbol": "FWSkeletonTableView.tableView(_:heightForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 760,
       "symbol": "FWSkeletonCollectionView.init(collectionViewLayout:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 769,
       "symbol": "FWSkeletonCollectionView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 773,
       "symbol": "FWSkeletonCollectionView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 785,
       "symbol": "FWSkeletonCollectionView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 795,
       "symbol": "FWSkeletonCollectionView.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 800,
       "symbol": "FWSkeletonCollectionView.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 813,
       "symbol": "FWSkeletonCollectionView.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 836,
       "symbol": "FWSkeletonCollectionView.collectionView(_:layout:sizeForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 840,
       "symbol": "FWSkeletonCollectionView.collectionView(_:layout:insetForSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 844,
       "symbol": "FWSkeletonCollectionView.collectionView(_:viewForSupplementaryElementOfKind:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 894,
       "symbol": "FWSkeletonCollectionView.collectionView(_:layout:referenceSizeForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 898,
       "symbol": "FWSkeletonCollectionView.collectionView(_:layout:referenceSizeForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Component/FWSkeletonView.swift",
       "line": 1116,
       "symbol": "UICollectionViewCell(FWApplication).skeletonViewLayout(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 85,
       "symbol": "FWCollectionViewDelegate.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 96,
       "symbol": "FWCollectionViewDelegate.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 107,
       "symbol": "FWCollectionViewDelegate.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 131,
       "symbol": "FWCollectionViewDelegate.collectionView(_:layout:sizeForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 173,
       "symbol": "FWCollectionViewDelegate.collectionView(_:layout:insetForSectionAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 177,
       "symbol": "FWCollectionViewDelegate.collectionView(_:viewForSupplementaryElementOfKind:at:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 203,
       "symbol": "FWCollectionViewDelegate.collectionView(_:layout:referenceSizeForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 222,
       "symbol": "FWCollectionViewDelegate.collectionView(_:layout:referenceSizeForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 241,
       "symbol": "FWCollectionViewDelegate.collectionView(_:didSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 247,
       "symbol": "UICollectionView(FWApplication).fwCollectionView()",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 255,
       "symbol": "UICollectionView(FWApplication).fwCollectionView(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UICollectionView+FWApplication.swift",
       "line": 262,
       "symbol": "UICollectionView(FWApplication).fwDelegate()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 72,
       "symbol": "FWTableViewDelegate.numberOfSections(in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 83,
       "symbol": "FWTableViewDelegate.tableView(_:numberOfRowsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 94,
       "symbol": "FWTableViewDelegate.tableView(_:cellForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 118,
       "symbol": "FWTableViewDelegate.tableView(_:heightForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 150,
       "symbol": "FWTableViewDelegate.tableView(_:viewForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 166,
       "symbol": "FWTableViewDelegate.tableView(_:heightForHeaderInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 189,
       "symbol": "FWTableViewDelegate.tableView(_:viewForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 205,
       "symbol": "FWTableViewDelegate.tableView(_:heightForFooterInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 228,
       "symbol": "FWTableViewDelegate.tableView(_:didSelectRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 232,
       "symbol": "FWTableViewDelegate.tableView(_:canEditRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 237,
       "symbol": "FWTableViewDelegate.tableView(_:titleForDeleteConfirmationButtonForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 241,
       "symbol": "FWTableViewDelegate.tableView(_:editingStyleForRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 246,
       "symbol": "FWTableViewDelegate.tableView(_:commit:forRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 254,
       "symbol": "UITableView(FWApplication).fwTableView()",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 258,
       "symbol": "UITableView(FWApplication).fwTableView(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/wuyong/Documents/github/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
+      "file": "/Users/wuyong/Documents/github/lszzy/FWApplication/FWApplication/Classes/Module/Compatible/View/Extension/UITableView+FWApplication.swift",
       "line": 266,
       "symbol": "UITableView(FWApplication).fwDelegate()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
@@ -1948,448 +1948,455 @@
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 13,
+      "line": 14,
       "symbol": "FWAlertControllerStyle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 13,
+      "line": 14,
       "symbol": "FWAlertControllerStyle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 14,
+      "line": 15,
       "symbol": "FWAlertControllerStyle.FWAlertControllerStyleActionSheet",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 15,
+      "line": 16,
       "symbol": "FWAlertControllerStyle.FWAlertControllerStyleAlert",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 18,
+      "line": 19,
       "symbol": "FWAlertAnimationType",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 18,
+      "line": 19,
       "symbol": "FWAlertAnimationType",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 19,
+      "line": 20,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeDefault",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 20,
+      "line": 21,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeFromBottom",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 21,
+      "line": 22,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeFromTop",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 22,
+      "line": 23,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeFromRight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 23,
+      "line": 24,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeFromLeft",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 25,
+      "line": 26,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeShrink",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 26,
+      "line": 27,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeExpand",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 27,
+      "line": 28,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeFade",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 29,
+      "line": 30,
       "symbol": "FWAlertAnimationType.FWAlertAnimationTypeNone",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 32,
+      "line": 33,
       "symbol": "FWAlertActionStyle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 32,
+      "line": 33,
       "symbol": "FWAlertActionStyle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 33,
+      "line": 34,
       "symbol": "FWAlertActionStyle.FWAlertActionStyleDefault",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 34,
+      "line": 35,
       "symbol": "FWAlertActionStyle.FWAlertActionStyleCancel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 35,
+      "line": 36,
       "symbol": "FWAlertActionStyle.FWAlertActionStyleDestructive",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 40,
-      "symbol": "FWAlertAction",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 42,
-      "symbol": "FWAlertAction.+actionWithTitle:style:handler:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 79,
-      "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 80,
-      "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:animationType:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 82,
-      "symbol": "FWAlertController.-addAction:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 83,
-      "symbol": "FWAlertController.actions",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 85,
-      "symbol": "FWAlertController.preferredAction",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 90,
-      "symbol": "FWAlertController.-addTextFieldWithConfigurationHandler:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 91,
-      "symbol": "FWAlertController.textFields",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 125,
-      "symbol": "FWAlertController.actionAxis",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 130,
-      "symbol": "FWAlertController.minDistanceToEdges",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 149,
-      "symbol": "FWAlertController.delegate",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 151,
-      "symbol": "FWAlertController.preferredStyle",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 152,
-      "symbol": "FWAlertController.animationType",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 156,
-      "symbol": "FWAlertController.-customSpacingAfterAction:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 162,
-      "symbol": "FWAlertController.-insertComponentView:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 201,
-      "symbol": "FWAlertControllerDelegate",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 203,
-      "symbol": "FWAlertControllerDelegate.-willPresentAlertController:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 204,
-      "symbol": "FWAlertControllerDelegate.-didPresentAlertController:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 205,
-      "symbol": "FWAlertControllerDelegate.-willDismissAlertController:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 206,
-      "symbol": "FWAlertControllerDelegate.-didDismissAlertController:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 209,
-      "symbol": "FWAlertPresentationController",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 212,
-      "symbol": "FWAlertAnimation",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 213,
-      "symbol": "FWAlertAnimation.+animationIsPresenting:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 216,
-      "symbol": "FWAlertControllerAppearance",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 217,
+      "line": 41,
       "symbol": "FWAlertControllerAppearance.appearance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 219,
+      "line": 43,
       "symbol": "FWAlertControllerAppearance.lineWidth",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 220,
+      "line": 44,
       "symbol": "FWAlertControllerAppearance.cancelLineWidth",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 221,
+      "line": 45,
       "symbol": "FWAlertControllerAppearance.contentInsets",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 222,
+      "line": 46,
       "symbol": "FWAlertControllerAppearance.actionHeight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 223,
+      "line": 47,
       "symbol": "FWAlertControllerAppearance.actionFont",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 224,
+      "line": 48,
       "symbol": "FWAlertControllerAppearance.actionBoldFont",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 226,
+      "line": 50,
       "symbol": "FWAlertControllerAppearance.normalColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 227,
+      "line": 51,
       "symbol": "FWAlertControllerAppearance.selectedColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 228,
+      "line": 52,
       "symbol": "FWAlertControllerAppearance.lineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 229,
+      "line": 53,
       "symbol": "FWAlertControllerAppearance.line2Color",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 230,
+      "line": 54,
       "symbol": "FWAlertControllerAppearance.lightLineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 231,
+      "line": 55,
       "symbol": "FWAlertControllerAppearance.darkLineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 232,
+      "line": 56,
       "symbol": "FWAlertControllerAppearance.lightWhite_DarkBlackColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 233,
+      "line": 57,
       "symbol": "FWAlertControllerAppearance.lightBlack_DarkWhiteColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 234,
+      "line": 58,
       "symbol": "FWAlertControllerAppearance.textViewBackgroundColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 235,
+      "line": 59,
       "symbol": "FWAlertControllerAppearance.alertRedColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 236,
+      "line": 60,
       "symbol": "FWAlertControllerAppearance.grayColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 65,
+      "symbol": "FWAlertAction",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 67,
+      "symbol": "FWAlertAction.+actionWithTitle:style:handler:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 68,
+      "symbol": "FWAlertAction.+actionWithTitle:style:appearance:handler:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 107,
+      "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 108,
+      "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:animationType:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 109,
+      "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:animationType:appearance:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 111,
+      "symbol": "FWAlertController.-addAction:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 112,
+      "symbol": "FWAlertController.actions",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 114,
+      "symbol": "FWAlertController.preferredAction",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 119,
+      "symbol": "FWAlertController.-addTextFieldWithConfigurationHandler:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 120,
+      "symbol": "FWAlertController.textFields",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 154,
+      "symbol": "FWAlertController.actionAxis",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 159,
+      "symbol": "FWAlertController.minDistanceToEdges",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 178,
+      "symbol": "FWAlertController.delegate",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 180,
+      "symbol": "FWAlertController.preferredStyle",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 181,
+      "symbol": "FWAlertController.animationType",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 187,
+      "symbol": "FWAlertController.-customSpacingAfterAction:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 193,
+      "symbol": "FWAlertController.-insertComponentView:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 244,
+      "symbol": "FWAlertControllerDelegate",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 246,
+      "symbol": "FWAlertControllerDelegate.-willPresentAlertController:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 247,
+      "symbol": "FWAlertControllerDelegate.-didPresentAlertController:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 248,
+      "symbol": "FWAlertControllerDelegate.-willDismissAlertController:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 249,
+      "symbol": "FWAlertControllerDelegate.-didDismissAlertController:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 252,
+      "symbol": "FWAlertPresentationController",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 255,
+      "symbol": "FWAlertAnimation",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 256,
+      "symbol": "FWAlertAnimation.+animationIsPresenting:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
       "file": "docs/FWApplication/FWAlertControllerImpl.h",
-      "line": 16,
+      "line": 15,
       "symbol": "FWAlertControllerPlugin",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
@@ -2452,155 +2459,183 @@
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 16,
-      "symbol": "UIViewController(FWAlertPriority)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 19,
-      "symbol": "UIViewController(FWAlertPriority).fwAlertPriorityEnabled",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
       "line": 22,
-      "symbol": "UIViewController(FWAlertPriority).fwAlertPriority",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 25,
-      "symbol": "UIViewController(FWAlertPriority).-fwAlertPriorityPresentIn:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 38,
-      "symbol": "UIAlertAction(FWAlert).+fwActionWithObject:style:handler:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 41,
-      "symbol": "UIAlertAction(FWAlert).fwTitleColor",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 54,
-      "symbol": "UIAlertController(FWAlert).+fwAlertControllerWithTitle:message:preferredStyle:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 57,
-      "symbol": "UIAlertController(FWAlert).fwAttributedTitle",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 60,
-      "symbol": "UIAlertController(FWAlert).fwAttributedMessage",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 73,
       "symbol": "FWAlertAppearance.appearance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 76,
+      "line": 25,
       "symbol": "FWAlertAppearance.preferredActionBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 79,
+      "line": 28,
       "symbol": "FWAlertAppearance.controllerEnabled",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 81,
+      "line": 30,
       "symbol": "FWAlertAppearance.titleColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 83,
+      "line": 32,
       "symbol": "FWAlertAppearance.titleFont",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 85,
+      "line": 34,
       "symbol": "FWAlertAppearance.messageColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 87,
+      "line": 36,
       "symbol": "FWAlertAppearance.messageFont",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 90,
+      "line": 39,
       "symbol": "FWAlertAppearance.actionEnabled",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 92,
+      "line": 41,
       "symbol": "FWAlertAppearance.actionColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 94,
+      "line": 43,
       "symbol": "FWAlertAppearance.preferredActionColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 96,
+      "line": 45,
       "symbol": "FWAlertAppearance.cancelActionColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 98,
+      "line": 47,
       "symbol": "FWAlertAppearance.destructiveActionColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
-      "line": 100,
+      "line": 49,
       "symbol": "FWAlertAppearance.disabledActionColor",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 56,
+      "symbol": "UIViewController(FWAlertPriority)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 59,
+      "symbol": "UIViewController(FWAlertPriority).fwAlertPriorityEnabled",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 62,
+      "symbol": "UIViewController(FWAlertPriority).fwAlertPriority",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 65,
+      "symbol": "UIViewController(FWAlertPriority).-fwAlertPriorityPresentIn:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 78,
+      "symbol": "UIAlertAction(FWAlert).+fwActionWithObject:style:handler:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 81,
+      "symbol": "UIAlertAction(FWAlert).+fwActionWithObject:style:appearance:handler:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 84,
+      "symbol": "UIAlertAction(FWAlert).fwAlertAppearance",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 87,
+      "symbol": "UIAlertAction(FWAlert).fwTitleColor",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 100,
+      "symbol": "UIAlertController(FWAlert).+fwAlertControllerWithTitle:message:preferredStyle:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 103,
+      "symbol": "UIAlertController(FWAlert).+fwAlertControllerWithTitle:message:preferredStyle:appearance:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 106,
+      "symbol": "UIAlertController(FWAlert).fwAlertAppearance",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 109,
+      "symbol": "UIAlertController(FWAlert).fwAttributedTitle",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPluginImpl.h",
+      "line": 112,
+      "symbol": "UIAlertController(FWAlert).fwAttributedMessage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
@@ -2676,14 +2711,14 @@
     },
     {
       "file": "docs/FWApplication/FWApplication-umbrella.h",
-      "line": 143,
+      "line": 142,
       "symbol": "FWApplicationVersionNumber",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWApplication-umbrella.h",
-      "line": 144,
+      "line": 143,
       "symbol": "FWApplicationVersionString",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
@@ -13035,5 +13070,5 @@
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/wuyong/Documents/github/FWApplication"
+  "source_directory": "/Users/wuyong/Documents/github/lszzy/FWApplication"
 }

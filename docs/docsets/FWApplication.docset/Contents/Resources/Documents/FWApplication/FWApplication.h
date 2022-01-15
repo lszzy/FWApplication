@@ -7,7 +7,6 @@
 //
 
 #import "FWAppBundle.h"
-#import "FWAppConfig.h"
 #import "FWAppDelegate.h"
 #import "FWSceneDelegate.h"
 #import "FWAlertControllerImpl.h"
@@ -19,6 +18,8 @@
 #import "FWImagePreviewPluginImpl.h"
 #import "FWViewPluginImpl.h"
 
+#if __has_include("FWWebViewController.h")
+#import "FWWebViewController.h"
 #import "FWNavigationStyle.h"
 #import "FWViewTransition.h"
 #import "FWViewController.h"
@@ -26,11 +27,14 @@
 #import "FWScrollViewController.h"
 #import "FWTableViewController.h"
 #import "FWNavigationController.h"
-#import "FWWebViewController.h"
+#endif
 
+#if __has_include("FWModel.h")
 #import "FWModel.h"
 #import "Foundation+FWApplication.h"
+#endif
 
+#if __has_include("FWView.h")
 #import "FWView.h"
 #import "UIKit+FWApplication.h"
 #import "FWAsyncLayer.h"
@@ -50,10 +54,13 @@
 #import "FWSegmentedControl.h"
 #import "FWStatisticalManager.h"
 #import "FWTagCollectionView.h"
+#endif
 
+#if __has_include("FWNetworkPrivate.h")
+#import "FWNetworkPrivate.h"
 #import "FWCacheManager.h"
 #import "FWDatabase.h"
 #import "FWWebImage.h"
 #import "FWOAuth2Manager.h"
-#import "FWNetworkPrivate.h"
 #import "FWAsyncSocket.h"
+#endif

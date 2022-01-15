@@ -11,7 +11,6 @@
 #endif
 
 #import "FWAppBundle.h"
-#import "FWAppConfig.h"
 #import "FWAppDelegate.h"
 #import "FWSceneDelegate.h"
 #import "FWApplication.h"
@@ -66,6 +65,7 @@
 #import "NSString+FWApplication.h"
 #import "NSURL+FWApplication.h"
 #import "FWModel.h"
+#import "FWSDWebImagePlugin.h"
 #import "FWCacheAbstract.h"
 #import "FWCacheFile.h"
 #import "FWCacheKeychain.h"
@@ -138,7 +138,6 @@
 #import "UIViewController+FWApplication.h"
 #import "UIWindow+FWApplication.h"
 #import "FWView.h"
-#import "FWSDWebImagePlugin.h"
 
 FOUNDATION_EXPORT double FWApplicationVersionNumber;
 FOUNDATION_EXPORT const unsigned char FWApplicationVersionString[];
