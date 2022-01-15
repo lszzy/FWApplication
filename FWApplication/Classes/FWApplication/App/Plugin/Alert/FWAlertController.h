@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FWAlertPluginImpl.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,11 +36,36 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
     FWAlertActionStyleDestructive   // 红色字体样式
 };
 
+/** FWAlertController样式，继承自FWAlertAppearance */
+@interface FWAlertControllerAppearance : FWAlertAppearance
+@property (class, nonatomic, readonly) FWAlertControllerAppearance *appearance;
+
+@property (nonatomic, assign) CGFloat lineWidth;
+@property (nonatomic, assign) CGFloat cancelLineWidth;
+@property (nonatomic, assign) UIEdgeInsets contentInsets;
+@property (nonatomic, assign) CGFloat actionHeight;
+@property (nonatomic, strong) UIFont *actionFont;
+@property (nonatomic, strong) UIFont *actionBoldFont;
+
+@property (nonatomic, strong) UIColor *normalColor;
+@property (nonatomic, strong) UIColor *selectedColor;
+@property (nonatomic, strong) UIColor *lineColor;
+@property (nonatomic, strong) UIColor *line2Color;
+@property (nonatomic, strong) UIColor *lightLineColor;
+@property (nonatomic, strong) UIColor *darkLineColor;
+@property (nonatomic, strong) UIColor *lightWhite_DarkBlackColor;
+@property (nonatomic, strong) UIColor *lightBlack_DarkWhiteColor;
+@property (nonatomic, strong) UIColor *textViewBackgroundColor;
+@property (nonatomic, strong) UIColor *alertRedColor;
+@property (nonatomic, strong) UIColor *grayColor;
+@end
+
 // ===================================================== FWAlertAction =====================================================
 
 @interface FWAlertAction : NSObject <NSCopying>
 
 + (instancetype)actionWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style handler:(void (^ __nullable)(FWAlertAction *action))handler;
++ (instancetype)actionWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style appearance:(nullable FWAlertControllerAppearance *)appearance handler:(void (^ __nullable)(FWAlertAction *action))handler;
 
 /** action的标题 */
 @property(nullable, nonatomic, copy) NSString *title;
@@ -62,6 +88,8 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
 /** 样式 */
 @property(nonatomic, readonly) FWAlertActionStyle style;
+/** 自定义样式，默认为样式单例 */
+@property (nonatomic, strong, readonly) FWAlertControllerAppearance *alertAppearance;
 
 @end
 
@@ -78,6 +106,7 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle;
 + (instancetype)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType;
++ (instancetype)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType appearance:(nullable FWAlertControllerAppearance *)appearance;
 
 - (void)addAction:(FWAlertAction *)action;
 @property (nonatomic, readonly) NSArray<FWAlertAction *> *actions;
@@ -150,6 +179,8 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
 @property(nonatomic, readonly) FWAlertControllerStyle preferredStyle;
 @property(nonatomic, readonly) FWAlertAnimationType animationType;
+/** 自定义样式，默认为样式单例 */
+@property (nonatomic, strong, readonly) FWAlertControllerAppearance *alertAppearance;
 
 /** 设置action与下一个action之间的间距, action仅限于非取消样式，必须在'-addAction:'之后设置，nil时设置header与action间距 */
 - (void)setCustomSpacing:(CGFloat)spacing afterAction:(nullable FWAlertAction *)action;
@@ -181,6 +212,18 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
  @return 控制器对象
  */
 + (instancetype)alertControllerWithCustomHeaderView:(nonnull UIView *)customHeaderView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType;
+
+/**
+ 创建控制器(自定义对话框的头部)
+ 
+ @param customHeaderView 头部自定义view
+ @param preferredStyle 对话框样式
+ @param animationType 动画类型
+ @param appearance 自定义样式
+ @return 控制器对象
+ */
++ (instancetype)alertControllerWithCustomHeaderView:(nonnull UIView *)customHeaderView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType appearance:(nullable FWAlertControllerAppearance *)appearance;
+
 /**
  创建控制器(自定义对话框的action部分)
  
@@ -211,29 +254,6 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
 @interface FWAlertAnimation : NSObject <UIViewControllerAnimatedTransitioning>
 + (instancetype)animationIsPresenting:(BOOL)presenting;
-@end
-
-@interface FWAlertControllerAppearance : NSObject
-@property (class, nonatomic, readonly) FWAlertControllerAppearance *appearance;
-
-@property (nonatomic, assign) CGFloat lineWidth;
-@property (nonatomic, assign) CGFloat cancelLineWidth;
-@property (nonatomic, assign) UIEdgeInsets contentInsets;
-@property (nonatomic, assign) CGFloat actionHeight;
-@property (nonatomic, strong) UIFont *actionFont;
-@property (nonatomic, strong) UIFont *actionBoldFont;
-
-@property (nonatomic, strong) UIColor *normalColor;
-@property (nonatomic, strong) UIColor *selectedColor;
-@property (nonatomic, strong) UIColor *lineColor;
-@property (nonatomic, strong) UIColor *line2Color;
-@property (nonatomic, strong) UIColor *lightLineColor;
-@property (nonatomic, strong) UIColor *darkLineColor;
-@property (nonatomic, strong) UIColor *lightWhite_DarkBlackColor;
-@property (nonatomic, strong) UIColor *lightBlack_DarkWhiteColor;
-@property (nonatomic, strong) UIColor *textViewBackgroundColor;
-@property (nonatomic, strong) UIColor *alertRedColor;
-@property (nonatomic, strong) UIColor *grayColor;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -94,6 +94,7 @@
 @interface FWAlertAction()
 
 @property (nonatomic, assign) FWAlertActionStyle style;
+@property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, copy) void (^handler)(FWAlertAction *action);
 // 当在addAction之后设置action属性时,会回调这个block,设置相应控件的字体、颜色等
 // 如果没有这个block，那使用时，只有在addAction之前设置action的属性才有效
@@ -111,6 +112,7 @@
     action.image = self.image;
     action.imageTitleSpacing = self.imageTitleSpacing;
     action.style = self.style;
+    action.alertAppearance = self.alertAppearance;
     action.enabled = self.enabled;
     action.titleColor = self.titleColor;
     action.titleFont = self.titleFont;
@@ -121,24 +123,31 @@
 }
 
 + (instancetype)actionWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style handler:(void (^ __nullable)(FWAlertAction *action))handler {
-    FWAlertAction *action = [[self alloc] initWithTitle:title style:(FWAlertActionStyle)style handler:handler];
+    FWAlertAction *action = [[self alloc] initWithTitle:title style:(FWAlertActionStyle)style appearance:nil handler:handler];
     return action;
 }
 
-- (instancetype)initWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style handler:(void (^ __nullable)(FWAlertAction *action))handler {
-    self = [self init];
++ (instancetype)actionWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style appearance:(nullable FWAlertControllerAppearance *)appearance handler:(void (^ __nullable)(FWAlertAction *action))handler {
+    FWAlertAction *action = [[self alloc] initWithTitle:title style:(FWAlertActionStyle)style appearance:appearance handler:handler];
+    return action;
+}
+
+- (instancetype)initWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style appearance:(nullable FWAlertControllerAppearance *)appearance handler:(void (^ __nullable)(FWAlertAction *action))handler {
+    self = [super init];
+    self.alertAppearance = appearance;
+    [self initialize];
     self.title = title;
     self.style = style;
     self.handler = handler;
     if (style == FWAlertActionStyleDestructive) {
-        self.titleColor = [FWAlertControllerAppearance.appearance alertRedColor];
-        self.titleFont = [FWAlertControllerAppearance.appearance actionFont];
+        self.titleColor = [self.alertAppearance alertRedColor];
+        self.titleFont = [self.alertAppearance actionFont];
     } else if (style == FWAlertActionStyleCancel) {
-        self.titleColor = [FWAlertControllerAppearance.appearance lightBlack_DarkWhiteColor];
-        self.titleFont = [FWAlertControllerAppearance.appearance actionBoldFont];
+        self.titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        self.titleFont = [self.alertAppearance actionBoldFont];
     } else {
-        self.titleColor = [FWAlertControllerAppearance.appearance lightBlack_DarkWhiteColor];
-        self.titleFont = [FWAlertControllerAppearance.appearance actionFont];
+        self.titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        self.titleFont = [self.alertAppearance actionFont];
     }
     return self;
 }
@@ -152,9 +161,13 @@
 
 - (void)initialize {
     _enabled = YES; // 默认能点击
-    _titleColor = [FWAlertControllerAppearance.appearance lightBlack_DarkWhiteColor];
-    _titleFont = [FWAlertControllerAppearance.appearance actionFont];
+    _titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+    _titleFont = [self.alertAppearance actionFont];
     _titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
+}
+
+- (FWAlertControllerAppearance *)alertAppearance {
+    return _alertAppearance ?: FWAlertControllerAppearance.appearance;
 }
 
 - (void)setTitle:(NSString *)title {
@@ -213,18 +226,20 @@
 #pragma mark ---------------------------- FWInterfaceActionItemSeparatorView begin --------------------------------
 
 @interface FWInterfaceActionItemSeparatorView : UIView
+@property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @end
 @implementation FWInterfaceActionItemSeparatorView
-- (instancetype)init {
+- (instancetype)initWithAppearance:(FWAlertControllerAppearance *)appearance {
     if (self = [super init]) {
-        self.backgroundColor = [FWAlertControllerAppearance.appearance lineColor];
+        self.alertAppearance = appearance;
+        self.backgroundColor = [self.alertAppearance lineColor];
     }
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.backgroundColor = MIN(self.frame.size.width, self.frame.size.height) > FWAlertControllerAppearance.appearance.lineWidth ? [FWAlertControllerAppearance.appearance line2Color] : [FWAlertControllerAppearance.appearance lineColor];
+    self.backgroundColor = MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth ? [self.alertAppearance line2Color] : [self.alertAppearance lineColor];
 }
 
 @end
@@ -233,6 +248,7 @@
 #pragma mark ---------------------------- FWInterfaceHeaderScrollView begin ----------------------------
 
 @interface FWInterfaceHeaderScrollView : UIScrollView
+@property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, weak) UIView *contentView;
 @property (nonatomic, weak) UILabel *titleLabel;
 @property (nonatomic, weak) UILabel *messageLabel;
@@ -246,11 +262,12 @@
 
 @implementation FWInterfaceHeaderScrollView
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
+- (instancetype)initWithAlertAppearance:(FWAlertControllerAppearance *)appearance {
+    if (self = [super init]) {
+        self.alertAppearance = appearance;
         self.showsHorizontalScrollIndicator = NO;
         self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        self.contentEdgeInsets = [FWAlertControllerAppearance.appearance contentInsets];
+        self.contentEdgeInsets = [self.alertAppearance contentInsets];
     }
     return self;
 }
@@ -268,7 +285,7 @@
     [super traitCollectionDidChange:previousTraitCollection];
     if (@available(iOS 13.0, *)) {
         // 设置CGColor，不要传previousTraitCollection,previousTraitCollection指的是上一次的模式
-        UIColor *resolvedColor = [[FWAlertControllerAppearance.appearance lineColor] resolvedColorWithTraitCollection:self.traitCollection];
+        UIColor *resolvedColor = [[self.alertAppearance lineColor] resolvedColorWithTraitCollection:self.traitCollection];
         for (UITextField *textField in self.textFields) {
             textField.layer.borderColor = resolvedColor.CGColor;
         }
@@ -284,10 +301,10 @@
 
 - (void)safeAreaInsetsDidChange {
     [super safeAreaInsetsDidChange];
-    CGFloat safeTop    = self.safeAreaInsets.top < FWAlertControllerAppearance.appearance.contentInsets.top ? FWAlertControllerAppearance.appearance.contentInsets.top : self.safeAreaInsets.top+10;
-    CGFloat safeLeft   = self.safeAreaInsets.left < FWAlertControllerAppearance.appearance.contentInsets.left ? FWAlertControllerAppearance.appearance.contentInsets.left : self.safeAreaInsets.left;
-    CGFloat safeBottom = self.safeAreaInsets.bottom < FWAlertControllerAppearance.appearance.contentInsets.bottom ? FWAlertControllerAppearance.appearance.contentInsets.bottom : self.safeAreaInsets.bottom+6;
-    CGFloat safeRight  = self.safeAreaInsets.right < FWAlertControllerAppearance.appearance.contentInsets.right ? FWAlertControllerAppearance.appearance.contentInsets.right : self.safeAreaInsets.right;
+    CGFloat safeTop    = self.safeAreaInsets.top < self.alertAppearance.contentInsets.top ? self.alertAppearance.contentInsets.top : self.safeAreaInsets.top+10;
+    CGFloat safeLeft   = self.safeAreaInsets.left < self.alertAppearance.contentInsets.left ? self.alertAppearance.contentInsets.left : self.safeAreaInsets.left;
+    CGFloat safeBottom = self.safeAreaInsets.bottom < self.alertAppearance.contentInsets.bottom ? self.alertAppearance.contentInsets.bottom : self.safeAreaInsets.bottom+6;
+    CGFloat safeRight  = self.safeAreaInsets.right < self.alertAppearance.contentInsets.right ? self.alertAppearance.contentInsets.right : self.safeAreaInsets.right;
     _contentEdgeInsets = UIEdgeInsetsMake(safeTop, safeLeft, safeBottom, safeRight);
     // 这个block，主要是更新Label的最大预估宽度
     if (self.headerViewSfeAreaDidChangBlock) {
@@ -402,7 +419,7 @@
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.font = [UIFont boldSystemFontOfSize:18];
         titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.textColor = [FWAlertControllerAppearance.appearance lightBlack_DarkWhiteColor];
+        titleLabel.textColor = [self.alertAppearance lightBlack_DarkWhiteColor];
         titleLabel.numberOfLines = 0;
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:titleLabel];
@@ -416,7 +433,7 @@
         UILabel *messageLabel = [[UILabel alloc] init];
         messageLabel.font = [UIFont systemFontOfSize:18];
         messageLabel.textAlignment = NSTextAlignmentCenter;
-        messageLabel.textColor = [FWAlertControllerAppearance.appearance grayColor];
+        messageLabel.textColor = [self.alertAppearance grayColor];
         messageLabel.numberOfLines = 0;
         messageLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:messageLabel];
@@ -456,6 +473,7 @@
 #pragma mark ---------------------------- FWAlertControllerActionView begin --------------------------------
 
 @interface FWAlertControllerActionView : UIView
+@property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, weak) id target;
 @property (nonatomic, assign) SEL methodAction;
 @property (nonatomic, strong) FWAlertAction *action;
@@ -467,9 +485,10 @@
 
 @implementation FWAlertControllerActionView
 
-- (instancetype)init {
+- (instancetype)initWithAlertAppearance:(FWAlertControllerAppearance *)appearance {
     if (self = [super init]) {
-        _afterSpacing = FWAlertControllerAppearance.appearance.lineWidth;
+        _alertAppearance = appearance;
+        _afterSpacing = self.alertAppearance.lineWidth;
     }
     return self;
 }
@@ -490,7 +509,7 @@
     self.actionButton.tintColor = action.tintColor;
     if (action.attributedTitle) {
         // 这里之所以要设置按钮颜色为黑色，是因为如果外界在addAction:之后设置按钮的富文本，那么富文本的颜色在没有采用NSForegroundColorAttributeName的情况下会自动读取按钮上普通文本的颜色，在addAction:之前设置会保持默认色(黑色)，为了在addAction:前后设置富文本保持统一，这里先将按钮置为黑色，富文本就会是黑色
-        [self.actionButton setTitleColor:[FWAlertControllerAppearance.appearance lightBlack_DarkWhiteColor] forState:UIControlStateNormal];
+        [self.actionButton setTitleColor:[self.alertAppearance lightBlack_DarkWhiteColor] forState:UIControlStateNormal];
         
         if ([action.attributedTitle.string containsString:@"\n"] || [action.attributedTitle.string containsString:@"\r"]) {
             self.actionButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -524,11 +543,11 @@
 }
 
 - (void)touchDown:(UIButton *)sender {
-    sender.backgroundColor = [FWAlertControllerAppearance.appearance selectedColor];
+    sender.backgroundColor = [self.alertAppearance selectedColor];
 }
 
 - (void)touchDragExit:(UIButton *)sender {
-    sender.backgroundColor = [FWAlertControllerAppearance.appearance normalColor];
+    sender.backgroundColor = [self.alertAppearance normalColor];
 }
 
 - (FWAlertController *)findAlertController {
@@ -572,7 +591,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     // 按钮的上下内边距之和
     CGFloat topBottom_insetsSum = actionButton.contentEdgeInsets.top+actionButton.contentEdgeInsets.bottom;
     // 文字的上下间距之和,等于FW_ACTION_HEIGHT-默认字体大小,这是为了保证文字上下有一个固定间距值，不至于使文字靠按钮太紧，,由于按钮内容默认垂直居中，所以最终的顶部或底部间距为topBottom_marginSum/2.0,这个间距，几乎等于18号字体时，最小高度为49时的上下间距
-    CGFloat topBottom_marginSum = FWAlertControllerAppearance.appearance.actionHeight-FWAlertControllerAppearance.appearance.actionFont.lineHeight;
+    CGFloat topBottom_marginSum = self.alertAppearance.actionHeight-self.alertAppearance.actionFont.lineHeight;
     // 按钮高度
     CGFloat buttonH = labelH+topBottom_insetsSum+topBottom_marginSum;
     UIStackView *stackView = (UIStackView *)self.superview;
@@ -585,7 +604,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     buttonHonstraint.priority = 999;
     [actionButtonConstraints addObject:buttonHonstraint];
     // 给一个最小高度，当按钮字体很小时，如果还按照上面的高度计算，高度会比较小
-    NSLayoutConstraint *minHConstraint = [NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:FWAlertControllerAppearance.appearance.actionHeight+topBottom_insetsSum];
+    NSLayoutConstraint *minHConstraint = [NSLayoutConstraint constraintWithItem:actionButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.alertAppearance.actionHeight+topBottom_insetsSum];
     minHConstraint.priority = UILayoutPriorityRequired;
     [self addConstraints:actionButtonConstraints];
     self.actionButtonConstraints = actionButtonConstraints;
@@ -594,7 +613,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (UIButton *)actionButton {
     if (!_actionButton) {
         UIButton *actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        actionButton.backgroundColor = [FWAlertControllerAppearance.appearance normalColor];
+        actionButton.backgroundColor = [self.alertAppearance normalColor];
         actionButton.translatesAutoresizingMaskIntoConstraints = NO;
         actionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
         actionButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -615,6 +634,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 #pragma mark ---------------------------- FWInterfaceActionSequenceView begin --------------------------------
 
 @interface FWInterfaceActionSequenceView : UIView
+@property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
 @property (nonatomic, weak) UIView *cancelView;
@@ -667,7 +687,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     [self.actions addObject:action];
     UIStackView *stackView = self.stackView;
 
-    FWAlertControllerActionView *currentActionView = [[FWAlertControllerActionView alloc] init];
+    FWAlertControllerActionView *currentActionView = [[FWAlertControllerActionView alloc] initWithAlertAppearance:self.alertAppearance];
     currentActionView.action = action;
     [currentActionView addTarget:self action:@selector(buttonClickedInActionView:)];
     [stackView addArrangedSubview:currentActionView];
@@ -683,7 +703,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     NSAssert(!_cancelAction, @"FWAlertController can only have one action with a style of FWAlertActionStyleCancel");
     _cancelAction = action;
     [self.actions addObject:action];
-    FWAlertControllerActionView *cancelActionView = [[FWAlertControllerActionView alloc] init];
+    FWAlertControllerActionView *cancelActionView = [[FWAlertControllerActionView alloc] initWithAlertAppearance:self.alertAppearance];
     cancelActionView.translatesAutoresizingMaskIntoConstraints = NO;
     cancelActionView.action = action;
     [cancelActionView addTarget:self action:@selector(buttonClickedInActionView:)];
@@ -696,7 +716,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 
 // 为stackView添加分割线(细节)
 - (void)addLineForStackView:(UIStackView *)stackView {
-    FWInterfaceActionItemSeparatorView *actionLine = [[FWInterfaceActionItemSeparatorView alloc] init];
+    FWInterfaceActionItemSeparatorView *actionLine = [[FWInterfaceActionItemSeparatorView alloc] initWithAppearance:self.alertAppearance];
     actionLine.translatesAutoresizingMaskIntoConstraints = NO;
     // 这里必须用addSubview:，不能用addArrangedSubview:,因为分割线不参与排列布局
     [stackView addSubview:actionLine];
@@ -788,21 +808,21 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         if (_axis == UILayoutConstraintAxisVertical) {
             if (self.cancelAction) {
                 if (self.actions.count > 4) { // 如果有取消按钮且action总个数大于4，则除去取消按钮之外的其余部分的高度至少为3个半FW_ACTION_HEIGHT的高度,即加上取消按钮就是总高度至少为4个半FW_ACTION_HEIGHT的高度
-                    minHeight = FWAlertControllerAppearance.appearance.actionHeight * 3.5;
+                    minHeight = self.alertAppearance.actionHeight * 3.5;
                     equalHeightConstraint.priority = 997.0f; // 优先级为997，必须小于998.0，因为头部如果内容过多时高度也会有限制，头部的优先级为998.0.这里定的规则是，当头部和action部分同时过多时，头部的优先级更高，但是它不能高到以至于action部分小于最小高度
                 } else { // 如果有取消按钮但action的个数大不于4，则该多高就显示多高
                     equalHeightConstraint.priority = 1000.0f; // 由子控件撑起
                 }
             } else {
                 if (self.actions.count > 4) {
-                    minHeight = FWAlertControllerAppearance.appearance.actionHeight * 4.5;
+                    minHeight = self.alertAppearance.actionHeight * 4.5;
                     equalHeightConstraint.priority = 997.0f;
                 } else {
                     equalHeightConstraint.priority = 1000.0f;
                 }
             }
         } else {
-            minHeight = FWAlertControllerAppearance.appearance.actionHeight;
+            minHeight = self.alertAppearance.actionHeight;
         }
         NSLayoutConstraint *minHeightConstraint = [NSLayoutConstraint constraintWithItem:scrollView attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationGreaterThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:minHeight];
         minHeightConstraint.priority = 999.0;// 优先级不能大于对话框的最小顶部间距的优先级(999.0)
@@ -823,7 +843,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         NSMutableArray *cancelActionLineConstraints = [NSMutableArray array];
         [cancelActionLineConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[cancelActionLine]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(cancelActionLine)]];
         [cancelActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:cancelActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:cancelView attribute:NSLayoutAttributeTop multiplier:1.0f constant:0]];
-        [cancelActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:cancelActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:FWAlertControllerAppearance.appearance.cancelLineWidth]];
+        [cancelActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:cancelActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0f constant:self.alertAppearance.cancelLineWidth]];
         [NSLayoutConstraint activateConstraints:cancelActionLineConstraints];
     }
     
@@ -868,7 +888,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         UIStackView *stackView = [[UIStackView alloc] init];
         stackView.translatesAutoresizingMaskIntoConstraints = NO;
         stackView.distribution = UIStackViewDistributionFillProportionally;
-        stackView.spacing = FWAlertControllerAppearance.appearance.lineWidth; // 该间距腾出来的空间显示分割线
+        stackView.spacing = self.alertAppearance.lineWidth; // 该间距腾出来的空间显示分割线
         stackView.axis = UILayoutConstraintAxisVertical;
         [self.contentView addSubview:stackView];
         _stackView = stackView;
@@ -890,7 +910,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 
 - (FWInterfaceActionItemSeparatorView *)cancelActionLine {
     if (!_cancelActionLine) {
-        FWInterfaceActionItemSeparatorView *cancelActionLine = [[FWInterfaceActionItemSeparatorView alloc] init];
+        FWInterfaceActionItemSeparatorView *cancelActionLine = [[FWInterfaceActionItemSeparatorView alloc] initWithAppearance:self.alertAppearance];
         cancelActionLine.translatesAutoresizingMaskIntoConstraints = NO;
         if (self.cancelView.superview && self.scrollView.superview) {
             [self addSubview:cancelActionLine];
@@ -936,6 +956,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 @property (nonatomic, strong) NSMutableArray *actionSequenceViewConstraints;
 @property (nonatomic, assign) FWAlertControllerStyle preferredStyle;
 @property (nonatomic, assign) FWAlertAnimationType animationType;
+@property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, assign) UIBlurEffectStyle backgroundViewAppearanceStyle;
 @property (nonatomic, assign) CGFloat backgroundViewAlpha;
 
@@ -954,28 +975,42 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 
 #pragma mark - public
 + (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle {
-    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:FWAlertAnimationTypeDefault];
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:FWAlertAnimationTypeDefault appearance:nil];
     return alertVc;
 }
 
 + (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType {
-    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType];
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType appearance:nil];
+    return alertVc;
+}
+
++ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType appearance:(FWAlertControllerAppearance *)appearance {
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType appearance:appearance];
     return alertVc;
 }
 
 + (instancetype)alertControllerWithCustomAlertView:(UIView *)customAlertView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType {
-    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:nil message:nil customAlertView:customAlertView customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType];
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:nil message:nil customAlertView:customAlertView customHeaderView:nil customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType appearance:nil];
     return alertVc;
 }
 
 + (instancetype)alertControllerWithCustomHeaderView:(UIView *)customHeaderView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType {
-    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:nil message:nil customAlertView:nil customHeaderView:customHeaderView customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType];
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:nil message:nil customAlertView:nil customHeaderView:customHeaderView customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType appearance:nil];
+    return alertVc;
+}
+
++ (instancetype)alertControllerWithCustomHeaderView:(UIView *)customHeaderView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType appearance:(FWAlertControllerAppearance *)appearance {
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:nil message:nil customAlertView:nil customHeaderView:customHeaderView customActionSequenceView:nil componentView:nil preferredStyle:preferredStyle animationType:animationType appearance:appearance];
     return alertVc;
 }
 
 + (instancetype)alertControllerWithCustomActionSequenceView:(UIView *)customActionSequenceView title:(nullable NSString *)title message:(nullable NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType {
-    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:customActionSequenceView componentView:nil preferredStyle:preferredStyle animationType:animationType];
+    FWAlertController *alertVc = [[FWAlertController alloc] initWithTitle:title message:message customAlertView:nil customHeaderView:nil customActionSequenceView:customActionSequenceView componentView:nil preferredStyle:preferredStyle animationType:animationType appearance:nil];
     return alertVc;
+}
+
+- (FWAlertControllerAppearance *)alertAppearance {
+    return _alertAppearance ?: FWAlertControllerAppearance.appearance;
 }
 
 - (void)setOffsetForAlert:(CGPoint)offsetForAlert animated:(BOOL)animated {
@@ -1067,11 +1102,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     _preferredAction = preferredAction;
     
     [self.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
-        if (obj.titleFont == FWAlertControllerAppearance.appearance.actionBoldFont) {
-            obj.titleFont = FWAlertControllerAppearance.appearance.actionFont;
+        if (obj.titleFont == self.alertAppearance.actionBoldFont) {
+            obj.titleFont = self.alertAppearance.actionFont;
         }
     }];
-    preferredAction.titleFont = FWAlertControllerAppearance.appearance.actionBoldFont;
+    preferredAction.titleFont = self.alertAppearance.actionBoldFont;
 }
 
 // 添加文本输入框
@@ -1079,11 +1114,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     NSAssert(self.preferredStyle == FWAlertControllerStyleAlert,@"FWAlertController does not allow 'addTextFieldWithConfigurationHandler:' to be called in the style of FWAlertControllerStyleActionSheet");
     UITextField *textField = [[UITextField alloc] init];
     textField.translatesAutoresizingMaskIntoConstraints = NO;
-    textField.backgroundColor = [FWAlertControllerAppearance.appearance textViewBackgroundColor];
+    textField.backgroundColor = [self.alertAppearance textViewBackgroundColor];
     // 系统的UITextBorderStyleLine样式线条过于黑，所以自己设置
-    textField.layer.borderWidth = FWAlertControllerAppearance.appearance.lineWidth;
+    textField.layer.borderWidth = self.alertAppearance.lineWidth;
     // 这里设置的颜色是静态的，动态设置CGColor,还需要监听深浅模式的切换
-    textField.layer.borderColor = [FWAlertControllerAppearance colorPairsWithStaticLightColor:[FWAlertControllerAppearance.appearance lineColor] darkColor:[FWAlertControllerAppearance.appearance darkLineColor]].CGColor;
+    textField.layer.borderColor = [FWAlertControllerAppearance colorPairsWithStaticLightColor:[self.alertAppearance lineColor] darkColor:[self.alertAppearance darkLineColor]].CGColor;
     // 在左边设置一张view，充当光标左边的间距，否则光标紧贴textField不美观
     textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
     textField.leftView.userInteractionEnabled = NO;
@@ -1139,8 +1174,10 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 }
 
 #pragma mark - Private
-- (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message customAlertView:(UIView *)customAlertView customHeaderView:(UIView *)customHeaderView customActionSequenceView:(UIView *)customActionSequenceView componentView:(UIView *)componentView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType {
-    self = [self init];
+- (instancetype)initWithTitle:(nullable NSString *)title message:(nullable NSString *)message customAlertView:(UIView *)customAlertView customHeaderView:(UIView *)customHeaderView customActionSequenceView:(UIView *)customActionSequenceView componentView:(UIView *)componentView preferredStyle:(FWAlertControllerStyle)preferredStyle animationType:(FWAlertAnimationType)animationType appearance:(nullable FWAlertControllerAppearance *)appearance {
+    self = [super init];
+    _alertAppearance = appearance;
+    [self initialize];
     _title = title;
     _message = message;
     _preferredStyle = preferredStyle;
@@ -1187,9 +1224,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     self.transitioningDelegate = self;
     
     _titleFont = [UIFont boldSystemFontOfSize:18];
-    _titleColor = [FWAlertControllerAppearance.appearance lightBlack_DarkWhiteColor];
+    _titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
     _messageFont = [UIFont systemFontOfSize:16];
-    _messageColor = [FWAlertControllerAppearance.appearance grayColor];
+    _messageColor = [self.alertAppearance grayColor];
     _textAlignment = NSTextAlignmentCenter;
     _imageLimitSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
     _backgroundViewAppearanceStyle = -1;
@@ -1380,7 +1417,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!self.componentView.superview) {
         [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:actionSequenceView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     }
-    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.customHeaderSpacing > 0 ? self.customHeaderSpacing : FWAlertControllerAppearance.appearance.lineWidth]];
+    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.customHeaderSpacing > 0 ? self.customHeaderSpacing : self.alertAppearance.lineWidth]];
 
     [NSLayoutConstraint activateConstraints:headerActionLineConstraints];
     self.headerActionLineConstraints = headerActionLineConstraints;
@@ -1425,7 +1462,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     }
     [componentActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:componentActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.actionSequenceView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     [componentActionLineConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-0-[componentActionLine]-0-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(componentActionLine)]];
-    [componentActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:componentActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:FWAlertControllerAppearance.appearance.lineWidth]];
+    [componentActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:componentActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.alertAppearance.lineWidth]];
     [NSLayoutConstraint activateConstraints:componentActionLineConstraints];
     self.componentActionLineConstraints = componentActionLineConstraints;
 }
@@ -1482,17 +1519,17 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         if (self.preferredStyle == FWAlertControllerStyleAlert) {
             for (FWAlertAction *action in self.actions) {
                 // 预估按钮宽度
-                CGFloat preButtonWidth = (MIN(FWScreenWidth, FWScreenHeight) - _minDistanceToEdges * 2 - FWAlertControllerAppearance.appearance.lineWidth * (self.actions.count - 1)) / self.actions.count - action.titleEdgeInsets.left - action.titleEdgeInsets.right;
+                CGFloat preButtonWidth = (MIN(FWScreenWidth, FWScreenHeight) - _minDistanceToEdges * 2 - self.alertAppearance.lineWidth * (self.actions.count - 1)) / self.actions.count - action.titleEdgeInsets.left - action.titleEdgeInsets.right;
                 // 如果action的标题文字总宽度，大于按钮的contentRect的宽度，则说明水平排列会导致文字显示不全，此时垂直排列
                 if (action.attributedTitle) {
-                    if (ceil([action.attributedTitle boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, FWAlertControllerAppearance.appearance.actionHeight) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.width) > preButtonWidth) {
+                    if (ceil([action.attributedTitle boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.alertAppearance.actionHeight) options:NSStringDrawingUsesLineFragmentOrigin context:nil].size.width) > preButtonWidth) {
                         _actionAxis = UILayoutConstraintAxisVertical;
                         [self updateActionAxis];
                         [self.actionSequenceView setNeedsUpdateConstraints];
                         break; // 一定要break，只要有一个按钮文字过长就垂直排列
                     }
                 } else {
-                    if (ceil([action.title boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, FWAlertControllerAppearance.appearance.actionHeight) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:action.titleFont} context:nil].size.width) > preButtonWidth) {
+                    if (ceil([action.title boundingRectWithSize:CGSizeMake(CGFLOAT_MAX, self.alertAppearance.actionHeight) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:action.titleFont} context:nil].size.width) > preButtonWidth) {
                         _actionAxis = UILayoutConstraintAxisVertical;
                         [self updateActionAxis];
                         [self.actionSequenceView setNeedsUpdateConstraints];
@@ -1858,7 +1895,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         if (_customAlertView) {
             self.containerView.backgroundColor = [UIColor clearColor];
         } else {
-            self.containerView.backgroundColor = [FWAlertControllerAppearance.appearance lightWhite_DarkBlackColor];
+            self.containerView.backgroundColor = [self.alertAppearance lightWhite_DarkBlackColor];
         }
     }
 }
@@ -1925,8 +1962,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 
 - (FWInterfaceHeaderScrollView *)headerView {
     if (!_headerView) {
-        FWInterfaceHeaderScrollView *headerView = [[FWInterfaceHeaderScrollView alloc] init];
-        headerView.backgroundColor = [FWAlertControllerAppearance.appearance normalColor];
+        FWInterfaceHeaderScrollView *headerView = [[FWInterfaceHeaderScrollView alloc] initWithAlertAppearance:self.alertAppearance];
+        headerView.backgroundColor = [self.alertAppearance normalColor];
         headerView.translatesAutoresizingMaskIntoConstraints = NO;
         __weak typeof(self) weakSelf = self;
         headerView.headerViewSfeAreaDidChangBlock = ^{
@@ -1960,6 +1997,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (FWInterfaceActionSequenceView *)actionSequenceView {
     if (!_actionSequenceView) {
         FWInterfaceActionSequenceView *actionSequenceView = [[FWInterfaceActionSequenceView alloc] init];
+        actionSequenceView.alertAppearance = self.alertAppearance;
         actionSequenceView.translatesAutoresizingMaskIntoConstraints = NO;
         __weak typeof(self) weakSelf = self;
         actionSequenceView.buttonClickedInActionViewBlock = ^(NSInteger index) {
@@ -1994,7 +2032,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 
 - (FWInterfaceActionItemSeparatorView *)headerActionLine {
     if (!_headerActionLine) {
-        FWInterfaceActionItemSeparatorView *headerActionLine = [[FWInterfaceActionItemSeparatorView alloc] init];
+        FWInterfaceActionItemSeparatorView *headerActionLine = [[FWInterfaceActionItemSeparatorView alloc] initWithAppearance:self.alertAppearance];
         headerActionLine.translatesAutoresizingMaskIntoConstraints = NO;
         if ((self.headerView.superview || self.customHeaderView.superview) && (self.actionSequenceView.superview || self.customActionSequenceView.superview)) {
             [self.alertView addSubview:headerActionLine];
@@ -2020,7 +2058,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 
 - (FWInterfaceActionItemSeparatorView *)componentActionLine {
     if (!_componentActionLine) {
-        FWInterfaceActionItemSeparatorView *componentActionLine = [[FWInterfaceActionItemSeparatorView alloc] init];
+        FWInterfaceActionItemSeparatorView *componentActionLine = [[FWInterfaceActionItemSeparatorView alloc] initWithAppearance:self.alertAppearance];
         componentActionLine.translatesAutoresizingMaskIntoConstraints = NO;
         // 必须组件view和action部分同时存在
         if (self.componentView.superview && (self.actionSequenceView.superview || self.customActionSequenceView.superview)) {

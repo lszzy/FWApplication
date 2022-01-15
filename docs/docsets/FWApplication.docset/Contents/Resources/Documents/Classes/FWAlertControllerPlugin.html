@@ -17,7 +17,7 @@
     <a title="FWAlertControllerPlugin Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.2.1 Docs</a> (58% documented)</p>
+        <p><a href="../index.html">FWApplication 1.3.0 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -294,9 +294,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/FWAppBundle.html">FWAppBundle</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Classes/FWAppConfig.html">FWAppConfig</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/FWAppDelegate.html">FWAppDelegate</a>
@@ -1846,6 +1843,9 @@
 <span class="cm">/** 单例模式 */</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">FWAlertControllerPlugin</span> <span class="o">*</span><span class="n">sharedInstance</span><span class="p">;</span>
 
+<span class="c1">/// 弹窗自定义样式，nil时使用单例</span>
+<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/FWAlertControllerAppearance.html">FWAlertControllerAppearance</a></span> <span class="o">*</span><span class="n">customAppearance</span><span class="p">;</span>
+
 <span class="c1">/// 弹窗自定义句柄，show方法自动调用</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">customBlock</span><span class="p">)(</span><span class="n"><a href="../Classes/FWAlertController.html">FWAlertController</a></span> <span class="o">*</span><span class="n">alertController</span><span class="p">);</span>
 
@@ -1891,6 +1891,33 @@
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">FWAlertControllerPlugin</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">sharedInstance</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWAlertControllerPlugin(py)customAppearance"></a>
+                    <a name="//apple_ref/swift/Property/customAppearance" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWAlertControllerPlugin(py)customAppearance">customAppearance</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>弹窗自定义样式，nil时使用单例</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n"><a href="../Classes/FWAlertControllerAppearance.html">FWAlertControllerAppearance</a></span> <span class="o">*</span><span class="n">customAppearance</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -1964,7 +1991,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-01-11)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-01-15)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

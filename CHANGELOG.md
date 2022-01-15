@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.3.0] - 2022-01-15
+
+### Added
+* FWAlertPlugin supports custom style configuration
+* Support FWApplication sub-module to be imported separately
+
 ## [1.2.1] - 2022-01-11
 
 ### Fixed

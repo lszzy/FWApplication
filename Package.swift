@@ -59,7 +59,12 @@ let package = Package(
                 .headerSearchPath("FWApplication/View"),
                 .headerSearchPath("FWApplication/View/Component"),
                 .headerSearchPath("FWApplication/View/Extension"),
-                .headerSearchPath("include")
+                .headerSearchPath("include"),
+                .define("FWApplicationSPM", to: "1")
+            ],
+            swiftSettings: [
+                .define("DEBUG", .when(platforms: [.iOS], configuration: .debug)),
+                .define("FWApplicationSPM")
             ]),
         .target(
             name: "FWApplicationCompatible",
