@@ -9,11 +9,25 @@
 
 #import "FWImagePreviewPlugin.h"
 #import "FWImagePreviewPluginImpl.h"
+#import <objc/runtime.h>
 @import FWFramework;
 
 #pragma mark - FWImagePreviewPluginController
 
 @implementation UIViewController (FWImagePreviewPluginController)
+
+- (id<FWImagePreviewPlugin>)fwImagePreviewPlugin
+{
+    id<FWImagePreviewPlugin> previewPlugin = objc_getAssociatedObject(self, @selector(fwImagePreviewPlugin));
+    if (!previewPlugin) previewPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePreviewPlugin)];
+    if (!previewPlugin) previewPlugin = FWImagePreviewPluginImpl.sharedInstance;
+    return previewPlugin;
+}
+
+- (void)setFwImagePreviewPlugin:(id<FWImagePreviewPlugin>)fwImagePreviewPlugin
+{
+    objc_setAssociatedObject(self, @selector(fwImagePreviewPlugin), fwImagePreviewPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)fwShowImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(NSArray *)imageInfos
@@ -38,7 +52,7 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
 {
     // 优先调用插件，不存在时使用默认
-    id<FWImagePreviewPlugin> imagePreviewPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePreviewPlugin)];
+    id<FWImagePreviewPlugin> imagePreviewPlugin = self.fwImagePreviewPlugin;
     if (!imagePreviewPlugin || ![imagePreviewPlugin respondsToSelector:@selector(fwViewController:showImagePreview:imageInfos:currentIndex:sourceView:placeholderImage:renderBlock:customBlock:)]) {
         imagePreviewPlugin = FWImagePreviewPluginImpl.sharedInstance;
     }

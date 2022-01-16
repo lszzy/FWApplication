@@ -9,16 +9,30 @@
 
 #import "FWRefreshPlugin.h"
 #import "FWRefreshPluginImpl.h"
+#import <objc/runtime.h>
 @import FWFramework;
 
 #pragma mark - UIScrollView+FWRefreshPlugin
 
 @implementation UIScrollView (FWRefreshPlugin)
 
+- (id<FWRefreshPlugin>)fwRefreshPlugin
+{
+    id<FWRefreshPlugin> refreshPlugin = objc_getAssociatedObject(self, @selector(fwRefreshPlugin));
+    if (!refreshPlugin) refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    if (!refreshPlugin) refreshPlugin = FWRefreshPluginImpl.sharedInstance;
+    return refreshPlugin;
+}
+
+- (void)setFwRefreshPlugin:(id<FWRefreshPlugin>)fwRefreshPlugin
+{
+    objc_setAssociatedObject(self, @selector(fwRefreshPlugin), fwRefreshPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 #pragma mark - Refreshing
 
 - (BOOL)fwIsRefreshing {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwIsRefreshing:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -26,7 +40,7 @@
 }
 
 - (BOOL)fwShowRefreshing {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwShowRefreshing:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -34,7 +48,7 @@
 }
 
 - (void)setFwShowRefreshing:(BOOL)fwShowRefreshing {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwSetShowRefreshing:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -42,7 +56,7 @@
 }
 
 - (void)fwSetRefreshingBlock:(void (^)(void))block {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwSetRefreshingBlock:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -50,7 +64,7 @@
 }
 
 - (void)fwSetRefreshingTarget:(id)target action:(SEL)action {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwSetRefreshingTarget:action:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -58,7 +72,7 @@
 }
 
 - (void)fwBeginRefreshing {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwBeginRefreshing:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -66,7 +80,7 @@
 }
 
 - (void)fwEndRefreshing {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwEndRefreshing:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -76,7 +90,7 @@
 #pragma mark - Loading
 
 - (BOOL)fwIsLoading {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwIsLoading:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -84,7 +98,7 @@
 }
 
 - (BOOL)fwShowLoading {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwShowLoading:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -92,7 +106,7 @@
 }
 
 - (void)setFwShowLoading:(BOOL)fwShowLoading {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwSetShowLoading:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -100,7 +114,7 @@
 }
 
 - (void)fwSetLoadingBlock:(void (^)(void))block {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwSetLoadingBlock:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -108,7 +122,7 @@
 }
 
 - (void)fwSetLoadingTarget:(id)target action:(SEL)action {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwSetLoadingTarget:action:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -116,7 +130,7 @@
 }
 
 - (void)fwBeginLoading {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwBeginLoading:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
@@ -124,7 +138,7 @@
 }
 
 - (void)fwEndLoading {
-    id<FWRefreshPlugin> refreshPlugin = [FWPluginManager loadPlugin:@protocol(FWRefreshPlugin)];
+    id<FWRefreshPlugin> refreshPlugin = self.fwRefreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(fwEndLoading:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }

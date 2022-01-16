@@ -105,6 +105,9 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// UIViewController使用图片选取插件，全局可使用UIWindow.fwMainWindow.fwTopPresentedController
 @interface UIViewController (FWImagePickerPluginController) <FWImagePickerPluginController>
 
+/// 自定义图片选取插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWImagePickerPlugin> fwImagePickerPlugin;
+
 @end
 
 /// UIView使用图片选取插件，内部使用UIView.fwViewController

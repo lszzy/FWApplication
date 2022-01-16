@@ -9,11 +9,25 @@
 #import "FWAlertPlugin.h"
 #import "FWAlertPluginImpl.h"
 #import "FWAppBundle.h"
+#import <objc/runtime.h>
 @import FWFramework;
 
 #pragma mark - FWAlertPluginController
 
 @implementation UIViewController (FWAlertPluginController)
+
+- (id<FWAlertPlugin>)fwAlertPlugin
+{
+    id<FWAlertPlugin> alertPlugin = objc_getAssociatedObject(self, @selector(fwAlertPlugin));
+    if (!alertPlugin) alertPlugin = [FWPluginManager loadPlugin:@protocol(FWAlertPlugin)];
+    if (!alertPlugin) alertPlugin = FWAlertPluginImpl.sharedInstance;
+    return alertPlugin;
+}
+
+- (void)setFwAlertPlugin:(id<FWAlertPlugin>)fwAlertPlugin
+{
+    objc_setAssociatedObject(self, @selector(fwAlertPlugin), fwAlertPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)fwShowAlertWithTitle:(id)title
                      message:(id)message
@@ -232,7 +246,7 @@
     }
     
     // 优先调用插件，不存在时使用默认
-    id<FWAlertPlugin> alertPlugin = [FWPluginManager loadPlugin:@protocol(FWAlertPlugin)];
+    id<FWAlertPlugin> alertPlugin = self.fwAlertPlugin;
     if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(fwViewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:priority:)]) {
         alertPlugin = FWAlertPluginImpl.sharedInstance;
     }

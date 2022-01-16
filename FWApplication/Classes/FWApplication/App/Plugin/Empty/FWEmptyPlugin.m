@@ -16,6 +16,19 @@
 
 @implementation UIView (FWEmptyPluginView)
 
+- (id<FWEmptyPlugin>)fwEmptyPlugin
+{
+    id<FWEmptyPlugin> emptyPlugin = objc_getAssociatedObject(self, @selector(fwEmptyPlugin));
+    if (!emptyPlugin) emptyPlugin = [FWPluginManager loadPlugin:@protocol(FWEmptyPlugin)];
+    if (!emptyPlugin) emptyPlugin = FWEmptyPluginImpl.sharedInstance;
+    return emptyPlugin;
+}
+
+- (void)setFwEmptyPlugin:(id<FWEmptyPlugin>)fwEmptyPlugin
+{
+    objc_setAssociatedObject(self, @selector(fwEmptyPlugin), fwEmptyPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (UIEdgeInsets)fwEmptyInsets
 {
     NSValue *insets = objc_getAssociatedObject(self, @selector(fwEmptyInsets));
@@ -59,7 +72,7 @@
 
 - (void)fwShowEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    id<FWEmptyPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWEmptyPlugin)];
+    id<FWEmptyPlugin> plugin = self.fwEmptyPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwShowEmptyViewWithText:detail:image:loading:action:block:inView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
@@ -75,7 +88,7 @@
 
 - (void)fwHideEmptyView
 {
-    id<FWEmptyPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWEmptyPlugin)];
+    id<FWEmptyPlugin> plugin = self.fwEmptyPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwHideEmptyView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
@@ -91,7 +104,7 @@
 
 - (BOOL)fwHasEmptyView
 {
-    id<FWEmptyPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWEmptyPlugin)];
+    id<FWEmptyPlugin> plugin = self.fwEmptyPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwHasEmptyView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
