@@ -16,6 +16,19 @@
 
 @implementation UIView (FWToastPluginView)
 
+- (id<FWToastPlugin>)fwToastPlugin
+{
+    id<FWToastPlugin> toastPlugin = objc_getAssociatedObject(self, @selector(fwToastPlugin));
+    if (!toastPlugin) toastPlugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    if (!toastPlugin) toastPlugin = FWToastPluginImpl.sharedInstance;
+    return toastPlugin;
+}
+
+- (void)setFwToastPlugin:(id<FWToastPlugin>)fwToastPlugin
+{
+    objc_setAssociatedObject(self, @selector(fwToastPlugin), fwToastPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (UIEdgeInsets)fwToastInsets
 {
     NSValue *insets = objc_getAssociatedObject(self, @selector(fwToastInsets));
@@ -35,7 +48,7 @@
 - (void)fwShowLoadingWithText:(id)text
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
-    id<FWToastPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    id<FWToastPlugin> plugin = self.fwToastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwShowLoadingWithAttributedText:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
@@ -44,7 +57,7 @@
 
 - (void)fwHideLoading
 {
-    id<FWToastPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    id<FWToastPlugin> plugin = self.fwToastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwHideLoading:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
@@ -54,7 +67,7 @@
 - (void)fwShowProgressWithText:(id)text progress:(CGFloat)progress
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
-    id<FWToastPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    id<FWToastPlugin> plugin = self.fwToastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwShowProgressWithAttributedText:progress:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
@@ -63,7 +76,7 @@
 
 - (void)fwHideProgress
 {
-    id<FWToastPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    id<FWToastPlugin> plugin = self.fwToastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwHideProgress:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
@@ -83,7 +96,7 @@
 - (void)fwShowMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
-    id<FWToastPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    id<FWToastPlugin> plugin = self.fwToastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwShowMessageWithAttributedText:style:completion:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
@@ -92,7 +105,7 @@
 
 - (void)fwHideMessage
 {
-    id<FWToastPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
+    id<FWToastPlugin> plugin = self.fwToastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(fwHideMessage:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }

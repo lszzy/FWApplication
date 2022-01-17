@@ -9,11 +9,25 @@
 
 #import "FWImagePickerPlugin.h"
 #import "FWImagePickerPluginImpl.h"
+#import <objc/runtime.h>
 @import FWFramework;
 
 #pragma mark - FWImagePickerPluginController
 
 @implementation UIViewController (FWImagePickerPluginController)
+
+- (id<FWImagePickerPlugin>)fwImagePickerPlugin
+{
+    id<FWImagePickerPlugin> pickerPlugin = objc_getAssociatedObject(self, @selector(fwImagePickerPlugin));
+    if (!pickerPlugin) pickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];
+    if (!pickerPlugin) pickerPlugin = FWImagePickerPluginImpl.sharedInstance;
+    return pickerPlugin;
+}
+
+- (void)setFwImagePickerPlugin:(id<FWImagePickerPlugin>)fwImagePickerPlugin
+{
+    objc_setAssociatedObject(self, @selector(fwImagePickerPlugin), fwImagePickerPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
 
 - (void)fwShowImageCameraWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
@@ -29,7 +43,7 @@
                              completion:(void (^)(id _Nullable, id _Nullable, BOOL))completion
 {
     // 优先调用插件，不存在时使用默认
-    id<FWImagePickerPlugin> imagePickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];
+    id<FWImagePickerPlugin> imagePickerPlugin = self.fwImagePickerPlugin;
     if (!imagePickerPlugin || ![imagePickerPlugin respondsToSelector:@selector(fwViewController:showImageCamera:allowsEditing:customBlock:completion:)]) {
         imagePickerPlugin = FWImagePickerPluginImpl.sharedInstance;
     }
@@ -60,7 +74,7 @@
                              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
     // 优先调用插件，不存在时使用默认
-    id<FWImagePickerPlugin> imagePickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];
+    id<FWImagePickerPlugin> imagePickerPlugin = self.fwImagePickerPlugin;
     if (!imagePickerPlugin || ![imagePickerPlugin respondsToSelector:@selector(fwViewController:showImagePicker:selectionLimit:allowsEditing:customBlock:completion:)]) {
         imagePickerPlugin = FWImagePickerPluginImpl.sharedInstance;
     }

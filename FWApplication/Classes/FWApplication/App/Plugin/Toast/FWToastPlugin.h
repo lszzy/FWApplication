@@ -88,6 +88,9 @@ static const FWToastStyle FWToastStyleFailure = 2;
 /// UIView使用吐司插件，全局可使用UIWindow.fwMainWindow
 @interface UIView (FWToastPluginView) <FWToastPluginView>
 
+/// 自定义吐司插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWToastPlugin> fwToastPlugin;
+
 @end
 
 /// UIViewController使用吐司插件，内部使用UIViewController.view

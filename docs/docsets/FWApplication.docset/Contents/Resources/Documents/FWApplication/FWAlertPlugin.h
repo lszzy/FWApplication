@@ -251,6 +251,9 @@ typedef NS_ENUM(NSInteger, FWAlertPriority) {
 /// UIViewController使用弹窗插件，全局可使用UIWindow.fwMainWindow.fwTopPresentedController
 @interface UIViewController (FWAlertPluginController) <FWAlertPluginController>
 
+/// 自定义弹窗插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWAlertPlugin> fwAlertPlugin;
+
 @end
 
 /// UIView使用弹窗插件，内部使用UIView.fwViewController

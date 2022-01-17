@@ -200,6 +200,18 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
 
 @implementation UIImageView (FWImagePlugin)
 
+- (id<FWImagePlugin>)fwImagePlugin
+{
+    id<FWImagePlugin> imagePlugin = objc_getAssociatedObject(self, @selector(fwImagePlugin));
+    if (!imagePlugin) imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
+    return imagePlugin;
+}
+
+- (void)setFwImagePlugin:(id<FWImagePlugin>)fwImagePlugin
+{
+    objc_setAssociatedObject(self, @selector(fwImagePlugin), fwImagePlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 + (Class)fwImageViewAnimatedClass
 {
     id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
@@ -217,7 +229,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
 
 - (NSURL *)fwImageURL
 {
-    id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
+    id<FWImagePlugin> imagePlugin = self.fwImagePlugin;
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwImageURL:)]) {
         return [imagePlugin fwImageURL:self];
     }
@@ -249,7 +261,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
                completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
                  progress:(void (^)(double))progress
 {
-    id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
+    id<FWImagePlugin> imagePlugin = self.fwImagePlugin;
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwImageView:setImageURL:placeholder:options:context:completion:progress:)]) {
         NSURL *imageURL = nil;
         if ([url isKindOfClass:[NSString class]] && [url length] > 0) {
@@ -269,7 +281,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
 
 - (void)fwCancelImageRequest
 {
-    id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
+    id<FWImagePlugin> imagePlugin = self.fwImagePlugin;
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(fwCancelImageRequest:)]) {
         [imagePlugin fwCancelImageRequest:self];
     }

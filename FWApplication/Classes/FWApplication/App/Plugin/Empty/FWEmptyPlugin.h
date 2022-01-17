@@ -70,6 +70,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// UIView使用空界面插件，兼容UITableView|UICollectionView
 @interface UIView (FWEmptyPluginView) <FWEmptyPluginView>
 
+/// 自定义空界面插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWEmptyPlugin> fwEmptyPlugin;
+
 @end
 
 /// UIViewController使用空界面插件，内部使用UIViewController.view

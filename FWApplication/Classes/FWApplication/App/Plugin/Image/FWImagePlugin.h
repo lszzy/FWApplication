@@ -130,6 +130,9 @@ FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name);
  */
 @interface UIImageView (FWImagePlugin)
 
+/// 自定义图片插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWImagePlugin> fwImagePlugin;
+
 /// 动画ImageView视图类，优先加载插件，默认UIImageView
 @property (class, nonatomic, unsafe_unretained) Class fwImageViewAnimatedClass;
 
