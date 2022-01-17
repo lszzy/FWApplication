@@ -71,6 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// UIScrollView刷新插件分类
 @interface UIScrollView (FWRefreshPlugin)
 
+/// 自定义刷新插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWRefreshPlugin> fwRefreshPlugin;
+
 #pragma mark - Refreshing
 
 /// 是否正在刷新中

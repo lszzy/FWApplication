@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.3.1] - 2022-01-17
+
+### Added
+* Support controller or view to set plugins used individually
+
 ## [1.3.0] - 2022-01-15
 
 ### Added

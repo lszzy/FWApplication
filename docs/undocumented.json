@@ -2558,21 +2558,21 @@
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
       "line": 59,
-      "symbol": "UIViewController(FWAlertPriority).fwAlertPriorityEnabled",
+      "symbol": "UIViewController(FWAlertPluginController).fwAlertPriorityEnabled",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
       "line": 62,
-      "symbol": "UIViewController(FWAlertPriority).fwAlertPriority",
+      "symbol": "UIViewController(FWAlertPluginController).fwAlertPriority",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertPluginImpl.h",
       "line": 65,
-      "symbol": "UIViewController(FWAlertPriority).-fwAlertPriorityPresentIn:",
+      "symbol": "UIViewController(FWAlertPluginController).-fwAlertPriorityPresentIn:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },

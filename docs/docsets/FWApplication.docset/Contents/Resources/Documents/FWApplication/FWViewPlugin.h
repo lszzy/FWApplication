@@ -78,6 +78,15 @@ static const FWIndicatorViewStyle FWIndicatorViewStyleRefresh = 1;
 /// UIView视图插件分类
 @interface UIView (FWViewPlugin)
 
+/// 自定义视图插件，未设置时自动从插件池加载
+@property (nonatomic, strong, nullable) id<FWViewPlugin> fwViewPlugin;
+
+/// 统一进度视图工厂方法
+- (UIView<FWProgressViewPlugin> *)fwProgressViewWithStyle:(FWProgressViewStyle)style;
+
+/// 统一指示器视图工厂方法
+- (UIView<FWIndicatorViewPlugin> *)fwIndicatorViewWithStyle:(FWIndicatorViewStyle)style;
+
 /// 统一进度视图工厂方法
 + (UIView<FWProgressViewPlugin> *)fwProgressViewWithStyle:(FWProgressViewStyle)style;
 

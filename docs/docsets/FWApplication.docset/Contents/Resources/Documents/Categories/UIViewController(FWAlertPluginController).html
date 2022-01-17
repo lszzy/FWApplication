@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>UIViewController(FWAlertPriority) Category Reference</title>
+    <title>UIViewController(FWAlertPluginController) Category Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,11 +13,11 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Extension/UIViewController(FWAlertPriority)" class="dashAnchor"></a>
-    <a title="UIViewController(FWAlertPriority) Category Reference"></a>
+    <a name="//apple_ref/swift/Extension/UIViewController(FWAlertPluginController)" class="dashAnchor"></a>
+    <a title="UIViewController(FWAlertPluginController) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 1.3.0 Docs</a> (58% documented)</p>
+        <p><a href="../index.html">FWApplication 1.3.1 Docs</a> (58% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">FWApplication Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        UIViewController(FWAlertPriority) Category Reference
+        UIViewController(FWAlertPluginController) Category Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -249,7 +249,7 @@
                 <a href="../Categories/UIView%28FWBadge%29.html">UIView(FWBadge)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Categories/UIViewController%28FWAlertPriority%29.html">UIViewController(FWAlertPriority)</a>
+                <a href="../Categories/UIViewController%28FWAlertPluginController%29.html">UIViewController(FWAlertPluginController)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UIWindow%28FWApplication%29.html">UIWindow(FWApplication)</a>
@@ -1834,30 +1834,59 @@
       <article class="main-content">
         <section>
           <section class="section">
-            <h1>UIViewController(FWAlertPriority)</h1>
+            <h1>UIViewController(FWAlertPluginController)</h1>
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">UIViewController</span> <span class="p">(</span><span class="nl">FWAlertPriority</span><span class="p">)</span>
-
-<span class="c1">// 启用弹出框优先级，未启用不生效</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fwAlertPriorityEnabled</span><span class="p">;</span>
-
-<span class="c1">// 设置弹出优先级，默认普通</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">assign</span><span class="p">)</span> <span class="n"><a href="../Enums/FWAlertPriority.html">FWAlertPriority</a></span> <span class="n">fwAlertPriority</span><span class="p">;</span>
-
-<span class="c1">// 设置弹出框在指定控制器中按照优先级显示</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fwAlertPriorityPresentIn</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span><span class="p">;</span>
-
-<span class="k">@end</span></code></pre>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">UIViewController</span> <span class="p">(</span><span class="nl">FWAlertPluginController</span><span class="p">)</span></code></pre>
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>UIViewController使用弹窗插件，全局可使用UIWindow.fwMainWindow.fwTopPresentedController</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIViewController(py)fwAlertPlugin"></a>
+                    <a name="//apple_ref/swift/Property/fwAlertPlugin" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIViewController(py)fwAlertPlugin">fwAlertPlugin</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>自定义弹窗插件，未设置时自动从插件池加载</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/FWAlertPlugin.html">FWAlertPlugin</a></span><span class="o">&gt;</span> <span class="n">fwAlertPlugin</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UIViewController%2BFWAlertPriority"></a>
+                <a name="//apple_ref/swift/Section/UIViewController+FWAlertPriority" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/UIViewController%2BFWAlertPriority"></a>
+                  <h3 class="section-name"><span>UIViewController+FWAlertPriority</span>
+</h3>
+                </div>
+              </div>
               <ul>
                 <li class="item">
                   <div>
@@ -1934,6 +1963,86 @@
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fwAlertPriorityPresentIn</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/FWImagePickerPluginController"></a>
+                <a name="//apple_ref/swift/Section/FWImagePickerPluginController" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/FWImagePickerPluginController"></a>
+                  <h3 class="section-name"><span>FWImagePickerPluginController</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIViewController(py)fwImagePickerPlugin"></a>
+                    <a name="//apple_ref/swift/Property/fwImagePickerPlugin" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIViewController(py)fwImagePickerPlugin">fwImagePickerPlugin</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>自定义图片选取插件，未设置时自动从插件池加载</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/FWImagePickerPlugin.html">FWImagePickerPlugin</a></span><span class="o">&gt;</span> <span class="n">fwImagePickerPlugin</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/FWImagePreviewPluginController"></a>
+                <a name="//apple_ref/swift/Section/FWImagePreviewPluginController" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/FWImagePreviewPluginController"></a>
+                  <h3 class="section-name"><span>FWImagePreviewPluginController</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIViewController(py)fwImagePreviewPlugin"></a>
+                    <a name="//apple_ref/swift/Property/fwImagePreviewPlugin" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIViewController(py)fwImagePreviewPlugin">fwImagePreviewPlugin</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>自定义图片预览插件，未设置时自动从插件池加载</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">id</span><span class="o">&lt;</span><span class="n"><a href="../Protocols/FWImagePreviewPlugin.html">FWImagePreviewPlugin</a></span><span class="o">&gt;</span> <span class="n">fwImagePreviewPlugin</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -3363,7 +3472,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-01-15)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-01-17)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
