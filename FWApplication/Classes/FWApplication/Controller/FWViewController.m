@@ -220,6 +220,11 @@
         if ([viewController respondsToSelector:@selector(renderView)]) {
             [(id<FWViewController>)viewController renderView];
         }
+        
+        // 3. 控制器renderLayout
+        if ([viewController respondsToSelector:@selector(renderLayout)]) {
+            [(id<FWViewController>)viewController renderLayout];
+        }
     }
 }
 
