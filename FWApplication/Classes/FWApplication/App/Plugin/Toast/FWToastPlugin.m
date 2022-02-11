@@ -95,12 +95,17 @@
 
 - (void)fwShowMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
+    [self fwShowMessageWithText:text style:style autoHide:YES completion:completion];
+}
+
+- (void)fwShowMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
+{
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
     id<FWToastPlugin> plugin = self.fwToastPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(fwShowMessageWithAttributedText:style:completion:inView:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(fwShowMessageWithAttributedText:style:autoHide:completion:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin fwShowMessageWithAttributedText:attributedText style:style completion:completion inView:self];
+    [plugin fwShowMessageWithAttributedText:attributedText style:style autoHide:autoHide completion:completion inView:self];
 }
 
 - (void)fwHideMessage
@@ -164,6 +169,11 @@
 - (void)fwShowMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
     [self.view fwShowMessageWithText:text style:style completion:completion];
+}
+
+- (void)fwShowMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
+{
+    [self.view fwShowMessageWithText:text style:style autoHide:autoHide completion:completion];
 }
 
 - (void)fwHideMessage

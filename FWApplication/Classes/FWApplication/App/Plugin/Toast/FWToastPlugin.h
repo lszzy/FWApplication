@@ -39,10 +39,10 @@ static const FWToastStyle FWToastStyleFailure = 2;
 /// 隐藏进度条吐司
 - (void)fwHideProgress:(UIView *)view;
 
-/// 显示指定样式消息吐司，自动隐藏，关闭时回调
-- (void)fwShowMessageWithAttributedText:(nullable NSAttributedString *)attributedText style:(FWToastStyle)style completion:(nullable void (^)(void))completion inView:(UIView *)view;
+/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调
+- (void)fwShowMessageWithAttributedText:(nullable NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion inView:(UIView *)view;
 
-/// 隐藏消息吐司，仅用于提前隐藏
+/// 隐藏消息吐司
 - (void)fwHideMessage:(UIView *)view;
 
 @end
@@ -77,10 +77,13 @@ static const FWToastStyle FWToastStyleFailure = 2;
 /// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
 - (void)fwShowMessageWithText:(nullable id)text style:(FWToastStyle)style;
 
-/// 显示指定样式消息吐司，自动隐藏，关闭时回调，支持String和AttributedString
+/// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
 - (void)fwShowMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion;
 
-/// 隐藏消息吐司，仅用于提前隐藏
+/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
+- (void)fwShowMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion;
+
+/// 隐藏消息吐司
 - (void)fwHideMessage;
 
 @end
