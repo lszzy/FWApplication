@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0] - 2022-02-12
+
+### Added
+* FWViewController adds renderLayout hook method
+
+### Changed
+* FWToastPlugin message toast support does not automatically hide the method
+
 ## [1.3.1] - 2022-01-17
 
 ### Added

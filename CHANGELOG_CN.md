@@ -1,5 +1,13 @@
 # 更新日志
 
+## [1.4.0] - 2022-02-12
+
+### Added
+* FWViewController新增renderLayout钩子方法
+
+### Changed
+* FWToastPlugin消息吐司支持不自动隐藏方法
+
 ## [1.3.1] - 2022-01-17
 
 ### Added

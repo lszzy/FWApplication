@@ -102,7 +102,7 @@
     if (toastView) [toastView hide];
 }
 
-- (void)fwShowMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style completion:(void (^)(void))completion inView:(UIView *)view
+- (void)fwShowMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion inView:(UIView *)view
 {
     NSAttributedString *messageText = attributedText;
     if (!messageText && self.defaultMessageText) {
@@ -124,7 +124,10 @@
         self.customBlock(toastView);
     }
     [toastView showAnimated:fadeAnimated];
-    [toastView hideAfterDelay:self.delayTime completion:completion];
+    
+    if (autoHide) {
+        [toastView hideAfterDelay:self.delayTime completion:completion];
+    }
 }
 
 - (void)fwHideMessage:(UIView *)view

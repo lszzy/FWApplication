@@ -10621,28 +10621,28 @@
     },
     {
       "file": "docs/FWApplication/FWViewController.h",
-      "line": 50,
+      "line": 53,
       "symbol": "FWViewControllerIntercepter.initIntercepter",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewController.h",
-      "line": 51,
+      "line": 54,
       "symbol": "FWViewControllerIntercepter.loadViewIntercepter",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewController.h",
-      "line": 52,
+      "line": 55,
       "symbol": "FWViewControllerIntercepter.viewDidLoadIntercepter",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewController.h",
-      "line": 54,
+      "line": 57,
       "symbol": "FWViewControllerIntercepter.forwardSelectors",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
