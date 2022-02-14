@@ -10,6 +10,9 @@
 #import "NSObject+FWApplication.h"
 #import <objc/runtime.h>
 
+static NSMutableDictionary *fwStaticTasks;
+static dispatch_semaphore_t fwStaticSemaphore;
+
 @implementation NSObject (FWApplication)
 
 #pragma mark - Archive
@@ -171,6 +174,54 @@
 - (void)fwPerformBlock:(void (^)(void (^completionHandler)(BOOL success, id _Nullable obj)))block completion:(void (^)(BOOL success, id _Nullable obj))completion retryCount:(NSUInteger)retryCount timeoutInterval:(NSTimeInterval)timeoutInterval delayInterval:(NSTimeInterval)delayInterval
 {
     [NSObject fwPerformBlock:block completion:completion retryCount:retryCount timeoutInterval:timeoutInterval delayInterval:delayInterval];
+}
+
+#pragma mark - Task
+
++ (void)fwTaskInitialize
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        fwStaticTasks = [NSMutableDictionary dictionary];
+        fwStaticSemaphore = dispatch_semaphore_create(1);
+    });
+}
+
++ (NSString *)fwPerformTask:(void (^)(void))task start:(NSTimeInterval)start interval:(NSTimeInterval)interval repeats:(BOOL)repeats async:(BOOL)async
+{
+    [self fwTaskInitialize];
+    
+    dispatch_queue_t queue = async ? dispatch_get_global_queue(0, 0) : dispatch_get_main_queue();
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(timer,
+                              dispatch_time(DISPATCH_TIME_NOW, start * NSEC_PER_SEC),
+                              interval * NSEC_PER_SEC, 0);
+    
+    dispatch_semaphore_wait(fwStaticSemaphore, DISPATCH_TIME_FOREVER);
+    NSString *taskId = [NSString stringWithFormat:@"%zd", fwStaticTasks.count];
+    fwStaticTasks[taskId] = timer;
+    dispatch_semaphore_signal(fwStaticSemaphore);
+    
+    dispatch_source_set_event_handler(timer, ^{
+        task();
+        if (!repeats) [self fwCancelTask:taskId];
+    });
+    dispatch_resume(timer);
+    return taskId;
+}
+
++ (void)fwCancelTask:(NSString *)taskId
+{
+    if (taskId.length == 0) return;
+    [self fwTaskInitialize];
+    
+    dispatch_semaphore_wait(fwStaticSemaphore, DISPATCH_TIME_FOREVER);
+    dispatch_source_t timer = fwStaticTasks[taskId];
+    if (timer) {
+        dispatch_source_cancel(timer);
+        [fwStaticTasks removeObjectForKey:taskId];
+    }
+    dispatch_semaphore_signal(fwStaticSemaphore);
 }
 
 @end
