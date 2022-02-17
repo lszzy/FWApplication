@@ -134,6 +134,8 @@
 - (void)setFwNavigationBarHidden:(BOOL)hidden
 {
     [self fwSetNavigationBarHidden:hidden animated:NO];
+    // 直接设置navigtionBar.isHidden不会影响右滑关闭手势
+    // self.navigationController.navigationBar.isHidden = YES;
 }
 
 - (void)fwSetNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated

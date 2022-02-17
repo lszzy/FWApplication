@@ -34,6 +34,9 @@ static const FWViewControllerState FWViewControllerStateFailure = 3;
 /// 渲染布局方法，loadView自动调用，默认未实现
 - (void)renderLayout;
 
+/// 渲染导航栏方法，viewDidLoad自动调用，默认未实现
+- (void)renderNavbar;
+
 /// 渲染模型方法，viewDidLoad自动调用，默认未实现
 - (void)renderModel;
 

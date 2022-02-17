@@ -248,17 +248,22 @@
             }
         }
         
-        // 3. 控制器renderModel
+        // 3. 控制器renderNavbar
+        if ([viewController respondsToSelector:@selector(renderNavbar)]) {
+            [(id<FWViewController>)viewController renderNavbar];
+        }
+        
+        // 4. 控制器renderModel
         if ([viewController respondsToSelector:@selector(renderModel)]) {
             [(id<FWViewController>)viewController renderModel];
         }
         
-        // 4. 控制器renderData
+        // 5. 控制器renderData
         if ([viewController respondsToSelector:@selector(renderData)]) {
             [(id<FWViewController>)viewController renderData];
         }
         
-        // 5. 控制器renderState
+        // 6. 控制器renderState
         if ([viewController respondsToSelector:@selector(renderState:withObject:)]) {
             [(id<FWViewController>)viewController renderState:FWViewControllerStateReady withObject:nil];
         }
