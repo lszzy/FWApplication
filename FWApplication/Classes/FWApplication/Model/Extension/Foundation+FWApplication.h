@@ -20,5 +20,6 @@
 #import "NSObject+FWApplication.h"
 #import "NSString+FWApplication.h"
 #import "NSURL+FWApplication.h"
+#import "NSURLRequest+FWApplication.h"
 
 #endif /* Foundation_FWApplication_h */

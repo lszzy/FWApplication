@@ -182,12 +182,12 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 @implementation TestRouterResultViewController
 
-+ (id)fwRouterURL
++ (id)routerURL
 {
     return TestRouter.ROUTE_LOADER;
 }
 
-+ (id)fwRouterHandler:(FWRouterContext *)context
++ (id)routerHandler:(FWRouterContext *)context
 {
     TestRouterResultViewController *viewController = [TestRouterResultViewController new];
     viewController.context = context;
