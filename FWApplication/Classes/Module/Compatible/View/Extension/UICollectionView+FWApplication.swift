@@ -260,11 +260,11 @@ import FWApplication
     }
     
     func fwDelegate() -> FWCollectionViewDelegate {
-        if let result = fwProperty(forName: "fwDelegate") as? FWCollectionViewDelegate {
+        if let result = fw.property(forName: "fwDelegate") as? FWCollectionViewDelegate {
             return result
         } else {
             let result = FWCollectionViewDelegate()
-            fwSetProperty(result, forName: "fwDelegate")
+            fw.setProperty(result, forName: "fwDelegate")
             dataSource = result
             delegate = result
             return result

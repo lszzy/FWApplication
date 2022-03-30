@@ -198,7 +198,7 @@
         titleColor = self.fwAlertAppearance.actionColor;
     }
     if (titleColor) {
-        [self fwPerformSetter:@"titleTextColor" withObject:titleColor];
+        [self.fw invokeSetter:@"titleTextColor" withObject:titleColor];
     }
 }
 
@@ -210,7 +210,7 @@
 - (void)setFwTitleColor:(UIColor *)fwTitleColor
 {
     objc_setAssociatedObject(self, @selector(fwTitleColor), fwTitleColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self fwPerformSetter:@"titleTextColor" withObject:fwTitleColor];
+    [self.fw invokeSetter:@"titleTextColor" withObject:fwTitleColor];
 }
 
 @end
@@ -308,7 +308,7 @@
         alertController.fwAttributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
     
-    [alertController fwObserveProperty:@"preferredAction" block:^(UIAlertController *object, NSDictionary *change) {
+    [alertController.fw observeProperty:@"preferredAction" block:^(UIAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(UIAlertAction *obj, NSUInteger idx, BOOL *stop) {
             if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
         }];
@@ -337,7 +337,7 @@
 - (void)setFwAttributedTitle:(NSAttributedString *)fwAttributedTitle
 {
     objc_setAssociatedObject(self, @selector(fwAttributedTitle), fwAttributedTitle, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self fwPerformSetter:@"attributedTitle" withObject:fwAttributedTitle];
+    [self.fw invokeSetter:@"attributedTitle" withObject:fwAttributedTitle];
 }
 
 - (NSAttributedString *)fwAttributedMessage
@@ -348,7 +348,7 @@
 - (void)setFwAttributedMessage:(NSAttributedString *)fwAttributedMessage
 {
     objc_setAssociatedObject(self, @selector(fwAttributedMessage), fwAttributedMessage, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self fwPerformSetter:@"attributedMessage" withObject:fwAttributedMessage];
+    [self.fw invokeSetter:@"attributedMessage" withObject:fwAttributedMessage];
 }
 
 @end

@@ -226,12 +226,12 @@ static WKProcessPool *fwStaticProcessPool = nil;
     [self addSubview:self.progressView];
     [self.progressView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
     [self.progressView fwSetDimension:NSLayoutAttributeHeight toSize:2.f];
-    [self fwObserveProperty:@"estimatedProgress" block:^(FWWebView *webView, NSDictionary *change) {
+    [self.fw observeProperty:@"estimatedProgress" block:^(FWWebView *webView, NSDictionary *change) {
         if (webView.estimatedProgress < 1.0) {
             webView.progressView.fwWebProgress = webView.estimatedProgress;
         }
     }];
-    [self fwObserveProperty:@"loading" block:^(FWWebView *webView, NSDictionary *change) {
+    [self.fw observeProperty:@"loading" block:^(FWWebView *webView, NSDictionary *change) {
         if (!webView.isLoading) {
             webView.progressView.fwWebProgress = 1.0;
         }
@@ -1049,7 +1049,7 @@ NSString * FWWebViewJsBridge_js() {
 - (NSString *)fwUserAgent
 {
     if (self.customUserAgent.length > 0) return self.customUserAgent;
-    NSString *userAgent = [self fwPerformGetter:@"userAgent"];
+    NSString *userAgent = [self.fw invokeGetter:@"userAgent"];
     if ([userAgent isKindOfClass:[NSString class]] && userAgent.length > 0) return userAgent;
     return [WKWebView fwBrowserUserAgent];
 }

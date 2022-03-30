@@ -141,12 +141,12 @@
 
 - (UITextField *)fwTextField
 {
-    return [self fwPerformGetter:@"searchField"];
+    return [self.fw invokeGetter:@"searchField"];
 }
 
 - (UIButton *)fwCancelButton
 {
-    return [self fwPerformGetter:@"cancelButton"];
+    return [self.fw invokeGetter:@"cancelButton"];
 }
 
 - (UIColor *)fwBackgroundColor
@@ -220,11 +220,11 @@
     UIButton *cancelButton = [self fwCancelButton];
     if (enabled) {
         cancelButton.enabled = YES;
-        [cancelButton fwObserveProperty:@"enabled" block:^(UIButton *object, NSDictionary *change) {
+        [cancelButton.fw observeProperty:@"enabled" block:^(UIButton *object, NSDictionary *change) {
             if (!object.enabled) object.enabled = YES;
         }];
     } else {
-        [cancelButton fwUnobserveProperty:@"enabled"];
+        [cancelButton.fw unobserveProperty:@"enabled"];
     }
 }
 

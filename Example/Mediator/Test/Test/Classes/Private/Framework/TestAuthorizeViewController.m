@@ -24,7 +24,7 @@
     
     // 手工修改设置返回页面自动刷新权限，释放时自动移除监听
     FWWeakifySelf();
-    [self fwObserveNotification:UIApplicationDidBecomeActiveNotification block:^(NSNotification *notification) {
+    [self.fw observeNotification:UIApplicationDidBecomeActiveNotification block:^(NSNotification *notification) {
         FWStrongifySelf();
         
         [self.tableView reloadData];

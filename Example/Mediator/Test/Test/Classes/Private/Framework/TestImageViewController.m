@@ -411,19 +411,19 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
     NSString *fileName = [self.tableData objectAtIndex:indexPath.row];
     cell.nameLabel.text = [[fileName lastPathComponent] stringByAppendingFormat:@"(%@)", [NSData fwMimeTypeFromExtension:[fileName pathExtension]]];
     if (!fileName.fwIsFormatUrl) {
-        cell.fwTempObject = fileName;
+        cell.fw.tempObject = fileName;
         FWDispatchGlobal(^{
             UIImage *image = [TestBundle imageNamed:fileName];
             UIImage *decodeImage = [UIImage fwImageWithData:[UIImage fwDataWithImage:image]];
             FWDispatchMain(^{
-                if ([cell.fwTempObject isEqualToString:fileName]) {
+                if ([cell.fw.tempObject isEqualToString:fileName]) {
                     [cell.systemView fwSetImageWithURL:nil placeholderImage:image];
                     [cell.animatedView fwSetImageWithURL:nil placeholderImage:decodeImage];
                 }
             });
         });
     } else {
-        cell.fwTempObject = nil;
+        cell.fw.tempObject = nil;
         NSString *url = fileName;
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
             url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fwCurrentTime)];

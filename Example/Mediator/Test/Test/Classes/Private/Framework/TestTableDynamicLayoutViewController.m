@@ -419,7 +419,7 @@ static BOOL isExpanded = NO;
     NSInteger count = 0;
     for (TestTableDynamicLayoutObject *object in self.tableData) {
         NSString *imageUrl = object.imageUrl;
-        imageUrl.fwTempObject = @(count++);
+        imageUrl.fw.tempObject = @(count++);
         if ([imageUrl fwIsFormatUrl] || imageUrl.length < 1) {
             [pictureUrls addObject:imageUrl];
         } else {

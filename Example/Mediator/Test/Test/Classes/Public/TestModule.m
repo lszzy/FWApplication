@@ -8,11 +8,11 @@
 #import "TestModule.h"
 #import "TestModuleController.h"
 
-@interface FWLoader (TestModule)
+@interface FWAutoloader (TestModule)
 
 @end
 
-@implementation FWLoader (TestModule)
+@implementation FWAutoloader (TestModule)
 
 - (void)loadTestModule
 {

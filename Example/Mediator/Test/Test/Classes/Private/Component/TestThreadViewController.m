@@ -160,7 +160,7 @@
 - (void)onArray1
 {
     // 清空
-    NSMutableArray *array = [NSMutableArray new];
+    NSMutableArray<NSObject *> *array = [NSMutableArray new];
     [array addObject:[NSObject new]];
     
     FWWeakifySelf();
@@ -168,14 +168,14 @@
         
         // 操作
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.fwTempObject = @([obj.fwTempObject integerValue] + 1);
+            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [[array.firstObject fwTempObject] integerValue];
+        NSInteger value = [array.firstObject.fw.tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -183,7 +183,7 @@
 - (void)onArray2
 {
     // 清空
-    FWMutableArray *array = [FWMutableArray new];
+    FWMutableArray<NSObject *> *array = [FWMutableArray new];
     [array addObject:[NSObject new]];
     
     FWWeakifySelf();
@@ -191,14 +191,14 @@
         
         // 操作
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.fwTempObject = @([obj.fwTempObject integerValue] + 1);
+            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [[array.firstObject fwTempObject] integerValue];
+        NSInteger value = [array.firstObject.fw.tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -206,7 +206,7 @@
 - (void)onArray3
 {
     // 清空
-    NSMutableArray *array = [NSMutableArray new];
+    NSMutableArray<UIView *> *array = [NSMutableArray new];
     [array addObject:[UIView new]];
     
     FWWeakifySelf();
@@ -216,7 +216,7 @@
         // 操作
         [self fwLock];
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.fwTempObject = @([obj.fwTempObject integerValue] + 1);
+            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
         }];
         [self fwUnlock];
         
@@ -224,7 +224,7 @@
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [[array.firstObject fwTempObject] integerValue];
+        NSInteger value = [array.firstObject.fw.tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -232,7 +232,7 @@
 - (void)onDictionary1
 {
     // 清空
-    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSMutableDictionary<NSString *, NSObject *> *dict = [NSMutableDictionary new];
     [dict setObject:[NSObject new] forKey:@"object"];
     
     FWWeakifySelf();
@@ -240,14 +240,14 @@
         
         // 操作
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
-            obj.fwTempObject = @([obj.fwTempObject integerValue] + 1);
+            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [[dict[@"object"] fwTempObject] integerValue];
+        NSInteger value = [dict[@"object"].fw.tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -255,7 +255,7 @@
 - (void)onDictionary2
 {
     // 清空
-    FWMutableDictionary *dict = [FWMutableDictionary new];
+    FWMutableDictionary<NSString *, NSObject *> *dict = [FWMutableDictionary new];
     [dict setObject:[NSObject new] forKey:@"object"];
     
     FWWeakifySelf();
@@ -263,14 +263,14 @@
         
         // 操作
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
-            obj.fwTempObject = @([obj.fwTempObject integerValue] + 1);
+            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [[dict[@"object"] fwTempObject] integerValue];
+        NSInteger value = [dict[@"object"].fw.tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -278,7 +278,7 @@
 - (void)onDictionary3
 {
     // 清空
-    NSMutableDictionary *dict = [NSMutableDictionary new];
+    NSMutableDictionary<NSString *, NSObject *> *dict = [NSMutableDictionary new];
     [dict setObject:[NSObject new] forKey:@"object"];
     
     FWWeakifySelf();
@@ -288,7 +288,7 @@
         // 操作
         [self fwLock];
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
-            obj.fwTempObject = @([obj.fwTempObject integerValue] + 1);
+            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
         }];
         [self fwUnlock];
         
@@ -296,7 +296,7 @@
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [[dict[@"object"] fwTempObject] integerValue];
+        NSInteger value = [dict[@"object"].fw.tempObject integerValue];
         [self onResult:value];
     }];
 }

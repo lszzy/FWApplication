@@ -208,7 +208,7 @@
         alertController.attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
     
-    [alertController fwObserveProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
+    [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
             if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
         }];
@@ -226,7 +226,7 @@
                                                                                      appearance:self.customAppearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
-    [alertController fwObserveProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
+    [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
             if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
         }];
@@ -250,7 +250,7 @@
         alertAction.fwIsPreferred = NO;
     }
     
-    [alertAction fwObserveProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
+    [alertAction.fw observeProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
         object.fwIsPreferred = object.fwIsPreferred;
     }];
     

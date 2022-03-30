@@ -86,9 +86,9 @@
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"常规16 " withFont:attrFont]];
     attrFont = FWFontBold(16);
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"粗体16 " withFont:attrFont]];
-    attrFont = FWFontItalic(16);
+    attrFont = [UIFont italicSystemFontOfSize:16];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"斜体16 " withFont:attrFont]];
-    attrFont = [FWFontItalic(16) fwBoldFont];
+    attrFont = [[UIFont italicSystemFontOfSize:16] fwBoldFont];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"粗斜体16 " withFont:attrFont]];
     
     attrFont = [UIFont fwFontOfSize:16 weight:UIFontWeightLight];

@@ -117,7 +117,7 @@
     }
     
     if ([self respondsToSelector:@selector(view)]) {
-        return [self fwPerformGetter:@"view"];
+        return [self.fw invokeGetter:@"view"];
     }
     return nil;
 }
@@ -135,14 +135,14 @@
     if (view) {
         block(self, view);
     } else {
-        [self fwObserveProperty:@"view" target:self action:@selector(fwViewLoaded:change:)];
+        [self.fw observeProperty:@"view" target:self action:@selector(fwViewLoaded:change:)];
     }
 }
 
 - (void)fwViewLoaded:(UIBarItem *)object change:(NSDictionary *)change
 {
     if (![change objectForKey:NSKeyValueChangeNewKey]) return;
-    [object fwUnobserveProperty:@"view" target:self action:@selector(fwViewLoaded:change:)];
+    [object.fw unobserveProperty:@"view" target:self action:@selector(fwViewLoaded:change:)];
     
     UIView *view = [object fwView];
     if (view && self.fwViewLoadedBlock) {

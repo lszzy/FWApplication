@@ -70,7 +70,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
         viewControllers = [homeNav, testNav, settingsNav]
         
-        fwObserveNotification(NSNotification.Name.FWLanguageChanged.rawValue) { (notification) in
+        fw.observeNotification(NSNotification.Name.FWLanguageChanged.rawValue) { (notification) in
             homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
             testNav.tabBarItem.title = FWLocalizedString("testTitle")
             settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")

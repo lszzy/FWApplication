@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/ibireme/YYKit
  */
-@interface FWMutableDictionary : NSMutableDictionary
+@interface FWMutableDictionary<__covariant KeyType, __covariant ObjectType> : NSMutableDictionary<KeyType, ObjectType>
 
 @end
 

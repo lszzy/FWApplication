@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/ibireme/YYKit
  */
-@interface FWMutableArray : NSMutableArray
+@interface FWMutableArray<__covariant ObjectType> : NSMutableArray<ObjectType>
 
 @end
 

@@ -301,9 +301,9 @@
             [[FWViewControllerManager sharedInstance] hookViewDidLoad:selfObject];
         }));
         
-        [UIViewController fwSwizzleInstanceMethod:@selector(respondsToSelector:) with:@selector(fwInnerIntercepterRespondsToSelector:)];
-        [UIViewController fwSwizzleInstanceMethod:@selector(methodSignatureForSelector:) with:@selector(fwInnerIntercepterMethodSignatureForSelector:)];
-        [UIViewController fwSwizzleInstanceMethod:@selector(forwardInvocation:) with:@selector(fwInnerIntercepterForwardInvocation:)];
+        [UIViewController.fw swizzleInstanceMethod:@selector(respondsToSelector:) with:@selector(fwInnerIntercepterRespondsToSelector:)];
+        [UIViewController.fw swizzleInstanceMethod:@selector(methodSignatureForSelector:) with:@selector(fwInnerIntercepterMethodSignatureForSelector:)];
+        [UIViewController.fw swizzleInstanceMethod:@selector(forwardInvocation:) with:@selector(fwInnerIntercepterForwardInvocation:)];
     });
 }
 

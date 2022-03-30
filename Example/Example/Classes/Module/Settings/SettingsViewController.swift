@@ -206,6 +206,6 @@ extension SettingsViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let rowData = tableData[indexPath.row] as! NSArray
         let action = FWSafeValue(rowData[1] as? String)
-        fwPerform(Selector(action))
+        fw.invokeMethod(Selector(action))
     }
 }

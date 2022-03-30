@@ -264,11 +264,11 @@ import FWApplication
     }
     
     func fwDelegate() -> FWTableViewDelegate {
-        if let result = fwProperty(forName: "fwDelegate") as? FWTableViewDelegate {
+        if let result = fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
             return result
         } else {
             let result = FWTableViewDelegate()
-            fwSetProperty(result, forName: "fwDelegate")
+            fw.setProperty(result, forName: "fwDelegate")
             dataSource = result
             delegate = result
             return result

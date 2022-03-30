@@ -102,7 +102,7 @@
         if ([self.webView canGoBack]) [self.webView goBack];
     }];
     backItem.enabled = NO;
-    [self.webView fwObserveProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
+    [self.webView.fw observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         backItem.enabled = webView.canGoBack;
         [self reloadToolbar:NO];
@@ -113,13 +113,13 @@
         if ([self.webView canGoForward]) [self.webView goForward];
     }];
     forwardItem.enabled = NO;
-    [self.webView fwObserveProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
+    [self.webView.fw observeProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         forwardItem.enabled = webView.canGoForward;
         [self reloadToolbar:NO];
     }];
     
-    [self.webView fwObserveProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
+    [self.webView.fw observeProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         [self reloadToolbar:NO];
     }];

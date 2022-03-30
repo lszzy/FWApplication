@@ -14,22 +14,22 @@ import FWApplication
 extension FWCollectionViewController where Self: UIViewController {
     /// 集合视图，默认不显示滚动条
     @nonobjc public var collectionView: UICollectionView {
-        if let result = fwProperty(forName: "collectionView") as? UICollectionView {
+        if let result = fw.property(forName: "collectionView") as? UICollectionView {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("collectionView"), withObject: self) as! UICollectionView
-            fwSetProperty(result, forName: "collectionView")
+            fw.setProperty(result, forName: "collectionView")
             return result
         }
     }
     
     /// 集合数据，默认空数组，延迟加载
     @nonobjc public var collectionData: NSMutableArray {
-        if let result = fwProperty(forName: "collectionData") as? NSMutableArray {
+        if let result = fw.property(forName: "collectionData") as? NSMutableArray {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("collectionData"), withObject: self) as! NSMutableArray
-            fwSetProperty(result, forName: "collectionData")
+            fw.setProperty(result, forName: "collectionData")
             return result
         }
     }
@@ -38,22 +38,22 @@ extension FWCollectionViewController where Self: UIViewController {
 extension FWScrollViewController where Self: UIViewController {
     /// 滚动视图，默认不显示滚动条
     @nonobjc public var scrollView: UIScrollView {
-        if let result = fwProperty(forName: "scrollView") as? UIScrollView {
+        if let result = fw.property(forName: "scrollView") as? UIScrollView {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("scrollView"), withObject: self) as! UIScrollView
-            fwSetProperty(result, forName: "scrollView")
+            fw.setProperty(result, forName: "scrollView")
             return result
         }
     }
     
     /// 内容容器视图，自动撑开，子视图需要添加到此视图上
     @nonobjc public var contentView: UIView {
-        if let result = fwProperty(forName: "contentView") as? UIView {
+        if let result = fw.property(forName: "contentView") as? UIView {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("contentView"), withObject: self) as! UIView
-            fwSetProperty(result, forName: "contentView")
+            fw.setProperty(result, forName: "contentView")
             return result
         }
     }
@@ -62,22 +62,22 @@ extension FWScrollViewController where Self: UIViewController {
 extension FWTableViewController where Self: UIViewController {
     /// 表格视图，默认不显示滚动条，Footer为空视图。Plain有悬停，Group无悬停
     @nonobjc public var tableView: UITableView {
-        if let result = fwProperty(forName: "tableView") as? UITableView {
+        if let result = fw.property(forName: "tableView") as? UITableView {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("tableView"), withObject: self) as! UITableView
-            fwSetProperty(result, forName: "tableView")
+            fw.setProperty(result, forName: "tableView")
             return result
         }
     }
     
     /// 表格数据，默认空数组，延迟加载
     @nonobjc public var tableData: NSMutableArray {
-        if let result = fwProperty(forName: "tableData") as? NSMutableArray {
+        if let result = fw.property(forName: "tableData") as? NSMutableArray {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("tableData"), withObject: self) as! NSMutableArray
-            fwSetProperty(result, forName: "tableData")
+            fw.setProperty(result, forName: "tableData")
             return result
         }
     }
@@ -86,11 +86,11 @@ extension FWTableViewController where Self: UIViewController {
 extension FWWebViewController where Self: UIViewController {
     /// 网页视图，默认显示滚动条，启用前进后退手势
     @nonobjc public var webView: FWWebView {
-        if let result = fwProperty(forName: "webView") as? FWWebView {
+        if let result = fw.property(forName: "webView") as? FWWebView {
             return result
         } else {
             let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webView"), withObject: self) as! FWWebView
-            fwSetProperty(result, forName: "webView")
+            fw.setProperty(result, forName: "webView")
             return result
         }
     }

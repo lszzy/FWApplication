@@ -33,7 +33,7 @@
 
 - (UIView *)fwBackgroundView
 {
-    return [self fwPerformGetter:@"_backgroundView"];
+    return [self.fw invokeGetter:@"_backgroundView"];
 }
 
 - (BOOL)fwIsFakeBar

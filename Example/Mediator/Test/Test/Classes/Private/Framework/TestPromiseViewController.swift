@@ -27,7 +27,7 @@ import UIKit
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let rowData = tableData.object(at: indexPath.row) as! [String]
-        fwPerform(NSSelectorFromString(rowData[1]))
+        fw.invokeMethod(NSSelectorFromString(rowData[1]))
     }
 }
 

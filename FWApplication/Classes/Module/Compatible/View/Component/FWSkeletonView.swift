@@ -413,7 +413,7 @@ import FWApplication
         if scrollView.contentOffset.y <= 0 && superview != nil {
             block?(scrollView.contentOffset.y)
         }
-        scrollView.fwObserveProperty("contentOffset") { [weak self] (_, _) in
+        scrollView.fw.observeProperty("contentOffset") { [weak self] (_, _) in
             if scrollView.contentOffset.y <= 0 && self?.superview != nil {
                 block?(scrollView.contentOffset.y)
             }

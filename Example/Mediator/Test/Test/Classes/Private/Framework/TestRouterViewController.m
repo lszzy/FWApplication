@@ -165,6 +165,12 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         [topController fwCloseViewControllerAnimated:YES];
         return nil;
     }];
+    
+    [FWRouter registerURL:TestRouter.ROUTE_LOADER withHandler:^id _Nullable(FWRouterContext * _Nonnull context) {
+        TestRouterResultViewController *viewController = [TestRouterResultViewController new];
+        viewController.context = context;
+        return viewController;
+    }];
 }
 
 + (void)registerRewrites
@@ -181,18 +187,6 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 @end
 
 @implementation TestRouterResultViewController
-
-+ (id)routerURL
-{
-    return TestRouter.ROUTE_LOADER;
-}
-
-+ (id)routerHandler:(FWRouterContext *)context
-{
-    TestRouterResultViewController *viewController = [TestRouterResultViewController new];
-    viewController.context = context;
-    return viewController;
-}
 
 #pragma mark - Lifecycle
 
