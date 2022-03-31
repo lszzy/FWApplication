@@ -22,7 +22,7 @@
 //  THE SOFTWARE.
 
 #import "FWChainRequest.h"
-#import "FWChainRequestAgent.h"
+#import "FWRequestAgent.h"
 #import "FWNetworkPrivate.h"
 #import "FWBaseRequest.h"
 
@@ -59,7 +59,7 @@
     if ([_requestArray count] > 0) {
         [self toggleAccessoriesWillStartCallBack];
         [self startNextRequest];
-        [[FWChainRequestAgent sharedAgent] addChainRequest:self];
+        [[FWRequestAgent sharedAgent] addChainRequest:self];
     } else {
         FWRequestLog(@"Error! Chain request array is empty.");
     }
@@ -68,7 +68,7 @@
 - (void)stop {
     [self toggleAccessoriesWillStopCallBack];
     [self clearRequest];
-    [[FWChainRequestAgent sharedAgent] removeChainRequest:self];
+    [[FWRequestAgent sharedAgent] removeChainRequest:self];
     [self toggleAccessoriesDidStopCallBack];
 }
 
@@ -108,7 +108,7 @@
         [self toggleAccessoriesWillStopCallBack];
         if ([_delegate respondsToSelector:@selector(chainRequestFinished:)]) {
             [_delegate chainRequestFinished:self];
-            [[FWChainRequestAgent sharedAgent] removeChainRequest:self];
+            [[FWRequestAgent sharedAgent] removeChainRequest:self];
         }
         [self toggleAccessoriesDidStopCallBack];
     }
@@ -118,7 +118,7 @@
     [self toggleAccessoriesWillStopCallBack];
     if ([_delegate respondsToSelector:@selector(chainRequestFailed:failedBaseRequest:)]) {
         [_delegate chainRequestFailed:self failedBaseRequest:request];
-        [[FWChainRequestAgent sharedAgent] removeChainRequest:self];
+        [[FWRequestAgent sharedAgent] removeChainRequest:self];
     }
     [self toggleAccessoriesDidStopCallBack];
 }

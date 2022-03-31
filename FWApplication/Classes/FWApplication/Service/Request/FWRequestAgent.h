@@ -1,5 +1,5 @@
 //
-//  FWChainRequestAgent.m
+//  FWRequestAgent.h
 //
 //  Copyright (c) 2012-2016 FWNetwork https://github.com/yuantiku
 //
@@ -21,44 +21,35 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "FWChainRequestAgent.h"
-#import "FWChainRequest.h"
+#import <Foundation/Foundation.h>
 
-@interface FWChainRequestAgent()
+NS_ASSUME_NONNULL_BEGIN
 
-@property (strong, nonatomic) NSMutableArray<FWChainRequest *> *requestArray;
+@class FWBatchRequest;
+@class FWChainRequest;
 
-@end
+///  FWRequestAgent handles batch request management. It keeps track of all
+///  the batch requests.
+@interface FWRequestAgent : NSObject
 
-@implementation FWChainRequestAgent
+- (instancetype)init NS_UNAVAILABLE;
++ (instancetype)new NS_UNAVAILABLE;
 
-+ (FWChainRequestAgent *)sharedAgent {
-    static id sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [[self alloc] init];
-    });
-    return sharedInstance;
-}
+///  Get the shared batch request agent.
++ (FWRequestAgent *)sharedAgent;
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        _requestArray = [NSMutableArray array];
-    }
-    return self;
-}
+///  Add a batch request.
+- (void)addBatchRequest:(FWBatchRequest *)request;
 
-- (void)addChainRequest:(FWChainRequest *)request {
-    @synchronized(self) {
-        [_requestArray addObject:request];
-    }
-}
+///  Remove a previously added batch request.
+- (void)removeBatchRequest:(FWBatchRequest *)request;
 
-- (void)removeChainRequest:(FWChainRequest *)request {
-    @synchronized(self) {
-        [_requestArray removeObject:request];
-    }
-}
+///  Add a chain request.
+- (void)addChainRequest:(FWChainRequest *)request;
+
+///  Remove a previously added chain request.
+- (void)removeChainRequest:(FWChainRequest *)request;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -23,7 +23,7 @@
 
 #import "FWBatchRequest.h"
 #import "FWNetworkPrivate.h"
-#import "FWBatchRequestAgent.h"
+#import "FWRequestAgent.h"
 #import "FWRequest.h"
 
 @interface FWBatchRequest() <FWRequestDelegate>
@@ -55,7 +55,7 @@
         return;
     }
     _failedRequest = nil;
-    [[FWBatchRequestAgent sharedAgent] addBatchRequest:self];
+    [[FWRequestAgent sharedAgent] addBatchRequest:self];
     [self toggleAccessoriesWillStartCallBack];
     for (FWRequest * req in _requestArray) {
         req.delegate = self;
@@ -69,7 +69,7 @@
     _delegate = nil;
     [self clearRequest];
     [self toggleAccessoriesDidStopCallBack];
-    [[FWBatchRequestAgent sharedAgent] removeBatchRequest:self];
+    [[FWRequestAgent sharedAgent] removeBatchRequest:self];
 }
 
 - (void)startWithCompletionBlockWithSuccess:(void (^)(FWBatchRequest *batchRequest))success
@@ -119,7 +119,7 @@
         }
         [self clearCompletionBlock];
         [self toggleAccessoriesDidStopCallBack];
-        [[FWBatchRequestAgent sharedAgent] removeBatchRequest:self];
+        [[FWRequestAgent sharedAgent] removeBatchRequest:self];
     }
 }
 
@@ -141,7 +141,7 @@
     [self clearCompletionBlock];
 
     [self toggleAccessoriesDidStopCallBack];
-    [[FWBatchRequestAgent sharedAgent] removeBatchRequest:self];
+    [[FWRequestAgent sharedAgent] removeBatchRequest:self];
 }
 
 - (void)clearRequest {

@@ -1,13 +1,13 @@
 //
-//  FWRequestEventAccessory.m
+//  FWRequestAccessory.m
 //  FWNetwork
 //
 //  Created by Chuanren Shang on 2020/8/17.
 //
 
-#import "FWRequestEventAccessory.h"
+#import "FWRequestAccessory.h"
 
-@implementation FWRequestEventAccessory
+@implementation FWRequestAccessory
 
 - (void)requestWillStart:(id)request {
     if (self.willStartBlock != nil) {
@@ -32,14 +32,14 @@
 
 @end
 
-@implementation FWBaseRequest (FWRequestEventAccessory)
+@implementation FWBaseRequest (FWRequestAccessory)
 
 - (void)startWithWillStart:(nullable FWRequestCompletionBlock)willStart
                   willStop:(nullable FWRequestCompletionBlock)willStop
                    success:(nullable FWRequestCompletionBlock)success
                    failure:(nullable FWRequestCompletionBlock)failure
                    didStop:(nullable FWRequestCompletionBlock)didStop {
-    FWRequestEventAccessory *accessory = [FWRequestEventAccessory new];
+    FWRequestAccessory *accessory = [FWRequestAccessory new];
     accessory.willStartBlock = willStart;
     accessory.willStopBlock = willStop;
     accessory.didStopBlock = didStop;
@@ -50,14 +50,14 @@
 
 @end
 
-@implementation FWBatchRequest (FWRequestEventAccessory)
+@implementation FWBatchRequest (FWRequestAccessory)
 
 - (void)startWithWillStart:(nullable void (^)(FWBatchRequest *batchRequest))willStart
                   willStop:(nullable void (^)(FWBatchRequest *batchRequest))willStop
                    success:(nullable void (^)(FWBatchRequest *batchRequest))success
                    failure:(nullable void (^)(FWBatchRequest *batchRequest))failure
                    didStop:(nullable void (^)(FWBatchRequest *batchRequest))didStop {
-    FWRequestEventAccessory *accessory = [FWRequestEventAccessory new];
+    FWRequestAccessory *accessory = [FWRequestAccessory new];
     accessory.willStartBlock = willStart;
     accessory.willStopBlock = willStop;
     accessory.didStopBlock = didStop;

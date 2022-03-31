@@ -1,5 +1,5 @@
 //
-//  FWBatchRequestAgent.m
+//  FWRequestAgent.m
 //
 //  Copyright (c) 2012-2016 FWNetwork https://github.com/yuantiku
 //
@@ -21,18 +21,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#import "FWBatchRequestAgent.h"
+#import "FWRequestAgent.h"
 #import "FWBatchRequest.h"
+#import "FWChainRequest.h"
 
-@interface FWBatchRequestAgent()
+@interface FWRequestAgent()
 
-@property (strong, nonatomic) NSMutableArray<FWBatchRequest *> *requestArray;
+@property (strong, nonatomic) NSMutableArray<FWBatchRequest *> *batchRequestArray;
+@property (strong, nonatomic) NSMutableArray<FWChainRequest *> *chainRequestArray;
 
 @end
 
-@implementation FWBatchRequestAgent
+@implementation FWRequestAgent
 
-+ (FWBatchRequestAgent *)sharedAgent {
++ (FWRequestAgent *)sharedAgent {
     static id sharedInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -44,20 +46,33 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _requestArray = [NSMutableArray array];
+        _batchRequestArray = [NSMutableArray array];
+        _chainRequestArray = [NSMutableArray array];
     }
     return self;
 }
 
 - (void)addBatchRequest:(FWBatchRequest *)request {
     @synchronized(self) {
-        [_requestArray addObject:request];
+        [_batchRequestArray addObject:request];
     }
 }
 
 - (void)removeBatchRequest:(FWBatchRequest *)request {
     @synchronized(self) {
-        [_requestArray removeObject:request];
+        [_batchRequestArray removeObject:request];
+    }
+}
+
+- (void)addChainRequest:(FWChainRequest *)request {
+    @synchronized(self) {
+        [_chainRequestArray addObject:request];
+    }
+}
+
+- (void)removeChainRequest:(FWChainRequest *)request {
+    @synchronized(self) {
+        [_chainRequestArray removeObject:request];
     }
 }
 

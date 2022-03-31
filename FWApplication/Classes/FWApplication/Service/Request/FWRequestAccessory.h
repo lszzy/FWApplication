@@ -1,5 +1,5 @@
 //
-//  FWRequestEventAccessory.h
+//  FWRequestAccessory.h
 //  FWNetwork
 //
 //  Created by Chuanren Shang on 2020/8/17.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWRequestEventAccessory : NSObject <FWRequestAccessory>
+@interface FWRequestAccessory : NSObject <FWRequestAccessory>
 
 @property (nonatomic, copy, nullable) void (^willStartBlock)(id);
 @property (nonatomic, copy, nullable) void (^willStopBlock)(id);
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface FWBaseRequest (FWRequestEventAccessory)
+@interface FWBaseRequest (FWRequestAccessory)
 
 - (void)startWithWillStart:(nullable FWRequestCompletionBlock)willStart
                   willStop:(nullable FWRequestCompletionBlock)willStop
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface FWBatchRequest (FWRequestEventAccessory)
+@interface FWBatchRequest (FWRequestAccessory)
 
 - (void)startWithWillStart:(nullable void (^)(FWBatchRequest *batchRequest))willStart
                   willStop:(nullable void (^)(FWBatchRequest *batchRequest))willStop
