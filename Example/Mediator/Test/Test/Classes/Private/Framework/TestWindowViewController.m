@@ -38,7 +38,7 @@
 #pragma mark - Action
 
 - (void)onClose {
-    [self fwCloseViewControllerAnimated:YES];
+    [self.fw closeViewControllerAnimated:YES];
 }
 
 - (void)onMediator {
@@ -59,9 +59,9 @@
 
 - (void)onInvalid {
     FWWeakifySelf();
-    [UIWindow.fwMainWindow.fwTopPresentedController fwShowConfirmWithTitle:@"模拟登录失效" message:nil cancel:nil confirm:nil confirmBlock:^{
+    [UIWindow.fw.topPresentedController fwShowConfirmWithTitle:@"模拟登录失效" message:nil cancel:nil confirm:nil confirmBlock:^{
         FWStrongifySelf();
-        [UIWindow.fwMainWindow fwDismissViewControllers:^{
+        [UIWindow.fw.mainWindow fwDismissViewControllers:^{
             FWStrongifySelf();
             [Mediator.userModule logout:^{
                 FWStrongifySelf();
@@ -130,19 +130,19 @@
 
 - (void)onPush
 {
-    [[UIWindow fwMainWindow] fwPushViewController:[TestWindowPresentController new] animated:YES];
+    [UIWindow.fw pushViewController:[TestWindowPresentController new] animated:YES];
 }
 
 - (void)onPresent
 {
-    [[UIWindow fwMainWindow] fwPresentViewController:[TestWindowPresentController new] animated:YES completion:nil];
+    [UIWindow.fw presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
 }
 
 - (void)onPush2
 {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[TestWindowPresentController new]];
     [self presentViewController:nav animated:YES completion:^{
-        [[UIWindow fwMainWindow] fwPushViewController:[TestWindowPresentController new] animated:YES];
+        [UIWindow.fw pushViewController:[TestWindowPresentController new] animated:YES];
     }];
 }
 
@@ -150,21 +150,21 @@
 {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[TestWindowPresentController new]];
     [self presentViewController:nav animated:YES completion:^{
-        [[UIWindow fwMainWindow] fwPresentViewController:[TestWindowPresentController new] animated:YES completion:nil];
+        [UIWindow.fw presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
     }];
 }
 
 - (void)onPush3
 {
     [self presentViewController:[TestWindowPresentController new] animated:YES completion:^{
-        [[UIWindow fwMainWindow] fwPushViewController:[TestWindowPresentController new] animated:YES];
+        [UIWindow.fw pushViewController:[TestWindowPresentController new] animated:YES];
     }];
 }
 
 - (void)onPresent3
 {
     [self presentViewController:[TestWindowPresentController new] animated:YES completion:^{
-        [[UIWindow fwMainWindow] fwPresentViewController:[TestWindowPresentController new] animated:YES completion:nil];
+        [UIWindow.fw presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
     }];
 }
 

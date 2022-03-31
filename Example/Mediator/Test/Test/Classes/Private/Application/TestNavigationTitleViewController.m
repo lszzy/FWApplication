@@ -84,7 +84,7 @@
         FWStrongifySelf();
         [self fwShowConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
             FWStrongifySelf();
-            [self fwCloseViewControllerAnimated:YES];
+            [self.fw closeViewControllerAnimated:YES];
         }];
         return NO;
     };

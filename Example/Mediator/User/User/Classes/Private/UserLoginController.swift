@@ -15,7 +15,7 @@ import Core
         super.viewDidLoad()
         navigationItem.title = UserBundle.localizedString("loginButton")
         fwSetLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
-            self?.fwClose(animated: true)
+            self?.fw.closeViewController(animated: true)
         }
         
         let button = UIButton(type: .system)

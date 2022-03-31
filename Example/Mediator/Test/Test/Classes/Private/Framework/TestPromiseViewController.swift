@@ -100,15 +100,15 @@ extension TestPromiseViewController {
     }
     
     private static func showMessage(_ text: String) {
-        UIWindow.fwMain?.fwShowMessage(withText: text)
+        UIWindow.fw.mainWindow?.fwShowMessage(withText: text)
     }
     
     private static var isLoading: Bool = false {
         didSet {
             if isLoading {
-                UIWindow.fwMain?.fwShowLoading()
+                UIWindow.fw.mainWindow?.fwShowLoading()
             } else {
-                UIWindow.fwMain?.fwHideLoading()
+                UIWindow.fw.mainWindow?.fwHideLoading()
             }
         }
     }
@@ -246,7 +246,7 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.randomPromise().then({ value in
             DispatchQueue.main.async {
-                UIWindow.fwMain?.fwShowLoading(withText: "delay")
+                UIWindow.fw.mainWindow?.fwShowLoading(withText: "delay")
             }
             return value
         }).delay(1).done { result in
@@ -278,19 +278,19 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.failurePromise().recover { error in
             DispatchQueue.main.async {
-                UIWindow.fwMain?.fwShowLoading(withText: "\(error)")
+                UIWindow.fw.mainWindow?.fwShowLoading(withText: "\(error)")
             }
             return 1
         }.delay(1).then({ value in
             DispatchQueue.main.async {
-                UIWindow.fwMain?.fwShowLoading(withText: "\(value.fwAsInt)")
+                UIWindow.fw.mainWindow?.fwShowLoading(withText: "\(value.fwAsInt)")
             }
             return Self.successPromise(value.fwAsInt)
         }).validate { value in
             return false
         }.recover { error in
             DispatchQueue.main.async {
-                UIWindow.fwMain?.fwShowLoading(withText: "\(error)")
+                UIWindow.fw.mainWindow?.fwShowLoading(withText: "\(error)")
             }
             return Self.successPromise()
         }.done { result in
@@ -316,7 +316,7 @@ extension TestPromiseViewController {
         Self.failurePromise().recover({ $0 }).retry(4, delay: 0) {
             count += 1
             DispatchQueue.main.async {
-                UIWindow.fwMain?.fwShowLoading(withText: "retry: \(count)")
+                UIWindow.fw.mainWindow?.fwShowLoading(withText: "retry: \(count)")
             }
             if count < 4 {
                 return Self.failurePromise()
@@ -338,7 +338,7 @@ extension TestPromiseViewController {
             count += 1
             if count == 1 { return Self.failurePromise() }
             DispatchQueue.main.async {
-                UIWindow.fwMain?.fwShowLoading(withText: "retry: \(count - 1)")
+                UIWindow.fw.mainWindow?.fwShowLoading(withText: "retry: \(count - 1)")
             }
             if count < 5 {
                 return Self.failurePromise()
@@ -368,7 +368,7 @@ extension TestPromiseViewController {
                 return Self.progressPromise()
             })
         }
-        UIWindow.fwMain?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.fw.mainWindow?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.validate({ value in
             return false
         }).recover({ error in
@@ -382,9 +382,9 @@ extension TestPromiseViewController {
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.fwMain?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.fw.mainWindow?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
         }, finally: {
-            UIWindow.fwMain?.fwHideProgress()
+            UIWindow.fw.mainWindow?.fwHideProgress()
         })
     }
     
@@ -401,15 +401,15 @@ extension TestPromiseViewController {
         } else {
             promise = FWPromise.race(promises)
         }
-        UIWindow.fwMain?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.fw.mainWindow?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.done({ value in
             Self.showMessage("\(value.fwAsString)")
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.fwMain?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.fw.mainWindow?.fwShowProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
         }, finally: {
-            UIWindow.fwMain?.fwHideProgress()
+            UIWindow.fw.mainWindow?.fwHideProgress()
         })
     }
 }

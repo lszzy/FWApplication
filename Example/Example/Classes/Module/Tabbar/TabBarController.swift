@@ -22,7 +22,7 @@ extension UITabBarController: UITabBarControllerDelegate {
     
     static func refreshController() {
         if #available(iOS 13.0, *) {
-            if let sceneDelegate = UIWindow.fwMainScene?.delegate as? FWSceneDelegate {
+            if let sceneDelegate = UIWindow.fw.mainScene?.delegate as? FWSceneDelegate {
                 sceneDelegate.setupController()
             }
         } else {
@@ -70,7 +70,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
         viewControllers = [homeNav, testNav, settingsNav]
         
-        fw.observeNotification(NSNotification.Name.FWLanguageChanged.rawValue) { (notification) in
+        fw.observeNotification(NSNotification.Name.FWLanguageChanged) { (notification) in
             homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
             testNav.tabBarItem.title = FWLocalizedString("testTitle")
             settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")

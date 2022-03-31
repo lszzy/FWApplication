@@ -16,7 +16,7 @@
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        bundle = [[NSBundle fwBundleWithName:@"FWApplication"] fwLocalizedBundle];
+        bundle = [[NSBundle.fw bundleWithName:@"FWApplication"].fw localizedBundle];
         if (!bundle) bundle = [NSBundle mainBundle];
     });
     return bundle;
@@ -227,7 +227,7 @@
         };
     });
     
-    NSString *language = [NSBundle fwCurrentLanguage];
+    NSString *language = [NSBundle.fw currentLanguage];
     NSDictionary *strings = localizedStrings[language] ?: localizedStrings[@"en"];
     return strings[key] ?: key;
 }

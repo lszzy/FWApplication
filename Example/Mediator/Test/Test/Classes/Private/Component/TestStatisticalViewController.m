@@ -156,7 +156,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
         // 手工触发曝光计算
         self.view.hidden = self.view.hidden;
     }];
-    [[UIWindow fwMainWindow] addSubview:shieldView];
+    [UIWindow.fw.mainWindow addSubview:shieldView];
     [shieldView fwPinEdgesToSuperview];
     
     UILabel *shieldLabel = [UILabel fwAutoLayoutView];

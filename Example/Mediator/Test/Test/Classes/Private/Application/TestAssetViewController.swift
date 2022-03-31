@@ -192,7 +192,7 @@ import FWApplication
             viewController.navigationItem.title = album.name()
             viewController.album = album
             viewController.isAlbum = true
-            fwOpen(viewController, animated: true)
+            fw.open(viewController, animated: true)
         }
     }
 }

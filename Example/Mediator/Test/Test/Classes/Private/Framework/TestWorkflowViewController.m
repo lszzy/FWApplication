@@ -14,11 +14,6 @@
 
 @implementation TestWorkflowViewController
 
-- (NSString *)fwWorkflowName
-{
-    return [NSString stringWithFormat:@"workflow.%ld", self.step];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,6 +22,7 @@
         self.step = 1;
     }
     
+    self.fw.workflowName = [NSString stringWithFormat:@"workflow.%ld", self.step];
     self.navigationItem.title = [NSString stringWithFormat:@"工作流-%ld", self.step];
     
     if (self.step < 3) {
@@ -48,12 +44,12 @@
 
 - (void)onExit
 {
-    [self.navigationController fwPopWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController.fw popWorkflows:@[@"workflow"] animated:YES];
 }
 
 - (void)onOpen
 {
-    [self.navigationController fwPushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController.fw pushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
 }
 
 @end

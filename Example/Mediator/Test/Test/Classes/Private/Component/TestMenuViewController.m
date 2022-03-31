@@ -65,7 +65,7 @@
     closeLabel.userInteractionEnabled = YES;
     [closeLabel fwAddTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
-        [self fwCloseViewControllerAnimated:YES];
+        [self.fw closeViewControllerAnimated:YES];
     }];
     [contentView addSubview:closeLabel];
     [self.view addSubview:contentView];

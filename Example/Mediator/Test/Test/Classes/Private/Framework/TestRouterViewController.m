@@ -65,7 +65,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         return object;
     };
     FWRouter.errorHandler = ^(FWRouterContext * _Nonnull context) {
-        [UIWindow.fwMainWindow.fwTopPresentedController fwShowAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+        [UIWindow.fw.topPresentedController fwShowAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
     };
 }
 
@@ -128,7 +128,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_JAVASCRIPT withHandler:^id(FWRouterContext *context) {
-        UIViewController *topController = [[UIWindow fwMainWindow] fwTopViewController];
+        UIViewController *topController = [UIWindow.fw topViewController];
         if (![topController isKindOfClass:[TestWebViewController class]] || !topController.isViewLoaded) return nil;
         
         NSString *param = [context.parameters[@"param"] fwAsNSString];
@@ -139,30 +139,30 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         
         TestWebViewController *viewController = (TestWebViewController *)topController;
         [viewController.webView evaluateJavaScript:javascript completionHandler:^(id value, NSError *error) {
-            [[[UIWindow fwMainWindow] fwTopViewController] fwShowAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
+            [[UIWindow.fw topViewController] fwShowAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
         }];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME withHandler:^id(FWRouterContext * _Nonnull context) {
-        [UIWindow.fwMainWindow fwSelectTabBarIndex:0];
+        [UIWindow.fw.mainWindow fwSelectTabBarIndex:0];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME_TEST withHandler:^id(FWRouterContext * _Nonnull context) {
-        TestModuleController *testController = [UIWindow.fwMainWindow fwSelectTabBarController:[TestModuleController class]];
+        TestModuleController *testController = [UIWindow.fw.mainWindow fwSelectTabBarController:[TestModuleController class]];
         [testController setSelectedIndex:1];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME_SETTINGS withHandler:^id(FWRouterContext * _Nonnull context) {
-        [UIWindow.fwMainWindow fwSelectTabBarIndex:2];
+        [UIWindow.fw.mainWindow fwSelectTabBarIndex:2];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_CLOSE withHandler:^id(FWRouterContext * _Nonnull context) {
-        UIViewController *topController = [UIWindow.fwMainWindow fwTopViewController];
-        [topController fwCloseViewControllerAnimated:YES];
+        UIViewController *topController = [UIWindow.fw topViewController];
+        [topController.fw closeViewControllerAnimated:YES];
         return nil;
     }];
     
@@ -207,7 +207,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         [self fwSetRightBarItem:@"完成" block:^(id sender) {
             FWStrongifySelf();
             [FWRouter completeURL:self.context result:@"我是回调数据"];
-            [self fwCloseViewControllerAnimated:YES];
+            [self.fw closeViewControllerAnimated:YES];
         }];
     }
 }

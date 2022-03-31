@@ -274,7 +274,7 @@
         self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
             __typeof__(self) self = self_weak_;
             if (![self fwPopBackBarItem]) return;
-            [self fwCloseViewControllerAnimated:YES];
+            [self.fw closeViewControllerAnimated:YES];
         }];
     }
 }
@@ -293,7 +293,7 @@
         self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
             __typeof__(self) self = self_weak_;
             if (![self fwPopBackBarItem]) return;
-            [self fwCloseViewControllerAnimated:YES];
+            [self.fw closeViewControllerAnimated:YES];
         }];
     }
 }

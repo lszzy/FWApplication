@@ -91,12 +91,12 @@ class SettingsViewController: UIViewController, FWTableViewController {
         fwShowSheet(withTitle: FWLocalizedString("languageTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [FWLocalizedString("systemTitle"), "中文", "English", FWLocalizedString("changeTitle")]) { [weak self] (index) in
             if index < 3 {
                 let language: String? = index == 1 ? "zh-Hans" : (index == 2 ? "en" : nil)
-                Bundle.fwLocalizedLanguage = language
+                Bundle.fw.localizedLanguage = language
                 UITabBarController.refreshController()
             } else {
-                let localized = Bundle.fwLocalizedLanguage
+                let localized = Bundle.fw.localizedLanguage
                 let language: String? = localized == nil ? "zh-Hans" : (localized!.hasPrefix("zh") ? "en" : nil)
-                Bundle.fwLocalizedLanguage = language
+                Bundle.fw.localizedLanguage = language
                 self?.renderData()
             }
         }
@@ -176,10 +176,10 @@ extension SettingsViewController {
         
         if "onLanguage" == action {
             var language = FWLocalizedString("systemTitle")
-            if let localized = Bundle.fwLocalizedLanguage, localized.count > 0 {
+            if let localized = Bundle.fw.localizedLanguage, localized.count > 0 {
                 language = localized.hasPrefix("zh") ? "中文" : "English"
             } else {
-                language = language.appending("(\(FWSafeString(Bundle.fwSystemLanguage)))")
+                language = language.appending("(\(FWSafeString(Bundle.fw.systemLanguage)))")
             }
             cell.detailTextLabel?.text = language
         } else if "onTheme" == action {

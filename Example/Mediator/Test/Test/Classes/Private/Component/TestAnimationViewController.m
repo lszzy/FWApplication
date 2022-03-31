@@ -101,7 +101,7 @@
     FWWeakifySelf();
     [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self fwCloseViewControllerAnimated:YES];
+        [self.fw closeViewControllerAnimated:YES];
     }];
     
     self.bottomView = [UIView new];

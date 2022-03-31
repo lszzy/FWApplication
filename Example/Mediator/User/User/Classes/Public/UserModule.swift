@@ -16,7 +16,7 @@ import Mediator
 
 @objcMembers public class UserBundle: FWModuleBundle {
     private static let sharedBundle: Bundle = {
-        return Bundle.fwBundle(with: UserBundle.classForCoder(), name: "UserModule")?.fwLocalized() ?? .main
+        return Bundle.fw.bundle(with: UserBundle.classForCoder(), name: "UserModule")?.fw.localizedBundle() ?? .main
     }()
     
     public override class func bundle() -> Bundle {

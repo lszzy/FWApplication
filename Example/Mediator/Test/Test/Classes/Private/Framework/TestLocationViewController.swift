@@ -55,7 +55,7 @@ import FWApplication
             if manager.error != nil {
                 self?.resultLabel.text = manager.error?.localizedDescription
             } else {
-                self?.resultLabel.text = FWLocationStringWithCoordinate(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
+                self?.resultLabel.text = FWLocationManager.locationString(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
             }
         }
     }

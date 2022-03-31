@@ -585,8 +585,8 @@ UITableViewDataSource
 {
     [self.orientationManager startMonitorDeviceOrientation];
     [self updateUI];
-    [UIWindow.fwMainWindow addSubview:_menuBackView];
-    [UIWindow.fwMainWindow addSubview:self];
+    [UIWindow.fw.mainWindow addSubview:_menuBackView];
+    [UIWindow.fw.mainWindow addSubview:self];
     if (self.delegate && [self.delegate respondsToSelector:@selector(popupMenuBeganShow:)]) {
         [self.delegate popupMenuBeganShow:self];
     }
@@ -699,7 +699,7 @@ UITableViewDataSource
 
 - (void)calculateRealPointIfNeed
 {
-    CGRect absoluteRect = [_relyView convertRect:_relyView.bounds toView:UIWindow.fwMainWindow];
+    CGRect absoluteRect = [_relyView convertRect:_relyView.bounds toView:UIWindow.fw.mainWindow];
     CGPoint relyPoint = CGPointMake(absoluteRect.origin.x + absoluteRect.size.width / 2, absoluteRect.origin.y + absoluteRect.size.height);
     self.relyRect = absoluteRect;
     self.point = relyPoint;

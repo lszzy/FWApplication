@@ -300,7 +300,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
             FWStrongifySelf();
             TestNestScrollViewController *viewController = [TestNestScrollViewController new];
             viewController.refreshList = YES;
-            [self fwOpenViewController:viewController animated:YES];
+            [self.fw openViewController:viewController animated:YES];
         }];
     }
 }
