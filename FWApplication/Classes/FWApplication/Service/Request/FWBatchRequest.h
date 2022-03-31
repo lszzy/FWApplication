@@ -76,6 +76,12 @@ NS_ASSUME_NONNULL_BEGIN
 ///  The first request that failed (and causing the batch request to fail).
 @property (nonatomic, strong, readonly, nullable) FWRequest *failedRequest;
 
+///  The requests that failed (and causing the batch request to fail).
+@property (nonatomic, strong, readonly) NSArray<FWRequest *> *failedRequestArray;
+
+///  When true, the batch request is stopped if one of the requests fails. Defaults to YES.
+@property (nonatomic, assign) BOOL stoppedOnFailure;
+
 ///  Creates a `FWBatchRequest` with a bunch of requests.
 ///
 ///  @param requestArray requests useds to create batch request.
