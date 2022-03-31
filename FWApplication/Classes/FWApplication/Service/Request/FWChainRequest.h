@@ -44,14 +44,13 @@ NS_ASSUME_NONNULL_BEGIN
 ///  Tell the delegate that the chain request has failed.
 ///
 ///  @param chainRequest The corresponding chain request.
-///  @param request      First failed request that causes the whole request to fail.
-- (void)chainRequestFailed:(FWChainRequest *)chainRequest failedBaseRequest:(FWBaseRequest*)request;
+- (void)chainRequestFailed:(FWChainRequest *)chainRequest;
 
 @end
 
 typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *baseRequest);
 
-///  FWBatchRequest can be used to chain several FWRequest so that one will only starts after another finishes.
+///  FWChainRequest can be used to chain several FWRequest so that one will only starts after another finishes.
 ///  Note that when used inside FWChainRequest, a single FWRequest will have its own callback and delegate
 ///  cleared, in favor of the batch request callback.
 @interface FWChainRequest : NSObject
@@ -62,9 +61,30 @@ typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *bas
 ///  The delegate object of the chain request. Default is nil.
 @property (nonatomic, weak, nullable) id<FWChainRequestDelegate> delegate;
 
+///  The success callback. Note this will be called only if all the requests are finished.
+///  This block will be called on the main queue.
+@property (nonatomic, copy, nullable) void (^successCompletionBlock)(FWChainRequest *);
+
+///  The failure callback. Note this will be called if one of the requests fails.
+///  This block will be called on the main queue.
+@property (nonatomic, copy, nullable) void (^failureCompletionBlock)(FWChainRequest *);
+
+///  Tag can be used to identify chain request. Default value is 0.
+@property (nonatomic) NSInteger tag;
+
 ///  This can be used to add several accessories object. Note if you use `addAccessory` to add accessory
 ///  this array will be automatically created. Default is nil.
 @property (nonatomic, strong, nullable) NSMutableArray<id<FWRequestAccessory>> *requestAccessories;
+
+///  The first request that failed (and causing the chain request to fail).
+@property (nonatomic, strong, readonly, nullable) FWBaseRequest *failedRequest;
+
+///  Set completion callbacks
+- (void)setCompletionBlockWithSuccess:(nullable void (^)(FWChainRequest *chainRequest))success
+                              failure:(nullable void (^)(FWChainRequest *chainRequest))failure;
+
+///  Nil out both success and failure callback blocks.
+- (void)clearCompletionBlock;
 
 ///  Convenience method to add request accessory. See also `requestAccessories`.
 - (void)addAccessory:(id<FWRequestAccessory>)accessory;
@@ -74,6 +94,10 @@ typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *bas
 
 ///  Stop the chain request. Remaining request in chain will be cancelled.
 - (void)stop;
+
+///  Convenience method to start the chain request with block callbacks.
+- (void)startWithCompletionBlockWithSuccess:(nullable void (^)(FWChainRequest *chainRequest))success
+                                    failure:(nullable void (^)(FWChainRequest *chainRequest))failure;
 
 ///  Add request to request chain.
 ///

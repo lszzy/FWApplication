@@ -67,3 +67,21 @@
 }
 
 @end
+
+@implementation FWChainRequest (FWRequestAccessory)
+
+- (void)startWithWillStart:(nullable void (^)(FWChainRequest *chainRequest))willStart
+                  willStop:(nullable void (^)(FWChainRequest *chainRequest))willStop
+                   success:(nullable void (^)(FWChainRequest *chainRequest))success
+                   failure:(nullable void (^)(FWChainRequest *chainRequest))failure
+                   didStop:(nullable void (^)(FWChainRequest *chainRequest))didStop {
+    FWRequestAccessory *accessory = [FWRequestAccessory new];
+    accessory.willStartBlock = willStart;
+    accessory.willStopBlock = willStop;
+    accessory.didStopBlock = didStop;
+    [self addAccessory:accessory];
+    [self startWithCompletionBlockWithSuccess:success
+                                      failure:failure];
+}
+
+@end

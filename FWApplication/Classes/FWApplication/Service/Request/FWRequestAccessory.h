@@ -7,6 +7,7 @@
 
 #import "FWBaseRequest.h"
 #import "FWBatchRequest.h"
+#import "FWChainRequest.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,6 +36,16 @@ NS_ASSUME_NONNULL_BEGIN
                    success:(nullable void (^)(FWBatchRequest *batchRequest))success
                    failure:(nullable void (^)(FWBatchRequest *batchRequest))failure
                    didStop:(nullable void (^)(FWBatchRequest *batchRequest))didStop;
+
+@end
+
+@interface FWChainRequest (FWRequestAccessory)
+
+- (void)startWithWillStart:(nullable void (^)(FWChainRequest *chainRequest))willStart
+                  willStop:(nullable void (^)(FWChainRequest *chainRequest))willStop
+                   success:(nullable void (^)(FWChainRequest *chainRequest))success
+                   failure:(nullable void (^)(FWChainRequest *chainRequest))failure
+                   didStop:(nullable void (^)(FWChainRequest *chainRequest))didStop;
 
 @end
 

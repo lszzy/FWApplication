@@ -126,18 +126,15 @@
 - (void)requestFailed:(FWRequest *)request {
     _failedRequest = request;
     [self toggleAccessoriesWillStopCallBack];
-    // Stop
     for (FWRequest *req in _requestArray) {
         [req stop];
     }
-    // Callback
     if ([_delegate respondsToSelector:@selector(batchRequestFailed:)]) {
         [_delegate batchRequestFailed:self];
     }
     if (_failureCompletionBlock) {
         _failureCompletionBlock(self);
     }
-    // Clear
     [self clearCompletionBlock];
 
     [self toggleAccessoriesDidStopCallBack];

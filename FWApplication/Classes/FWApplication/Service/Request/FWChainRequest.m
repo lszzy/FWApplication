@@ -56,10 +56,11 @@
         return;
     }
 
+    _failedRequest = nil;
     if ([_requestArray count] > 0) {
+        [[FWRequestAgent sharedAgent] addChainRequest:self];
         [self toggleAccessoriesWillStartCallBack];
         [self startNextRequest];
-        [[FWRequestAgent sharedAgent] addChainRequest:self];
     } else {
         FWRequestLog(@"Error! Chain request array is empty.");
     }
@@ -67,9 +68,32 @@
 
 - (void)stop {
     [self toggleAccessoriesWillStopCallBack];
+    _delegate = nil;
     [self clearRequest];
-    [[FWRequestAgent sharedAgent] removeChainRequest:self];
     [self toggleAccessoriesDidStopCallBack];
+    [[FWRequestAgent sharedAgent] removeChainRequest:self];
+}
+
+- (void)startWithCompletionBlockWithSuccess:(void (^)(FWChainRequest *chainRequest))success
+                                    failure:(void (^)(FWChainRequest *chainRequest))failure {
+    [self setCompletionBlockWithSuccess:success failure:failure];
+    [self start];
+}
+
+- (void)setCompletionBlockWithSuccess:(void (^)(FWChainRequest *chainRequest))success
+                              failure:(void (^)(FWChainRequest *chainRequest))failure {
+    self.successCompletionBlock = success;
+    self.failureCompletionBlock = failure;
+}
+
+- (void)clearCompletionBlock {
+    // nil out to break the retain cycle.
+    self.successCompletionBlock = nil;
+    self.failureCompletionBlock = nil;
+}
+
+- (void)dealloc {
+    [self clearRequest];
 }
 
 - (void)addRequest:(FWBaseRequest *)request callback:(FWChainCallback)callback {
@@ -108,29 +132,41 @@
         [self toggleAccessoriesWillStopCallBack];
         if ([_delegate respondsToSelector:@selector(chainRequestFinished:)]) {
             [_delegate chainRequestFinished:self];
-            [[FWRequestAgent sharedAgent] removeChainRequest:self];
         }
+        if (_successCompletionBlock) {
+            _successCompletionBlock(self);
+        }
+        [self clearCompletionBlock];
         [self toggleAccessoriesDidStopCallBack];
+        [[FWRequestAgent sharedAgent] removeChainRequest:self];
     }
 }
 
 - (void)requestFailed:(FWBaseRequest *)request {
+    _failedRequest = request;
     [self toggleAccessoriesWillStopCallBack];
-    if ([_delegate respondsToSelector:@selector(chainRequestFailed:failedBaseRequest:)]) {
-        [_delegate chainRequestFailed:self failedBaseRequest:request];
-        [[FWRequestAgent sharedAgent] removeChainRequest:self];
+    if ([_delegate respondsToSelector:@selector(chainRequestFailed:)]) {
+        [_delegate chainRequestFailed:self];
     }
+    if (_failureCompletionBlock) {
+        _failureCompletionBlock(self);
+    }
+    [self clearCompletionBlock];
     [self toggleAccessoriesDidStopCallBack];
+    [[FWRequestAgent sharedAgent] removeChainRequest:self];
 }
 
 - (void)clearRequest {
-    NSUInteger currentRequestIndex = _nextRequestIndex - 1;
-    if (currentRequestIndex < [_requestArray count]) {
-        FWBaseRequest *request = _requestArray[currentRequestIndex];
-        [request stop];
+    if (_nextRequestIndex > 0) {
+        NSUInteger currentRequestIndex = _nextRequestIndex - 1;
+        if (currentRequestIndex < [_requestArray count]) {
+            FWBaseRequest *request = _requestArray[currentRequestIndex];
+            [request stop];
+        }
     }
     [_requestArray removeAllObjects];
     [_requestCallbackArray removeAllObjects];
+    [self clearCompletionBlock];
 }
 
 #pragma mark - Request Accessoies
