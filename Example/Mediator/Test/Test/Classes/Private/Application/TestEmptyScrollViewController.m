@@ -70,7 +70,7 @@
 {
     UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
     cell.textLabel.textColor = Theme.textColor;
-    cell.textLabel.text = FWSafeString([self.tableData fwObjectAtIndex:indexPath.row]);
+    cell.textLabel.text = FWSafeString([self.tableData objectAtIndex:indexPath.row]);
     return cell;
 }
 

@@ -58,7 +58,7 @@
     
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    self.isExtendedBottom = [@[@YES, @NO].fwRandomObject fwAsBool];
+    self.isExtendedBottom = [@[@YES, @NO].fwRandomObject fw].asBool;
     if (self.isExtendedBottom) {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame

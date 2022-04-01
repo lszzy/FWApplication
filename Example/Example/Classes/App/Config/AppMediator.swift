@@ -29,7 +29,7 @@ class AppModule: NSObject, AppService {
     func setup() {
         #if DEBUG
         FWDebugManager.sharedInstance().openUrl = { (url) in
-            if let scheme = NSURL.fwURL(with: url)?.scheme, scheme.count > 0 {
+            if let scheme = NSURL.fw.url(with: url)?.scheme, scheme.count > 0 {
                 FWRouter.openURL(url)
                 return true
             }

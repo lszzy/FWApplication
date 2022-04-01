@@ -41,7 +41,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     }];
     
     FWRouter.preFilter = ^BOOL(FWRouterContext * _Nonnull context) {
-        NSURL *url = [NSURL fwURLWithString:context.URL];
+        NSURL *url = [NSURL.fw urlWithString:context.URL];
         if ([UIApplication fwIsSystemURL:url]) {
             [UIApplication fwOpenURL:url];
             return NO;
@@ -131,10 +131,10 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         UIViewController *topController = [UIWindow.fw topViewController];
         if (![topController isKindOfClass:[TestWebViewController class]] || !topController.isViewLoaded) return nil;
         
-        NSString *param = [context.parameters[@"param"] fwAsNSString];
+        NSString *param = [context.parameters[@"param"] fw].asString;
         NSString *result = [NSString stringWithFormat:@"js:%@ => app:%@", param, @"2"];
         
-        NSString *callback = [context.parameters[@"callback"] fwAsNSString];
+        NSString *callback = [context.parameters[@"callback"] fw].asString;
         NSString *javascript = [NSString stringWithFormat:@"%@('%@');", callback, result];
         
         TestWebViewController *viewController = (TestWebViewController *)topController;
@@ -234,17 +234,17 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 {
     self.navigationItem.title = @"FWRouter";
     NSString *url = @"http://test.com?id=我是中文";
-    FWLogDebug(@"fwUrlEncode: %@", [url fwUrlEncode]);
-    FWLogDebug(@"fwUrlDecode: %@", [[url fwUrlEncode] fwUrlDecode]);
-    FWLogDebug(@"fwUrlEncodeComponent: %@", [url fwUrlEncodeComponent]);
-    FWLogDebug(@"fwUrlDecodeComponent: %@", [[url fwUrlEncodeComponent] fwUrlDecodeComponent]);
+    FWLogDebug(@"fwUrlEncode: %@", [url.fw urlEncode]);
+    FWLogDebug(@"fwUrlDecode: %@", [[url.fw urlEncode].fw urlDecode]);
+    FWLogDebug(@"fwUrlEncodeComponent: %@", [url.fw urlEncodeComponent]);
+    FWLogDebug(@"fwUrlDecodeComponent: %@", [[url.fw urlEncodeComponent].fw urlDecodeComponent]);
     
     url = @"app://test/1?value=2&name=name2&title=我是字符串100%&url=https%3A%2F%2Fkvm.wuyong.site%2Ftest.php%3Fvalue%3D1%26name%3Dname1%23%2Fhome1#/home2";
-    FWLogDebug(@"string.fwQueryDecode: %@", [url fwQueryDecode]);
-    FWLogDebug(@"string.fwQueryEncode: %@", [NSString fwQueryEncode:[url fwQueryDecode]]);
-    NSURL *nsurl = [NSURL fwURLWithString:url];
-    FWLogDebug(@"query.fwQueryDecode: %@", [nsurl.query fwQueryDecode]);
-    FWLogDebug(@"url.fwQueryDictionary: %@", nsurl.fwQueryDictionary);
+    FWLogDebug(@"string.fwQueryDecode: %@", [url.fw queryDecode]);
+    FWLogDebug(@"string.fwQueryEncode: %@", [NSString.fw queryEncode:[url.fw queryDecode]]);
+    NSURL *nsurl = [NSURL.fw urlWithString:url];
+    FWLogDebug(@"query.fwQueryDecode: %@", [nsurl.query.fw queryDecode]);
+    FWLogDebug(@"url.fwQueryDictionary: %@", nsurl.fw.queryDictionary);
 }
 
 - (void)renderData
@@ -252,7 +252,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     NSString *str = @"http://test.com?id=我是中文";
     NSURL *url = [NSURL URLWithString:str];
     FWLogDebug(@"str: %@ =>\nurl: %@", str, url);
-    url = [NSURL fwURLWithString:str];
+    url = [NSURL.fw urlWithString:str];
     FWLogDebug(@"str: %@ =>\nurl: %@", str, url);
     
     NSString *urlStr = [FWRouter generateURL:TestRouter.ROUTE_TEST parameters:nil];

@@ -142,7 +142,7 @@
 
 - (void)renderView
 {
-    self.isShort = [@[@0, @1].fwRandomObject fwAsInteger] == 0;
+    self.isShort = [@[@0, @1].fwRandomObject fw].asInteger == 0;
     FWWeakifySelf();
     [self.tableView fwSetRefreshingBlock:^{
         FWStrongifySelf();
@@ -236,7 +236,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableData fwRemoveObjectAtIndex:indexPath.row];
+        [self.tableData removeObjectAtIndex:indexPath.row];
         [self.tableView reloadData];
     }
 }

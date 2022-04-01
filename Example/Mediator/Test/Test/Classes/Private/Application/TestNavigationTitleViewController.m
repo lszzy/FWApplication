@@ -257,11 +257,11 @@
             cell.textLabel.text = self.titleView.style == FWToolbarTitleViewStyleHorizontal ? @"切换为上下两行显示" : @"切换为水平一行显示";
             break;
         case 4:
-            cell.textLabel.text = [self.tableData fwObjectAtIndex:indexPath.row];
+            cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
             cell.detailTextLabel.text = (self.horizontalAlignment == UIControlContentHorizontalAlignmentLeft ? @"左对齐" : (self.horizontalAlignment == UIControlContentHorizontalAlignmentRight ? @"右对齐" : @"居中对齐"));
             break;
         default:
-            cell.textLabel.text = [self.tableData fwObjectAtIndex:indexPath.row];
+            cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
             break;
     }
     return cell;

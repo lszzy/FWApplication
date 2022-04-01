@@ -101,7 +101,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     if (@available(iOS 13, *)) {
         [themes addObject:@"深色"];
     }
-    NSString *title = [themes fwObjectAtIndex:mode] ?: @"红色";
+    NSString *title = mode < themes.count ? [themes objectAtIndex:mode] : @"红色";
     [themes addObject:@"红色"];
     FWWeakifySelf();
     [self fwSetRightBarItem:title block:^(id  _Nonnull sender) {

@@ -260,7 +260,7 @@ static WKProcessPool *fwStaticProcessPool = nil;
     
     NSURL *requestUrl = [webRequest isKindOfClass:[NSURL class]] ? webRequest : nil;
     if (!requestUrl && [webRequest isKindOfClass:[NSString class]]) {
-        requestUrl = [NSURL fwURLWithString:webRequest];
+        requestUrl = [NSURL.fw urlWithString:webRequest];
     }
     if (requestUrl.absoluteString.length < 1) return;
     

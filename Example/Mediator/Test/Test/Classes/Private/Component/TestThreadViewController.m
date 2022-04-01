@@ -27,17 +27,17 @@
     NSString *originString = @"FWApplication";
     
     FWLogDebug(@"Original: %@", originString);
-    NSString *publicEncode = [originString.fwUTF8Data fwRSAEncryptWithPublicKey:publicKey].fwUTF8String;
+    NSString *publicEncode = [originString.fw.utf8Data fwRSAEncryptWithPublicKey:publicKey].fw.utf8String;
     FWLogDebug(@"Encrypted Public: %@", publicEncode);
-    NSString *privateDecode = [publicEncode.fwUTF8Data fwRSADecryptWithPrivateKey:privateKey].fwUTF8String;
+    NSString *privateDecode = [publicEncode.fw.utf8Data fwRSADecryptWithPrivateKey:privateKey].fw.utf8String;
     FWLogDebug(@"Decrypted Private: %@", privateDecode);
     
-    privateDecode = [encodeString.fwUTF8Data fwRSADecryptWithPrivateKey:privateKey].fwUTF8String;
+    privateDecode = [encodeString.fw.utf8Data fwRSADecryptWithPrivateKey:privateKey].fw.utf8String;
     FWLogDebug(@"Decrypted Server: %@", privateDecode);
     
-    NSString *privateEncode = [originString.fwUTF8Data fwRSASignWithPrivateKey:privateKey].fwUTF8String;
+    NSString *privateEncode = [originString.fw.utf8Data fwRSASignWithPrivateKey:privateKey].fw.utf8String;
     FWLogDebug(@"Sign Private: %@", privateEncode);
-    NSString *publicDecode = [privateEncode.fwUTF8Data fwRSAVerifyWithPublicKey:publicKey].fwUTF8String;
+    NSString *publicDecode = [privateEncode.fw.utf8Data fwRSAVerifyWithPublicKey:publicKey].fw.utf8String;
     FWLogDebug(@"Verify Public: %@", publicDecode);
 }
 

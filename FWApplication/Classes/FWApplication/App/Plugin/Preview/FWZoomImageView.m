@@ -814,7 +814,7 @@
         if ([imageURL isAbsolutePath]) {
             imageURL = [NSURL fileURLWithPath:imageURL];
         } else {
-            imageURL = [NSURL fwURLWithString:imageURL];
+            imageURL = [NSURL.fw urlWithString:imageURL];
         }
     }
     if ([imageURL isKindOfClass:[NSURL class]]) {

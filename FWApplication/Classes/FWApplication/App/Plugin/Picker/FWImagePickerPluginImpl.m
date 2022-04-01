@@ -127,7 +127,7 @@
             if (url) {
                 NSString *filePath = [PHPhotoLibrary fwPickerControllerVideoCachePath];
                 [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
-                filePath = [[filePath stringByAppendingPathComponent:[url.absoluteString fwMd5Encode]] stringByAppendingPathExtension:url.pathExtension];
+                filePath = [[filePath stringByAppendingPathComponent:[url.absoluteString.fw md5Encode]] stringByAppendingPathExtension:url.pathExtension];
                 fileURL = [NSURL fileURLWithPath:filePath];
                 if (![[NSFileManager defaultManager] moveItemAtURL:url toURL:fileURL error:NULL]) {
                     fileURL = nil;

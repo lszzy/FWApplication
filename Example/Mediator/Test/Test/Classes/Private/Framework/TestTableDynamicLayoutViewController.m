@@ -289,7 +289,7 @@ static BOOL isExpanded = NO;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableData fwRemoveObjectAtIndex:indexPath.row];
+        [self.tableData removeObjectAtIndex:indexPath.row];
         [self.tableView fwReloadDataWithoutCache];
     }
 }

@@ -42,7 +42,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
-    NSInteger rowData = [sectionData[indexPath.row] fwAsInteger];
+    NSInteger rowData = [sectionData[indexPath.row] fw].asInteger;
     if (indexPath.section == 0) {
         UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -108,7 +108,7 @@
     }
     
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
-    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fwAsInteger];
+    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw].asInteger;
     FWToastPluginImpl *toastPlugin = [[FWToastPluginImpl alloc] init];
     toastPlugin.customBlock = ^(FWToastView * _Nonnull toastView) {
         toastView.indicatorView = [[FWIndicatorView alloc] initWithType:type];
@@ -137,7 +137,7 @@
     }
     
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
-    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fwAsInteger];
+    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw].asInteger;
     FWViewPluginImpl.sharedInstance.customIndicatorView = ^UIView<FWIndicatorViewPlugin> * _Nonnull(FWIndicatorViewStyle style) {
         return [[FWIndicatorView alloc] initWithType:type];
     };

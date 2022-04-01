@@ -203,7 +203,7 @@
         FWWeakifySelf();
         [self mockProgress:^(double progress, BOOL finished) {
             FWStrongifySelf();
-            if (zoomImageView.reusedIdentifier.fwAsInteger != index) return;
+            if (zoomImageView.reusedIdentifier.fw.asInteger != index) return;
             
             zoomImageView.progress = progress;
             if (finished) {

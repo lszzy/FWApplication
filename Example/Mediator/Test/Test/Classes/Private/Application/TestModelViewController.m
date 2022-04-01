@@ -34,8 +34,8 @@
 
 - (void)requestCompleteFilter
 {
-    NSDictionary *dict = [self.responseJSONObject fwAsNSDictionary];
-    _responseName = [dict[@"name"] fwAsNSString];
+    NSDictionary *dict = [self.responseJSONObject fw].asDictionary;
+    _responseName = [dict[@"name"] fw].asString;
 }
 
 @end
@@ -151,12 +151,12 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
     
     // 测试\udf36|\udd75等字符会导致json解码失败问题
     NSString *jsonString = @"{\"name\": \"\\u8499\\u81ea\\u7f8e\\u5473\\u6ce1\\u6912\\u7b0b\\ud83d\\ude04\\\\udf36\\ufe0f\"}";
-    id jsonObject = [jsonString fwJsonDecode];
-    self.textView.text = [NSString stringWithFormat:@"%@\nname: %@\njson: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString fwJsonEncode:jsonObject]];
+    id jsonObject = [jsonString.fw jsonDecode];
+    self.textView.text = [NSString stringWithFormat:@"%@\nname: %@\njson: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString.fw jsonEncode:jsonObject]];
     
     jsonString = @"{\"name\": \"Test1\\udd75Test2\\ud83dTest3\\u8499\\u81ea\\u7f8e\\u5473\\u6ce1\\u6912\\u7b0b\\ud83d\\ude04\\udf36\\ufe0f\"}";
-    jsonObject = [jsonString fwJsonDecode];
-    self.textView.text = [NSString stringWithFormat:@"%@\nname2: %@\njson2: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString fwJsonEncode:jsonObject]];
+    jsonObject = [jsonString.fw jsonDecode];
+    self.textView.text = [NSString stringWithFormat:@"%@\nname2: %@\njson2: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString.fw jsonEncode:jsonObject]];
     
     // 测试%导致stringByRemovingPercentEncoding返回nil问题
     NSString *queryValue = @"我是字符串100%测试";

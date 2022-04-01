@@ -100,7 +100,7 @@ class TestIconCell: UICollectionViewCell {
         }
         
         var array = Array(iconClass.iconMapper().keys)
-        let text = FWSafeString(searchBar.text?.fwTrimString)
+        let text = FWSafeString(searchBar.text?.fw.trimString)
         if text.count > 0 {
             array.removeAll { icon in
                 return !icon.lowercased().contains(text.lowercased())
@@ -116,7 +116,7 @@ class TestIconCell: UICollectionViewCell {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = TestIconCell.fwCell(with: collectionView, indexPath: indexPath)
-        let name = collectionData.fwObject(at: indexPath.item) as? String
+        let name = collectionData.object(at: indexPath.item) as? String
         cell.imageView.fwThemeImage = FWIconImage(name.fwSafeValue, 60)?.fwTheme
         cell.nameLabel.text = name
         return cell
@@ -124,7 +124,7 @@ class TestIconCell: UICollectionViewCell {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let name = collectionData.fwObject(at: indexPath.item) as? String
+        let name = collectionData.object(at: indexPath.item) as? String
         UIPasteboard.general.string = FWSafeString(name)
         fwShowMessage(withText: name)
     }

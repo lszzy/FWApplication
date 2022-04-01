@@ -163,7 +163,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TestNestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTestNestCollectionCellID forIndexPath:indexPath];
-    cell.textLabel.text = [@(indexPath.row) fwAsNSString];
+    cell.textLabel.text = [@(indexPath.row) fw].asString;
     cell.selected = NO;
     return cell;
 }

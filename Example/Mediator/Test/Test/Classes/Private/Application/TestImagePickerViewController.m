@@ -29,7 +29,7 @@
         UIImage *accessoryImage = [[bezierPath fwShapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         pickerController.titleAccessoryImage = accessoryImage;
         
-        BOOL showsCheckedIndexLabel = [@[@YES, @NO].fwRandomObject fwAsBool];
+        BOOL showsCheckedIndexLabel = [@[@YES, @NO].fwRandomObject fw].asBool;
         pickerController.customCellBlock = ^(FWImagePickerCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
             cell.showsCheckedIndexLabel = showsCheckedIndexLabel;
             cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
@@ -45,8 +45,8 @@
     };
     FWImagePickerControllerImpl.sharedInstance.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
         FWImagePickerPreviewController *previewController = [[FWImagePickerPreviewController alloc] init];
-        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fwRandomObject fwAsBool];
-        previewController.showsEditButton = [@[@YES, @NO].fwRandomObject fwAsBool];
+        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fwRandomObject fw].asBool;
+        previewController.showsEditButton = [@[@YES, @NO].fwRandomObject fw].asBool;
         previewController.customCellBlock = ^(FWImagePickerPreviewCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
             cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
         };

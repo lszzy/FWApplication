@@ -101,7 +101,7 @@
               @[@"FWRouter", @"TestRouterViewController"],
               @[@"FWNavigation", @"TestWindowViewController"],
               @[@"FWWorkflow", @"TestWorkflowViewController"],
-              @[@"FWEncode", @"TestCrashViewController"],
+              @[@"FWException", @"TestCrashViewController"],
               @[@"FWLayoutChain", @"TestChainViewController"],
               @[@"FWTheme", @"TestThemeViewController"],
               @[@"FWTheme+Extension", @"TestThemeExtensionViewController"],
@@ -220,7 +220,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    self.isSearch = searchText.fwTrimString.length > 0;
+    self.isSearch = searchText.fw.trimString.length > 0;
     if (!self.isSearch) {
         self.searchResult = [NSMutableArray array];
         [self.tableView reloadData];
@@ -228,7 +228,7 @@
     }
     
     NSMutableArray *searchResult = [NSMutableArray array];
-    NSString *searchString = searchText.fwTrimString.lowercaseString;
+    NSString *searchString = searchText.fw.trimString.lowercaseString;
     for (NSArray *sectionData in self.tableData) {
         NSMutableArray *sectionResult = [NSMutableArray array];
         for (NSArray *rowData in sectionData[1]) {
