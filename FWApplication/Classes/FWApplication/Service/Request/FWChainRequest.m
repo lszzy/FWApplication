@@ -31,7 +31,8 @@
 @property (strong, nonatomic) NSMutableArray<FWBaseRequest *> *requestArray;
 @property (strong, nonatomic) NSMutableArray<FWChainCallback> *requestCallbackArray;
 @property (assign, nonatomic) NSUInteger nextRequestIndex;
-@property (strong, nonatomic) FWChainCallback emptyCallback;
+@property (weak, nonatomic) FWBaseRequest *nextRequest;
+@property (copy, nonatomic) FWChainCallback emptyCallback;
 
 @end
 
@@ -43,9 +44,8 @@
         _nextRequestIndex = 0;
         _requestArray = [NSMutableArray array];
         _requestCallbackArray = [NSMutableArray array];
-        _emptyCallback = ^(FWChainRequest *chainRequest, FWBaseRequest *baseRequest) {
-            // do nothing
-        };
+        _stoppedOnFailure = YES;
+        _emptyCallback = ^(FWChainRequest *chainRequest, FWBaseRequest *baseRequest) { };
     }
     return self;
 }
@@ -56,12 +56,11 @@
         return;
     }
 
+    _succeedRequest = nil;
     _failedRequest = nil;
-    if ([_requestArray count] > 0) {
-        [[FWRequestAgent sharedAgent] addChainRequest:self];
-        [self toggleAccessoriesWillStartCallBack];
-        [self startNextRequest];
-    } else {
+    [[FWRequestAgent sharedAgent] addChainRequest:self];
+    [self toggleAccessoriesWillStartCallBack];
+    if (![self startNextRequest:nil]) {
         FWRequestLog(@"Error! Chain request array is empty.");
     }
 }
@@ -109,13 +108,28 @@
     return _requestArray;
 }
 
-- (BOOL)startNextRequest {
+- (BOOL)startNextRequest:(FWBaseRequest *)previousRequest {
+    if (_nextRequestIndex >= [_requestArray count] && self.requestBuilder) {
+        FWBaseRequest *baseRequest = self.requestBuilder(self, previousRequest);
+        if (baseRequest) {
+            [self addRequest:baseRequest callback:nil];
+        }
+    }
+    
     if (_nextRequestIndex < [_requestArray count]) {
         FWBaseRequest *request = _requestArray[_nextRequestIndex];
         _nextRequestIndex++;
         request.delegate = self;
         [request clearCompletionBlock];
-        [request start];
+        if (_nextRequestIndex > 1 && self.requestInterval > 0) {
+            _nextRequest = request;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.requestInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.nextRequest start];
+            });
+        } else {
+            _nextRequest = nil;
+            [request start];
+        }
         return YES;
     } else {
         return NO;
@@ -125,32 +139,46 @@
 #pragma mark - Network Request Delegate
 
 - (void)requestFinished:(FWBaseRequest *)request {
+    _succeedRequest = request;
+    _failedRequest = nil;
+    
     NSUInteger currentRequestIndex = _nextRequestIndex - 1;
-    FWChainCallback callback = _requestCallbackArray[currentRequestIndex];
-    callback(self, request);
-    if (![self startNextRequest]) {
-        [self toggleAccessoriesWillStopCallBack];
+    FWChainCallback chainCallback = _requestCallbackArray[currentRequestIndex];
+    chainCallback(self, request);
+    
+    if (self.stoppedOnSuccess || ![self startNextRequest:request]) {
+        [self requestCompleted];
+    }
+}
+
+- (void)requestFailed:(FWBaseRequest *)request {
+    _succeedRequest = nil;
+    _failedRequest = request;
+    
+    if (self.stoppedOnFailure || ![self startNextRequest:request]) {
+        [self requestCompleted];
+    }
+}
+
+- (void)requestCompleted {
+    [self toggleAccessoriesWillStopCallBack];
+    
+    if (!_failedRequest) {
         if ([_delegate respondsToSelector:@selector(chainRequestFinished:)]) {
             [_delegate chainRequestFinished:self];
         }
         if (_successCompletionBlock) {
             _successCompletionBlock(self);
         }
-        [self clearCompletionBlock];
-        [self toggleAccessoriesDidStopCallBack];
-        [[FWRequestAgent sharedAgent] removeChainRequest:self];
+    } else {
+        if ([_delegate respondsToSelector:@selector(chainRequestFailed:)]) {
+            [_delegate chainRequestFailed:self];
+        }
+        if (_failureCompletionBlock) {
+            _failureCompletionBlock(self);
+        }
     }
-}
-
-- (void)requestFailed:(FWBaseRequest *)request {
-    _failedRequest = request;
-    [self toggleAccessoriesWillStopCallBack];
-    if ([_delegate respondsToSelector:@selector(chainRequestFailed:)]) {
-        [_delegate chainRequestFailed:self];
-    }
-    if (_failureCompletionBlock) {
-        _failureCompletionBlock(self);
-    }
+    
     [self clearCompletionBlock];
     [self toggleAccessoriesDidStopCallBack];
     [[FWRequestAgent sharedAgent] removeChainRequest:self];
@@ -164,8 +192,10 @@
             [request stop];
         }
     }
+    _nextRequest = nil;
     [_requestArray removeAllObjects];
     [_requestCallbackArray removeAllObjects];
+    _requestBuilder = nil;
     [self clearCompletionBlock];
 }
 

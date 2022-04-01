@@ -170,6 +170,12 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 ///  this value will be nil.
 @property (nonatomic, strong, readonly, nullable) NSError *error;
 
+///  Return finished state of request task.
+@property (nonatomic, readonly, getter=isFinished) BOOL finished;
+
+///  Return failed state of request task.
+@property (nonatomic, readonly, getter=isFailed) BOOL failed;
+
 ///  Return cancelled state of request task.
 @property (nonatomic, readonly, getter=isCancelled) BOOL cancelled;
 

@@ -48,15 +48,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// The chain callback called when one request finished
 typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *baseRequest);
 
 ///  FWChainRequest can be used to chain several FWRequest so that one will only starts after another finishes.
 ///  Note that when used inside FWChainRequest, a single FWRequest will have its own callback and delegate
-///  cleared, in favor of the batch request callback.
+///  cleared, in favor of the chain request callback.
 @interface FWChainRequest : NSObject
 
 ///  All the requests are stored in this array.
-- (NSArray<FWBaseRequest *> *)requestArray;
+@property (nonatomic, strong, readonly) NSArray<FWBaseRequest *> *requestArray;
 
 ///  The delegate object of the chain request. Default is nil.
 @property (nonatomic, weak, nullable) id<FWChainRequestDelegate> delegate;
@@ -76,8 +77,20 @@ typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *bas
 ///  this array will be automatically created. Default is nil.
 @property (nonatomic, strong, nullable) NSMutableArray<id<FWRequestAccessory>> *requestAccessories;
 
-///  The first request that failed (and causing the chain request to fail).
+///  The last request that succeed (and causing the chain request to finish).
+@property (nonatomic, strong, readonly, nullable) FWBaseRequest *succeedRequest;
+
+///  The last request that failed (and causing the chain request to fail).
 @property (nonatomic, strong, readonly, nullable) FWBaseRequest *failedRequest;
+
+///  The request interval to start next chain request. Defaults to 0.
+@property (nonatomic, assign) NSTimeInterval requestInterval;
+
+///  When true, the chain request is stopped if one of the requests fails. Defaults to YES.
+@property (nonatomic, assign) BOOL stoppedOnFailure;
+
+///  When true, the chain request is stopped if one of the requests succeed. Defaults to NO.
+@property (nonatomic, assign) BOOL stoppedOnSuccess;
 
 ///  Set completion callbacks
 - (void)setCompletionBlockWithSuccess:(nullable void (^)(FWChainRequest *chainRequest))success
@@ -104,6 +117,10 @@ typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *bas
 ///  @param request  The request to be chained.
 ///  @param callback The finish callback
 - (void)addRequest:(FWBaseRequest *)request callback:(nullable FWChainCallback)callback;
+
+///  The request builder for the chain. Note this will be called if all of the requests finished.
+///  This block will be called on the main queue.
+@property (nonatomic, copy, nullable) FWBaseRequest * _Nullable (^requestBuilder)(FWChainRequest *chainRequest, FWBaseRequest * _Nullable previousRequest);
 
 @end
 

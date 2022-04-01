@@ -70,6 +70,20 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return self.requestTask.originalRequest;
 }
 
+- (BOOL)isFinished {
+    if (!self.requestTask) {
+        return NO;
+    }
+    return self.requestTask.state == NSURLSessionTaskStateCompleted && self.error == nil;
+}
+
+- (BOOL)isFailed {
+    if (!self.requestTask) {
+        return NO;
+    }
+    return self.requestTask.state == NSURLSessionTaskStateCompleted && self.error != nil;
+}
+
 - (BOOL)isCancelled {
     if (!self.requestTask) {
         return NO;
