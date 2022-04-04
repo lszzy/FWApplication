@@ -47,7 +47,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self didInitializeWithStyle:style];
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }
@@ -57,7 +57,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
-    self.imageView.layer.borderWidth = [UIScreen fwPixelOne];
+    self.imageView.layer.borderWidth = [UIScreen.fw pixelOne];
     self.imageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.1].CGColor;
     
     _maskView = [[UIView alloc] init];
@@ -503,7 +503,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self didInitialize];
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }
@@ -1501,7 +1501,7 @@
     if (self) {
         _checkedIndex = NSNotFound;
         [self didInitialize];
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }
@@ -2163,7 +2163,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (UICollectionViewFlowLayout *)collectionViewLayout {
     if (!_collectionViewLayout) {
         _collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-        CGFloat inset = [UIScreen fwPixelOne] * 2; // no why, just beautiful
+        CGFloat inset = [UIScreen.fw pixelOne] * 2; // no why, just beautiful
         _collectionViewLayout.sectionInset = UIEdgeInsetsMake(inset, inset, inset, inset);
         _collectionViewLayout.minimumLineSpacing = _collectionViewLayout.sectionInset.bottom;
         _collectionViewLayout.minimumInteritemSpacing = _collectionViewLayout.sectionInset.left;

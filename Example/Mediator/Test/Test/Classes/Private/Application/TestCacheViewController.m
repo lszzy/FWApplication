@@ -23,12 +23,12 @@
 
 - (void)renderView
 {
-    UILabel *cacheLabel = [UILabel fwAutoLayoutView];
+    UILabel *cacheLabel = [UILabel new];
     self.cacheLabel = cacheLabel;
     cacheLabel.numberOfLines = 0;
     cacheLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:cacheLabel]; {
-        [cacheLabel fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
+        [cacheLabel.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
     }
     
     UIButton *refreshButton = [Theme largeButton];
@@ -40,8 +40,8 @@
         [self refreshCache];
     }];
     [self.view addSubview:refreshButton]; {
-        [refreshButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheLabel withOffset:10];
-        [refreshButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [refreshButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheLabel withOffset:10];
+        [refreshButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *cacheButton = [Theme largeButton];
@@ -53,8 +53,8 @@
         [self refreshCache];
     }];
     [self.view addSubview:cacheButton]; {
-        [cacheButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:refreshButton withOffset:10];
-        [cacheButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [cacheButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:refreshButton withOffset:10];
+        [cacheButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *expireButton = [Theme largeButton];
@@ -66,8 +66,8 @@
         [self refreshCache];
     }];
     [self.view addSubview:expireButton]; {
-        [expireButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheButton withOffset:10];
-        [expireButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [expireButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheButton withOffset:10];
+        [expireButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *deleteButton = [Theme largeButton];
@@ -79,8 +79,8 @@
         [self refreshCache];
     }];
     [self.view addSubview:deleteButton]; {
-        [deleteButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:expireButton withOffset:10];
-        [deleteButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [deleteButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:expireButton withOffset:10];
+        [deleteButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *clearButton = [Theme largeButton];
@@ -92,8 +92,8 @@
         [self refreshCache];
     }];
     [self.view addSubview:clearButton]; {
-        [clearButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:deleteButton withOffset:10];
-        [clearButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [clearButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:deleteButton withOffset:10];
+        [clearButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
 }
 

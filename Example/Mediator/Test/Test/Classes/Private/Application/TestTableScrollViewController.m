@@ -42,41 +42,41 @@
     if (self) {
         self.fwSeparatorInset = UIEdgeInsetsZero;
         
-        UILabel *titleLabel = [UILabel fwAutoLayoutView];
+        UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = 0;
         titleLabel.font = [UIFont fwFontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel]; {
-            [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
-            [titleLabel fwAddCollapseConstraint:constraint];
-            titleLabel.fwAutoCollapse = YES;
+            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
+            [titleLabel.fw addCollapseConstraint:constraint];
+            titleLabel.fw.autoCollapse = YES;
         }
         
-        UILabel *textLabel = [UILabel fwAutoLayoutView];
+        UILabel *textLabel = [[UILabel alloc] init];
         textLabel.numberOfLines = 0;
         textLabel.font = [UIFont fwFontOfSize:13];
         textLabel.textColor = [Theme textColor];
-        textLabel.fwHiddenCollapse = YES;
+        textLabel.fw.hiddenCollapse = YES;
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel]; {
-            [textLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [textLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [textLabel fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel fwAddCollapseConstraint:constraint];
+            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel.fw addCollapseConstraint:constraint];
         }
         
-        UIImageView *imageView = [UIImageView fwAutoLayoutView];
+        UIImageView *imageView = [[UIImageView alloc] init];
         self.myImageView = imageView;
         [self.contentView addSubview:imageView]; {
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *constraint = [imageView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView fwAddCollapseConstraint:constraint];
-            imageView.fwAutoCollapse = YES;
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView.fw addCollapseConstraint:constraint];
+            imageView.fw.autoCollapse = YES;
         }
     }
     return self;

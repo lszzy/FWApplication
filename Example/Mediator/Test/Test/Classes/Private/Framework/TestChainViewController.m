@@ -23,7 +23,7 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = Theme.textColor;
     [self.view addSubview:view];
-    view.fwLayoutChain.remake().topWithInset(20).leftWithInset(20).size(CGSizeMake(100, 100)).width(50).height(50);
+    view.fw.layoutChain.remake().topWithInset(20).leftWithInset(20).size(CGSizeMake(100, 100)).width(50).height(50);
     
     UILabel *label = [[UILabel alloc] init];
     label.text = @"text";
@@ -33,7 +33,7 @@
     label.fwContentInset = UIEdgeInsetsMake(5, 5, 5, 5);
     [label fwSetCornerRadius:5];
     [self.view addSubview:label];
-    [label fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [label.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.widthToView(view).centerYToView(view).leftToRightOfViewWithOffset(view, 20);
     }];
     
@@ -41,12 +41,12 @@
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"btn" forState:UIControlStateNormal];
     [self.view addSubview:button];
-    button.fwLayoutChain.widthToView(view).heightToView(view).leftToRightOfViewWithOffset(label, 20).topToViewWithOffset(view, 0);
+    button.fw.layoutChain.widthToView(view).heightToView(view).leftToRightOfViewWithOffset(label, 20).topToViewWithOffset(view, 0);
     
     UIImageView *image = [UIImageView new];
     image.image = [UIImage fwImageWithAppIcon];
     [self.view addSubview:image];
-    image.fwLayoutChain.attribute(NSLayoutAttributeWidth, NSLayoutAttributeWidth, view).heightToWidth(1.0).centerYToView(view).attributeWithOffset(NSLayoutAttributeLeft, NSLayoutAttributeRight, button, 20);
+    image.fw.layoutChain.attribute(NSLayoutAttributeWidth, NSLayoutAttributeWidth, view).heightToWidth(1.0).centerYToView(view).attributeWithOffset(NSLayoutAttributeLeft, NSLayoutAttributeRight, button, 20);
     
     CGFloat lineHeight = ceil(FWFontRegular(16).lineHeight);
     NSString *moreText = @"点击展开";
@@ -62,7 +62,7 @@
     attr.textColor = Theme.textColor;
     attr.textAlignment = kCTTextAlignmentLeft;
     [self.view addSubview:attr];
-    attr.fwLayoutChain.leftWithInset(20).rightWithInset(20).topToBottomOfViewWithOffset(view, 20);
+    attr.fw.layoutChain.leftWithInset(20).rightWithInset(20).topToBottomOfViewWithOffset(view, 20);
     
     [self.attributedLabel setText:@"我是非常长的文本，要多长有多长，我会自动截断，再附加视图，不信你看嘛，我是显示不下了的文本，我是更多文本，我是更多更多的文本，我又要换行了"];
     UILabel *collapseLabel = [UILabel fwLabelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
@@ -95,7 +95,7 @@
     emptyLabel.textColor = Theme.textColor;
     emptyLabel.backgroundColor = Theme.backgroundColor;
     [self.view addSubview:emptyLabel];
-    [emptyLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [emptyLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.topToBottomOfViewWithOffset(attr, 20);
         make.leftWithInset(20);
     }];
@@ -106,7 +106,7 @@
     emptyLabel2.backgroundColor = Theme.backgroundColor;
     emptyLabel2.fwContentInset = UIEdgeInsetsMake(5, 5, 5, 5);
     [self.view addSubview:emptyLabel2];
-    [emptyLabel2 fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [emptyLabel2.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftToRightOfViewWithOffset(emptyLabel, 20);
         make.centerYToView(emptyLabel);
     }];
@@ -118,7 +118,7 @@
     resultLabel.textAlignment = NSTextAlignmentCenter;
     resultLabel.textColor = Theme.textColor;
     [self.view addSubview:resultLabel];
-    [resultLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [resultLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.centerX();
         make.centerYToView(emptyLabel2);
     }];
@@ -129,7 +129,7 @@
     numberLabel.textColor = Theme.textColor;
     numberLabel.text = [self numberString];
     [self.view addSubview:numberLabel];
-    [numberLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [numberLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftWithInset(20).rightWithInset(20)
             .topToBottomOfViewWithOffset(attr, 50);
     }];

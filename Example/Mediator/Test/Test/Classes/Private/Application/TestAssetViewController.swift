@@ -72,14 +72,14 @@ import FWApplication
             let photo = photos[indexPath.row]
             cell.fw.tempObject = photo.identifier
             photo.requestThumbnailImage(with: CGSize(width: 88, height: 88)) { image, info, finished in
-                if cell.fw.tempObject.fwAsString == photo.identifier {
+                if cell.fw.tempObject.asString == photo.identifier {
                     cell.imageView?.image = image?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
                 } else {
                     cell.imageView?.image = nil
                 }
             }
             photo.assetSize { size in
-                if cell.fw.tempObject.fwAsString == photo.identifier {
+                if cell.fw.tempObject.asString == photo.identifier {
                     cell.textLabel?.text = NSString.fwSizeString(UInt(size))
                 } else {
                     cell.textLabel?.text = nil
@@ -168,7 +168,7 @@ import FWApplication
                             label.tag = 100
                             titleLabel = label
                             controller.view.addSubview(label)
-                            label.fwLayoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
+                            label.fw.layoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
                         }
                         
                         guard let photo = self?.photos[index] else { return }

@@ -52,7 +52,7 @@
             view.tag = 100;
             view.color = Theme.textColor;
             [cell.contentView addSubview:view];
-            view.fwLayoutChain.center();
+            view.fw.layoutChain.center();
         }
         view.annular = rowData == 0 ? YES : NO;
         [self mockProgress:^(double progress, BOOL finished) {
@@ -69,7 +69,7 @@
         view.tag = 100;
         view.color = Theme.textColor;
         [cell.contentView addSubview:view];
-        view.fwLayoutChain.center();
+        view.fw.layoutChain.center();
     }
     view.type = (FWIndicatorViewAnimationType)rowData;
     [view startAnimating];

@@ -80,7 +80,7 @@ static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresenta
     [viewController didMoveToParentViewController:self];
     [view addSubview:viewController.view];
     // viewController.view.frame = view.bounds;
-    [viewController.view fwPinEdgesToSuperview];
+    [viewController.view.fw pinEdgesToSuperview];
 }
 
 #pragma mark - Previous

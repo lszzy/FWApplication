@@ -19,7 +19,7 @@
     [super viewDidLoad];
     
     [self fwSetRightBarItem:@"设置" block:^(id sender) {
-        [UIApplication fwOpenAppSettings];
+        [UIApplication.fw openAppSettings];
     }];
     
     // 手工修改设置返回页面自动刷新权限，释放时自动移除监听

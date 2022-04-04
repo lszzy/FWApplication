@@ -58,9 +58,9 @@ FWPropertyAssign(BOOL, canScroll);
     mobileField.keyboardType = UIKeyboardTypeDefault;
     mobileField.returnKeyType = UIReturnKeyNext;
     [self.contentView addSubview:mobileField];
-    [mobileField fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-    [mobileField fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-    [mobileField fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [mobileField.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+    [mobileField.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+    [mobileField.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextField *passwordField = [self createTextField];
     self.passwordField = passwordField;
@@ -79,8 +79,8 @@ FWPropertyAssign(BOOL, canScroll);
         [self.textView becomeFirstResponder];
     }];
     [self.contentView addSubview:passwordField];
-    [passwordField fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:mobileField];
-    [passwordField fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [passwordField.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:mobileField];
+    [passwordField.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextView *textView = [self createTextView];
     self.textView = textView;
@@ -91,8 +91,8 @@ FWPropertyAssign(BOOL, canScroll);
     textView.returnKeyType = UIReturnKeyNext;
     passwordField.fwReturnResponder = textView;
     [self.contentView addSubview:textView];
-    [textView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:passwordField withOffset:15];
-    [textView fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [textView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:passwordField withOffset:15];
+    [textView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextView *inputView = [self createTextView];
     self.inputView = inputView;
@@ -107,17 +107,17 @@ FWPropertyAssign(BOOL, canScroll);
     inputView.fwDelegate = self;
     [inputView fwAddToolbar:UIBarStyleDefault title:@"Done" block:nil];
     [self.contentView addSubview:inputView];
-    [inputView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
-    [inputView fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [inputView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
+    [inputView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *submitButton = [Theme largeButton];
     self.submitButton = submitButton;
     [submitButton setTitle:@"提交" forState:UIControlStateNormal];
     [submitButton fwAddTouchTarget:self action:@selector(onSubmit)];
     [self.contentView addSubview:submitButton];
-    [submitButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:inputView withOffset:15];
-    [submitButton fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-    [submitButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [submitButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:inputView withOffset:15];
+    [submitButton.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+    [submitButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
 }
 
 - (void)renderModel
@@ -165,35 +165,35 @@ FWPropertyAssign(BOOL, canScroll);
 
 - (void)renderData
 {
-    CGFloat marginTop = FWScreenHeight - (390 + 15 + FWTopBarHeight + UIScreen.fwSafeAreaInsets.bottom);
+    CGFloat marginTop = FWScreenHeight - (390 + 15 + FWTopBarHeight + UIScreen.fw.safeAreaInsets.bottom);
     CGFloat topInset = self.canScroll ? FWScreenHeight : marginTop;
-    [self.mobileField fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:topInset];
+    [self.mobileField.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:topInset];
 }
 
 - (UITextView *)createTextView
 {
-    UITextView *textView = [UITextView fwAutoLayoutView];
+    UITextView *textView = [UITextView new];
     textView.font = [UIFont fwFontOfSize:15];
     textView.textColor = [Theme textColor];
     textView.fwCursorColor = Theme.textColor;
     textView.fwCursorRect = CGRectMake(0, 0, 2, 0);
     [textView fwSetBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
-    [textView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
-    [textView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [textView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
+    [textView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     return textView;
 }
 
 - (UITextField *)createTextField
 {
-    UITextField *textField = [UITextField fwAutoLayoutView];
+    UITextField *textField = [UITextField new];
     textField.font = [UIFont fwFontOfSize:15];
     textField.textColor = [Theme textColor];
     textField.fwCursorColor = Theme.textColor;
     textField.fwCursorRect = CGRectMake(0, 0, 2, 0);
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [textField fwSetBorderView:UIRectEdgeBottom color:[Theme borderColor] width:0.5];
-    [textField fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
-    [textField fwSetDimension:NSLayoutAttributeHeight toSize:50];
+    [textField.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
+    [textField.fw setDimension:NSLayoutAttributeHeight toSize:50];
     return textField;
 }
 

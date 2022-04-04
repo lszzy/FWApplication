@@ -51,7 +51,7 @@
         [FWRouter closeViewControllerAnimated:YES];
     }];
     [self.view addSubview:self.navigationView];
-    self.navigationView.fwLayoutChain.left().right().top();
+    self.navigationView.fw.layoutChain.left().right().top();
     
     self.toolbarView = [[FWToolbarView alloc] init];
     self.toolbarView.tintColor = Theme.textColor;
@@ -71,10 +71,10 @@
         [self fwShowMessageWithText:@"点击了确定"];
     }];
     [self.view addSubview:self.toolbarView];
-    self.toolbarView.fwLayoutChain.left().right().bottom();
+    self.toolbarView.fw.layoutChain.left().right().bottom();
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
-    self.tableView.fwLayoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
+    self.tableView.fw.layoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
 }
 
 - (void)renderModel

@@ -28,8 +28,8 @@ class TestIconCell: UICollectionViewCell {
         contentView.backgroundColor = Theme.cellColor
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
-        imageView.fwLayoutChain.centerX().top().size(CGSize(width: 60, height: 60))
-        nameLabel.fwLayoutChain.edges(.zero, excludingEdge: .top)
+        imageView.fw.layoutChain.centerX().top().size(CGSize(width: 60, height: 60))
+        nameLabel.fw.layoutChain.edges(.zero, excludingEdge: .top)
             .topToBottomOfView(imageView)
     }
     
@@ -73,10 +73,10 @@ class TestIconCell: UICollectionViewCell {
     
     func renderCollectionLayout() {
         view.addSubview(searchBar)
-        searchBar.fwLayoutChain
+        searchBar.fw.layoutChain
             .edges(excludingEdge: .bottom)
             .height(FWNavigationBarHeight)
-        collectionView.fwLayoutChain
+        collectionView.fw.layoutChain
             .edges(excludingEdge: .top)
             .topToBottomOfView(searchBar)
     }
@@ -117,7 +117,7 @@ class TestIconCell: UICollectionViewCell {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = TestIconCell.fwCell(with: collectionView, indexPath: indexPath)
         let name = collectionData.object(at: indexPath.item) as? String
-        cell.imageView.fwThemeImage = FWIconImage(name.fwSafeValue, 60)?.fwTheme
+        cell.imageView.fwThemeImage = FWIconImage(name.safeValue, 60)?.fwTheme
         cell.nameLabel.text = name
         return cell
     }

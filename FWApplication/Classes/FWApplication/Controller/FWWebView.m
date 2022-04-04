@@ -39,8 +39,8 @@
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
-    if ([UIApplication fwIsSystemURL:navigationAction.request.URL]) {
-        [UIApplication fwOpenURL:navigationAction.request.URL];
+    if ([UIApplication.fw isSystemURL:navigationAction.request.URL]) {
+        [UIApplication.fw openURL:navigationAction.request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -224,8 +224,8 @@ static WKProcessPool *fwStaticProcessPool = nil;
     self.progressView.trackTintColor = [UIColor clearColor];
     self.progressView.fwWebProgress = 0;
     [self addSubview:self.progressView];
-    [self.progressView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
-    [self.progressView fwSetDimension:NSLayoutAttributeHeight toSize:2.f];
+    [self.progressView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
+    [self.progressView.fw setDimension:NSLayoutAttributeHeight toSize:2.f];
     [self.fw observeProperty:@"estimatedProgress" block:^(FWWebView *webView, NSDictionary *change) {
         if (webView.estimatedProgress < 1.0) {
             webView.progressView.fwWebProgress = webView.estimatedProgress;

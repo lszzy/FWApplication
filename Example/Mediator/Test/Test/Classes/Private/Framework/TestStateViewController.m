@@ -24,20 +24,20 @@
 
 - (void)renderView
 {
-    UILabel *label = [UILabel fwAutoLayoutView];
+    UILabel *label = [UILabel new];
     self.label = label;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:label]; {
-        [label fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
+        [label.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
     }
     
     UIButton *button = [Theme largeButton];
     self.button = button;
     [button fwAddTouchTarget:self action:@selector(onClick:)];
     [self.view addSubview:button]; {
-        [button fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:label withOffset:10];
-        [button fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [button.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:label withOffset:10];
+        [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
 }
 

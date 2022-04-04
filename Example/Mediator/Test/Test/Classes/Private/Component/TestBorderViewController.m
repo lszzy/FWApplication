@@ -90,60 +90,60 @@
     [frameView fwSetCornerLayer:(UIRectCornerTopLeft | UIRectCornerTopRight) radius:5 borderColor:[UIColor redColor] width:0.5];
     
     // Layer
-    UIView *layoutView = [UIView fwAutoLayoutView];
+    UIView *layoutView = [[UIView alloc] init];
     layoutView.backgroundColor = bgColor;
     [self.view addSubview:layoutView];
-    [layoutView fwSetDimensionsToSize:CGSizeMake(50, 50)];
-    [layoutView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
-    [layoutView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:20];
+    [layoutView.fw setDimensionsToSize:CGSizeMake(50, 50)];
+    [layoutView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
+    [layoutView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:20];
     [layoutView layoutIfNeeded];
     [layoutView fwSetBorderLayer:(UIRectEdgeTop | UIRectEdgeBottom) color:[UIColor redColor] width:0.5];
     
-    layoutView = [UIView fwAutoLayoutView];
+    layoutView = [UIView new];
     layoutView.backgroundColor = bgColor;
     [self.view addSubview:layoutView];
-    [layoutView fwSetDimensionsToSize:CGSizeMake(50, 50)];
-    [layoutView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
-    [layoutView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:90];
+    [layoutView.fw setDimensionsToSize:CGSizeMake(50, 50)];
+    [layoutView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
+    [layoutView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:90];
     [layoutView layoutIfNeeded];
     [layoutView fwSetBorderLayer:(UIRectEdgeLeft | UIRectEdgeRight) color:[UIColor redColor] width:0.5];
     [layoutView fwSetBorderLayer:(UIRectEdgeLeft | UIRectEdgeRight) color:[UIColor redColor] width:0.5 leftInset:5.0 rightInset:5.0];
     
-    layoutView = [UIView fwAutoLayoutView];
+    layoutView = [UIView new];
     layoutView.backgroundColor = bgColor;
     [self.view addSubview:layoutView];
-    [layoutView fwSetDimensionsToSize:CGSizeMake(50, 50)];
-    [layoutView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
-    [layoutView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:160];
+    [layoutView.fw setDimensionsToSize:CGSizeMake(50, 50)];
+    [layoutView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
+    [layoutView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:160];
     [layoutView layoutIfNeeded];
     [layoutView fwSetCornerLayer:(UIRectCornerTopLeft | UIRectCornerTopRight) radius:0];
     [layoutView fwSetCornerLayer:(UIRectCornerTopLeft | UIRectCornerTopRight) radius:5];
     
-    layoutView = [UIView fwAutoLayoutView];
+    layoutView = [UIView new];
     layoutView.backgroundColor = bgColor;
     [self.view addSubview:layoutView];
-    [layoutView fwSetDimensionsToSize:CGSizeMake(50, 50)];
-    [layoutView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
-    [layoutView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:230];
+    [layoutView.fw setDimensionsToSize:CGSizeMake(50, 50)];
+    [layoutView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:frameView withOffset:20];
+    [layoutView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:230];
     [layoutView layoutIfNeeded];
     [layoutView fwSetCornerLayer:(UIRectCornerTopLeft | UIRectCornerTopRight) radius:0 borderColor:[UIColor blueColor] width:1];
     [layoutView fwSetCornerLayer:(UIRectCornerTopLeft | UIRectCornerTopRight) radius:5 borderColor:[UIColor redColor] width:0.5];
     
     // View
-    UIView *autoView = [UIView fwAutoLayoutView];
+    UIView *autoView = [UIView new];
     autoView.backgroundColor = bgColor;
     [self.view addSubview:autoView];
-    [autoView fwSetDimensionsToSize:CGSizeMake(50, 50)];
-    [autoView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:layoutView withOffset:20];
-    [autoView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:20];
+    [autoView.fw setDimensionsToSize:CGSizeMake(50, 50)];
+    [autoView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:layoutView withOffset:20];
+    [autoView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:20];
     [autoView fwSetBorderView:(UIRectEdgeTop | UIRectEdgeBottom) color:[UIColor redColor] width:0.5];
     
-    autoView = [UIView fwAutoLayoutView];
+    autoView = [UIView new];
     autoView.backgroundColor = bgColor;
     [self.view addSubview:autoView];
-    [autoView fwSetDimensionsToSize:CGSizeMake(50, 50)];
-    [autoView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:layoutView withOffset:20];
-    [autoView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:90];
+    [autoView.fw setDimensionsToSize:CGSizeMake(50, 50)];
+    [autoView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:layoutView withOffset:20];
+    [autoView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:90];
     [autoView fwSetBorderView:(UIRectEdgeLeft | UIRectEdgeRight) color:[UIColor redColor] width:0.5];
     [autoView fwSetBorderView:(UIRectEdgeLeft | UIRectEdgeRight) color:[UIColor redColor] width:0.5 leftInset:5.0 rightInset:5.0];
 }

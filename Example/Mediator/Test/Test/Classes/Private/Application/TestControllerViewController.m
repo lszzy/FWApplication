@@ -53,37 +53,37 @@
 {
     self.scrollView.delegate = self;
     
-    UIImageView *imageView = [UIImageView fwAutoLayoutView];
+    UIImageView *imageView = [UIImageView new];
     imageView.image = [TestBundle imageNamed:@"public_picture"];
     [self.contentView addSubview:imageView]; {
-        [imageView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-        [imageView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
-        [imageView fwSetDimension:NSLayoutAttributeHeight toSize:150];
+        [imageView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+        [imageView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
+        [imageView.fw setDimension:NSLayoutAttributeHeight toSize:150];
     }
     
-    UIView *redView = [UIView fwAutoLayoutView];
+    UIView *redView = [UIView new];
     _redView = redView;
     redView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:redView]; {
-        [redView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-        [redView fwPinEdgeToSuperview:NSLayoutAttributeRight];
-        [redView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:imageView];
-        [redView fwSetDimension:NSLayoutAttributeHeight toSize:50];
+        [redView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+        [redView.fw pinEdgeToSuperview:NSLayoutAttributeRight];
+        [redView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:imageView];
+        [redView.fw setDimension:NSLayoutAttributeHeight toSize:50];
     }
     
-    UIView *hoverView = [UIView fwAutoLayoutView];
+    UIView *hoverView = [UIView new];
     _hoverView = hoverView;
     hoverView.backgroundColor = [UIColor redColor];
     [redView addSubview:hoverView]; {
-        [hoverView fwPinEdgesToSuperview];
+        [hoverView.fw pinEdgesToSuperview];
     }
     
-    UIView *blueView = [UIView fwAutoLayoutView];
+    UIView *blueView = [UIView new];
     blueView.backgroundColor = [UIColor blueColor];
     [self.contentView addSubview:blueView]; {
-        [blueView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-        [blueView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:redView];
-        [blueView fwSetDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
+        [blueView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
+        [blueView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:redView];
+        [blueView.fw setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
     }
 }
 

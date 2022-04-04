@@ -69,12 +69,12 @@
     }
     
     // 添加内容
-    UIImageView *imageView = [UIImageView fwAutoLayoutView];
+    UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [TestBundle imageNamed:@"public_picture"];
     [self.contentView addSubview:imageView]; {
-        [imageView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-        [imageView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero];
-        [imageView fwSetDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
+        [imageView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+        [imageView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero];
+        [imageView.fw setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
     }
 }
 

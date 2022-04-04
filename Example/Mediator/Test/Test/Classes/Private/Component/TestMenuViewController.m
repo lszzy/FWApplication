@@ -79,7 +79,7 @@
     _imageView = imageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
-    imageView.fwLayoutChain.center().size(CGSizeMake(200, 200));
+    imageView.fw.layoutChain.center().size(CGSizeMake(200, 200));
 }
 
 - (void)onPhotoSheet:(UIBarButtonItem *)sender

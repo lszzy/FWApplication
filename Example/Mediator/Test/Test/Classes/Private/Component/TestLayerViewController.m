@@ -300,8 +300,8 @@ FWPropertyWeak(UIButton *, snapshotButton);
     // TouchDown事件，按钮还未highlighted
     [button addTarget:self action:@selector(onSnapshot) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:button];
-    [button fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-    [button fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+    [button.fw alignAxisToSuperview:NSLayoutAttributeCenterX];
 }
 
 #pragma mark - Action

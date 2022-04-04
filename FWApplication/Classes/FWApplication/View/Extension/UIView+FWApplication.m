@@ -853,7 +853,7 @@
         UIBlurEffect *effect = [UIBlurEffect effectWithStyle:style];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
         [self addSubview:effectView];
-        [effectView fwPinEdgesToSuperview];
+        [effectView.fw pinEdgesToSuperview];
         return effectView;
     }
     return nil;

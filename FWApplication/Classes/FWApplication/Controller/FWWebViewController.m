@@ -182,7 +182,7 @@
 - (void)fwInnerRenderWebLayout
 {
     FWWebView *webView = [(id<FWWebViewController>)self webView];
-    [webView fwPinEdgesToSuperview];
+    [webView.fw pinEdgesToSuperview];
 }
 
 @end

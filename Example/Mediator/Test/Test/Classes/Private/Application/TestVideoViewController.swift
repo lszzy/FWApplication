@@ -56,8 +56,8 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         
         addSubview(closeButton)
         addSubview(playButton)
-        closeButton.fwLayoutChain.leftToSafeArea(8).topToSafeArea(8)
-        playButton.fwLayoutChain.rightToSafeArea(8).topToSafeArea(8)
+        closeButton.fw.layoutChain.leftToSafeArea(8).topToSafeArea(8)
+        playButton.fw.layoutChain.rightToSafeArea(8).topToSafeArea(8)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +99,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         
         self.addChild(self.player)
         self.view.addSubview(self.player.view)
-        self.player.view.fwPinEdgesToSuperview()
+        self.player.view.fw.pinEdgesToSuperview()
         self.player.didMove(toParent: self)
         
         self.playVideo()
@@ -115,8 +115,8 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if !fwIsLoaded {
-            fwIsLoaded = true
+        if !fw.isLoaded {
+            fw.isLoaded = true
             self.player.playFromBeginning()
         }
     }

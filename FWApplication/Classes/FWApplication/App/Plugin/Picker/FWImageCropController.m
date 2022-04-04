@@ -926,7 +926,7 @@
 
 - (CGFloat)toolbarHeight
 {
-    return _toolbarHeight > 0 ? _toolbarHeight : FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+    return _toolbarHeight > 0 ? _toolbarHeight : FWToolBarHeight - UIScreen.fw.safeAreaInsets.bottom;
 }
 
 - (BOOL)verticalLayout

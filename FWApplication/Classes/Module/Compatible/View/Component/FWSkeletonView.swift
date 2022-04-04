@@ -403,7 +403,7 @@ import FWApplication
     open func setScrollView(_ scrollView: UIScrollView, scrollBlock: ((CGFloat) -> ())? = nil) {
         var block = scrollBlock
         if block == nil && superview != nil {
-            let constraint = fwConstraint(toSuperview: .top)
+            let constraint = fw.constraint(toSuperview: .top)
             let constant = constraint?.constant ?? 0
             block = { (offsetY) in
                 constraint?.constant = constant - offsetY
@@ -624,7 +624,7 @@ import FWApplication
         tableView.backgroundColor = FWSkeletonAppearance.appearance.backgroundColor
         
         addSubview(tableView)
-        tableView.fwPinEdgesToSuperview()
+        tableView.fw.pinEdgesToSuperview()
     }
     
     open override func layoutSubviews() {
@@ -669,7 +669,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutCell)
         skeletonLayout.tag = 2052
         cell.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return cell
     }
@@ -696,7 +696,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutHeader)
         skeletonLayout.tag = 2052
         header.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return header
     }
@@ -723,7 +723,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutFooter)
         skeletonLayout.tag = 2052
         footer.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return footer
     }
@@ -779,7 +779,7 @@ import FWApplication
         collectionView.backgroundColor = FWSkeletonAppearance.appearance.backgroundColor
         
         addSubview(collectionView)
-        collectionView.fwPinEdgesToSuperview()
+        collectionView.fw.pinEdgesToSuperview()
     }
     
     open override func layoutSubviews() {
@@ -828,7 +828,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutCell)
         skeletonLayout.tag = 2052
         cell.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return cell
     }
@@ -860,7 +860,7 @@ import FWApplication
             let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutHeader)
             skeletonLayout.tag = 2052
             header.addSubview(skeletonLayout)
-            skeletonLayout.fwPinEdgesToSuperview()
+            skeletonLayout.fw.pinEdgesToSuperview()
             addAnimationView(skeletonLayout)
             return header
         }
@@ -883,7 +883,7 @@ import FWApplication
             let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutFooter)
             skeletonLayout.tag = 2052
             footer.addSubview(skeletonLayout)
-            skeletonLayout.fwPinEdgesToSuperview()
+            skeletonLayout.fw.pinEdgesToSuperview()
             addAnimationView(skeletonLayout)
             return footer
         }
@@ -918,7 +918,7 @@ import FWApplication
         let layout = FWSkeletonLayout(layoutView: self)
         layout.tag = 2051
         addSubview(layout)
-        layout.fwPinEdgesToSuperview()
+        layout.fw.pinEdgesToSuperview()
         
         delegate?.skeletonViewLayout(layout)
         block?(layout)

@@ -143,7 +143,7 @@
         _contentView = [[UIView alloc] initWithFrame:CGRectZero];
         _contentView.layer.masksToBounds = NO;
         [self addSubview:_contentView];
-        [_contentView fwPinEdgesToSuperview];
+        [_contentView.fw pinEdgesToSuperview];
     }
     return self;
 }
@@ -152,7 +152,7 @@
 {
     _contentInset = contentInset;
     
-    [self.contentView fwPinEdgesToSuperviewWithInsets:contentInset];
+    [self.contentView.fw pinEdgesToSuperviewWithInsets:contentInset];
 }
 
 - (void)setSectionContentInset:(UIEdgeInsets)contentInset tableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath

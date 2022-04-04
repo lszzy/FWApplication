@@ -108,19 +108,19 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)renderTableLayout
 {
-    UILabel *frameLabel = [UILabel fwAutoLayoutView];
+    UILabel *frameLabel = [UILabel new];
     self.frameLabel = frameLabel;
     frameLabel.numberOfLines = 0;
     frameLabel.textColor = [Theme textColor];
     frameLabel.font = [UIFont fwFontOfSize:15];
     frameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:frameLabel]; {
-        frameLabel.fwLayoutChain.leftWithInset(10).rightWithInset(10)
+        frameLabel.fw.layoutChain.leftWithInset(10).rightWithInset(10)
             .bottomWithInset(FWTabBarHeight + 10);
     }
     
     self.tableView.backgroundColor = [Theme tableColor];
-    self.tableView.fwLayoutChain.edgesHorizontal().top()
+    self.tableView.fw.layoutChain.edgesHorizontal().top()
         .bottomToTopOfViewWithOffset(self.frameLabel, -10);
 }
 
@@ -198,12 +198,12 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)refreshBarFrame
 {
     self.frameLabel.text = [NSString stringWithFormat:@"全局状态栏：%.0f 当前状态栏：%.0f\n全局导航栏：%.0f 当前导航栏：%.0f\n全局顶部栏：%.0f 当前顶部栏：%.0f\n全局标签栏：%.0f 当前标签栏：%.0f\n全局工具栏：%.0f 当前工具栏：%.0f\n全局安全区域：%@",
-                            [UIScreen fwStatusBarHeight], [self fwStatusBarHeight],
-                            [UIScreen fwNavigationBarHeight], [self fwNavigationBarHeight],
-                            [UIScreen fwTopBarHeight], [self fwTopBarHeight],
-                            [UIScreen fwTabBarHeight], [self fwTabBarHeight],
-                            [UIScreen fwToolBarHeight], [self fwToolBarHeight],
-                            NSStringFromUIEdgeInsets([UIScreen fwSafeAreaInsets])];
+                            [UIScreen.fw statusBarHeight], [self.fw statusBarHeight],
+                            [UIScreen.fw navigationBarHeight], [self.fw navigationBarHeight],
+                            [UIScreen.fw topBarHeight], [self.fw topBarHeight],
+                            [UIScreen.fw tabBarHeight], [self.fw tabBarHeight],
+                            [UIScreen.fw toolBarHeight], [self.fw toolBarHeight],
+                            NSStringFromUIEdgeInsets([UIScreen.fw safeAreaInsets])];
 }
 
 - (void)onStatusBar
@@ -358,10 +358,10 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onOrientation
 {
-    if ([UIDevice fwIsDeviceLandscape]) {
-        [UIDevice fwSetDeviceOrientation:UIDeviceOrientationPortrait];
+    if ([UIDevice.fw isDeviceLandscape]) {
+        [UIDevice.fw setDeviceOrientation:UIDeviceOrientationPortrait];
     } else {
-        [UIDevice fwSetDeviceOrientation:UIDeviceOrientationLandscapeLeft];
+        [UIDevice.fw setDeviceOrientation:UIDeviceOrientationLandscapeLeft];
     }
     [self refreshBarFrame];
 }

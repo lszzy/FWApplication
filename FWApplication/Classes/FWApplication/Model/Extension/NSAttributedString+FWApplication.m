@@ -29,7 +29,7 @@
 {
     self = [super init];
     if (self) {
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }

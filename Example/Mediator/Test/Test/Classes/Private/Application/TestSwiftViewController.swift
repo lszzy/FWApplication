@@ -115,11 +115,11 @@ import FWApplication
     
     func renderCollectionLayout() {
         view.addSubview(contentView)
-        contentView.fwLayoutChain.edges(excludingEdge: .bottom).height(200)
+        contentView.fw.layoutChain.edges(excludingEdge: .bottom).height(200)
         
         collectionView.removeFromSuperview()
         contentView.addSubview(collectionView)
-        collectionView.fwLayoutChain.edges(excludingEdge: .bottom).height(200)
+        collectionView.fw.layoutChain.edges(excludingEdge: .bottom).height(200)
     }
     
     func renderModel() {
@@ -154,7 +154,7 @@ import FWApplication
             label = textLabel
             textLabel.tag = 100
             cell.contentView.addSubview(textLabel)
-            textLabel.fwLayoutChain.center()
+            textLabel.fw.layoutChain.center()
         }
         if indexPath.item < collectionData.count {
             label?.text = "\(indexPath.section) : \(indexPath.item)"
@@ -204,7 +204,7 @@ import FWApplication
         } else {
             contentHeight = 80 + (120 * offsetPercent)
         }
-        contentView.fwLayoutChain.height(contentHeight)
+        contentView.fw.layoutChain.height(contentHeight)
     }*/
 }
 
@@ -213,7 +213,7 @@ import FWApplication
         let view = UIView()
         view.backgroundColor = UIColor.fwRandom
         contentView.addSubview(view)
-        view.fwLayoutMaker { (make) in
+        view.fw.layoutMaker { (make) in
             make.edges().height(1000).width(FWScreenWidth)
         }
     }

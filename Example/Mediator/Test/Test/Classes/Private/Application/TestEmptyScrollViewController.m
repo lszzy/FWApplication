@@ -57,7 +57,7 @@
     
     UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
     [view addSubview:label];
-    label.fwLayoutChain.leftWithInset(15).centerY();
+    label.fw.layoutChain.leftWithInset(15).centerY();
     return view;
 }
 

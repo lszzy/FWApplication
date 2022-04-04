@@ -33,7 +33,7 @@
     cycleView.autoScrollTimeInterval = 4;
     cycleView.placeholderImage = [TestBundle imageNamed:@"public_icon"];
     [self.contentView addSubview:cycleView];
-    cycleView.fwLayoutChain.left().top().width(FWScreenWidth).height(200);
+    cycleView.fw.layoutChain.left().top().width(FWScreenWidth).height(200);
     
     NSMutableArray *imageUrls = [NSMutableArray array];
     [imageUrls addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -45,27 +45,27 @@
     cycleView.imageURLStringsGroup = [imageUrls copy];
     cycleView.titlesGroup = @[@"1", @"2", @"3", @"4"];
     
-    UIView *footerView = [UIView fwAutoLayoutView];
+    UIView *footerView = [[UIView alloc] init];
     footerView.backgroundColor = [Theme tableColor];
     [self.contentView addSubview:footerView];
-    footerView.fwLayoutChain.left().bottom().topToBottomOfView(cycleView).width(FWScreenWidth).height(1000);
+    footerView.fw.layoutChain.left().bottom().topToBottomOfView(cycleView).width(FWScreenWidth).height(1000);
     
     UILabel *frameLabel = [[UILabel alloc] init];
     _frameLabel = frameLabel;
     frameLabel.textColor = [Theme textColor];
     frameLabel.text = NSStringFromCGRect(self.view.frame);
     [footerView addSubview:frameLabel];
-    frameLabel.fwLayoutChain.centerX().topWithInset(50);
+    frameLabel.fw.layoutChain.centerX().topWithInset(50);
     
     // 添加视图
-    UIButton *button = [UIButton fwAutoLayoutView];
+    UIButton *button = [[UIButton alloc] init];
     button.backgroundColor = [Theme cellColor];
     button.titleLabel.font = [UIFont fwFontOfSize:15];
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"点击背景关闭" forState:UIControlStateNormal];
     [footerView addSubview:button];
-    [button fwSetDimensionsToSize:CGSizeMake(200, 100)];
-    [button fwAlignCenterToSuperview];
+    [button.fw setDimensionsToSize:CGSizeMake(200, 100)];
+    [button.fw alignCenterToSuperview];
 }
 
 - (void)viewDidLoad
@@ -100,7 +100,7 @@
     [super viewWillAppear:animated];
     
     self.frameLabel.text = NSStringFromCGRect(self.view.frame);
-    if (!self.fwIsPresented) {
+    if (!self.fw.isPresented) {
         self.fwNavigationBarHidden = YES;
     }
 }
@@ -151,15 +151,15 @@ FWDealloc();
     [super viewDidLoad];
     
     // 方式2：不指定presentedFrame，背景手势不生效，自己添加手势和圆角即可
-    UIView *contentView = [UIView fwAutoLayoutView];
+    UIView *contentView = [[UIView alloc] init];
     _contentView = contentView;
     contentView.backgroundColor = Theme.cellColor;
     [self.view addSubview:contentView];
-    contentView.fwLayoutChain.center();
+    contentView.fw.layoutChain.center();
     
-    UIView *childView = [UIView fwAutoLayoutView];
+    UIView *childView = [[UIView alloc] init];
     [contentView addSubview:childView];
-    childView.fwLayoutChain.edges().size(CGSizeMake(300, 250));
+    childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
     [contentView fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
@@ -225,17 +225,17 @@ FWDealloc();
 {
     [super viewDidLoad];
     
-    UIView *contentView = [UIView fwAutoLayoutView];
+    UIView *contentView = [[UIView alloc] init];
     _contentView = contentView;
     contentView.layer.masksToBounds = YES;
     contentView.layer.cornerRadius = 10;
     contentView.backgroundColor = Theme.cellColor;
     [self.view addSubview:contentView];
-    contentView.fwLayoutChain.center();
+    contentView.fw.layoutChain.center();
     
-    UIView *childView = [UIView fwAutoLayoutView];
+    UIView *childView = [[UIView alloc] init];
     [contentView addSubview:childView];
-    childView.fwLayoutChain.edges().size(CGSizeMake(300, 250));
+    childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
     self.view.backgroundColor = [[Theme backgroundColor] colorWithAlphaComponent:0.5];

@@ -44,45 +44,45 @@ static BOOL isExpanded = NO;
     if (self) {
         self.contentView.backgroundColor = [Theme cellColor];
         
-        UILabel *titleLabel = [UILabel fwAutoLayoutView];
+        UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
         titleLabel.font = [UIFont fwFontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        [titleLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [titleLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftWithInset(15).rightWithInset(15).topWithInset(15);
         }];
         
-        UILabel *textLabel = [UILabel fwAutoLayoutView];
+        UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
         textLabel.font = [UIFont fwFontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel];
-        [textLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [textLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftToView(titleLabel).rightToView(titleLabel);
-            NSLayoutConstraint *constraint = [textLabel fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel fwAddCollapseConstraint:constraint];
-            textLabel.fwAutoCollapse = YES;
+            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel.fw addCollapseConstraint:constraint];
+            textLabel.fw.autoCollapse = YES;
         }];
         
         // maxY视图不需要和bottom布局，默认平齐，可设置底部间距
         self.fwMaxYViewPadding = 15;
-        UIImageView *imageView = [UIImageView fwAutoLayoutView];
+        UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         [imageView fwSetContentModeAspectFill];
         [self.contentView addSubview:imageView];
-        [imageView fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *widthCons = [imageView fwSetDimension:NSLayoutAttributeWidth toSize:100];
-            NSLayoutConstraint *heightCons = [imageView fwSetDimension:NSLayoutAttributeHeight toSize:100];
-            NSLayoutConstraint *constraint = [imageView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView fwAddCollapseConstraint:widthCons];
-            [imageView fwAddCollapseConstraint:heightCons];
-            [imageView fwAddCollapseConstraint:constraint];
-            imageView.fwAutoCollapse = YES;
+        [imageView.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *widthCons = [imageView.fw setDimension:NSLayoutAttributeWidth toSize:100];
+            NSLayoutConstraint *heightCons = [imageView.fw setDimension:NSLayoutAttributeHeight toSize:100];
+            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView.fw addCollapseConstraint:widthCons];
+            [imageView.fw addCollapseConstraint:heightCons];
+            [imageView.fw addCollapseConstraint:constraint];
+            imageView.fw.autoCollapse = YES;
         }];
     }
     return self;
@@ -103,7 +103,7 @@ static BOOL isExpanded = NO;
     // 手工收缩
     self.myTextLabel.text = object.text;
     
-    [self.myImageView fwConstraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
+    [self.myImageView.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
     self.fwMaxYViewExpanded = isExpanded;
 }
 
@@ -128,7 +128,7 @@ static BOOL isExpanded = NO;
         titleLabel.numberOfLines = 0;
         _titleLabel = titleLabel;
         [self addSubview:titleLabel];
-        titleLabel.fwLayoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15).bottomWithInset(15);
+        titleLabel.fw.layoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15).bottomWithInset(15);
     }
     return self;
 }
@@ -139,7 +139,7 @@ static BOOL isExpanded = NO;
     
     self.titleLabel.text = FWSafeString(fwViewModel);
     
-    [self.titleLabel fwConstraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
+    [self.titleLabel.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
     self.fwMaxYViewExpanded = isExpanded;
 }
 

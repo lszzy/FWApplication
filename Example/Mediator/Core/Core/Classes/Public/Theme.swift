@@ -46,8 +46,8 @@ import FWApplication
         button.titleLabel?.font = .fwBoldFont(ofSize: 17)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-        button.fwSetDimension(.width, toSize: FWScreenWidth - 30)
-        button.fwSetDimension(.height, toSize: 50)
+        button.fw.setDimension(.width, toSize: FWScreenWidth - 30)
+        button.fw.setDimension(.height, toSize: 50)
         return button
     }
     

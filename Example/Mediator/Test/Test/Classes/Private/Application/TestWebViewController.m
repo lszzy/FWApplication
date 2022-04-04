@@ -73,11 +73,11 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    if (self.isExtendedBottom || !self.fwIsLoaded) return;
+    if (self.isExtendedBottom || !self.fw.isLoaded) return;
     
     // 顶部延伸时，不需要减顶部栏高度
-    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fwTopBarHeight;
-    self.view.fwHeight = FWScreenHeight - topHeight - self.fwBottomBarHeight;
+    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw.topBarHeight;
+    self.view.fwHeight = FWScreenHeight - topHeight - self.fw.bottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -161,7 +161,7 @@
 
 - (void)shareRequestUrl
 {
-    [UIApplication fwOpenActivityItems:@[FWSafeURL(self.requestUrl)] excludedTypes:nil];
+    [UIApplication.fw openActivityItems:@[FWSafeURL(self.requestUrl)] excludedTypes:nil];
 }
 
 - (void)loadRequestUrl
@@ -176,15 +176,15 @@
 
 - (void)webViewFinishLoad
 {
-    if (self.fwIsLoaded) return;
-    self.fwIsLoaded = YES;
+    if (self.fw.isLoaded) return;
+    self.fw.isLoaded = YES;
     
     [self fwSetRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
 }
 
 - (void)webViewFailLoad:(NSError *)error
 {
-    if (self.fwIsLoaded) return;
+    if (self.fw.isLoaded) return;
     
     [self fwSetRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     
@@ -203,8 +203,8 @@
         return;
     }
     
-    if ([UIApplication fwIsSystemURL:navigationAction.request.URL]) {
-        [UIApplication fwOpenURL:navigationAction.request.URL];
+    if ([UIApplication.fw isSystemURL:navigationAction.request.URL]) {
+        [UIApplication.fw openURL:navigationAction.request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -216,7 +216,7 @@
     }
     
     if ([navigationAction.request.URL.scheme isEqualToString:@"https"]) {
-        [UIApplication fwOpenUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
+        [UIApplication.fw openUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
             if (success) {
                 decisionHandler(WKNavigationActionPolicyCancel);
             } else {

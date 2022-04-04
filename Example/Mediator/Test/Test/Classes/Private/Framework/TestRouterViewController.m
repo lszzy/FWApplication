@@ -42,8 +42,8 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     
     FWRouter.preFilter = ^BOOL(FWRouterContext * _Nonnull context) {
         NSURL *url = [NSURL.fw urlWithString:context.URL];
-        if ([UIApplication fwIsSystemURL:url]) {
-            [UIApplication fwOpenURL:url];
+        if ([UIApplication.fw isSystemURL:url]) {
+            [UIApplication.fw openURL:url];
             return NO;
         }
         if ([url.absoluteString hasPrefix:@"app://filter/"]) {
@@ -73,7 +73,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 {
     [FWRouter registerURL:@[@"http://*", @"https://*"] withHandler:^id(FWRouterContext *context) {
         // 尝试打开通用链接，失败了再内部浏览器打开
-        [UIApplication fwOpenUniversalLinks:context.URL completionHandler:^(BOOL success) {
+        [UIApplication.fw openUniversalLinks:context.URL completionHandler:^(BOOL success) {
             if (success) return;
             
             TestWebViewController *viewController = [TestWebViewController new];
@@ -195,12 +195,12 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     [super viewDidLoad];
     self.fwBarTitle = self.context.URL;
     
-    UILabel *label = [UILabel fwAutoLayoutView];
+    UILabel *label = [[UILabel alloc] init];
     label.numberOfLines = 0;
     label.text = [NSString stringWithFormat:@"URL: %@\n\nparameters: %@", self.context.URL, self.context.parameters];
     [self.view addSubview:label];
-    [label fwAlignCenterToSuperview];
-    [label fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 40];
+    [label.fw alignCenterToSuperview];
+    [label.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 40];
     
     if (self.context.completion) {
         FWWeakifySelf();
@@ -227,7 +227,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)renderTableLayout
 {
-    [self.tableView fwPinEdgesToSuperview];
+    [self.tableView.fw pinEdgesToSuperview];
 }
 
 - (void)renderModel
@@ -486,12 +486,12 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)onOpenUrl
 {
-    [UIApplication fwOpenURL:@"http://kvm.wuyong.site/test.php"];
+    [UIApplication.fw openURL:@"http://kvm.wuyong.site/test.php"];
 }
 
 - (void)onOpenSafari
 {
-    [UIApplication fwOpenSafariController:@"http://kvm.wuyong.site/test.php" completionHandler:^{
+    [UIApplication.fw openSafariController:@"http://kvm.wuyong.site/test.php" completionHandler:^{
         FWLogDebug(@"SafariController completionHandler");
     }];
 }

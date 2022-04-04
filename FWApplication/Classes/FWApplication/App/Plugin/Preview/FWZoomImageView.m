@@ -119,7 +119,7 @@
     }
     if (_videoCloseButton) {
         [_videoCloseButton sizeToFit];
-        CGPoint videoCloseButtonCenter = self.videoCloseButtonCenter ? self.videoCloseButtonCenter() : CGPointMake(UIScreen.fwSafeAreaInsets.left + 24, FWStatusBarHeight + FWNavigationBarHeight / 2);
+        CGPoint videoCloseButtonCenter = self.videoCloseButtonCenter ? self.videoCloseButtonCenter() : CGPointMake(UIScreen.fw.safeAreaInsets.left + 24, FWStatusBarHeight + FWNavigationBarHeight / 2);
         _videoCloseButton.center = videoCloseButtonCenter;
     }
     
@@ -498,7 +498,7 @@
 
 - (void)handleCloseButton:(UIButton *)button {
     UIViewController *viewController = self.fwViewController;
-    if (viewController && viewController.fwIsPresented) {
+    if (viewController && viewController.fw.isPresented) {
         [viewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -777,7 +777,7 @@
         _progressView = [UIView fwProgressViewWithStyle:FWProgressViewStyleDefault];
         _progressView.hidden = YES;
         [self addSubview:_progressView];
-        [_progressView fwAlignCenterToSuperview];
+        [_progressView.fw alignCenterToSuperview];
     }
     return _progressView;
 }
@@ -787,7 +787,7 @@
     _progressView = progressView;
     _progressView.hidden = YES;
     [self addSubview:_progressView];
-    [_progressView fwAlignCenterToSuperview];
+    [_progressView.fw alignCenterToSuperview];
 }
 
 - (CGFloat)progress {

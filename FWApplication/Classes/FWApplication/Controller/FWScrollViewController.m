@@ -34,7 +34,7 @@
     
     UIView *contentView = [viewController contentView];
     [scrollView addSubview:contentView];
-    [contentView fwPinEdgesToSuperview];
+    [contentView.fw pinEdgesToSuperview];
     
     if (self.hookScrollViewController) {
         self.hookScrollViewController(viewController);
@@ -84,7 +84,7 @@
 - (void)fwInnerRenderScrollLayout
 {
     UIScrollView *scrollView = [(id<FWScrollViewController>)self scrollView];
-    [scrollView fwPinEdgesToSuperview];
+    [scrollView.fw pinEdgesToSuperview];
 }
 
 @end

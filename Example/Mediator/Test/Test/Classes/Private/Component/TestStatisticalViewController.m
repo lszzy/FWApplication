@@ -24,7 +24,7 @@
         UILabel *textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
         _textLabel = textLabel;
         [self.contentView addSubview:textLabel];
-        textLabel.fwLayoutChain.center();
+        textLabel.fw.layoutChain.center();
     }
     return self;
 }
@@ -55,33 +55,33 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     bannerView.autoScrollTimeInterval = 6;
     bannerView.placeholderImage = [TestBundle imageNamed:@"public_icon"];
     [headerView addSubview:bannerView];
-    bannerView.fwLayoutChain.leftWithInset(10).topWithInset(50).rightWithInset(10).height(100);
+    bannerView.fw.layoutChain.leftWithInset(10).topWithInset(50).rightWithInset(10).height(100);
     
-    UIView *testView = [UIView fwAutoLayoutView];
+    UIView *testView = [UIView new];
     _testView = testView;
     testView.backgroundColor = [UIColor fwRandomColor];
     [headerView addSubview:testView];
-    testView.fwLayoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(bannerView, 50);
+    testView.fw.layoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(bannerView, 50);
     
-    UILabel *testLabel = [UILabel fwAutoLayoutView];
+    UILabel *testLabel = [UILabel new];
     testLabel.text = @"Banner";
     testLabel.textAlignment = NSTextAlignmentCenter;
     [testView addSubview:testLabel];
-    testLabel.fwLayoutChain.edges();
+    testLabel.fw.layoutChain.edges();
     
     UIButton *testButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _testButton = testButton;
     [testButton setTitle:@"Button" forState:UIControlStateNormal];
     [testButton fwSetBackgroundColor:[UIColor fwRandomColor] forState:UIControlStateNormal];
     [headerView addSubview:testButton];
-    testButton.fwLayoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(testView, 50);
+    testButton.fw.layoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(testView, 50);
     
     UISwitch *testSwitch = [UISwitch new];
     _testSwitch = testSwitch;
     testSwitch.thumbTintColor = [UIColor fwRandomColor];
     testSwitch.onTintColor = testSwitch.thumbTintColor;
     [headerView addSubview:testSwitch];
-    testSwitch.fwLayoutChain.centerX().topToBottomOfViewWithOffset(testButton, 50);
+    testSwitch.fw.layoutChain.centerX().topToBottomOfViewWithOffset(testButton, 50);
     
     FWSegmentedControl *segmentedControl = [FWSegmentedControl new];
     self.segmentedControl = segmentedControl;
@@ -95,22 +95,22 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont fwFontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
     self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont fwBoldFontOfSize:18], NSForegroundColorAttributeName: Theme.textColor};
     [headerView addSubview:self.segmentedControl];
-    segmentedControl.fwLayoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(testSwitch, 50).height(50);
+    segmentedControl.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(testSwitch, 50).height(50);
     
     FWTextTagCollectionView *tagCollectionView = [FWTextTagCollectionView new];
     _tagCollectionView = tagCollectionView;
     tagCollectionView.verticalSpacing = 10;
     tagCollectionView.horizontalSpacing = 10;
     [headerView addSubview:tagCollectionView];
-    tagCollectionView.fwLayoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(segmentedControl, 50).height(100).bottomWithInset(50);
+    tagCollectionView.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(segmentedControl, 50).height(100).bottomWithInset(50);
     
     self.tableView.tableHeaderView = headerView;
-    [headerView fwAutoLayoutSubviews];
+    [headerView.fw autoLayoutSubviews];
 }
 
 - (void)renderTableLayout
 {
-    self.tableView.fwLayoutChain.edges();
+    self.tableView.fw.layoutChain.edges();
 }
 
 - (UICollectionView *)collectionView
@@ -139,7 +139,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 
 - (void)renderCollectionLayout
 {
-    self.collectionView.fwLayoutChain.edges();
+    self.collectionView.fw.layoutChain.edges();
 }
 
 - (void)renderView
@@ -157,13 +157,13 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
         self.view.hidden = self.view.hidden;
     }];
     [UIWindow.fw.mainWindow addSubview:shieldView];
-    [shieldView fwPinEdgesToSuperview];
+    [shieldView.fw pinEdgesToSuperview];
     
-    UILabel *shieldLabel = [UILabel fwAutoLayoutView];
+    UILabel *shieldLabel = [UILabel new];
     shieldLabel.text = @"点击关闭";
     shieldLabel.textAlignment = NSTextAlignmentCenter;
     [shieldView addSubview:shieldLabel];
-    shieldLabel.fwLayoutChain.edges();
+    shieldLabel.fw.layoutChain.edges();
     
     [self.testView fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();

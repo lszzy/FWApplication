@@ -32,9 +32,9 @@
         self.bottomView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.bottomView];
         if (self.transitionType == 6 || self.transitionType == 9) {
-            self.bottomView.fwLayoutChain.left().right().bottom().height(FWScreenHeight / 2);
+            self.bottomView.fw.layoutChain.left().right().bottom().height(FWScreenHeight / 2);
         } else {
-            self.bottomView.fwLayoutChain.center().width(300).height(200);
+            self.bottomView.fw.layoutChain.center().width(300).height(200);
         }
         
         FWWeakifySelf();
@@ -108,9 +108,9 @@
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.bottomView];
     if (self.transitionType == 0 || self.transitionType == 3) {
-        self.bottomView.fwLayoutChain.left().right().bottom().height(FWScreenHeight / 2);
+        self.bottomView.fw.layoutChain.left().right().bottom().height(FWScreenHeight / 2);
     } else {
-        self.bottomView.fwLayoutChain.center().width(300).height(200);
+        self.bottomView.fw.layoutChain.center().width(300).height(200);
     }
     
     UIButton *button = [UIButton new];
@@ -124,7 +124,7 @@
         animationController.transitionType = self.transitionType;
         [self.navigationController pushViewController:animationController animated:YES];
     }];
-    button.fwLayoutChain.center();
+    button.fw.layoutChain.center();
 }
 
 - (void)showInViewController:(UIViewController *)viewController
@@ -176,22 +176,22 @@ FWDefLazyProperty(UIView *, animationView, {
     [button setTitle:@"转场动画" forState:UIControlStateNormal];
     [button fwAddTouchTarget:self action:@selector(onPresent)];
     [self.view addSubview:button];
-    [button fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-    [button fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+    [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button2 = [Theme largeButton];
     [button2 setTitle:@"切换拖动" forState:UIControlStateNormal];
     [button2 fwAddTouchTarget:self action:@selector(onDrag:)];
     [self.view addSubview:button2];
-    [button2 fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
-    [button2 fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button2.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
+    [button2.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button3 = [Theme largeButton];
     [button3 setTitle:@"切换动画" forState:UIControlStateNormal];
     [button3 fwAddTouchTarget:self action:@selector(onAnimation:)];
     [self.view addSubview:button3];
-    [button3 fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
-    [button3 fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button3.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
+    [button3.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
 }
 
 - (void)renderModel

@@ -80,7 +80,7 @@
     }];
     
     self.floatLayoutView = [[FWFloatLayoutView alloc] init];
-    self.floatLayoutView.itemMargins = UIEdgeInsetsMake(UIScreen.fwPixelOne, UIScreen.fwPixelOne, 0, 0);
+    self.floatLayoutView.itemMargins = UIEdgeInsetsMake(UIScreen.fw.pixelOne, UIScreen.fw.pixelOne, 0, 0);
     for (id image in self.images) {
         UIButton *button = [[UIButton alloc] init];
         button.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -113,7 +113,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    UIEdgeInsets margins = UIEdgeInsetsMake(24 + self.fwTopBarHeight, 24 + self.view.safeAreaInsets.left, 24, 24 + self.view.safeAreaInsets.right);
+    UIEdgeInsets margins = UIEdgeInsetsMake(24 + self.fw.topBarHeight, 24 + self.view.safeAreaInsets.left, 24, 24 + self.view.safeAreaInsets.right);
     CGFloat contentWidth = self.view.fwWidth - (margins.left + margins.right);
     NSInteger column = FWIsIpad || FWIsLandscape ? self.images.count : 3;
     CGFloat imageWidth = contentWidth / column - (column - 1) * (self.floatLayoutView.itemMargins.left + self.floatLayoutView.itemMargins.right);

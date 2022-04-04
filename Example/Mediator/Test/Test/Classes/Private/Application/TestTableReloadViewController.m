@@ -23,7 +23,7 @@
         UILabel *titleLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
         _titleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        titleLabel.fwLayoutChain.centerY().leftWithInset(15).rightWithInset(15);
+        titleLabel.fw.layoutChain.centerY().leftWithInset(15).rightWithInset(15);
     }
     return self;
 }
@@ -94,9 +94,9 @@
 
 - (void)renderView
 {
-    self.tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fwSafeAreaInsets.top;
+    self.tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top;
     [self.tableView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    self.tableView.fwInfiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fwSafeAreaInsets.bottom;
+    self.tableView.fwInfiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw.safeAreaInsets.bottom;
     [self.tableView fwSetLoadingTarget:self action:@selector(onLoading)];
 }
 

@@ -45,7 +45,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     
     override func renderView() {
         tableView.fwContentInsetAdjustmentNever()
-        tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fwSafeAreaInsets.top
+        tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top
         tableView.fwSetRefreshingTarget(self, action: #selector(onRefreshing))
         
         let toolbar = UIToolbar()
@@ -53,7 +53,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
         toolbar.fwForegroundColor = Theme.textColor
         toolbar.fwBackgroundColor = Theme.barColor
         view.addSubview(toolbar)
-        toolbar.fwLayoutChain.edgesToSafeArea(excludingEdge: .top)
+        toolbar.fw.layoutChain.edgesToSafeArea(excludingEdge: .top)
         
         let leftItem = UIBarButtonItem.fwBarItem(with: "取消", block: nil)
         let flexibleItem = UIBarButtonItem.fwBarItem(with: NSNumber(value: UIBarButtonItem.SystemItem.flexibleSpace.rawValue), block: nil)

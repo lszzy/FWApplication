@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
         tableView.tableFooterView = footerView
         
         footerView.addSubview(loginButton)
-        loginButton.fwLayoutChain.center()
+        loginButton.fw.layoutChain.center()
     }
     
     func renderData() {

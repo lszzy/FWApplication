@@ -27,7 +27,7 @@ import FWApplication
         result.fwSetBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
         result.fwMinHeight = 44
         result.fwAutoHeight(withMaxHeight: 100) { height in
-            result.fwLayoutChain.height(height)
+            result.fw.layoutChain.height(height)
         }
         result.fwTouchResign = true
         result.fwVerticalAlignment = .center
@@ -47,8 +47,8 @@ import FWApplication
         view.addSubview(textView)
         view.addSubview(textView2)
         view.addSubview(textView3)
-        textView2.fwLayoutChain.left(16).right(16).topToBottomOfView(textView, withOffset: 16)
-        textView3.fwLayoutChain.left(16).right(16).topToBottomOfView(textView2, withOffset: 16).height(44)
+        textView2.fw.layoutChain.left(16).right(16).topToBottomOfView(textView, withOffset: 16)
+        textView3.fw.layoutChain.left(16).right(16).topToBottomOfView(textView2, withOffset: 16).height(44)
     }
     
     override func renderModel() {

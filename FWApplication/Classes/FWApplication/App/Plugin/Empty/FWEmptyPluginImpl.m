@@ -59,7 +59,7 @@
     emptyView = [[FWEmptyView alloc] initWithFrame:view.bounds];
     emptyView.tag = 2021;
     [view addSubview:emptyView];
-    [emptyView fwPinEdgesToSuperviewWithInsets:view.fwEmptyInsets];
+    [emptyView.fw pinEdgesToSuperviewWithInsets:view.fwEmptyInsets];
     [emptyView setLoadingViewHidden:!loading];
     [emptyView setImage:emptyImage];
     [emptyView setTextLabelText:emptyText];

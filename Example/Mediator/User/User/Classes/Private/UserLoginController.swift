@@ -25,6 +25,6 @@ import Core
             self?.dismiss(animated: true, completion: self?.completion)
         }
         view.addSubview(button)
-        button.fwLayoutChain.center()
+        button.fw.layoutChain.center()
     }
 }

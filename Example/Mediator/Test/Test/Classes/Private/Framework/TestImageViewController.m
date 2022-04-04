@@ -283,15 +283,15 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
     if (self) {
         _nameLabel = [UILabel new];
         [self.contentView addSubview:_nameLabel];
-        _nameLabel.fwLayoutChain.leftWithInset(10).topWithInset(10).height(20);
+        _nameLabel.fw.layoutChain.leftWithInset(10).topWithInset(10).height(20);
         
         _systemView = [UIImageView new];
         [self.contentView addSubview:_systemView];
-        _systemView.fwLayoutChain.leftWithInset(10).topToBottomOfViewWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
+        _systemView.fw.layoutChain.leftWithInset(10).topToBottomOfViewWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
         
         _animatedView = [[UIImageView fwImageViewAnimatedClass] new];
         [self.contentView addSubview:_animatedView];
-        _animatedView.fwLayoutChain.leftToRightOfViewWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
+        _animatedView.fw.layoutChain.leftToRightOfViewWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
     }
     return self;
 }

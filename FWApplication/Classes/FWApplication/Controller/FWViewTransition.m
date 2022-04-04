@@ -996,7 +996,7 @@
     }
     [containerView addSubview:self];
     if (pinEdges) {
-        [self fwPinEdgesToSuperview];
+        [self.fw pinEdgesToSuperview];
         [containerView setNeedsLayout];
         [containerView layoutIfNeeded];
     }
@@ -1008,7 +1008,7 @@
     UIViewController *viewController = [[UIViewController alloc] init];
     [viewController.view addSubview:self];
     if (pinEdges) {
-        [self fwPinEdgesToSuperview];
+        [self.fw pinEdgesToSuperview];
         [viewController.view setNeedsLayout];
         [viewController.view layoutIfNeeded];
     }

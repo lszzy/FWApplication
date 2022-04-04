@@ -419,13 +419,13 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
     if (self.pageLabel.text.length < 1 && self.imagePreviewView.imageCount > 0) {
         [self updatePageLabel];
     }
-    CGPoint pageLabelCenter = self.pageLabelCenter ? self.pageLabelCenter() : CGPointMake(FWScreenWidth / 2, FWScreenHeight - (UIScreen.fwSafeAreaInsets.bottom + 18));
+    CGPoint pageLabelCenter = self.pageLabelCenter ? self.pageLabelCenter() : CGPointMake(FWScreenWidth / 2, FWScreenHeight - (UIScreen.fw.safeAreaInsets.bottom + 18));
     self.pageLabel.center = pageLabelCenter;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.fwIsPresented) {
+    if (self.fw.isPresented) {
         [self initObjectsForZoomStyleIfNeeded];
     }
     [self.imagePreviewView.collectionView reloadData];
@@ -434,7 +434,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.fwIsPresented) {
+    if (self.fw.isPresented) {
         self.statusBarHidden = YES;
     }
     [self setNeedsStatusBarAppearanceUpdate];
@@ -604,7 +604,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 }
 
 - (void)dismissingWhenTapped:(FWZoomImageView *)zoomImageView {
-    if (!self.fwIsPresented) return;
+    if (!self.fw.isPresented) return;
     
     BOOL shouldDismiss = NO;
     if (zoomImageView.videoPlayerItem) {

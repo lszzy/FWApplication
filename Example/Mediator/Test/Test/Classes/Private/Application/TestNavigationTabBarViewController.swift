@@ -30,7 +30,7 @@ class TestNavigationTabBarChildController: TestViewController {
         
         view.backgroundColor = UIColor.fwRandom
         view.addSubview(navigationView)
-        navigationView.fwLayoutChain.left().right().top()
+        navigationView.fw.layoutChain.left().right().top()
         view.fwAddTapGesture { [weak self] sender in
             let viewController = TestNavigationTabBarChildController()
             var title = FWSafeString(self?.title)
@@ -119,8 +119,8 @@ class TestNavigationTabBarChildController: TestViewController {
     override func renderView() {
         view.addSubview(childView)
         view.addSubview(tabBarView)
-        childView.fwLayoutChain.left().right().top()
-        tabBarView.fwLayoutChain.left().right().bottom().topToBottomOfView(childView)
+        childView.fw.layoutChain.left().right().top()
+        tabBarView.fw.layoutChain.left().right().bottom().topToBottomOfView(childView)
     }
     
     override func renderData() {

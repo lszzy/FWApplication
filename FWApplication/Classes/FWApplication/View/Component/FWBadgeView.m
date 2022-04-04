@@ -37,7 +37,7 @@
                 self.userInteractionEnabled = NO;
                 self.backgroundColor = [UIColor redColor];
                 self.layer.cornerRadius = badgeHeight / 2.0;
-                [self fwSetDimensionsToSize:CGSizeMake(badgeHeight, badgeHeight)];
+                [self.fw setDimensionsToSize:CGSizeMake(badgeHeight, badgeHeight)];
                 break;
             }
         }
@@ -61,17 +61,17 @@
     self.userInteractionEnabled = NO;
     self.backgroundColor = [UIColor redColor];
     self.layer.cornerRadius = badgeHeight / 2.0;
-    [self fwSetDimension:NSLayoutAttributeHeight toSize:badgeHeight];
-    [self fwSetDimension:NSLayoutAttributeWidth toSize:badgeHeight relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.fw setDimension:NSLayoutAttributeHeight toSize:badgeHeight];
+    [self.fw setDimension:NSLayoutAttributeWidth toSize:badgeHeight relation:NSLayoutRelationGreaterThanOrEqual];
     
-    _badgeLabel = [UILabel fwAutoLayoutView];
+    _badgeLabel = [[UILabel alloc] init];
     _badgeLabel.textColor = [UIColor whiteColor];
     _badgeLabel.font = [UIFont systemFontOfSize:fontSize];
     _badgeLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_badgeLabel];
-    [_badgeLabel fwAlignCenterToSuperview];
-    [_badgeLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
-    [_badgeLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
+    [_badgeLabel.fw alignCenterToSuperview];
+    [_badgeLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
+    [_badgeLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 @end
@@ -90,8 +90,8 @@
     [self bringSubviewToFront:badgeView];
     
     // 默认偏移
-    [badgeView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:-badgeView.badgeOffset.y];
-    [badgeView fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:-badgeView.badgeOffset.x];
+    [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:-badgeView.badgeOffset.y];
+    [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:-badgeView.badgeOffset.x];
 }
 
 - (void)fwHideBadgeView
@@ -168,8 +168,8 @@
         [view bringSubviewToFront:badgeView];
         
         // 自定义视图时默认偏移，否则固定偏移
-        [badgeView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 0];
-        [badgeView fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : 0];
+        [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 0];
+        [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : 0];
     };
 }
 
@@ -206,7 +206,7 @@
                     // 解决iOS13因为磨砂层切换导致的badgeView位置不对问题
                     if (@available(iOS 13.0, *)) {
                         UIView *imageView = [UITabBarItem fwImageView:selfObject];
-                        if (imageView) [badgeView fwPinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
+                        if (imageView) [badgeView.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
                     }
                     break;
                 }
@@ -255,8 +255,8 @@
         badgeView.tag = 2041;
         [view addSubview:badgeView];
         [view bringSubviewToFront:badgeView];
-        [badgeView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 2.f];
-        [badgeView fwPinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
+        [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 2.f];
+        [badgeView.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
     };
 }
 

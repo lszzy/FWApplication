@@ -33,7 +33,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         _textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_textLabel];
-        [_textLabel fwPinEdgesToSuperview];
+        [_textLabel.fw pinEdgesToSuperview];
     }
     return self;
 }
@@ -64,7 +64,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (void)renderTableLayout
 {
-    [self.tableView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, self.cart ? CategoryViewWidth : 0, self.cart ? CartViewHeight : 0, 0)];
+    [self.tableView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, self.cart ? CategoryViewWidth : 0, self.cart ? CartViewHeight : 0, 0)];
 }
 
 - (UICollectionViewLayout *)renderCollectionViewLayout
@@ -81,8 +81,8 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self.collectionView.backgroundColor = [Theme backgroundColor];
     [self.collectionView registerClass:[TestNestCollectionCell class] forCellWithReuseIdentifier:kTestNestCollectionCellID];
-    [self.collectionView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, 0, self.cart ? CartViewHeight : 0, 0) excludingEdge:NSLayoutAttributeRight];
-    [self.collectionView fwSetDimension:NSLayoutAttributeWidth toSize:self.cart ? CategoryViewWidth : 0];
+    [self.collectionView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, 0, self.cart ? CartViewHeight : 0, 0) excludingEdge:NSLayoutAttributeRight];
+    [self.collectionView.fw setDimension:NSLayoutAttributeWidth toSize:self.cart ? CategoryViewWidth : 0];
 }
 
 - (void)renderView
@@ -353,14 +353,14 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     }
     self.pagerView.pinSectionHeaderVerticalOffset = FWTopBarHeight;
     [self.view addSubview:self.pagerView];
-    [self.pagerView fwPinEdgesToSuperview];
+    [self.pagerView.fw pinEdgesToSuperview];
     
-    UIView *cartView = [UIView fwAutoLayoutView];
+    UIView *cartView = [UIView new];
     _cartView = cartView;
     cartView.backgroundColor = [UIColor greenColor];
     [self.view addSubview:cartView];
-    [cartView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-    [cartView fwSetDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
+    [cartView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
+    [cartView.fw setDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
     UILabel *cartLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[UIColor blackColor] text:@"我是购物车"];
     cartLabel.textAlignment = NSTextAlignmentCenter;
     cartLabel.frame = CGRectMake(0, 0, FWScreenWidth, CartViewHeight);

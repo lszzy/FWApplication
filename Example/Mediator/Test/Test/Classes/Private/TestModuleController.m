@@ -69,10 +69,10 @@
 - (UIView *)titleView
 {
     UIView *titleView = [[TestModuleExpandedView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWNavigationBarHeight)];
-    [titleView fwSetDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
+    [titleView.fw setDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
     titleView.backgroundColor = [UIColor clearColor];
     [titleView addSubview:self.searchBar];
-    [self.searchBar fwPinEdgesToSuperview];
+    [self.searchBar.fw pinEdgesToSuperview];
     return titleView;
 }
 
