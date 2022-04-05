@@ -72,14 +72,14 @@ import FWApplication
             let photo = photos[indexPath.row]
             cell.fw.tempObject = photo.identifier
             photo.requestThumbnailImage(with: CGSize(width: 88, height: 88)) { image, info, finished in
-                if cell.fw.tempObject.asString == photo.identifier {
+                if cell.fw.tempObject.safeString == photo.identifier {
                     cell.imageView?.image = image?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
                 } else {
                     cell.imageView?.image = nil
                 }
             }
             photo.assetSize { size in
-                if cell.fw.tempObject.asString == photo.identifier {
+                if cell.fw.tempObject.safeString == photo.identifier {
                     cell.textLabel?.text = NSString.fwSizeString(UInt(size))
                 } else {
                     cell.textLabel?.text = nil

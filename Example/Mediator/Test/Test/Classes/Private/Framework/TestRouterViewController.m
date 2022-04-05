@@ -131,10 +131,10 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         UIViewController *topController = [UIWindow.fw topViewController];
         if (![topController isKindOfClass:[TestWebViewController class]] || !topController.isViewLoaded) return nil;
         
-        NSString *param = [context.parameters[@"param"] fw].asString;
+        NSString *param = [context.parameters[@"param"] fw].safeString;
         NSString *result = [NSString stringWithFormat:@"js:%@ => app:%@", param, @"2"];
         
-        NSString *callback = [context.parameters[@"callback"] fw].asString;
+        NSString *callback = [context.parameters[@"callback"] fw].safeString;
         NSString *javascript = [NSString stringWithFormat:@"%@('%@');", callback, result];
         
         TestWebViewController *viewController = (TestWebViewController *)topController;

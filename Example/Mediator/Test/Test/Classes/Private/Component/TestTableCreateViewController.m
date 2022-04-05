@@ -295,7 +295,7 @@
     [self fwSetRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
         NSMutableArray *sectionData = self.tableView.fwDelegate.tableData[0].mutableCopy;
-        NSInteger lastIndex = [sectionData.lastObject fw].asInteger;
+        NSInteger lastIndex = [sectionData.lastObject fw].safeInteger;
         [sectionData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
         self.tableView.fwDelegate.tableData = @[sectionData];
         [self.tableView reloadData];
@@ -327,7 +327,7 @@
         NSLog(@"加载完成");
         
         NSMutableArray *sectionData = self.tableView.fwDelegate.tableData[0].mutableCopy;
-        NSInteger lastIndex = [sectionData.lastObject fw].asInteger;
+        NSInteger lastIndex = [sectionData.lastObject fw].safeInteger;
         [sectionData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
         self.tableView.fwDelegate.tableData = @[sectionData];
         [self.tableView reloadData];

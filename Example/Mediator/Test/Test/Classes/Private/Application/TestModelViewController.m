@@ -34,8 +34,8 @@
 
 - (void)requestCompleteFilter
 {
-    NSDictionary *dict = [self.responseJSONObject fw].asDictionary;
-    _responseName = [dict[@"name"] fw].asString;
+    NSDictionary *dict = [self.responseJSONObject fw].safeDictionary;
+    _responseName = [dict[@"name"] fw].safeString;
 }
 
 @end
