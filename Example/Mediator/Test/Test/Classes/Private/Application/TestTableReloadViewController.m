@@ -73,7 +73,7 @@
 - (void)startTimer
 {
     FWWeakifySelf();
-    self.timer = [NSTimer fwCommonTimerWithTimeInterval:10 block:^(NSTimer * _Nonnull timer) {
+    self.timer = [NSTimer.fw commonTimerWithTimeInterval:10 block:^(NSTimer * _Nonnull timer) {
         FWStrongifySelf();
         self.isTimer = YES;
         [self onRefreshing];

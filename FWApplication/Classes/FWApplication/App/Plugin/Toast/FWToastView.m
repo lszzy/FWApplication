@@ -251,7 +251,7 @@
     if (self.superview != nil) {
         [self invalidateTimer];
         __weak __typeof__(self) self_weak_ = self;
-        self.hideTimer = [NSTimer fwCommonTimerWithTimeInterval:delay block:^(NSTimer *timer) {
+        self.hideTimer = [NSTimer.fw commonTimerWithTimeInterval:delay block:^(NSTimer *timer) {
             __typeof__(self) self = self_weak_;
             BOOL hideSuccess = [self hide];
             if (hideSuccess && completion) {

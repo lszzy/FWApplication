@@ -66,13 +66,13 @@
     [timerButton2 fwAddTouchBlock:^(UIButton *sender) {
         [timerButton fwCountDown:60 title:@"=>" waitTitle:@"%lds"];
         [timer1 invalidate];
-        timer1 = [NSTimer fwCommonTimerWithCountDown:60 block:^(NSInteger countDown) {
+        timer1 = [NSTimer.fw commonTimerWithCountDown:60 block:^(NSInteger countDown) {
             NSString *title = countDown > 0 ? [NSString stringWithFormat:@"%lds", countDown] : @"=>";
             [timerButton1 setTitle:title forState:UIControlStateNormal];
         }];
         [timer2 invalidate];
         NSTimeInterval startTime = NSDate.fwCurrentTime;
-        timer2 = [NSTimer fwCommonTimerWithTimeInterval:1 block:^(NSTimer * _Nonnull timer) {
+        timer2 = [NSTimer.fw commonTimerWithTimeInterval:1 block:^(NSTimer * _Nonnull timer) {
             NSInteger countDown = 60 - (NSInteger)(NSDate.fwCurrentTime - startTime);
             if (countDown < 1) [timer2 invalidate];
             NSString *title = countDown > 0 ? [NSString stringWithFormat:@"%lds", countDown] : @"发送";
