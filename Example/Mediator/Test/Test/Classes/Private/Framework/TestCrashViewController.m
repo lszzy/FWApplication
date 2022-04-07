@@ -30,16 +30,9 @@
 {
     [self.tableData addObjectsFromArray:@[
                                          @[@"NSNull", @"onNull"],
-                                         @[@"NSNumber", @"onNumber"],
                                          @[@"NSString", @"onString"],
-                                         @[@"NSMutableString", @"onMutableString"],
-                                         @[@"NSAttributedString", @"onAttributedString"],
-                                         @[@"NSMutableAttributedString", @"onMutableAttributedString"],
                                          @[@"NSArray", @"onArray"],
-                                         @[@"NSMutableArray", @"onMutableArray"],
                                          @[@"NSDictionary", @"onDictionary"],
-                                         @[@"NSMutableDictionary", @"onMutableDictionary"],
-                                         @[@"NSObject", @"onObject"],
                                          @[@"KVC", @"onKvc"],
                                          ]];
 }
@@ -79,70 +72,23 @@
     [object onNull];
 }
 
-- (void)onNumber
-{
-    id value = nil;
-    [@(1) isEqualToNumber:value];
-    [@(1) compare:value];
-}
-
 - (void)onString
 {
     NSString *str = @"test";
-    [str characterAtIndex:100];
     NSString *subStr = [str substringFromIndex:100];
     subStr = [str substringToIndex:100];
     NSRange range = NSMakeRange(0, 100);
     subStr = [str substringWithRange:range];
     
-    NSString *nilStr = nil;
-    subStr = [str stringByReplacingOccurrencesOfString:nilStr withString:nilStr];
+    str = [NSString stringWithFormat:@"test"];
+    subStr = [str substringFromIndex:100];
+    subStr = [str substringToIndex:100];
+    subStr = [str substringWithRange:range];
     
-    range = NSMakeRange(0, 1000);
-    subStr = [str stringByReplacingOccurrencesOfString:@"chen" withString:@"" options:NSCaseInsensitiveSearch range:range];
-    
-    range = NSMakeRange(0, 1000);
-    subStr = [str stringByReplacingCharactersInRange:range withString:@"cff"];
-}
-
-- (void)onMutableString
-{
-    NSMutableString *strM = [NSMutableString stringWithFormat:@"chenfanfang"];
-    NSRange range = NSMakeRange(0, 1000);
-    [strM replaceCharactersInRange:range withString:@"--"];
-    
-    strM = [NSMutableString stringWithFormat:@"chenfanfang"];
-    [strM insertString:@"cool" atIndex:1000];
-    
-    strM = [NSMutableString stringWithFormat:@"chenfanfang"];
-    range = NSMakeRange(0, 1000);
-    [strM deleteCharactersInRange:range];
-}
-
-- (void)onAttributedString
-{
-    NSString *str = nil;
-    NSAttributedString *attributedStr = [[NSAttributedString alloc] initWithString:str];
-    
-    NSAttributedString *nilAttributedStr = nil;
-    attributedStr = [[NSAttributedString alloc] initWithAttributedString:nilAttributedStr];
-    
-    NSDictionary *attributes = @{
-                           NSForegroundColorAttributeName : [UIColor redColor]
-                           };
-    NSString *nilStr = nil;
-    attributedStr = [[NSAttributedString alloc] initWithString:nilStr attributes:attributes];
-}
-
-- (void)onMutableAttributedString
-{
-    NSString *nilStr = nil;
-    NSMutableAttributedString *attrStrM = [[NSMutableAttributedString alloc] initWithString:nilStr];
-    
-    NSDictionary *attributes = @{
-                                 NSForegroundColorAttributeName : [UIColor redColor]
-                                 };
-    attrStrM = [[NSMutableAttributedString alloc] initWithString:nilStr attributes:attributes];
+    str = @"test".mutableCopy;
+    subStr = [str substringFromIndex:100];
+    subStr = [str substringToIndex:100];
+    subStr = [str substringWithRange:range];
 }
 
 - (void)onArray
@@ -158,30 +104,16 @@
     [arrm replaceObjectAtIndex:10 withObject:@3];
     
     NSString *nilStr = nil;
-    NSArray *array = @[@"chenfanfang", nilStr, @"iOSDeveloper"];
+    arr = @[@"chenfanfang", nilStr, @"iOSDeveloper"];
     arr = @[@"chenfanfang", @"iOS_Dev"];
     object = arr[100];
     
-    NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:100];
-    [array objectsAtIndexes:indexSet];
-    
-    array = @[@"1", @"2", @"3"];
-    NSRange range = NSMakeRange(0, 11);
-    __unsafe_unretained id cArray[range.length];
-    [array getObjects:cArray range:range];
-}
-
-- (void)onMutableArray
-{
-    NSMutableArray *array = @[@"chenfanfang"].mutableCopy;
-    id object = array[2];
+    NSMutableArray *marray = @[@"chenfanfang"].mutableCopy;
+    object = marray[2];
     object = nil;
-    array[3] = @"iOS";
-    [array removeObjectAtIndex:5];
-    [array insertObject:@"cool" atIndex:5];
-    NSRange range = NSMakeRange(0, 11);
-    __unsafe_unretained id cArray[range.length];
-    [array getObjects:cArray range:range];
+    marray[3] = @"iOS";
+    [marray removeObjectAtIndex:5];
+    [marray insertObject:@"cool" atIndex:5];
 }
 
 - (void)onDictionary
@@ -198,34 +130,24 @@
            @"name" : @"chenfanfang",
            @"age" : nilStr
            };
-}
-
-- (void)onMutableDictionary
-{
-    NSMutableDictionary *dict = @{
+    
+    NSMutableDictionary *mdict = @{
                                    @"name" : @"chenfanfang"
                                    
                                    }.mutableCopy;
     NSString *ageKey = nil;
-    dict[ageKey] = @(25);
+    mdict[ageKey] = @(25);
     
-    dict = [NSMutableDictionary dictionary];
-    [dict setObject:@(25) forKey:ageKey];
+    mdict = [NSMutableDictionary dictionary];
+    [mdict setObject:@(25) forKey:ageKey];
     
-    dict = @{
+    mdict = @{
           @"name" : @"chenfanfang",
           @"age" : @(25)
           
           }.mutableCopy;
     NSString *key = nil;
-    [dict removeObjectForKey:key];
-}
-
-- (void)onObject
-{
-    id object = [NSObject new];
-    [object onNull];
-    [object objectForKey:@"key"];
+    [mdict removeObjectForKey:key];
 }
 
 - (void)onKvc
