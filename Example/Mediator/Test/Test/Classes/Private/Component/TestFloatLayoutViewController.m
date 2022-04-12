@@ -35,13 +35,13 @@
             label.numberOfLines = 0;
             label.text = suggestions[i];
             label.font = FWFontRegular(14);
-            [label fwSetBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
-            label.fwContentInset = UIEdgeInsetsMake(6, 20, 6, 20);
+            [label.fw setBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
+            label.fw.contentInset = UIEdgeInsetsMake(6, 20, 6, 20);
             [self.floatLayoutView addSubview:label];
         } else {
             UIButton *button = [[UIButton alloc] init];
             [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
-            [button fwSetBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
+            [button.fw setBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
             [button setTitle:suggestions[i] forState:UIControlStateNormal];
             button.titleLabel.font = FWFontRegular(14);
             button.titleLabel.numberOfLines = 0;

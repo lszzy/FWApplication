@@ -59,7 +59,7 @@
 
 - (void)fwReloadDataWithoutCache
 {
-    [self fwClearHeightCache];
+    [self.fw clearHeightCache];
     [self fwClearTemplateHeightCache];
     [self reloadData];
 }

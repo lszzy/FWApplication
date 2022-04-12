@@ -21,7 +21,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UILabel *textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+        UILabel *textLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
         _textLabel = textLabel;
         [self.contentView addSubview:textLabel];
         textLabel.fw.layoutChain.center();
@@ -92,8 +92,8 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     self.segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     self.segmentedControl.segmentWidthStyle = FWSegmentedControlSegmentWidthStyleDynamic;
     self.segmentedControl.selectionIndicatorLocation = FWSegmentedControlSelectionIndicatorLocationBottom;
-    self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont fwFontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont fwBoldFontOfSize:18], NSForegroundColorAttributeName: Theme.textColor};
+    self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont.fw fontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
+    self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont.fw boldFontOfSize:18], NSForegroundColorAttributeName: Theme.textColor};
     [headerView addSubview:self.segmentedControl];
     segmentedControl.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(testSwitch, 50).height(50);
     
@@ -149,7 +149,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     self.shieldView = shieldView;
     shieldView.backgroundColor = [Theme tableColor];
     FWWeakifySelf();
-    [shieldView fwAddTapGestureWithBlock:^(UITapGestureRecognizer *sender) {
+    [shieldView.fw addTapGestureWithBlock:^(UITapGestureRecognizer *sender) {
         FWStrongifySelf();
         [self.shieldView removeFromSuperview];
         self.shieldView = nil;
@@ -165,18 +165,18 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     [shieldView addSubview:shieldLabel];
     shieldLabel.fw.layoutChain.edges();
     
-    [self.testView fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.testView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.testView.backgroundColor = [UIColor fwRandomColor];
         [self.bannerView makeScrollViewScrollToIndex:0];
     }];
     
-    [self.testButton fwAddTouchBlock:^(id  _Nonnull sender) {
+    [self.testButton.fw addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.testButton fwSetBackgroundColor:[UIColor fwRandomColor] forState:UIControlStateNormal];
     }];
     
-    [self.testSwitch fwAddBlock:^(id  _Nonnull sender) {
+    [self.testSwitch.fw addBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.testSwitch.thumbTintColor = [UIColor fwRandomColor];
         self.testSwitch.onTintColor = self.testSwitch.thumbTintColor;

@@ -116,7 +116,7 @@
 
 - (UIImage *)fwSnapshotImage
 {
-    return [UIImage fwImageWithView:self];
+    return [UIImage.fw imageWithView:self];
 }
 
 - (NSData *)fwSnapshotPdf
@@ -411,7 +411,7 @@
     
     // 设置完成事件，需要在add之前设置才能生效，因为add时会copy动画对象
     if (completion) {
-        animation.fwStopBlock = ^(CAAnimation *animation, BOOL finished) {
+        animation.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
@@ -535,7 +535,7 @@
     
     // 设置完成事件
     if (completion) {
-        transition.fwStopBlock = ^(CAAnimation *animation, BOOL finished) {
+        transition.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
@@ -571,7 +571,7 @@
     
     // 设置完成事件
     if (completion) {
-        animation.fwStopBlock = ^(CAAnimation *animation, BOOL finished) {
+        animation.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }

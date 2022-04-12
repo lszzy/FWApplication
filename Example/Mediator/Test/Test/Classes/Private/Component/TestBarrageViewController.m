@@ -507,7 +507,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view, typically from a nib.
-    self.view.fwHeight = FWScreenHeight - FWTopBarHeight;
+    self.view.fw.height = FWScreenHeight - FWTopBarHeight;
     self.barrageManager = [[FWBarrageManager alloc] init];
     [self.view addSubview:self.barrageManager.renderView];
     self.barrageManager.renderView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);

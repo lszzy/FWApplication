@@ -93,7 +93,7 @@
     [self.contentView addSubview:self.detailTextLabel];
     
     UIButton *actionButton = [[UIButton alloc] init];
-    actionButton.fwTouchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+    actionButton.fw.touchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
     _actionButton = actionButton;
     [self.contentView addSubview:self.actionButton];
 }

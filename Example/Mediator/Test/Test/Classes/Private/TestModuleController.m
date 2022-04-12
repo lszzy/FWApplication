@@ -60,8 +60,8 @@
         
         UITextField *textField = [_searchBar fwTextField];
         textField.font = [UIFont systemFontOfSize:12];
-        [textField fwSetCornerRadius:16];
-        textField.fwTouchResign = YES;
+        [textField.fw setCornerRadius:16];
+        textField.fw.touchResign = YES;
     }
     return _searchBar;
 }
@@ -260,7 +260,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSArray *sectionData = [self.displayData objectAtIndex:indexPath.section];
     NSArray *sectionList = [sectionData objectAtIndex:1];

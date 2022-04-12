@@ -68,7 +68,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView)
+        let cell = UITableViewCell.fw.cell(with: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator

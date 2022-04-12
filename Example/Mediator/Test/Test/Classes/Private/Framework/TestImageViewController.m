@@ -407,7 +407,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TestImageCell *cell = [TestImageCell fwCellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
+    TestImageCell *cell = [TestImageCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
     NSString *fileName = [self.tableData objectAtIndex:indexPath.row];
     cell.nameLabel.text = [[fileName lastPathComponent] stringByAppendingFormat:@"(%@)", [NSData fwMimeTypeFromExtension:[fileName pathExtension]]];
     if (!fileName.fwIsFormatUrl) {
@@ -426,7 +426,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         cell.fw.tempObject = nil;
         NSString *url = fileName;
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
-            url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fwCurrentTime)];
+            url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fw.currentTime)];
         }
         [cell.systemView fwSetImageWithURL:url];
         [cell.animatedView fwSetImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];

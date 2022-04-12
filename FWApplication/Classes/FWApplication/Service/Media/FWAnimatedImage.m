@@ -476,7 +476,7 @@ static SEL FWCGSVGDocumentSEL = NULL;
 {
     if (!image) return nil;
     if (format == FWImageFormatUndefined) {
-        format = image.fwHasAlpha ? FWImageFormatPNG : FWImageFormatJPEG;
+        format = image.fw.hasAlpha ? FWImageFormatPNG : FWImageFormatJPEG;
     }
     if (format == FWImageFormatSVG) {
         if (@available(iOS 13.0, *)) {

@@ -580,7 +580,7 @@
         if ((self.rectCorner & UIRectCornerAllCorners) == UIRectCornerAllCorners) {
             self.presentedView.layer.cornerRadius = self.cornerRadius;
         } else {
-            [self.presentedView fwSetCornerLayer:self.rectCorner radius:self.cornerRadius];
+            [self.presentedView.fw setCornerLayer:self.rectCorner radius:self.cornerRadius];
         }
     }
     self.dimmingView.frame = self.containerView.bounds;
@@ -703,9 +703,9 @@
     if (!self.scrollView || !self.scrollView.scrollEnabled) return;
     
     if (self.direction == UISwipeGestureRecognizerDirectionUp || self.direction == UISwipeGestureRecognizerDirectionDown) {
-        if (![self.scrollView fwCanScrollVertical]) return;
+        if (![self.scrollView.fw canScrollVertical]) return;
     } else {
-        if (![self.scrollView fwCanScrollHorizontal]) return;
+        if (![self.scrollView.fw canScrollHorizontal]) return;
     }
 
     if (self.state == UIGestureRecognizerStateFailed) return;
@@ -724,7 +724,7 @@
     BOOL isFailed = NO;
     switch (self.direction) {
         case UISwipeGestureRecognizerDirectionDown: {
-            CGFloat edgeOffset = [self.scrollView fwContentOffsetOfEdge:UIRectEdgeTop].y;
+            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeTop].y;
             if ((fabs(velocity.x) < fabs(velocity.y)) && (location.y > prevLocation.y) && (self.scrollView.contentOffset.y <= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.y >= edgeOffset) {
@@ -733,7 +733,7 @@
             break;
         }
         case UISwipeGestureRecognizerDirectionUp: {
-            CGFloat edgeOffset = [self.scrollView fwContentOffsetOfEdge:UIRectEdgeBottom].y;
+            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeBottom].y;
             if ((fabs(velocity.x) < fabs(velocity.y)) && (location.y < prevLocation.y) && (self.scrollView.contentOffset.y >= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.y <= edgeOffset) {
@@ -742,7 +742,7 @@
             break;
         }
         case UISwipeGestureRecognizerDirectionRight: {
-            CGFloat edgeOffset = [self.scrollView fwContentOffsetOfEdge:UIRectEdgeLeft].x;
+            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeLeft].x;
             if ((fabs(velocity.y) < fabs(velocity.x)) && (location.x > prevLocation.x) && (self.scrollView.contentOffset.x <= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.x >= edgeOffset) {
@@ -751,7 +751,7 @@
             break;
         }
         case UISwipeGestureRecognizerDirectionLeft: {
-            CGFloat edgeOffset = [self.scrollView fwContentOffsetOfEdge:UIRectEdgeRight].x;
+            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeRight].x;
             if ((fabs(velocity.y) < fabs(velocity.x)) && (location.x < prevLocation.x) && (self.scrollView.contentOffset.x >= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.x <= edgeOffset) {
@@ -784,9 +784,9 @@
         if (self.autoDetected) {
             UIScrollView *scrollView = (UIScrollView *)otherGestureRecognizer.view;
             if (self.direction == UISwipeGestureRecognizerDirectionUp || self.direction == UISwipeGestureRecognizerDirectionDown) {
-                if ([scrollView fwCanScrollHorizontal]) return NO;
+                if ([scrollView.fw canScrollHorizontal]) return NO;
             } else {
-                if ([scrollView fwCanScrollVertical]) return NO;
+                if ([scrollView.fw canScrollVertical]) return NO;
             }
             
             if (scrollView != self.scrollView) self.scrollView = scrollView;
@@ -807,9 +807,9 @@
         if (self.autoDetected) {
             UIScrollView *scrollView = (UIScrollView *)otherGestureRecognizer.view;
             if (self.direction == UISwipeGestureRecognizerDirectionUp || self.direction == UISwipeGestureRecognizerDirectionDown) {
-                if ([scrollView fwCanScrollHorizontal]) return NO;
+                if ([scrollView.fw canScrollHorizontal]) return NO;
             } else {
-                if ([scrollView fwCanScrollVertical]) return NO;
+                if ([scrollView.fw canScrollVertical]) return NO;
             }
             
             if (scrollView != self.scrollView) self.scrollView = scrollView;

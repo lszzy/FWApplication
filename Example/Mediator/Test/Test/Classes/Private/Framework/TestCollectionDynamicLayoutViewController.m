@@ -46,7 +46,7 @@ static BOOL isExpanded = NO;
         
         UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
@@ -56,7 +56,7 @@ static BOOL isExpanded = NO;
         
         UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel];
@@ -68,7 +68,7 @@ static BOOL isExpanded = NO;
         }];
         
         // maxY视图不需要和bottom布局，默认平齐，可设置底部间距
-        self.fwMaxYViewPadding = 15;
+        self.fw.maxYViewPadding = 15;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         [imageView fwSetContentModeAspectFill];
@@ -104,7 +104,7 @@ static BOOL isExpanded = NO;
     self.myTextLabel.text = object.text;
     
     [self.myImageView.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
-    self.fwMaxYViewExpanded = isExpanded;
+    self.fw.maxYViewExpanded = isExpanded;
 }
 
 @end
@@ -122,9 +122,9 @@ static BOOL isExpanded = NO;
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = Theme.cellColor;
-        self.fwMaxYViewPadding = 15;
+        self.fw.maxYViewPadding = 15;
         
-        UILabel *titleLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
         titleLabel.numberOfLines = 0;
         _titleLabel = titleLabel;
         [self addSubview:titleLabel];
@@ -133,14 +133,14 @@ static BOOL isExpanded = NO;
     return self;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)setViewModel:(id)viewModel
 {
-    [super setFwViewModel:fwViewModel];
+    self.fw.viewModel = viewModel;
     
-    self.titleLabel.text = FWSafeString(fwViewModel);
+    self.titleLabel.text = FWSafeString(viewModel);
     
     [self.titleLabel.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
-    self.fwMaxYViewExpanded = isExpanded;
+    self.fw.maxYViewExpanded = isExpanded;
 }
 
 @end
@@ -218,7 +218,7 @@ static BOOL isExpanded = NO;
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // 渲染可重用Cell
-    TestCollectionDynamicLayoutCell *cell = [TestCollectionDynamicLayoutCell fwCellWithCollectionView:collectionView indexPath:indexPath];
+    TestCollectionDynamicLayoutCell *cell = [TestCollectionDynamicLayoutCell.fw cellWithCollectionView:collectionView indexPath:indexPath];
     cell.object = [self.collectionData objectAtIndex:indexPath.row];
     return cell;
 }
@@ -226,12 +226,12 @@ static BOOL isExpanded = NO;
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        TestCollectionDynamicLayoutHeaderView *reusableView = [TestCollectionDynamicLayoutHeaderView fwReusableViewWithCollectionView:collectionView kind:kind indexPath:indexPath];
-        reusableView.fwViewModel = @"我是集合Header\n我是集合Header";
+        TestCollectionDynamicLayoutHeaderView *reusableView = [TestCollectionDynamicLayoutHeaderView.fw reusableViewWithCollectionView:collectionView kind:kind indexPath:indexPath];
+        reusableView.viewModel = @"我是集合Header\n我是集合Header";
         return reusableView;
     } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        TestCollectionDynamicLayoutHeaderView *reusableView = [TestCollectionDynamicLayoutHeaderView fwReusableViewWithCollectionView:collectionView kind:kind indexPath:indexPath];
-        reusableView.fwViewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
+        TestCollectionDynamicLayoutHeaderView *reusableView = [TestCollectionDynamicLayoutHeaderView.fw reusableViewWithCollectionView:collectionView kind:kind indexPath:indexPath];
+        reusableView.viewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
         return reusableView;
     }
     return nil;
@@ -240,20 +240,20 @@ static BOOL isExpanded = NO;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.mode == 0) {
-        return [collectionView fwSizeWithCellClass:[TestCollectionDynamicLayoutCell class]
+        return [collectionView.fw sizeWithCellClass:[TestCollectionDynamicLayoutCell class]
                                   cacheByIndexPath:indexPath
                                      configuration:^(TestCollectionDynamicLayoutCell *cell) {
             cell.object = [self.collectionData objectAtIndex:indexPath.row];
         }];
     } else if (self.mode == 1) {
-        return [collectionView fwSizeWithCellClass:[TestCollectionDynamicLayoutCell class]
+        return [collectionView.fw sizeWithCellClass:[TestCollectionDynamicLayoutCell class]
                                              width:FWScreenWidth - 30
                                   cacheByIndexPath:indexPath
                                      configuration:^(TestCollectionDynamicLayoutCell *cell) {
             cell.object = [self.collectionData objectAtIndex:indexPath.row];
         }];
     } else {
-        return [collectionView fwSizeWithCellClass:[TestCollectionDynamicLayoutCell class]
+        return [collectionView.fw sizeWithCellClass:[TestCollectionDynamicLayoutCell class]
                                             height:FWScreenHeight - FWTopBarHeight
                                   cacheByIndexPath:indexPath
                                      configuration:^(TestCollectionDynamicLayoutCell *cell) {
@@ -265,14 +265,14 @@ static BOOL isExpanded = NO;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     if (self.mode == 0) {
-        return [collectionView fwSizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
+        return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
                                                       kind:UICollectionElementKindSectionHeader
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
             reusableView.fwViewModel = @"我是集合Header\n我是集合Header";
         }];
     } else if (self.mode == 1) {
-        return [collectionView fwSizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
+        return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
                                                      width:FWScreenWidth - 30
                                                       kind:UICollectionElementKindSectionHeader
                                             cacheBySection:section
@@ -280,7 +280,7 @@ static BOOL isExpanded = NO;
             reusableView.fwViewModel = @"我是集合Header\n我是集合Header";
         }];
     } else {
-        return [collectionView fwSizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
+        return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
                                                     height:FWScreenHeight - FWTopBarHeight
                                                       kind:UICollectionElementKindSectionHeader
                                             cacheBySection:section
@@ -293,14 +293,14 @@ static BOOL isExpanded = NO;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
 {
     if (self.mode == 0) {
-        return [collectionView fwSizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
+        return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
                                                       kind:UICollectionElementKindSectionFooter
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
             reusableView.fwViewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
         }];
     } else if (self.mode == 1) {
-        return [collectionView fwSizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
+        return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
                                                      width:FWScreenWidth - 30
                                                       kind:UICollectionElementKindSectionFooter
                                             cacheBySection:section
@@ -308,7 +308,7 @@ static BOOL isExpanded = NO;
             reusableView.fwViewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
         }];
     } else {
-        return [collectionView fwSizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
+        return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
                                                     height:FWScreenHeight - FWTopBarHeight
                                                       kind:UICollectionElementKindSectionFooter
                                             cacheBySection:section
@@ -320,7 +320,7 @@ static BOOL isExpanded = NO;
 
 - (TestCollectionDynamicLayoutObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -359,9 +359,9 @@ static BOOL isExpanded = NO;
     });
     
     TestCollectionDynamicLayoutObject *object = [TestCollectionDynamicLayoutObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }
@@ -378,7 +378,7 @@ static BOOL isExpanded = NO;
         for (int i = 0; i < 4; i++) {
             [self.collectionData addObject:[self randomObject]];
         }
-        [self.collectionView fwClearSizeCache];
+        [self.collectionView.fw clearSizeCache];
         [self.collectionView fwReloadDataWithoutAnimation];
         
         self.collectionView.fwShowRefreshing = self.collectionData.count < 20 ? YES : NO;

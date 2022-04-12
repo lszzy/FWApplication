@@ -21,7 +21,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
@@ -29,7 +29,7 @@
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
         iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
@@ -37,10 +37,10 @@
     return self;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)setViewModel:(id)viewModel
 {
-    [super setFwViewModel:fwViewModel];
-    self.iconLabel.text = [NSString stringWithFormat:@"我是文本%@", fwViewModel];
+    self.fw.viewModel = viewModel;
+    self.iconLabel.text = [NSString stringWithFormat:@"我是文本%@", viewModel];
 }
 
 @end
@@ -59,7 +59,7 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
@@ -67,7 +67,7 @@
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
         iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
@@ -97,7 +97,7 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
@@ -105,7 +105,7 @@
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
         iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
@@ -138,14 +138,14 @@
         UIView *testView = [UIView new];
         _testView = testView;
         testView.backgroundColor = [UIColor redColor];
-        [testView fwSetCornerRadius:5];
+        [testView.fw setCornerRadius:5];
         [self addSubview:testView];
         testView.fw.layoutChain.leftWithInset(20).topWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
         UIView *rightView = [UIView new];
         rightView.backgroundColor = [UIColor redColor];
-        [rightView fwSetCornerRadius:5];
+        [rightView.fw setCornerRadius:5];
         [self addSubview:rightView];
         rightView.fw.layoutChain.rightWithInset(20).topWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
@@ -160,7 +160,7 @@
         _imageView = imageView;
         imageView.image = [TestBundle imageNamed:@"test_scale"];
         [imageView fwSetContentModeAspectFill];
-        [imageView fwSetCornerRadius:5];
+        [imageView.fw setCornerRadius:5];
         [self addSubview:imageView];
         imageView.fw.layoutChain.centerXToView(testView)
             .topToBottomOfViewWithOffset(testView, 20).size(CGSizeMake(50, 50));
@@ -261,13 +261,13 @@
     
     self.tableView.fwDelegate.viewForHeader = ^id _Nullable(NSInteger section) {
         FWStrongifySelf();
-        TestTableCreateHeaderView *viewForHeader = [TestTableCreateHeaderView fwHeaderFooterViewWithTableView:self.tableView];
+        TestTableCreateHeaderView *viewForHeader = [TestTableCreateHeaderView.fw headerFooterViewWithTableView:self.tableView];
         viewForHeader.object = @1;
         
-        CGFloat height = [self.tableView fwHeightWithHeaderFooterViewClass:[TestTableCreateHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableCreateHeaderView * _Nonnull headerFooterView) {
+        CGFloat height = [self.tableView.fw heightWithHeaderFooterViewClass:[TestTableCreateHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableCreateHeaderView * _Nonnull headerFooterView) {
             headerFooterView.object = @1;
         }];
-        viewForHeader.frame = CGRectMake(0, 0, self.tableView.fwWidth, height);
+        viewForHeader.frame = CGRectMake(0, 0, self.tableView.fw.width, height);
         return viewForHeader;
     };
     self.tableView.fwDelegate.footerViewClass = [TestTableCreateFooterView class];

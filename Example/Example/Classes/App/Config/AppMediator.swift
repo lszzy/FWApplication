@@ -74,11 +74,11 @@ class AppModule: NSObject, AppService {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        UIDevice.fwSetDeviceTokenData(deviceToken)
+        UIDevice.fw.setDeviceTokenData(deviceToken)
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        UIDevice.fwSetDeviceTokenData(nil)
+        UIDevice.fw.setDeviceTokenData(nil)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

@@ -164,11 +164,11 @@
         UIImage *image = FWIcon.closeImage;
         [image drawInRect:CGRectMake(20, 120, 50, 50)];
         
-        [[image fwImageWithTintColor:[UIColor orangeColor] blendMode:kCGBlendModeNormal] drawInRect:CGRectMake(90, 120, 50, 50)];
+        [[image.fw imageWithTintColor:[UIColor orangeColor] blendMode:kCGBlendModeNormal] drawInRect:CGRectMake(90, 120, 50, 50)];
         
-        [[image fwImageWithTintColor:[UIColor orangeColor] blendMode:kCGBlendModeDestinationIn] drawInRect:CGRectMake(160, 120, 50, 50)];
+        [[image.fw imageWithTintColor:[UIColor orangeColor] blendMode:kCGBlendModeDestinationIn] drawInRect:CGRectMake(160, 120, 50, 50)];
         
-        [[image fwImageWithTintColor:[UIColor orangeColor] blendMode:kCGBlendModeMultiply] drawInRect:CGRectMake(230, 120, 50, 50)];
+        [[image.fw imageWithTintColor:[UIColor orangeColor] blendMode:kCGBlendModeMultiply] drawInRect:CGRectMake(230, 120, 50, 50)];
     }
     
     // 颜色渐变
@@ -182,7 +182,7 @@
         [self addSubview:gradientView];
     
         gradientColor = [UIColor fwGradientColorWithSize:CGSizeMake(1, 50) colors:@[(id)[UIColor redColor].CGColor, (id)[UIColor blueColor].CGColor] locations:NULL direction:UISwipeGestureRecognizerDirectionDown];
-        UIImage *gradientImage = [UIImage fwImageWithColor:gradientColor size:CGSizeMake(50, 50)];
+        UIImage *gradientImage = [UIImage.fw imageWithColor:gradientColor size:CGSizeMake(50, 50)];
         [gradientImage drawInRect:CGRectMake(230, 190, 50, 50)];
     }
     

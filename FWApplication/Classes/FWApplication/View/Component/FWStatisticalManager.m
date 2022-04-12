@@ -206,7 +206,7 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
             [self isKindOfClass:[UITextField class]]) {
             controlEvents = UIControlEventValueChanged;
         }
-        [(UIControl *)self fwAddBlock:^(UIControl *sender) {
+        [((UIControl *)self).fw addBlock:^(UIControl *sender) {
             [sender fwStatisticalTriggerClick:nil indexPath:nil];
         } forControlEvents:controlEvents];
         return;
@@ -214,7 +214,7 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
     
     for (UIGestureRecognizer *gesture in self.gestureRecognizers) {
         if ([gesture isKindOfClass:[UITapGestureRecognizer class]]) {
-            [gesture fwAddBlock:^(UIGestureRecognizer *sender) {
+            [gesture.fw addBlock:^(UIGestureRecognizer *sender) {
                 [sender.view fwStatisticalTriggerClick:nil indexPath:nil];
             }];
         }
@@ -421,11 +421,11 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 
 - (FWStatisticalExposureState)fwStatisticalExposureState
 {
-    if (!self.fwIsViewVisible) {
+    if (!self.fw.isViewVisible) {
         return FWStatisticalExposureStateNone;
     }
     
-    UIViewController *viewController = self.fwViewController;
+    UIViewController *viewController = self.fw.viewController;
     if (viewController && (!viewController.view.window || viewController.presentedViewController)) {
         return FWStatisticalExposureStateNone;
     }
@@ -434,7 +434,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     UIView *superview = self.superview;
     BOOL superviewHidden = NO;
     while (superview && superview != targetView) {
-        if (!superview.fwIsViewVisible) {
+        if (!superview.fw.isViewVisible) {
             superviewHidden = YES;
             break;
         }
@@ -465,7 +465,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     } else if (self.fwStatisticalExposure.shieldViewBlock) {
         shieldView = self.fwStatisticalExposure.shieldViewBlock();
     }
-    if (!shieldView || !shieldView.fwIsViewVisible) {
+    if (!shieldView || !shieldView.fw.isViewVisible) {
         return state;
     }
     CGRect shieldRect = [shieldView convertRect:shieldView.bounds toView:targetView];
@@ -558,7 +558,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 {
     if (![self fwStatisticalExposureIsRegistered]) return;
     
-    UIViewController *viewController = self.fwViewController;
+    UIViewController *viewController = self.fw.viewController;
     if (viewController && (!viewController.view.window || viewController.presentedViewController)) return;
     
     [self fwStatisticalExposureRecursive];

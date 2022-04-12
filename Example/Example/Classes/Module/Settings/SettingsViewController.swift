@@ -15,7 +15,7 @@ import FWFramework
 class SettingsViewController: UIViewController, FWTableViewController {
     private lazy var loginButton: UIButton = {
         let button = Theme.largeButton()
-        button.fwAddTouchTarget(self, action: #selector(onMediator))
+        button.fw.addTouchTarget(self, action: #selector(onMediator))
         return button
     }()
     
@@ -166,7 +166,7 @@ extension SettingsViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView, style: .value1)
+        let cell = UITableViewCell.fw.cell(with: tableView, style: .value1)
         cell.accessoryType = .disclosureIndicator
         
         let rowData = tableData[indexPath.row] as! NSArray

@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
     FWWeakifySelf();
     [self fwSetRightBarItem:@"Toggle" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        NSArray *titles = [self.dataArr fwMapWithBlock:^id _Nullable(NSArray *obj) {
+        NSArray *titles = [self.dataArr.fw mapWithBlock:^id _Nullable(NSArray *obj) {
             return obj.firstObject;
         }];
         [self fwShowSheetWithTitle:nil message:nil cancel:@"Cancel" actions:titles actionBlock:^(NSInteger index) {

@@ -55,8 +55,8 @@ class TestIconCell: UICollectionViewCell {
         
         let textField = searchBar.fwTextField
         textField?.font = UIFont.systemFont(ofSize: 12)
-        textField?.fwSetCornerRadius(16)
-        textField?.fwTouchResign = true
+        textField?.fw.setCornerRadius(16)
+        textField?.fw.touchResign = true
         return searchBar
     }()
     
@@ -115,9 +115,9 @@ class TestIconCell: UICollectionViewCell {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = TestIconCell.fwCell(with: collectionView, indexPath: indexPath)
+        let cell = TestIconCell.fw.cell(with: collectionView, indexPath: indexPath) as! TestIconCell
         let name = collectionData.object(at: indexPath.item) as? String
-        cell.imageView.fwThemeImage = FWIconImage(name.safeValue, 60)?.fwTheme
+        cell.imageView.fw.themeImage = FWIconImage(name.safeValue, 60)?.fw.themeImage
         cell.nameLabel.text = name
         return cell
     }

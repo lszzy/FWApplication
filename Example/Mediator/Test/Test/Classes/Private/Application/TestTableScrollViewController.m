@@ -44,7 +44,7 @@
         
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel]; {
@@ -57,7 +57,7 @@
         
         UILabel *textLabel = [[UILabel alloc] init];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         textLabel.fw.hiddenCollapse = YES;
         self.myTextLabel = textLabel;
@@ -150,7 +150,7 @@
 
 - (TestTableScrollObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -181,9 +181,9 @@
     });
     
     TestTableScrollObject *object = [TestTableScrollObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.image = [TestBundle imageNamed:imageName];
     }

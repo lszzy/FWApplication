@@ -65,7 +65,7 @@
     [emptyView setTextLabelText:emptyText];
     [emptyView setDetailTextLabelText:emptyDetail];
     [emptyView setActionButtonTitle:emptyAction];
-    if (block) [emptyView.actionButton fwAddTouchBlock:block];
+    if (block) [emptyView.actionButton.fw addTouchBlock:block];
 
     if (self.customBlock) {
         self.customBlock(emptyView);

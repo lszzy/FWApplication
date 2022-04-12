@@ -260,7 +260,7 @@
 - (void)fwShowAlertWithTitle:(id)title
                      message:(id)message
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -273,7 +273,7 @@
                       cancel:(id)cancel
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -291,7 +291,7 @@
                  cancelBlock:(void (^)(void))cancelBlock
                     priority:(FWAlertPriority)priority
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -310,7 +310,7 @@
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -329,7 +329,7 @@
                    cancelBlock:(void (^)(void))cancelBlock
                       priority:(FWAlertPriority)priority
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -348,7 +348,7 @@
                       confirm:(id)confirm
                  confirmBlock:(void (^)(NSString *))confirmBlock
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -368,7 +368,7 @@
                   cancelBlock:(void (^)(void))cancelBlock
                      priority:(FWAlertPriority)priority
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -392,7 +392,7 @@
                   cancelBlock:(void (^)(void))cancelBlock
                      priority:(FWAlertPriority)priority
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -413,7 +413,7 @@
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -432,7 +432,7 @@
                  cancelBlock:(void (^)(void))cancelBlock
                     priority:(FWAlertPriority)priority
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -457,7 +457,7 @@
                  customBlock:(nullable void (^)(id))customBlock
                     priority:(FWAlertPriority)priority
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }

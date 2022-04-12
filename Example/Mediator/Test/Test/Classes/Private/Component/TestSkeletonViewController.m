@@ -22,7 +22,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
@@ -30,7 +30,7 @@
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
         iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
@@ -60,7 +60,7 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
@@ -68,7 +68,7 @@
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
         iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
@@ -98,7 +98,7 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
@@ -106,7 +106,7 @@
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
         iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
@@ -139,14 +139,14 @@
         UIView *testView = [UIView new];
         _testView = testView;
         testView.backgroundColor = [UIColor redColor];
-        [testView fwSetCornerRadius:5];
+        [testView.fw setCornerRadius:5];
         [self addSubview:testView];
         testView.fw.layoutChain.leftWithInset(20).topWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
         UIView *rightView = [UIView new];
         rightView.backgroundColor = [UIColor redColor];
-        [rightView fwSetCornerRadius:5];
+        [rightView.fw setCornerRadius:5];
         [self addSubview:rightView];
         rightView.fw.layoutChain.rightWithInset(20).topWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
@@ -161,7 +161,7 @@
         _imageView = imageView;
         imageView.image = [TestBundle imageNamed:@"test_scale"];
         [imageView fwSetContentModeAspectFill];
-        [imageView fwSetCornerRadius:5];
+        [imageView.fw setCornerRadius:5];
         [self addSubview:imageView];
         imageView.fw.layoutChain.centerXToView(testView)
             .topToBottomOfViewWithOffset(testView, 20).size(CGSizeMake(50, 50));
@@ -356,42 +356,42 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [tableView fwHeightWithCellClass:[TestSkeletonCell class] configuration:^(TestSkeletonCell * _Nonnull cell) {
+    return [tableView.fw heightWithCellClass:[TestSkeletonCell class] configuration:^(TestSkeletonCell * _Nonnull cell) {
         cell.object = self.tableData[indexPath.row];
     }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TestSkeletonCell *cell = [TestSkeletonCell fwCellWithTableView:tableView];
+    TestSkeletonCell *cell = [TestSkeletonCell.fw cellWithTableView:tableView];
     cell.object = self.tableData[indexPath.row];
     return cell;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    TestSkeletonHeaderView *headerView = [TestSkeletonHeaderView fwHeaderFooterViewWithTableView:tableView];
+    TestSkeletonHeaderView *headerView = [TestSkeletonHeaderView.fw headerFooterViewWithTableView:tableView];
     headerView.object = @1;
     return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return [tableView fwHeightWithHeaderFooterViewClass:[TestSkeletonHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestSkeletonHeaderView * _Nonnull headerFooterView) {
+    return [tableView.fw heightWithHeaderFooterViewClass:[TestSkeletonHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestSkeletonHeaderView * _Nonnull headerFooterView) {
         headerFooterView.object = @1;
     }];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    TestSkeletonFooterView *footerView = [TestSkeletonFooterView fwHeaderFooterViewWithTableView:tableView];
+    TestSkeletonFooterView *footerView = [TestSkeletonFooterView.fw headerFooterViewWithTableView:tableView];
     footerView.object = @1;
     return footerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return [tableView fwHeightWithHeaderFooterViewClass:[TestSkeletonHeaderView class] type:FWHeaderFooterViewTypeFooter configuration:^(TestSkeletonHeaderView * _Nonnull headerFooterView) {
+    return [tableView.fw heightWithHeaderFooterViewClass:[TestSkeletonHeaderView class] type:FWHeaderFooterViewTypeFooter configuration:^(TestSkeletonHeaderView * _Nonnull headerFooterView) {
         headerFooterView.object = @1;
     }];
 }

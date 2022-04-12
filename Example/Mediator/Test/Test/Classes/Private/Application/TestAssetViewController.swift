@@ -63,7 +63,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView, style: .subtitle)
+        let cell = UITableViewCell.fw.cell(with: tableView, style: .subtitle)
         cell.selectionStyle = .none
         
         if isAlbum {
@@ -73,21 +73,21 @@ import FWApplication
             cell.fw.tempObject = photo.identifier
             photo.requestThumbnailImage(with: CGSize(width: 88, height: 88)) { image, info, finished in
                 if cell.fw.tempObject.safeString == photo.identifier {
-                    cell.imageView?.image = image?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
+                    cell.imageView?.image = image?.fw.image(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
                 } else {
                     cell.imageView?.image = nil
                 }
             }
             photo.assetSize { size in
                 if cell.fw.tempObject.safeString == photo.identifier {
-                    cell.textLabel?.text = NSString.fwSizeString(UInt(size))
+                    cell.textLabel?.text = NSString.fw.sizeString(UInt(size))
                 } else {
                     cell.textLabel?.text = nil
                 }
             }
             
             if photo.assetType == .video {
-                cell.detailTextLabel?.text = NSDate.fwFormatDuration(photo.duration(), hasHour: false)
+                cell.detailTextLabel?.text = NSDate.fw.formatDuration(photo.duration(), hasHour: false)
             } else if photo.assetType == .audio {
                 cell.detailTextLabel?.text = "audio"
             } else if photo.assetSubType == .livePhoto {
@@ -102,7 +102,7 @@ import FWApplication
             
             let album = albums[indexPath.row]
             cell.textLabel?.text = album.name()
-            cell.imageView?.image = album.posterImage(with: CGSize(width: 88, height: 88))?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
+            cell.imageView?.image = album.posterImage(with: CGSize(width: 88, height: 88))?.fw.image(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
             cell.detailTextLabel?.text = "\(album.numberOfAssets())"
         }
         
@@ -164,7 +164,7 @@ import FWApplication
                         guard let controller = previewController else { return }
                         var titleLabel: UILabel? = controller.view.viewWithTag(100) as? UILabel
                         if titleLabel == nil {
-                            let label = UILabel.fwLabel(with: FWFontSize(16), textColor: UIColor.white)
+                            let label = UILabel.fw.label(with: FWFontSize(16), textColor: UIColor.white)
                             label.tag = 100
                             titleLabel = label
                             controller.view.addSubview(label)

@@ -343,7 +343,7 @@
     self.scrollView.pinchGestureRecognizer.enabled = enabledZoomImageView;
     self.scrollView.minimumZoomScale = minimumZoomScale;
     self.scrollView.maximumZoomScale = maximumZoomScale;
-    self.contentView.fwOrigin = CGPointMake(0, 0);
+    self.contentView.fw.origin = CGPointMake(0, 0);
     [self setZoomScale:zoomScale animated:NO];
     
     // 只有前后的 zoomScale 不相等，才会触发 UIScrollViewDelegate scrollViewDidZoom:，因此对于相等的情况要自己手动触发
@@ -497,7 +497,7 @@
 }
 
 - (void)handleCloseButton:(UIButton *)button {
-    UIViewController *viewController = self.fwViewController;
+    UIViewController *viewController = self.fw.viewController;
     if (viewController && viewController.fw.isPresented) {
         [viewController dismissViewControllerAnimated:YES completion:nil];
     }
@@ -685,7 +685,7 @@
     
     _videoPlayButton = ({
         UIButton *playButton = [[UIButton alloc] init];
-        playButton.fwTouchInsets = UIEdgeInsetsMake(60, 60, 60, 60);
+        playButton.fw.touchInsets = UIEdgeInsetsMake(60, 60, 60, 60);
         playButton.tag = 1;
         [playButton setImage:self.videoPlayButtonImage forState:UIControlStateNormal];
         [playButton addTarget:self action:@selector(handlePlayButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -700,7 +700,7 @@
     
     _videoCloseButton = ({
         UIButton *closeButton = [[UIButton alloc] init];
-        closeButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        closeButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [closeButton setImage:self.videoCloseButtonImage forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
         closeButton.hidden = YES;
@@ -991,21 +991,21 @@
     if (self = [super initWithFrame:frame]) {
         
         _playButton = [[UIButton alloc] init];
-        self.playButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        self.playButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [self.playButton setImage:self.playButtonImage forState:UIControlStateNormal];
         [self addSubview:self.playButton];
         
         _pauseButton = [[UIButton alloc] init];
         self.pauseButton.hidden = YES;
-        self.pauseButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        self.pauseButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [self.pauseButton setImage:self.pauseButtonImage forState:UIControlStateNormal];
         [self addSubview:self.pauseButton];
         
         _slider = [[UISlider alloc] init];
         self.slider.minimumTrackTintColor = [UIColor colorWithRed:195/255.f green:195/255.f blue:195/255.f alpha:1];
         self.slider.maximumTrackTintColor = [UIColor colorWithRed:95/255.f green:95/255.f blue:95/255.f alpha:1];
-        self.slider.fwThumbSize = CGSizeMake(12, 12);
-        self.slider.fwThumbColor = UIColor.whiteColor;
+        self.slider.fw.thumbSize = CGSizeMake(12, 12);
+        self.slider.fw.thumbColor = UIColor.whiteColor;
         [self addSubview:self.slider];
         
         _sliderLeftLabel = [[UILabel alloc] init];

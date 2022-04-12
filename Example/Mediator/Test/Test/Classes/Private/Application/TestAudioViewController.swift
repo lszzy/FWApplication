@@ -18,7 +18,7 @@ import FWApplication
     private lazy var audioImage: UIImageView = {
         let result = UIImageView()
         result.isUserInteractionEnabled = true
-        result.fwAddTapGesture { [weak self] sender in
+        result.fw.addTapGesture { [weak self] sender in
             self?.toggleAudio()
         }
         return result
@@ -90,8 +90,8 @@ import FWApplication
         
         let indexStr = String(describing: (audioPlayer.getAudioIndex(currentItem)?.intValue ?? 0) + 1)
         let totalStr = String(describing: audioPlayerNumberOfItems())
-        let timeStr = NSDate.fwFormatDuration(TimeInterval(audioPlayer.playingItemCurrentTime), hasHour: false)
-        let durationStr = NSDate.fwFormatDuration(TimeInterval(audioPlayer.playingItemDurationTime), hasHour: false)
+        let timeStr = NSDate.fw.formatDuration(TimeInterval(audioPlayer.playingItemCurrentTime), hasHour: false)
+        let durationStr = NSDate.fw.formatDuration(TimeInterval(audioPlayer.playingItemDurationTime), hasHour: false)
         audioLabel.text = String(format: "%@/%@\n%@\n%@", indexStr, totalStr, timeStr, durationStr)
     }
     

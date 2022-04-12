@@ -34,7 +34,7 @@
     
     UIButton *button = [Theme largeButton];
     self.button = button;
-    [button fwAddTouchTarget:self action:@selector(onClick:)];
+    [button.fw addTouchTarget:self action:@selector(onClick:)];
     [self.view addSubview:button]; {
         [button.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:label withOffset:10];
         [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
@@ -84,7 +84,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self fwHideLoading];
             
-            if (![[@[@1, @2, @3, @4] fwRandomObject] isEqual:@3]) {
+            if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
                 [self fwShowMessageWithText:@"请求失败"];
@@ -109,7 +109,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self fwHideLoading];
             
-            if (![[@[@1, @2, @3, @4] fwRandomObject] isEqual:@3]) {
+            if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
                 [self fwShowMessageWithText:@"请求失败"];
@@ -134,7 +134,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self fwHideLoading];
             
-            if (![[@[@1, @2, @3, @4] fwRandomObject] isEqual:@3]) {
+            if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
                 [self fwShowMessageWithText:@"请求失败"];

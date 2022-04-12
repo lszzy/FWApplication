@@ -32,7 +32,7 @@
         return nil;
     } else {
         return @[
-            [UIBarButtonItem fwBarItemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
+            [UIBarButtonItem.fw itemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
             FWIcon.closeImage,
         ];
     }
@@ -58,7 +58,7 @@
     
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    self.isExtendedBottom = [@[@YES, @NO].fwRandomObject fw].safeBool;
+    self.isExtendedBottom = [@[@YES, @NO].fw.randomObject fw].safeBool;
     if (self.isExtendedBottom) {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame
@@ -77,7 +77,7 @@
     
     // 顶部延伸时，不需要减顶部栏高度
     CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw.topBarHeight;
-    self.view.fwHeight = FWScreenHeight - topHeight - self.fw.bottomBarHeight;
+    self.view.fw.height = FWScreenHeight - topHeight - self.fw.bottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -97,7 +97,7 @@
 - (void)renderToolbar
 {
     FWWeakifySelf();
-    UIBarButtonItem *backItem = [UIBarButtonItem fwBarItemWithObject:FWIconImage(@"ion-ios-arrow-back", 24) block:^(id  _Nonnull sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem.fw itemWithObject:FWIconImage(@"ion-ios-arrow-back", 24) block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if ([self.webView canGoBack]) [self.webView goBack];
     }];
@@ -108,7 +108,7 @@
         [self reloadToolbar:NO];
     }];
     
-    UIBarButtonItem *forwardItem = [UIBarButtonItem fwBarItemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
+    UIBarButtonItem *forwardItem = [UIBarButtonItem.fw itemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if ([self.webView canGoForward]) [self.webView goForward];
     }];
@@ -129,9 +129,9 @@
     spaceItem.width = 79;
     self.toolbarItems = @[flexibleItem, backItem, spaceItem, forwardItem, flexibleItem];
     
-    self.navigationController.toolbar.fwShadowImage = [UIImage fwImageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
-    self.navigationController.toolbar.fwBackgroundColor = Theme.barColor;
-    self.navigationController.toolbar.fwForegroundColor = Theme.textColor;
+    self.navigationController.toolbar.fw.shadowImage = [UIImage.fw imageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
+    self.navigationController.toolbar.fw.backgroundColor = Theme.barColor;
+    self.navigationController.toolbar.fw.foregroundColor = Theme.textColor;
 }
 
 - (void)reloadToolbar:(BOOL)animated
@@ -149,7 +149,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!scrollView.isDragging || !scrollView.fwCanScrollVertical) return;
+    if (!scrollView.isDragging || !scrollView.fw.canScrollVertical) return;
     
     CGPoint transition = [scrollView.panGestureRecognizer translationInView:scrollView.panGestureRecognizer.view];
     if (transition.y > 10.0f) {

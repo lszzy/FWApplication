@@ -185,25 +185,25 @@
     FWNavigationBarAppearance *appearance = [self fwCurrentNavigationBarAppearance];
     if (!appearance) return;
     UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    if (appearance.isTranslucent != navigationBar.fwIsTranslucent) {
-        navigationBar.fwIsTranslucent = appearance.isTranslucent;
+    if (appearance.isTranslucent != navigationBar.fw.isTranslucent) {
+        navigationBar.fw.isTranslucent = appearance.isTranslucent;
     }
     if (appearance.backgroundTransparent) {
-        navigationBar.fwBackgroundTransparent = appearance.backgroundTransparent;
+        navigationBar.fw.backgroundTransparent = appearance.backgroundTransparent;
     } else if (appearance.backgroundImage) {
-        navigationBar.fwBackgroundImage = appearance.backgroundImage;
+        navigationBar.fw.backgroundImage = appearance.backgroundImage;
     } else if (appearance.backgroundColor) {
-        navigationBar.fwBackgroundColor = appearance.backgroundColor;
+        navigationBar.fw.backgroundColor = appearance.backgroundColor;
     }
     if (appearance.shadowImage) {
-        navigationBar.fwShadowImage = appearance.shadowImage;
+        navigationBar.fw.shadowImage = appearance.shadowImage;
     } else if (appearance.shadowColor) {
-        navigationBar.fwShadowColor = appearance.shadowColor;
+        navigationBar.fw.shadowColor = appearance.shadowColor;
     } else {
-        navigationBar.fwShadowColor = nil;
+        navigationBar.fw.shadowColor = nil;
     }
-    if (appearance.foregroundColor) navigationBar.fwForegroundColor = appearance.foregroundColor;
-    if (appearance.titleColor) navigationBar.fwTitleColor = appearance.titleColor;
+    if (appearance.foregroundColor) navigationBar.fw.foregroundColor = appearance.foregroundColor;
+    if (appearance.titleColor) navigationBar.fw.titleColor = appearance.titleColor;
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
 }
 
@@ -271,7 +271,7 @@
         self.navigationItem.leftBarButtonItem = object;
     } else {
         __weak __typeof__(self) self_weak_ = self;
-        self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
+        self.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
             __typeof__(self) self = self_weak_;
             if (![self fwPopBackBarItem]) return;
             [self.fw closeViewControllerAnimated:YES];
@@ -290,7 +290,7 @@
         self.navigationItem.rightBarButtonItem = object;
     } else {
         __weak __typeof__(self) self_weak_ = self;
-        self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:^(id  _Nonnull sender) {
+        self.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
             __typeof__(self) self = self_weak_;
             if (![self fwPopBackBarItem]) return;
             [self.fw closeViewControllerAnimated:YES];
@@ -300,27 +300,27 @@
 
 - (void)fwSetLeftBarItem:(id)object target:(id)target action:(SEL)action
 {
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
 }
 
 - (void)fwSetLeftBarItem:(id)object block:(void (^)(id sender))block
 {
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
+    self.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
 }
 
 - (void)fwSetRightBarItem:(id)object target:(id)target action:(SEL)action
 {
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
 }
 
 - (void)fwSetRightBarItem:(id)object block:(void (^)(id sender))block
 {
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
+    self.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
 }
 
 - (void)fwAddLeftBarItem:(id)object target:(id)target action:(SEL)action
 {
-    UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
+    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
     NSMutableArray *items = self.navigationItem.leftBarButtonItems ? [self.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
     self.navigationItem.leftBarButtonItems = [items copy];
@@ -328,7 +328,7 @@
 
 - (void)fwAddLeftBarItem:(id)object block:(void (^)(id sender))block
 {
-    UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
+    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object block:block];
     NSMutableArray *items = self.navigationItem.leftBarButtonItems ? [self.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
     self.navigationItem.leftBarButtonItems = [items copy];
@@ -336,7 +336,7 @@
 
 - (void)fwAddRightBarItem:(id)object target:(id)target action:(SEL)action
 {
-    UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object target:target action:action];
+    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
     NSMutableArray *items = self.navigationItem.rightBarButtonItems ? [self.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
     self.navigationItem.rightBarButtonItems = [items copy];
@@ -344,7 +344,7 @@
 
 - (void)fwAddRightBarItem:(id)object block:(void (^)(id sender))block
 {
-    UIBarButtonItem *barItem = [UIBarButtonItem fwBarItemWithObject:object block:block];
+    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object block:block];
     NSMutableArray *items = self.navigationItem.rightBarButtonItems ? [self.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
     self.navigationItem.rightBarButtonItems = [items copy];
@@ -361,11 +361,11 @@
 {
     if ([object isKindOfClass:[UIImage class]]) {
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.navigationController.navigationBar.fwBackImage = (UIImage *)object;
+        self.navigationController.navigationBar.fw.backImage = (UIImage *)object;
     } else {
-        UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem fwBarItemWithObject:object ?: [UIImage new] target:nil action:nil];
+        UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem.fw itemWithObject:object ?: [UIImage new] target:nil action:nil];
         self.navigationItem.backBarButtonItem = backItem;
-        self.navigationController.navigationBar.fwBackImage = nil;
+        self.navigationController.navigationBar.fw.backImage = nil;
     }
 }
 

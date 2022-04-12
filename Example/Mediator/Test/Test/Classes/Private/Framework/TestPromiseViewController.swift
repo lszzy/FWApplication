@@ -18,7 +18,7 @@ import UIKit
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView)
+        let cell = UITableViewCell.fw.cell(with: tableView)
         let rowData = tableData.object(at: indexPath.row) as! [String]
         cell.textLabel?.text = rowData[0]
         return cell
@@ -311,7 +311,7 @@ extension TestPromiseViewController {
     
     @objc func onRetry() {
         Self.isLoading = true
-        let startTime = NSDate.fwCurrentTime
+        let startTime = NSDate.fw.currentTime
         var count = 0
         Self.failurePromise().recover({ $0 }).retry(4, delay: 0) {
             count += 1
@@ -325,14 +325,14 @@ extension TestPromiseViewController {
             }
         }.done { result in
             Self.isLoading = false
-            let endTime = NSDate.fwCurrentTime
+            let endTime = NSDate.fw.currentTime
             Self.showMessage("result: \(result.safeString) => " + String(format: "%.1fs", endTime - startTime))
         }
     }
     
     @objc func onRetry2() {
         Self.isLoading = true
-        let startTime = NSDate.fwCurrentTime
+        let startTime = NSDate.fw.currentTime
         var count = 0
         FWPromise.retry(4, delay: 0) {
             count += 1
@@ -347,7 +347,7 @@ extension TestPromiseViewController {
             }
         }.done { result in
             Self.isLoading = false
-            let endTime = NSDate.fwCurrentTime
+            let endTime = NSDate.fw.currentTime
             Self.showMessage("result: \(result.safeString) => " + String(format: "%.1fs", endTime - startTime))
         }
     }

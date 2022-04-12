@@ -560,7 +560,7 @@
 
 - (UIImage *)fwAlphaImage
 {
-    if ([self fwHasAlpha]) {
+    if ([self.fw hasAlpha]) {
         return self;
     }
     

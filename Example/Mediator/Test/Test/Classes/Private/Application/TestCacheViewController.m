@@ -34,7 +34,7 @@
     UIButton *refreshButton = [Theme largeButton];
     [refreshButton setTitle:@"读取缓存" forState:UIControlStateNormal];
     FWWeakifySelf();
-    [refreshButton fwAddTouchBlock:^(id sender) {
+    [refreshButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self refreshCache];
@@ -46,7 +46,7 @@
     
     UIButton *cacheButton = [Theme largeButton];
     [cacheButton setTitle:@"写入缓存" forState:UIControlStateNormal];
-    [cacheButton fwAddTouchBlock:^(id sender) {
+    [cacheButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache setObject:[NSString fwUUIDString] forKey:TestCacheKey];
@@ -59,7 +59,7 @@
     
     UIButton *expireButton = [Theme largeButton];
     [expireButton setTitle:@"写入缓存(10s)" forState:UIControlStateNormal];
-    [expireButton fwAddTouchBlock:^(id sender) {
+    [expireButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache setObject:[NSString fwUUIDString] forKey:TestCacheKey withExpire:10];
@@ -72,7 +72,7 @@
     
     UIButton *deleteButton = [Theme largeButton];
     [deleteButton setTitle:@"删除缓存" forState:UIControlStateNormal];
-    [deleteButton fwAddTouchBlock:^(id sender) {
+    [deleteButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache removeObjectForKey:TestCacheKey];
@@ -85,7 +85,7 @@
     
     UIButton *clearButton = [Theme largeButton];
     [clearButton setTitle:@"清空缓存" forState:UIControlStateNormal];
-    [clearButton fwAddTouchBlock:^(id sender) {
+    [clearButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache removeAllObjects];

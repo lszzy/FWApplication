@@ -55,7 +55,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 100)];
     view.backgroundColor = Theme.cellColor;
     
-    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
+    UILabel *label = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
     [view addSubview:label];
     label.fw.layoutChain.leftWithInset(15).centerY();
     return view;
@@ -68,7 +68,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.textLabel.textColor = Theme.textColor;
     cell.textLabel.text = FWSafeString([self.tableData objectAtIndex:indexPath.row]);
     return cell;

@@ -30,8 +30,8 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = Theme.textColor;
     label.backgroundColor = Theme.backgroundColor;
-    label.fwContentInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    [label fwSetCornerRadius:5];
+    label.fw.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    [label.fw setCornerRadius:5];
     [self.view addSubview:label];
     [label.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.widthToView(view).centerYToView(view).leftToRightOfViewWithOffset(view, 20);
@@ -50,7 +50,7 @@
     
     CGFloat lineHeight = ceil(FWFontRegular(16).lineHeight);
     NSString *moreText = @"点击展开";
-    self.buttonWidth = [moreText fwSizeWithFont:FWFontRegular(16)].width + 20;
+    self.buttonWidth = [moreText.fw sizeWithFont:FWFontRegular(16)].width + 20;
     FWAttributedLabel *attr = [[FWAttributedLabel alloc] init];
     _attributedLabel = attr;
     attr.clipsToBounds = YES;
@@ -65,12 +65,12 @@
     attr.fw.layoutChain.leftWithInset(20).rightWithInset(20).topToBottomOfViewWithOffset(view, 20);
     
     [self.attributedLabel setText:@"我是非常长的文本，要多长有多长，我会自动截断，再附加视图，不信你看嘛，我是显示不下了的文本，我是更多文本，我是更多更多的文本，我又要换行了"];
-    UILabel *collapseLabel = [UILabel fwLabelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
+    UILabel *collapseLabel = [UILabel.fw labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
     collapseLabel.textAlignment = NSTextAlignmentCenter;
     collapseLabel.frame = CGRectMake(0, 0, self.buttonWidth, ceil(FWFontRegular(16).lineHeight));
     collapseLabel.userInteractionEnabled = YES;
     FWWeakifySelf();
-    [collapseLabel fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [collapseLabel.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.attributedLabel.lineTruncatingSpacing = self.buttonWidth;
         self.attributedLabel.numberOfLines = 2;
@@ -78,11 +78,11 @@
     }];
     [self.attributedLabel appendView:collapseLabel];
     
-    UILabel *expandLabel = [UILabel fwLabelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:moreText];
+    UILabel *expandLabel = [UILabel.fw labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:moreText];
     expandLabel.textAlignment = NSTextAlignmentCenter;
     expandLabel.frame = CGRectMake(0, 0, self.buttonWidth, lineHeight);
     expandLabel.userInteractionEnabled = YES;
-    [expandLabel fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [expandLabel.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.attributedLabel.lineTruncatingSpacing = 0;
         self.attributedLabel.numberOfLines = 0;
@@ -104,7 +104,7 @@
     emptyLabel2.textAlignment = NSTextAlignmentCenter;
     emptyLabel2.textColor = Theme.textColor;
     emptyLabel2.backgroundColor = Theme.backgroundColor;
-    emptyLabel2.fwContentInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    emptyLabel2.fw.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
     [self.view addSubview:emptyLabel2];
     [emptyLabel2.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftToRightOfViewWithOffset(emptyLabel, 20);

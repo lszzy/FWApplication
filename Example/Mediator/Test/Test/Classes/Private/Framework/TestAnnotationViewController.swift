@@ -62,11 +62,11 @@ class TestRouter {
     
     override func renderData() {
         TestPluginManager.testPlugin = TestPluginImpl()
-        pluginButton.fwAddTouch { (sender) in
+        pluginButton.fw.addTouch { (sender) in
             TestPluginManager.testPlugin.pluginMethod()
         }
         
-        routerButton.fwAddTouch { (sender) in
+        routerButton.fw.addTouch { (sender) in
             FWRouter.openURL(FWRouter.generateURL(TestRouter.pluginUrl, parameters: 1))
         }
     }

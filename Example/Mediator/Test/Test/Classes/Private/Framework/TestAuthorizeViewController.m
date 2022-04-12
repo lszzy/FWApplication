@@ -62,7 +62,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     FWAuthorizeType type = [[rowData objectAtIndex:1] integerValue];
     

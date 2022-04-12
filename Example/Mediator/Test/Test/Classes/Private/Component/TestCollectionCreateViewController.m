@@ -44,7 +44,7 @@
         
         UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
@@ -54,7 +54,7 @@
         
         UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel];
@@ -66,7 +66,7 @@
         }];
         
         // maxY视图不需要和bottom布局，默认平齐，可设置底部间距
-        self.fwMaxYViewPadding = 15;
+        self.fw.maxYViewPadding = 15;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         [imageView fwSetContentModeAspectFill];
@@ -125,9 +125,9 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor fwRandomColor];
-        self.fwMaxYViewPadding = 15;
+        self.fw.maxYViewPadding = 15;
         
-        UILabel *titleLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
         titleLabel.numberOfLines = 0;
         _titleLabel = titleLabel;
         [self addSubview:titleLabel];
@@ -218,7 +218,7 @@
         [self fwHideSkeleton];
         
         self.collectionView.fwDelegate.collectionData = @[@[[self randomObject], [self randomObject]]];
-        [self.collectionView fwClearSizeCache];
+        [self.collectionView.fw clearSizeCache];
         [self.collectionView fwReloadDataWithoutAnimation];
         
         [self.collectionView fwEndRefreshing];
@@ -242,7 +242,7 @@
 
 - (TestCollectionCreateObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -281,9 +281,9 @@
     });
     
     TestCollectionCreateObject *object = [TestCollectionCreateObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }

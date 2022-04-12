@@ -25,7 +25,7 @@
 
 - (void)fwReloadDataWithoutCache
 {
-    [self fwClearSizeCache];
+    [self.fw clearSizeCache];
     [self reloadData];
 }
 

@@ -310,7 +310,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;

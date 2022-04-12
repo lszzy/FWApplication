@@ -35,10 +35,10 @@ extension UITabBarController: UITabBarControllerDelegate {
     // MARK: - Private
     private func setupController() {
         delegate = self
-        tabBar.fwIsTranslucent = Theme.isBarTranslucent
-        tabBar.fwShadowColor = nil
-        tabBar.fwForegroundColor = Theme.textColor
-        tabBar.fwBackgroundColor = Theme.isBarTranslucent ? Theme.barColor.fwColor(withAlpha: 0.5) : Theme.barColor
+        tabBar.fw.isTranslucent = Theme.isBarTranslucent
+        tabBar.fw.shadowColor = nil
+        tabBar.fw.foregroundColor = Theme.textColor
+        tabBar.fw.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(withAlpha: 0.5) : Theme.barColor
         
         let homeController = HomeViewController()
         homeController.hidesBottomBarWhenPushed = false

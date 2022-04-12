@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBar.fwBackgroundTransparent = YES;
+    self.navigationController.navigationBar.fw.backgroundTransparent = YES;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -78,14 +78,14 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    _bgView.fwY = -scrollView.contentOffset.y;
+    _bgView.fw.y = -scrollView.contentOffset.y;
 }
 
 #pragma mark - TableView
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];

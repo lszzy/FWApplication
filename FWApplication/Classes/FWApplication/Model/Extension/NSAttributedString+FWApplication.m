@@ -158,7 +158,7 @@
         }
     }
     
-    return [self fwAttributedStringWithHtmlString:htmlString];
+    return [self.fw attributedStringWithHtmlString:htmlString];
 }
 
 + (FWThemeObject<NSAttributedString *> *)fwThemeObjectWithHtmlString:(NSString *)htmlString defaultAttributes:(NSDictionary<NSAttributedStringKey,id> *)attributes
@@ -168,8 +168,8 @@
     if (attributes != nil) {
         UIColor *textColor = attributes[NSForegroundColorAttributeName];
         if (textColor != nil) {
-            lightAttributes[NSForegroundColorAttributeName] = [textColor fwColorForStyle:FWThemeStyleLight];
-            darkAttributes[NSForegroundColorAttributeName] = [textColor fwColorForStyle:FWThemeStyleDark];
+            lightAttributes[NSForegroundColorAttributeName] = [textColor.fw colorForStyle:FWThemeStyleLight];
+            darkAttributes[NSForegroundColorAttributeName] = [textColor.fw colorForStyle:FWThemeStyleDark];
         }
         UIFont *font = attributes[NSFontAttributeName];
         if (font != nil) {

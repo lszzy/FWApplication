@@ -153,9 +153,9 @@
 {
     if (!scrollView.scrollEnabled) return NO;
     if (self.isVertical) {
-        if (![scrollView fwCanScrollVertical]) return NO;
+        if (![scrollView.fw canScrollVertical]) return NO;
     } else {
-        if (![scrollView fwCanScrollHorizontal]) return NO;
+        if (![scrollView.fw canScrollHorizontal]) return NO;
     }
     return YES;
 }
@@ -278,11 +278,11 @@
     if (scrollView != self.scrollView || !self.gestureRecognizer.enabled) return;
     if (![self canScroll:self.scrollView]) return;
     
-    if ([self.scrollView fwIsScrollToEdge:self.scrollEdge]) {
+    if ([self.scrollView.fw isScrollToEdge:self.scrollEdge]) {
         self.panDisabled = NO;
     }
     if (!self.panDisabled) {
-        [self.scrollView fwScrollToEdge:self.scrollEdge animated:NO];
+        [self.scrollView.fw scrollToEdge:self.scrollEdge animated:NO];
     }
 }
 

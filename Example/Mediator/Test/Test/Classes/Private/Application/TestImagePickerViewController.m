@@ -29,26 +29,26 @@
         UIImage *accessoryImage = [[bezierPath fwShapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         pickerController.titleAccessoryImage = accessoryImage;
         
-        BOOL showsCheckedIndexLabel = [@[@YES, @NO].fwRandomObject fw].safeBool;
+        BOOL showsCheckedIndexLabel = [@[@YES, @NO].fw.randomObject fw].safeBool;
         pickerController.customCellBlock = ^(FWImagePickerCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
             cell.showsCheckedIndexLabel = showsCheckedIndexLabel;
-            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
+            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12).fw imageWithTintColor:[UIColor whiteColor]];
         };
         return pickerController;
     };
     FWImagePickerControllerImpl.sharedInstance.albumControllerBlock = ^FWImageAlbumController * _Nonnull{
         FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
         albumController.customCellBlock = ^(FWImageAlbumTableCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
-            cell.checkedMaskColor = [UIColor fwColorWithHex:0xFFFFFF alpha:0.1];
+            cell.checkedMaskColor = [UIColor.fw colorWithHex:0xFFFFFF alpha:0.1];
         };
         return albumController;
     };
     FWImagePickerControllerImpl.sharedInstance.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
         FWImagePickerPreviewController *previewController = [[FWImagePickerPreviewController alloc] init];
-        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fwRandomObject fw].safeBool;
-        previewController.showsEditButton = [@[@YES, @NO].fwRandomObject fw].safeBool;
+        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fw.randomObject fw].safeBool;
+        previewController.showsEditButton = [@[@YES, @NO].fw.randomObject fw].safeBool;
         previewController.customCellBlock = ^(FWImagePickerPreviewCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
-            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fwImageWithTintColor:[UIColor whiteColor]];
+            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12).fw imageWithTintColor:[UIColor whiteColor]];
         };
         return previewController;
     };
@@ -57,9 +57,9 @@
         cropController.aspectRatioPickerButtonHidden = YES;
         cropController.cropView.backgroundColor = UIColor.blackColor;
         cropController.toolbar.tintColor = UIColor.whiteColor;
-        [cropController.toolbar.cancelTextButton fwSetImage:FWIconImage(@"ion-android-close", 22)];
+        [cropController.toolbar.cancelTextButton.fw setImage:FWIconImage(@"ion-android-close", 22)];
         [cropController.toolbar.cancelTextButton setTitle:nil forState:UIControlStateNormal];
-        [cropController.toolbar.doneTextButton fwSetImage:FWIconImage(@"ion-android-done", 22)];
+        [cropController.toolbar.doneTextButton.fw setImage:FWIconImage(@"ion-android-done", 22)];
         [cropController.toolbar.doneTextButton setTitle:nil forState:UIControlStateNormal];
         return cropController;
     };
@@ -105,7 +105,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;

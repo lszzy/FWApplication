@@ -158,7 +158,7 @@
 {
     objc_setAssociatedObject(self, @selector(fwBackgroundColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    self.backgroundImage = [UIImage fwImageWithColor:color];
+    self.backgroundImage = [UIImage.fw imageWithColor:color];
 }
 
 - (UIColor *)fwTextFieldBackgroundColor

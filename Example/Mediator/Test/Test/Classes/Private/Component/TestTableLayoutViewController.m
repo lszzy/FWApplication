@@ -51,7 +51,7 @@
         bgView.backgroundColor = [Theme cellColor];
         bgView.layer.masksToBounds = NO;
         bgView.layer.cornerRadius = 10;
-        [bgView fwSetShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:5];
+        [bgView.fw setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:5];
         [self.contentView addSubview:bgView];
         bgView.fw.layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
         
@@ -63,7 +63,7 @@
         
         UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [bgView addSubview:titleLabel]; {
@@ -76,7 +76,7 @@
         
         UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [bgView addSubview:textLabel]; {
@@ -89,7 +89,7 @@
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         imageView.userInteractionEnabled = YES;
-        [imageView fwAddTapGestureWithTarget:self action:@selector(onImageClick:)];
+        [imageView.fw addTapGestureWithTarget:self action:@selector(onImageClick:)];
         [bgView addSubview:imageView]; {
             [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
             [imageView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
@@ -142,7 +142,7 @@
 
 - (void)renderView
 {
-    self.isShort = [@[@0, @1].fwRandomObject fw].safeInteger == 0;
+    self.isShort = [@[@0, @1].fw.randomObject fw].safeInteger == 0;
     FWWeakifySelf();
     [self.tableView fwSetRefreshingBlock:^{
         FWStrongifySelf();
@@ -243,7 +243,7 @@
 
 - (TestTableLayoutObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -282,9 +282,9 @@
     });
     
     TestTableLayoutObject *object = [TestTableLayoutObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }

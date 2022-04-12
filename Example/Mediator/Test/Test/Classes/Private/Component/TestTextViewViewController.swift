@@ -11,35 +11,35 @@ import FWApplication
 @objcMembers class TestTextViewViewController: TestViewController {
     private lazy var textView: UITextView = {
         let result = UITextView(frame: CGRect(x: 16, y: 16, width: FWScreenWidth - 32, height: 44))
-        result.fwPlaceholder = "我是TextView1"
-        result.fwSetBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
-        result.fwAutoHeightEnabled = true
-        result.fwMaxLength = 100
-        result.fwMinHeight = 44
-        result.fwTouchResign = true
-        result.fwVerticalAlignment = .center
+        result.fw.placeholder = "我是TextView1"
+        result.fw.setBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
+        result.fw.autoHeightEnabled = true
+        result.fw.maxLength = 100
+        result.fw.minHeight = 44
+        result.fw.touchResign = true
+        result.fw.verticalAlignment = .center
         return result
     }()
     
     private lazy var textView2: UITextView = {
         let result = UITextView()
-        result.fwPlaceholder = "我是TextView2\n我有两行"
-        result.fwSetBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
-        result.fwMinHeight = 44
-        result.fwAutoHeight(withMaxHeight: 100) { height in
+        result.fw.placeholder = "我是TextView2\n我有两行"
+        result.fw.setBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
+        result.fw.minHeight = 44
+        result.fw.autoHeight(withMaxHeight: 100) { height in
             result.fw.layoutChain.height(height)
         }
-        result.fwTouchResign = true
-        result.fwVerticalAlignment = .center
+        result.fw.touchResign = true
+        result.fw.verticalAlignment = .center
         return result
     }()
     
     private lazy var textView3: UITextView = {
         let result = UITextView()
-        result.fwPlaceholder = "我是TextView2\n我是第二行\n我是第三行"
-        result.fwSetBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
-        result.fwTouchResign = true
-        result.fwVerticalAlignment = .center
+        result.fw.placeholder = "我是TextView2\n我是第二行\n我是第三行"
+        result.fw.setBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
+        result.fw.touchResign = true
+        result.fw.verticalAlignment = .center
         return result
     }()
     
@@ -60,9 +60,9 @@ import FWApplication
                 } else if index == 2 {
                     verticalAlignment = .bottom
                 }
-                self?.textView.fwVerticalAlignment = verticalAlignment
-                self?.textView2.fwVerticalAlignment = verticalAlignment
-                self?.textView3.fwVerticalAlignment = verticalAlignment
+                self?.textView.fw.verticalAlignment = verticalAlignment
+                self?.textView2.fw.verticalAlignment = verticalAlignment
+                self?.textView3.fw.verticalAlignment = verticalAlignment
             })
         }
     }

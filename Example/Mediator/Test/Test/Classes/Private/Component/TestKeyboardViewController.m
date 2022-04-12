@@ -37,14 +37,14 @@ FWPropertyAssign(BOOL, canScroll);
     
     UITextField *textFieldAppearance = [UITextField appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
     UITextView *textViewAppearance = [UITextView appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
-    textFieldAppearance.fwKeyboardManager = YES;
-    textFieldAppearance.fwTouchResign = YES;
-    textFieldAppearance.fwKeyboardResign = YES;
-    textViewAppearance.fwKeyboardManager = YES;
-    textViewAppearance.fwTouchResign = YES;
-    textViewAppearance.fwKeyboardResign = YES;
-    textFieldAppearance.fwKeyboardScrollView = keyboardScrollView ? self.scrollView : nil;
-    textViewAppearance.fwKeyboardScrollView = keyboardScrollView ? self.scrollView : nil;
+    textFieldAppearance.fw.keyboardManager = YES;
+    textFieldAppearance.fw.touchResign = YES;
+    textFieldAppearance.fw.keyboardResign = YES;
+    textViewAppearance.fw.keyboardManager = YES;
+    textViewAppearance.fw.touchResign = YES;
+    textViewAppearance.fw.keyboardResign = YES;
+    textFieldAppearance.fw.keyboardScrollView = keyboardScrollView ? self.scrollView : nil;
+    textViewAppearance.fw.keyboardScrollView = keyboardScrollView ? self.scrollView : nil;
     if (keyboardScrollView) {
         self.navigationItem.title = @"UIScrollView+FWKeyboard";
     }
@@ -53,7 +53,7 @@ FWPropertyAssign(BOOL, canScroll);
     UITextField *mobileField = [self createTextField];
     self.mobileField = mobileField;
     mobileField.delegate = self;
-    mobileField.fwMaxUnicodeLength = 10;
+    mobileField.fw.maxUnicodeLength = 10;
     mobileField.placeholder = @"昵称，最多10个中文";
     mobileField.keyboardType = UIKeyboardTypeDefault;
     mobileField.returnKeyType = UIReturnKeyNext;
@@ -65,16 +65,16 @@ FWPropertyAssign(BOOL, canScroll);
     UITextField *passwordField = [self createTextField];
     self.passwordField = passwordField;
     passwordField.delegate = self;
-    passwordField.fwMaxLength = 20;
+    passwordField.fw.maxLength = 20;
     passwordField.fwMenuDisabled = YES;
     passwordField.placeholder = @"密码，最多20个英文";
     passwordField.keyboardType = UIKeyboardTypeDefault;
     passwordField.returnKeyType = UIReturnKeyNext;
-    mobileField.fwReturnResponder = passwordField;
+    mobileField.fw.returnResponder = passwordField;
     passwordField.secureTextEntry = YES;
     passwordField.delegate = self;
     FWWeakifySelf();
-    [passwordField fwAddToolbar:UIBarStyleDefault title:@"Next" block:^(id sender) {
+    [passwordField.fw addToolbar:UIBarStyleDefault title:@"Next" block:^(id sender) {
         FWStrongifySelf();
         [self.textView becomeFirstResponder];
     }];
@@ -86,10 +86,10 @@ FWPropertyAssign(BOOL, canScroll);
     self.textView = textView;
     textView.delegate = self;
     textView.backgroundColor = [Theme backgroundColor];
-    textView.fwMaxUnicodeLength = 10;
-    textView.fwPlaceholder = @"问题，最多10个中文";
+    textView.fw.maxUnicodeLength = 10;
+    textView.fw.placeholder = @"问题，最多10个中文";
     textView.returnKeyType = UIReturnKeyNext;
-    passwordField.fwReturnResponder = textView;
+    passwordField.fw.returnResponder = textView;
     [self.contentView addSubview:textView];
     [textView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:passwordField withOffset:15];
     [textView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
@@ -97,15 +97,15 @@ FWPropertyAssign(BOOL, canScroll);
     UITextView *inputView = [self createTextView];
     self.inputView = inputView;
     inputView.backgroundColor = [Theme backgroundColor];
-    inputView.fwMaxLength = 20;
+    inputView.fw.maxLength = 20;
     inputView.fwMenuDisabled = YES;
-    inputView.fwPlaceholder = @"建议，最多20个英文";
+    inputView.fw.placeholder = @"建议，最多20个英文";
     inputView.returnKeyType = UIReturnKeyDone;
-    inputView.fwReturnResign = YES;
-    inputView.fwKeyboardSpacing = 80;
-    textView.fwReturnResponder = inputView;
-    inputView.fwDelegate = self;
-    [inputView fwAddToolbar:UIBarStyleDefault title:@"Done" block:nil];
+    inputView.fw.returnResign = YES;
+    inputView.fw.keyboardSpacing = 80;
+    textView.fw.returnResponder = inputView;
+    inputView.fw.delegate = self;
+    [inputView.fw addToolbar:UIBarStyleDefault title:@"Done" block:nil];
     [self.contentView addSubview:inputView];
     [inputView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
     [inputView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
@@ -113,7 +113,7 @@ FWPropertyAssign(BOOL, canScroll);
     UIButton *submitButton = [Theme largeButton];
     self.submitButton = submitButton;
     [submitButton setTitle:@"提交" forState:UIControlStateNormal];
-    [submitButton fwAddTouchTarget:self action:@selector(onSubmit)];
+    [submitButton.fw addTouchTarget:self action:@selector(onSubmit)];
     [self.contentView addSubview:submitButton];
     [submitButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:inputView withOffset:15];
     [submitButton.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
@@ -123,7 +123,7 @@ FWPropertyAssign(BOOL, canScroll);
 - (void)renderModel
 {
     FWWeakifySelf();
-    self.mobileField.fwAutoCompleteBlock = ^(NSString * _Nonnull text) {
+    self.mobileField.fw.autoCompleteBlock = ^(NSString * _Nonnull text) {
         FWStrongifySelf();
         if (text.length < 1) {
             [self.popupMenu dismiss];
@@ -132,14 +132,14 @@ FWPropertyAssign(BOOL, canScroll);
             self.popupMenu = [FWPopupMenu showRelyOnView:self.mobileField
                                                   titles:@[text]
                                                    icons:nil
-                                               menuWidth:self.mobileField.fwWidth
+                                               menuWidth:self.mobileField.fw.width
                                            otherSettings:^(FWPopupMenu * _Nonnull popupMenu) {
                 popupMenu.showMaskView = NO;
             }];
         }
     };
     
-    self.inputView.fwAutoCompleteBlock = ^(NSString * _Nonnull text) {
+    self.inputView.fw.autoCompleteBlock = ^(NSString * _Nonnull text) {
         FWStrongifySelf();
         if (text.length < 1) {
             [self.popupMenu dismiss];
@@ -148,7 +148,7 @@ FWPropertyAssign(BOOL, canScroll);
             self.popupMenu = [FWPopupMenu showRelyOnView:self.inputView
                                                   titles:@[text]
                                                    icons:nil
-                                               menuWidth:self.inputView.fwWidth
+                                               menuWidth:self.inputView.fw.width
                                            otherSettings:^(FWPopupMenu * _Nonnull popupMenu) {
                 popupMenu.showMaskView = NO;
             }];
@@ -173,11 +173,11 @@ FWPropertyAssign(BOOL, canScroll);
 - (UITextView *)createTextView
 {
     UITextView *textView = [UITextView new];
-    textView.font = [UIFont fwFontOfSize:15];
+    textView.font = [UIFont.fw fontOfSize:15];
     textView.textColor = [Theme textColor];
     textView.fwCursorColor = Theme.textColor;
     textView.fwCursorRect = CGRectMake(0, 0, 2, 0);
-    [textView fwSetBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
+    [textView.fw setBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
     [textView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
     [textView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     return textView;
@@ -186,12 +186,12 @@ FWPropertyAssign(BOOL, canScroll);
 - (UITextField *)createTextField
 {
     UITextField *textField = [UITextField new];
-    textField.font = [UIFont fwFontOfSize:15];
+    textField.font = [UIFont.fw fontOfSize:15];
     textField.textColor = [Theme textColor];
     textField.fwCursorColor = Theme.textColor;
     textField.fwCursorRect = CGRectMake(0, 0, 2, 0);
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [textField fwSetBorderView:UIRectEdgeBottom color:[Theme borderColor] width:0.5];
+    [textField.fw setBorderView:UIRectEdgeBottom color:[Theme borderColor] width:0.5];
     [textField.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
     [textField.fw setDimension:NSLayoutAttributeHeight toSize:50];
     return textField;

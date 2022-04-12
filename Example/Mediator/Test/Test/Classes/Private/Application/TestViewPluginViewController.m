@@ -44,7 +44,7 @@
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
     NSInteger rowData = [sectionData[indexPath.row] fw].safeInteger;
     if (indexPath.section == 0) {
-        UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+        UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FWProgressView *view = [cell viewWithTag:100];
         if (!view) {
@@ -61,7 +61,7 @@
         return cell;
     }
     
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FWIndicatorView *view = [cell viewWithTag:100];
     if (!view) {

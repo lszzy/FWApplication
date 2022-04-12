@@ -31,7 +31,7 @@ class TestNavigationTabBarChildController: TestViewController {
         view.backgroundColor = UIColor.fwRandom
         view.addSubview(navigationView)
         navigationView.fw.layoutChain.left().right().top()
-        view.fwAddTapGesture { [weak self] sender in
+        view.fw.addTapGesture { [weak self] sender in
             let viewController = TestNavigationTabBarChildController()
             var title = FWSafeString(self?.title)
             if let index = title.firstIndex(of: "-") {
@@ -65,7 +65,7 @@ class TestNavigationTabBarChildController: TestViewController {
     private lazy var homeButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_home"), title: "首页")
         result.titleLabel?.font = FWFontRegular(10)
-        result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
+        result.fw.addTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 1
         return result
     }()
@@ -73,7 +73,7 @@ class TestNavigationTabBarChildController: TestViewController {
     private lazy var testButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_test"), title: "测试")
         result.titleLabel?.font = FWFontRegular(10)
-        result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
+        result.fw.addTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 2
         return result
     }()
@@ -81,7 +81,7 @@ class TestNavigationTabBarChildController: TestViewController {
     private lazy var settingsButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_settings"), title: "设置")
         result.titleLabel?.font = FWFontRegular(10)
-        result.fwAddTouchTarget(self, action: #selector(onButtonClicked(_:)))
+        result.fw.addTouchTarget(self, action: #selector(onButtonClicked(_:)))
         result.tag = 3
         return result
     }()
@@ -109,11 +109,11 @@ class TestNavigationTabBarChildController: TestViewController {
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         homeButton.contentEdgeInsets = UIEdgeInsets(top: FWIsLandscape ? 2 : 8, left: 8, bottom: FWIsLandscape ? 2 : 8, right: 8)
-        homeButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        homeButton.fw.setImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
         testButton.contentEdgeInsets = homeButton.contentEdgeInsets
-        testButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        testButton.fw.setImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
         settingsButton.contentEdgeInsets = homeButton.contentEdgeInsets
-        settingsButton.fwSetImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
+        settingsButton.fw.setImageEdge(FWIsLandscape ? .left : .top, spacing: FWIsLandscape ? 4 : 2)
     }
     
     override func renderView() {

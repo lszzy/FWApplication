@@ -79,14 +79,14 @@ import FWApplication
             fromValue = 0.6
             toValue = 1
         default:
-            let lightColor = UIColor.fwColor(withHex: 0xEEEEEE)
+            let lightColor = UIColor.fw.color(withHex: 0xEEEEEE)
             let lightBrightness: CGFloat = 0.92
-            let darkColor = UIColor.fwColor(withHex: 0x282828)
+            let darkColor = UIColor.fw.color(withHex: 0x282828)
             let darkBrightness: CGFloat = 0.5
             colors = [
-                UIColor.fwThemeLight(lightColor, dark: darkColor),
-                UIColor.fwThemeLight(lightColor.fwBrightnessColor(lightBrightness), dark: darkColor.fwBrightnessColor(darkBrightness)),
-                UIColor.fwThemeLight(lightColor, dark: darkColor)
+                UIColor.fw.themeLight(lightColor, dark: darkColor),
+                UIColor.fw.themeLight(lightColor.fwBrightnessColor(lightBrightness), dark: darkColor.fwBrightnessColor(darkBrightness)),
+                UIColor.fw.themeLight(lightColor, dark: darkColor)
             ]
         }
     }
@@ -158,7 +158,7 @@ import FWApplication
         default:
             let startAnimation = CABasicAnimation(keyPath: "startPoint")
             let endAnimation = CABasicAnimation(keyPath: "endPoint")
-            gradientLayer.fwThemeColors = colors
+            gradientLayer.fw.themeColors = colors
             switch direction {
             case .right:
                 startAnimation.fromValue = NSValue(cgPoint: CGPoint(x:-1, y:0.5))
@@ -212,9 +212,9 @@ import FWApplication
     public var animation: FWSkeletonAnimationProtocol?
     
     /// 骨架背景色，默认自动适配
-    public var backgroundColor: UIColor = UIColor.fwThemeLight(UIColor.white, dark: UIColor.black)
+    public var backgroundColor: UIColor = UIColor.fw.themeLight(UIColor.white, dark: UIColor.black)
     /// 骨架颜色，默认自动适配
-    public var skeletonColor: UIColor = UIColor.fwThemeLight(UIColor.fwColor(withHex: 0xEEEEEE), dark: UIColor.fwColor(withHex: 0x282828))
+    public var skeletonColor: UIColor = UIColor.fw.themeLight(UIColor.fw.color(withHex: 0xEEEEEE), dark: UIColor.fw.color(withHex: 0x282828))
     
     /// 多行标签行高，默认15
     public var lineHeight: CGFloat = 15
@@ -251,7 +251,7 @@ import FWApplication
     /// 骨架图片，默认空
     open var image: UIImage? {
         didSet {
-            layer.fwThemeContents = image
+            layer.fw.themeContents = image
             layer.contentsGravity = .resizeAspectFill
         }
     }
@@ -290,7 +290,7 @@ import FWApplication
     /// 开始动画
     open func startAnimating() {
         animationLayers.forEach { (gradientLayer) in
-            gradientLayer.fwThemeContext = self
+            gradientLayer.fw.themeContext = self
             animation?.skeletonAnimationStart(gradientLayer)
         }
     }
@@ -652,7 +652,7 @@ import FWApplication
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let layoutCell = tableDelegate.tableView(tableView, cellForRowAt: indexPath)
-        let cell = UITableViewCell.fwCell(with: tableView, style: .default, reuseIdentifier: "FWSkeletonCell")
+        let cell = UITableViewCell.fw.cell(with: tableView, style: .default, reuseIdentifier: "FWSkeletonCell")
         cell.selectionStyle = .none
         if let skeletonLayout = cell.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
@@ -680,7 +680,7 @@ import FWApplication
     
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let layoutHeader = tableDelegate.tableView(tableView, viewForHeaderInSection: section) else { return nil }
-        let header = UITableViewHeaderFooterView.fwHeaderFooterView(with: tableView, reuseIdentifier: "FWSkeletonHeader")
+        let header = UITableViewHeaderFooterView.fw.headerFooterView(with: tableView, reuseIdentifier: "FWSkeletonHeader")
         if let skeletonLayout = header.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
             removeAnimationView(skeletonLayout)
@@ -707,7 +707,7 @@ import FWApplication
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard let layoutFooter = tableDelegate.tableView(tableView, viewForFooterInSection: section) else { return nil }
-        let footer = UITableViewHeaderFooterView.fwHeaderFooterView(with: tableView, reuseIdentifier: "FWSkeletonFooter")
+        let footer = UITableViewHeaderFooterView.fw.headerFooterView(with: tableView, reuseIdentifier: "FWSkeletonFooter")
         if let skeletonLayout = footer.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
             removeAnimationView(skeletonLayout)
@@ -812,7 +812,7 @@ import FWApplication
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let layoutCell = collectionDelegate.collectionView(collectionView, cellForItemAt: indexPath)
-        let cell = UICollectionViewCell.fwCell(with: collectionView, indexPath: indexPath, reuseIdentifier: "FWSkeletonCell")
+        let cell = UICollectionViewCell.fw.cell(with: collectionView, indexPath: indexPath, reuseIdentifier: "FWSkeletonCell")
         if let skeletonLayout = cell.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
             removeAnimationView(skeletonLayout)
@@ -844,7 +844,7 @@ import FWApplication
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let layoutHeader = collectionDelegate.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-            let header = UICollectionReusableView.fwReusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonHeader")
+            let header = UICollectionReusableView.fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonHeader")
             if let skeletonLayout = header.viewWithTag(2052) as? FWSkeletonLayout {
                 skeletonLayout.removeFromSuperview()
                 removeAnimationView(skeletonLayout)
@@ -867,7 +867,7 @@ import FWApplication
         
         if kind == UICollectionView.elementKindSectionFooter {
             let layoutFooter = collectionDelegate.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-            let footer = UICollectionReusableView.fwReusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonFooter")
+            let footer = UICollectionReusableView.fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonFooter")
             if let skeletonLayout = footer.viewWithTag(2052) as? FWSkeletonLayout {
                 skeletonLayout.removeFromSuperview()
                 removeAnimationView(skeletonLayout)

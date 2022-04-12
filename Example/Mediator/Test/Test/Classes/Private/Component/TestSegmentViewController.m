@@ -49,7 +49,7 @@
     [progressView.fw alignCenterToSuperview];
     
     BOOL useTimestamp = YES;
-    NSString *timestampStr = useTimestamp ? [NSString stringWithFormat:@"?t=%@", @([NSDate fwCurrentTime])] : @"";
+    NSString *timestampStr = useTimestamp ? [NSString stringWithFormat:@"?t=%@", @(NSDate.fw.currentTime)] : @"";
     NSString *gifImageUrl = [NSString stringWithFormat:@"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif%@", timestampStr];
     progressView.progress = 0;
     progressView.hidden = NO;
@@ -72,7 +72,7 @@
     [activityView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:imageView withOffset:10];
     [activityView.fw setDimensionsToSize:activitySize];
     
-    UILabel *textLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+    UILabel *textLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
     textLabel.numberOfLines = 0;
     textLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:textLabel];
@@ -91,15 +91,15 @@
     attrFont = [[UIFont italicSystemFontOfSize:16] fwBoldFont];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"粗斜体16 " withFont:attrFont]];
     
-    attrFont = [UIFont fwFontOfSize:16 weight:UIFontWeightLight];
+    attrFont = [UIFont.fw fontOfSize:16 weight:UIFontWeightLight];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"\n细体16 " withFont:attrFont]];
-    attrFont = [UIFont fwFontOfSize:16 weight:UIFontWeightRegular];
+    attrFont = [UIFont.fw fontOfSize:16 weight:UIFontWeightRegular];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"常规16 " withFont:attrFont]];
-    attrFont = [UIFont fwFontOfSize:16 weight:UIFontWeightBold];
+    attrFont = [UIFont.fw fontOfSize:16 weight:UIFontWeightBold];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"粗体16 " withFont:attrFont]];
-    attrFont = [[UIFont fwFontOfSize:16 weight:UIFontWeightRegular] fwItalicFont];
+    attrFont = [[UIFont.fw fontOfSize:16 weight:UIFontWeightRegular] fwItalicFont];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"斜体16 " withFont:attrFont]];
-    attrFont = [[[[[[UIFont fwFontOfSize:16 weight:UIFontWeightBold] fwItalicFont] fwNonBoldFont] fwBoldFont] fwNonItalicFont] fwItalicFont];
+    attrFont = [[[[[[UIFont.fw fontOfSize:16 weight:UIFontWeightBold] fwItalicFont] fwNonBoldFont] fwBoldFont] fwNonItalicFont] fwItalicFont];
     [attrStr appendAttributedString:[NSAttributedString fwAttributedString:@"粗斜体16 " withFont:attrFont]];
     textLabel.attributedText = attrStr;
     
@@ -117,10 +117,10 @@
     [label appendText:@"文本 "];
     UIView *labelView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
     labelView.backgroundColor = [UIColor redColor];
-    [labelView fwSetCornerRadius:15];
+    [labelView.fw setCornerRadius:15];
     [label appendView:labelView margin:UIEdgeInsetsZero alignment:FWAttributedAlignmentCenter];
     [label appendText:@" "];
-    UIImage *image = [UIImage fwImageWithColor:[UIColor blueColor] size:CGSizeMake(30, 30)];
+    UIImage *image = [UIImage.fw imageWithColor:[UIColor blueColor] size:CGSizeMake(30, 30)];
     [label appendImage:image maxSize:image.size margin:UIEdgeInsetsZero alignment:FWAttributedAlignmentCenter];
     [label appendText:@" 结束"];
     
@@ -139,7 +139,7 @@
         [self.tagCollectionView addTag:tagName withConfig:self.textTagConfig];
     }
     
-    FWMarqueeLabel *marqueeLabel = [FWMarqueeLabel fwLabelWithFont:FWFontRegular(16) textColor:[Theme textColor] text:@"FWMarqueeLabel 会在添加到界面上后，并且文字超过 label 宽度时自动滚动"];
+    FWMarqueeLabel *marqueeLabel = [FWMarqueeLabel.fw labelWithFont:FWFontRegular(16) textColor:[Theme textColor] text:@"FWMarqueeLabel 会在添加到界面上后，并且文字超过 label 宽度时自动滚动"];
     [self.view addSubview:marqueeLabel];
     [marqueeLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:10];
     [marqueeLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:10];
@@ -158,8 +158,8 @@
     self.segmentedControl.segmentWidthStyle = FWSegmentedControlSegmentWidthStyleDynamic;
     self.segmentedControl.selectionIndicatorLocation = FWSegmentedControlSelectionIndicatorLocationBottom;
     self.segmentedControl.selectionIndicatorCornerRadius = 2.5f;
-    self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont fwFontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont fwBoldFontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
+    self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont.fw fontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
+    self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont.fw boldFontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
     [self.view addSubview:self.segmentedControl];
     [self.segmentedControl.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
     [self.segmentedControl.fw pinEdgeToSuperview:NSLayoutAttributeRight];
@@ -205,8 +205,8 @@
     tagConfig.selectedCornerRadius = 2;
     tagConfig.borderWidth = 1;
     tagConfig.selectedBorderWidth = 1;
-    tagConfig.borderColor = [UIColor fwColorWithHex:0xF3B2AF];
-    tagConfig.selectedBorderColor = [UIColor fwColorWithHex:0xF3B2AF];
+    tagConfig.borderColor = [UIColor.fw colorWithHex:0xF3B2AF];
+    tagConfig.selectedBorderColor = [UIColor.fw colorWithHex:0xF3B2AF];
     tagConfig.extraSpace = CGSizeMake(10, 6);
     tagConfig.enableGradientBackground = NO;
     return tagConfig;

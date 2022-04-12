@@ -40,14 +40,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.fwBackgroundTransparent = YES;
+    self.navigationController.navigationBar.fw.backgroundTransparent = YES;
 }
 
 - (void)renderView
 {
     self.view.backgroundColor = [Theme tableColor];
     
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 2.0, 0, FWScreenWidth / 2.0, self.view.fwHeight)];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 2.0, 0, FWScreenWidth / 2.0, self.view.fw.height)];
     _contentView = contentView;
     contentView.backgroundColor = [UIColor brownColor];
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 200, 100, 30)];
@@ -63,7 +63,7 @@
     closeLabel.text = @"Back";
     FWWeakifySelf();
     closeLabel.userInteractionEnabled = YES;
-    [closeLabel fwAddTapGestureWithBlock:^(id sender) {
+    [closeLabel.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         [self.fw closeViewControllerAnimated:YES];
     }];

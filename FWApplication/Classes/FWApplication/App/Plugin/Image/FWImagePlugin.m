@@ -147,7 +147,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
         return [imagePlugin fwImageEncode:image options:options];
     }
     
-    if (image.fwHasAlpha) {
+    if (image.fw.hasAlpha) {
         return UIImagePNGRepresentation(image);
     } else {
         return UIImageJPEGRepresentation(image, 1);

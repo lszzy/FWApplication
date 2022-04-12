@@ -20,7 +20,7 @@ import FWApplication
     private lazy var clearButton: UIButton = {
         let button = Theme.largeButton()
         button.setTitle("Clear", for: .normal)
-        button.fwAddTouch { [weak self] (sender) in
+        button.fw.addTouch { [weak self] (sender) in
             self?.signatureView.clear()
         }
         return button
@@ -29,7 +29,7 @@ import FWApplication
     private lazy var saveButton: UIButton = {
         let button = Theme.largeButton()
         button.setTitle("Save", for: .normal)
-        button.fwAddTouch { [weak self] (sender) in
+        button.fw.addTouch { [weak self] (sender) in
             if let image = self?.signatureView.getSignature(scale: 10) {
                 image.fwSave(block: nil)
                 self?.signatureView.clear()

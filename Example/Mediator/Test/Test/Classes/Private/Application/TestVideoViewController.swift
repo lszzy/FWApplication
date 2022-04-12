@@ -27,7 +27,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     private lazy var closeButton: FWToolbarButton = {
         let result = FWToolbarButton(image: FWIcon.closeImage)
         result.tintColor = Theme.textColor
-        result.fwAddTouch { sender in
+        result.fw.addTouch { sender in
             FWRouter.closeViewController(animated: true)
         }
         return result
@@ -36,7 +36,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     private lazy var playButton: FWToolbarButton = {
         let result = FWToolbarButton(image: FWIconImage("octicon-playback-play", 24))
         result.tintColor = Theme.textColor
-        result.fwAddTouch { [weak self] sender in
+        result.fw.addTouch { [weak self] sender in
             guard let player = self?.videoPlayer else { return }
             
             if player.playbackState == .playing {

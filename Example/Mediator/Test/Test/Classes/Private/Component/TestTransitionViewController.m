@@ -60,7 +60,7 @@
     // 添加视图
     UIButton *button = [[UIButton alloc] init];
     button.backgroundColor = [Theme cellColor];
-    button.titleLabel.font = [UIFont fwFontOfSize:15];
+    button.titleLabel.font = [UIFont.fw fontOfSize:15];
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"点击背景关闭" forState:UIControlStateNormal];
     [footerView addSubview:button];
@@ -89,7 +89,7 @@
     self.view.backgroundColor = self.navigationController ? [Theme tableColor] : [[Theme tableColor] colorWithAlphaComponent:0.9];
     
     // 点击背景关闭，默认子视图也会响应，解决方法：子视图设为UIButton或子视图添加空手势事件
-    [self.view fwAddTapGestureWithBlock:^(id sender) {
+    [self.view.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         [self.fw closeViewControllerAnimated:!self.noAnimate];
     }];
@@ -162,7 +162,7 @@ FWDealloc();
     childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
-    [contentView fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [contentView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (self.useAnimator) {
             [self configAnimator];
@@ -239,7 +239,7 @@ FWDealloc();
     
     FWWeakifySelf();
     self.view.backgroundColor = [[Theme backgroundColor] colorWithAlphaComponent:0.5];
-    [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self dismiss];
     }];
@@ -329,7 +329,7 @@ FWDealloc();
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *cellData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [cellData objectAtIndex:0];
     return cell;

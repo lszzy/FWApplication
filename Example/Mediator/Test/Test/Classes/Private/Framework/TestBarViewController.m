@@ -28,7 +28,7 @@
     } else if (self.index < 3) {
         self.fwNavigationBarStyle = FWNavigationBarStyleTransparent;
     } else {
-        self.fwNavigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)] fwRandomObject] integerValue];
+        self.fwNavigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)].fw randomObject] integerValue];
         self.fwNavigationBarHidden = self.fwNavigationBarStyle == -1;
     }
     self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fwNavigationBarStyle)];
@@ -40,7 +40,7 @@
         viewController.index = self.index + 1;
         [self.navigationController pushViewController:viewController animated:YES];
     }];
-    [self.view fwAddTapGestureWithBlock:^(id sender) {
+    [self.view.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         TestBarSubViewController *viewController = [TestBarSubViewController new];
         viewController.index = self.index + 1;
@@ -112,7 +112,7 @@ FWPropertyAssign(BOOL, hideToast);
     self.frameLabel = frameLabel;
     frameLabel.numberOfLines = 0;
     frameLabel.textColor = [Theme textColor];
-    frameLabel.font = [UIFont fwFontOfSize:15];
+    frameLabel.font = [UIFont.fw fontOfSize:15];
     frameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:frameLabel]; {
         frameLabel.fw.layoutChain.leftWithInset(10).rightWithInset(10)
@@ -158,7 +158,7 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -240,7 +240,7 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onTitleColor
 {
-    self.navigationController.navigationBar.fwTitleColor = self.navigationController.navigationBar.fwTitleColor ? nil : Theme.buttonColor;
+    self.navigationController.navigationBar.fw.titleColor = self.navigationController.navigationBar.fw.titleColor ? nil : Theme.buttonColor;
 }
 
 - (void)onLargeTitle
@@ -258,8 +258,8 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)onToolBar
 {
     if (self.fwToolBarHidden) {
-        UIBarButtonItem *item = [UIBarButtonItem fwBarItemWithObject:@(UIBarButtonSystemItemCancel) target:self action:@selector(onToolBar)];
-        UIBarButtonItem *item2 = [UIBarButtonItem fwBarItemWithObject:@(UIBarButtonSystemItemDone) target:self action:@selector(onPresent)];
+        UIBarButtonItem *item = [UIBarButtonItem.fw itemWithObject:@(UIBarButtonSystemItemCancel) target:self action:@selector(onToolBar)];
+        UIBarButtonItem *item2 = [UIBarButtonItem.fw itemWithObject:@(UIBarButtonSystemItemDone) target:self action:@selector(onPresent)];
         self.toolbarItems = @[item, item2];
         self.fwToolBarHidden = NO;
     } else {
@@ -274,7 +274,7 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.fwPresentationDidDismiss = ^{
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fwCompletionHandler = ^(id  _Nullable result) {
+    viewController.fw.completionHandler = ^(id  _Nullable result) {
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
@@ -295,7 +295,7 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.fwPresentationDidDismiss = ^{
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fwCompletionHandler = ^(id  _Nullable result) {
+    viewController.fw.completionHandler = ^(id  _Nullable result) {
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
@@ -311,7 +311,7 @@ FWPropertyAssign(BOOL, hideToast);
     navController.fwPresentationDidDismiss = ^{
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    navController.fwCompletionHandler = ^(id  _Nullable result) {
+    navController.fw.completionHandler = ^(id  _Nullable result) {
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:navController animated:YES completion:nil];
@@ -332,11 +332,11 @@ FWPropertyAssign(BOOL, hideToast);
         controller.permittedArrowDirections = UIPopoverArrowDirectionUp;
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         controller.passthroughViews = [NSArray arrayWithObjects:cell, nil];
-    } shouldDismiss:[@[@0, @1].fwRandomObject fw].safeBool];
+    } shouldDismiss:[@[@0, @1].fw.randomObject fw].safeBool];
     viewController.fwPresentationDidDismiss = ^{
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fwCompletionHandler = ^(id  _Nullable result) {
+    viewController.fw.completionHandler = ^(id  _Nullable result) {
         [UIWindow.fw.mainWindow fwShowMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:viewController animated:YES completion:nil];

@@ -88,7 +88,7 @@
 - (void)fwShowImageCameraWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -101,7 +101,7 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(id _Nullable, id _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -114,7 +114,7 @@
 - (void)fwShowImagePickerWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -126,7 +126,7 @@
                               allowsEditing:(BOOL)allowsEditing
                                  completion:(void (^)(NSArray<UIImage *> * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
@@ -141,7 +141,7 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    UIViewController *ctrl = self.fwViewController;
+    UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }

@@ -1115,7 +1115,7 @@
     } else {
         button = [[FWToolbarButton alloc] initWithTitle:object];
     }
-    if (block) [button fwAddTouchBlock:block];
+    if (block) [button.fw addTouchBlock:block];
     return button;
 }
 
@@ -1179,9 +1179,9 @@
     
     if (image && [self imageForState:state] != image) {
         if (state == UIControlStateNormal) {
-            self.highlightedImage = [[image fwImageWithAlpha:0.2f] imageWithRenderingMode:image.renderingMode];
+            self.highlightedImage = [[image.fw imageWithAlpha:0.2f] imageWithRenderingMode:image.renderingMode];
             [self setImage:self.highlightedImage forState:UIControlStateHighlighted];
-            self.disabledImage = [[image fwImageWithAlpha:0.2f] imageWithRenderingMode:image.renderingMode];
+            self.disabledImage = [[image.fw imageWithAlpha:0.2f] imageWithRenderingMode:image.renderingMode];
             [self setImage:self.disabledImage forState:UIControlStateDisabled];
         } else {
             if (image != self.highlightedImage && image != self.disabledImage) {

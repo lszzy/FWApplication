@@ -319,7 +319,7 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             FWOAuthCredential *credential = [[FWOAuthCredential alloc] initWithOAuthToken:@"oauth_token" tokenType:@"token_type"];
-            [credential setRefreshToken:@"refresh_token" expiration:[NSDate dateWithTimeIntervalSince1970:NSDate.fwCurrentTime + 60]];
+            [credential setRefreshToken:@"refresh_token" expiration:[NSDate dateWithTimeIntervalSince1970:NSDate.fw.currentTime + 60]];
             [FWOAuthCredential storeCredential:credential withIdentifier:identifier];
             self.label2.text = [credentialText stringByAppendingString:@"stored"];
             

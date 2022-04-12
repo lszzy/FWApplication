@@ -24,7 +24,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView)
+        let cell = UITableViewCell.fw.cell(with: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -150,7 +150,7 @@ import FWApplication
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         var label = cell.contentView.viewWithTag(100) as? UILabel
         if label == nil {
-            let textLabel = UILabel.fwLabel(with: .systemFont(ofSize: 16), textColor: .white)
+            let textLabel = UILabel.fw.label(with: .systemFont(ofSize: 16), textColor: .white)
             label = textLabel
             textLabel.tag = 100
             cell.contentView.addSubview(textLabel)

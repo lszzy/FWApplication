@@ -25,7 +25,7 @@
         if (self.transitionType > 8) {
             self.backgroundColor = [UIColor clearColor];
         } else {
-            self.backgroundColor = [UIColor fwColorWithHex:0x000000 alpha:0.5];
+            self.backgroundColor = [UIColor.fw colorWithHex:0x000000 alpha:0.5];
         }
         
         self.bottomView = [UIView new];
@@ -38,10 +38,10 @@
         }
         
         FWWeakifySelf();
-        [self fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+        [self.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
             FWStrongifySelf();
             if (self.transitionType > 8) {
-                [self.fwViewController dismissViewControllerAnimated:YES completion:nil];
+                [self.fw.viewController dismissViewControllerAnimated:YES completion:nil];
                 return;
             }
             
@@ -99,7 +99,7 @@
     self.fwNavigationBarHidden = YES;
     self.view.backgroundColor = [UIColor clearColor];
     FWWeakifySelf();
-    [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.fw closeViewControllerAnimated:YES];
     }];
@@ -118,7 +118,7 @@
     NSString *buttonTitle = self.navigationController ? @"支持push" : @"不支持push";
     [button setTitle:buttonTitle forState:UIControlStateNormal];
     [self.bottomView addSubview:button];
-    [button fwAddTouchBlock:^(id  _Nonnull sender) {
+    [button.fw addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         TestAnimationChildController *animationController = [TestAnimationChildController new];
         animationController.transitionType = self.transitionType;
@@ -174,21 +174,21 @@ FWDefLazyProperty(UIView *, animationView, {
 {
     UIButton *button = [Theme largeButton];
     [button setTitle:@"转场动画" forState:UIControlStateNormal];
-    [button fwAddTouchTarget:self action:@selector(onPresent)];
+    [button.fw addTouchTarget:self action:@selector(onPresent)];
     [self.view addSubview:button];
     [button.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
     [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button2 = [Theme largeButton];
     [button2 setTitle:@"切换拖动" forState:UIControlStateNormal];
-    [button2 fwAddTouchTarget:self action:@selector(onDrag:)];
+    [button2.fw addTouchTarget:self action:@selector(onDrag:)];
     [self.view addSubview:button2];
     [button2.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
     [button2.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button3 = [Theme largeButton];
     [button3 setTitle:@"切换动画" forState:UIControlStateNormal];
-    [button3 fwAddTouchTarget:self action:@selector(onAnimation:)];
+    [button3.fw addTouchTarget:self action:@selector(onAnimation:)];
     [self.view addSubview:button3];
     [button3.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
     [button3.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];

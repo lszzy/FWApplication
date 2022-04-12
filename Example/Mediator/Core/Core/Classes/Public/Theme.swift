@@ -15,35 +15,35 @@ import FWApplication
     public static var isBarTranslucent: Bool
     
     public static var backgroundColor: UIColor {
-        UIColor.fwThemeLight(.white, dark: .black)
+        UIColor.fw.themeLight(.white, dark: .black)
     }
     public static var textColor: UIColor {
-        UIColor.fwThemeLight(.black, dark: .white)
+        UIColor.fw.themeLight(.black, dark: .white)
     }
     public static var detailColor: UIColor {
-        UIColor.fwThemeLight(UIColor.black.withAlphaComponent(0.5), dark: UIColor.white.withAlphaComponent(0.5))
+        UIColor.fw.themeLight(UIColor.black.withAlphaComponent(0.5), dark: UIColor.white.withAlphaComponent(0.5))
     }
     public static var barColor: UIColor {
-        UIColor.fwThemeLight(.fwColor(withHex: 0xFAFAFA), dark: .fwColor(withHex: 0x121212))
+        UIColor.fw.themeLight(.fw.color(withHex: 0xFAFAFA), dark: .fw.color(withHex: 0x121212))
     }
     public static var tableColor: UIColor {
-        UIColor.fwThemeLight(.fwColor(withHex: 0xF2F2F2), dark: .fwColor(withHex: 0x000000))
+        UIColor.fw.themeLight(.fw.color(withHex: 0xF2F2F2), dark: .fw.color(withHex: 0x000000))
     }
     public static var cellColor: UIColor {
-        UIColor.fwThemeLight(.fwColor(withHex: 0xFFFFFF), dark: .fwColor(withHex: 0x1C1C1C))
+        UIColor.fw.themeLight(.fw.color(withHex: 0xFFFFFF), dark: .fw.color(withHex: 0x1C1C1C))
     }
     public static var borderColor: UIColor {
-        UIColor.fwThemeLight(.fwColor(withHex: 0xDDDDDD), dark: .fwColor(withHex: 0x303030))
+        UIColor.fw.themeLight(.fw.color(withHex: 0xDDDDDD), dark: .fw.color(withHex: 0x303030))
     }
     public static var buttonColor: UIColor {
-        UIColor.fwThemeLight(.fwColor(withHex: 0x017AFF), dark: .fwColor(withHex: 0x0A84FF))
+        UIColor.fw.themeLight(.fw.color(withHex: 0x017AFF), dark: .fw.color(withHex: 0x0A84FF))
     }
     
     public static func largeButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
-        button.setBackgroundImage(UIImage.fwImage(with: Theme.buttonColor), for: .normal)
-        button.titleLabel?.font = .fwBoldFont(ofSize: 17)
+        button.setBackgroundImage(UIImage.fw.image(with: Theme.buttonColor), for: .normal)
+        button.titleLabel?.font = .fw.boldFont(ofSize: 17)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
         button.fw.setDimension(.width, toSize: FWScreenWidth - 30)
@@ -54,11 +54,11 @@ import FWApplication
     public static func themeChanged() {
         let defaultAppearance = FWNavigationBarAppearance()
         defaultAppearance.foregroundColor = Theme.textColor
-        defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fwColor(withAlpha: 0.5) : Theme.barColor
+        defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(withAlpha: 0.5) : Theme.barColor
         defaultAppearance.isTranslucent = Theme.isBarTranslucent
         let whiteAppearance = FWNavigationBarAppearance()
         whiteAppearance.foregroundColor = .black
-        whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fwColor(withAlpha: 0.5) : .white
+        whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fw.color(withAlpha: 0.5) : .white
         whiteAppearance.isTranslucent = Theme.isBarTranslucent
         let transparentAppearance = FWNavigationBarAppearance()
         transparentAppearance.foregroundColor = Theme.textColor

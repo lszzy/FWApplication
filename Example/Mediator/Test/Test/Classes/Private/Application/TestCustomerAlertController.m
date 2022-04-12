@@ -1731,7 +1731,7 @@ static NSTimeInterval kDelay = 0.0618; // 按钮接着上一个按钮的延时�
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [rowData objectAtIndex:0];
