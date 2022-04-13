@@ -55,10 +55,10 @@ import FWApplication
     func renderState(_ state: FWViewControllerState, with object: Any?) {
         switch state {
         case .success:
-            view.fwShowEmpty(withText: object as? String)
+            view.fw.showEmpty(withText: object as? String)
         case .failure:
-            view.fwShowEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
-                self?.view.fwHideEmpty()
+            view.fw.showEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
+                self?.view.fw.hideEmpty()
                 
                 self?.renderState(.loading, with: nil)
             }
