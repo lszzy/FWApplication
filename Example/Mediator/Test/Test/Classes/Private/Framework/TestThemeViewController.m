@@ -48,46 +48,54 @@
     colorView.backgroundColor = [UIColor.fw themeNamed:@"theme_color" bundle:TestBundle.bundle];
     [self.view addSubview:colorView];
     
-    colorView = [[UIView alloc] initWithFrame:CGRectMake(160, 20, 50, 50)];
+    UIView *colorView1 = [[UIView alloc] initWithFrame:CGRectMake(160, 20, 50, 50)];
     [UIColor.fw setThemeColor:[UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]] forName:@"dynamic_color"];
     UIColor *dynamicColor = [UIColor.fw themeNamed:@"dynamic_color"];
-    colorView.backgroundColor = [dynamicColor.fw colorForStyle:FWThemeManager.sharedInstance.style];
-    [colorView.fw addThemeListener:^(FWThemeStyle style) {
-        colorView.backgroundColor = [dynamicColor.fw colorForStyle:style];
+    colorView1.backgroundColor = [dynamicColor.fw colorForStyle:FWThemeManager.sharedInstance.style];
+    FWWeakify(colorView1);
+    [colorView1.fw addThemeListener:^(FWThemeStyle style) {
+        FWStrongify(colorView1);
+        colorView1.backgroundColor = [dynamicColor.fw colorForStyle:style];
     }];
-    [self.view addSubview:colorView];
+    [self.view addSubview:colorView1];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 90, 50, 50)];
+    UIImageView *imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(20, 90, 50, 50)];
     UIImage *themeImage = [UIImage.fw themeLight:[TestBundle imageNamed:@"theme_image_light"] dark:[TestBundle imageNamed:@"theme_image_dark"]];
-    imageView.image = themeImage.fw.image;
-    [imageView.fw addThemeListener:^(FWThemeStyle style) {
-        imageView.image = themeImage.fw.image;
+    imageView1.image = themeImage.fw.image;
+    FWWeakify(imageView1);
+    [imageView1.fw addThemeListener:^(FWThemeStyle style) {
+        FWStrongify(imageView1);
+        imageView1.image = themeImage.fw.image;
     }];
-    [self.view addSubview:imageView];
+    [self.view addSubview:imageView1];
     
-    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(90, 90, 50, 50)];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(90, 90, 50, 50)];
     imageView.fw.themeImage = [UIImage.fw themeNamed:@"theme_image" bundle:TestBundle.bundle];
     [self.view addSubview:imageView];
     
-    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(160, 90, 50, 50)];
+    UIImageView *imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(160, 90, 50, 50)];
     UIImage *reverseImage = [UIImage.fw themeNamed:@"theme_image" bundle:TestBundle.bundle];
-    imageView.image = [reverseImage.fw imageForStyle:FWThemeManager.sharedInstance.style];
-    [imageView.fw addThemeListener:^(FWThemeStyle style) {
-        imageView.image = [reverseImage.fw imageForStyle:style];
+    imageView2.image = [reverseImage.fw imageForStyle:FWThemeManager.sharedInstance.style];
+    FWWeakify(imageView2);
+    [imageView2.fw addThemeListener:^(FWThemeStyle style) {
+        FWStrongify(imageView2);
+        imageView2.image = [reverseImage.fw imageForStyle:style];
     }];
-    [self.view addSubview:imageView];
+    [self.view addSubview:imageView2];
+    
+    CALayer *layer1 = [CALayer new];
+    layer1.frame = CGRectMake(20, 160, 50, 50);
+    UIColor *themeColor = [UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]];
+    layer1.backgroundColor = [themeColor.fw colorForStyle:FWThemeManager.sharedInstance.style].CGColor;
+    layer1.fw.themeContext = self;
+    FWWeakify(layer1);
+    [layer1.fw addThemeListener:^(FWThemeStyle style) {
+        FWStrongify(layer1);
+        layer1.backgroundColor = [themeColor.fw colorForStyle:style].CGColor;
+    }];
+    [self.view.layer addSublayer:layer1];
     
     CALayer *layer = [CALayer new];
-    layer.frame = CGRectMake(20, 160, 50, 50);
-    UIColor *themeColor = [UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]];
-    layer.backgroundColor = [themeColor.fw colorForStyle:FWThemeManager.sharedInstance.style].CGColor;
-    layer.fw.themeContext = self;
-    [layer.fw addThemeListener:^(FWThemeStyle style) {
-        layer.backgroundColor = [themeColor.fw colorForStyle:style].CGColor;
-    }];
-    [self.view.layer addSublayer:layer];
-    
-    layer = [CALayer new];
     layer.frame = CGRectMake(90, 160, 50, 50);
     layer.fw.themeContext = self.view;
     layer.fw.themeBackgroundColor = [UIColor.fw themeColor:^UIColor * _Nonnull(FWThemeStyle style) {
@@ -101,15 +109,17 @@
     gradientLayer.fw.themeColors = @[[UIColor.fw themeNamed:@"theme_color" bundle:TestBundle.bundle], [UIColor.fw themeNamed:@"theme_color" bundle:TestBundle.bundle]];
     [self.view.layer addSublayer:gradientLayer];
     
-    layer = [CALayer new];
-    layer.frame = CGRectMake(20, 230, 50, 50);
+    CALayer *layer2 = [CALayer new];
+    layer2.frame = CGRectMake(20, 230, 50, 50);
     UIImage *layerImage = [UIImage.fw themeLight:[TestBundle imageNamed:@"theme_image_light"] dark:[TestBundle imageNamed:@"theme_image_dark"]];
-    layer.contents = (id)layerImage.fw.image.CGImage;
-    layer.fw.themeContext = self.view;
-    [layer.fw addThemeListener:^(FWThemeStyle style) {
-        layer.contents = (id)layerImage.fw.image.CGImage;
+    layer2.contents = (id)layerImage.fw.image.CGImage;
+    layer2.fw.themeContext = self.view;
+    FWWeakify(layer2);
+    [layer2.fw addThemeListener:^(FWThemeStyle style) {
+        FWStrongify(layer2);
+        layer2.contents = (id)layerImage.fw.image.CGImage;
     }];
-    [self.view.layer addSublayer:layer];
+    [self.view.layer addSublayer:layer2];
     
     layer = [CALayer new];
     layer.frame = CGRectMake(90, 230, 50, 50);
@@ -152,14 +162,16 @@
     }];
     [self.view addSubview:imageView];
     
-    imageView = [[UIImageView alloc] initWithFrame:CGRectMake(160, 370, 50, 50)];
+    UIImageView *imageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(160, 370, 50, 50)];
     [UIImage.fw setThemeImage:[UIImage.fw themeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"].fw imageWithTintColor:[UIColor redColor]]] forName:@"dynamic_image"];
     UIImage *dynamicImage = [UIImage.fw themeNamed:@"dynamic_image"];
-    imageView.image = [dynamicImage.fw imageForStyle:FWThemeManager.sharedInstance.style];
-    [imageView.fw addThemeListener:^(FWThemeStyle style) {
-        imageView.image = [dynamicImage.fw imageForStyle:style];
+    imageView3.image = [dynamicImage.fw imageForStyle:FWThemeManager.sharedInstance.style];
+    FWWeakify(imageView3);
+    [imageView3.fw addThemeListener:^(FWThemeStyle style) {
+        FWStrongify(imageView3);
+        imageView3.image = [dynamicImage.fw imageForStyle:style];
     }];
-    [self.view addSubview:imageView];
+    [self.view addSubview:imageView3];
     
     UILabel *themeLabel = [UILabel new];
     themeLabel.frame = CGRectMake(0, 440, FWScreenWidth, 50);
