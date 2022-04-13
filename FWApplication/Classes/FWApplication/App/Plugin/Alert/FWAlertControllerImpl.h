@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) void (^customBlock)(FWAlertController *alertController);
 
 /// 显示自定义视图弹窗，无默认按钮
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
               headerView:(UIView *)headerView
                   cancel:(nullable id)cancel

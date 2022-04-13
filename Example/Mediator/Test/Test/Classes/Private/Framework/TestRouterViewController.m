@@ -65,7 +65,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         return object;
     };
     FWRouter.errorHandler = ^(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw.topPresentedController fwShowAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+        [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
     };
 }
 
@@ -139,7 +139,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         
         TestWebViewController *viewController = (TestWebViewController *)topController;
         [viewController.webView evaluateJavaScript:javascript completionHandler:^(id value, NSError *error) {
-            [[UIWindow.fw topViewController] fwShowAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
+            [[UIWindow.fw topViewController].fw showAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
         }];
         return nil;
     }];

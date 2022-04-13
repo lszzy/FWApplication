@@ -57,7 +57,7 @@
     return instance;
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
                    title:(id)title
                  message:(id)message
@@ -120,7 +120,7 @@
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
               headerView:(UIView *)headerView
                   cancel:(id)cancel

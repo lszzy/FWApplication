@@ -80,7 +80,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onLogout() {
-        fwShowConfirm(withTitle: FWLocalizedString("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
+        fw.showConfirm(withTitle: FWLocalizedString("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
             Mediator.userModule.logout {
                 self?.renderData()
             }
@@ -88,7 +88,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onLanguage() {
-        fwShowSheet(withTitle: FWLocalizedString("languageTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [FWLocalizedString("systemTitle"), "中文", "English", FWLocalizedString("changeTitle")]) { [weak self] (index) in
+        fw.showSheet(withTitle: FWLocalizedString("languageTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [FWLocalizedString("systemTitle"), "中文", "English", FWLocalizedString("changeTitle")]) { [weak self] (index) in
             if index < 3 {
                 let language: String? = index == 1 ? "zh-Hans" : (index == 2 ? "en" : nil)
                 Bundle.fw.localizedLanguage = language
@@ -109,7 +109,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
         }
         actions.append(FWLocalizedString("changeTitle"))
         
-        fwShowSheet(withTitle: FWLocalizedString("themeTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: actions) { (index) in
+        fw.showSheet(withTitle: FWLocalizedString("themeTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: actions) { (index) in
             var mode = FWThemeMode(index)
             if index > actions.count - 2 {
                 let currentMode = FWThemeManager.sharedInstance.mode
@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onRoot() {
-        fwShowSheet(withTitle: FWLocalizedString("rootTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
+        fw.showSheet(withTitle: FWLocalizedString("rootTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootNavigation = false
@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onOption() {
-        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? FWLocalizedString("defaultTitles") : FWLocalizedString("translucentTitles")]) { (index) in
+        fw.showSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? FWLocalizedString("defaultTitles") : FWLocalizedString("translucentTitles")]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin

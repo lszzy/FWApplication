@@ -6,7 +6,7 @@
 //  Copyright © 2018年 wuyong.site. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 // 显示弹出框插件方法，默认使用系统UIAlertController
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
                    title:(nullable id)title
                  message:(nullable id)message
@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param title       警告框标题
  *  @param message   警告框消息
  */
-- (void)fwShowAlertWithTitle:(nullable id)title
+- (void)showAlertWithTitle:(nullable id)title
                      message:(nullable id)message;
 
 /**
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cancel      取消按钮标题，默认关闭
  *  @param cancelBlock 取消按钮事件
  */
-- (void)fwShowAlertWithTitle:(nullable id)title
+- (void)showAlertWithTitle:(nullable id)title
                      message:(nullable id)message
                       cancel:(nullable id)cancel
                  cancelBlock:(nullable void (^)(void))cancelBlock;
@@ -70,7 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param actionBlock 动作按钮点击事件，参数为索引index
  *  @param cancelBlock 取消按钮事件
  */
-- (void)fwShowAlertWithTitle:(nullable id)title
+- (void)showAlertWithTitle:(nullable id)title
                      message:(nullable id)message
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param confirm      确认按钮文字，默认确定
  *  @param confirmBlock 确认按钮事件
  */
-- (void)fwShowConfirmWithTitle:(nullable id)title
+- (void)showConfirmWithTitle:(nullable id)title
                        message:(nullable id)message
                         cancel:(nullable id)cancel
                        confirm:(nullable id)confirm
@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param confirmBlock 确认按钮事件
  *  @param cancelBlock  取消按钮事件
  */
-- (void)fwShowConfirmWithTitle:(nullable id)title
+- (void)showConfirmWithTitle:(nullable id)title
                        message:(nullable id)message
                         cancel:(nullable id)cancel
                        confirm:(nullable id)confirm
@@ -118,7 +118,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param confirm      确认按钮文字，默认确定
  *  @param confirmBlock 确认按钮事件，参数为输入值
  */
-- (void)fwShowPromptWithTitle:(nullable id)title
+- (void)showPromptWithTitle:(nullable id)title
                       message:(nullable id)message
                        cancel:(nullable id)cancel
                       confirm:(nullable id)confirm
@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param confirmBlock 确认按钮事件，参数为输入值
  *  @param cancelBlock  取消按钮事件
  */
-- (void)fwShowPromptWithTitle:(nullable id)title
+- (void)showPromptWithTitle:(nullable id)title
                       message:(nullable id)message
                        cancel:(nullable id)cancel
                       confirm:(nullable id)confirm
@@ -155,7 +155,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param confirmBlock 确认按钮事件，参数为输入值数组
  *  @param cancelBlock  取消按钮事件
  */
-- (void)fwShowPromptWithTitle:(nullable id)title
+- (void)showPromptWithTitle:(nullable id)title
                       message:(nullable id)message
                        cancel:(nullable id)cancel
                       confirm:(nullable id)confirm
@@ -173,7 +173,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param actions     动作按钮标题列表
  *  @param actionBlock 动作按钮点击事件，参数为索引index
  */
-- (void)fwShowSheetWithTitle:(nullable id)title
+- (void)showSheetWithTitle:(nullable id)title
                      message:(nullable id)message
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
@@ -189,7 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param actionBlock 动作按钮点击事件，参数为索引index
  *  @param cancelBlock 取消按钮事件
  */
-- (void)fwShowSheetWithTitle:(nullable id)title
+- (void)showSheetWithTitle:(nullable id)title
                      message:(nullable id)message
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
@@ -210,7 +210,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param cancelBlock 取消按钮事件
  *  @param customBlock 自定义弹出框事件
  */
-- (void)fwShowAlertWithStyle:(UIAlertControllerStyle)style
+- (void)showAlertWithStyle:(UIAlertControllerStyle)style
                        title:(nullable id)title
                      message:(nullable id)message
                       cancel:(nullable id)cancel
@@ -223,16 +223,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// UIViewController使用弹窗插件，全局可使用UIWindow.fwMainWindow.fwTopPresentedController
-@interface UIViewController (FWAlertPluginController) <FWAlertPluginController>
+/// UIViewController使用弹窗插件，全局可使用UIWindow.fw.topPresentedController
+@interface FWViewControllerWrapper (FWAlertPluginController) <FWAlertPluginController>
 
 /// 自定义弹窗插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWAlertPlugin> fwAlertPlugin;
+@property (nonatomic, strong, nullable) id<FWAlertPlugin> alertPlugin;
 
 @end
 
-/// UIView使用弹窗插件，内部使用UIView.fwViewController
-@interface UIView (FWAlertPluginController) <FWAlertPluginController>
+/// UIView使用弹窗插件，内部使用UIView.fw.viewController
+@interface FWViewWrapper (FWAlertPluginController) <FWAlertPluginController>
 
 @end
 

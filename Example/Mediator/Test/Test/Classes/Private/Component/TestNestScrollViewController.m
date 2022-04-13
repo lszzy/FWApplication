@@ -217,7 +217,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self fwShowAlertWithTitle:[NSString stringWithFormat:@"点击%@", @(indexPath.row)] message:nil cancel:nil cancelBlock:nil];
+    [self.fw showAlertWithTitle:[NSString stringWithFormat:@"点击%@", @(indexPath.row)] message:nil cancel:nil cancelBlock:nil];
 }
 
 - (void)selectCollectionViewWithOffset:(CGFloat)contentOffsetY

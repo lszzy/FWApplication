@@ -85,11 +85,11 @@
 - (void)onPhotoSheet:(UIBarButtonItem *)sender
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"拍照", @"选取相册"] actionBlock:^(NSInteger index) {
+    [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"拍照", @"选取相册"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index == 0) {
             if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                [self fwShowAlertWithTitle:@"未检测到您的摄像头" message:nil cancel:nil cancelBlock:nil];
+                [self.fw showAlertWithTitle:@"未检测到您的摄像头" message:nil cancel:nil cancelBlock:nil];
                 return;
             }
             

@@ -209,7 +209,7 @@ FWDefLazyProperty(UIView *, animationView, {
 - (void)onPresent
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"VC present", @"VC alert", @"VC fade", @"nav present", @"nav alert", @"nav fade", @"view present", @"view alert", @"view fade", @"wrapped present", @"wrapped alert", @"wrapped fade"] actionBlock:^(NSInteger index) {
+    [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"VC present", @"VC alert", @"VC fade", @"nav present", @"nav alert", @"nav fade", @"view present", @"view alert", @"view fade", @"wrapped present", @"wrapped alert", @"wrapped fade"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index < 3) {
             TestAnimationChildController *animationController = [TestAnimationChildController new];

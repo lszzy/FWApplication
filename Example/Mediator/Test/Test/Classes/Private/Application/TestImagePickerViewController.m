@@ -69,7 +69,7 @@
     FWWeakifySelf();
     [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换选取插件", @"切换选取样式"] actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换选取插件", @"切换选取样式"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             if (index == 0) {
                 id<FWImagePickerPlugin> pickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];

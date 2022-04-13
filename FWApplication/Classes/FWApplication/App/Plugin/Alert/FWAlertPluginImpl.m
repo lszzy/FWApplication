@@ -261,7 +261,7 @@
     return instance;
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
                    title:(id)title
                  message:(id)message

@@ -10,40 +10,39 @@
 #import "FWAlertPluginImpl.h"
 #import "FWAppBundle.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
 #pragma mark - FWAlertPluginController
 
-@implementation UIViewController (FWAlertPluginController)
+@implementation FWViewControllerWrapper (FWAlertPluginController)
 
-- (id<FWAlertPlugin>)fwAlertPlugin
+- (id<FWAlertPlugin>)alertPlugin
 {
-    id<FWAlertPlugin> alertPlugin = objc_getAssociatedObject(self, @selector(fwAlertPlugin));
+    id<FWAlertPlugin> alertPlugin = objc_getAssociatedObject(self.base, @selector(alertPlugin));
     if (!alertPlugin) alertPlugin = [FWPluginManager loadPlugin:@protocol(FWAlertPlugin)];
     if (!alertPlugin) alertPlugin = FWAlertPluginImpl.sharedInstance;
     return alertPlugin;
 }
 
-- (void)setFwAlertPlugin:(id<FWAlertPlugin>)fwAlertPlugin
+- (void)setAlertPlugin:(id<FWAlertPlugin>)alertPlugin
 {
-    objc_setAssociatedObject(self, @selector(fwAlertPlugin), fwAlertPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(alertPlugin), alertPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)fwShowAlertWithTitle:(id)title
+- (void)showAlertWithTitle:(id)title
                      message:(id)message
 {
-    [self fwShowAlertWithTitle:title
+    [self showAlertWithTitle:title
                        message:message
                         cancel:nil
                    cancelBlock:nil];
 }
 
-- (void)fwShowAlertWithTitle:(id)title
+- (void)showAlertWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    [self fwShowAlertWithTitle:title
+    [self showAlertWithTitle:title
                        message:message
                         cancel:cancel
                        actions:nil
@@ -51,14 +50,14 @@
                    cancelBlock:cancelBlock];
 }
 
-- (void)fwShowAlertWithTitle:(id)title
+- (void)showAlertWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
+    [self showAlertWithStyle:UIAlertControllerStyleAlert
                          title:title
                        message:message
                         cancel:cancel
@@ -72,13 +71,13 @@
                    customBlock:nil];
 }
 
-- (void)fwShowConfirmWithTitle:(id)title
+- (void)showConfirmWithTitle:(id)title
                        message:(id)message
                         cancel:(id)cancel
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
 {
-    [self fwShowConfirmWithTitle:title
+    [self showConfirmWithTitle:title
                          message:message
                           cancel:cancel
                          confirm:confirm
@@ -86,7 +85,7 @@
                      cancelBlock:nil];
 }
 
-- (void)fwShowConfirmWithTitle:(id)title
+- (void)showConfirmWithTitle:(id)title
                        message:(id)message
                         cancel:(id)cancel
                        confirm:(id)confirm
@@ -97,7 +96,7 @@
         confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
     }
     
-    [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
+    [self showAlertWithStyle:UIAlertControllerStyleAlert
                          title:title
                        message:message
                         cancel:cancel
@@ -111,13 +110,13 @@
                    customBlock:nil];
 }
 
-- (void)fwShowPromptWithTitle:(id)title
+- (void)showPromptWithTitle:(id)title
                       message:(id)message
                        cancel:(id)cancel
                       confirm:(id)confirm
                  confirmBlock:(void (^)(NSString *))confirmBlock
 {
-    [self fwShowPromptWithTitle:title
+    [self showPromptWithTitle:title
                         message:message
                          cancel:cancel
                         confirm:confirm
@@ -126,7 +125,7 @@
                     cancelBlock:nil];
 }
 
-- (void)fwShowPromptWithTitle:(id)title
+- (void)showPromptWithTitle:(id)title
                       message:(id)message
                        cancel:(id)cancel
                       confirm:(id)confirm
@@ -134,7 +133,7 @@
                  confirmBlock:(void (^)(NSString *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
 {
-    [self fwShowPromptWithTitle:title
+    [self showPromptWithTitle:title
                         message:message
                          cancel:cancel
                         confirm:confirm
@@ -148,7 +147,7 @@
                     cancelBlock:cancelBlock];
 }
 
-- (void)fwShowPromptWithTitle:(id)title
+- (void)showPromptWithTitle:(id)title
                       message:(id)message
                        cancel:(id)cancel
                       confirm:(id)confirm
@@ -161,7 +160,7 @@
         confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
     }
     
-    [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
+    [self showAlertWithStyle:UIAlertControllerStyleAlert
                          title:title
                        message:message
                         cancel:cancel
@@ -175,13 +174,13 @@
                    customBlock:nil];
 }
 
-- (void)fwShowSheetWithTitle:(id)title
+- (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
 {
-    [self fwShowSheetWithTitle:title
+    [self showSheetWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
@@ -189,14 +188,14 @@
                    cancelBlock:nil];
 }
 
-- (void)fwShowSheetWithTitle:(id)title
+- (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    [self fwShowAlertWithStyle:UIAlertControllerStyleActionSheet
+    [self showAlertWithStyle:UIAlertControllerStyleActionSheet
                          title:title
                        message:message
                         cancel:cancel
@@ -210,7 +209,7 @@
                    customBlock:nil];
 }
 
-- (void)fwShowAlertWithStyle:(UIAlertControllerStyle)style
+- (void)showAlertWithStyle:(UIAlertControllerStyle)style
                        title:(id)title
                      message:(id)message
                       cancel:(id)cancel
@@ -231,55 +230,55 @@
     }
     
     // 优先调用插件，不存在时使用默认
-    id<FWAlertPlugin> alertPlugin = self.fwAlertPlugin;
-    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(fwViewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
+    id<FWAlertPlugin> alertPlugin = self.alertPlugin;
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
         alertPlugin = FWAlertPluginImpl.sharedInstance;
     }
-    [alertPlugin fwViewController:self showAlert:style title:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
+    [alertPlugin viewController:self.base showAlert:style title:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
 }
 
 @end
 
-@implementation UIView (FWAlertPluginController)
+@implementation FWViewWrapper (FWAlertPluginController)
 
-- (void)fwShowAlertWithTitle:(id)title
+- (void)showAlertWithTitle:(id)title
                      message:(id)message
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowAlertWithTitle:title
+    [ctrl.fw showAlertWithTitle:title
                        message:message];
 }
 
-- (void)fwShowAlertWithTitle:(id)title
+- (void)showAlertWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowAlertWithTitle:title
+    [ctrl.fw showAlertWithTitle:title
                        message:message
                         cancel:cancel
                    cancelBlock:cancelBlock];
 }
 
-- (void)fwShowAlertWithTitle:(id)title
+- (void)showAlertWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowAlertWithTitle:title
+    [ctrl.fw showAlertWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
@@ -287,35 +286,35 @@
                    cancelBlock:cancelBlock];
 }
 
-- (void)fwShowConfirmWithTitle:(id)title
+- (void)showConfirmWithTitle:(id)title
                        message:(id)message
                         cancel:(id)cancel
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowConfirmWithTitle:title
+    [ctrl.fw showConfirmWithTitle:title
                          message:message
                           cancel:cancel
                          confirm:confirm
                     confirmBlock:confirmBlock];
 }
 
-- (void)fwShowConfirmWithTitle:(id)title
+- (void)showConfirmWithTitle:(id)title
                        message:(id)message
                         cancel:(id)cancel
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
                    cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowConfirmWithTitle:title
+    [ctrl.fw showConfirmWithTitle:title
                          message:message
                           cancel:cancel
                          confirm:confirm
@@ -323,24 +322,24 @@
                      cancelBlock:cancelBlock];
 }
 
-- (void)fwShowPromptWithTitle:(id)title
+- (void)showPromptWithTitle:(id)title
                       message:(id)message
                        cancel:(id)cancel
                       confirm:(id)confirm
                  confirmBlock:(void (^)(NSString *))confirmBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowPromptWithTitle:title
+    [ctrl.fw showPromptWithTitle:title
                         message:message
                          cancel:cancel
                         confirm:confirm
                    confirmBlock:confirmBlock];
 }
 
-- (void)fwShowPromptWithTitle:(id)title
+- (void)showPromptWithTitle:(id)title
                       message:(id)message
                        cancel:(id)cancel
                       confirm:(id)confirm
@@ -348,11 +347,11 @@
                  confirmBlock:(void (^)(NSString *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowPromptWithTitle:title
+    [ctrl.fw showPromptWithTitle:title
                         message:message
                          cancel:cancel
                         confirm:confirm
@@ -361,7 +360,7 @@
                     cancelBlock:cancelBlock];
 }
 
-- (void)fwShowPromptWithTitle:(id)title
+- (void)showPromptWithTitle:(id)title
                       message:(id)message
                        cancel:(id)cancel
                       confirm:(id)confirm
@@ -370,11 +369,11 @@
                  confirmBlock:(void (^)(NSArray<NSString *> *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowPromptWithTitle:title
+    [ctrl.fw showPromptWithTitle:title
                         message:message
                          cancel:cancel
                         confirm:confirm
@@ -384,35 +383,35 @@
                     cancelBlock:cancelBlock];
 }
 
-- (void)fwShowSheetWithTitle:(id)title
+- (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowSheetWithTitle:title
+    [ctrl.fw showSheetWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
                    actionBlock:actionBlock];
 }
 
-- (void)fwShowSheetWithTitle:(id)title
+- (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowSheetWithTitle:title
+    [ctrl.fw showSheetWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
@@ -420,7 +419,7 @@
                    cancelBlock:cancelBlock];
 }
 
-- (void)fwShowAlertWithStyle:(UIAlertControllerStyle)style
+- (void)showAlertWithStyle:(UIAlertControllerStyle)style
                        title:(id)title
                      message:(id)message
                       cancel:(id)cancel
@@ -431,11 +430,11 @@
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowAlertWithStyle:style
+    [ctrl.fw showAlertWithStyle:style
                          title:title
                        message:message
                         cancel:cancel

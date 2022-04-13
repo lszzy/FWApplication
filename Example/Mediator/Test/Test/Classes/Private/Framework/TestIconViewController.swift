@@ -83,7 +83,7 @@ class TestIconCell: UICollectionViewCell {
     
     override func renderData() {
         fwSetRightBarItem(NSStringFromClass(iconClass)) { [weak self] sender in
-            self?.fwShowSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["Octicons", "MaterialIcons", "FontAwesome", "FoundationIcons", "IonIcons"], actionBlock: { index in
+            self?.fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["Octicons", "MaterialIcons", "FontAwesome", "FoundationIcons", "IonIcons"], actionBlock: { index in
                 if index == 0 {
                     self?.iconClass = Octicons.self
                 } else if index == 1 {

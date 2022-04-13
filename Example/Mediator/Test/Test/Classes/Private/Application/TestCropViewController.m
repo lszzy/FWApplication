@@ -105,7 +105,7 @@
 - (void)showCropViewController
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:nil message:nil cancel:nil actions:@[@"Crop Image", @"Make Profile"] actionBlock:^(NSInteger index) {
+    [self.fw showSheetWithTitle:nil message:nil cancel:nil actions:@[@"Crop Image", @"Make Profile"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         self.croppingStyle = index == 0 ? FWImageCropCroppingStyleDefault : FWImageCropCroppingStyleCircular;
         [self fwShowImagePickerWithAllowsEditing:NO completion:^(UIImage * _Nullable image, BOOL cancel) {

@@ -85,7 +85,7 @@
 
 - (void)onAlert1
 {
-    [self fwShowAlertWithTitle:@"警告框标题"
+    [self.fw showAlertWithTitle:@"警告框标题"
                        message:@"警告框消息"
                         cancel:nil
                    cancelBlock:^{
@@ -95,7 +95,7 @@
 
 - (void)onAlert2
 {
-    [self fwShowAlertWithTitle:@"警告框标题"
+    [self.fw showAlertWithTitle:@"警告框标题"
                        message:@"警告框消息"
                         cancel:nil
                        actions:@[@"按钮1", @"按钮2"]
@@ -109,7 +109,7 @@
 
 - (void)onConfirm1
 {
-    [self fwShowConfirmWithTitle:@"确认框标题"
+    [self.fw showConfirmWithTitle:@"确认框标题"
                          message:@"确认框消息"
                           cancel:nil
                          confirm:nil
@@ -120,7 +120,7 @@
 
 - (void)onConfirm2
 {
-    [self fwShowConfirmWithTitle:@"确认框标题"
+    [self.fw showConfirmWithTitle:@"确认框标题"
                          message:@"确认框消息"
                           cancel:nil
                          confirm:@"我是很长的确定按钮"
@@ -134,7 +134,7 @@
 
 - (void)onPrompt1
 {
-    [self fwShowPromptWithTitle:@"输入框标题"
+    [self.fw showPromptWithTitle:@"输入框标题"
                         message:@"输入框消息"
                          cancel:nil
                         confirm:nil
@@ -145,7 +145,7 @@
 
 - (void)onPrompt2
 {
-    [self fwShowPromptWithTitle:@"输入框标题"
+    [self.fw showPromptWithTitle:@"输入框标题"
                         message:@"输入框消息"
                          cancel:nil
                         confirm:nil
@@ -163,7 +163,7 @@
 
 - (void)onPrompt3
 {
-    [self fwShowPromptWithTitle:@"输入框标题"
+    [self.fw showPromptWithTitle:@"输入框标题"
                         message:@"输入框消息"
                          cancel:nil
                         confirm:nil
@@ -187,7 +187,7 @@
 
 - (void)onSheet1
 {
-    [self fwShowSheetWithTitle:@"操作表标题"
+    [self.fw showSheetWithTitle:@"操作表标题"
                        message:@"操作表消息"
                         cancel:@"取消"
                        actions:@[@"操作1"]
@@ -198,7 +198,7 @@
 
 - (void)onSheet2
 {
-    [self fwShowSheetWithTitle:@"操作表标题"
+    [self.fw showSheetWithTitle:@"操作表标题"
                        message:@"操作表消息"
                         cancel:@"取消"
                        actions:@[@"操作1", @"操作2", @"操作3"]
@@ -213,7 +213,7 @@
 - (void)onAlertF
 {
     FWWeakifySelf();
-    [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
+    [self.fw showAlertWithStyle:UIAlertControllerStyleAlert
                          title:@"请输入账号信息，我是很长很长很长很长很长很长的标题"
                        message:@"账户信息必填，我是很长很长很长很长很长很长的消息"
                         cancel:@"取消"
@@ -253,7 +253,7 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
     headerView.backgroundColor = UIColor.whiteColor;
     
-    [[FWAlertControllerPlugin sharedInstance] fwViewController:self
+    [[FWAlertControllerPlugin sharedInstance] viewController:self
                                               showAlert:UIAlertControllerStyleAlert
                                              headerView:headerView
                                                  cancel:@"取消"
@@ -277,7 +277,7 @@
         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [[FWAlertControllerPlugin sharedInstance] fwViewController:self
+    [[FWAlertControllerPlugin sharedInstance] viewController:self
                                               showAlert:UIAlertControllerStyleAlert
                                              headerView:alertView
                                                  cancel:nil
@@ -309,7 +309,7 @@
     };
     [message appendAttributedString:[[NSAttributedString alloc] initWithString:@"警告框消息" attributes:attrs]];
     
-    [self fwShowAlertWithTitle:title
+    [self.fw showAlertWithTitle:title
                        message:message
                         cancel:nil
                        actions:@[@"按钮1", @"按钮2", @"按钮3", @"按钮4"]
@@ -337,7 +337,7 @@
     };
     [message appendAttributedString:[[NSAttributedString alloc] initWithString:@"操作表消息" attributes:attrs]];
     
-    [self fwShowSheetWithTitle:title
+    [self.fw showSheetWithTitle:title
                        message:message
                         cancel:@"取消"
                        actions:@[@"操作1", @"操作2", @"操作3", @"操作4"]
@@ -349,11 +349,11 @@
 - (void)onAlertP
 {
     FWWeakifySelf();
-    [self fwShowAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+    [self.fw showAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
         FWStrongifySelf();
-        [self fwShowAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+        [self.fw showAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
             FWStrongifySelf();
-            [self fwShowAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+            [self.fw showAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
         }];
     }];
 }
@@ -361,11 +361,11 @@
 - (void)onSheetP
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+    [self.fw showSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
         FWStrongifySelf();
-        [self fwShowSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+        [self.fw showSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
             FWStrongifySelf();
-            [self fwShowSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+            [self.fw showSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
         }];
     }];
 }

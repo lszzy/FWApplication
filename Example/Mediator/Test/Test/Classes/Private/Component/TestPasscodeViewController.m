@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
         NSArray *titles = [self.dataArr.fw mapWithBlock:^id _Nullable(NSArray *obj) {
             return obj.firstObject;
         }];
-        [self fwShowSheetWithTitle:nil message:nil cancel:@"Cancel" actions:titles actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"Cancel" actions:titles actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             self.boxInputModelType = index;
         }];
