@@ -10,138 +10,6 @@
 #import <objc/runtime.h>
 @import FWFramework;
 
-#pragma mark - UIViewController+FWAlertPriority
-
-// 优先级隐藏状态：0正常隐藏并移除队列；1立即隐藏并保留队列；2立即隐藏执行状态(解决弹出框还未显示完成时调用dismiss触发警告问题)。默认0
-@implementation UIViewController (FWAlertPriority)
-
-#pragma mark - Accessor
-
-- (BOOL)fwAlertPriorityEnabled
-{
-    return [objc_getAssociatedObject(self, @selector(fwAlertPriorityEnabled)) boolValue];
-}
-
-- (void)setFwAlertPriorityEnabled:(BOOL)fwAlertPriorityEnabled
-{
-    objc_setAssociatedObject(self, @selector(fwAlertPriorityEnabled), @(fwAlertPriorityEnabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (FWAlertPriority)fwAlertPriority
-{
-    return [objc_getAssociatedObject(self, @selector(fwAlertPriority)) integerValue];
-}
-
-- (void)setFwAlertPriority:(FWAlertPriority)fwAlertPriority
-{
-    objc_setAssociatedObject(self, @selector(fwAlertPriority), @(fwAlertPriority), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (UIViewController *)fwAlertPriorityParentController
-{
-    FWWeakObject *value = objc_getAssociatedObject(self, @selector(fwAlertPriorityParentController));
-    return value.object;
-}
-
-- (void)setFwAlertPriorityParentController:(UIViewController *)fwAlertPriorityParentController
-{
-    objc_setAssociatedObject(self, @selector(fwAlertPriorityParentController), [[FWWeakObject alloc] initWithObject:fwAlertPriorityParentController], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSInteger)fwAlertPriorityDismissState
-{
-    return [objc_getAssociatedObject(self, @selector(fwAlertPriorityDismissState)) integerValue];
-}
-
-- (void)setFwAlertPriorityDismissState:(NSInteger)fwAlertPriorityDismissState
-{
-    objc_setAssociatedObject(self, @selector(fwAlertPriorityDismissState), @(fwAlertPriorityDismissState), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-#pragma mark - Hook
-
-+ (void)load
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        FWSwizzleClass(UIViewController, @selector(viewDidAppear:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
-            FWSwizzleOriginal(animated);
-            if (!selfObject.fwAlertPriorityEnabled) return;
-            
-            // 替换弹出框时显示完成立即隐藏
-            if (selfObject.fwAlertPriorityDismissState == 1) {
-                selfObject.fwAlertPriorityDismissState = 2;
-                [selfObject dismissViewControllerAnimated:YES completion:nil];
-            }
-        }));
-        FWSwizzleClass(UIViewController, @selector(viewDidDisappear:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
-            FWSwizzleOriginal(animated);
-            if (!selfObject.fwAlertPriorityEnabled) return;
-            
-            // 立即隐藏不移除队列，正常隐藏移除队列
-            NSMutableArray *alertControllers = [selfObject fwInnerAlertPriorityControllers:NO];
-            if (selfObject.fwAlertPriorityDismissState > 0) {
-                selfObject.fwAlertPriorityDismissState = 0;
-            } else {
-                [alertControllers removeObject:selfObject];
-            }
-            
-            // 按优先级显示下一个弹出框
-            if (alertControllers.count > 0) {
-                [selfObject.fwAlertPriorityParentController presentViewController:[alertControllers firstObject] animated:YES completion:nil];
-            }
-        }));
-    });
-}
-
-- (void)fwAlertPriorityPresentIn:(UIViewController *)viewController
-{
-    if (!self.fwAlertPriorityEnabled) return;
-    
-    // 加入队列并按优先级排序
-    self.fwAlertPriorityParentController = viewController;
-    NSMutableArray *alertControllers = [self fwInnerAlertPriorityControllers:YES];
-    if (![alertControllers containsObject:self]) {
-        [alertControllers addObject:self];
-    }
-    [alertControllers sortUsingComparator:^NSComparisonResult(UIViewController *obj1, UIViewController *obj2) {
-        return [@(obj2.fwAlertPriority) compare:@(obj1.fwAlertPriority)];
-    }];
-    // 独占优先级只显示一个
-    UIAlertController *firstController = [alertControllers firstObject];
-    if (firstController.fwAlertPriority == FWAlertPrioritySuper) {
-        [alertControllers removeAllObjects];
-        [alertControllers addObject:firstController];
-    }
-    
-    UIViewController *currentController = viewController.presentedViewController;
-    if (currentController && currentController.fwAlertPriorityEnabled) {
-        if (currentController != firstController) {
-            // 替换弹出框时显示完成立即隐藏。如果已经显示，直接隐藏；如果未显示完，等待显示完成立即隐藏。解决弹出框还未显示完成时调用dismiss触发警告问题
-            currentController.fwAlertPriorityDismissState = 1;
-            if (currentController.isViewLoaded && currentController.view.window && currentController.fwAlertPriorityDismissState == 1) {
-                currentController.fwAlertPriorityDismissState = 2;
-                [currentController dismissViewControllerAnimated:YES completion:nil];
-            }
-        }
-    } else {
-        [viewController presentViewController:firstController animated:YES completion:nil];
-    }
-}
-
-- (NSMutableArray *)fwInnerAlertPriorityControllers:(BOOL)autoCreate
-{
-    // parentController强引用弹出框数组，内部使用弱引用
-    NSMutableArray *array = objc_getAssociatedObject(self.fwAlertPriorityParentController, _cmd);
-    if (!array && autoCreate) {
-        array = [NSMutableArray array];
-        objc_setAssociatedObject(self.fwAlertPriorityParentController, _cmd, array, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return array;
-}
-
-@end
-
 #pragma mark - UIAlertAction+FWAlert
 
 @implementation UIAlertAction (FWAlert)
@@ -404,7 +272,6 @@
              actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
              cancelBlock:(void (^)(void))cancelBlock
              customBlock:(void (^)(id))customBlock
-                priority:(FWAlertPriority)priority
 {
     // 初始化Alert
     UIAlertController *alertController = [UIAlertController fwAlertControllerWithTitle:title
@@ -455,9 +322,7 @@
     if (customBlock) customBlock(alertController);
     
     // 显示Alert
-    alertController.fwAlertPriorityEnabled = YES;
-    alertController.fwAlertPriority = priority;
-    [alertController fwAlertPriorityPresentIn:viewController];
+    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 @end

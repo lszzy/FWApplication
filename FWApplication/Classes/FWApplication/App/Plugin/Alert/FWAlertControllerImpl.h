@@ -31,8 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
                  actions:(nullable NSArray *)actions
              actionBlock:(nullable void (^)(NSInteger index))actionBlock
              cancelBlock:(nullable void (^)(void))cancelBlock
-             customBlock:(nullable void (^)(id alertController))customBlock
-                priority:(FWAlertPriority)priority;
+             customBlock:(nullable void (^)(id alertController))customBlock;
 
 @end
 

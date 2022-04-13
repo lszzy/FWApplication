@@ -48,8 +48,7 @@
                         cancel:cancel
                        actions:nil
                    actionBlock:nil
-                   cancelBlock:cancelBlock
-                      priority:FWAlertPriorityNormal];
+                   cancelBlock:cancelBlock];
 }
 
 - (void)fwShowAlertWithTitle:(id)title
@@ -58,7 +57,6 @@
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
-                    priority:(FWAlertPriority)priority
 {
     [self fwShowAlertWithStyle:UIAlertControllerStyleAlert
                          title:title
@@ -71,8 +69,7 @@
                        if (actionBlock) actionBlock(index);
                    }
                    cancelBlock:cancelBlock
-                   customBlock:nil
-                      priority:priority];
+                   customBlock:nil];
 }
 
 - (void)fwShowConfirmWithTitle:(id)title
@@ -86,8 +83,7 @@
                           cancel:cancel
                          confirm:confirm
                     confirmBlock:confirmBlock
-                     cancelBlock:nil
-                        priority:FWAlertPriorityNormal];
+                     cancelBlock:nil];
 }
 
 - (void)fwShowConfirmWithTitle:(id)title
@@ -96,7 +92,6 @@
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
                    cancelBlock:(void (^)(void))cancelBlock
-                      priority:(FWAlertPriority)priority
 {
     if (!confirm) {
         confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
@@ -113,8 +108,7 @@
                        if (confirmBlock) confirmBlock();
                    }
                    cancelBlock:cancelBlock
-                   customBlock:nil
-                      priority:priority];
+                   customBlock:nil];
 }
 
 - (void)fwShowPromptWithTitle:(id)title
@@ -129,8 +123,7 @@
                         confirm:confirm
                     promptBlock:nil
                    confirmBlock:confirmBlock
-                    cancelBlock:nil
-                       priority:FWAlertPriorityNormal];
+                    cancelBlock:nil];
 }
 
 - (void)fwShowPromptWithTitle:(id)title
@@ -140,7 +133,6 @@
                   promptBlock:(void (^)(UITextField *))promptBlock
                  confirmBlock:(void (^)(NSString *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
-                     priority:(FWAlertPriority)priority
 {
     [self fwShowPromptWithTitle:title
                         message:message
@@ -153,8 +145,7 @@
                    confirmBlock:^(NSArray<NSString *> *values) {
                         if (confirmBlock) confirmBlock(values.firstObject);
                     }
-                    cancelBlock:cancelBlock
-                       priority:priority];
+                    cancelBlock:cancelBlock];
 }
 
 - (void)fwShowPromptWithTitle:(id)title
@@ -165,7 +156,6 @@
                   promptBlock:(void (^)(UITextField *, NSInteger))promptBlock
                  confirmBlock:(void (^)(NSArray<NSString *> *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
-                     priority:(FWAlertPriority)priority
 {
     if (!confirm) {
         confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
@@ -182,8 +172,7 @@
                        if (confirmBlock) confirmBlock(values);
                    }
                    cancelBlock:cancelBlock
-                   customBlock:nil
-                      priority:priority];
+                   customBlock:nil];
 }
 
 - (void)fwShowSheetWithTitle:(id)title
@@ -197,8 +186,7 @@
                         cancel:cancel
                        actions:actions
                    actionBlock:actionBlock
-                   cancelBlock:nil
-                      priority:FWAlertPriorityNormal];
+                   cancelBlock:nil];
 }
 
 - (void)fwShowSheetWithTitle:(id)title
@@ -207,7 +195,6 @@
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
-                    priority:(FWAlertPriority)priority
 {
     [self fwShowAlertWithStyle:UIAlertControllerStyleActionSheet
                          title:title
@@ -220,8 +207,7 @@
                        if (actionBlock) actionBlock(index);
                    }
                    cancelBlock:cancelBlock
-                   customBlock:nil
-                      priority:priority];
+                   customBlock:nil];
 }
 
 - (void)fwShowAlertWithStyle:(UIAlertControllerStyle)style
@@ -234,7 +220,6 @@
                  actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
-                    priority:(FWAlertPriority)priority
 {
     // 处理取消按钮，Sheet时默认取消，Alert多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
@@ -247,10 +232,10 @@
     
     // 优先调用插件，不存在时使用默认
     id<FWAlertPlugin> alertPlugin = self.fwAlertPlugin;
-    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(fwViewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:priority:)]) {
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(fwViewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
         alertPlugin = FWAlertPluginImpl.sharedInstance;
     }
-    [alertPlugin fwViewController:self showAlert:style title:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock priority:priority];
+    [alertPlugin fwViewController:self showAlert:style title:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
 }
 
 @end
@@ -289,7 +274,6 @@
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
-                    priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
@@ -300,8 +284,7 @@
                         cancel:cancel
                        actions:actions
                    actionBlock:actionBlock
-                   cancelBlock:cancelBlock
-                      priority:priority];
+                   cancelBlock:cancelBlock];
 }
 
 - (void)fwShowConfirmWithTitle:(id)title
@@ -327,7 +310,6 @@
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
                    cancelBlock:(void (^)(void))cancelBlock
-                      priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
@@ -338,8 +320,7 @@
                           cancel:cancel
                          confirm:confirm
                     confirmBlock:confirmBlock
-                     cancelBlock:cancelBlock
-                        priority:priority];
+                     cancelBlock:cancelBlock];
 }
 
 - (void)fwShowPromptWithTitle:(id)title
@@ -366,7 +347,6 @@
                   promptBlock:(void (^)(UITextField *))promptBlock
                  confirmBlock:(void (^)(NSString *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
-                     priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
@@ -378,8 +358,7 @@
                         confirm:confirm
                     promptBlock:promptBlock
                    confirmBlock:confirmBlock
-                    cancelBlock:cancelBlock
-                       priority:priority];
+                    cancelBlock:cancelBlock];
 }
 
 - (void)fwShowPromptWithTitle:(id)title
@@ -390,7 +369,6 @@
                   promptBlock:(void (^)(UITextField *, NSInteger))promptBlock
                  confirmBlock:(void (^)(NSArray<NSString *> *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
-                     priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
@@ -403,8 +381,7 @@
                     promptCount:promptCount
                     promptBlock:promptBlock
                    confirmBlock:confirmBlock
-                    cancelBlock:cancelBlock
-                       priority:priority];
+                    cancelBlock:cancelBlock];
 }
 
 - (void)fwShowSheetWithTitle:(id)title
@@ -430,7 +407,6 @@
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
-                    priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
@@ -441,8 +417,7 @@
                         cancel:cancel
                        actions:actions
                    actionBlock:actionBlock
-                   cancelBlock:cancelBlock
-                      priority:priority];
+                   cancelBlock:cancelBlock];
 }
 
 - (void)fwShowAlertWithStyle:(UIAlertControllerStyle)style
@@ -455,7 +430,6 @@
                  actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
-                    priority:(FWAlertPriority)priority
 {
     UIViewController *ctrl = self.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
@@ -470,8 +444,7 @@
                    promptBlock:promptBlock
                    actionBlock:actionBlock
                    cancelBlock:cancelBlock
-                   customBlock:customBlock
-                      priority:priority];
+                   customBlock:customBlock];
 }
 
 @end

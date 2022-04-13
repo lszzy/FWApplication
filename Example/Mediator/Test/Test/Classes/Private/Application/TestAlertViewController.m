@@ -104,8 +104,7 @@
                    }
                    cancelBlock:^{
                        NSLog(@"点击了取消按钮");
-                   }
-                      priority:FWAlertPriorityNormal];
+                   }];
 }
 
 - (void)onConfirm1
@@ -130,8 +129,7 @@
                     }
                      cancelBlock:^{
                          NSLog(@"点击了取消按钮");
-                     }
-                        priority:FWAlertPriorityNormal];
+                     }];
 }
 
 - (void)onPrompt1
@@ -160,8 +158,7 @@
                    }
                     cancelBlock:^{
                         NSLog(@"点击了取消按钮");
-                    }
-                       priority:FWAlertPriorityNormal];
+                    }];
 }
 
 - (void)onPrompt3
@@ -185,8 +182,7 @@
                     }
                     cancelBlock:^{
                         NSLog(@"点击了取消按钮");
-                    }
-                       priority:FWAlertPriorityNormal];
+                    }];
 }
 
 - (void)onSheet1
@@ -211,8 +207,7 @@
                    }
                    cancelBlock:^{
                        NSLog(@"点击了取消操作");
-                   }
-                      priority:FWAlertPriorityNormal];
+                   }];
 }
 
 - (void)onAlertF
@@ -250,8 +245,7 @@
                         if ([alertController isKindOfClass:[FWAlertController class]]) {
                             ((FWAlertController *)alertController).image = [UIImage fwImageWithAppIcon];
                         }
-                    }
-                      priority:FWAlertPriorityNormal];
+                    }];
 }
 
 - (void)onAlertH
@@ -270,8 +264,7 @@
                                             cancelBlock:^{
                                                 NSLog(@"点击了取消按钮");
                                             }
-                                            customBlock:nil
-                                               priority:FWAlertPriorityNormal];
+                                            customBlock:nil];
 }
 
 - (void)onAlertV
@@ -293,8 +286,7 @@
                                             cancelBlock:nil
                                             customBlock:^(FWAlertController *alertController) {
                                                 alertController.tapBackgroundViewDismiss = YES;
-                                            }
-                                               priority:FWAlertPriorityNormal];
+                                            }];
 }
 
 - (void)onAlertA
@@ -322,8 +314,7 @@
                         cancel:nil
                        actions:@[@"按钮1", @"按钮2", @"按钮3", @"按钮4"]
                    actionBlock:nil
-                   cancelBlock:nil
-                      priority:FWAlertPriorityNormal];
+                   cancelBlock:nil];
 }
 
 - (void)onSheetA
@@ -357,16 +348,26 @@
 
 - (void)onAlertP
 {
-    [self fwShowAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityNormal];
-    [self fwShowAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityLow];
-    [self fwShowAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityHigh];
+    FWWeakifySelf();
+    [self fwShowAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+        FWStrongifySelf();
+        [self fwShowAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+            FWStrongifySelf();
+            [self fwShowAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+        }];
+    }];
 }
 
 - (void)onSheetP
 {
-    [self fwShowSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityNormal];
-    [self fwShowSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityHigh];
-    [self fwShowSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityLow];
+    FWWeakifySelf();
+    [self fwShowSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+        FWStrongifySelf();
+        [self fwShowSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+            FWStrongifySelf();
+            [self fwShowSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+        }];
+    }];
 }
 
 @end

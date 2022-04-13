@@ -58,7 +58,7 @@
         NSLog(@"version status: %@", @([FWVersionManager sharedInstance].status));
         
         if ([FWVersionManager sharedInstance].status == FWVersionStatusAudit) {
-            [self fwShowAlertWithTitle:nil message:@"当前版本正在审核中" cancel:nil actions:nil actionBlock:nil cancelBlock:nil priority:FWAlertPriorityHigh];
+            [self fwShowAlertWithTitle:nil message:@"当前版本正在审核中" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
         } else if ([FWVersionManager sharedInstance].status == FWVersionStatusUpdate) {
             BOOL isForce = NO;
             if (isForce) {
@@ -71,13 +71,13 @@
                             exit(EXIT_SUCCESS);
                         }
                     }];
-                } priority:FWAlertPrioritySuper];
+                }];
             } else {
                 // 非强制更新
                 NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"微信", [FWVersionManager sharedInstance].latestVersion];
                 [self fwShowConfirmWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"取消" confirm:@"更新" confirmBlock:^{
                     [[FWVersionManager sharedInstance] openAppStore];
-                } cancelBlock:nil priority:FWAlertPriorityHigh];
+                } cancelBlock:nil];
             }
         }
     }];

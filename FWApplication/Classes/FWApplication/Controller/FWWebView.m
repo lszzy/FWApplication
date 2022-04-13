@@ -124,7 +124,7 @@
         completionHandler(YES);
     } cancelBlock:^{
         completionHandler(NO);
-    } priority:FWAlertPriorityNormal];
+    }];
 }
 
 - (void)webView:(WKWebView *)webView runJavaScriptTextInputPanelWithPrompt:(NSString *)prompt defaultText:(NSString *)defaultText initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(NSString *))completionHandler
@@ -140,7 +140,7 @@
         completionHandler(text);
     } cancelBlock:^{
         completionHandler(nil);
-    } priority:FWAlertPriorityNormal];
+    }];
 }
 
 - (WKWebView *)webView:(WKWebView *)webView createWebViewWithConfiguration:(WKWebViewConfiguration *)configuration forNavigationAction:(WKNavigationAction *)navigationAction windowFeatures:(WKWindowFeatures *)windowFeatures

@@ -68,7 +68,6 @@
              actionBlock:(void (^)(NSArray<NSString *> * _Nonnull, NSInteger))actionBlock
              cancelBlock:(void (^)(void))cancelBlock
              customBlock:(void (^)(id))customBlock
-                priority:(FWAlertPriority)priority
 {
     // 初始化Alert
     FWAlertController *alertController = [self alertControllerWithTitle:title
@@ -118,9 +117,7 @@
     if (customBlock) customBlock(alertController);
     
     // 显示Alert
-    alertController.fwAlertPriorityEnabled = YES;
-    alertController.fwAlertPriority = priority;
-    [alertController fwAlertPriorityPresentIn:viewController];
+    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)fwViewController:(UIViewController *)viewController
@@ -131,7 +128,6 @@
              actionBlock:(void (^)(NSInteger))actionBlock
              cancelBlock:(void (^)(void))cancelBlock
              customBlock:(void (^)(id _Nonnull))customBlock
-                priority:(FWAlertPriority)priority
 {
     // 初始化Alert
     FWAlertController *alertController = [self alertControllerWithHeaderView:headerView
@@ -166,9 +162,7 @@
     if (customBlock) customBlock(alertController);
     
     // 显示Alert
-    alertController.fwAlertPriorityEnabled = YES;
-    alertController.fwAlertPriority = priority;
-    [alertController fwAlertPriorityPresentIn:viewController];
+    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (FWAlertController *)alertControllerWithTitle:(id)title message:(id)message preferredStyle:(FWAlertControllerStyle)preferredStyle

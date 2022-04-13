@@ -50,22 +50,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - UIViewController+FWAlertPriority
-
-// 视图控制器弹窗优先级分类，支持优先级
-@interface UIViewController (FWAlertPriority)
-
-// 启用弹出框优先级，未启用不生效
-@property (nonatomic, assign) BOOL fwAlertPriorityEnabled;
-
-// 设置弹出优先级，默认普通
-@property (nonatomic, assign) FWAlertPriority fwAlertPriority;
-
-// 设置弹出框在指定控制器中按照优先级显示
-- (void)fwAlertPriorityPresentIn:(UIViewController *)viewController;
-
-@end
-
 #pragma mark - UIAlertAction+FWAlert
 
 /**

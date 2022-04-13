@@ -91,7 +91,7 @@
         } else {
             [self onSettings:indexPath];
         }
-    } cancelBlock:nil priority:FWAlertPriorityNormal];
+    } cancelBlock:nil];
 }
 
 #pragma mark - Action
