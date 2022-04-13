@@ -7,3 +7,6 @@
  */
 
 #import "FWAppWrapper.h"
+
+FWDefWrapper(UIAlertAction, FWAlertActionWrapper, FWAlertActionClassWrapper);
+FWDefWrapper(UIAlertController, FWAlertControllerWrapper, FWAlertControllerClassWrapper);

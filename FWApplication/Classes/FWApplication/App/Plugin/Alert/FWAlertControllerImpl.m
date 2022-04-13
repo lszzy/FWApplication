@@ -18,20 +18,20 @@
 
 @implementation FWAlertAction (FWAlertControllerPlugin)
 
-- (BOOL)fwIsPreferred
+- (BOOL)isPreferred
 {
-    return [objc_getAssociatedObject(self, @selector(fwIsPreferred)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(isPreferred)) boolValue];
 }
 
-- (void)setFwIsPreferred:(BOOL)fwIsPreferred
+- (void)setIsPreferred:(BOOL)isPreferred
 {
-    objc_setAssociatedObject(self, @selector(fwIsPreferred), @(fwIsPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(isPreferred), @(isPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (self.attributedTitle || self.title.length < 1 || !self.alertAppearance.actionEnabled) return;
     
     UIColor *titleColor = nil;
     if (!self.enabled) {
         titleColor = self.alertAppearance.disabledActionColor;
-    } else if (fwIsPreferred) {
+    } else if (isPreferred) {
         titleColor = self.alertAppearance.preferredActionColor;
     } else if (self.style == UIAlertActionStyleDestructive) {
         titleColor = self.alertAppearance.destructiveActionColor;
@@ -204,9 +204,9 @@
     
     [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
-            if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
+            if (obj.isPreferred) obj.isPreferred = NO;
         }];
-        object.preferredAction.fwIsPreferred = YES;
+        object.preferredAction.isPreferred = YES;
     }];
     
     return alertController;
@@ -222,9 +222,9 @@
     
     [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
-            if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
+            if (obj.isPreferred) obj.isPreferred = NO;
         }];
-        object.preferredAction.fwIsPreferred = YES;
+        object.preferredAction.isPreferred = YES;
     }];
     
     return alertController;
@@ -241,11 +241,11 @@
     if (attributedTitle) {
         alertAction.attributedTitle = attributedTitle;
     } else {
-        alertAction.fwIsPreferred = NO;
+        alertAction.isPreferred = NO;
     }
     
     [alertAction.fw observeProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
-        object.fwIsPreferred = object.fwIsPreferred;
+        object.isPreferred = object.isPreferred;
     }];
     
     return alertAction;

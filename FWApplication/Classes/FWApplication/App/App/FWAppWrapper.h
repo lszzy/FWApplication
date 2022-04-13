@@ -10,4 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+FWWrapperCompatible(UIAlertAction, FWAlertActionWrapper, FWObjectWrapper, FWAlertActionClassWrapper, FWClassWrapper);
+FWWrapperCompatible(UIAlertController, FWAlertControllerWrapper, FWViewControllerWrapper, FWAlertControllerClassWrapper, FWViewControllerClassWrapper);
+
 NS_ASSUME_NONNULL_END
