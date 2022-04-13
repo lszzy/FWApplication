@@ -27,7 +27,7 @@
     UIImage *image = [super imageNamed:name];
     if (image) return image;
     
-    if ([name isEqualToString:@"fwNavBack"]) {
+    if ([name isEqualToString:@"fw.navBack"]) {
         CGSize size = CGSizeMake(12, 20);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
@@ -40,7 +40,7 @@
             [path setLineWidth:lineWidth];
             [path stroke];
         }];
-    } else if ([name isEqualToString:@"fwNavClose"]) {
+    } else if ([name isEqualToString:@"fw.navClose"]) {
         CGSize size = CGSizeMake(16, 16);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
@@ -57,7 +57,7 @@
             [path setLineCapStyle:kCGLineCapRound];
             [path stroke];
         }];
-    } else if ([name isEqualToString:@"fwVideoPlay"]) {
+    } else if ([name isEqualToString:@"fw.videoPlay"]) {
         CGSize size = CGSizeMake(60, 60);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
@@ -81,7 +81,7 @@
             [triangle applyTransform:CGAffineTransformMakeTranslation(offset.horizontal, offset.vertical)];
             [triangle fill];
         }];
-    } else if ([name isEqualToString:@"fwVideoPause"]) {
+    } else if ([name isEqualToString:@"fw.videoPause"]) {
         CGSize size = CGSizeMake(12, 18);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
@@ -95,7 +95,7 @@
             [path setLineWidth:lineWidth];
             [path stroke];
         }];
-    } else if ([name isEqualToString:@"fwVideoStart"]) {
+    } else if ([name isEqualToString:@"fw.videoStart"]) {
         CGSize size = CGSizeMake(17, 17);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
@@ -107,7 +107,7 @@
             [path closePath];
             [path fill];
         }];
-    } else if ([name isEqualToString:@"fwPickerCheck"]) {
+    } else if ([name isEqualToString:@"fw.pickerCheck"]) {
         CGSize size = CGSizeMake(20, 20);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
@@ -120,7 +120,7 @@
             [circle stroke];
             [circle fill];
         }];
-    } else if ([name isEqualToString:@"fwPickerChecked"]) {
+    } else if ([name isEqualToString:@"fw.pickerChecked"]) {
         CGSize size = CGSizeMake(20, 20);
         return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
@@ -160,69 +160,69 @@
     dispatch_once(&onceToken, ^{
         localizedStrings = @{
             @"zh-Hans": @{
-                @"fwDone": @"完成",
-                @"fwClose": @"关闭",
-                @"fwConfirm": @"确定",
-                @"fwCancel": @"取消",
-                @"fwOriginal": @"原图",
-                @"fwEdit": @"编辑",
-                @"fwPreview": @"预览",
-                @"fwPickerAlbum": @"相册",
-                @"fwPickerEmpty": @"无照片",
-                @"fwPickerDenied": @"请在iPhone的\"设置-隐私-照片\"选项中，允许%@访问你的照片",
-                @"fwPickerExceed": @"最多只能选择%@张图片",
+                @"fw.done": @"完成",
+                @"fw.close": @"关闭",
+                @"fw.confirm": @"确定",
+                @"fw.cancel": @"取消",
+                @"fw.original": @"原图",
+                @"fw.edit": @"编辑",
+                @"fw.preview": @"预览",
+                @"fw.pickerAlbum": @"相册",
+                @"fw.pickerEmpty": @"无照片",
+                @"fw.pickerDenied": @"请在iPhone的\"设置-隐私-照片\"选项中，允许%@访问你的照片",
+                @"fw.pickerExceed": @"最多只能选择%@张图片",
             },
             @"zh-Hant": @{
-                @"fwDone": @"完成",
-                @"fwClose": @"關閉",
-                @"fwConfirm": @"確定",
-                @"fwCancel": @"取消",
-                @"fwOriginal": @"原圖",
-                @"fwEdit": @"編輯",
-                @"fwPreview": @"預覽",
-                @"fwPickerAlbum": @"相冊",
-                @"fwPickerEmpty": @"無照片",
-                @"fwPickerDenied": @"請在iPhone的\"設置-隱私-相冊\"選項中，允許%@訪問你的照片",
-                @"fwPickerExceed": @"最多只能選擇%@張圖片",
+                @"fw.done": @"完成",
+                @"fw.close": @"關閉",
+                @"fw.confirm": @"確定",
+                @"fw.cancel": @"取消",
+                @"fw.original": @"原圖",
+                @"fw.edit": @"編輯",
+                @"fw.preview": @"預覽",
+                @"fw.pickerAlbum": @"相冊",
+                @"fw.pickerEmpty": @"無照片",
+                @"fw.pickerDenied": @"請在iPhone的\"設置-隱私-相冊\"選項中，允許%@訪問你的照片",
+                @"fw.pickerExceed": @"最多只能選擇%@張圖片",
             },
             @"en": @{
-                @"fwDone": @"Done",
-                @"fwClose": @"OK",
-                @"fwConfirm": @"Yes",
-                @"fwCancel": @"Cancel",
-                @"fwOriginal": @"Original",
-                @"fwEdit": @"Edit",
-                @"fwPreview": @"Preview",
-                @"fwPickerAlbum": @"Album",
-                @"fwPickerEmpty": @"No Photo",
-                @"fwPickerDenied": @"Please allow %@ to access your album in \"Settings\"->\"Privacy\"->\"Photos\"",
-                @"fwPickerExceed": @"Max count for selection: %@",
+                @"fw.done": @"Done",
+                @"fw.close": @"OK",
+                @"fw.confirm": @"Yes",
+                @"fw.cancel": @"Cancel",
+                @"fw.original": @"Original",
+                @"fw.edit": @"Edit",
+                @"fw.preview": @"Preview",
+                @"fw.pickerAlbum": @"Album",
+                @"fw.pickerEmpty": @"No Photo",
+                @"fw.pickerDenied": @"Please allow %@ to access your album in \"Settings\"->\"Privacy\"->\"Photos\"",
+                @"fw.pickerExceed": @"Max count for selection: %@",
             },
             @"ja": @{
-                @"fwDone": @"完了",
-                @"fwClose": @"閉める",
-                @"fwConfirm": @"確認",
-                @"fwCancel": @"戻る",
-                @"fwOriginal": @"原図",
-                @"fwEdit": @"編集",
-                @"fwPreview": @"プレビュー",
-                @"fwPickerAlbum": @"アルバム",
-                @"fwPickerEmpty": @"写真でない",
-                @"fwPickerDenied": @"%@があなたのアルバムにアクセスするには「設定」->「プライバシー」->「写真」",
-                @"fwPickerExceed": @"最大選択数: %@",
+                @"fw.done": @"完了",
+                @"fw.close": @"閉める",
+                @"fw.confirm": @"確認",
+                @"fw.cancel": @"戻る",
+                @"fw.original": @"原図",
+                @"fw.edit": @"編集",
+                @"fw.preview": @"プレビュー",
+                @"fw.pickerAlbum": @"アルバム",
+                @"fw.pickerEmpty": @"写真でない",
+                @"fw.pickerDenied": @"%@があなたのアルバムにアクセスするには「設定」->「プライバシー」->「写真」",
+                @"fw.pickerExceed": @"最大選択数: %@",
             },
             @"ms": @{
-                @"fwDone": @"Selesai",
-                @"fwClose": @"OK",
-                @"fwConfirm": @"Ya",
-                @"fwCancel": @"Batal",
-                @"fwOriginal": @"Asal",
-                @"fwEdit": @"Edit",
-                @"fwPreview": @"Pratonton",
-                @"fwPickerAlbum": @"Imej",
-                @"fwPickerEmpty": @"Tiada gambar",
-                @"fwPickerDenied": @"Izinkan %@ mengakses album anda di \"Tetapan\" -> \"Privasi\" -> \"Foto\"",
-                @"fwPickerExceed": @"Kiraan maksimum untuk pemilihan: %@",
+                @"fw.done": @"Selesai",
+                @"fw.close": @"OK",
+                @"fw.confirm": @"Ya",
+                @"fw.cancel": @"Batal",
+                @"fw.original": @"Asal",
+                @"fw.edit": @"Edit",
+                @"fw.preview": @"Pratonton",
+                @"fw.pickerAlbum": @"Imej",
+                @"fw.pickerEmpty": @"Tiada gambar",
+                @"fw.pickerDenied": @"Izinkan %@ mengakses album anda di \"Tetapan\" -> \"Privasi\" -> \"Foto\"",
+                @"fw.pickerExceed": @"Kiraan maksimum untuk pemilihan: %@",
             },
         };
     });
@@ -236,94 +236,94 @@
 
 + (UIImage *)navBackImage
 {
-    return [self imageNamed:@"fwNavBack"];
+    return [self imageNamed:@"fw.navBack"];
 }
 
 + (UIImage *)navCloseImage
 {
-    return [self imageNamed:@"fwNavClose"];
+    return [self imageNamed:@"fw.navClose"];
 }
 
 + (UIImage *)videoPlayImage
 {
-    return [self imageNamed:@"fwVideoPlay"];
+    return [self imageNamed:@"fw.videoPlay"];
 }
 
 + (UIImage *)videoPauseImage
 {
-    return [self imageNamed:@"fwVideoPause"];
+    return [self imageNamed:@"fw.videoPause"];
 }
 
 + (UIImage *)videoStartImage
 {
-    return [self imageNamed:@"fwVideoStart"];
+    return [self imageNamed:@"fw.videoStart"];
 }
 
 + (UIImage *)pickerCheckImage
 {
-    return [self imageNamed:@"fwPickerCheck"];
+    return [self imageNamed:@"fw.pickerCheck"];
 }
 
 + (UIImage *)pickerCheckedImage
 {
-    return [self imageNamed:@"fwPickerChecked"];
+    return [self imageNamed:@"fw.pickerChecked"];
 }
 
 #pragma mark - String
 
 + (NSString *)cancelButton
 {
-    return [self localizedString:@"fwCancel"];
+    return [self localizedString:@"fw.cancel"];
 }
 
 + (NSString *)confirmButton
 {
-    return [self localizedString:@"fwConfirm"];
+    return [self localizedString:@"fw.confirm"];
 }
 
 + (NSString *)doneButton
 {
-    return [self localizedString:@"fwDone"];
+    return [self localizedString:@"fw.done"];
 }
 
 + (NSString *)closeButton
 {
-    return [self localizedString:@"fwClose"];
+    return [self localizedString:@"fw.close"];
 }
 
 + (NSString *)editButton
 {
-    return [self localizedString:@"fwEdit"];
+    return [self localizedString:@"fw.edit"];
 }
 
 + (NSString *)previewButton
 {
-    return [self localizedString:@"fwPreview"];
+    return [self localizedString:@"fw.preview"];
 }
 
 + (NSString *)originalButton
 {
-    return [self localizedString:@"fwOriginal"];
+    return [self localizedString:@"fw.original"];
 }
 
 + (NSString *)pickerAlbumTitle
 {
-    return [self localizedString:@"fwPickerAlbum"];
+    return [self localizedString:@"fw.pickerAlbum"];
 }
 
 + (NSString *)pickerEmptyTitle
 {
-    return [self localizedString:@"fwPickerEmpty"];
+    return [self localizedString:@"fw.pickerEmpty"];
 }
 
 + (NSString *)pickerDeniedTitle
 {
-    return [self localizedString:@"fwPickerDenied"];
+    return [self localizedString:@"fw.pickerDenied"];
 }
 
 + (NSString *)pickerExceedTitle
 {
-    return [self localizedString:@"fwPickerExceed"];
+    return [self localizedString:@"fw.pickerExceed"];
 }
 
 @end
