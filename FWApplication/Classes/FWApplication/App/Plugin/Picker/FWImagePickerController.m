@@ -1086,7 +1086,7 @@
         } else if (imageAsset.assetSubType == FWAssetSubTypeGIF) {
             [imageAsset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    UIImage *resultImage = [UIImage fwImageWithData:imageData];
+                    UIImage *resultImage = [UIImage.fw imageWithData:imageData];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (resultImage) {
                             imageView.image = resultImage;
@@ -2622,7 +2622,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             } else if (asset.assetSubType == FWAssetSubTypeGIF) {
                 [asset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        UIImage *resultImage = imageData ? [UIImage fwImageWithData:imageData] : nil;
+                        UIImage *resultImage = imageData ? [UIImage.fw imageWithData:imageData] : nil;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completionHandler(asset, resultImage, info);
                         });

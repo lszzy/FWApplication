@@ -916,7 +916,7 @@ internal extension FWTabBar /* Actions */ {
     open func updateDisplay() {
         let currentImage = (selected ? (selectedImage ?? image) : image)?.withRenderingMode(renderingMode)
         if let currentImageURL = selected ? (selectedImageURL ?? imageURL) : imageURL {
-            imageView.fwSetImage(withURL: currentImageURL, placeholderImage: currentImage, options: .avoidSetImage, context: nil, completion: { [weak self] (image, error) in
+            imageView.fw.setImageWithURL(currentImageURL, placeholderImage: currentImage, options: .avoidSetImage, context: nil, completion: { [weak self] (image, error) in
                 guard var renderImage = image else { return }
                 if let cgImage = renderImage.cgImage {
                     renderImage = UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: renderImage.imageOrientation)

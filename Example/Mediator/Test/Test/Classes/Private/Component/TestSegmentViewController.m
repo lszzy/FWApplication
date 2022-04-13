@@ -53,10 +53,12 @@
     NSString *gifImageUrl = [NSString stringWithFormat:@"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif%@", timestampStr];
     progressView.progress = 0;
     progressView.hidden = NO;
-    [imageView fwSetImageWithURL:gifImageUrl placeholderImage:nil options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+    FWWeakifySelf();
+    [imageView.fw setImageWithURL:gifImageUrl placeholderImage:nil options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+        FWStrongifySelf();
         progressView.hidden = YES;
         if (image) {
-            imageView.image = image;
+            self.gifImageView.image = image;
         }
     } progress:^(double progress) {
         progressView.progress = progress;
@@ -167,7 +169,6 @@
     [self.segmentedControl.fw setDimension:NSLayoutAttributeHeight toSize:50];
     self.segmentedControl.sectionTitles = sectionTitles;
     self.segmentedControl.selectedSegmentIndex = 5;
-    FWWeakifySelf();
     self.segmentedControl.indexChangeBlock = ^(NSUInteger index) {
         FWStrongifySelf();
         [self.scrollView scrollRectToVisible:CGRectMake(FWScreenWidth * index, 0, FWScreenWidth, 100) animated:YES];

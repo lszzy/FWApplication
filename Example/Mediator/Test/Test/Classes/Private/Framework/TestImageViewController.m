@@ -289,7 +289,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         [self.contentView addSubview:_systemView];
         _systemView.fw.layoutChain.leftWithInset(10).topToBottomOfViewWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
         
-        _animatedView = [[UIImageView fwImageViewAnimatedClass] new];
+        _animatedView = [[UIImageView.fw imageViewAnimatedClass] new];
         [self.contentView addSubview:_animatedView];
         _animatedView.fw.layoutChain.leftToRightOfViewWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
     }
@@ -414,11 +414,11 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         cell.fw.tempObject = fileName;
         FWDispatchGlobal(^{
             UIImage *image = [TestBundle imageNamed:fileName];
-            UIImage *decodeImage = [UIImage fwImageWithData:[UIImage fwDataWithImage:image]];
+            UIImage *decodeImage = [UIImage.fw imageWithData:[UIImage.fw dataWithImage:image]];
             FWDispatchMain(^{
                 if ([cell.fw.tempObject isEqualToString:fileName]) {
-                    [cell.systemView fwSetImageWithURL:nil placeholderImage:image];
-                    [cell.animatedView fwSetImageWithURL:nil placeholderImage:decodeImage];
+                    [cell.systemView.fw setImageWithURL:nil placeholderImage:image];
+                    [cell.animatedView.fw setImageWithURL:nil placeholderImage:decodeImage];
                 }
             });
         });
@@ -428,8 +428,8 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
             url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fw.currentTime)];
         }
-        [cell.systemView fwSetImageWithURL:url];
-        [cell.animatedView fwSetImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];
+        [cell.systemView.fw setImageWithURL:url];
+        [cell.animatedView.fw setImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     }
     return cell;
 }

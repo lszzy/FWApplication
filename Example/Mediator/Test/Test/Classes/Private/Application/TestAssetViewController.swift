@@ -123,7 +123,7 @@ import FWApplication
                         zoomImageView.progress = 0.01
                         photo.requestImageData { data, info, _, _ in
                             zoomImageView.progress = 1
-                            zoomImageView.image = UIImage.fwImage(with:data)
+                            zoomImageView.image = UIImage.fw.image(with:data)
                         }
                     } else if photo.assetSubType == .livePhoto {
                         zoomImageView.progress = 0.01

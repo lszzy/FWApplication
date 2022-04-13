@@ -796,17 +796,17 @@
     return instance;
 }
 
-- (Class)fwImageViewAnimatedClass
+- (Class)imageViewAnimatedClass
 {
     return [UIImageView class];
 }
 
-- (UIImage *)fwImageDecode:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
+- (UIImage *)imageDecode:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     return [[FWImageCoder sharedInstance] decodedImageWithData:data scale:scale options:options];
 }
 
-- (NSData *)fwImageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+- (NSData *)imageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     FWImageFormat imageFormat = image.fwImageFormat;
     NSData *imageData = [FWImageCoder.sharedInstance encodedDataWithImage:image format:imageFormat options:options];
@@ -814,12 +814,12 @@
     return [FWImageCoder.sharedInstance encodedDataWithImage:image format:FWImageFormatUndefined options:options];
 }
 
-- (NSURL *)fwImageURL:(UIImageView *)imageView
+- (NSURL *)imageURL:(UIImageView *)imageView
 {
     return [[FWImageDownloader sharedDownloader] imageURLForObject:imageView];
 }
 
-- (void)fwImageView:(UIImageView *)imageView
+- (void)imageView:(UIImageView *)imageView
         setImageURL:(NSURL *)imageURL
         placeholder:(UIImage *)placeholder
             options:(FWWebImageOptions)options
@@ -858,12 +858,12 @@
     } progress:progress];
 }
 
-- (void)fwCancelImageRequest:(UIImageView *)imageView
+- (void)cancelImageRequest:(UIImageView *)imageView
 {
     [[FWImageDownloader sharedDownloader] cancelImageDownloadTask:imageView];
 }
 
-- (id)fwDownloadImage:(NSURL *)imageURL
+- (id)downloadImage:(NSURL *)imageURL
               options:(FWWebImageOptions)options
               context:(NSDictionary<FWImageCoderOptions, id> *)context
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
@@ -882,7 +882,7 @@
     } : nil)];
 }
 
-- (void)fwCancelImageDownload:(id)receipt
+- (void)cancelImageDownload:(id)receipt
 {
     if (receipt && [receipt isKindOfClass:[FWImageDownloadReceipt class]]) {
         [[FWImageDownloader sharedDownloader] cancelTaskForImageDownloadReceipt:receipt];
