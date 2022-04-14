@@ -22,12 +22,12 @@
     intercepter.loadViewIntercepter = @selector(webViewControllerLoadView:);
     intercepter.viewDidLoadIntercepter = @selector(webViewControllerViewDidLoad:);
     intercepter.forwardSelectors = @{
-        @"webView" : @"fwInnerWebView",
-        @"webItems" : @"fwInnerWebItems",
-        @"webRequest" : @"fwInnerWebRequest",
-        @"setWebRequest:" : @"fwInnerSetWebRequest:",
-        @"renderWebLayout" : @"fwInnerRenderWebLayout",
-        @"onWebClose": @"fwInnerOnWebClose",
+        @"webView" : @"innerWebView",
+        @"webItems" : @"innerWebItems",
+        @"webRequest" : @"innerWebRequest",
+        @"setWebRequest:" : @"innerSetWebRequest:",
+        @"renderWebLayout" : @"innerRenderWebLayout",
+        @"onWebClose": @"innerOnWebClose",
     };
     [[FWViewControllerManager sharedInstance] registerProtocol:@protocol(FWWebViewController) withIntercepter:intercepter];
 }
@@ -128,7 +128,7 @@
 
 @implementation UIViewController (FWWebViewController)
 
-- (FWWebView *)fwInnerWebView
+- (FWWebView *)innerWebView
 {
     FWWebView *webView = objc_getAssociatedObject(self, _cmd);
     if (!webView) {
@@ -142,12 +142,12 @@
     return webView;
 }
 
-- (NSArray *)fwInnerWebItems
+- (NSArray *)innerWebItems
 {
     return nil;
 }
 
-- (void)fwInnerOnWebClose
+- (void)innerOnWebClose
 {
     if (self.navigationController) {
         if ([self.navigationController popViewControllerAnimated:YES]) return;
@@ -164,14 +164,14 @@
     }
 }
 
-- (id)fwInnerWebRequest
+- (id)innerWebRequest
 {
-    return objc_getAssociatedObject(self, @selector(fwInnerWebRequest));
+    return objc_getAssociatedObject(self, @selector(innerWebRequest));
 }
 
-- (void)fwInnerSetWebRequest:(id)webRequest
+- (void)innerSetWebRequest:(id)webRequest
 {
-    objc_setAssociatedObject(self, @selector(fwInnerWebRequest), webRequest, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(innerWebRequest), webRequest, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     if (self.isViewLoaded) {
         FWWebView *webView = [(id<FWWebViewController>)self webView];
@@ -179,7 +179,7 @@
     }
 }
 
-- (void)fwInnerRenderWebLayout
+- (void)innerRenderWebLayout
 {
     FWWebView *webView = [(id<FWWebViewController>)self webView];
     [webView.fw pinEdgesToSuperview];
