@@ -9,6 +9,7 @@
 
 #import <UIKit/UIKit.h>
 #import <PhotosUI/PhotosUI.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -179,12 +180,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - UIView+FWZoomImageView
+#pragma mark - FWViewWrapper+FWZoomImageView
 
-@interface UIView (FWZoomImageView)
+@interface FWViewWrapper (FWZoomImageView)
 
 /// 将要设置的frame按照view的anchorPoint(.5, .5)处理后再设置，而系统默认按照(0, 0)方式计算
-@property(nonatomic, assign) CGRect fwFrameApplyTransform;
+@property(nonatomic, assign) CGRect frameApplyTransform;
 
 @end
 

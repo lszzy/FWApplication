@@ -128,7 +128,7 @@
     if (self.usePlugin) {
         NSInteger buttonIndex = [self.floatLayoutView.subviews indexOfObject:button];
         __weak __typeof(self) weakSelf = self;
-        [self fwShowImagePreviewWithImageURLs:self.images imageInfos:nil currentIndex:buttonIndex sourceView:^id _Nullable(NSInteger index) {
+        [self.fw showImagePreviewWithImageURLs:self.images imageInfos:nil currentIndex:buttonIndex sourceView:^id _Nullable(NSInteger index) {
             return weakSelf.floatLayoutView.subviews[index];
         }];
         return;

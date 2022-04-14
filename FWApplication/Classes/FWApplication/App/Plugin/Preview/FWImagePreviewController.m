@@ -29,7 +29,7 @@
         self.zoomImageView = [[FWZoomImageView alloc] init];
         [self.contentView addSubview:self.zoomImageView];
         self.contentViewBounds = self.contentView.bounds;
-        self.zoomImageView.fwFrameApplyTransform = self.contentView.bounds;
+        self.zoomImageView.fw.frameApplyTransform = self.contentView.bounds;
     }
     return self;
 }
@@ -38,7 +38,7 @@
     [super layoutSubviews];
     if (!CGRectEqualToRect(self.contentView.bounds, self.contentViewBounds)) {
         self.contentViewBounds = self.contentView.bounds;
-        self.zoomImageView.fwFrameApplyTransform = self.contentView.bounds;
+        self.zoomImageView.fw.frameApplyTransform = self.contentView.bounds;
     }
 }
 
@@ -414,7 +414,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    self.imagePreviewView.fwFrameApplyTransform = self.view.bounds;
+    self.imagePreviewView.fw.frameApplyTransform = self.view.bounds;
     
     if (self.pageLabel.text.length < 1 && self.imagePreviewView.imageCount > 0) {
         [self updatePageLabel];

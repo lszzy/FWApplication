@@ -428,7 +428,7 @@ static BOOL isExpanded = NO;
     }
     
     FWWeakifySelf();
-    [self fwShowImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:indexPath.row sourceView:^id _Nullable(NSInteger index) {
+    [self.fw showImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:indexPath.row sourceView:^id _Nullable(NSInteger index) {
         FWStrongifySelf();
         TestTableDynamicLayoutCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         return cell.myImageView;
