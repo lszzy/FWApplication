@@ -38,21 +38,21 @@
 
 - (void)callHandler:(id)sender {
     id data = @{ @"greetingFromObjC": @"Hi there, JS!" };
-    [self.webView.fwJsBridge callHandler:@"testJavascriptHandler" data:data responseCallback:^(id response) {
+    [self.webView.fw.jsBridge callHandler:@"testJavascriptHandler" data:data responseCallback:^(id response) {
         NSLog(@"testJavascriptHandler responded: %@", response);
     }];
 }
 
 - (void)errorHandler:(id)sender {
     id data = @{ @"greetingFromObjC": @"Hi there, Error!" };
-    [self.webView.fwJsBridge callHandler:@"notFoundHandler" data:data responseCallback:^(id  _Nonnull responseData) {
+    [self.webView.fw.jsBridge callHandler:@"notFoundHandler" data:data responseCallback:^(id  _Nonnull responseData) {
         NSLog(@"notFoundHandler responded: %@", responseData);
     }];
 }
 
 - (void)filterHandler:(id)sender {
     id data = @{ @"greetingFromObjC": @"Hi there, Error!" };
-    [self.webView.fwJsBridge callHandler:@"testFilterHandler" data:data responseCallback:^(id  _Nonnull responseData) {
+    [self.webView.fw.jsBridge callHandler:@"testFilterHandler" data:data responseCallback:^(id  _Nonnull responseData) {
         NSLog(@"testFilterHandler responded: %@", responseData);
     }];
 }

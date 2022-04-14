@@ -8,9 +8,11 @@
 
 #import "FWAppWrapper.h"
 
+FWDefWrapper(UIProgressView, FWProgressViewWrapper, FWProgressViewClassWrapper);
+FWDefWrapper(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWActivityIndicatorViewClassWrapper);
 FWDefWrapper(UIAlertAction, FWAlertActionWrapper, FWAlertActionClassWrapper);
 FWDefWrapper(UIAlertController, FWAlertControllerWrapper, FWAlertControllerClassWrapper);
-FWDefWrapper(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWActivityIndicatorViewClassWrapper);
-FWDefWrapper(PHPhotoLibrary, FWPhotoLibraryWrapper, FWPhotoLibraryClassWrapper);
 FWDefWrapper(UIImagePickerController, FWImagePickerControllerWrapper, FWImagePickerControllerClassWrapper);
+FWDefWrapper(WKWebView, FWWebViewWrapper, FWWebViewClassWrapper);
+FWDefWrapper(PHPhotoLibrary, FWPhotoLibraryWrapper, FWPhotoLibraryClassWrapper);
 FWDefWrapper(PHPickerViewController, FWPickerViewControllerWrapper, FWPickerViewControllerClassWrapper);

@@ -10,7 +10,6 @@
 #import "FWWebView.h"
 #import "FWAlertPlugin.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
 #pragma mark - FWWebView
 
@@ -190,7 +189,7 @@ static WKProcessPool *fwStaticProcessPool = nil;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
-    configuration.applicationNameForUserAgent = [WKWebView fwExtensionUserAgent];
+    configuration.applicationNameForUserAgent = [WKWebView.fw extensionUserAgent];
     configuration.processPool = [FWWebView processPool];
     return [self initWithFrame:frame configuration:configuration];
 }
@@ -222,18 +221,18 @@ static WKProcessPool *fwStaticProcessPool = nil;
     
     self.progressView = [[UIProgressView alloc] initWithFrame:CGRectZero];
     self.progressView.trackTintColor = [UIColor clearColor];
-    self.progressView.fwWebProgress = 0;
+    self.progressView.fw.webProgress = 0;
     [self addSubview:self.progressView];
     [self.progressView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
     [self.progressView.fw setDimension:NSLayoutAttributeHeight toSize:2.f];
     [self.fw observeProperty:@"estimatedProgress" block:^(FWWebView *webView, NSDictionary *change) {
         if (webView.estimatedProgress < 1.0) {
-            webView.progressView.fwWebProgress = webView.estimatedProgress;
+            webView.progressView.fw.webProgress = webView.estimatedProgress;
         }
     }];
     [self.fw observeProperty:@"loading" block:^(FWWebView *webView, NSDictionary *change) {
         if (!webView.isLoading) {
-            webView.progressView.fwWebProgress = 1.0;
+            webView.progressView.fw.webProgress = 1.0;
         }
     }];
 }
@@ -290,33 +289,33 @@ static WKProcessPool *fwStaticProcessPool = nil;
 
 @end
 
-@implementation UIProgressView (FWWebView)
+@implementation FWProgressViewWrapper (FWWebView)
 
-- (float)fwWebProgress
+- (float)webProgress
 {
-    return self.progress;
+    return self.base.progress;
 }
 
-- (void)setFwWebProgress:(float)progress
+- (void)setWebProgress:(float)progress
 {
     if (progress <= 0) {
-        self.alpha = 0;
+        self.base.alpha = 0;
     } else if (progress > 0 && progress < 1.0) {
-        if (self.alpha == 0) {
-            self.progress = 0;
+        if (self.base.alpha == 0) {
+            self.base.progress = 0;
             [UIView animateWithDuration:0.2 animations:^{
-                self.alpha = 1.0;
+                self.base.alpha = 1.0;
             }];
         }
     } else {
-        self.alpha = 1.0;
+        self.base.alpha = 1.0;
         [UIView animateWithDuration:0.2 animations:^{
-            self.alpha = 0.0;
+            self.base.alpha = 0.0;
         } completion:^(BOOL finished) {
-            self.progress = 0;
+            self.base.progress = 0;
         }];
     }
-    [self setProgress:progress animated:YES];
+    [self.base setProgress:progress animated:YES];
 }
 
 @end
@@ -1034,40 +1033,44 @@ NSString * FWWebViewJsBridge_js() {
     return preprocessorJSCode;
 };
 
-@implementation WKWebView (FWWebViewBridge)
+@implementation FWWebViewWrapper (FWWebViewBridge)
 
-- (FWWebViewJsBridge *)fwJsBridge
+- (FWWebViewJsBridge *)jsBridge
 {
-    return objc_getAssociatedObject(self, @selector(fwJsBridge));
+    return objc_getAssociatedObject(self.base, @selector(jsBridge));
 }
 
-- (void)setFwJsBridge:(FWWebViewJsBridge *)fwJsBridge
+- (void)setJsBridge:(FWWebViewJsBridge *)jsBridge
 {
-    objc_setAssociatedObject(self, @selector(fwJsBridge), fwJsBridge, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(jsBridge), jsBridge, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSString *)fwUserAgent
+- (NSString *)userAgent
 {
-    if (self.customUserAgent.length > 0) return self.customUserAgent;
-    NSString *userAgent = [self.fw invokeGetter:@"userAgent"];
+    if (self.base.customUserAgent.length > 0) return self.base.customUserAgent;
+    NSString *userAgent = [self invokeGetter:@"userAgent"];
     if ([userAgent isKindOfClass:[NSString class]] && userAgent.length > 0) return userAgent;
-    return [WKWebView fwBrowserUserAgent];
+    return [WKWebView.fw browserUserAgent];
 }
 
-+ (NSString *)fwBrowserUserAgent
+@end
+
+@implementation FWWebViewClassWrapper (FWWebViewBridge)
+
+- (NSString *)browserUserAgent
 {
     NSString *platformUserAgent = [NSString stringWithFormat:@"Mozilla/5.0 (%@; CPU OS %@ like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)", [[UIDevice currentDevice] model], [[UIDevice currentDevice].systemVersion stringByReplacingOccurrencesOfString:@"." withString:@"_"]];
-    NSString *userAgent = [NSString stringWithFormat:@"%@ %@", platformUserAgent, [self fwExtensionUserAgent]];
+    NSString *userAgent = [NSString stringWithFormat:@"%@ %@", platformUserAgent, [self extensionUserAgent]];
     return userAgent;
 }
 
-+ (NSString *)fwExtensionUserAgent
+- (NSString *)extensionUserAgent
 {
     NSString *userAgent = [NSString stringWithFormat:@"Mobile/15E148 Safari/605.1.15 %@/%@", [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleExecutableKey] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleIdentifierKey], [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleVersionKey]];
     return userAgent;
 }
 
-+ (NSString *)fwRequestUserAgent
+- (NSString *)requestUserAgent
 {
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleExecutableKey] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleIdentifierKey], [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
     return userAgent;
