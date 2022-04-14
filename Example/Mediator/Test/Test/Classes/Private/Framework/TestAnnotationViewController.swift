@@ -16,7 +16,7 @@ import UIKit
 
 @objc class TestPluginImpl: NSObject, TestPluginProtocol {
     func pluginMethod() {
-        UIWindow.fw.mainWindow?.fwShowMessage(withText: "TestPluginImpl")
+        UIWindow.fw.showMessage(withText: "TestPluginImpl")
     }
 }
 
@@ -33,7 +33,7 @@ class TestRouter {
     
     static func pluginRouter(_ context: FWRouterContext) -> Any? {
         let pluginId = FWSafeString(context.urlParameters["id"])
-        UIWindow.fw.mainWindow?.fwShowMessage(withText: "plugin - \(pluginId)")
+        UIWindow.fw.showMessage(withText: "plugin - \(pluginId)")
         return nil
     }
 }

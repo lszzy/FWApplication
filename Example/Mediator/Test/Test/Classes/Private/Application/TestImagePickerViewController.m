@@ -122,7 +122,7 @@
                                completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results, BOOL cancel) {
         FWStrongifySelf();
         if (cancel || objects.count < 1) {
-            [self fwShowMessageWithText:@"已取消"];
+            [self.fw showMessageWithText:@"已取消"];
         } else {
             [self.fw showImagePreviewWithImageURLs:objects imageInfos:nil currentIndex:0 sourceView:nil];
         }

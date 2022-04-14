@@ -80,14 +80,14 @@
     viewEvent.fireBlock = ^(FWStateTransition *transition, void (^completion)(BOOL finished)){
         FWStrongifySelf();
         
-        [self fwShowLoadingWithText:@"正在请求"];
+        [self.fw showLoadingWithText:@"正在请求"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self fwHideLoading];
+            [self.fw hideLoading];
             
             if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
-                [self fwShowMessageWithText:@"请求失败"];
+                [self.fw showMessageWithText:@"请求失败"];
                 completion(NO);
             }
         });
@@ -97,7 +97,7 @@
         FWStrongifySelf();
         
         if (self.isLock) {
-            [self fwShowMessageWithText:@"已锁定，不能删除"];
+            [self.fw showMessageWithText:@"已锁定，不能删除"];
             return NO;
         }
         return YES;
@@ -105,14 +105,14 @@
     deleteEvent.fireBlock = ^(FWStateTransition *transition, void (^completion)(BOOL finished)){
         FWStrongifySelf();
         
-        [self fwShowLoadingWithText:@"正在请求"];
+        [self.fw showLoadingWithText:@"正在请求"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self fwHideLoading];
+            [self.fw hideLoading];
             
             if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
-                [self fwShowMessageWithText:@"请求失败"];
+                [self.fw showMessageWithText:@"请求失败"];
                 completion(NO);
             }
         });
@@ -122,7 +122,7 @@
         FWStrongifySelf();
         
         if (self.isLock) {
-            [self fwShowMessageWithText:@"已锁定，不能恢复"];
+            [self.fw showMessageWithText:@"已锁定，不能恢复"];
             return NO;
         }
         return YES;
@@ -130,14 +130,14 @@
     unreadEvent.fireBlock = ^(FWStateTransition *transition, void (^completion)(BOOL finished)){
         FWStrongifySelf();
         
-        [self fwShowLoadingWithText:@"正在请求"];
+        [self.fw showLoadingWithText:@"正在请求"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self fwHideLoading];
+            [self.fw hideLoading];
             
             if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
-                [self fwShowMessageWithText:@"请求失败"];
+                [self.fw showMessageWithText:@"请求失败"];
                 completion(NO);
             }
         });

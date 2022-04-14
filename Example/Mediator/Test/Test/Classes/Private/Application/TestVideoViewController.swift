@@ -109,7 +109,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.player.view.addGestureRecognizer(tapGestureRecognizer)
         
-        fwShowLoading()
+        fw.showLoading()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -161,7 +161,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     func playerReady(_ player: FWVideoPlayer) {
         print("\(#function) ready")
         
-        fwHideLoading()
+        fw.hideLoading()
     }
     
     func playerPlaybackStateDidChange(_ player: FWVideoPlayer) {
@@ -171,6 +171,6 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     func player(_ player: FWVideoPlayer, didFailWithError error: Error?) {
         print("\(#function) error.description")
         
-        fwHideLoading()
+        fw.hideLoading()
     }
 }

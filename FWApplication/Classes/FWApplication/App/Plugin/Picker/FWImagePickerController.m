@@ -256,7 +256,7 @@
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
         [self.albumControllerDelegate albumControllerWillStartLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwShowLoading];
+        [self.fw showLoading];
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -293,7 +293,7 @@
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerDidFinishLoading:)]) {
         [self.albumControllerDelegate albumControllerDidFinishLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwHideLoading];
+        [self.fw hideLoading];
     }
     
     if (self.maximumTableViewHeight > 0) {
@@ -1296,13 +1296,13 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillStartLoading:)]) {
             [self.delegate imagePickerPreviewControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
-            [self fwShowLoading];
+            [self.fw showLoading];
         }
         [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType useOrigin:self.shouldUseOriginImage completion:^{
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
                 [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
-                [self fwHideLoading];
+                [self.fw hideLoading];
             }
             
             [self dismissViewControllerAnimated:YES completion:^(void) {
@@ -1939,7 +1939,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
-            [self fwShowLoading];
+            [self.fw showLoading];
         }
     }
     if (!assetsGroup) {
@@ -1967,7 +1967,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwShowLoading];
+        [self.fw showLoading];
     }
     self.isImagesAssetLoading = YES;
     [self initAlbumControllerIfNeeded];
@@ -1979,7 +1979,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwHideLoading];
+        [self.fw hideLoading];
     }
     self.isImagesAssetLoading = NO;
     if (self.imagesAssetArray.count > 0) {
@@ -2349,14 +2349,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
-            [self fwShowLoading];
+            [self.fw showLoading];
         }
         [self initPreviewViewControllerIfNeeded];
         [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType useOrigin:self.imagePickerPreviewController.shouldUseOriginImage completion:^{
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
-                [self fwHideLoading];
+                [self.fw hideLoading];
             }
             
             [self dismissViewControllerAnimated:YES completion:^{

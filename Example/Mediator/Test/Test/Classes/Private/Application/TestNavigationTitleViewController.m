@@ -63,12 +63,12 @@
     self.toolbarView.menuView.leftButton = [FWToolbarButton buttonWithObject:@"取消" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
-        [self fwShowMessageWithText:@"点击了取消"];
+        [self.fw showMessageWithText:@"点击了取消"];
     }];
     self.toolbarView.menuView.rightButton = [FWToolbarButton buttonWithObject:@"确定" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
-        [self fwShowMessageWithText:@"点击了确定"];
+        [self.fw showMessageWithText:@"点击了确定"];
     }];
     [self.view addSubview:self.toolbarView];
     self.toolbarView.fw.layoutChain.left().right().bottom();
