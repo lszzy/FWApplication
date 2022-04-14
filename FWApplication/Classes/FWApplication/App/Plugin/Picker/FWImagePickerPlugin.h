@@ -7,7 +7,7 @@
  @updated    2018/9/22
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +30,7 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// @param allowsEditing 是否允许编辑
 /// @param customBlock 自定义配置句柄，默认nil
 /// @param completion 完成回调，主线程。参数1为对象(UIImage|PHLivePhoto|NSURL)，2为结果信息，3为是否取消
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
          showImageCamera:(FWImagePickerFilterType)filterType
            allowsEditing:(BOOL)allowsEditing
              customBlock:(nullable void (^)(id imagePicker))customBlock
@@ -43,7 +43,7 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// @param allowsEditing 是否允许编辑
 /// @param customBlock 自定义配置句柄，默认nil
 /// @param completion 完成回调，主线程。参数1为对象数组(UIImage|PHLivePhoto|NSURL)，2位结果数组，3为是否取消
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
          showImagePicker:(FWImagePickerFilterType)filterType
           selectionLimit:(NSInteger)selectionLimit
            allowsEditing:(BOOL)allowsEditing
@@ -61,7 +61,7 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// 从Camera选取单张图片(简单版)
 /// @param allowsEditing 是否允许编辑
 /// @param completion 完成回调，主线程。参数1为图片，2为是否取消
-- (void)fwShowImageCameraWithAllowsEditing:(BOOL)allowsEditing
+- (void)showImageCameraWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable image, BOOL cancel))completion;
 
 /// 从Camera选取单张图片(详细版)
@@ -69,7 +69,7 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// @param allowsEditing 是否允许编辑
 /// @param customBlock 自定义配置句柄，默认nil
 /// @param completion 完成回调，主线程。参数1为对象(UIImage|PHLivePhoto|NSURL)，2为结果信息，3为是否取消
-- (void)fwShowImageCameraWithFilterType:(FWImagePickerFilterType)filterType
+- (void)showImageCameraWithFilterType:(FWImagePickerFilterType)filterType
                           allowsEditing:(BOOL)allowsEditing
                             customBlock:(nullable void (^)(id imagePicker))customBlock
                              completion:(void (^)(id _Nullable object, id _Nullable result, BOOL cancel))completion;
@@ -77,14 +77,14 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// 从图片库选取单张图片(简单版)
 /// @param allowsEditing 是否允许编辑
 /// @param completion 完成回调，主线程。参数1为图片，2为是否取消
-- (void)fwShowImagePickerWithAllowsEditing:(BOOL)allowsEditing
+- (void)showImagePickerWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable image, BOOL cancel))completion;
 
 /// 从图片库选取多张图片(简单版)
 /// @param selectionLimit 最大选择数量
 /// @param allowsEditing 是否允许编辑
 /// @param completion 完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消
-- (void)fwShowImagePickerWithSelectionLimit:(NSInteger)selectionLimit
+- (void)showImagePickerWithSelectionLimit:(NSInteger)selectionLimit
                               allowsEditing:(BOOL)allowsEditing
                                  completion:(void (^)(NSArray<UIImage *> *images, NSArray *results, BOOL cancel))completion;
 
@@ -94,7 +94,7 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 /// @param allowsEditing 是否允许编辑
 /// @param customBlock 自定义配置句柄，默认nil
 /// @param completion 完成回调，主线程。参数1为对象数组(UIImage|PHLivePhoto|NSURL)，2位结果数组，3为是否取消
-- (void)fwShowImagePickerWithFilterType:(FWImagePickerFilterType)filterType
+- (void)showImagePickerWithFilterType:(FWImagePickerFilterType)filterType
                          selectionLimit:(NSInteger)selectionLimit
                           allowsEditing:(BOOL)allowsEditing
                             customBlock:(nullable void (^)(id imagePicker))customBlock
@@ -102,16 +102,16 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 
 @end
 
-/// UIViewController使用图片选取插件，全局可使用UIWindow.fwMainWindow.fwTopPresentedController
-@interface UIViewController (FWImagePickerPluginController) <FWImagePickerPluginController>
+/// UIViewController使用图片选取插件，全局可使用UIWindow.fw.topPresentedController
+@interface FWViewControllerWrapper (FWImagePickerPluginController) <FWImagePickerPluginController>
 
 /// 自定义图片选取插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWImagePickerPlugin> fwImagePickerPlugin;
+@property (nonatomic, strong, nullable) id<FWImagePickerPlugin> imagePickerPlugin;
 
 @end
 
-/// UIView使用图片选取插件，内部使用UIView.fwViewController
-@interface UIView (FWImagePickerPluginController) <FWImagePickerPluginController>
+/// UIView使用图片选取插件，内部使用UIView.fw.viewController
+@interface FWViewWrapper (FWImagePickerPluginController) <FWImagePickerPluginController>
 
 @end
 

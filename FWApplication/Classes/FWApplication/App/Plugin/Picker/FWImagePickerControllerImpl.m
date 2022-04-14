@@ -23,7 +23,7 @@
     return instance;
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
          showImagePicker:(FWImagePickerFilterType)filterType
           selectionLimit:(NSInteger)selectionLimit
            allowsEditing:(BOOL)allowsEditing

@@ -10,142 +10,141 @@
 #import "FWImagePickerPlugin.h"
 #import "FWImagePickerPluginImpl.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
 #pragma mark - FWImagePickerPluginController
 
-@implementation UIViewController (FWImagePickerPluginController)
+@implementation FWViewControllerWrapper (FWImagePickerPluginController)
 
-- (id<FWImagePickerPlugin>)fwImagePickerPlugin
+- (id<FWImagePickerPlugin>)imagePickerPlugin
 {
-    id<FWImagePickerPlugin> pickerPlugin = objc_getAssociatedObject(self, @selector(fwImagePickerPlugin));
+    id<FWImagePickerPlugin> pickerPlugin = objc_getAssociatedObject(self.base, @selector(imagePickerPlugin));
     if (!pickerPlugin) pickerPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePickerPlugin)];
     if (!pickerPlugin) pickerPlugin = FWImagePickerPluginImpl.sharedInstance;
     return pickerPlugin;
 }
 
-- (void)setFwImagePickerPlugin:(id<FWImagePickerPlugin>)fwImagePickerPlugin
+- (void)setImagePickerPlugin:(id<FWImagePickerPlugin>)imagePickerPlugin
 {
-    objc_setAssociatedObject(self, @selector(fwImagePickerPlugin), fwImagePickerPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(imagePickerPlugin), imagePickerPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)fwShowImageCameraWithAllowsEditing:(BOOL)allowsEditing
+- (void)showImageCameraWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    [self fwShowImageCameraWithFilterType:FWImagePickerFilterTypeImage allowsEditing:allowsEditing customBlock:nil completion:^(id  _Nullable object, id  _Nullable result, BOOL cancel) {
+    [self showImageCameraWithFilterType:FWImagePickerFilterTypeImage allowsEditing:allowsEditing customBlock:nil completion:^(id  _Nullable object, id  _Nullable result, BOOL cancel) {
         if (completion) completion(object, cancel);
     }];
 }
 
-- (void)fwShowImageCameraWithFilterType:(FWImagePickerFilterType)filterType
+- (void)showImageCameraWithFilterType:(FWImagePickerFilterType)filterType
                           allowsEditing:(BOOL)allowsEditing
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(id _Nullable, id _Nullable, BOOL))completion
 {
     // 优先调用插件，不存在时使用默认
-    id<FWImagePickerPlugin> imagePickerPlugin = self.fwImagePickerPlugin;
-    if (!imagePickerPlugin || ![imagePickerPlugin respondsToSelector:@selector(fwViewController:showImageCamera:allowsEditing:customBlock:completion:)]) {
+    id<FWImagePickerPlugin> imagePickerPlugin = self.imagePickerPlugin;
+    if (!imagePickerPlugin || ![imagePickerPlugin respondsToSelector:@selector(viewController:showImageCamera:allowsEditing:customBlock:completion:)]) {
         imagePickerPlugin = FWImagePickerPluginImpl.sharedInstance;
     }
-    [imagePickerPlugin fwViewController:self showImageCamera:filterType allowsEditing:allowsEditing customBlock:customBlock completion:completion];
+    [imagePickerPlugin viewController:self.base showImageCamera:filterType allowsEditing:allowsEditing customBlock:customBlock completion:completion];
 }
 
-- (void)fwShowImagePickerWithAllowsEditing:(BOOL)allowsEditing
+- (void)showImagePickerWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    [self fwShowImagePickerWithSelectionLimit:1 allowsEditing:allowsEditing completion:^(NSArray<UIImage *> * _Nonnull images, NSArray * _Nonnull results, BOOL cancel) {
+    [self showImagePickerWithSelectionLimit:1 allowsEditing:allowsEditing completion:^(NSArray<UIImage *> * _Nonnull images, NSArray * _Nonnull results, BOOL cancel) {
         if (completion) completion(images.firstObject, cancel);
     }];
 }
 
-- (void)fwShowImagePickerWithSelectionLimit:(NSInteger)selectionLimit
+- (void)showImagePickerWithSelectionLimit:(NSInteger)selectionLimit
                               allowsEditing:(BOOL)allowsEditing
                                  completion:(void (^)(NSArray<UIImage *> * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    [self fwShowImagePickerWithFilterType:FWImagePickerFilterTypeImage selectionLimit:selectionLimit allowsEditing:allowsEditing customBlock:nil completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results, BOOL cancel) {
+    [self showImagePickerWithFilterType:FWImagePickerFilterTypeImage selectionLimit:selectionLimit allowsEditing:allowsEditing customBlock:nil completion:^(NSArray * _Nonnull objects, NSArray * _Nonnull results, BOOL cancel) {
         if (completion) completion(objects, results, cancel);
     }];
 }
 
-- (void)fwShowImagePickerWithFilterType:(FWImagePickerFilterType)filterType
+- (void)showImagePickerWithFilterType:(FWImagePickerFilterType)filterType
                          selectionLimit:(NSInteger)selectionLimit
                           allowsEditing:(BOOL)allowsEditing
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
     // 优先调用插件，不存在时使用默认
-    id<FWImagePickerPlugin> imagePickerPlugin = self.fwImagePickerPlugin;
-    if (!imagePickerPlugin || ![imagePickerPlugin respondsToSelector:@selector(fwViewController:showImagePicker:selectionLimit:allowsEditing:customBlock:completion:)]) {
+    id<FWImagePickerPlugin> imagePickerPlugin = self.imagePickerPlugin;
+    if (!imagePickerPlugin || ![imagePickerPlugin respondsToSelector:@selector(viewController:showImagePicker:selectionLimit:allowsEditing:customBlock:completion:)]) {
         imagePickerPlugin = FWImagePickerPluginImpl.sharedInstance;
     }
-    [imagePickerPlugin fwViewController:self showImagePicker:filterType selectionLimit:selectionLimit allowsEditing:allowsEditing customBlock:customBlock completion:completion];
+    [imagePickerPlugin viewController:self.base showImagePicker:filterType selectionLimit:selectionLimit allowsEditing:allowsEditing customBlock:customBlock completion:completion];
 }
 
 @end
 
-@implementation UIView (FWImagePickerPluginController)
+@implementation FWViewWrapper (FWImagePickerPluginController)
 
-- (void)fwShowImageCameraWithAllowsEditing:(BOOL)allowsEditing
+- (void)showImageCameraWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowImageCameraWithAllowsEditing:allowsEditing
+    [ctrl.fw showImageCameraWithAllowsEditing:allowsEditing
                                   completion:completion];
 }
 
-- (void)fwShowImageCameraWithFilterType:(FWImagePickerFilterType)filterType
+- (void)showImageCameraWithFilterType:(FWImagePickerFilterType)filterType
                           allowsEditing:(BOOL)allowsEditing
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(id _Nullable, id _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowImageCameraWithFilterType:filterType
+    [ctrl.fw showImageCameraWithFilterType:filterType
                             allowsEditing:allowsEditing
                               customBlock:customBlock
                                completion:completion];
 }
 
-- (void)fwShowImagePickerWithAllowsEditing:(BOOL)allowsEditing
+- (void)showImagePickerWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowImagePickerWithAllowsEditing:allowsEditing
+    [ctrl.fw showImagePickerWithAllowsEditing:allowsEditing
                                   completion:completion];
 }
 
-- (void)fwShowImagePickerWithSelectionLimit:(NSInteger)selectionLimit
+- (void)showImagePickerWithSelectionLimit:(NSInteger)selectionLimit
                               allowsEditing:(BOOL)allowsEditing
                                  completion:(void (^)(NSArray<UIImage *> * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowImagePickerWithSelectionLimit:selectionLimit
+    [ctrl.fw showImagePickerWithSelectionLimit:selectionLimit
                                 allowsEditing:allowsEditing
                                    completion:completion];
 }
 
-- (void)fwShowImagePickerWithFilterType:(FWImagePickerFilterType)filterType
+- (void)showImagePickerWithFilterType:(FWImagePickerFilterType)filterType
                          selectionLimit:(NSInteger)selectionLimit
                           allowsEditing:(BOOL)allowsEditing
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    UIViewController *ctrl = self.fw.viewController;
+    UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl fwShowImagePickerWithFilterType:filterType
+    [ctrl.fw showImagePickerWithFilterType:filterType
                            selectionLimit:selectionLimit
                             allowsEditing:allowsEditing
                               customBlock:customBlock

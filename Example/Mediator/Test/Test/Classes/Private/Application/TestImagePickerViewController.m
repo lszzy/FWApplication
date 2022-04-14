@@ -115,7 +115,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSInteger index = indexPath.row;
     FWWeakifySelf();
-    [self fwShowImagePickerWithFilterType:index == 2 ? FWImagePickerFilterTypeImage : (index == 3 ? FWImagePickerFilterTypeVideo : 0)
+    [self.fw showImagePickerWithFilterType:index == 2 ? FWImagePickerFilterTypeImage : (index == 3 ? FWImagePickerFilterTypeVideo : 0)
                            selectionLimit:index == 0 ? 1 : 9
                             allowsEditing:index == 2 ? NO : YES
                               customBlock:nil
