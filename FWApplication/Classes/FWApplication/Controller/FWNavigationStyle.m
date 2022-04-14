@@ -368,15 +368,15 @@
 
 - (BOOL (^)(void))backBarBlock
 {
-    return objc_getAssociatedObject(self.base, @selector(popBackBarItem));
+    return objc_getAssociatedObject(self.base, @selector(backBarBlock));
 }
 
 - (void)setBackBarBlock:(BOOL (^)(void))block
 {
     if (block) {
-        objc_setAssociatedObject(self.base, @selector(popBackBarItem), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+        objc_setAssociatedObject(self.base, @selector(backBarBlock), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
     } else {
-        objc_setAssociatedObject(self.base, @selector(popBackBarItem), nil, OBJC_ASSOCIATION_ASSIGN);
+        objc_setAssociatedObject(self.base, @selector(backBarBlock), nil, OBJC_ASSOCIATION_ASSIGN);
     }
 }
 
@@ -387,10 +387,8 @@
 - (BOOL)popBackBarItem
 {
     BOOL shouldPop = YES;
-    BOOL (^block)(void) = objc_getAssociatedObject(self, @selector(popBackBarItem));
-    if (block) {
-        shouldPop = block();
-    }
+    BOOL (^block)(void) = objc_getAssociatedObject(self, @selector(backBarBlock));
+    if (block) shouldPop = block();
     return shouldPop;
 }
 

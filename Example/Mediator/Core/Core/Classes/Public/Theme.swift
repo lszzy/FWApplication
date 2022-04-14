@@ -88,7 +88,7 @@ extension Theme {
             viewController.hidesBottomBarWhenPushed = true
             viewController.fw.navigationBarHidden = false
             viewController.fw.navigationBarStyle = .default
-            viewController.fwForcePopGesture = true
+            viewController.fw.forcePopGesture = true
         }
         FWViewControllerManager.sharedInstance.hookLoadView = { viewController in
             viewController.view.backgroundColor = Theme.tableColor

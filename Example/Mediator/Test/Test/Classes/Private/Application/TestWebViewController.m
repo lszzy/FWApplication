@@ -47,11 +47,6 @@
     }
 }
 
-- (BOOL)fwForcePopGesture
-{
-    return !self.webView.canGoBack || self.gobackDisabled;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -65,6 +60,11 @@
     } else {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeTop : UIRectEdgeNone;
     }
+    FWWeakifySelf();
+    self.fw.forcePopGestureBlock = ^BOOL{
+        FWStrongifySelf();
+        return !self.webView.canGoBack || self.gobackDisabled;
+    };
     
     [self renderToolbar];
     [self loadRequestUrl];

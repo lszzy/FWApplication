@@ -10,59 +10,58 @@
 #import "FWNavigationController.h"
 #import "FWNavigationStyle.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
-#pragma mark - UINavigationController+FWBarTransition
+#pragma mark - FWNavigationControllerWrapper+FWBarTransition
 
-@interface UINavigationController (FWBarInternal)
+@interface FWNavigationControllerWrapper (FWBarInternal)
 
-@property (nonatomic, assign) BOOL fwBackgroundViewHidden;
-@property (nonatomic, weak) UIViewController *fwTransitionContextToViewController;
-
-@end
-
-@interface UIViewController (FWBarInternal)
-
-@property (nonatomic, strong) UINavigationBar *fwTransitionNavigationBar;
-
-- (void)fwAddTransitionNavigationBarIfNeeded;
+@property (nonatomic, assign) BOOL backgroundViewHidden;
+@property (nonatomic, weak) UIViewController *transitionContextToViewController;
 
 @end
 
-@implementation UINavigationBar (FWBarTransition)
+@interface FWViewControllerWrapper (FWBarInternal)
 
-- (UIView *)fwBackgroundView
+@property (nonatomic, strong) UINavigationBar *transitionNavigationBar;
+
+- (void)addTransitionNavigationBarIfNeeded;
+
+@end
+
+@implementation FWNavigationBarWrapper (FWBarTransition)
+
+- (UIView *)backgroundView
 {
-    return [self.fw invokeGetter:@"_backgroundView"];
+    return [self invokeGetter:@"_backgroundView"];
 }
 
-- (BOOL)fwIsFakeBar
+- (BOOL)isFakeBar
 {
-    return [objc_getAssociatedObject(self, @selector(fwIsFakeBar)) boolValue];
+    return [objc_getAssociatedObject(self.base, @selector(isFakeBar)) boolValue];
 }
 
-- (void)setFwIsFakeBar:(BOOL)fwIsFakeBar
+- (void)setIsFakeBar:(BOOL)isFakeBar
 {
-    objc_setAssociatedObject(self, @selector(fwIsFakeBar), @(fwIsFakeBar), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(isFakeBar), @(isFakeBar), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)fwReplaceStyleWithNavigationBar:(UINavigationBar *)navigationBar
+- (void)replaceStyleWithNavigationBar:(UINavigationBar *)navigationBar
 {
-    self.barTintColor = navigationBar.barTintColor;
-    [self setBackgroundImage:[navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-    [self setShadowImage:navigationBar.shadowImage];
+    self.base.barTintColor = navigationBar.barTintColor;
+    [self.base setBackgroundImage:[navigationBar backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+    [self.base setShadowImage:navigationBar.shadowImage];
     
-    self.tintColor = navigationBar.tintColor;
-    self.titleTextAttributes = navigationBar.titleTextAttributes;
-    self.largeTitleTextAttributes = navigationBar.largeTitleTextAttributes;
+    self.base.tintColor = navigationBar.tintColor;
+    self.base.titleTextAttributes = navigationBar.titleTextAttributes;
+    self.base.largeTitleTextAttributes = navigationBar.largeTitleTextAttributes;
     
     if (@available(iOS 13.0, *)) {
-        self.standardAppearance = navigationBar.standardAppearance;
-        self.compactAppearance = navigationBar.compactAppearance;
-        self.scrollEdgeAppearance = navigationBar.scrollEdgeAppearance;
+        self.base.standardAppearance = navigationBar.standardAppearance;
+        self.base.compactAppearance = navigationBar.compactAppearance;
+        self.base.scrollEdgeAppearance = navigationBar.scrollEdgeAppearance;
         #if __IPHONE_15_0
         if (@available(iOS 15.0, *)) {
-            self.compactScrollEdgeAppearance = navigationBar.compactScrollEdgeAppearance;
+            self.base.compactScrollEdgeAppearance = navigationBar.compactScrollEdgeAppearance;
         }
         #endif
     }
@@ -70,78 +69,78 @@
 
 @end
 
-@implementation UIViewController (FWBarTransition)
+@implementation FWViewControllerWrapper (FWBarTransition)
 
 #pragma mark - Accessor
 
-- (id)fwBarTransitionIdentifier
+- (id)barTransitionIdentifier
 {
-    return objc_getAssociatedObject(self, @selector(fwBarTransitionIdentifier));
+    return objc_getAssociatedObject(self.base, @selector(barTransitionIdentifier));
 }
 
-- (void)setFwBarTransitionIdentifier:(id)identifier
+- (void)setBarTransitionIdentifier:(id)identifier
 {
-    objc_setAssociatedObject(self, @selector(fwBarTransitionIdentifier), identifier, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(barTransitionIdentifier), identifier, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UINavigationBar *)fwTransitionNavigationBar
+- (UINavigationBar *)transitionNavigationBar
 {
-    return objc_getAssociatedObject(self, @selector(fwTransitionNavigationBar));
+    return objc_getAssociatedObject(self.base, @selector(transitionNavigationBar));
 }
 
-- (void)setFwTransitionNavigationBar:(UINavigationBar *)navigationBar
+- (void)setTransitionNavigationBar:(UINavigationBar *)navigationBar
 {
-    objc_setAssociatedObject(self, @selector(fwTransitionNavigationBar), navigationBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(transitionNavigationBar), navigationBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Private
 
-- (void)fwResizeTransitionNavigationBarFrame
+- (void)resizeTransitionNavigationBarFrame
 {
-    if (!self.view.window) {
+    if (!self.base.view.window) {
         return;
     }
-    UIView *backgroundView = self.navigationController.navigationBar.fwBackgroundView;
-    CGRect rect = [backgroundView.superview convertRect:backgroundView.frame toView:self.view];
-    self.fwTransitionNavigationBar.frame = rect;
+    UIView *backgroundView = self.base.navigationController.navigationBar.fw.backgroundView;
+    CGRect rect = [backgroundView.superview convertRect:backgroundView.frame toView:self.base.view];
+    self.transitionNavigationBar.frame = rect;
 }
 
-- (void)fwAddTransitionNavigationBarIfNeeded
+- (void)addTransitionNavigationBarIfNeeded
 {
-    if (!self.isViewLoaded || !self.view.window) {
+    if (!self.base.isViewLoaded || !self.base.view.window) {
         return;
     }
-    if (!self.navigationController.navigationBar) {
+    if (!self.base.navigationController.navigationBar) {
         return;
     }
     UINavigationBar *bar = [[UINavigationBar alloc] init];
-    bar.fwIsFakeBar = YES;
+    bar.fw.isFakeBar = YES;
     // 修复iOS14假的NavigationBar不生效问题
     if (@available(iOS 14.0, *)) {
         bar.items = @[[UINavigationItem new]];
     }
-    bar.barStyle = self.navigationController.navigationBar.barStyle;
-    if (bar.translucent != self.navigationController.navigationBar.translucent) {
-        bar.translucent = self.navigationController.navigationBar.translucent;
+    bar.barStyle = self.base.navigationController.navigationBar.barStyle;
+    if (bar.translucent != self.base.navigationController.navigationBar.translucent) {
+        bar.translucent = self.base.navigationController.navigationBar.translucent;
     }
-    [bar fwReplaceStyleWithNavigationBar:self.navigationController.navigationBar];
-    [self.fwTransitionNavigationBar removeFromSuperview];
-    self.fwTransitionNavigationBar = bar;
-    [self fwResizeTransitionNavigationBarFrame];
-    if (!self.navigationController.navigationBarHidden && !self.navigationController.navigationBar.hidden) {
-        [self.view addSubview:self.fwTransitionNavigationBar];
+    [bar.fw replaceStyleWithNavigationBar:self.base.navigationController.navigationBar];
+    [self.transitionNavigationBar removeFromSuperview];
+    self.transitionNavigationBar = bar;
+    [self resizeTransitionNavigationBarFrame];
+    if (!self.base.navigationController.navigationBarHidden && !self.base.navigationController.navigationBar.hidden) {
+        [self.base.view addSubview:self.transitionNavigationBar];
     }
 }
 
-- (BOOL)fwShouldCustomTransitionFrom:(UIViewController *)from to:(UIViewController *)to
+- (BOOL)shouldCustomTransitionFrom:(UIViewController *)from to:(UIViewController *)to
 {
     if (!from || !to) {
         return YES;
     }
     
     // 如果identifier有值则比较之，不相等才启用转场
-    id fromIdentifier = [from fwBarTransitionIdentifier];
-    id toIdentifier = [to fwBarTransitionIdentifier];
+    id fromIdentifier = [from.fw barTransitionIdentifier];
+    id toIdentifier = [to.fw barTransitionIdentifier];
     if (fromIdentifier || toIdentifier) {
         return ![fromIdentifier isEqual:toIdentifier];
     }
@@ -151,16 +150,55 @@
 
 @end
 
-@implementation UINavigationController (FWBarTransition)
+@implementation FWNavigationControllerWrapper (FWBarTransition)
 
-+ (void)fwEnableBarTransition
+#pragma mark - Accessor
+
+- (UIColor *)containerBackgroundColor
+{
+    UIColor *backgroundColor = objc_getAssociatedObject(self.base, @selector(containerBackgroundColor));
+    return backgroundColor ?: [UIColor clearColor];
+}
+
+- (void)setContainerBackgroundColor:(UIColor *)backgroundColor
+{
+    objc_setAssociatedObject(self.base, @selector(containerBackgroundColor), backgroundColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)backgroundViewHidden
+{
+    return [objc_getAssociatedObject(self.base, @selector(backgroundViewHidden)) boolValue];
+}
+
+- (void)setBackgroundViewHidden:(BOOL)hidden
+{
+    objc_setAssociatedObject(self.base, @selector(backgroundViewHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self.base.navigationBar.fw.backgroundView setHidden:hidden];
+}
+
+- (UIViewController *)transitionContextToViewController
+{
+    FWWeakObject *value = objc_getAssociatedObject(self.base, @selector(transitionContextToViewController));
+    return value.object;
+}
+
+- (void)setTransitionContextToViewController:(UIViewController *)viewController
+{
+    objc_setAssociatedObject(self.base, @selector(transitionContextToViewController), [[FWWeakObject alloc] initWithObject:viewController], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+
+@implementation FWNavigationControllerClassWrapper (FWBarTransition)
+
+- (void)enableBarTransition
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UINavigationBar, @selector(layoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             FWSwizzleOriginal();
             
-            UIView *backgroundView = selfObject.fwBackgroundView;
+            UIView *backgroundView = selfObject.fw.backgroundView;
             CGRect frame = backgroundView.frame;
             frame.size.height = selfObject.frame.size.height + fabs(frame.origin.y);
             backgroundView.frame = frame;
@@ -169,11 +207,11 @@
         FWSwizzleMethod(objc_getClass("_UIBarBackground"), @selector(setHidden:), nil, FWSwizzleType(UIView *), FWSwizzleReturn(void), FWSwizzleArgs(BOOL hidden), FWSwizzleCode({
             UIResponder *responder = (UIResponder *)selfObject;
             while (responder) {
-                if ([responder isKindOfClass:[UINavigationBar class]] && ((UINavigationBar *)responder).fwIsFakeBar) {
+                if ([responder isKindOfClass:[UINavigationBar class]] && ((UINavigationBar *)responder).fw.isFakeBar) {
                     return;
                 }
                 if ([responder isKindOfClass:[UINavigationController class]]) {
-                    FWSwizzleOriginal(((UINavigationController *)responder).fwBackgroundViewHidden);
+                    FWSwizzleOriginal(((UINavigationController *)responder).fw.backgroundViewHidden);
                     return;
                 }
                 responder = responder.nextResponder;
@@ -198,43 +236,43 @@
         }));
         
         FWSwizzleClass(UIViewController, @selector(viewDidAppear:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
-            UIViewController *transitionViewController = selfObject.navigationController.fwTransitionContextToViewController;
-            if (selfObject.fwTransitionNavigationBar) {
-                [selfObject.navigationController.navigationBar fwReplaceStyleWithNavigationBar:selfObject.fwTransitionNavigationBar];
+            UIViewController *transitionViewController = selfObject.navigationController.fw.transitionContextToViewController;
+            if (selfObject.fw.transitionNavigationBar) {
+                [selfObject.navigationController.navigationBar.fw replaceStyleWithNavigationBar:selfObject.fw.transitionNavigationBar];
                 if (!transitionViewController || [transitionViewController isEqual:selfObject]) {
-                    [selfObject.fwTransitionNavigationBar removeFromSuperview];
-                    selfObject.fwTransitionNavigationBar = nil;
+                    [selfObject.fw.transitionNavigationBar removeFromSuperview];
+                    selfObject.fw.transitionNavigationBar = nil;
                 }
             }
             if ([transitionViewController isEqual:selfObject]) {
-                selfObject.navigationController.fwTransitionContextToViewController = nil;
+                selfObject.navigationController.fw.transitionContextToViewController = nil;
             }
-            selfObject.navigationController.fwBackgroundViewHidden = NO;
+            selfObject.navigationController.fw.backgroundViewHidden = NO;
             FWSwizzleOriginal(animated);
         }));
         FWSwizzleClass(UIViewController, @selector(viewWillLayoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             id<UIViewControllerTransitionCoordinator> tc = selfObject.transitionCoordinator;
             UIViewController *fromViewController = [tc viewControllerForKey:UITransitionContextFromViewControllerKey];
             UIViewController *toViewController = [tc viewControllerForKey:UITransitionContextToViewControllerKey];
-            if (![selfObject fwShouldCustomTransitionFrom:fromViewController to:toViewController]) {
+            if (![selfObject.fw shouldCustomTransitionFrom:fromViewController to:toViewController]) {
                 FWSwizzleOriginal();
                 return;
             }
             
             if ([selfObject isEqual:selfObject.navigationController.viewControllers.lastObject] && [toViewController isEqual:selfObject] && tc.presentationStyle == UIModalPresentationNone) {
                 if (selfObject.navigationController.navigationBar.translucent) {
-                    [tc containerView].backgroundColor = [selfObject.navigationController fwContainerBackgroundColor];
+                    [tc containerView].backgroundColor = [selfObject.navigationController.fw containerBackgroundColor];
                 }
                 fromViewController.view.clipsToBounds = NO;
                 toViewController.view.clipsToBounds = NO;
-                if (!selfObject.fwTransitionNavigationBar) {
-                    [selfObject fwAddTransitionNavigationBarIfNeeded];
-                    selfObject.navigationController.fwBackgroundViewHidden = YES;
+                if (!selfObject.fw.transitionNavigationBar) {
+                    [selfObject.fw addTransitionNavigationBarIfNeeded];
+                    selfObject.navigationController.fw.backgroundViewHidden = YES;
                 }
-                [selfObject fwResizeTransitionNavigationBarFrame];
+                [selfObject.fw resizeTransitionNavigationBarFrame];
             }
-            if (selfObject.fwTransitionNavigationBar) {
-                [selfObject.view bringSubviewToFront:selfObject.fwTransitionNavigationBar];
+            if (selfObject.fw.transitionNavigationBar) {
+                [selfObject.view bringSubviewToFront:selfObject.fw.transitionNavigationBar];
             }
             FWSwizzleOriginal();
         }));
@@ -244,17 +282,17 @@
             if (!disappearingViewController) {
                 return FWSwizzleOriginal(viewController, animated);
             }
-            if (![selfObject fwShouldCustomTransitionFrom:disappearingViewController to:viewController]) {
+            if (![selfObject.fw shouldCustomTransitionFrom:disappearingViewController to:viewController]) {
                 return FWSwizzleOriginal(viewController, animated);
             }
             
-            if (!selfObject.fwTransitionContextToViewController || !disappearingViewController.fwTransitionNavigationBar) {
-                [disappearingViewController fwAddTransitionNavigationBarIfNeeded];
+            if (!selfObject.fw.transitionContextToViewController || !disappearingViewController.fw.transitionNavigationBar) {
+                [disappearingViewController.fw addTransitionNavigationBarIfNeeded];
             }
             if (animated) {
-                selfObject.fwTransitionContextToViewController = viewController;
-                if (disappearingViewController.fwTransitionNavigationBar) {
-                    disappearingViewController.navigationController.fwBackgroundViewHidden = YES;
+                selfObject.fw.transitionContextToViewController = viewController;
+                if (disappearingViewController.fw.transitionNavigationBar) {
+                    disappearingViewController.navigationController.fw.backgroundViewHidden = YES;
                 }
             }
             return FWSwizzleOriginal(viewController, animated);
@@ -265,17 +303,17 @@
             }
             UIViewController *disappearingViewController = selfObject.viewControllers.lastObject;
             UIViewController *appearingViewController = selfObject.viewControllers[selfObject.viewControllers.count - 2];
-            if (![selfObject fwShouldCustomTransitionFrom:disappearingViewController to:appearingViewController]) {
+            if (![selfObject.fw shouldCustomTransitionFrom:disappearingViewController to:appearingViewController]) {
                 return FWSwizzleOriginal(animated);
             }
             
-            [disappearingViewController fwAddTransitionNavigationBarIfNeeded];
-            if (appearingViewController.fwTransitionNavigationBar) {
-                UINavigationBar *appearingNavigationBar = appearingViewController.fwTransitionNavigationBar;
-                [selfObject.navigationBar fwReplaceStyleWithNavigationBar:appearingNavigationBar];
+            [disappearingViewController.fw addTransitionNavigationBarIfNeeded];
+            if (appearingViewController.fw.transitionNavigationBar) {
+                UINavigationBar *appearingNavigationBar = appearingViewController.fw.transitionNavigationBar;
+                [selfObject.navigationBar.fw replaceStyleWithNavigationBar:appearingNavigationBar];
             }
             if (animated) {
-                disappearingViewController.navigationController.fwBackgroundViewHidden = YES;
+                disappearingViewController.navigationController.fw.backgroundViewHidden = YES;
             }
             return FWSwizzleOriginal(animated);
         }));
@@ -284,17 +322,17 @@
                 return FWSwizzleOriginal(viewController, animated);
             }
             UIViewController *disappearingViewController = selfObject.viewControllers.lastObject;
-            if (![selfObject fwShouldCustomTransitionFrom:disappearingViewController to:viewController]) {
+            if (![selfObject.fw shouldCustomTransitionFrom:disappearingViewController to:viewController]) {
                 return FWSwizzleOriginal(viewController, animated);
             }
             
-            [disappearingViewController fwAddTransitionNavigationBarIfNeeded];
-            if (viewController.fwTransitionNavigationBar) {
-                UINavigationBar *appearingNavigationBar = viewController.fwTransitionNavigationBar;
-                [selfObject.navigationBar fwReplaceStyleWithNavigationBar:appearingNavigationBar];
+            [disappearingViewController.fw addTransitionNavigationBarIfNeeded];
+            if (viewController.fw.transitionNavigationBar) {
+                UINavigationBar *appearingNavigationBar = viewController.fw.transitionNavigationBar;
+                [selfObject.navigationBar.fw replaceStyleWithNavigationBar:appearingNavigationBar];
             }
             if (animated) {
-                disappearingViewController.navigationController.fwBackgroundViewHidden = YES;
+                disappearingViewController.navigationController.fw.backgroundViewHidden = YES;
             }
             return FWSwizzleOriginal(viewController, animated);
         }));
@@ -304,31 +342,31 @@
             }
             UIViewController *disappearingViewController = selfObject.viewControllers.lastObject;
             UIViewController *rootViewController = selfObject.viewControllers.firstObject;
-            if (![selfObject fwShouldCustomTransitionFrom:disappearingViewController to:rootViewController]) {
+            if (![selfObject.fw shouldCustomTransitionFrom:disappearingViewController to:rootViewController]) {
                 return FWSwizzleOriginal(animated);
             }
             
-            [disappearingViewController fwAddTransitionNavigationBarIfNeeded];
-            if (rootViewController.fwTransitionNavigationBar) {
-                UINavigationBar *appearingNavigationBar = rootViewController.fwTransitionNavigationBar;
-                [selfObject.navigationBar fwReplaceStyleWithNavigationBar:appearingNavigationBar];
+            [disappearingViewController.fw addTransitionNavigationBarIfNeeded];
+            if (rootViewController.fw.transitionNavigationBar) {
+                UINavigationBar *appearingNavigationBar = rootViewController.fw.transitionNavigationBar;
+                [selfObject.navigationBar.fw replaceStyleWithNavigationBar:appearingNavigationBar];
             }
             if (animated) {
-                disappearingViewController.navigationController.fwBackgroundViewHidden = YES;
+                disappearingViewController.navigationController.fw.backgroundViewHidden = YES;
             }
             return FWSwizzleOriginal(animated);
         }));
         FWSwizzleClass(UINavigationController, @selector(setViewControllers:animated:), FWSwizzleReturn(void), FWSwizzleArgs(NSArray<UIViewController *> *viewControllers, BOOL animated), FWSwizzleCode({
             UIViewController *disappearingViewController = selfObject.viewControllers.lastObject;
             UIViewController *appearingViewController = viewControllers.count > 0 ? viewControllers.lastObject : nil;
-            if (![selfObject fwShouldCustomTransitionFrom:disappearingViewController to:appearingViewController]) {
+            if (![selfObject.fw shouldCustomTransitionFrom:disappearingViewController to:appearingViewController]) {
                 return FWSwizzleOriginal(viewControllers, animated);
             }
             
             if (animated && disappearingViewController && ![disappearingViewController isEqual:viewControllers.lastObject]) {
-                [disappearingViewController fwAddTransitionNavigationBarIfNeeded];
-                if (disappearingViewController.fwTransitionNavigationBar) {
-                    disappearingViewController.navigationController.fwBackgroundViewHidden = YES;
+                [disappearingViewController.fw addTransitionNavigationBarIfNeeded];
+                if (disappearingViewController.fw.transitionNavigationBar) {
+                    disappearingViewController.navigationController.fw.backgroundViewHidden = YES;
                 }
             }
             return FWSwizzleOriginal(viewControllers, animated);
@@ -336,85 +374,63 @@
     });
 }
 
-#pragma mark - Accessor
-
-- (UIColor *)fwContainerBackgroundColor
-{
-    UIColor *backgroundColor = objc_getAssociatedObject(self, @selector(fwContainerBackgroundColor));
-    return backgroundColor ?: [UIColor clearColor];
-}
-
-- (void)setFwContainerBackgroundColor:(UIColor *)backgroundColor
-{
-    objc_setAssociatedObject(self, @selector(fwContainerBackgroundColor), backgroundColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)fwBackgroundViewHidden
-{
-    return [objc_getAssociatedObject(self, @selector(fwBackgroundViewHidden)) boolValue];
-}
-
-- (void)setFwBackgroundViewHidden:(BOOL)hidden
-{
-    objc_setAssociatedObject(self, @selector(fwBackgroundViewHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.navigationBar.fwBackgroundView setHidden:hidden];
-}
-
-- (UIViewController *)fwTransitionContextToViewController
-{
-    FWWeakObject *value = objc_getAssociatedObject(self, @selector(fwTransitionContextToViewController));
-    return value.object;
-}
-
-- (void)setFwTransitionContextToViewController:(UIViewController *)viewController
-{
-    objc_setAssociatedObject(self, @selector(fwTransitionContextToViewController), [[FWWeakObject alloc] initWithObject:viewController], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 @end
 
-#pragma mark - UINavigationController+FWPopGesture
+#pragma mark - FWNavigationControllerWrapper+FWPopGesture
 
-@implementation UIViewController (FWPopGesture)
+@implementation FWViewControllerWrapper (FWPopGesture)
 
-- (BOOL)fwForcePopGesture
+- (BOOL)forcePopGesture
 {
-    return [objc_getAssociatedObject(self, @selector(fwForcePopGesture)) boolValue];
+    BOOL (^block)(void) = self.forcePopGestureBlock;
+    if (block != nil) return block();
+    return [objc_getAssociatedObject(self.base, @selector(forcePopGesture)) boolValue];
 }
 
-- (void)setFwForcePopGesture:(BOOL)enabled
+- (void)setForcePopGesture:(BOOL)enabled
 {
-    objc_setAssociatedObject(self, @selector(fwForcePopGesture), @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(forcePopGesture), @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)issetFwForcePopGesture
+- (BOOL (^)(void))forcePopGestureBlock
 {
-    NSNumber *value = objc_getAssociatedObject(self, @selector(fwForcePopGesture));
-    return value != nil;
+    return objc_getAssociatedObject(self.base, @selector(forcePopGestureBlock));
 }
 
-- (BOOL)fwFullscreenPopGestureDisabled
+- (void)setForcePopGestureBlock:(BOOL (^)(void))forcePopGestureBlock
 {
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
+    objc_setAssociatedObject(self.base, @selector(forcePopGestureBlock), forcePopGestureBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void)setFwFullscreenPopGestureDisabled:(BOOL)disabled
+- (BOOL)issetForcePopGesture
 {
-    objc_setAssociatedObject(self, @selector(fwFullscreenPopGestureDisabled), @(disabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    NSNumber *value = objc_getAssociatedObject(self.base, @selector(forcePopGesture));
+    if (value != nil) return true;
+    return self.forcePopGestureBlock != nil;
 }
 
-- (CGFloat)fwFullscreenPopGestureDistance
+- (BOOL)fullscreenPopGestureDisabled
+{
+    return [objc_getAssociatedObject(self.base, _cmd) boolValue];
+}
+
+- (void)setFullscreenPopGestureDisabled:(BOOL)disabled
+{
+    objc_setAssociatedObject(self.base, @selector(fullscreenPopGestureDisabled), @(disabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)fullscreenPopGestureDistance
 {
 #if CGFLOAT_IS_DOUBLE
-    return [objc_getAssociatedObject(self, _cmd) doubleValue];
+    return [objc_getAssociatedObject(self.base, _cmd) doubleValue];
 #else
-    return [objc_getAssociatedObject(self, _cmd) floatValue];
+    return [objc_getAssociatedObject(self.base, _cmd) floatValue];
 #endif
 }
 
-- (void)setFwFullscreenPopGestureDistance:(CGFloat)distance
+- (void)setFullscreenPopGestureDistance:(CGFloat)distance
 {
-    objc_setAssociatedObject(self, @selector(fwFullscreenPopGestureDistance), @(MAX(0, distance)), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(fullscreenPopGestureDistance), @(MAX(0, distance)), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
@@ -431,10 +447,10 @@
 {
     if (self.navigationController.viewControllers.count <= 1) return NO;
     if (!self.navigationController.interactivePopGestureRecognizer.enabled) return NO;
-    if ([self.navigationController.topViewController issetFwForcePopGesture]) {
-        return self.navigationController.topViewController.fwForcePopGesture;
+    if ([self.navigationController.topViewController.fw issetForcePopGesture]) {
+        return self.navigationController.topViewController.fw.forcePopGesture;
     }
-    return self.navigationController.fwForcePopGesture;
+    return self.navigationController.fw.forcePopGesture;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -501,7 +517,7 @@
     }
     
     UIViewController *topViewController = self.navigationController.viewControllers.lastObject;
-    if (topViewController.fwFullscreenPopGestureDisabled) {
+    if (topViewController.fw.fullscreenPopGestureDisabled) {
         return NO;
     }
     
@@ -511,7 +527,7 @@
     }
     
     CGPoint beginningLocation = [gestureRecognizer locationInView:gestureRecognizer.view];
-    CGFloat maxAllowedInitialDistance = topViewController.fwFullscreenPopGestureDistance;
+    CGFloat maxAllowedInitialDistance = topViewController.fw.fullscreenPopGestureDistance;
     if (maxAllowedInitialDistance > 0 && beginningLocation.x > maxAllowedInitialDistance) {
         return NO;
     }
@@ -532,7 +548,19 @@
 
 @end
 
-@implementation UINavigationController (FWPopGesture)
+@implementation FWNavigationControllerClassWrapper (FWPopGesture)
+
+- (BOOL)isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([gestureRecognizer.delegate isKindOfClass:[FWFullscreenPopGestureRecognizerDelegate class]]) {
+        return YES;
+    }
+    return NO;
+}
+
+@end
+
+@implementation FWNavigationControllerWrapper (FWPopGesture)
 
 + (void)load
 {
@@ -542,10 +570,10 @@
             FWSwizzleOriginal();
             
             // 拦截系统返回手势事件代理，加载自定义代理方法
-            if (selfObject.interactivePopGestureRecognizer.delegate != selfObject.fwDelegateProxy) {
-                selfObject.fwDelegateProxy.delegate = selfObject.interactivePopGestureRecognizer.delegate;
-                selfObject.fwDelegateProxy.navigationController = selfObject;
-                selfObject.interactivePopGestureRecognizer.delegate = selfObject.fwDelegateProxy;
+            if (selfObject.interactivePopGestureRecognizer.delegate != selfObject.fw.delegateProxy) {
+                selfObject.fw.delegateProxy.delegate = selfObject.interactivePopGestureRecognizer.delegate;
+                selfObject.fw.delegateProxy.navigationController = selfObject;
+                selfObject.interactivePopGestureRecognizer.delegate = selfObject.fw.delegateProxy;
             }
         }));
         FWSwizzleClass(UINavigationController, @selector(navigationBar:shouldPopItem:), FWSwizzleReturn(BOOL), FWSwizzleArgs(UINavigationBar *navigationBar, UINavigationItem *item), FWSwizzleCode({
@@ -577,63 +605,55 @@
     });
 }
 
-- (FWGestureRecognizerDelegateProxy *)fwDelegateProxy
+- (FWGestureRecognizerDelegateProxy *)delegateProxy
 {
-    FWGestureRecognizerDelegateProxy *proxy = objc_getAssociatedObject(self, _cmd);
+    FWGestureRecognizerDelegateProxy *proxy = objc_getAssociatedObject(self.base, _cmd);
     if (!proxy) {
         proxy = [[FWGestureRecognizerDelegateProxy alloc] init];
-        objc_setAssociatedObject(self, _cmd, proxy, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self.base, _cmd, proxy, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return proxy;
 }
 
-+ (BOOL)fwIsFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+- (BOOL)fullscreenPopGestureEnabled
 {
-    if ([gestureRecognizer.delegate isKindOfClass:[FWFullscreenPopGestureRecognizerDelegate class]]) {
-        return YES;
-    }
-    return NO;
+    return self.fullscreenPopGestureRecognizer.enabled;
 }
 
-- (BOOL)fwFullscreenPopGestureEnabled
+- (void)setFullscreenPopGestureEnabled:(BOOL)enabled
 {
-    return self.fwFullscreenPopGestureRecognizer.enabled;
-}
-
-- (void)setFwFullscreenPopGestureEnabled:(BOOL)enabled
-{
-    if (![self.interactivePopGestureRecognizer.view.gestureRecognizers containsObject:self.fwFullscreenPopGestureRecognizer]) {
-        [self.interactivePopGestureRecognizer.view addGestureRecognizer:self.fwFullscreenPopGestureRecognizer];
+    if (![self.base.interactivePopGestureRecognizer.view.gestureRecognizers containsObject:self.fullscreenPopGestureRecognizer]) {
+        [self.base.interactivePopGestureRecognizer.view addGestureRecognizer:self.fullscreenPopGestureRecognizer];
         
-        NSArray *internalTargets = [self.interactivePopGestureRecognizer valueForKey:@"targets"];
+        NSArray *internalTargets = [self.base.interactivePopGestureRecognizer valueForKey:@"targets"];
         id internalTarget = [internalTargets.firstObject valueForKey:@"target"];
         SEL internalAction = NSSelectorFromString(@"handleNavigationTransition:");
-        self.fwFullscreenPopGestureRecognizer.delegate = self.fwPopGestureRecognizerDelegate;
-        [self.fwFullscreenPopGestureRecognizer addTarget:internalTarget action:internalAction];
+        self.fullscreenPopGestureRecognizer.delegate = self.popGestureRecognizerDelegate;
+        [self.fullscreenPopGestureRecognizer addTarget:internalTarget action:internalAction];
     }
     
-    self.fwFullscreenPopGestureRecognizer.enabled = enabled;
-    self.interactivePopGestureRecognizer.enabled = !enabled;
+    self.fullscreenPopGestureRecognizer.enabled = enabled;
+    self.base.interactivePopGestureRecognizer.enabled = !enabled;
 }
 
-- (FWFullscreenPopGestureRecognizerDelegate *)fwPopGestureRecognizerDelegate
+- (FWFullscreenPopGestureRecognizerDelegate *)popGestureRecognizerDelegate
 {
-    FWFullscreenPopGestureRecognizerDelegate *delegate = objc_getAssociatedObject(self, _cmd);
+    FWFullscreenPopGestureRecognizerDelegate *delegate = objc_getAssociatedObject(self.base, _cmd);
     if (!delegate) {
         delegate = [[FWFullscreenPopGestureRecognizerDelegate alloc] init];
-        delegate.navigationController = self;
-        objc_setAssociatedObject(self, _cmd, delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        delegate.navigationController = self.base;
+        objc_setAssociatedObject(self.base, _cmd, delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return delegate;
 }
 
-- (UIPanGestureRecognizer *)fwFullscreenPopGestureRecognizer
+- (UIPanGestureRecognizer *)fullscreenPopGestureRecognizer
 {
-    UIPanGestureRecognizer *panGestureRecognizer = objc_getAssociatedObject(self, _cmd);
+    UIPanGestureRecognizer *panGestureRecognizer = objc_getAssociatedObject(self.base, _cmd);
     if (!panGestureRecognizer) {
         panGestureRecognizer = [[UIPanGestureRecognizer alloc] init];
         panGestureRecognizer.maximumNumberOfTouches = 1;
-        objc_setAssociatedObject(self, _cmd, panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self.base, _cmd, panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return panGestureRecognizer;
 }

@@ -14,6 +14,7 @@
 - (void)renderInit
 {
     self.hidesBottomBarWhenPushed = NO;
+    self.fw.forcePopGesture = YES;
 }
 
 - (void)viewDidLoad
@@ -102,11 +103,6 @@
 }
 
 #pragma mark - Action
-
-- (BOOL)fwForcePopGesture
-{
-    return YES;
-}
 
 - (BOOL)popBackBarItem
 {

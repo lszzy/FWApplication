@@ -104,10 +104,10 @@
         showClose = NO;
     }
     viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:showClose ? leftItems.firstObject : nil, nil];
-    // 如需自定义fwForcePopGesture，重写该属性getter即可
-    viewController.fwForcePopGesture = YES;
+    // 如需自定义fw.forcePopGesture，重写该属性getter即可
+    viewController.fw.forcePopGesture = YES;
     [viewController.webView.fw observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary *change) {
-        weakController.fwForcePopGesture = !webView.canGoBack;
+        weakController.fw.forcePopGesture = !webView.canGoBack;
         if (webView.canGoBack) {
             weakController.navigationItem.leftBarButtonItems = [leftItems copy];
         } else {

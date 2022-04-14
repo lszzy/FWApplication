@@ -19,7 +19,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fwForcePopGesture = YES;
+    self.fw.forcePopGesture = YES;
     self.fw.extendedLayoutEdge = UIRectEdgeAll;
     if (self.index < 1) {
         self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
@@ -68,7 +68,7 @@ FWPropertyAssign(BOOL, hideToast);
     
     if (!self.hideToast) {
         [self.fw setRightBarItem:@"启用" block:^(id sender) {
-            [UINavigationController fwEnableBarTransition];
+            [UINavigationController.fw enableBarTransition];
         }];
     } else {
         [self.fw setLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {
