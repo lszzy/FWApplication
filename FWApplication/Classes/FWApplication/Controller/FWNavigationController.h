@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 当自定义left按钮或隐藏导航栏之后，系统返回手势失效，可开启此属性强制加回手势。设置即生效，VC优先级大于Nav，当interactivePop手势禁用时不生效
 @property (nonatomic, assign) BOOL forcePopGesture;
 
-/// 自定义侧滑返回手势强制开关句柄，设置后优先调用，默认nil
+/// 自定义侧滑返回手势强制开关句柄，设置后forcePopGesture自动优先调用，默认nil
 @property (nonatomic, copy, nullable) BOOL (^forcePopGestureBlock)(void);
 
 /// 视图控制器是否禁用全屏返回手势，默认NO
