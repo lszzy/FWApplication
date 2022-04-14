@@ -1,17 +1,16 @@
 /**
  @header     FWRefreshView.h
  @indexgroup FWApplication
-      FWRefreshView
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/10/16
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - UIScrollView+FWPullRefresh
+#pragma mark - FWScrollViewWrapper+FWPullRefresh
 
 typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
     FWPullRefreshStateStopped = 0,
@@ -56,23 +55,23 @@ typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
 @end
 
 /**
- UIScrollView+FWPullRefresh
+ FWScrollViewWrapper+FWPullRefresh
  
  @see https://github.com/samvermette/SVPullToRefresh
  */
-@interface UIScrollView (FWPullRefresh)
+@interface FWScrollViewWrapper (FWPullRefresh)
 
-- (void)fwAddPullRefreshWithBlock:(void (^)(void))block;
-- (void)fwAddPullRefreshWithTarget:(id)target action:(SEL)action;
-- (void)fwTriggerPullRefresh;
+- (void)addPullRefreshWithBlock:(void (^)(void))block;
+- (void)addPullRefreshWithTarget:(id)target action:(SEL)action;
+- (void)triggerPullRefresh;
 
-@property (nullable, nonatomic, strong, readonly) FWPullRefreshView *fwPullRefreshView;
-@property (nonatomic, assign) CGFloat fwPullRefreshHeight;
-@property (nonatomic, assign) BOOL fwShowPullRefresh;
+@property (nullable, nonatomic, strong, readonly) FWPullRefreshView *pullRefreshView;
+@property (nonatomic, assign) CGFloat pullRefreshHeight;
+@property (nonatomic, assign) BOOL showPullRefresh;
 
 @end
 
-#pragma mark - UIScrollView+FWInfiniteScroll
+#pragma mark - FWScrollViewWrapper+FWInfiniteScroll
 
 typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
     FWInfiniteScrollStateStopped = 0,
@@ -107,19 +106,19 @@ typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
 @end
 
 /**
- UIScrollView+FWInfiniteScroll
+ FWScrollViewWrapper+FWInfiniteScroll
  
  @see https://github.com/samvermette/SVPullToRefresh
  */
-@interface UIScrollView (FWInfiniteScroll)
+@interface FWScrollViewWrapper (FWInfiniteScroll)
 
-- (void)fwAddInfiniteScrollWithBlock:(void (^)(void))block;
-- (void)fwAddInfiniteScrollWithTarget:(id)target action:(SEL)action;
-- (void)fwTriggerInfiniteScroll;
+- (void)addInfiniteScrollWithBlock:(void (^)(void))block;
+- (void)addInfiniteScrollWithTarget:(id)target action:(SEL)action;
+- (void)triggerInfiniteScroll;
 
-@property (nullable, nonatomic, strong, readonly) FWInfiniteScrollView *fwInfiniteScrollView;
-@property (nonatomic, assign) CGFloat fwInfiniteScrollHeight;
-@property (nonatomic, assign) BOOL fwShowInfiniteScroll;
+@property (nullable, nonatomic, strong, readonly) FWInfiniteScrollView *infiniteScrollView;
+@property (nonatomic, assign) CGFloat infiniteScrollHeight;
+@property (nonatomic, assign) BOOL showInfiniteScroll;
 
 @end
 

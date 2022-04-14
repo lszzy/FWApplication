@@ -144,35 +144,35 @@
 {
     self.isShort = [@[@0, @1].fw.randomObject fw].safeInteger == 0;
     FWWeakifySelf();
-    [self.tableView fwSetRefreshingBlock:^{
+    [self.tableView.fw setRefreshingBlock:^{
         FWStrongifySelf();
         
         [self onRefreshing];
     }];
-    self.tableView.fwPullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
+    self.tableView.fw.pullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh state-%@", @(state)];
     };
-    self.tableView.fwPullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw.pullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh progress-%.2f", progress];
     };
     
     FWInfiniteScrollView.height = 64;
-    [self.tableView fwSetLoadingBlock:^{
+    [self.tableView.fw setLoadingBlock:^{
         FWStrongifySelf();
         
         [self onLoading];
     }];
-    self.tableView.fwInfiniteScrollView.preloadHeight = self.isShort ? 0 : 200;
-    self.tableView.fwInfiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
+    self.tableView.fw.infiniteScrollView.preloadHeight = self.isShort ? 0 : 200;
+    self.tableView.fw.infiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load state-%@", @(state)];
     };
-    self.tableView.fwInfiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw.infiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load progress-%.2f", progress];
@@ -186,7 +186,7 @@
 
 - (void)renderData
 {
-    [self.tableView fwBeginRefreshing];
+    [self.tableView.fw beginRefreshing];
 }
 
 #pragma mark - TableView
@@ -303,9 +303,9 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndRefreshing];
-        if (!self.tableView.fwShowRefreshing) {
+        self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endRefreshing];
+        if (!self.tableView.fw.showRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -322,8 +322,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndLoading];
+        self.tableView.fw.showLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endLoading];
     });
 }
 

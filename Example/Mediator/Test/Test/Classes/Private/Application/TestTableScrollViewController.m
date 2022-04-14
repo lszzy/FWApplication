@@ -109,22 +109,22 @@
 - (void)renderView
 {
     FWInfiniteScrollView.height = 64;
-    [self.tableView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.tableView fwSetLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
     
     UIImageView *pullView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     pullView.image = [TestBundle imageNamed:@"test.gif"];
-    self.tableView.fwPullRefreshView.shouldChangeAlpha = NO;
-    [self.tableView.fwPullRefreshView setCustomView:pullView forState:FWPullRefreshStateAll];
+    self.tableView.fw.pullRefreshView.shouldChangeAlpha = NO;
+    [self.tableView.fw.pullRefreshView setCustomView:pullView forState:FWPullRefreshStateAll];
     
     UIImageView *infiniteView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     infiniteView.image = [TestBundle imageNamed:@"LoadingPlaceholder.gif"];
-    [self.tableView.fwInfiniteScrollView setCustomView:infiniteView forState:FWInfiniteScrollStateAll];
+    [self.tableView.fw.infiniteScrollView setCustomView:infiniteView forState:FWInfiniteScrollStateAll];
 }
 
 - (void)renderData
 {
-    [self.tableView fwBeginLoading];
+    [self.tableView.fw beginLoading];
 }
 
 #pragma mark - TableView
@@ -202,8 +202,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndRefreshing];
+        self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endRefreshing];
     });
 }
 
@@ -218,8 +218,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndLoading];
+        self.tableView.fw.showLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endLoading];
     });
 }
 

@@ -24,66 +24,66 @@
 
 #pragma mark - Refreshing
 
-- (BOOL)fwIsRefreshing:(UIScrollView *)scrollView {
-    return scrollView.fwPullRefreshView.state == FWPullRefreshStateLoading;
+- (BOOL)isRefreshing:(UIScrollView *)scrollView {
+    return scrollView.fw.pullRefreshView.state == FWPullRefreshStateLoading;
 }
 
-- (BOOL)fwShowRefreshing:(UIScrollView *)scrollView {
-    return scrollView.fwShowPullRefresh;
+- (BOOL)showRefreshing:(UIScrollView *)scrollView {
+    return scrollView.fw.showPullRefresh;
 }
 
-- (void)fwSetShowRefreshing:(BOOL)showRefreshing scrollView:(UIScrollView *)scrollView {
-    scrollView.fwShowPullRefresh = showRefreshing;
+- (void)setShowRefreshing:(BOOL)showRefreshing scrollView:(UIScrollView *)scrollView {
+    scrollView.fw.showPullRefresh = showRefreshing;
 }
 
-- (void)fwSetRefreshingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {
-    [scrollView fwAddPullRefreshWithBlock:block];
-    if (self.pullRefreshBlock) self.pullRefreshBlock(scrollView.fwPullRefreshView);
+- (void)setRefreshingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {
+    [scrollView.fw addPullRefreshWithBlock:block];
+    if (self.pullRefreshBlock) self.pullRefreshBlock(scrollView.fw.pullRefreshView);
 }
 
-- (void)fwSetRefreshingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView {
-    [scrollView fwAddPullRefreshWithTarget:target action:action];
-    if (self.pullRefreshBlock) self.pullRefreshBlock(scrollView.fwPullRefreshView);
+- (void)setRefreshingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView {
+    [scrollView.fw addPullRefreshWithTarget:target action:action];
+    if (self.pullRefreshBlock) self.pullRefreshBlock(scrollView.fw.pullRefreshView);
 }
 
-- (void)fwBeginRefreshing:(UIScrollView *)scrollView {
-    [scrollView fwTriggerPullRefresh];
+- (void)beginRefreshing:(UIScrollView *)scrollView {
+    [scrollView.fw triggerPullRefresh];
 }
 
-- (void)fwEndRefreshing:(UIScrollView *)scrollView {
-    [scrollView.fwPullRefreshView stopAnimating];
+- (void)endRefreshing:(UIScrollView *)scrollView {
+    [scrollView.fw.pullRefreshView stopAnimating];
 }
 
 #pragma mark - Loading
 
-- (BOOL)fwIsLoading:(UIScrollView *)scrollView {
-    return scrollView.fwInfiniteScrollView.state == FWInfiniteScrollStateLoading;
+- (BOOL)isLoading:(UIScrollView *)scrollView {
+    return scrollView.fw.infiniteScrollView.state == FWInfiniteScrollStateLoading;
 }
 
-- (BOOL)fwShowLoading:(UIScrollView *)scrollView {
-    return scrollView.fwShowInfiniteScroll;
+- (BOOL)showLoading:(UIScrollView *)scrollView {
+    return scrollView.fw.showInfiniteScroll;
 }
 
-- (void)fwSetShowLoading:(BOOL)showLoading scrollView:(UIScrollView *)scrollView {
-    scrollView.fwShowInfiniteScroll = showLoading;
+- (void)setShowLoading:(BOOL)showLoading scrollView:(UIScrollView *)scrollView {
+    scrollView.fw.showInfiniteScroll = showLoading;
 }
 
-- (void)fwSetLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {
-    [scrollView fwAddInfiniteScrollWithBlock:block];
-    if (self.infiniteScrollBlock) self.infiniteScrollBlock(scrollView.fwInfiniteScrollView);
+- (void)setLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {
+    [scrollView.fw addInfiniteScrollWithBlock:block];
+    if (self.infiniteScrollBlock) self.infiniteScrollBlock(scrollView.fw.infiniteScrollView);
 }
 
-- (void)fwSetLoadingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView {
-    [scrollView fwAddInfiniteScrollWithTarget:target action:action];
-    if (self.infiniteScrollBlock) self.infiniteScrollBlock(scrollView.fwInfiniteScrollView);
+- (void)setLoadingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView {
+    [scrollView.fw addInfiniteScrollWithTarget:target action:action];
+    if (self.infiniteScrollBlock) self.infiniteScrollBlock(scrollView.fw.infiniteScrollView);
 }
 
-- (void)fwBeginLoading:(UIScrollView *)scrollView {
-    [scrollView fwTriggerInfiniteScroll];
+- (void)beginLoading:(UIScrollView *)scrollView {
+    [scrollView.fw triggerInfiniteScroll];
 }
 
-- (void)fwEndLoading:(UIScrollView *)scrollView {
-    [scrollView.fwInfiniteScrollView stopAnimating];
+- (void)endLoading:(UIScrollView *)scrollView {
+    [scrollView.fw.infiniteScrollView stopAnimating];
 }
 
 @end

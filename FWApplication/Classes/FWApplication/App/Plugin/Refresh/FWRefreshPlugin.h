@@ -1,13 +1,12 @@
 /**
  @header     FWRefreshPlugin.h
  @indexgroup FWApplication
-      FWRefreshPlugin
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/10/16
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,98 +20,98 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Refreshing
 
 /// 是否正在刷新中
-- (BOOL)fwIsRefreshing:(UIScrollView *)scrollView;
+- (BOOL)isRefreshing:(UIScrollView *)scrollView;
 
 /// 是否显示刷新组件
-- (BOOL)fwShowRefreshing:(UIScrollView *)scrollView;
+- (BOOL)showRefreshing:(UIScrollView *)scrollView;
 
 /// 设置是否显示刷新组件
-- (void)fwSetShowRefreshing:(BOOL)showRefreshing scrollView:(UIScrollView *)scrollView;
+- (void)setShowRefreshing:(BOOL)showRefreshing scrollView:(UIScrollView *)scrollView;
 
 /// 配置下拉刷新句柄
-- (void)fwSetRefreshingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
+- (void)setRefreshingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
 
 /// 配置下拉刷新事件
-- (void)fwSetRefreshingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView;
+- (void)setRefreshingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView;
 
 /// 开始下拉刷新
-- (void)fwBeginRefreshing:(UIScrollView *)scrollView;
+- (void)beginRefreshing:(UIScrollView *)scrollView;
 
 /// 结束下拉刷新
-- (void)fwEndRefreshing:(UIScrollView *)scrollView;
+- (void)endRefreshing:(UIScrollView *)scrollView;
 
 #pragma mark - Loading
 
 /// 是否正在追加中
-- (BOOL)fwIsLoading:(UIScrollView *)scrollView;
+- (BOOL)isLoading:(UIScrollView *)scrollView;
 
 /// 是否显示追加组件
-- (BOOL)fwShowLoading:(UIScrollView *)scrollView;
+- (BOOL)showLoading:(UIScrollView *)scrollView;
 
 /// 设置是否显示追加组件
-- (void)fwSetShowLoading:(BOOL)showLoading scrollView:(UIScrollView *)scrollView;
+- (void)setShowLoading:(BOOL)showLoading scrollView:(UIScrollView *)scrollView;
 
 /// 配置上拉追加句柄
-- (void)fwSetLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
+- (void)setLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
 
 /// 配置上拉追加事件
-- (void)fwSetLoadingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView;
+- (void)setLoadingTarget:(id)target action:(SEL)action scrollView:(UIScrollView *)scrollView;
 
 /// 开始上拉追加
-- (void)fwBeginLoading:(UIScrollView *)scrollView;
+- (void)beginLoading:(UIScrollView *)scrollView;
 
 /// 结束上拉追加
-- (void)fwEndLoading:(UIScrollView *)scrollView;
+- (void)endLoading:(UIScrollView *)scrollView;
 
 @end
 
-#pragma mark - UIScrollView+FWRefreshPlugin
+#pragma mark - FWScrollViewWrapper+FWRefreshPlugin
 
 /// UIScrollView刷新插件分类
-@interface UIScrollView (FWRefreshPlugin)
+@interface FWScrollViewWrapper (FWRefreshPlugin)
 
 /// 自定义刷新插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWRefreshPlugin> fwRefreshPlugin;
+@property (nonatomic, strong, nullable) id<FWRefreshPlugin> refreshPlugin;
 
 #pragma mark - Refreshing
 
 /// 是否正在刷新中
-@property (nonatomic, readonly) BOOL fwIsRefreshing;
+@property (nonatomic, readonly) BOOL isRefreshing;
 
 /// 是否显示刷新组件
-@property (nonatomic, assign) BOOL fwShowRefreshing;
+@property (nonatomic, assign) BOOL showRefreshing;
 
 /// 配置下拉刷新句柄
-- (void)fwSetRefreshingBlock:(void (^)(void))block;
+- (void)setRefreshingBlock:(void (^)(void))block;
 
 /// 配置下拉刷新事件
-- (void)fwSetRefreshingTarget:(id)target action:(SEL)action;
+- (void)setRefreshingTarget:(id)target action:(SEL)action;
 
 /// 开始下拉刷新
-- (void)fwBeginRefreshing;
+- (void)beginRefreshing;
 
 /// 结束下拉刷新
-- (void)fwEndRefreshing;
+- (void)endRefreshing;
 
 #pragma mark - Loading
 
 /// 是否正在追加中
-@property (nonatomic, readonly) BOOL fwIsLoading;
+@property (nonatomic, readonly) BOOL isLoading;
 
 /// 是否显示追加组件
-@property (nonatomic, assign) BOOL fwShowLoading;
+@property (nonatomic, assign) BOOL showLoading;
 
 /// 配置上拉追加句柄
-- (void)fwSetLoadingBlock:(void (^)(void))block;
+- (void)setLoadingBlock:(void (^)(void))block;
 
 /// 配置上拉追加事件
-- (void)fwSetLoadingTarget:(id)target action:(SEL)action;
+- (void)setLoadingTarget:(id)target action:(SEL)action;
 
 /// 开始上拉追加
-- (void)fwBeginLoading;
+- (void)beginLoading;
 
 /// 结束上拉追加
-- (void)fwEndLoading;
+- (void)endLoading;
 
 @end
 

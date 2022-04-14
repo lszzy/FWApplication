@@ -188,8 +188,8 @@
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
     
-    [self.collectionView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.collectionView fwSetLoadingTarget:self action:@selector(onLoading)];
+    [self.collectionView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.collectionView.fw setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderModel
@@ -206,7 +206,7 @@
 
 - (void)renderData
 {
-    [self.collectionView fwBeginRefreshing];
+    [self.collectionView.fw beginRefreshing];
 }
 
 - (void)onRefreshing
@@ -221,7 +221,7 @@
         [self.collectionView.fw clearSizeCache];
         [self.collectionView fwReloadDataWithoutAnimation];
         
-        [self.collectionView fwEndRefreshing];
+        [self.collectionView.fw endRefreshing];
     });
 }
 
@@ -236,7 +236,7 @@
         self.collectionView.fwDelegate.collectionData = @[sectionData];
         [self.collectionView fwReloadDataWithoutAnimation];
         
-        [self.collectionView fwEndLoading];
+        [self.collectionView.fw endLoading];
     });
 }
 

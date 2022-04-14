@@ -167,12 +167,12 @@ static BOOL isExpanded = NO;
 {
     FWWeakifySelf();
     self.collectionView.backgroundColor = [Theme tableColor];
-    [self.collectionView fwSetRefreshingBlock:^{
+    [self.collectionView.fw setRefreshingBlock:^{
         FWStrongifySelf();
         
         [self onRefreshing];
     }];
-    [self.collectionView fwSetLoadingBlock:^{
+    [self.collectionView.fw setLoadingBlock:^{
         FWStrongifySelf();
         
         [self onLoading];
@@ -205,7 +205,7 @@ static BOOL isExpanded = NO;
     } else {
         self.flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
-    [self.collectionView fwBeginRefreshing];
+    [self.collectionView.fw beginRefreshing];
 }
 
 #pragma mark - CollectionView
@@ -381,9 +381,9 @@ static BOOL isExpanded = NO;
         [self.collectionView.fw clearSizeCache];
         [self.collectionView fwReloadDataWithoutAnimation];
         
-        self.collectionView.fwShowRefreshing = self.collectionData.count < 20 ? YES : NO;
-        [self.collectionView fwEndRefreshing];
-        if (!self.collectionView.fwShowRefreshing) {
+        self.collectionView.fw.showRefreshing = self.collectionData.count < 20 ? YES : NO;
+        [self.collectionView.fw endRefreshing];
+        if (!self.collectionView.fw.showRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -400,8 +400,8 @@ static BOOL isExpanded = NO;
         }
         [self.collectionView fwReloadDataWithoutAnimation];
         
-        self.collectionView.fwShowLoading = self.collectionData.count < 20 ? YES : NO;
-        [self.collectionView fwEndLoading];
+        self.collectionView.fw.showLoading = self.collectionData.count < 20 ? YES : NO;
+        [self.collectionView.fw endLoading];
     });
 }
 

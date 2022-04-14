@@ -94,15 +94,15 @@
 
 - (void)renderView
 {
-    self.tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top;
-    [self.tableView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    self.tableView.fwInfiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw.safeAreaInsets.bottom;
-    [self.tableView fwSetLoadingTarget:self action:@selector(onLoading)];
+    self.tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top;
+    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+    self.tableView.fw.infiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw.safeAreaInsets.bottom;
+    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderData
 {
-    [self.tableView fwBeginRefreshing];
+    [self.tableView.fw beginRefreshing];
 }
 
 #pragma mark - TableView
@@ -151,7 +151,7 @@
         for (int i = 0; i < 10; i++) {
             [self.tableData addObject:[NSString stringWithFormat:@"我是数据 %@", @(self.tableData.count + self.count + 1)]];
         }
-        [self.tableView fwEndRefreshing];
+        [self.tableView.fw endRefreshing];
         [self.tableView reloadData];
         self.count++;
     });
@@ -166,7 +166,7 @@
         for (int i = 0; i < 10; i++) {
             [self.tableData addObject:[NSString stringWithFormat:@"我是数据 %@", @(self.tableData.count + 1)]];
         }
-        [self.tableView fwEndLoading];
+        [self.tableView.fw endLoading];
         [self.tableView reloadData];
     });
 }
