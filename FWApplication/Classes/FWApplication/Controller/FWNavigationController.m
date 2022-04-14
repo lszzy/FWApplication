@@ -441,9 +441,9 @@
 {
     if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
         BOOL shouldPop = YES;
-        if ([self.navigationController.topViewController respondsToSelector:@selector(fwPopBackBarItem)]) {
+        if ([self.navigationController.topViewController respondsToSelector:@selector(popBackBarItem)]) {
             // 调用钩子。如果返回NO，则不开始手势；如果返回YES，则使用系统方式
-            shouldPop = [self.navigationController.topViewController fwPopBackBarItem];
+            shouldPop = [self.navigationController.topViewController popBackBarItem];
         }
         if (shouldPop) {
             if ([self.delegate respondsToSelector:@selector(gestureRecognizerShouldBegin:)]) {
@@ -505,8 +505,8 @@
         return NO;
     }
     
-    if ([topViewController respondsToSelector:@selector(fwPopBackBarItem)] &&
-        ![topViewController fwPopBackBarItem]) {
+    if ([topViewController respondsToSelector:@selector(popBackBarItem)] &&
+        ![topViewController popBackBarItem]) {
         return NO;
     }
     
@@ -551,9 +551,9 @@
         FWSwizzleClass(UINavigationController, @selector(navigationBar:shouldPopItem:), FWSwizzleReturn(BOOL), FWSwizzleArgs(UINavigationBar *navigationBar, UINavigationItem *item), FWSwizzleCode({
             // 检查返回按钮点击事件钩子
             if (selfObject.viewControllers.count >= navigationBar.items.count &&
-                [selfObject.topViewController respondsToSelector:@selector(fwPopBackBarItem)]) {
+                [selfObject.topViewController respondsToSelector:@selector(popBackBarItem)]) {
                 // 调用钩子。如果返回NO，则不pop当前页面；如果返回YES，则使用默认方式
-                if (![selfObject.topViewController fwPopBackBarItem]) {
+                if (![selfObject.topViewController popBackBarItem]) {
                     return NO;
                 }
             }

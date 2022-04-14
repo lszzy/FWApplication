@@ -332,7 +332,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Change" block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@"Change" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.isSDWebImage = !self.isSDWebImage;
         [FWPluginManager unloadPlugin:@protocol(FWImagePlugin)];
@@ -352,7 +352,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderData
 {
     self.isSDWebImage = [[FWPluginManager loadPlugin:@protocol(FWImagePlugin)] isKindOfClass:[FWSDWebImagePlugin class]];
-    self.fwBarTitle = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
+    self.fw.barTitle = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
     FWSDWebImagePlugin.sharedInstance.fadeAnimated = YES;
     FWImagePluginImpl.sharedInstance.fadeAnimated = YES;
     

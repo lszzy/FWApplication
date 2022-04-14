@@ -76,11 +76,11 @@
     
     // 视图延伸到导航栏
     self.fwForcePopGesture = YES;
-    self.fwExtendedLayoutEdge = UIRectEdgeNone;
+    self.fw.extendedLayoutEdge = UIRectEdgeNone;
     
     // 自定义关闭按钮
     FWWeakifySelf();
-    [self fwSetLeftBarItem:FWIcon.closeImage block:^(id sender) {
+    [self.fw setLeftBarItem:FWIcon.closeImage block:^(id sender) {
         FWStrongifySelf();
         [self.fw closeViewControllerAnimated:!self.noAnimate];
     }];
@@ -101,7 +101,7 @@
     
     self.frameLabel.text = NSStringFromCGRect(self.view.frame);
     if (!self.fw.isPresented) {
-        self.fwNavigationBarHidden = YES;
+        self.fw.navigationBarHidden = YES;
     }
 }
 
@@ -282,7 +282,7 @@ FWDealloc();
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.fwNavigationBarHidden = NO;
+    self.fw.navigationBarHidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated

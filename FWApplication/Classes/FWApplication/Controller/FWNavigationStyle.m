@@ -9,7 +9,6 @@
 
 #import "FWNavigationStyle.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
 #pragma mark - FWNavigationBarAppearance
 
@@ -41,9 +40,9 @@
 
 @end
 
-#pragma mark - UIViewController+FWStyle
+#pragma mark - FWViewControllerWrapper+FWStyle
 
-@implementation UIViewController (FWStyle)
+@implementation FWViewControllerWrapper (FWStyle)
 
 #pragma mark - Bar
 
@@ -52,7 +51,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UIViewController, @selector(prefersStatusBarHidden), FWSwizzleReturn(BOOL), FWSwizzleArgs(), FWSwizzleCode({
-            NSNumber *hiddenValue = objc_getAssociatedObject(selfObject, @selector(fwStatusBarHidden));
+            NSNumber *hiddenValue = objc_getAssociatedObject(selfObject, @selector(statusBarHidden));
             if (hiddenValue) {
                 return [hiddenValue boolValue];
             } else {
@@ -61,7 +60,7 @@
         }));
         
         FWSwizzleClass(UIViewController, @selector(preferredStatusBarStyle), FWSwizzleReturn(UIStatusBarStyle), FWSwizzleArgs(), FWSwizzleCode({
-            NSNumber *styleValue = objc_getAssociatedObject(selfObject, @selector(fwStatusBarStyle));
+            NSNumber *styleValue = objc_getAssociatedObject(selfObject, @selector(statusBarStyle));
             if (styleValue) {
                 return [styleValue integerValue];
             } else {
@@ -71,120 +70,120 @@
         
         FWSwizzleClass(UIViewController, @selector(viewWillAppear:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
             FWSwizzleOriginal(animated);
-            [selfObject fwUpdateNavigationBarStyle:animated];
+            [selfObject.fw updateNavigationBarStyle:animated];
         }));
     });
 }
 
-- (UIStatusBarStyle)fwStatusBarStyle
+- (UIStatusBarStyle)statusBarStyle
 {
-    return [objc_getAssociatedObject(self, @selector(fwStatusBarStyle)) integerValue];
+    return [objc_getAssociatedObject(self.base, @selector(statusBarStyle)) integerValue];
 }
 
-- (void)setFwStatusBarStyle:(UIStatusBarStyle)fwStatusBarStyle
+- (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle
 {
-    objc_setAssociatedObject(self, @selector(fwStatusBarStyle), @(fwStatusBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self setNeedsStatusBarAppearanceUpdate];
+    objc_setAssociatedObject(self.base, @selector(statusBarStyle), @(statusBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self.base setNeedsStatusBarAppearanceUpdate];
 }
 
-- (BOOL)fwStatusBarHidden
+- (BOOL)statusBarHidden
 {
-    return [objc_getAssociatedObject(self, @selector(fwStatusBarHidden)) boolValue];
+    return [objc_getAssociatedObject(self.base, @selector(statusBarHidden)) boolValue];
 }
 
-- (void)setFwStatusBarHidden:(BOOL)fwStatusBarHidden
+- (void)setStatusBarHidden:(BOOL)statusBarHidden
 {
-    objc_setAssociatedObject(self, @selector(fwStatusBarHidden), @(fwStatusBarHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self setNeedsStatusBarAppearanceUpdate];
+    objc_setAssociatedObject(self.base, @selector(statusBarHidden), @(statusBarHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self.base setNeedsStatusBarAppearanceUpdate];
 }
 
-- (FWNavigationBarAppearance *)fwNavigationBarAppearance
+- (FWNavigationBarAppearance *)navigationBarAppearance
 {
-    return objc_getAssociatedObject(self, @selector(fwNavigationBarAppearance));
+    return objc_getAssociatedObject(self.base, @selector(navigationBarAppearance));
 }
 
-- (void)setFwNavigationBarAppearance:(FWNavigationBarAppearance *)fwNavigationBarAppearance
+- (void)setNavigationBarAppearance:(FWNavigationBarAppearance *)navigationBarAppearance
 {
-    objc_setAssociatedObject(self, @selector(fwNavigationBarAppearance), fwNavigationBarAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(navigationBarAppearance), navigationBarAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if (self.isViewLoaded && self.view.window) {
-        [self fwUpdateNavigationBarStyle:NO];
+    if (self.base.isViewLoaded && self.base.view.window) {
+        [self updateNavigationBarStyle:NO];
     }
 }
 
-- (FWNavigationBarStyle)fwNavigationBarStyle
+- (FWNavigationBarStyle)navigationBarStyle
 {
-    return [objc_getAssociatedObject(self, @selector(fwNavigationBarStyle)) integerValue];
+    return [objc_getAssociatedObject(self.base, @selector(navigationBarStyle)) integerValue];
 }
 
-- (void)setFwNavigationBarStyle:(FWNavigationBarStyle)fwNavigationBarStyle
+- (void)setNavigationBarStyle:(FWNavigationBarStyle)navigationBarStyle
 {
-    objc_setAssociatedObject(self, @selector(fwNavigationBarStyle), @(fwNavigationBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(navigationBarStyle), @(navigationBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if (self.isViewLoaded && self.view.window) {
-        [self fwUpdateNavigationBarStyle:NO];
+    if (self.base.isViewLoaded && self.base.view.window) {
+        [self updateNavigationBarStyle:NO];
     }
 }
 
-- (BOOL)fwNavigationBarHidden
+- (BOOL)navigationBarHidden
 {
-    return [objc_getAssociatedObject(self, @selector(fwNavigationBarHidden)) boolValue];
+    return [objc_getAssociatedObject(self.base, @selector(navigationBarHidden)) boolValue];
 }
 
-- (void)setFwNavigationBarHidden:(BOOL)hidden
+- (void)setNavigationBarHidden:(BOOL)hidden
 {
-    [self fwSetNavigationBarHidden:hidden animated:NO];
+    [self setNavigationBarHidden:hidden animated:NO];
     // 直接设置navigtionBar.isHidden不会影响右滑关闭手势
     // self.navigationController.navigationBar.isHidden = YES;
 }
 
-- (void)fwSetNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated
+- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated
 {
-    objc_setAssociatedObject(self, @selector(fwNavigationBarHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(navigationBarHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if (self.isViewLoaded && self.view.window) {
-        [self fwUpdateNavigationBarStyle:animated];
+    if (self.base.isViewLoaded && self.base.view.window) {
+        [self updateNavigationBarStyle:animated];
     }
 }
 
-- (FWNavigationBarAppearance *)fwCurrentNavigationBarAppearance
+- (FWNavigationBarAppearance *)currentNavigationBarAppearance
 {
     // 1. 检查VC是否自定义appearance
-    FWNavigationBarAppearance *appearance = self.fwNavigationBarAppearance;
+    FWNavigationBarAppearance *appearance = self.navigationBarAppearance;
     if (appearance) return appearance;
     // 2. 检查VC是否自定义style
-    NSNumber *style = objc_getAssociatedObject(self, @selector(fwNavigationBarStyle));
+    NSNumber *style = objc_getAssociatedObject(self.base, @selector(navigationBarStyle));
     if (style) {
         appearance = [FWNavigationBarAppearance appearanceForStyle:style.integerValue];
         return appearance;
     }
     // 3. 检查NAV是否自定义appearance
-    appearance = self.navigationController.fwNavigationBarAppearance;
+    appearance = self.base.navigationController.fw.navigationBarAppearance;
     if (appearance) return appearance;
     // 4. 检查NAV是否自定义style
-    style = objc_getAssociatedObject(self.navigationController, @selector(fwNavigationBarStyle));
+    style = objc_getAssociatedObject(self.base.navigationController, @selector(navigationBarStyle));
     if (style) {
         appearance = [FWNavigationBarAppearance appearanceForStyle:style.integerValue];
     }
     return appearance;
 }
 
-- (void)fwUpdateNavigationBarStyle:(BOOL)animated
+- (void)updateNavigationBarStyle:(BOOL)animated
 {
     // 含有导航栏且不是child控制器且不是导航栏控制器时才处理
-    if (!self.navigationController || self.fw.isChild ||
-        [self isKindOfClass:[UINavigationController class]]) return;
+    if (!self.base.navigationController || self.isChild ||
+        [self.base isKindOfClass:[UINavigationController class]]) return;
     
     // fwNavigationBarHidden设置即生效，动态切换导航栏不突兀，一般在viewWillAppear:中调用
-    NSNumber *hidden = objc_getAssociatedObject(self, @selector(fwNavigationBarHidden));
-    if (hidden && self.navigationController.navigationBarHidden != hidden.boolValue) {
-        [self.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
+    NSNumber *hidden = objc_getAssociatedObject(self.base, @selector(navigationBarHidden));
+    if (hidden && self.base.navigationController.navigationBarHidden != hidden.boolValue) {
+        [self.base.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
     }
     
     // 获取当前用于显示的appearance
-    FWNavigationBarAppearance *appearance = [self fwCurrentNavigationBarAppearance];
+    FWNavigationBarAppearance *appearance = [self currentNavigationBarAppearance];
     if (!appearance) return;
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    UINavigationBar *navigationBar = self.base.navigationController.navigationBar;
     if (appearance.isTranslucent != navigationBar.fw.isTranslucent) {
         navigationBar.fw.isTranslucent = appearance.isTranslucent;
     }
@@ -207,190 +206,192 @@
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
 }
 
-- (BOOL)fwTabBarHidden
+- (BOOL)tabBarHidden
 {
-    return self.tabBarController.tabBar.hidden;
+    return self.base.tabBarController.tabBar.hidden;
 }
 
-- (void)setFwTabBarHidden:(BOOL)fwTabBarHidden
+- (void)setTabBarHidden:(BOOL)tabBarHidden
 {
-    self.tabBarController.tabBar.hidden = fwTabBarHidden;
+    self.base.tabBarController.tabBar.hidden = tabBarHidden;
 }
 
-- (BOOL)fwToolBarHidden
+- (BOOL)toolBarHidden
 {
-    return self.navigationController.toolbarHidden;
+    return self.base.navigationController.toolbarHidden;
 }
 
-- (void)setFwToolBarHidden:(BOOL)fwToolBarHidden
+- (void)setToolBarHidden:(BOOL)toolBarHidden
 {
-    self.navigationController.toolbarHidden = fwToolBarHidden;
+    self.base.navigationController.toolbarHidden = toolBarHidden;
 }
 
-- (void)fwSetToolBarHidden:(BOOL)hidden animated:(BOOL)animated
+- (void)setToolBarHidden:(BOOL)hidden animated:(BOOL)animated
 {
-    [self.navigationController setToolbarHidden:hidden animated:animated];
+    [self.base.navigationController setToolbarHidden:hidden animated:animated];
 }
 
-- (UIRectEdge)fwExtendedLayoutEdge
+- (UIRectEdge)extendedLayoutEdge
 {
-    return self.edgesForExtendedLayout;
+    return self.base.edgesForExtendedLayout;
 }
 
-- (void)setFwExtendedLayoutEdge:(UIRectEdge)edge
+- (void)setExtendedLayoutEdge:(UIRectEdge)edge
 {
-    self.edgesForExtendedLayout = edge;
-    self.extendedLayoutIncludesOpaqueBars = YES;
+    self.base.edgesForExtendedLayout = edge;
+    self.base.extendedLayoutIncludesOpaqueBars = YES;
 }
 
 #pragma mark - Item
 
-- (id)fwBarTitle
+- (id)barTitle
 {
     // 系统导航栏
-    return self.navigationItem.titleView ?: self.navigationItem.title;
+    return self.base.navigationItem.titleView ?: self.base.navigationItem.title;
 }
 
-- (void)setFwBarTitle:(id)title
+- (void)setBarTitle:(id)title
 {
     if ([title isKindOfClass:[UIView class]]) {
-        self.navigationItem.titleView = title;
+        self.base.navigationItem.titleView = title;
     } else {
-        self.navigationItem.title = title;
+        self.base.navigationItem.title = title;
     }
 }
 
-- (id)fwLeftBarItem
+- (id)leftBarItem
 {
-    return self.navigationItem.leftBarButtonItem;
+    return self.base.navigationItem.leftBarButtonItem;
 }
 
-- (void)setFwLeftBarItem:(id)object
+- (void)setLeftBarItem:(id)object
 {
     if (!object || [object isKindOfClass:[UIBarButtonItem class]]) {
-        self.navigationItem.leftBarButtonItem = object;
+        self.base.navigationItem.leftBarButtonItem = object;
     } else {
-        __weak __typeof__(self) self_weak_ = self;
-        self.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
-            __typeof__(self) self = self_weak_;
-            if (![self fwPopBackBarItem]) return;
-            [self.fw closeViewControllerAnimated:YES];
+        __weak UIViewController *weakController = self.base;
+        self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
+            if (![weakController popBackBarItem]) return;
+            [weakController.fw closeViewControllerAnimated:YES];
         }];
     }
 }
 
-- (id)fwRightBarItem
+- (id)rightBarItem
 {
-    return self.navigationItem.rightBarButtonItem;
+    return self.base.navigationItem.rightBarButtonItem;
 }
 
-- (void)setFwRightBarItem:(id)object
+- (void)setRightBarItem:(id)object
 {
     if (!object || [object isKindOfClass:[UIBarButtonItem class]]) {
-        self.navigationItem.rightBarButtonItem = object;
+        self.base.navigationItem.rightBarButtonItem = object;
     } else {
-        __weak __typeof__(self) self_weak_ = self;
-        self.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
-            __typeof__(self) self = self_weak_;
-            if (![self fwPopBackBarItem]) return;
-            [self.fw closeViewControllerAnimated:YES];
+        __weak UIViewController *weakController = self.base;
+        self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
+            if (![weakController popBackBarItem]) return;
+            [weakController.fw closeViewControllerAnimated:YES];
         }];
     }
 }
 
-- (void)fwSetLeftBarItem:(id)object target:(id)target action:(SEL)action
+- (void)setLeftBarItem:(id)object target:(id)target action:(SEL)action
 {
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
+    self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
 }
 
-- (void)fwSetLeftBarItem:(id)object block:(void (^)(id sender))block
+- (void)setLeftBarItem:(id)object block:(void (^)(id sender))block
 {
-    self.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
+    self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
 }
 
-- (void)fwSetRightBarItem:(id)object target:(id)target action:(SEL)action
+- (void)setRightBarItem:(id)object target:(id)target action:(SEL)action
 {
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
+    self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
 }
 
-- (void)fwSetRightBarItem:(id)object block:(void (^)(id sender))block
+- (void)setRightBarItem:(id)object block:(void (^)(id sender))block
 {
-    self.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
+    self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
 }
 
-- (void)fwAddLeftBarItem:(id)object target:(id)target action:(SEL)action
+- (void)addLeftBarItem:(id)object target:(id)target action:(SEL)action
 {
     UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
-    NSMutableArray *items = self.navigationItem.leftBarButtonItems ? [self.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.base.navigationItem.leftBarButtonItems ? [self.base.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.navigationItem.leftBarButtonItems = [items copy];
+    self.base.navigationItem.leftBarButtonItems = [items copy];
 }
 
-- (void)fwAddLeftBarItem:(id)object block:(void (^)(id sender))block
+- (void)addLeftBarItem:(id)object block:(void (^)(id sender))block
 {
     UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object block:block];
-    NSMutableArray *items = self.navigationItem.leftBarButtonItems ? [self.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.base.navigationItem.leftBarButtonItems ? [self.base.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.navigationItem.leftBarButtonItems = [items copy];
+    self.base.navigationItem.leftBarButtonItems = [items copy];
 }
 
-- (void)fwAddRightBarItem:(id)object target:(id)target action:(SEL)action
+- (void)addRightBarItem:(id)object target:(id)target action:(SEL)action
 {
     UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
-    NSMutableArray *items = self.navigationItem.rightBarButtonItems ? [self.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.base.navigationItem.rightBarButtonItems ? [self.base.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.navigationItem.rightBarButtonItems = [items copy];
+    self.base.navigationItem.rightBarButtonItems = [items copy];
 }
 
-- (void)fwAddRightBarItem:(id)object block:(void (^)(id sender))block
+- (void)addRightBarItem:(id)object block:(void (^)(id sender))block
 {
     UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object block:block];
-    NSMutableArray *items = self.navigationItem.rightBarButtonItems ? [self.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
+    NSMutableArray *items = self.base.navigationItem.rightBarButtonItems ? [self.base.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
-    self.navigationItem.rightBarButtonItems = [items copy];
+    self.base.navigationItem.rightBarButtonItems = [items copy];
 }
 
 #pragma mark - Back
 
-- (id)fwBackBarItem
+- (id)backBarItem
 {
-    return self.navigationItem.backBarButtonItem;
+    return self.base.navigationItem.backBarButtonItem;
 }
 
-- (void)setFwBackBarItem:(id)object
+- (void)setBackBarItem:(id)object
 {
     if ([object isKindOfClass:[UIImage class]]) {
-        self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.navigationController.navigationBar.fw.backImage = (UIImage *)object;
+        self.base.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.base.navigationController.navigationBar.fw.backImage = (UIImage *)object;
     } else {
         UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem.fw itemWithObject:object ?: [UIImage new] target:nil action:nil];
-        self.navigationItem.backBarButtonItem = backItem;
-        self.navigationController.navigationBar.fw.backImage = nil;
+        self.base.navigationItem.backBarButtonItem = backItem;
+        self.base.navigationController.navigationBar.fw.backImage = nil;
     }
 }
 
-- (BOOL)fwPopBackBarItem
+- (BOOL (^)(void))backBarBlock
+{
+    return objc_getAssociatedObject(self.base, @selector(popBackBarItem));
+}
+
+- (void)setBackBarBlock:(BOOL (^)(void))block
+{
+    if (block) {
+        objc_setAssociatedObject(self.base, @selector(popBackBarItem), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    } else {
+        objc_setAssociatedObject(self.base, @selector(popBackBarItem), nil, OBJC_ASSOCIATION_ASSIGN);
+    }
+}
+
+@end
+
+@implementation UIViewController (FWStyle)
+
+- (BOOL)popBackBarItem
 {
     BOOL shouldPop = YES;
-    BOOL (^block)(void) = objc_getAssociatedObject(self, @selector(fwPopBackBarItem));
+    BOOL (^block)(void) = objc_getAssociatedObject(self, @selector(popBackBarItem));
     if (block) {
         shouldPop = block();
     }
     return shouldPop;
-}
-
-- (BOOL (^)(void))fwBackBarBlock
-{
-    return objc_getAssociatedObject(self, @selector(fwPopBackBarItem));
-}
-
-- (void)setFwBackBarBlock:(BOOL (^)(void))block
-{
-    if (block) {
-        objc_setAssociatedObject(self, @selector(fwPopBackBarItem), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    } else {
-        objc_setAssociatedObject(self, @selector(fwPopBackBarItem), nil, OBJC_ASSOCIATION_ASSIGN);
-    }
 }
 
 @end

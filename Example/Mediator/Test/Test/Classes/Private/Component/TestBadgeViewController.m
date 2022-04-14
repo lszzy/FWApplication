@@ -20,9 +20,9 @@
 {
     [super viewDidLoad];
     
-    self.fwTabBarHidden = NO;
+    self.fw.tabBarHidden = NO;
     
-    [self fwSetLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
+    [self.fw setLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
     [self.navigationItem.leftBarButtonItem fwShowBadgeView:badgeView badgeValue:nil];
     
@@ -108,7 +108,7 @@
     return YES;
 }
 
-- (BOOL)fwPopBackBarItem
+- (BOOL)popBackBarItem
 {
     [self onClose];
     return NO;

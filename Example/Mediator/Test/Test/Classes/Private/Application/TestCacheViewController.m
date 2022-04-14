@@ -108,7 +108,7 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"切换" block:^(id sender) {
+    [self.fw setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
         
         [self.fw showSheetWithTitle:@"选择缓存类型" message:nil cancel:@"取消" actions:@[@"FWCacheMemory", @"FWCacheUserDefaults", @"FWCacheKeychain", @"FWCacheFile", @"FWCacheSqlite"] actionBlock:^(NSInteger index) {

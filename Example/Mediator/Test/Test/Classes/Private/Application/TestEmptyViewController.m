@@ -22,7 +22,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.fw hideEmptyView];
         [self.tableView reloadData];

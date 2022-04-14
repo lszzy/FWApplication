@@ -204,7 +204,7 @@
     FWThemeMode mode = FWThemeManager.sharedInstance.mode;
     NSString *title = mode == FWThemeModeSystem ? @"系统" : (mode == FWThemeModeDark ? @"深色" : @"浅色");
     FWWeakifySelf();
-    [self fwSetRightBarItem:title block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         NSMutableArray *actions = [NSMutableArray arrayWithArray:@[@"系统", @"浅色"]];

@@ -192,7 +192,7 @@
 {
     [super viewDidLoad];
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    self.fwBarTitle = [self titleView];
+    self.fw.barTitle = [self titleView];
 }
 
 - (void)viewWillAppear:(BOOL)animated

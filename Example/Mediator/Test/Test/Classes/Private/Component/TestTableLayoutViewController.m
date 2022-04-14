@@ -181,7 +181,7 @@
 
 - (void)renderModel
 {
-    [self fwSetRightBarItem:FWIcon.refreshImage target:self action:@selector(renderData)];
+    [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(renderData)];
 }
 
 - (void)renderData

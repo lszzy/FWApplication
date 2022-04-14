@@ -58,7 +58,7 @@
 - (void)setupItem
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:self.timer ? FWIcon.stopImage : FWIcon.playImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:self.timer ? FWIcon.stopImage : FWIcon.playImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         if (self.timer) {

@@ -22,7 +22,7 @@
     self.navigationItem.hidesBackButton = YES;
     
     FWWeakifySelf();
-    [self fwSetLeftBarItem:FWIcon.backImage block:^(id sender) {
+    [self.fw setLeftBarItem:FWIcon.backImage block:^(id sender) {
         FWStrongifySelf();
         [self.fw closeViewControllerAnimated:YES];
     }];

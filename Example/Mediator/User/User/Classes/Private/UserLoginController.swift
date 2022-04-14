@@ -14,7 +14,7 @@ import Core
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = UserBundle.localizedString("loginButton")
-        fwSetLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
+        fw.setLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
             self?.fw.closeViewController(animated: true)
         }
         

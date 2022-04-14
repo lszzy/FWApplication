@@ -26,7 +26,7 @@ class TestNavigationTabBarChildController: TestViewController {
     }
     
     override func renderView() {
-        fwNavigationBarHidden = true
+        fw.navigationBarHidden = true
         
         view.backgroundColor = UIColor.fwRandom
         view.addSubview(navigationView)
@@ -124,7 +124,7 @@ class TestNavigationTabBarChildController: TestViewController {
     }
     
     override func renderData() {
-        fwNavigationBarHidden = true
+        fw.navigationBarHidden = true
         onButtonClicked(homeButton)
     }
     

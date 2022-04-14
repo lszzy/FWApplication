@@ -38,10 +38,10 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     func renderData() {
-        fwBarTitle = FWLocalizedString("settingTitle")
+        fw.barTitle = FWLocalizedString("settingTitle")
         
         #if DEBUG
-        fwSetRightBarItem(FWLocalizedString("debugButton")) { (sender) in
+        fw.setRightBarItem(FWLocalizedString("debugButton")) { (sender) in
             if FWDebugManager.sharedInstance().isHidden {
                 FWDebugManager.sharedInstance().show()
             } else {

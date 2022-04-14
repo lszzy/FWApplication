@@ -25,8 +25,8 @@
     _isTop = isTop;
     
     if (isTop) {
-        self.fwNavigationBarStyle = FWNavigationBarStyleTransparent;
-        self.fwExtendedLayoutEdge = UIRectEdgeTop;
+        self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
+        self.fw.extendedLayoutEdge = UIRectEdgeTop;
     }
 }
 
@@ -35,7 +35,7 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"切换" block:^(id sender) {
+    [self.fw setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
         
         TestControllerViewController *viewController = [TestControllerViewController new];
@@ -46,7 +46,7 @@
 
 - (void)renderInit
 {
-    self.fwNavigationBarStyle = FWNavigationBarStyleDefault;
+    self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
 }
 
 - (void)renderView

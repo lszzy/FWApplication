@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - UINavigationController+FWPopGesture
 
 /**
- 导航栏全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法
+ 导航栏全屏返回手势分类，兼容popBackBarItem返回拦截方法
  @see https://github.com/forkingdog/FDFullscreenPopGesture
  */
 @interface UINavigationController (FWPopGesture)
@@ -71,7 +71,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- 控制器全屏返回手势分类，兼容fwPopBackBarItem返回拦截方法
+ 控制器全屏返回手势分类，兼容popBackBarItem返回拦截方法
  */
 @interface UIViewController (FWPopGesture)
 

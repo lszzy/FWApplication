@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Toggle" block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@"Toggle" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         NSArray *titles = [self.dataArr.fw mapWithBlock:^id _Nullable(NSArray *obj) {
             return obj.firstObject;

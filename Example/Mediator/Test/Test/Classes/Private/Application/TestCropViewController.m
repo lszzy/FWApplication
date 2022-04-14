@@ -136,8 +136,8 @@
     
     self.navigationController.navigationBar.translucent = NO;
     
-    [self fwAddRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.addImage] target:self action:@selector(showCropViewController)];
-    [self fwAddRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.actionImage] target:self action:@selector(sharePhoto:)];
+    [self.fw addRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.addImage] target:self action:@selector(showCropViewController)];
+    [self.fw addRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.actionImage] target:self action:@selector(sharePhoto:)];
     
     self.imageView = [[UIImageView alloc] init];
     self.imageView.userInteractionEnabled = YES;

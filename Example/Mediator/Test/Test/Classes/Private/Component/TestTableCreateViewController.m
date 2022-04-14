@@ -292,7 +292,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.addImage block:^(id sender) {
+    [self.fw setRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
         NSMutableArray *sectionData = self.tableView.fw.delegate.tableData[0].mutableCopy;
         NSInteger lastIndex = [sectionData.lastObject fw].safeInteger;

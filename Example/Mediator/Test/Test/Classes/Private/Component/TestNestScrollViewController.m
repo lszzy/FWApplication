@@ -283,7 +283,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self = [super init];
     if (self) {
-        self.fwExtendedLayoutEdge = UIRectEdgeTop;
+        self.fw.extendedLayoutEdge = UIRectEdgeTop;
     }
     return self;
 }
@@ -296,7 +296,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         [self.pagerView.mainTableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
         
         FWWeakifySelf();
-        [self fwSetRightBarItem:@"测试" block:^(id  _Nonnull sender) {
+        [self.fw setRightBarItem:@"测试" block:^(id  _Nonnull sender) {
             FWStrongifySelf();
             TestNestScrollViewController *viewController = [TestNestScrollViewController new];
             viewController.refreshList = YES;

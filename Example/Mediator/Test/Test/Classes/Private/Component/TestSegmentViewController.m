@@ -25,7 +25,7 @@
 {
     [super viewDidLoad];
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Save" block:^(id sender) {
+    [self.fw setRightBarItem:@"Save" block:^(id sender) {
         FWStrongifySelf();
         [self.gifImageView.image fwSaveImageWithBlock:nil];
     }];

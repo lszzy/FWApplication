@@ -21,7 +21,7 @@
 
 - (void)renderInit
 {
-    self.fwNavigationBarHidden = YES;
+    self.fw.navigationBarHidden = YES;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -80,7 +80,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    self.fwBackBarBlock = ^BOOL{
+    self.fw.backBarBlock = ^BOOL{
         FWStrongifySelf();
         [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
             FWStrongifySelf();

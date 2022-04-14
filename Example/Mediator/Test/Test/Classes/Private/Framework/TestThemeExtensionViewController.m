@@ -104,7 +104,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     NSString *title = mode < themes.count ? [themes objectAtIndex:mode] : @"红色";
     [themes addObject:@"红色"];
     FWWeakifySelf();
-    [self fwSetRightBarItem:title block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:themes actionBlock:^(NSInteger index) {

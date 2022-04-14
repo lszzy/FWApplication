@@ -193,7 +193,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fwBarTitle = self.context.URL;
+    self.fw.barTitle = self.context.URL;
     
     UILabel *label = [[UILabel alloc] init];
     label.numberOfLines = 0;
@@ -204,7 +204,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     
     if (self.context.completion) {
         FWWeakifySelf();
-        [self fwSetRightBarItem:@"完成" block:^(id sender) {
+        [self.fw setRightBarItem:@"完成" block:^(id sender) {
             FWStrongifySelf();
             [FWRouter completeURL:self.context result:@"我是回调数据"];
             [self.fw closeViewControllerAnimated:YES];
@@ -501,7 +501,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     TestViewController *viewController = [TestViewController new];
     viewController.navigationItem.title = @"iOS14 bug";
     FWWeakifySelf();
-    viewController.fwBackBarBlock = ^BOOL{
+    viewController.fw.backBarBlock = ^BOOL{
         FWStrongifySelf();
         static NSInteger count = 0;
         NSInteger index = count++ % 3;

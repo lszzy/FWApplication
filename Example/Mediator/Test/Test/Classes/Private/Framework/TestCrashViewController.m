@@ -21,7 +21,7 @@
 
 - (void)renderNavbar
 {
-    [self fwSetRightBarItem:@"捕获异常" block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@"捕获异常" block:^(id  _Nonnull sender) {
         [FWException startCaptureExceptions];
     }];
 }

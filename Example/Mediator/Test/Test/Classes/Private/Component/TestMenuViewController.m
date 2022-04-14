@@ -19,7 +19,7 @@
 
 - (void)renderInit
 {
-    self.fwExtendedLayoutEdge = UIRectEdgeTop;
+    self.fw.extendedLayoutEdge = UIRectEdgeTop;
 }
 
 - (void)viewDidLoad
@@ -27,14 +27,14 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetLeftBarItem:@"Menu" block:^(id sender) {
+    [self.fw setLeftBarItem:@"Menu" block:^(id sender) {
         FWStrongifySelf();
         FWDrawerView *drawerView = self.contentView.fwDrawerView;
         CGFloat position = (drawerView.position == drawerView.openPosition) ? drawerView.closePosition : drawerView.openPosition;
         [drawerView setPosition:position animated:YES];
     }];
     
-    [self fwAddRightBarItem:@"相册" target:self action:@selector(onPhotoSheet:)];
+    [self.fw addRightBarItem:@"相册" target:self action:@selector(onPhotoSheet:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated

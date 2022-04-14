@@ -40,7 +40,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }()
     
     override func renderInit() {
-        fwNavigationBarHidden = true
+        fw.navigationBarHidden = true
     }
     
     override func renderView() {

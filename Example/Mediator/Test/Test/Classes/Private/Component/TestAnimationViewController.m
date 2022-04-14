@@ -96,7 +96,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fwNavigationBarHidden = YES;
+    self.fw.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor clearColor];
     FWWeakifySelf();
     [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
@@ -197,7 +197,7 @@ FWDefLazyProperty(UIView *, animationView, {
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         UIViewController *viewController = [NSClassFromString(@"Test.TestPropertyAnimatorViewController") new];
         [self.navigationController pushViewController:viewController animated:true];

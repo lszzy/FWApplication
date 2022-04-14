@@ -155,7 +155,7 @@ FWPropertyAssign(BOOL, canScroll);
         }
     };
     
-    [self fwSetRightBarItem:@"切换滚动" block:^(id sender) {
+    [self.fw setRightBarItem:@"切换滚动" block:^(id sender) {
         FWStrongifySelf();
         [self.view endEditing:YES];
         self.canScroll = !self.canScroll;

@@ -47,7 +47,7 @@
     self.dismissTappedVideo = YES;
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         NSString *pluginText = self.usePlugin ? @"不使用插件" : @"使用插件";
         NSString *progressText = self.mockProgress ? @"关闭进度" : @"开启进度";

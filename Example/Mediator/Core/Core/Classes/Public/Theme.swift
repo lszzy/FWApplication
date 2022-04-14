@@ -86,15 +86,15 @@ extension Theme {
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
-            viewController.fwNavigationBarHidden = false
-            viewController.fwNavigationBarStyle = .default
+            viewController.fw.navigationBarHidden = false
+            viewController.fw.navigationBarStyle = .default
             viewController.fwForcePopGesture = true
         }
         FWViewControllerManager.sharedInstance.hookLoadView = { viewController in
             viewController.view.backgroundColor = Theme.tableColor
         }
         FWViewControllerManager.sharedInstance.hookViewDidLoad = { viewController in
-            viewController.fwBackBarItem = FWIcon.backImage
+            viewController.fw.backBarItem = FWIcon.backImage
             viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
         FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in

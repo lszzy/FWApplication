@@ -137,11 +137,11 @@
 - (void)reloadToolbar:(BOOL)animated
 {
     if (self.webView.canGoBack || self.webView.canGoForward) {
-        if (self.fwToolBarHidden) {
+        if (self.fw.toolBarHidden) {
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
     } else {
-        if (!self.fwToolBarHidden) {
+        if (!self.fw.toolBarHidden) {
             [self.navigationController setToolbarHidden:YES animated:animated];
         }
     }
@@ -179,14 +179,14 @@
     if (self.fw.isLoaded) return;
     self.fw.isLoaded = YES;
     
-    [self fwSetRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
+    [self.fw setRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
 }
 
 - (void)webViewFailLoad:(NSError *)error
 {
     if (self.fw.isLoaded) return;
     
-    [self fwSetRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
+    [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     
     FWWeakifySelf();
     [self.fw showEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {

@@ -21,7 +21,7 @@
 
 - (void)renderModel
 {
-    [self fwSetRightBarItem:@"切换插件" block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@"切换插件" block:^(id  _Nonnull sender) {
         id<FWAlertPlugin> alertPlugin = [FWPluginManager loadPlugin:@protocol(FWAlertPlugin)];
         if (alertPlugin) {
             [FWPluginManager unloadPlugin:@protocol(FWAlertPlugin)];

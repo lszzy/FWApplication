@@ -151,7 +151,7 @@
 - (void)renderData
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"锁定" block:^(UIBarButtonItem *sender) {
+    [self.fw setRightBarItem:@"锁定" block:^(UIBarButtonItem *sender) {
         FWStrongifySelf();
         
         self.lock = !self.lock;

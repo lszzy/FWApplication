@@ -20,21 +20,21 @@
 {
     [super viewDidLoad];
     self.fwForcePopGesture = YES;
-    self.fwExtendedLayoutEdge = UIRectEdgeAll;
+    self.fw.extendedLayoutEdge = UIRectEdgeAll;
     if (self.index < 1) {
-        self.fwNavigationBarStyle = FWNavigationBarStyleDefault;
+        self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
     } else if (self.index < 2) {
-        self.fwNavigationBarStyle = FWNavigationBarStyleWhite;
+        self.fw.navigationBarStyle = FWNavigationBarStyleWhite;
     } else if (self.index < 3) {
-        self.fwNavigationBarStyle = FWNavigationBarStyleTransparent;
+        self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
     } else {
-        self.fwNavigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)].fw randomObject] integerValue];
-        self.fwNavigationBarHidden = self.fwNavigationBarStyle == -1;
+        self.fw.navigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)].fw randomObject] integerValue];
+        self.fw.navigationBarHidden = self.fw.navigationBarStyle == -1;
     }
-    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fwNavigationBarStyle)];
+    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fw.navigationBarStyle)];
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"打开界面" block:^(id sender) {
+    [self.fw setRightBarItem:@"打开界面" block:^(id sender) {
         FWStrongifySelf();
         TestBarSubViewController *viewController = [TestBarSubViewController new];
         viewController.index = self.index + 1;
@@ -63,15 +63,15 @@ FWPropertyAssign(BOOL, hideToast);
 {
     [super viewDidLoad];
     
-    self.fwTabBarHidden = YES;
+    self.fw.tabBarHidden = YES;
     [self.fw observeNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
     
     if (!self.hideToast) {
-        [self fwSetRightBarItem:@"启用" block:^(id sender) {
+        [self.fw setRightBarItem:@"启用" block:^(id sender) {
             [UINavigationController fwEnableBarTransition];
         }];
     } else {
-        [self fwSetLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {
+        [self.fw setLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {
             [FWRouter closeViewControllerAnimated:YES];
         }];
     }
@@ -185,12 +185,12 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.fwStatusBarHidden;
+    return self.fw.statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return self.fwStatusBarStyle;
+    return self.fw.statusBarStyle;
 }
 
 #pragma mark - Action
@@ -208,32 +208,32 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onStatusBar
 {
-    self.fwStatusBarHidden = !self.fwStatusBarHidden;
+    self.fw.statusBarHidden = !self.fw.statusBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onStatusStyle
 {
-    if (self.fwStatusBarStyle == UIStatusBarStyleDefault) {
-        self.fwStatusBarStyle = UIStatusBarStyleLightContent;
+    if (self.fw.statusBarStyle == UIStatusBarStyleDefault) {
+        self.fw.statusBarStyle = UIStatusBarStyleLightContent;
     } else {
-        self.fwStatusBarStyle = UIStatusBarStyleDefault;
+        self.fw.statusBarStyle = UIStatusBarStyleDefault;
     }
     [self refreshBarFrame];
 }
 
 - (void)onNavigationBar
 {
-    self.fwNavigationBarHidden = !self.fwNavigationBarHidden;
+    self.fw.navigationBarHidden = !self.fw.navigationBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onNavigationStyle
 {
-    if (self.fwNavigationBarStyle == FWNavigationBarStyleDefault) {
-        self.fwNavigationBarStyle = FWNavigationBarStyleWhite;
+    if (self.fw.navigationBarStyle == FWNavigationBarStyleDefault) {
+        self.fw.navigationBarStyle = FWNavigationBarStyleWhite;
     } else {
-        self.fwNavigationBarStyle = FWNavigationBarStyleDefault;
+        self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
     }
     [self refreshBarFrame];
 }
@@ -251,19 +251,19 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onTabBar
 {
-    self.fwTabBarHidden = !self.fwTabBarHidden;
+    self.fw.tabBarHidden = !self.fw.tabBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onToolBar
 {
-    if (self.fwToolBarHidden) {
+    if (self.fw.toolBarHidden) {
         UIBarButtonItem *item = [UIBarButtonItem.fw itemWithObject:@(UIBarButtonSystemItemCancel) target:self action:@selector(onToolBar)];
         UIBarButtonItem *item2 = [UIBarButtonItem.fw itemWithObject:@(UIBarButtonSystemItemDone) target:self action:@selector(onPresent)];
         self.toolbarItems = @[item, item2];
-        self.fwToolBarHidden = NO;
+        self.fw.toolBarHidden = NO;
     } else {
-        self.fwToolBarHidden = YES;
+        self.fw.toolBarHidden = YES;
     }
     [self refreshBarFrame];
 }

@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
     
-    [self fwSetRightBarItem:@"设置" block:^(id sender) {
+    [self.fw setRightBarItem:@"设置" block:^(id sender) {
         [UIApplication.fw openAppSettings];
     }];
     

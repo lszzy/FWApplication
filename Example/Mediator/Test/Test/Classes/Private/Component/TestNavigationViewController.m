@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Push" block:^(id sender) {
+    [self.fw setRightBarItem:@"Push" block:^(id sender) {
         FWStrongifySelf();
         TestNavigationViewController *viewController = [TestNavigationViewController new];
         viewController.fullscreenPop = YES;

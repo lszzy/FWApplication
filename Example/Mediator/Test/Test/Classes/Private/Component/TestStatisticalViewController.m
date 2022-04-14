@@ -197,7 +197,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 {
     self.collectionView.hidden = YES;
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (self.collectionView.hidden) {
             self.collectionView.hidden = NO;

@@ -52,7 +52,7 @@ import FWApplication
     }
     
     override func renderModel() {
-        fwSetRightBarItem("切换") { [weak self] sender in
+        fw.setRightBarItem("切换") { [weak self] sender in
             self?.fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["垂直居上", "垂直居中", "垂直居下"], actionBlock: { index in
                 var verticalAlignment: UIControl.ContentVerticalAlignment = .top
                 if index == 1 {
