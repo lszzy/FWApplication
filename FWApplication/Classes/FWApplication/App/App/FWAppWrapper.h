@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 FWWrapperCompatible(UIAlertAction, FWAlertActionWrapper, FWObjectWrapper, FWAlertActionClassWrapper, FWClassWrapper);
 FWWrapperCompatible(UIAlertController, FWAlertControllerWrapper, FWViewControllerWrapper, FWAlertControllerClassWrapper, FWViewControllerClassWrapper);
+FWWrapperCompatible(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWViewWrapper, FWActivityIndicatorViewClassWrapper, FWViewClassWrapper);
 FWWrapperCompatible(PHPhotoLibrary, FWPhotoLibraryWrapper, FWObjectWrapper, FWPhotoLibraryClassWrapper, FWClassWrapper);
 FWWrapperCompatible(UIImagePickerController, FWImagePickerControllerWrapper, FWViewControllerWrapper, FWImagePickerControllerClassWrapper, FWViewControllerClassWrapper);
 FWWrapperCompatibleAvailable(14.0, PHPickerViewController, FWPickerViewControllerWrapper, FWViewControllerWrapper, FWPickerViewControllerClassWrapper, FWViewControllerClassWrapper);

@@ -773,7 +773,7 @@
 
 - (UIView<FWProgressViewPlugin> *)progressView {
     if (!_progressView) {
-        _progressView = [UIView fwProgressViewWithStyle:FWProgressViewStyleDefault];
+        _progressView = [UIView.fw progressViewWithStyle:FWProgressViewStyleDefault];
         _progressView.hidden = YES;
         [self addSubview:_progressView];
         [_progressView.fw alignCenterToSuperview];

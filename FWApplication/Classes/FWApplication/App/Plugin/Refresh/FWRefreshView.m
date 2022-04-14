@@ -380,7 +380,7 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
 
 - (UIView<FWIndicatorViewPlugin> *)indicatorView {
     if(!_indicatorView) {
-        _indicatorView = [UIView fwIndicatorViewWithStyle:FWIndicatorViewStyleRefresh];
+        _indicatorView = [UIView.fw indicatorViewWithStyle:FWIndicatorViewStyleRefresh];
         _indicatorView.color = UIColor.grayColor;
         [self addSubview:_indicatorView];
     }
@@ -829,7 +829,7 @@ static char UIScrollViewFWPullRefreshView;
 
 - (UIView<FWIndicatorViewPlugin> *)indicatorView {
     if(!_indicatorView) {
-        _indicatorView = [UIView fwIndicatorViewWithStyle:FWIndicatorViewStyleRefresh];
+        _indicatorView = [UIView.fw indicatorViewWithStyle:FWIndicatorViewStyleRefresh];
         _indicatorView.color = UIColor.grayColor;
         [self addSubview:_indicatorView];
     }
