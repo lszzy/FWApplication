@@ -7,7 +7,7 @@
  @updated    2018/12/27
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -37,34 +37,34 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol FWViewDelegate <NSObject>
 
 /// 通用事件代理方法，通知名称即为事件名称
-- (void)fwEventReceived:(__kindof UIView *)view withNotification:(NSNotification *)notification;
+- (void)eventReceived:(__kindof UIView *)view withNotification:(NSNotification *)notification;
 
 @end
 
 /**
- UIView+FWView
+ FWViewWrapper+FWView
  */
-@interface UIView (FWView)
+@interface FWViewWrapper (FWView)
 
 /// 通用视图模型，可监听
-@property (nonatomic, strong, nullable) id fwViewModel;
+@property (nonatomic, strong, nullable) id viewModel;
 
 /// 通用事件接收代理，弱引用，Delegate方式
-@property (nonatomic, weak, nullable) id<FWViewDelegate> fwViewDelegate;
+@property (nonatomic, weak, nullable) id<FWViewDelegate> viewDelegate;
 
 /// 通用事件接收句柄，Block方式
-@property (nonatomic, copy, nullable) void (^fwEventReceived)(__kindof UIView *view, NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^eventReceived)(__kindof UIView *view, NSNotification *notification);
 
 /// 通用事件完成回调句柄，Block方式
-@property (nonatomic, copy, nullable) void (^fwEventFinished)(NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^eventFinished)(NSNotification *notification);
 
 /// 发送指定事件，通知代理，支持附带对象和用户信息
-- (void)fwSendEvent:(NSString *)name;
-- (void)fwSendEvent:(NSString *)name object:(nullable id)object;
-- (void)fwSendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
+- (void)sendEvent:(NSString *)name;
+- (void)sendEvent:(NSString *)name object:(nullable id)object;
+- (void)sendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
 
-/// 通用事件完成回调，子类可重写，默认调用fwEventFinished句柄
-- (void)fwEventFinished:(NSNotification *)notification;
+/// 通用事件完成回调，子类可重写，默认调用eventFinished句柄
+- (void)eventFinished:(NSNotification *)notification;
 
 @end
 

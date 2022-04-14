@@ -101,9 +101,9 @@
     self.myTextLabel.text = object.text;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)setViewModel:(id)viewModel
 {
-    [super setFwViewModel:fwViewModel];
+    self.fw.viewModel = viewModel;
     
     self.myTitleLabel.text = @"我是标题";
     self.myImageView.image = [TestBundle imageNamed:@"public_icon"];
@@ -136,11 +136,11 @@
     return self;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)setViewModel:(id)viewModel
 {
-    [super setFwViewModel:fwViewModel];
+    self.fw.viewModel = viewModel;
     
-    self.titleLabel.text = FWSafeString(fwViewModel ? fwViewModel : @"我是Header");
+    self.titleLabel.text = FWSafeString(viewModel ? viewModel : @"我是Header");
 }
 
 @end
@@ -177,10 +177,10 @@
     self.collectionView.fw.delegate.headerViewClass = [TestCollectionCreateHeaderView class];
     self.collectionView.fw.delegate.footerViewClass = [TestCollectionCreateHeaderView class];
     self.collectionView.fw.delegate.headerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
-        headerView.fwViewModel = @"我是Header\n我是Header";
+        headerView.fw.viewModel = @"我是Header\n我是Header";
     };
     self.collectionView.fw.delegate.footerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
-        headerView.fwViewModel = @"我是Footer\n我是Footer\n我是Footer";
+        headerView.fw.viewModel = @"我是Footer\n我是Footer\n我是Footer";
     };
     
     [self.view addSubview:self.collectionView];

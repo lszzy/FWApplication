@@ -269,7 +269,7 @@ static BOOL isExpanded = NO;
                                                       kind:UICollectionElementKindSectionHeader
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
-            reusableView.fwViewModel = @"我是集合Header\n我是集合Header";
+            reusableView.fw.viewModel = @"我是集合Header\n我是集合Header";
         }];
     } else if (self.mode == 1) {
         return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
@@ -277,7 +277,7 @@ static BOOL isExpanded = NO;
                                                       kind:UICollectionElementKindSectionHeader
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
-            reusableView.fwViewModel = @"我是集合Header\n我是集合Header";
+            reusableView.fw.viewModel = @"我是集合Header\n我是集合Header";
         }];
     } else {
         return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
@@ -285,7 +285,7 @@ static BOOL isExpanded = NO;
                                                       kind:UICollectionElementKindSectionHeader
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
-            reusableView.fwViewModel = @"我是集合Header\n我是集合Header";
+            reusableView.fw.viewModel = @"我是集合Header\n我是集合Header";
         }];
     }
 }
@@ -297,7 +297,7 @@ static BOOL isExpanded = NO;
                                                       kind:UICollectionElementKindSectionFooter
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
-            reusableView.fwViewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
+            reusableView.fw.viewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
         }];
     } else if (self.mode == 1) {
         return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
@@ -305,7 +305,7 @@ static BOOL isExpanded = NO;
                                                       kind:UICollectionElementKindSectionFooter
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
-            reusableView.fwViewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
+            reusableView.fw.viewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
         }];
     } else {
         return [collectionView.fw sizeWithReusableViewClass:[TestCollectionDynamicLayoutHeaderView class]
@@ -313,7 +313,7 @@ static BOOL isExpanded = NO;
                                                       kind:UICollectionElementKindSectionFooter
                                             cacheBySection:section
                                              configuration:^(TestCollectionDynamicLayoutHeaderView * _Nonnull reusableView) {
-            reusableView.fwViewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
+            reusableView.fw.viewModel = @"我是集合Footer\n我是集合Footer\n我是集合Footer";
         }];
     }
 }

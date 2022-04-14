@@ -9,86 +9,81 @@
 
 #import "FWView.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
-@implementation UIView (FWView)
+@implementation FWViewWrapper (FWView)
 
-- (id)fwViewModel
+- (id)viewModel
 {
-    return objc_getAssociatedObject(self, @selector(fwViewModel));
+    return objc_getAssociatedObject(self.base, @selector(viewModel));
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)setViewModel:(id)viewModel
 {
     // 仅当值发生改变才触发KVO，下同
-    if (fwViewModel != [self fwViewModel]) {
-        [self willChangeValueForKey:@"fwViewModel"];
-        objc_setAssociatedObject(self, @selector(fwViewModel), fwViewModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [self didChangeValueForKey:@"fwViewModel"];
+    if (viewModel != [self viewModel]) {
+        objc_setAssociatedObject(self.base, @selector(viewModel), viewModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
 
-- (id<FWViewDelegate>)fwViewDelegate
+- (id<FWViewDelegate>)viewDelegate
 {
-    FWWeakObject *value = objc_getAssociatedObject(self, @selector(fwViewDelegate));
+    FWWeakObject *value = objc_getAssociatedObject(self.base, @selector(viewDelegate));
     return value.object;
 }
 
-- (void)setFwViewDelegate:(id<FWViewDelegate>)fwViewDelegate
+- (void)setViewDelegate:(id<FWViewDelegate>)viewDelegate
 {
     // 仅当值发生改变才触发KVO，下同
-    if (fwViewDelegate != [self fwViewDelegate]) {
-        [self willChangeValueForKey:@"fwViewDelegate"];
-        objc_setAssociatedObject(self, @selector(fwViewDelegate), [[FWWeakObject alloc] initWithObject:fwViewDelegate], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [self didChangeValueForKey:@"fwViewDelegate"];
+    if (viewDelegate != [self viewDelegate]) {
+        objc_setAssociatedObject(self.base, @selector(viewDelegate), [[FWWeakObject alloc] initWithObject:viewDelegate], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
 
-- (void (^)(__kindof UIView *, NSNotification *))fwEventReceived
+- (void (^)(__kindof UIView *, NSNotification *))eventReceived
 {
-    return objc_getAssociatedObject(self, @selector(fwEventReceived));
+    return objc_getAssociatedObject(self.base, @selector(eventReceived));
 }
 
-- (void)setFwEventReceived:(void (^)(__kindof UIView *, NSNotification *))fwEventReceived
+- (void)setEventReceived:(void (^)(__kindof UIView *, NSNotification *))eventReceived
 {
-    objc_setAssociatedObject(self, @selector(fwEventReceived), fwEventReceived, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(eventReceived), eventReceived, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void (^)(NSNotification *))fwEventFinished
+- (void (^)(NSNotification *))eventFinished
 {
-    return objc_getAssociatedObject(self, @selector(fwEventFinished));
+    return objc_getAssociatedObject(self.base, @selector(eventFinished));
 }
 
-- (void)setFwEventFinished:(void (^)(NSNotification *))fwEventFinished
+- (void)setEventFinished:(void (^)(NSNotification *))eventFinished
 {
-    objc_setAssociatedObject(self, @selector(fwEventFinished), fwEventFinished, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(eventFinished), eventFinished, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void)fwSendEvent:(NSString *)name
+- (void)sendEvent:(NSString *)name
 {
-    [self fwSendEvent:name object:nil];
+    [self sendEvent:name object:nil];
 }
 
-- (void)fwSendEvent:(NSString *)name object:(id)object
+- (void)sendEvent:(NSString *)name object:(id)object
 {
-    [self fwSendEvent:name object:object userInfo:nil];
+    [self sendEvent:name object:object userInfo:nil];
 }
 
-- (void)fwSendEvent:(NSString *)name object:(id)object userInfo:(NSDictionary *)userInfo
+- (void)sendEvent:(NSString *)name object:(id)object userInfo:(NSDictionary *)userInfo
 {
     NSNotification *notification = [NSNotification notificationWithName:name object:object userInfo:userInfo];
-    if (self.fwEventReceived) {
-        self.fwEventReceived(self, notification);
+    if (self.eventReceived) {
+        self.eventReceived(self.base, notification);
     }
-    if (self.fwViewDelegate && [self.fwViewDelegate respondsToSelector:@selector(fwEventReceived:withNotification:)]) {
-        [self.fwViewDelegate fwEventReceived:self withNotification:notification];
+    if (self.viewDelegate && [self.viewDelegate respondsToSelector:@selector(eventReceived:withNotification:)]) {
+        [self.viewDelegate eventReceived:self.base withNotification:notification];
     }
 }
 
-- (void)fwEventFinished:(NSNotification *)notification
+- (void)eventFinished:(NSNotification *)notification
 {
-    if (self.fwEventFinished) {
-        self.fwEventFinished(notification);
+    if (self.eventFinished) {
+        self.eventFinished(notification);
     }
 }
 
