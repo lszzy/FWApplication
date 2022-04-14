@@ -271,7 +271,7 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)onPresent
 {
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
-    viewController.fwPresentationDidDismiss = ^{
+    viewController.fw.presentationDidDismiss = ^{
         [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
     };
     viewController.fw.completionHandler = ^(id  _Nullable result) {
@@ -292,7 +292,7 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)onPresent3
 {
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
-    viewController.fwPresentationDidDismiss = ^{
+    viewController.fw.presentationDidDismiss = ^{
         [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
     };
     viewController.fw.completionHandler = ^(id  _Nullable result) {
@@ -308,7 +308,7 @@ FWPropertyAssign(BOOL, hideToast);
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
     viewController.hideToast = YES;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    navController.fwPresentationDidDismiss = ^{
+    navController.fw.presentationDidDismiss = ^{
         [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
     };
     navController.fw.completionHandler = ^(id  _Nullable result) {
@@ -327,13 +327,13 @@ FWPropertyAssign(BOOL, hideToast);
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
     viewController.hideToast = YES;
     viewController.preferredContentSize = CGSizeMake(FWScreenWidth / 2, FWScreenHeight / 2);
-    [viewController fwSetPopoverPresentation:^(UIPopoverPresentationController *controller) {
+    [viewController.fw setPopoverPresentation:^(UIPopoverPresentationController *controller) {
         controller.barButtonItem = self.navigationItem.rightBarButtonItem;
         controller.permittedArrowDirections = UIPopoverArrowDirectionUp;
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         controller.passthroughViews = [NSArray arrayWithObjects:cell, nil];
     } shouldDismiss:[@[@0, @1].fw.randomObject fw].safeBool];
-    viewController.fwPresentationDidDismiss = ^{
+    viewController.fw.presentationDidDismiss = ^{
         [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
     };
     viewController.fw.completionHandler = ^(id  _Nullable result) {
