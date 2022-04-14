@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FWFramework
 #if FWApplicationSPM
 import FWApplication
 #endif
@@ -250,28 +251,30 @@ import FWApplication
     }
 }
 
-@objc public extension UITableView {
-    class func fwTableView() -> UITableView {
-        return fwTableView(.plain)
+@objc public extension FWTableViewWrapper {
+    var delegate: FWTableViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
+            return result
+        } else {
+            let result = FWTableViewDelegate()
+            base.fw.setProperty(result, forName: "fwDelegate")
+            base.dataSource = result
+            base.delegate = result
+            return result
+        }
+    }
+}
+
+@objc public extension FWTableViewClassWrapper {
+    func tableView() -> UITableView {
+        return tableView(.plain)
     }
     
-    class func fwTableView(_ style: UITableView.Style) -> UITableView {
+    func tableView(_ style: UITableView.Style) -> UITableView {
         let tableView = UITableView(frame: .zero, style: style)
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.tableFooterView = UIView(frame: .zero)
         return tableView
-    }
-    
-    func fwDelegate() -> FWTableViewDelegate {
-        if let result = fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
-            return result
-        } else {
-            let result = FWTableViewDelegate()
-            fw.setProperty(result, forName: "fwDelegate")
-            dataSource = result
-            delegate = result
-            return result
-        }
     }
 }

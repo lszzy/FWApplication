@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FWFramework
 #if FWApplicationSPM
 import FWApplication
 #endif
@@ -243,31 +244,33 @@ import FWApplication
     }
 }
 
-@objc public extension UICollectionView {
-    class func fwCollectionView() -> UICollectionView {
+@objc public extension FWCollectionViewWrapper {
+    var delegate: FWCollectionViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? FWCollectionViewDelegate {
+            return result
+        } else {
+            let result = FWCollectionViewDelegate()
+            base.fw.setProperty(result, forName: "fwDelegate")
+            base.dataSource = result
+            base.delegate = result
+            return result
+        }
+    }
+}
+
+@objc public extension FWCollectionViewClassWrapper {
+    func collectionView() -> UICollectionView {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         
-        return fwCollectionView(flowLayout)
+        return collectionView(flowLayout)
     }
     
-    class func fwCollectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
+    func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
-    }
-    
-    func fwDelegate() -> FWCollectionViewDelegate {
-        if let result = fw.property(forName: "fwDelegate") as? FWCollectionViewDelegate {
-            return result
-        } else {
-            let result = FWCollectionViewDelegate()
-            fw.setProperty(result, forName: "fwDelegate")
-            dataSource = result
-            delegate = result
-            return result
-        }
     }
 }

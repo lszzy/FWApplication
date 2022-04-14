@@ -318,10 +318,10 @@
     self.footerView.hidden = YES;
     
     NSLog(@"开始刷新");
-    [self fwShowSkeleton];
+    [self.fw showSkeleton];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"刷新完成");
-        [self fwHideSkeleton];
+        [self.fw hideSkeleton];
         
         self.headerView.hidden = NO;
         self.footerView.hidden = NO;

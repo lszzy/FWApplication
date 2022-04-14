@@ -155,8 +155,8 @@
 
 - (void)renderView
 {
-    self.collectionView = [UICollectionView fwCollectionView];
-    self.collectionView.fwDelegate.collectionData = @[@[]];
+    self.collectionView = [UICollectionView.fw collectionView];
+    self.collectionView.fw.delegate.collectionData = @[@[]];
     self.collectionView.backgroundColor = [Theme backgroundColor];
     self.collectionView.alwaysBounceVertical = YES;
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -164,22 +164,22 @@
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     FWWeakifySelf();
-    self.collectionView.fwDelegate.cellClass = [TestCollectionCreateCell class];
-    self.collectionView.fwDelegate.cellConfiguration = ^(TestCollectionCreateCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
+    self.collectionView.fw.delegate.cellClass = [TestCollectionCreateCell class];
+    self.collectionView.fw.delegate.cellConfiguration = ^(TestCollectionCreateCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
         FWStrongifySelf();
-        cell.object = self.collectionView.fwDelegate.collectionData[indexPath.section][indexPath.row];
+        cell.object = self.collectionView.fw.delegate.collectionData[indexPath.section][indexPath.row];
     };
-    self.collectionView.fwDelegate.didSelectItem = ^(NSIndexPath * indexPath) {
+    self.collectionView.fw.delegate.didSelectItem = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
         [self.fw showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.item)] cancel:nil cancelBlock:nil];
     };
     
-    self.collectionView.fwDelegate.headerViewClass = [TestCollectionCreateHeaderView class];
-    self.collectionView.fwDelegate.footerViewClass = [TestCollectionCreateHeaderView class];
-    self.collectionView.fwDelegate.headerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
+    self.collectionView.fw.delegate.headerViewClass = [TestCollectionCreateHeaderView class];
+    self.collectionView.fw.delegate.footerViewClass = [TestCollectionCreateHeaderView class];
+    self.collectionView.fw.delegate.headerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
         headerView.fwViewModel = @"我是Header\n我是Header";
     };
-    self.collectionView.fwDelegate.footerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
+    self.collectionView.fw.delegate.footerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
         headerView.fwViewModel = @"我是Footer\n我是Footer\n我是Footer";
     };
     
@@ -197,9 +197,9 @@
     FWWeakifySelf();
     [self fwSetRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
-        NSMutableArray *sectionData = self.collectionView.fwDelegate.collectionData[0].mutableCopy;
+        NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
-        self.collectionView.fwDelegate.collectionData = @[sectionData];
+        self.collectionView.fw.delegate.collectionData = @[sectionData];
         [self.collectionView fwReloadDataWithoutAnimation];
     }];
 }
@@ -212,12 +212,12 @@
 - (void)onRefreshing
 {
     NSLog(@"开始刷新");
-    [self fwShowSkeleton];
+    [self.fw showSkeleton];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"刷新完成");
-        [self fwHideSkeleton];
+        [self.fw hideSkeleton];
         
-        self.collectionView.fwDelegate.collectionData = @[@[[self randomObject], [self randomObject]]];
+        self.collectionView.fw.delegate.collectionData = @[@[[self randomObject], [self randomObject]]];
         [self.collectionView.fw clearSizeCache];
         [self.collectionView fwReloadDataWithoutAnimation];
         
@@ -231,9 +231,9 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"加载完成");
         
-        NSMutableArray *sectionData = self.collectionView.fwDelegate.collectionData[0].mutableCopy;
+        NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
-        self.collectionView.fwDelegate.collectionData = @[sectionData];
+        self.collectionView.fw.delegate.collectionData = @[sectionData];
         [self.collectionView fwReloadDataWithoutAnimation];
         
         [self.collectionView.fw endLoading];
