@@ -1,20 +1,20 @@
 //
-//  FWCacheAbstract.m
+//  FWCacheEngine.m
 //  FWApplication
 //
 //  Created by wuyong on 2017/5/10.
 //  Copyright © 2018年 wuyong.site. All rights reserved.
 //
 
-#import "FWCacheAbstract.h"
+#import "FWCacheEngine.h"
 
-@interface FWCacheAbstract ()
+@interface FWCacheEngine () <FWCacheEngineProtocol>
 
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 
 @end
 
-@implementation FWCacheAbstract
+@implementation FWCacheEngine
 
 - (instancetype)init
 {
@@ -32,19 +32,19 @@
     if (!key) return nil;
     
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    id object = [self innerObjectForKey:key];
+    id object = [self readCacheForKey:key];
     if (!object) {
         dispatch_semaphore_signal(self.semaphore);
         return nil;
     }
     
     // 检查缓存有效期
-    NSNumber *expire = [self innerObjectForKey:[self expireKey:key]];
+    NSNumber *expire = [self readCacheForKey:[self expireKey:key]];
     if (expire) {
         // 检查是否过期，大于0为过期
         if ([[NSDate date] timeIntervalSince1970] > [expire doubleValue]) {
-            [self innerRemoveObjectForKey:key];
-            [self innerRemoveObjectForKey:[self expireKey:key]];
+            [self clearCacheForKey:key];
+            [self clearCacheForKey:[self expireKey:key]];
             dispatch_semaphore_signal(self.semaphore);
             return nil;
         }
@@ -65,17 +65,17 @@
     
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     if (nil != object) {
-        [self innerSetObject:object forKey:key];
+        [self writeCache:object forKey:key];
         
         // 小于等于0为永久有效
         if (expire <= 0) {
-            [self innerRemoveObjectForKey:[self expireKey:key]];
+            [self clearCacheForKey:[self expireKey:key]];
         } else {
-            [self innerSetObject:@([[NSDate date] timeIntervalSince1970] + expire) forKey:[self expireKey:key]];
+            [self writeCache:@([[NSDate date] timeIntervalSince1970] + expire) forKey:[self expireKey:key]];
         }
     } else {
-        [self innerRemoveObjectForKey:key];
-        [self innerRemoveObjectForKey:[self expireKey:key]];
+        [self clearCacheForKey:key];
+        [self clearCacheForKey:[self expireKey:key]];
     }
     dispatch_semaphore_signal(self.semaphore);
 }
@@ -85,15 +85,15 @@
     if (!key) return;
     
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    [self innerRemoveObjectForKey:key];
-    [self innerRemoveObjectForKey:[self expireKey:key]];
+    [self clearCacheForKey:key];
+    [self clearCacheForKey:[self expireKey:key]];
     dispatch_semaphore_signal(self.semaphore);
 }
 
 - (void)removeAllObjects
 {
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-    [self innerRemoveAllObjects];
+    [self clearAllCaches];
     dispatch_semaphore_signal(self.semaphore);
 }
 
@@ -104,25 +104,25 @@
     return [key stringByAppendingString:@".__EXPIRE__"];
 }
 
-#pragma mark - Protected
+#pragma mark - FWCacheEngineProtocol
 
-- (id)innerObjectForKey:(NSString *)key
+- (id)readCacheForKey:(NSString *)key
 {
     // 子类重写
     return nil;
 }
 
-- (void)innerSetObject:(id)object forKey:(NSString *)key
+- (void)writeCache:(id)object forKey:(NSString *)key
 {
     // 子类重写
 }
 
-- (void)innerRemoveObjectForKey:(NSString *)key
+- (void)clearCacheForKey:(NSString *)key
 {
     // 子类重写
 }
 
-- (void)innerRemoveAllObjects
+- (void)clearAllCaches
 {
     // 子类重写
 }

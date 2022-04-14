@@ -6,12 +6,12 @@
 //  Copyright © 2018年 wuyong.site. All rights reserved.
 //
 
-#import "FWCacheAbstract.h"
+#import "FWCacheEngine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Keychain缓存
-@interface FWCacheKeychain : FWCacheAbstract
+@interface FWCacheKeychain : FWCacheEngine
 
 /** 单例模式 */
 @property (class, nonatomic, readonly) FWCacheKeychain *sharedInstance;

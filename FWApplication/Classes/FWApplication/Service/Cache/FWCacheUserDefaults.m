@@ -8,7 +8,7 @@
 
 #import "FWCacheUserDefaults.h"
 
-@interface FWCacheUserDefaults ()
+@interface FWCacheUserDefaults () <FWCacheEngineProtocol>
 
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 
@@ -52,26 +52,26 @@
     return [NSString stringWithFormat:@"FWCache.%@", key];
 }
 
-#pragma mark - Protected
+#pragma mark - FWCacheEngineProtocol
 
-- (id)innerObjectForKey:(NSString *)key
+- (id)readCacheForKey:(NSString *)key
 {
     return [self.userDefaults objectForKey:[self cacheKey:key]];
 }
 
-- (void)innerSetObject:(id)object forKey:(NSString *)key
+- (void)writeCache:(id)object forKey:(NSString *)key
 {
     [self.userDefaults setObject:object forKey:[self cacheKey:key]];
     [self.userDefaults synchronize];
 }
 
-- (void)innerRemoveObjectForKey:(NSString *)key
+- (void)clearCacheForKey:(NSString *)key
 {
     [self.userDefaults removeObjectForKey:[self cacheKey:key]];
     [self.userDefaults synchronize];
 }
 
-- (void)innerRemoveAllObjects
+- (void)clearAllCaches
 {
     NSDictionary *dict = [self.userDefaults dictionaryRepresentation];
     for (NSString *key in dict) {

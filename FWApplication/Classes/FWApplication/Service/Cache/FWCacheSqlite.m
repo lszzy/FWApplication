@@ -9,7 +9,7 @@
 #import "FWCacheSqlite.h"
 #import <sqlite3.h>
 
-@interface FWCacheSqlite ()
+@interface FWCacheSqlite () <FWCacheEngineProtocol>
 
 @property (nonatomic, strong) NSString *dbPath;
 @property (nonatomic) sqlite3 *database;
@@ -79,9 +79,9 @@
     }
 }
 
-#pragma mark - Protected
+#pragma mark - FWCacheEngineProtocol
 
-- (id)innerObjectForKey:(NSString *)key
+- (id)readCacheForKey:(NSString *)key
 {
     id object = nil;
     @autoreleasepool {
@@ -112,7 +112,7 @@
     return object;
 }
 
-- (void)innerSetObject:(id)object forKey:(NSString *)key
+- (void)writeCache:(id)object forKey:(NSString *)key
 {
     @autoreleasepool {
         if ([self open]) {
@@ -140,7 +140,7 @@
     }
 }
 
-- (void)innerRemoveObjectForKey:(NSString *)key
+- (void)clearCacheForKey:(NSString *)key
 {
     @autoreleasepool {
         if ([self open]) {
@@ -158,7 +158,7 @@
     }
 }
 
-- (void)innerRemoveAllObjects
+- (void)clearAllCaches
 {
     @autoreleasepool {
         if ([self open]) {

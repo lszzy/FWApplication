@@ -9,7 +9,7 @@
 #import "FWCacheFile.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@interface FWCacheFile ()
+@interface FWCacheFile () <FWCacheEngineProtocol>
 
 @property (nonatomic, copy, readonly) NSString *path;
 
@@ -66,9 +66,9 @@
     return [self.path stringByAppendingPathComponent:fileName];
 }
 
-#pragma mark - Protected
+#pragma mark - FWCacheEngineProtocol
 
-- (id)innerObjectForKey:(NSString *)key
+- (id)readCacheForKey:(NSString *)key
 {
     NSString *filePath = [self filePath:key];
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
@@ -77,7 +77,7 @@
     return nil;
 }
 
-- (void)innerSetObject:(id)object forKey:(NSString *)key
+- (void)writeCache:(id)object forKey:(NSString *)key
 {
     NSString *filePath = [self filePath:key];
     // 自动创建目录
@@ -89,13 +89,13 @@
     [NSKeyedArchiver archiveRootObject:object toFile:filePath];
 }
 
-- (void)innerRemoveObjectForKey:(NSString *)key
+- (void)clearCacheForKey:(NSString *)key
 {
     NSString *filePath = [self filePath:key];
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
 }
 
-- (void)innerRemoveAllObjects
+- (void)clearAllCaches
 {
     NSString *filePath = self.path;
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];

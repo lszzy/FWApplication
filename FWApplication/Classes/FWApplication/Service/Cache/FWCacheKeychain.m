@@ -9,7 +9,7 @@
 #import "FWCacheKeychain.h"
 @import FWFramework;
 
-@interface FWCacheKeychain ()
+@interface FWCacheKeychain () <FWCacheEngineProtocol>
 
 @property (nonatomic, strong) FWKeychainManager *keychainManager;
 
@@ -45,24 +45,24 @@
     return self;
 }
 
-#pragma mark - Protected
+#pragma mark - FWCacheEngineProtocol
 
-- (id)innerObjectForKey:(NSString *)key
+- (id)readCacheForKey:(NSString *)key
 {
     return [self.keychainManager passwordObjectForService:@"FWCache" account:key];
 }
 
-- (void)innerSetObject:(id)object forKey:(NSString *)key
+- (void)writeCache:(id)object forKey:(NSString *)key
 {
     [self.keychainManager setPasswordObject:object forService:@"FWCache" account:key];
 }
 
-- (void)innerRemoveObjectForKey:(NSString *)key
+- (void)clearCacheForKey:(NSString *)key
 {
     [self.keychainManager deletePasswordForService:@"FWCache" account:key];
 }
 
-- (void)innerRemoveAllObjects
+- (void)clearAllCaches
 {
     [self.keychainManager deletePasswordForService:@"FWCache" account:nil];
 }

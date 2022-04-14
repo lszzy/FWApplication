@@ -8,7 +8,7 @@
 
 #import "FWCacheMemory.h"
 
-@interface FWCacheMemory ()
+@interface FWCacheMemory () <FWCacheEngineProtocol>
 
 @property (nonatomic, strong) NSMutableDictionary *cachePool;
 
@@ -35,24 +35,24 @@
     return self;
 }
 
-#pragma mark - Protected
+#pragma mark - FWCacheEngineProtocol
 
-- (id)innerObjectForKey:(NSString *)key
+- (id)readCacheForKey:(NSString *)key
 {
     return [self.cachePool objectForKey:key];
 }
 
-- (void)innerSetObject:(id)object forKey:(NSString *)key
+- (void)writeCache:(id)object forKey:(NSString *)key
 {
     [self.cachePool setObject:object forKey:key];
 }
 
-- (void)innerRemoveObjectForKey:(NSString *)key
+- (void)clearCacheForKey:(NSString *)key
 {
     [self.cachePool removeObjectForKey:key];
 }
 
-- (void)innerRemoveAllObjects
+- (void)clearAllCaches
 {
     [self.cachePool removeAllObjects];
 }

@@ -1,5 +1,5 @@
 //
-//  FWCacheAbstract.h
+//  FWCacheEngine.h
 //  FWApplication
 //
 //  Created by wuyong on 2017/5/10.
@@ -13,10 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWCacheProtocol
 
 /**
- *  缓存协议
+ *  缓存调用协议
  */
 @protocol FWCacheProtocol <NSObject>
-
 @required
 
 /// 读取某个缓存
@@ -36,26 +35,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - FWCacheAbstract
+#pragma mark - FWCacheEngineProtocol
+
+/// 缓存引擎内部协议
+@protocol FWCacheEngineProtocol <NSObject>
+@required
+
+/// 从引擎读取某个缓存，内部方法，必须实现
+- (nullable id)readCacheForKey:(NSString *)key;
+
+/// 从引擎写入某个缓存，内部方法，必须实现
+- (void)writeCache:(id)object forKey:(NSString *)key;
+
+/// 从引擎清空某个缓存，内部方法，必须实现
+- (void)clearCacheForKey:(NSString *)key;
+
+/// 从引擎清空所有缓存，内部方法，必须实现
+- (void)clearAllCaches;
+
+@end
+
+#pragma mark - FWCacheEngine
 
 /**
- *  缓存抽象类，自动管理缓存有效期，线程安全
+ *  缓存引擎基类，自动管理缓存有效期，线程安全
  */
-@interface FWCacheAbstract : NSObject <FWCacheProtocol>
-
-#pragma mark - Protected
-
-/// 读取某个缓存，内部方法，子类重写
-- (nullable id)innerObjectForKey:(NSString *)key;
-
-/// 设置某个缓存，内部方法，子类重写
-- (void)innerSetObject:(id)object forKey:(NSString *)key;
-
-/// 移除某个缓存，内部方法，子类重写
-- (void)innerRemoveObjectForKey:(NSString *)key;
-
-/// 清空所有缓存，内部方法，子类重写
-- (void)innerRemoveAllObjects;
+@interface FWCacheEngine : NSObject <FWCacheProtocol>
 
 @end
 
