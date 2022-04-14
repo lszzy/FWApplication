@@ -10,3 +10,4 @@
 
 FWDefWrapper(UIAlertAction, FWAlertActionWrapper, FWAlertActionClassWrapper);
 FWDefWrapper(UIAlertController, FWAlertControllerWrapper, FWAlertControllerClassWrapper);
+FWDefWrapper(PHPhotoLibrary, FWPhotoLibraryWrapper, FWPhotoLibraryClassWrapper);

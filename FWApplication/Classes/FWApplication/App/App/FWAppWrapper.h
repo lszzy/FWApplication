@@ -7,10 +7,12 @@
  */
 
 @import FWFramework;
+#import <Photos/Photos.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 FWWrapperCompatible(UIAlertAction, FWAlertActionWrapper, FWObjectWrapper, FWAlertActionClassWrapper, FWClassWrapper);
 FWWrapperCompatible(UIAlertController, FWAlertControllerWrapper, FWViewControllerWrapper, FWAlertControllerClassWrapper, FWViewControllerClassWrapper);
+FWWrapperCompatible(PHPhotoLibrary, FWPhotoLibraryWrapper, FWObjectWrapper, FWPhotoLibraryClassWrapper, FWClassWrapper);
 
 NS_ASSUME_NONNULL_END
