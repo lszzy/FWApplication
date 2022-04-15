@@ -107,12 +107,12 @@ import FWApplication
             return cell
         }
         
-        var viewModel: Any?
+        var viewData: Any?
         if let sectionData = tableData.count > indexPath.section ? tableData[indexPath.section] : nil,
            sectionData.count > indexPath.row {
-            viewModel = sectionData[indexPath.row]
+            viewData = sectionData[indexPath.row]
         }
-        cell.fw.viewModel = viewModel
+        cell.fw.viewData = viewData
         return cell
     }
     
@@ -138,13 +138,13 @@ import FWApplication
             }
         }
         
-        var viewModel: Any?
+        var viewData: Any?
         if let sectionData = tableData.count > indexPath.section ? tableData[indexPath.section] : nil,
            sectionData.count > indexPath.row {
-            viewModel = sectionData[indexPath.row]
+            viewData = sectionData[indexPath.row]
         }
         return tableView.fw.height(withCellClass: clazz, cacheBy: indexPath) { (cell) in
-            cell.fw.viewModel = viewModel
+            cell.fw.viewData = viewData
         }
     }
     
@@ -157,7 +157,7 @@ import FWApplication
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
             let view = clazz.fw.headerFooterView(with: tableView)
-            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewModel = nil }
+            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewData = nil }
             viewBlock(view, section)
             return view
         }
@@ -179,7 +179,7 @@ import FWApplication
             return view.frame.size.height
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
-            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewModel = nil }
+            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewData = nil }
             return tableView.fw.height(withHeaderFooterViewClass: clazz, type: .header, cacheBySection: section) { (headerView) in
                 viewBlock(headerView, section)
             }
@@ -196,7 +196,7 @@ import FWApplication
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
             let view = clazz.fw.headerFooterView(with: tableView)
-            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewModel = nil }
+            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewData = nil }
             viewBlock(view, section)
             return view
         }
@@ -218,7 +218,7 @@ import FWApplication
             return view.frame.size.height
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
-            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewModel = nil }
+            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewData = nil }
             return tableView.fw.height(withHeaderFooterViewClass: clazz, type: .footer, cacheBySection: section) { (footerView) in
                 viewBlock(footerView, section)
             }

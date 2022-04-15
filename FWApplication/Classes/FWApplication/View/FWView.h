@@ -32,22 +32,46 @@ NS_ASSUME_NONNULL_BEGIN
     + (NSString *)name { return [NSString stringWithFormat:@"%@.%@.%s", @"event", NSStringFromClass([self class]), #name]; }
 
 /**
- FWViewDelegate
+ 视图挂钩协议，可覆写
  */
+@protocol FWView <NSObject>
+
+@optional
+
+/// 渲染初始化方法，init自动调用，默认未实现
+- (void)renderInit;
+
+/// 渲染视图方法，init自动调用，默认未实现
+- (void)renderView;
+
+/// 渲染布局方法，init自动调用，默认未实现
+- (void)renderLayout;
+
+/// 渲染数据方法，init和viewData改变时自动调用，默认未实现
+- (void)renderData;
+
+/// 渲染事件方法，事件完成时自动调用，默认未实现
+- (void)renderEvent:(NSNotification *)notification;
+
+@end
+
+/// 通用视图事件代理
 @protocol FWViewDelegate <NSObject>
+
+@optional
 
 /// 通用事件代理方法，通知名称即为事件名称
 - (void)eventReceived:(__kindof UIView *)view withNotification:(NSNotification *)notification;
 
 @end
 
-/**
- FWViewWrapper+FWView
- */
 @interface FWViewWrapper (FWView)
 
-/// 通用视图模型，可监听
-@property (nonatomic, strong, nullable) id viewModel;
+/// 通用视图绑定数据，改变时自动触发viewDataChanged和base.renderData
+@property (nullable, nonatomic, strong) id viewData;
+
+/// 通用视图数据改变句柄钩子，viewData改变时自动调用
+@property (nullable, nonatomic, copy) void (^viewDataChanged)(__kindof UIView *view);
 
 /// 通用事件接收代理，弱引用，Delegate方式
 @property (nonatomic, weak, nullable) id<FWViewDelegate> viewDelegate;
@@ -56,15 +80,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) void (^eventReceived)(__kindof UIView *view, NSNotification *notification);
 
 /// 通用事件完成回调句柄，Block方式
-@property (nonatomic, copy, nullable) void (^eventFinished)(NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^eventFinished)(__kindof UIView *view, NSNotification *notification);
 
 /// 发送指定事件，通知代理，支持附带对象和用户信息
 - (void)sendEvent:(NSString *)name;
 - (void)sendEvent:(NSString *)name object:(nullable id)object;
 - (void)sendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
 
-/// 通用事件完成回调，子类可重写，默认调用eventFinished句柄
-- (void)eventFinished:(NSNotification *)notification;
+/// 通知事件完成，自动调用eventFinished句柄和base.renderEvent钩子
+- (void)finishEvent:(NSNotification *)notification;
 
 @end
 

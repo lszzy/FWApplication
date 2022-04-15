@@ -12,17 +12,74 @@
 
 @implementation FWViewWrapper (FWView)
 
-- (id)viewModel
++ (void)load
 {
-    return objc_getAssociatedObject(self.base, @selector(viewModel));
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        FWSwizzleClass(UIView, @selector(initWithFrame:), FWSwizzleReturn(UIView *), FWSwizzleArgs(CGRect frame), FWSwizzleCode({
+            UIView *view = FWSwizzleOriginal(frame);
+            if ([view conformsToProtocol:@protocol(FWView)]) {
+                [FWViewWrapper hookInit:(UIView<FWView> *)view];
+            }
+            return view;
+        }));
+        
+        FWSwizzleClass(UIView, @selector(initWithCoder:), FWSwizzleReturn(UIView *), FWSwizzleArgs(NSCoder *coder), FWSwizzleCode({
+            UIView *view = FWSwizzleOriginal(coder);
+            if (view && [view conformsToProtocol:@protocol(FWView)]) {
+                [FWViewWrapper hookInit:(UIView<FWView> *)view];
+            }
+            return view;
+        }));
+    });
 }
 
-- (void)setViewModel:(id)viewModel
-{
-    // 仅当值发生改变才触发KVO，下同
-    if (viewModel != [self viewModel]) {
-        objc_setAssociatedObject(self.base, @selector(viewModel), viewModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
++ (void)hookInit:(UIView<FWView> *)view {
+    // 1. 视图renderInit
+    if ([view respondsToSelector:@selector(renderInit)]) {
+        [view renderInit];
     }
+    
+    // 2. 视图renderView
+    if ([view respondsToSelector:@selector(renderView)]) {
+        [view renderView];
+    }
+    
+    // 3. 视图renderLayout
+    if ([view respondsToSelector:@selector(renderLayout)]) {
+        [view renderLayout];
+    }
+    
+    // 4. 视图renderData
+    if ([view respondsToSelector:@selector(renderData)]) {
+        [view renderData];
+    }
+}
+
+- (id)viewData {
+    return objc_getAssociatedObject(self.base, @selector(viewData));
+}
+
+- (void)setViewData:(id)viewData {
+    if (viewData != self.viewData) {
+        objc_setAssociatedObject(self.base, @selector(viewData), viewData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        
+        if (self.viewDataChanged) {
+            self.viewDataChanged(self.base);
+        }
+        
+        if ([self.base respondsToSelector:@selector(renderData)]) {
+            [(id<FWView>)self.base renderData];
+        }
+    }
+}
+
+- (void (^)(__kindof UIView *))viewDataChanged {
+    return objc_getAssociatedObject(self.base, @selector(viewDataChanged));
+}
+
+- (void)setViewDataChanged:(void (^)(__kindof UIView *))viewDataChanged {
+    objc_setAssociatedObject(self.base, @selector(viewDataChanged), viewDataChanged, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (id<FWViewDelegate>)viewDelegate
@@ -49,12 +106,12 @@
     objc_setAssociatedObject(self.base, @selector(eventReceived), eventReceived, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void (^)(NSNotification *))eventFinished
+- (void (^)(__kindof UIView *, NSNotification *))eventFinished
 {
     return objc_getAssociatedObject(self.base, @selector(eventFinished));
 }
 
-- (void)setEventFinished:(void (^)(NSNotification *))eventFinished
+- (void)setEventFinished:(void (^)(__kindof UIView *, NSNotification *))eventFinished
 {
     objc_setAssociatedObject(self.base, @selector(eventFinished), eventFinished, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
@@ -80,10 +137,13 @@
     }
 }
 
-- (void)eventFinished:(NSNotification *)notification
+- (void)finishEvent:(NSNotification *)notification
 {
     if (self.eventFinished) {
-        self.eventFinished(notification);
+        self.eventFinished(self.base, notification);
+    }
+    if ([self.base respondsToSelector:@selector(renderEvent:)]) {
+        [(id<FWView>)self.base renderEvent:notification];
     }
 }
 
