@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,54 +44,54 @@ typedef NS_ENUM(NSInteger, FWBadgeStyle) {
 
 @end
 
-#pragma mark - UIView+FWBadge
+#pragma mark - FWViewWrapper+FWBadge
 
-@interface UIView (FWBadge)
+@interface FWViewWrapper (FWBadge)
 
 /// 显示右上角提醒灯，上右偏移指定距离
-- (void)fwShowBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
+- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
 
 /// 隐藏提醒灯
-- (void)fwHideBadgeView;
+- (void)hideBadgeView;
 
 @end
 
-#pragma mark - UIBarItem+FWBadge
+#pragma mark - FWBarItemWrapper+FWBadge
 
-@interface UIBarItem (FWBadge)
+@interface FWBarItemWrapper (FWBadge)
 
 /// 获取UIBarItem(UIBarButtonItem、UITabBarItem)内部的view，通常对于navigationItem和tabBarItem而言，需要在设置为item后并且在bar可见时(例如 viewDidAppear:及之后)获取fwView才有值
-@property (nullable, nonatomic, weak, readonly) UIView *fwView;
+@property (nullable, nonatomic, weak, readonly) UIView *view;
 
 /// 当item内的view生成后就会调用一次这个block，仅对UIBarButtonItem、UITabBarItem有效
-@property (nullable, nonatomic, copy) void (^fwViewLoadedBlock)(__kindof UIBarItem *item, UIView *view);
+@property (nullable, nonatomic, copy) void (^viewLoadedBlock)(__kindof UIBarItem *item, UIView *view);
 
 @end
 
-#pragma mark - UIBarButtonItem+FWBadge
+#pragma mark - FWBarButtonItemWrapper+FWBadge
 
-@interface UIBarButtonItem (FWBadge)
+@interface FWBarButtonItemWrapper (FWBadge)
 
 /// 显示右上角提醒灯，上右偏移指定距离
-- (void)fwShowBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
+- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
 
 /// 隐藏提醒灯
-- (void)fwHideBadgeView;
+- (void)hideBadgeView;
 
 @end
 
-#pragma mark - UITabBarItem+FWBadge
+#pragma mark - FWTabBarItemWrapper+FWBadge
 
-@interface UITabBarItem (FWBadge)
+@interface FWTabBarItemWrapper (FWBadge)
 
 /// 获取一个UITabBarItem内显示图标的UIImageView，如果找不到则返回nil
-@property (nullable, nonatomic, weak, readonly) UIImageView *fwImageView;
+@property (nullable, nonatomic, weak, readonly) UIImageView *imageView;
 
 /// 显示右上角提醒灯，上右偏移指定距离
-- (void)fwShowBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
+- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
 
 /// 隐藏提醒灯
-- (void)fwHideBadgeView;
+- (void)hideBadgeView;
 
 @end
 

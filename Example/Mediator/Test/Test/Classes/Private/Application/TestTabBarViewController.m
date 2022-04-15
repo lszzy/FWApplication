@@ -73,14 +73,14 @@
     thirdController.tabBarItem.image = [TestBundle imageNamed:@"tabbar_settings"];
     thirdController.tabBarItem.title = FWLocalizedString(@"settingTitle");
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
-    [thirdController.tabBarItem fwShowBadgeView:badgeView badgeValue:nil];
+    [thirdController.tabBarItem.fw showBadgeView:badgeView badgeValue:nil];
 }
 
 #pragma mark - UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    UIImageView *imageView = viewController.tabBarItem.fwImageView;
+    UIImageView *imageView = viewController.tabBarItem.fw.imageView;
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     animation.values = @[@(1.0), @(1.4), @(0.9), @(1.15), @(0.95), @(1.02), @(1.0)];
     animation.duration = 0.3 * 2;

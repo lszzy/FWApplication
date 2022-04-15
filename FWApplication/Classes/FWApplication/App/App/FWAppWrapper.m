@@ -8,7 +8,9 @@
 
 #import "FWAppWrapper.h"
 
+FWDefWrapper(NSMutableAttributedString, FWMutableAttributedStringWrapper, FWMutableAttributedStringClassWrapper);
 FWDefWrapper(UIProgressView, FWProgressViewWrapper, FWProgressViewClassWrapper);
+FWDefWrapper(UITabBarItem, FWTabBarItemWrapper, FWTabBarItemClassWrapper);
 FWDefWrapper(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWActivityIndicatorViewClassWrapper);
 FWDefWrapper(UIAlertAction, FWAlertActionWrapper, FWAlertActionClassWrapper);
 FWDefWrapper(UIAlertController, FWAlertControllerWrapper, FWAlertControllerClassWrapper);

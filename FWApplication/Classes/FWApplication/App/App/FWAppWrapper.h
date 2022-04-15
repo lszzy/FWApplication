@@ -13,7 +13,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+FWWrapperCompatible(NSMutableAttributedString, FWMutableAttributedStringWrapper, FWAttributedStringWrapper, FWMutableAttributedStringClassWrapper, FWAttributedStringClassWrapper);
 FWWrapperCompatible(UIProgressView, FWProgressViewWrapper, FWViewWrapper, FWProgressViewClassWrapper, FWViewClassWrapper);
+FWWrapperCompatible(UITabBarItem, FWTabBarItemWrapper, FWBarItemWrapper, FWTabBarItemClassWrapper, FWBarItemClassWrapper);
 FWWrapperCompatible(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWViewWrapper, FWActivityIndicatorViewClassWrapper, FWViewClassWrapper);
 FWWrapperCompatible(UIAlertAction, FWAlertActionWrapper, FWObjectWrapper, FWAlertActionClassWrapper, FWClassWrapper);
 FWWrapperCompatible(UIAlertController, FWAlertControllerWrapper, FWViewControllerWrapper, FWAlertControllerClassWrapper, FWViewControllerClassWrapper);

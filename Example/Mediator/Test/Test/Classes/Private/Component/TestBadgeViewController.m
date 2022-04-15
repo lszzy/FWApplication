@@ -25,17 +25,17 @@
     
     [self.fw setLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
-    [self.navigationItem.leftBarButtonItem fwShowBadgeView:badgeView badgeValue:nil];
+    [self.navigationItem.leftBarButtonItem.fw showBadgeView:badgeView badgeValue:nil];
     
     UIBarButtonItem *rightItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage target:self action:@selector(onClick:)];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
-    [rightItem fwShowBadgeView:badgeView badgeValue:@"1"];
+    [rightItem.fw showBadgeView:badgeView badgeValue:@"1"];
     
     UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     customView.backgroundColor = [Theme textColor];
     UIBarButtonItem *customItem = [UIBarButtonItem.fw itemWithObject:customView target:self action:@selector(onClick:)];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
-    [customItem fwShowBadgeView:badgeView badgeValue:@"1"];
+    [customItem.fw showBadgeView:badgeView badgeValue:@"1"];
     self.navigationItem.rightBarButtonItems = @[rightItem, customItem];
 }
 
@@ -44,17 +44,17 @@
     [super viewWillAppear:animated];
     
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
-    [self.tabBarController.tabBar.items[0] fwShowBadgeView:badgeView badgeValue:nil];
+    [self.tabBarController.tabBar.items[0].fw showBadgeView:badgeView badgeValue:nil];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
-    [self.tabBarController.tabBar.items[1] fwShowBadgeView:badgeView badgeValue:@"99"];
+    [self.tabBarController.tabBar.items[1].fw showBadgeView:badgeView badgeValue:@"99"];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    [self.tabBarController.tabBar.items[0] fwHideBadgeView];
-    [self.tabBarController.tabBar.items[1] fwHideBadgeView];
+    [self.tabBarController.tabBar.items[0].fw hideBadgeView];
+    [self.tabBarController.tabBar.items[1].fw hideBadgeView];
 }
 
 - (void)renderView
@@ -62,43 +62,43 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(20, 20, 50, 50)];
     view.backgroundColor = [Theme textColor];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
-    [view fwShowBadgeView:badgeView badgeValue:nil];
+    [view.fw showBadgeView:badgeView badgeValue:nil];
     [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(20, 90, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
-    [view fwShowBadgeView:badgeView badgeValue:@"9"];
+    [view.fw showBadgeView:badgeView badgeValue:@"9"];
     [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(90, 90, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
-    [view fwShowBadgeView:badgeView badgeValue:@"99"];
+    [view.fw showBadgeView:badgeView badgeValue:@"99"];
     [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(160, 90, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
-    [view fwShowBadgeView:badgeView badgeValue:@"99+"];
+    [view.fw showBadgeView:badgeView badgeValue:@"99+"];
     [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(20, 160, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleBig];
-    [view fwShowBadgeView:badgeView badgeValue:@"9"];
+    [view.fw showBadgeView:badgeView badgeValue:@"9"];
     [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(90, 160, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleBig];
-    [view fwShowBadgeView:badgeView badgeValue:@"99"];
+    [view.fw showBadgeView:badgeView badgeValue:@"99"];
     [self.view addSubview:view];
     
     view = [[UIView alloc] initWithFrame:CGRectMake(160, 160, 50, 50)];
     view.backgroundColor = [Theme textColor];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleBig];
-    [view fwShowBadgeView:badgeView badgeValue:@"99+"];
+    [view.fw showBadgeView:badgeView badgeValue:@"99+"];
     [self.view addSubview:view];
 }
 
@@ -121,7 +121,7 @@
 
 - (void)onClick:(UIBarButtonItem *)sender
 {
-    [sender fwHideBadgeView];
+    [sender.fw hideBadgeView];
 }
 
 @end

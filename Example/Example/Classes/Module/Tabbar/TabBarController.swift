@@ -45,7 +45,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         let homeNav = UINavigationController(rootViewController: homeController)
         homeNav.tabBarItem.image = FWIconImage("fa-home", 26)
         homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
-        homeNav.tabBarItem.fwShow(FWBadgeView(badgeStyle: .small), badgeValue: "1")
+        homeNav.tabBarItem.fw.show(FWBadgeView(badgeStyle: .small), badgeValue: "1")
         
         let testController = Mediator.testModule.testViewController()
         testController.hidesBottomBarWhenPushed = false
@@ -64,7 +64,7 @@ extension UITabBarController: UITabBarControllerDelegate {
             settingsNav.tabBarItem.badgeValue = ""
         } else {
             let badgeView = FWBadgeView(badgeStyle: .dot)
-            settingsNav.tabBarItem.fwShow(badgeView, badgeValue: nil)
+            settingsNav.tabBarItem.fw.show(badgeView, badgeValue: nil)
         }
         settingsNav.tabBarItem.image = FWIconNamed("fa-wrench", 26)?.image
         settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
@@ -99,7 +99,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         animation.duration = 0.3 * 2
         animation.calculationMode = .cubic
         
-        var animationView = viewController.tabBarItem.fwImageView
+        var animationView = viewController.tabBarItem.fw.imageView
         if let tabBarItem = viewController.tabBarItem as? FWTabBarItem {
             animationView = tabBarItem.contentView.imageView
         }
