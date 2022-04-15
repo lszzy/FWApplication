@@ -122,7 +122,7 @@ static BOOL isExpanded = NO;
 
 @end
 
-@interface TestTableDynamicLayoutHeaderView : UITableViewHeaderFooterView
+@interface TestTableDynamicLayoutHeaderView : UITableViewHeaderFooterView <FWView>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 

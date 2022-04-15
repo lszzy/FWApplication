@@ -22,7 +22,7 @@
 
 @end
 
-@interface TestCollectionCreateCell : UICollectionViewCell
+@interface TestCollectionCreateCell : UICollectionViewCell <FWView>
 
 @property (nonatomic, strong) TestCollectionCreateObject *object;
 
@@ -110,7 +110,7 @@
 
 @end
 
-@interface TestCollectionCreateHeaderView : UICollectionReusableView
+@interface TestCollectionCreateHeaderView : UICollectionReusableView <FWView>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 

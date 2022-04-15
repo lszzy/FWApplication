@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FWViewWrapper (FWView)
 
-/// 通用视图绑定数据，改变时自动触发viewDataChanged和base.renderData
+/// 通用视图绑定数据，改变时自动触发viewDataChanged和FWView.renderData
 @property (nullable, nonatomic, strong) id viewData;
 
 /// 通用视图数据改变句柄钩子，viewData改变时自动调用
@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)sendEvent:(NSString *)name object:(nullable id)object;
 - (void)sendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
 
-/// 通知事件完成，自动调用eventFinished句柄和base.renderEvent钩子
+/// 通知事件完成，自动调用eventFinished句柄和FWView.renderEvent钩子
 - (void)finishEvent:(NSNotification *)notification;
 
 @end

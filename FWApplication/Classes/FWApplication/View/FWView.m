@@ -68,8 +68,9 @@
             self.viewDataChanged(self.base);
         }
         
-        if ([self.base respondsToSelector:@selector(renderData)]) {
-            [(id<FWView>)self.base renderData];
+        if ([self.base conformsToProtocol:@protocol(FWView)] &&
+            [self.base respondsToSelector:@selector(renderData)]) {
+            [(UIView<FWView> *)self.base renderData];
         }
     }
 }
@@ -142,8 +143,9 @@
     if (self.eventFinished) {
         self.eventFinished(self.base, notification);
     }
-    if ([self.base respondsToSelector:@selector(renderEvent:)]) {
-        [(id<FWView>)self.base renderEvent:notification];
+    if ([self.base conformsToProtocol:@protocol(FWView)] &&
+        [self.base respondsToSelector:@selector(renderEvent:)]) {
+        [(UIView<FWView> *)self.base renderEvent:notification];
     }
 }
 

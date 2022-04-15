@@ -109,7 +109,7 @@ static BOOL isExpanded = NO;
 
 @end
 
-@interface TestCollectionDynamicLayoutHeaderView : UICollectionReusableView
+@interface TestCollectionDynamicLayoutHeaderView : UICollectionReusableView <FWView>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
