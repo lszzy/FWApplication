@@ -8,6 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -119,39 +120,39 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 
 @end
 
-#pragma mark - UIView+FWStatistical
+#pragma mark - FWViewWrapper+FWStatistical
 
 /**
  Click点击统计
  */
-@interface UIView (FWStatistical)
+@interface FWViewWrapper (FWStatistical)
 
 /// 绑定统计点击事件，触发管理器。view为添加的Tap手势(需先添加手势)，control为TouchUpInside|ValueChanged，tableView|collectionView为Select(需先设置delegate)
-@property (nullable, nonatomic, strong) FWStatisticalObject *fwStatisticalClick;
+@property (nullable, nonatomic, strong) FWStatisticalObject *statisticalClick;
 
 /// 绑定统计点击事件，仅触发回调。view为添加的Tap手势(需先添加手势)，control为TouchUpInside|ValueChanged，tableView|collectionView为Select(需先设置delegate)
-@property (nullable, nonatomic, copy) FWStatisticalBlock fwStatisticalClickBlock;
+@property (nullable, nonatomic, copy) FWStatisticalBlock statisticalClickBlock;
 
 /// 手工触发统计点击事件，更新点击次数，列表可指定cell和位置，可重复触发
-- (void)fwStatisticalTriggerClick:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath;
+- (void)statisticalTriggerClick:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath;
 
 @end
 
-#pragma mark - UIView+FWExposure
+#pragma mark - FWViewWrapper+FWExposure
 
 /**
  Exposure曝光统计
  */
-@interface UIView (FWExposure)
+@interface FWViewWrapper (FWExposure)
 
 /// 绑定统计曝光事件，触发管理器。如果对象发生变化(indexPath|name|object)，也会触发
-@property (nullable, nonatomic, strong) FWStatisticalObject *fwStatisticalExposure;
+@property (nullable, nonatomic, strong) FWStatisticalObject *statisticalExposure;
 
 /// 绑定统计曝光事件，仅触发回调
-@property (nullable, nonatomic, copy) FWStatisticalBlock fwStatisticalExposureBlock;
+@property (nullable, nonatomic, copy) FWStatisticalBlock statisticalExposureBlock;
 
 /// 手工触发统计曝光事件，更新曝光次数和时长，列表可指定cell和位置，duration为单次曝光时长(0表示开始)，可重复触发
-- (void)fwStatisticalTriggerExposure:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath duration:(NSTimeInterval)duration;
+- (void)statisticalTriggerExposure:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath duration:(NSTimeInterval)duration;
 
 @end
 
