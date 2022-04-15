@@ -56,16 +56,16 @@
     }
 }
 
-- (id)viewData {
-    return objc_getAssociatedObject(self.base, @selector(viewData));
+- (id)viewModel {
+    return objc_getAssociatedObject(self.base, @selector(viewModel));
 }
 
-- (void)setViewData:(id)viewData {
-    if (viewData != self.viewData) {
-        objc_setAssociatedObject(self.base, @selector(viewData), viewData, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setViewModel:(id)viewModel {
+    if (viewModel != self.viewModel) {
+        objc_setAssociatedObject(self.base, @selector(viewModel), viewModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
-        if (self.viewDataChanged) {
-            self.viewDataChanged(self.base);
+        if (self.viewModelChanged) {
+            self.viewModelChanged(self.base);
         }
         
         if ([self.base conformsToProtocol:@protocol(FWView)] &&
@@ -75,12 +75,12 @@
     }
 }
 
-- (void (^)(__kindof UIView *))viewDataChanged {
-    return objc_getAssociatedObject(self.base, @selector(viewDataChanged));
+- (void (^)(__kindof UIView *))viewModelChanged {
+    return objc_getAssociatedObject(self.base, @selector(viewModelChanged));
 }
 
-- (void)setViewDataChanged:(void (^)(__kindof UIView *))viewDataChanged {
-    objc_setAssociatedObject(self.base, @selector(viewDataChanged), viewDataChanged, OBJC_ASSOCIATION_COPY_NONATOMIC);
+- (void)setViewModelChanged:(void (^)(__kindof UIView *))viewModelChanged {
+    objc_setAssociatedObject(self.base, @selector(viewModelChanged), viewModelChanged, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (id<FWViewDelegate>)viewDelegate

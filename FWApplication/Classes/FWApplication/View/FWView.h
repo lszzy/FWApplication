@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 渲染布局方法，init自动调用，默认未实现
 - (void)renderLayout;
 
-/// 渲染数据方法，init和viewData改变时自动调用，默认未实现
+/// 渲染数据方法，init和viewModel改变时自动调用，默认未实现
 - (void)renderData;
 
 /// 渲染事件方法，事件完成时自动调用，默认未实现
@@ -67,11 +67,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FWViewWrapper (FWView)
 
-/// 通用视图绑定数据，改变时自动触发viewDataChanged和FWView.renderData
-@property (nullable, nonatomic, strong) id viewData;
+/// 通用视图绑定数据，改变时自动触发viewModelChanged和FWView.renderData
+@property (nullable, nonatomic, strong) id viewModel;
 
 /// 通用视图数据改变句柄钩子，viewData改变时自动调用
-@property (nullable, nonatomic, copy) void (^viewDataChanged)(__kindof UIView *view);
+@property (nullable, nonatomic, copy) void (^viewModelChanged)(__kindof UIView *view);
 
 /// 通用事件接收代理，弱引用，Delegate方式
 @property (nonatomic, weak, nullable) id<FWViewDelegate> viewDelegate;

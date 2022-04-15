@@ -136,7 +136,7 @@
 
 - (void)renderData
 {
-    self.titleLabel.text = FWSafeString(self.fw.viewData ?: @"我是Header");
+    self.titleLabel.text = FWSafeString(self.fw.viewModel ?: @"我是Header");
 }
 
 @end
@@ -173,10 +173,10 @@
     self.collectionView.fw.delegate.headerViewClass = [TestCollectionCreateHeaderView class];
     self.collectionView.fw.delegate.footerViewClass = [TestCollectionCreateHeaderView class];
     self.collectionView.fw.delegate.headerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
-        headerView.fw.viewData = @"我是Header\n我是Header";
+        headerView.fw.viewModel = @"我是Header\n我是Header";
     };
     self.collectionView.fw.delegate.footerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
-        headerView.fw.viewData = @"我是Footer\n我是Footer\n我是Footer";
+        headerView.fw.viewModel = @"我是Footer\n我是Footer\n我是Footer";
     };
     
     [self.view addSubview:self.collectionView];

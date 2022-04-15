@@ -148,7 +148,7 @@ static BOOL isExpanded = NO;
 
 - (void)renderData
 {
-    self.titleLabel.text = FWSafeString(self.fw.viewData);
+    self.titleLabel.text = FWSafeString(self.fw.viewModel);
     [self.titleLabel.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
     self.fw.maxYViewExpanded = isExpanded;
 }
@@ -294,14 +294,14 @@ static BOOL isExpanded = NO;
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     TestTableDynamicLayoutHeaderView *headerView = [TestTableDynamicLayoutHeaderView.fw headerFooterViewWithTableView:tableView];
-    headerView.fw.viewData = @"我是表格Header\n我是表格Header";
+    headerView.fw.viewModel = @"我是表格Header\n我是表格Header";
     return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     CGFloat height = [tableView.fw heightWithHeaderFooterViewClass:[TestTableDynamicLayoutHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableDynamicLayoutHeaderView *headerView) {
-        headerView.fw.viewData = @"我是表格Header\n我是表格Header";
+        headerView.fw.viewModel = @"我是表格Header\n我是表格Header";
     }];
     return height;
 }
@@ -309,14 +309,14 @@ static BOOL isExpanded = NO;
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     TestTableDynamicLayoutHeaderView *footerView = [TestTableDynamicLayoutHeaderView.fw headerFooterViewWithTableView:tableView];
-    footerView.fw.viewData = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
+    footerView.fw.viewModel = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
     return footerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     CGFloat height = [tableView.fw heightWithHeaderFooterViewClass:[TestTableDynamicLayoutHeaderView class] type:FWHeaderFooterViewTypeFooter configuration:^(TestTableDynamicLayoutHeaderView *footerView) {
-        footerView.fw.viewData = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
+        footerView.fw.viewModel = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
     }];
     return height;
 }
