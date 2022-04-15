@@ -273,6 +273,16 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
 
 #pragma mark - FWViewWrapper+FWExposure
 
+@interface FWInnerStatisticalTarget : NSObject
+
+@property (nonatomic, weak, readonly) UIView *view;
+
+- (instancetype)initWithView:(UIView *)view;
+
+- (void)statisticalExposureCalculate;
+
+@end
+
 typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     FWStatisticalExposureStateNone,
     FWStatisticalExposureStatePartly,
@@ -532,8 +542,8 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     }
     
     if (self.statisticalExposure || self.statisticalExposureBlock || [self statisticalExposureIsProxy]) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(statisticalExposureCalculate) object:nil];
-        [self performSelector:@selector(statisticalExposureCalculate) withObject:nil afterDelay:0 inModes:@[FWStatisticalManager.sharedInstance.runLoopMode]];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self.innerStatisticalTarget selector:@selector(statisticalExposureCalculate) object:nil];
+        [self.innerStatisticalTarget performSelector:@selector(statisticalExposureCalculate) withObject:nil afterDelay:0 inModes:@[FWStatisticalManager.sharedInstance.runLoopMode]];
     }
 }
 
@@ -566,8 +576,8 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     if (![self statisticalExposureIsRegistered]) return;
 
     if (self.statisticalExposure || self.statisticalExposureBlock || [self statisticalExposureIsProxy]) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(statisticalExposureCalculate) object:nil];
-        [self performSelector:@selector(statisticalExposureCalculate) withObject:nil afterDelay:0 inModes:@[FWStatisticalManager.sharedInstance.runLoopMode]];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self.innerStatisticalTarget selector:@selector(statisticalExposureCalculate) object:nil];
+        [self.innerStatisticalTarget performSelector:@selector(statisticalExposureCalculate) withObject:nil afterDelay:0 inModes:@[FWStatisticalManager.sharedInstance.runLoopMode]];
     }
     
     [self.base.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
@@ -575,15 +585,14 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     }];
 }
 
-- (void)statisticalExposureCalculate
+- (FWInnerStatisticalTarget *)innerStatisticalTarget
 {
-    if ([self.base isKindOfClass:[UITableView class]] || [self.base isKindOfClass:[UICollectionView class]]) {
-        [self.base.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
-            [obj.fw setStatisticalExposureState];
-        }];
-    } else {
-        [self setStatisticalExposureState];
+    FWInnerStatisticalTarget *target = objc_getAssociatedObject(self.base, _cmd);
+    if (!target) {
+        target = [[FWInnerStatisticalTarget alloc] initWithView:self.base];
+        objc_setAssociatedObject(self.base, _cmd, target, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
+    return target;
 }
 
 - (NSInteger)statisticalExposureCount:(NSIndexPath *)indexPath
@@ -635,6 +644,30 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
     }
     if (cell.fw.statisticalExposure || self.statisticalExposure) {
         [[FWStatisticalManager sharedInstance] handleEvent:object];
+    }
+}
+
+@end
+
+@implementation FWInnerStatisticalTarget
+
+- (instancetype)initWithView:(UIView *)view
+{
+    self = [super init];
+    if (self) {
+        _view = view;
+    }
+    return self;
+}
+
+- (void)statisticalExposureCalculate
+{
+    if ([self.view isKindOfClass:[UITableView class]] || [self.view isKindOfClass:[UICollectionView class]]) {
+        [self.view.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL *stop) {
+            [obj.fw setStatisticalExposureState];
+        }];
+    } else {
+        [self.view.fw setStatisticalExposureState];
     }
 }
 
