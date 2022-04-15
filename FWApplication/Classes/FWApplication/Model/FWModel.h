@@ -9,6 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,18 +17,18 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWDefCopying() \
     - (id)copyWithZone:(NSZone *)zone \
     { \
-        return [self modelCopy]; \
+        return [self.fw modelCopy]; \
     }
 
 /// 定义NSCoding实现宏
 #define FWDefCoding( ) \
     - (instancetype)initWithCoder:(NSCoder *)aDecoder \
     { \
-        return [self modelInitWithCoder:aDecoder]; \
+        return [self.fw modelInitWithCoder:aDecoder]; \
     } \
     - (void)encodeWithCoder:(NSCoder *)aCoder \
     { \
-        [self modelEncodeWithCoder:aCoder]; \
+        [self.fw modelEncodeWithCoder:aCoder]; \
     }
 
 /// 定义数组类型模型
@@ -79,11 +80,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/**
- Model模型解析分类，参考自YYModel
- 
- @see https://github.com/ibireme/YYModel
- */
 @interface NSObject (FWModel)
 
 /**
@@ -117,6 +113,51 @@ NS_ASSUME_NONNULL_BEGIN
  @return Model字典
  */
 + (nullable NSDictionary *)modelDictionaryWithJson:(id)json;
+
+@end
+
+@interface FWClassWrapper (FWModel)
+
+/**
+ 从json创建对象，线程安全。NSDate会按照UTC时间解析，下同
+ 
+ @param json json对象，支持NSDictionary、NSString、NSData
+ @return 实例对象，失败为nil
+ */
+- (nullable __kindof NSObject *)modelWithJson:(id)json;
+
+/**
+ 从字典创建对象，线程安全
+ 
+ @param dictionary 字典数据
+ @return 实例对象，失败为nil
+ */
+- (nullable __kindof NSObject *)modelWithDictionary:(NSDictionary *)dictionary;
+
+/**
+ 从json创建Model数组
+ 
+ @param json json对象，支持NSDictionary、NSString、NSData
+ @return Model数组
+ */
+- (nullable NSArray *)modelArrayWithJson:(id)json;
+
+/**
+ 从json创建Model字典
+ 
+ @param json json对象，支持NSDictionary、NSString、NSData
+ @return Model字典
+ */
+- (nullable NSDictionary *)modelDictionaryWithJson:(id)json;
+
+@end
+
+/**
+ Model模型解析分类，参考自YYModel
+ 
+ @see https://github.com/ibireme/YYModel
+ */
+@interface FWObjectWrapper (FWModel)
 
 /**
  从json对象设置对象属性

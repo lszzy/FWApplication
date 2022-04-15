@@ -147,7 +147,7 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
                                        ],
                                };
     TestModelObj *obj = [TestModelObj modelWithJson:jsonDict];
-    self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj modelToJsonObject]];
+    self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj.fw modelToJsonObject]];
     
     // 测试\udf36|\udd75等字符会导致json解码失败问题
     NSString *jsonString = @"{\"name\": \"\\u8499\\u81ea\\u7f8e\\u5473\\u6ce1\\u6912\\u7b0b\\ud83d\\ude04\\\\udf36\\ufe0f\"}";
