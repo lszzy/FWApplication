@@ -46,7 +46,7 @@
 }
 
 - (void)convertContentToImage {
-    UIImage *contentImage = [self.layer fwConvertContentToImageWithSize:_gradientLayer.frame.size];
+    UIImage *contentImage = [self.layer.fw convertContentToImageWithSize:_gradientLayer.frame.size];
     [self.layer setContents:(__bridge id)contentImage.CGImage];
 }
 
@@ -173,7 +173,7 @@
 }
 
 - (void)convertContentToImage {
-    UIImage *contentImage = [self.layer fwConvertContentToImageWithSize:CGSizeMake(CGRectGetMaxX(self.rightImageView.frame), CGRectGetMaxY(self.rightImageView.frame))];
+    UIImage *contentImage = [self.layer.fw convertContentToImageWithSize:CGSizeMake(CGRectGetMaxX(self.rightImageView.frame), CGRectGetMaxY(self.rightImageView.frame))];
     [self.layer setContents:(__bridge id)contentImage.CGImage];
 }
 
@@ -270,7 +270,7 @@
 }
 
 - (void)convertContentToImage {
-    UIImage *image = [self.layer fwConvertContentToImageWithSize:CGSizeMake(self.nobleDescriptor.backgroundImage.size.width, self.nobleDescriptor.backgroundImage.size.height)];
+    UIImage *image = [self.layer.fw convertContentToImageWithSize:CGSizeMake(self.nobleDescriptor.backgroundImage.size.width, self.nobleDescriptor.backgroundImage.size.height)];
     [self.layer setContents:(__bridge id)image.CGImage];
 }
 

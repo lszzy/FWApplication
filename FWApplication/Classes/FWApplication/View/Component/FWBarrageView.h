@@ -8,6 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -188,9 +189,9 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 @end
 
-@interface CALayer (FWBarrage)
+@interface FWLayerWrapper (FWBarrage)
 
-- (nullable UIImage *)fwConvertContentToImageWithSize:(CGSize)contentSize;
+- (nullable UIImage *)convertContentToImageWithSize:(CGSize)contentSize;
 
 @end
 

@@ -12,6 +12,7 @@ FWDefWrapper(NSMutableAttributedString, FWMutableAttributedStringWrapper, FWMuta
 FWDefWrapper(UIProgressView, FWProgressViewWrapper, FWProgressViewClassWrapper);
 FWDefWrapper(UITabBarItem, FWTabBarItemWrapper, FWTabBarItemClassWrapper);
 FWDefWrapper(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWActivityIndicatorViewClassWrapper);
+FWDefWrapper(UICollectionViewFlowLayout, FWCollectionViewFlowLayoutWrapper, FWCollectionViewFlowLayoutClassWrapper);
 FWDefWrapper(UIAlertAction, FWAlertActionWrapper, FWAlertActionClassWrapper);
 FWDefWrapper(UIAlertController, FWAlertControllerWrapper, FWAlertControllerClassWrapper);
 FWDefWrapper(UIImagePickerController, FWImagePickerControllerWrapper, FWImagePickerControllerClassWrapper);
