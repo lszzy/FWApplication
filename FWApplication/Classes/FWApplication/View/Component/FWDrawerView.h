@@ -8,6 +8,7 @@
  */
 
 #import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -69,10 +70,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  视图抽屉拖拽效果分类
  */
-@interface UIView (FWDrawerView)
+@interface FWViewWrapper (FWDrawerView)
 
 // 抽屉拖拽视图，绑定抽屉拖拽效果后才存在
-@property (nullable, nonatomic, strong) FWDrawerView *fwDrawerView;
+@property (nullable, nonatomic, strong) FWDrawerView *drawerView;
 
 /**
  设置抽屉拖拽效果。如果view为滚动视图，自动处理与滚动视图pan手势冲突的问题
@@ -83,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param callback 抽屉视图位移回调，参数为相对父视图的origin位置和是否拖拽完成的标记
  @return 抽屉拖拽视图
  */
-- (FWDrawerView *)fwDrawerView:(UISwipeGestureRecognizerDirection)direction
+- (FWDrawerView *)drawerView:(UISwipeGestureRecognizerDirection)direction
                      positions:(NSArray<NSNumber *> *)positions
                 kickbackHeight:(CGFloat)kickbackHeight
                       callback:(nullable void (^)(CGFloat position, BOOL finished))callback;
@@ -93,16 +94,16 @@ NS_ASSUME_NONNULL_BEGIN
 /**
 滚动视图纵向手势冲突无缝滑动分类，需允许同时识别多个手势
 */
-@interface UIScrollView (FWDrawerView)
+@interface FWScrollViewWrapper (FWDrawerView)
 
 // 外部滚动视图是否位于顶部固定位置，在顶部时不能滚动
-@property (nonatomic, assign) BOOL fwDrawerSuperviewFixed;
+@property (nonatomic, assign) BOOL drawerSuperviewFixed;
 
 // 外部滚动视图scrollViewDidScroll调用，参数为固定的位置
-- (void)fwDrawerSuperviewDidScroll:(CGFloat)position;
+- (void)drawerSuperviewDidScroll:(CGFloat)position;
 
 // 内嵌滚动视图scrollViewDidScroll调用，参数为外部滚动视图
-- (void)fwDrawerSubviewDidScroll:(UIScrollView *)superview;
+- (void)drawerSubviewDidScroll:(UIScrollView *)superview;
 
 @end
 

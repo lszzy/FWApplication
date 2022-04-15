@@ -29,7 +29,7 @@
     FWWeakifySelf();
     [self.fw setLeftBarItem:@"Menu" block:^(id sender) {
         FWStrongifySelf();
-        FWDrawerView *drawerView = self.contentView.fwDrawerView;
+        FWDrawerView *drawerView = self.contentView.fw.drawerView;
         CGFloat position = (drawerView.position == drawerView.openPosition) ? drawerView.closePosition : drawerView.openPosition;
         [drawerView setPosition:position animated:YES];
     }];
@@ -70,7 +70,7 @@
     [contentView addSubview:closeLabel];
     [self.view addSubview:contentView];
     
-    [contentView fwDrawerView:UISwipeGestureRecognizerDirectionRight
+    [contentView.fw drawerView:UISwipeGestureRecognizerDirectionRight
                     positions:@[@(-FWScreenWidth / 2.0), @(0)]
                kickbackHeight:25
                      callback:nil];
