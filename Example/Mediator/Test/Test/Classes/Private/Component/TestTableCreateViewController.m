@@ -8,7 +8,7 @@
 
 #import "TestTableCreateViewController.h"
 
-@interface TestTableCreateCell : UITableViewCell
+@interface TestTableCreateCell : UITableViewCell <FWView>
 
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UILabel *iconLabel;
@@ -17,24 +17,23 @@
 
 @implementation TestTableCreateCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (void)renderInit
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        self.fw.maxYViewPadding = 20;
-        
-        UIImageView *iconView = [UIImageView new];
-        _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
-        [self.contentView addSubview:iconView];
-        iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
-        
-        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
-        _iconLabel = iconLabel;
-        [self.contentView addSubview:iconLabel];
-        iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
-    }
-    return self;
+    self.fw.maxYViewPadding = 20;
+}
+
+- (void)renderView
+{
+    UIImageView *iconView = [UIImageView new];
+    _iconView = iconView;
+    iconView.image = [UIImage fwImageWithAppIcon];
+    [self.contentView addSubview:iconView];
+    iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
+    
+    UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
+    _iconLabel = iconLabel;
+    [self.contentView addSubview:iconLabel];
+    iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
 }
 
 - (void)renderData
