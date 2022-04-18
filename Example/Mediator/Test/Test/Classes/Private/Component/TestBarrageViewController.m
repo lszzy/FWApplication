@@ -601,7 +601,7 @@
     gradientBackgroundDescriptor.strokeWidth = -1;
     gradientBackgroundDescriptor.fixedSpeed = 50.0;//用fixedSpeed属性设定速度
     gradientBackgroundDescriptor.barrageCellClass = [FWBarrageGradientBackgroundColorCell class];
-    gradientBackgroundDescriptor.gradientColor = [UIColor fwRandomColor];
+    gradientBackgroundDescriptor.gradientColor = UIColor.fw.randomColor;
     
     [self.barrageManager renderBarrageDescriptor:gradientBackgroundDescriptor];
     

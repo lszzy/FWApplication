@@ -133,7 +133,7 @@ import FWApplication
     
     func renderData() {
         for _ in 0 ..< 18 {
-            collectionData.add(UIColor.fwRandom)
+            collectionData.add(UIColor.fw.randomColor)
         }
         collectionView.reloadData()
     }
@@ -166,13 +166,13 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "view", for: indexPath)
-        view.backgroundColor = UIColor.fwRandom
+        view.backgroundColor = UIColor.fw.randomColor
         return view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> FWCollectionViewSectionConfig? {
         let sectionConfig = FWCollectionViewSectionConfig()
-        sectionConfig.backgroundColor = UIColor.fwRandom
+        sectionConfig.backgroundColor = UIColor.fw.randomColor
         return sectionConfig
     }
     
@@ -211,7 +211,7 @@ import FWApplication
 @objcMembers class SwiftTestScrollViewController: UIViewController, FWScrollViewController {
     func renderScrollView() {
         let view = UIView()
-        view.backgroundColor = UIColor.fwRandom
+        view.backgroundColor = UIColor.fw.randomColor
         contentView.addSubview(view)
         view.fw.layoutMaker { (make) in
             make.edges().height(1000).width(FWScreenWidth)

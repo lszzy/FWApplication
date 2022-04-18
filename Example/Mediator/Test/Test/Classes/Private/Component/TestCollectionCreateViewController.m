@@ -40,7 +40,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor fwRandomColor];
+        self.contentView.backgroundColor = UIColor.fw.randomColor;
         
         UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
@@ -122,7 +122,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor fwRandomColor];
+        self.backgroundColor = UIColor.fw.randomColor;
         self.fw.maxYViewPadding = 15;
         
         UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];

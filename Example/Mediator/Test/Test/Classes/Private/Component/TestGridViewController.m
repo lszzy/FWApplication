@@ -29,7 +29,7 @@
     self.gridView.fw.layoutChain.edgesWithInsetsExcludingEdge(UIEdgeInsetsMake(24, 24, 24, 24), NSLayoutAttributeBottom);
     
     // 将要布局的 item 以 addSubview: 的方式添加进去即可自动布局
-    NSArray<UIColor *> *themeColors = @[UIColor.fwRandomColor, UIColor.fwRandomColor, UIColor.fwRandomColor, UIColor.fwRandomColor, UIColor.fwRandomColor, UIColor.fwRandomColor, UIColor.fwRandomColor, UIColor.fwRandomColor];
+    NSArray<UIColor *> *themeColors = @[UIColor.fw.randomColor, UIColor.fw.randomColor, UIColor.fw.randomColor, UIColor.fw.randomColor, UIColor.fw.randomColor, UIColor.fw.randomColor, UIColor.fw.randomColor, UIColor.fw.randomColor];
     for (NSInteger i = 0; i < themeColors.count; i++) {
         UIView *view = [[UIView alloc] init];
         view.backgroundColor = [themeColors[i] colorWithAlphaComponent:.7];

@@ -45,12 +45,12 @@
 {
     UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWScreenHeight)];
     _bgView = bgView;
-    bgView.backgroundColor = [UIColor fwRandomColor];
+    bgView.backgroundColor = UIColor.fw.randomColor;
     [self.view insertSubview:bgView atIndex:0];
     self.view.clipsToBounds = YES;
     
     UIView *subView = [[UIView alloc] initWithFrame:CGRectMake(0, FWScreenHeight / 2, FWScreenWidth, FWScreenHeight / 2)];
-    subView.backgroundColor = [UIColor fwRandomColor];
+    subView.backgroundColor = UIColor.fw.randomColor;
     [bgView addSubview:subView];
 }
 

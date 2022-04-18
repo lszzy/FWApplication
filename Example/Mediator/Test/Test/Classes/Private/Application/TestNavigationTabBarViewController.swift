@@ -28,7 +28,7 @@ class TestNavigationTabBarChildController: TestViewController {
     override func renderView() {
         fw.navigationBarHidden = true
         
-        view.backgroundColor = UIColor.fwRandom
+        view.backgroundColor = UIColor.fw.randomColor
         view.addSubview(navigationView)
         navigationView.fw.layoutChain.left().right().top()
         view.fw.addTapGesture { [weak self] sender in

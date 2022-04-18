@@ -59,7 +59,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     
     UIView *testView = [UIView new];
     _testView = testView;
-    testView.backgroundColor = [UIColor fwRandomColor];
+    testView.backgroundColor = UIColor.fw.randomColor;
     [headerView addSubview:testView];
     testView.fw.layoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(bannerView, 50);
     
@@ -72,13 +72,13 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     UIButton *testButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _testButton = testButton;
     [testButton setTitle:@"Button" forState:UIControlStateNormal];
-    [testButton fwSetBackgroundColor:[UIColor fwRandomColor] forState:UIControlStateNormal];
+    [testButton fwSetBackgroundColor:[UIColor.fw randomColor] forState:UIControlStateNormal];
     [headerView addSubview:testButton];
     testButton.fw.layoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(testView, 50);
     
     UISwitch *testSwitch = [UISwitch new];
     _testSwitch = testSwitch;
-    testSwitch.thumbTintColor = [UIColor fwRandomColor];
+    testSwitch.thumbTintColor = [UIColor.fw randomColor];
     testSwitch.onTintColor = testSwitch.thumbTintColor;
     [headerView addSubview:testSwitch];
     testSwitch.fw.layoutChain.centerX().topToBottomOfViewWithOffset(testButton, 50);
@@ -167,18 +167,18 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     
     [self.testView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        self.testView.backgroundColor = [UIColor fwRandomColor];
+        self.testView.backgroundColor = UIColor.fw.randomColor;
         [self.bannerView makeScrollViewScrollToIndex:0];
     }];
     
     [self.testButton.fw addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self.testButton fwSetBackgroundColor:[UIColor fwRandomColor] forState:UIControlStateNormal];
+        [self.testButton fwSetBackgroundColor:UIColor.fw.randomColor forState:UIControlStateNormal];
     }];
     
     [self.testSwitch.fw addBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        self.testSwitch.thumbTintColor = [UIColor fwRandomColor];
+        self.testSwitch.thumbTintColor = UIColor.fw.randomColor;
         self.testSwitch.onTintColor = self.testSwitch.thumbTintColor;
     } forControlEvents:UIControlEventValueChanged];
     
@@ -189,7 +189,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     
     self.segmentedControl.indexChangeBlock = ^(NSUInteger index) {
         FWStrongifySelf();
-        self.segmentedControl.selectionIndicatorBoxColor = [UIColor fwRandomColor];
+        self.segmentedControl.selectionIndicatorBoxColor = UIColor.fw.randomColor;
     };
 }
 
@@ -307,14 +307,14 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
-    cell.contentView.backgroundColor = [UIColor fwRandomColor];
+    cell.contentView.backgroundColor = UIColor.fw.randomColor;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = [UIColor fwRandomColor];
+    cell.contentView.backgroundColor = UIColor.fw.randomColor;
     
     [self clickHandler:indexPath.row];
 }
@@ -330,7 +330,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 {
     TestStatisticalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
-    cell.contentView.backgroundColor = [UIColor fwRandomColor];
+    cell.contentView.backgroundColor = UIColor.fw.randomColor;
     cell.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_collectionView" object:@"cell"];
     cell.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_collectionView" object:@"cell"];
     cell.fw.statisticalExposure.triggerOnce = YES;
@@ -341,7 +341,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = [UIColor fwRandomColor];
+    cell.contentView.backgroundColor = UIColor.fw.randomColor;
     
     [self clickHandler:indexPath.row];
 }

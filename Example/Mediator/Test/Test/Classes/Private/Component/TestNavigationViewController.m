@@ -35,7 +35,7 @@
     
     if (self.fullscreenPop) {
         if (!self.fw.tempObject) {
-            self.fw.tempObject = [UIColor fwRandomColor];
+            self.fw.tempObject = UIColor.fw.randomColor;
         }
         self.navigationController.navigationBar.fw.backgroundColor = self.fw.tempObject;
     }

@@ -236,7 +236,7 @@ static NSString *const kFooterReuseIdentifier = @"kFooterReuseIdentifier";
 
 - (FWCollectionViewSectionConfig *)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)layout configForSectionAtIndex:(NSInteger)section {
     FWCollectionViewSectionConfig *config = [FWCollectionViewSectionConfig new];
-    config.backgroundColor = UIColor.fwRandomColor;
+    config.backgroundColor = UIColor.fw.randomColor;
     return config;
 }
 
