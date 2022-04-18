@@ -152,18 +152,4 @@
     return [self timeIntervalSinceDate:date];
 }
 
-#pragma mark - Format
-
-+ (NSTimeInterval)fwFormatTimestamp:(NSTimeInterval)timestamp
-{
-    NSString *timestampStr = [NSString stringWithFormat:@"%ld", (long)timestamp];
-    if (timestampStr.length == 16) {
-        return timestamp / 1000.f / 1000.f;
-    } else if (timestampStr.length == 13) {
-        return timestamp / 1000.f;
-    } else {
-        return timestamp;
-    }
-}
-
 @end

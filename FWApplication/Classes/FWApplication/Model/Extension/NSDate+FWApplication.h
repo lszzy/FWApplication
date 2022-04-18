@@ -82,11 +82,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 与指定日期相隔秒数。分钟数/60，小时数/3600
 - (double)fwSecondsFrom:(NSDate *)date;
 
-#pragma mark - Format
-
-// 格式化16位、13位时间戳为秒
-+ (NSTimeInterval)fwFormatTimestamp:(NSTimeInterval)timestamp;
-
 @end
 
 NS_ASSUME_NONNULL_END

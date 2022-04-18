@@ -70,11 +70,6 @@ NS_ASSUME_NONNULL_BEGIN
                           startPoint:(CGPoint)startPoint
                             endPoint:(CGPoint)endPoint;
 
-#pragma mark - Random
-
-// 随机颜色
-@property (class, nonatomic, readonly) UIColor *fwRandomColor;
-
 @end
 
 NS_ASSUME_NONNULL_END

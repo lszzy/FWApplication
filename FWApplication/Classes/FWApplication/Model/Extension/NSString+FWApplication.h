@@ -16,32 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface NSString (FWApplication)
 
-#pragma mark - Convert
-
-/**
- *  首字母大写
- */
-@property (nonatomic, copy, readonly) NSString *fwUcfirstString;
-
-/**
- *  首字母小写
- */
-@property (nonatomic, copy, readonly) NSString *fwLcfirstString;
-
-/**
- *  驼峰转下划线
- */
-@property (nonatomic, copy, readonly) NSString *fwUnderlineString;
-
-/**
- *  下划线转驼峰
- */
-@property (nonatomic, copy, readonly) NSString *fwCamelString;
-
 #pragma mark - Pinyin
 
 /**
- *  转拼音
+ 中文转拼音
  */
 @property (nonatomic, copy, readonly) NSString *fwPinyinString;
 
