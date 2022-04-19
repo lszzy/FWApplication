@@ -8,8 +8,6 @@
 
 #import "TestKeyboardViewController.h"
 
-static BOOL keyboardScrollView = NO;
-
 @interface TestKeyboardViewController () <FWScrollViewController, UITextFieldDelegate, UITextViewDelegate>
 
 FWPropertyStrong(UITextField *, mobileField);
@@ -25,15 +23,42 @@ FWPropertyStrong(UIButton *, submitButton);
 FWPropertyStrong(FWPopupMenu *, popupMenu);
 
 FWPropertyAssign(BOOL, canScroll);
+FWPropertyAssign(BOOL, dismissOnDrag);
+FWPropertyAssign(BOOL, useScrollView);
 
 @end
 
 @implementation TestKeyboardViewController
 
+- (void)setCanScroll:(BOOL)canScroll
+{
+    _canScroll = canScroll;
+    [self.view endEditing:YES];
+    [self renderData];
+}
+
+- (void)setDismissOnDrag:(BOOL)dismissOnDrag
+{
+    _dismissOnDrag = dismissOnDrag;
+    [self.view endEditing:YES];
+    self.scrollView.fwKeyboardDismissOnDrag = dismissOnDrag;
+}
+
+- (void)setUseScrollView:(BOOL)useScrollView
+{
+    _useScrollView = useScrollView;
+    [self.view endEditing:YES];
+    self.navigationItem.title = useScrollView ? @"UIScrollView+FWKeyboard" : @"UITextField+FWKeyboard";
+    NSArray<UIView *> *textInputs = @[self.mobileField, self.passwordField, self.textView, self.inputView];
+    for (UIView *textInput in textInputs) {
+        ((UITextField *)textInput).fw.keyboardScrollView = useScrollView ? self.scrollView : nil;
+    }
+}
+
 - (void)renderView
 {
     self.scrollView.backgroundColor = [Theme tableColor];
-    self.scrollView.fwKeyboardDismissOnDrag = YES;
+    self.dismissOnDrag = YES;
     
     UITextField *textFieldAppearance = [UITextField appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
     UITextView *textViewAppearance = [UITextView appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
@@ -45,16 +70,11 @@ FWPropertyAssign(BOOL, canScroll);
     textViewAppearance.fw.touchResign = YES;
     textViewAppearance.fw.keyboardResign = YES;
     textViewAppearance.fw.reboundHeight = 200;
-    if (keyboardScrollView) {
-        self.navigationItem.title = @"UIScrollView+FWKeyboard";
-    }
-    keyboardScrollView = !keyboardScrollView;
     
     UITextField *mobileField = [self createTextField];
     self.mobileField = mobileField;
     mobileField.delegate = self;
     mobileField.fw.maxUnicodeLength = 10;
-    mobileField.fw.keyboardScrollView = keyboardScrollView ? self.scrollView : nil;
     mobileField.placeholder = @"昵称，最多10个中文";
     mobileField.keyboardType = UIKeyboardTypeDefault;
     mobileField.returnKeyType = UIReturnKeyNext;
@@ -68,7 +88,6 @@ FWPropertyAssign(BOOL, canScroll);
     passwordField.delegate = self;
     passwordField.fw.maxLength = 20;
     passwordField.fwMenuDisabled = YES;
-    passwordField.fw.keyboardScrollView = keyboardScrollView ? self.scrollView : nil;
     passwordField.placeholder = @"密码，最多20个英文";
     passwordField.keyboardType = UIKeyboardTypeDefault;
     passwordField.returnKeyType = UIReturnKeyNext;
@@ -86,7 +105,6 @@ FWPropertyAssign(BOOL, canScroll);
     textView.delegate = self;
     textView.backgroundColor = [Theme backgroundColor];
     textView.fw.maxUnicodeLength = 10;
-    textView.fw.keyboardScrollView = keyboardScrollView ? self.scrollView : nil;
     textView.fw.placeholder = @"问题，最多10个中文";
     textView.returnKeyType = UIReturnKeyNext;
     passwordField.fw.returnResponder = textView;
@@ -103,7 +121,6 @@ FWPropertyAssign(BOOL, canScroll);
     inputView.fw.maxLength = 20;
     inputView.fwMenuDisabled = YES;
     inputView.fw.placeholder = @"建议，最多20个英文";
-    inputView.fw.keyboardScrollView = keyboardScrollView ? self.scrollView : nil;
     inputView.returnKeyType = UIReturnKeyDone;
     inputView.fw.returnResign = YES;
     inputView.fw.keyboardDistance = 80;
@@ -163,11 +180,18 @@ FWPropertyAssign(BOOL, canScroll);
         }
     };
     
-    [self.fw setRightBarItem:@"切换滚动" block:^(id sender) {
+    [self.fw setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
-        [self.view endEditing:YES];
-        self.canScroll = !self.canScroll;
-        [self renderData];
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换滚动", @"切换滚动时收起键盘", @"切换滚动视图"] actionBlock:^(NSInteger index) {
+            FWStrongifySelf();
+            if (index == 0) {
+                self.canScroll = !self.canScroll;
+            } else if (index == 1) {
+                self.dismissOnDrag = !self.dismissOnDrag;
+            } else {
+                self.useScrollView = !self.useScrollView;
+            }
+        }];
     }];
 }
 
