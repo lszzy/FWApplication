@@ -58,7 +58,6 @@ FWPropertyAssign(BOOL, useScrollView);
 - (void)renderView
 {
     self.scrollView.backgroundColor = [Theme tableColor];
-    self.dismissOnDrag = YES;
     
     UITextField *textFieldAppearance = [UITextField appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
     UITextView *textViewAppearance = [UITextView appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
