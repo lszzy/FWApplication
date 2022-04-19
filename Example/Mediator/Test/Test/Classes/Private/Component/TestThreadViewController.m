@@ -318,7 +318,7 @@
         
         // 操作
         [self.fw lock];
-        NSInteger value = [[dict fwRandomWeightKey] integerValue];
+        NSInteger value = [[dict.fw randomWeightKey] integerValue];
         if (value == 1) {
             count1 += 1;
         } else if (value == 2) {

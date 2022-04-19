@@ -9,13 +9,12 @@
 
 #import "NSArray+FWApplication.h"
 #import "NSDictionary+FWApplication.h"
-@import FWFramework;
 
-@implementation NSArray (FWApplication)
+@implementation FWArrayWrapper (FWApplication)
 
-- (id)fwRandomObject:(NSArray *)weights
+- (id)randomObject:(NSArray *)weights
 {
-    NSInteger count = self.count;
+    NSInteger count = self.base.count;
     if (count < 1) return nil;
     
     __block NSInteger sum = 0;
@@ -25,7 +24,7 @@
             sum += val;
         }
     }];
-    if (sum < 1) return self.fw.randomObject;
+    if (sum < 1) return self.randomObject;
     
     __block NSInteger index = -1;
     __block NSInteger weight = 0;
@@ -40,27 +39,27 @@
             }
         }
     }];
-    return index >= 0 && index < count ? [self objectAtIndex:index] : self.fw.randomObject;
+    return index >= 0 && index < count ? [self.base objectAtIndex:index] : self.randomObject;
 }
 
-- (NSArray *)fwReverseArray
+- (NSArray *)reverseArray
 {
-    NSMutableArray *reverseArray = [NSMutableArray arrayWithArray:self];
-    [reverseArray fwReverse];
+    NSMutableArray *reverseArray = [NSMutableArray arrayWithArray:self.base];
+    [reverseArray.fw reverse];
     return [reverseArray copy];
 }
 
-- (NSArray *)fwShuffleArray
+- (NSArray *)shuffleArray
 {
-    NSMutableArray *shuffleArray = [NSMutableArray arrayWithArray:self];
-    [shuffleArray fwShuffle];
+    NSMutableArray *shuffleArray = [NSMutableArray arrayWithArray:self.base];
+    [shuffleArray.fw shuffle];
     return [shuffleArray copy];
 }
 
-- (BOOL)fwIncludeNull
+- (BOOL)includeNull
 {
     __block BOOL includeNull = NO;
-    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self.base enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[NSNull class]]) {
             includeNull = YES;
             *stop = YES;
@@ -69,15 +68,15 @@
     return includeNull;
 }
 
-- (NSArray *)fwRemoveNull
+- (NSArray *)removeNull
 {
-    return [self fwRemoveNullRecursive:YES];
+    return [self removeNullRecursive:YES];
 }
 
-- (NSArray *)fwRemoveNullRecursive:(BOOL)recursive
+- (NSArray *)removeNullRecursive:(BOOL)recursive
 {
-    NSMutableArray *array = [self mutableCopy];
-    for (id object in self) {
+    NSMutableArray *array = [self.base mutableCopy];
+    for (id object in self.base) {
         if (object == [NSNull null]) {
             [array removeObject:object];
         }
@@ -85,13 +84,13 @@
         if (recursive) {
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSInteger index = [array indexOfObject:object];
-                NSDictionary *subdictionary = [(NSDictionary *)object fwRemoveNullRecursive:YES];
+                NSDictionary *subdictionary = [((NSDictionary *)object).fw removeNullRecursive:YES];
                 [array replaceObjectAtIndex:index withObject:subdictionary];
             }
             
             if ([object isKindOfClass:[NSArray class]]) {
                 NSInteger index = [array indexOfObject:object];
-                NSArray *subarray = [object fwRemoveNullRecursive:YES];
+                NSArray *subarray = [((NSArray *)object).fw removeNullRecursive:YES];
                 [array replaceObjectAtIndex:index withObject:subarray];
             }
         }
@@ -101,23 +100,23 @@
 
 @end
 
-#pragma mark - NSMutableArray+FWApplication
+#pragma mark - FWMutableArrayWrapper+FWApplication
 
-@implementation NSMutableArray (FWApplication)
+@implementation FWMutableArrayWrapper (FWApplication)
 
-- (void)fwReverse
+- (void)reverse
 {
-    NSUInteger count = self.count;
+    NSUInteger count = self.base.count;
     int mid = floor(count / 2.0);
     for (NSUInteger i = 0; i < mid; i++) {
-        [self exchangeObjectAtIndex:i withObjectAtIndex:(count - (i + 1))];
+        [self.base exchangeObjectAtIndex:i withObjectAtIndex:(count - (i + 1))];
     }
 }
 
-- (void)fwShuffle
+- (void)shuffle
 {
-    for (NSUInteger i = self.count; i > 1; i--) {
-        [self exchangeObjectAtIndex:(i - 1)
+    for (NSUInteger i = self.base.count; i > 1; i--) {
+        [self.base exchangeObjectAtIndex:(i - 1)
                   withObjectAtIndex:arc4random_uniform((u_int32_t)i)];
     }
 }
