@@ -16,6 +16,12 @@
 
 NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTriggeredNotification";
 
+@interface FWViewWrapper (FWStatisticalInternal)
+
++ (void)enableStatistical;
+
+@end
+
 @interface FWStatisticalManager ()
 
 @property (nonatomic, strong) NSMutableDictionary *eventHandlers;
@@ -42,6 +48,12 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
         _eventHandlers = [[NSMutableDictionary alloc] init];
     }
     return self;
+}
+
+- (void)setStatisticalEnabled:(BOOL)enabled
+{
+    _statisticalEnabled = enabled;
+    if (enabled) [FWViewWrapper enableStatistical];
 }
 
 - (void)registerEvent:(NSString *)name withHandler:(FWStatisticalBlock)handler
@@ -293,7 +305,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 
 #pragma mark - Hook
 
-+ (void)load
++ (void)enableStatistical
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{

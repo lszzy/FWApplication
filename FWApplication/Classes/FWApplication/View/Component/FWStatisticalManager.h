@@ -40,6 +40,9 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /// 单例模式
 @property (class, nonatomic, readonly) FWStatisticalManager *sharedInstance;
 
+/// 是否启用事件统计，为提高性能，默认NO未开启，需手动开启
+@property (nonatomic, assign) BOOL statisticalEnabled;
+
 /// 是否启用通知，默认NO
 @property (nonatomic, assign) BOOL notificationEnabled;
 

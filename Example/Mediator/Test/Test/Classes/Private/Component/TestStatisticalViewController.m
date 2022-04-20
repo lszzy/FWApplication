@@ -45,6 +45,11 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 
 @implementation TestStatisticalViewController
 
++ (void)initialize
+{
+    FWStatisticalManager.sharedInstance.statisticalEnabled = YES;
+}
+
 - (void)renderTableView
 {
     UIView *headerView = [UIView new];
