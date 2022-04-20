@@ -8,14 +8,6 @@
 
 #import "FWAppWrapper.h"
 
-FWDefWrapper(NSMutableAttributedString, FWMutableAttributedStringWrapper, FWMutableAttributedStringClassWrapper);
-FWDefWrapper(UIProgressView, FWProgressViewWrapper, FWProgressViewClassWrapper);
-FWDefWrapper(UITabBarItem, FWTabBarItemWrapper, FWTabBarItemClassWrapper);
-FWDefWrapper(UIActivityIndicatorView, FWActivityIndicatorViewWrapper, FWActivityIndicatorViewClassWrapper);
-FWDefWrapper(UICollectionViewFlowLayout, FWCollectionViewFlowLayoutWrapper, FWCollectionViewFlowLayoutClassWrapper);
-FWDefWrapper(UIAlertAction, FWAlertActionWrapper, FWAlertActionClassWrapper);
-FWDefWrapper(UIAlertController, FWAlertControllerWrapper, FWAlertControllerClassWrapper);
-FWDefWrapper(UIImagePickerController, FWImagePickerControllerWrapper, FWImagePickerControllerClassWrapper);
-FWDefWrapper(WKWebView, FWWebViewWrapper, FWWebViewClassWrapper);
-FWDefWrapper(PHPhotoLibrary, FWPhotoLibraryWrapper, FWPhotoLibraryClassWrapper);
-FWDefWrapper(PHPickerViewController, FWPickerViewControllerWrapper, FWPickerViewControllerClassWrapper);
+#pragma mark - FWWrapperCompatible
+
+FWDefWrapperApplication_(FWDefWrapper, fw);
