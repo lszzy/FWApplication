@@ -8,6 +8,7 @@
 
 #import "TestWebViewController.h"
 
+// 如果需要隐藏导航栏，可以加载时显示导航栏，WebView延伸到导航栏下面，加载完成时隐藏导航栏即可
 @interface TestWebViewController () <UIScrollViewDelegate>
 
 @property (nonatomic, assign) BOOL gobackDisabled;
