@@ -34,7 +34,6 @@
     self.delegate = self;
     self.tabBar.fw.foregroundColor = [Theme textColor];
     self.tabBar.fw.backgroundColor = [Theme barColor];
-    self.fw.forcePopGesture = YES;
     self.fw.navigationBarHidden = YES;
 }
 

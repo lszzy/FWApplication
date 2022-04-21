@@ -11,7 +11,6 @@
 // 如果需要隐藏导航栏，可以加载时显示导航栏，WebView延伸到导航栏下面，加载完成时隐藏导航栏即可
 @interface TestWebViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, assign) BOOL gobackDisabled;
 @property (nonatomic, assign) BOOL isExtendedBottom;
 
 @end
@@ -41,7 +40,7 @@
 
 - (void)onWebBack
 {
-    if (self.webView.canGoBack && !self.gobackDisabled) {
+    if (self.webView.canGoBack) {
         [self.webView goBack];
     } else {
         [self onWebClose];
@@ -61,11 +60,6 @@
     } else {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeTop : UIRectEdgeNone;
     }
-    FWWeakifySelf();
-    self.fw.forcePopGestureBlock = ^BOOL{
-        FWStrongifySelf();
-        return !self.webView.canGoBack || self.gobackDisabled;
-    };
     
     [self renderToolbar];
     [self loadRequestUrl];

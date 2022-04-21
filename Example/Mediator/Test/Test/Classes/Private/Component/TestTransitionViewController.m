@@ -75,7 +75,6 @@
     self.navigationItem.title = @"全屏弹出框";
     
     // 视图延伸到导航栏
-    self.fw.forcePopGesture = YES;
     self.fw.extendedLayoutEdge = UIRectEdgeNone;
     
     // 自定义关闭按钮

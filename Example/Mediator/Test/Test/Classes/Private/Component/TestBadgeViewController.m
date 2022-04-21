@@ -14,7 +14,6 @@
 - (void)renderInit
 {
     self.hidesBottomBarWhenPushed = NO;
-    self.fw.forcePopGesture = YES;
 }
 
 - (void)viewDidLoad

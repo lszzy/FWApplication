@@ -378,63 +378,6 @@
 
 #pragma mark - FWNavigationControllerWrapper+FWPopGesture
 
-@implementation FWViewControllerWrapper (FWPopGesture)
-
-- (BOOL)forcePopGesture
-{
-    BOOL (^block)(void) = self.forcePopGestureBlock;
-    if (block != nil) return block();
-    return [objc_getAssociatedObject(self.base, @selector(forcePopGesture)) boolValue];
-}
-
-- (void)setForcePopGesture:(BOOL)enabled
-{
-    objc_setAssociatedObject(self.base, @selector(forcePopGesture), @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL (^)(void))forcePopGestureBlock
-{
-    return objc_getAssociatedObject(self.base, @selector(forcePopGestureBlock));
-}
-
-- (void)setForcePopGestureBlock:(BOOL (^)(void))forcePopGestureBlock
-{
-    objc_setAssociatedObject(self.base, @selector(forcePopGestureBlock), forcePopGestureBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (BOOL)issetForcePopGesture
-{
-    NSNumber *value = objc_getAssociatedObject(self.base, @selector(forcePopGesture));
-    if (value != nil) return true;
-    return self.forcePopGestureBlock != nil;
-}
-
-- (BOOL)fullscreenPopGestureDisabled
-{
-    return [objc_getAssociatedObject(self.base, _cmd) boolValue];
-}
-
-- (void)setFullscreenPopGestureDisabled:(BOOL)disabled
-{
-    objc_setAssociatedObject(self.base, @selector(fullscreenPopGestureDisabled), @(disabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (CGFloat)fullscreenPopGestureDistance
-{
-#if CGFLOAT_IS_DOUBLE
-    return [objc_getAssociatedObject(self.base, _cmd) doubleValue];
-#else
-    return [objc_getAssociatedObject(self.base, _cmd) floatValue];
-#endif
-}
-
-- (void)setFullscreenPopGestureDistance:(CGFloat)distance
-{
-    objc_setAssociatedObject(self.base, @selector(fullscreenPopGestureDistance), @(MAX(0, distance)), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-@end
-
 @interface FWGestureRecognizerDelegateProxy : FWDelegateProxy <UIGestureRecognizerDelegate>
 
 @property (nonatomic, weak) UINavigationController *navigationController;
@@ -447,10 +390,7 @@
 {
     if (self.navigationController.viewControllers.count <= 1) return NO;
     if (!self.navigationController.interactivePopGestureRecognizer.enabled) return NO;
-    if ([self.navigationController.topViewController.fw issetForcePopGesture]) {
-        return self.navigationController.topViewController.fw.forcePopGesture;
-    }
-    return self.navigationController.fw.forcePopGesture;
+    return self.navigationController.topViewController.fw.popGestureEnabled;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
@@ -502,52 +442,6 @@
 
 @end
 
-@interface FWFullscreenPopGestureRecognizerDelegate : NSObject <UIGestureRecognizerDelegate>
-
-@property (nonatomic, weak) UINavigationController *navigationController;
-
-@end
-
-@implementation FWFullscreenPopGestureRecognizerDelegate
-
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
-{
-    if (self.navigationController.viewControllers.count <= 1) {
-        return NO;
-    }
-    
-    UIViewController *topViewController = self.navigationController.viewControllers.lastObject;
-    if (topViewController.fw.fullscreenPopGestureDisabled) {
-        return NO;
-    }
-    
-    if ([topViewController respondsToSelector:@selector(popBackBarItem)] &&
-        ![topViewController popBackBarItem]) {
-        return NO;
-    }
-    
-    CGPoint beginningLocation = [gestureRecognizer locationInView:gestureRecognizer.view];
-    CGFloat maxAllowedInitialDistance = topViewController.fw.fullscreenPopGestureDistance;
-    if (maxAllowedInitialDistance > 0 && beginningLocation.x > maxAllowedInitialDistance) {
-        return NO;
-    }
-    
-    if ([[self.navigationController valueForKey:@"_isTransitioning"] boolValue]) {
-        return NO;
-    }
-    
-    CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
-    BOOL isLeftToRight = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
-    CGFloat multiplier = isLeftToRight ? 1 : - 1;
-    if ((translation.x * multiplier) <= 0) {
-        return NO;
-    }
-    
-    return YES;
-}
-
-@end
-
 @implementation FWNavigationControllerWrapper (FWPopGesture)
 
 - (FWGestureRecognizerDelegateProxy *)delegateProxy
@@ -558,49 +452,6 @@
         objc_setAssociatedObject(self.base, _cmd, proxy, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return proxy;
-}
-
-- (BOOL)fullscreenPopGestureEnabled
-{
-    return self.fullscreenPopGestureRecognizer.enabled;
-}
-
-- (void)setFullscreenPopGestureEnabled:(BOOL)enabled
-{
-    if (![self.base.interactivePopGestureRecognizer.view.gestureRecognizers containsObject:self.fullscreenPopGestureRecognizer]) {
-        [self.base.interactivePopGestureRecognizer.view addGestureRecognizer:self.fullscreenPopGestureRecognizer];
-        
-        NSArray *internalTargets = [self.base.interactivePopGestureRecognizer valueForKey:@"targets"];
-        id internalTarget = [internalTargets.firstObject valueForKey:@"target"];
-        SEL internalAction = NSSelectorFromString(@"handleNavigationTransition:");
-        self.fullscreenPopGestureRecognizer.delegate = self.popGestureRecognizerDelegate;
-        [self.fullscreenPopGestureRecognizer addTarget:internalTarget action:internalAction];
-    }
-    
-    self.fullscreenPopGestureRecognizer.enabled = enabled;
-    self.base.interactivePopGestureRecognizer.enabled = !enabled;
-}
-
-- (FWFullscreenPopGestureRecognizerDelegate *)popGestureRecognizerDelegate
-{
-    FWFullscreenPopGestureRecognizerDelegate *delegate = objc_getAssociatedObject(self.base, _cmd);
-    if (!delegate) {
-        delegate = [[FWFullscreenPopGestureRecognizerDelegate alloc] init];
-        delegate.navigationController = self.base;
-        objc_setAssociatedObject(self.base, _cmd, delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return delegate;
-}
-
-- (UIPanGestureRecognizer *)fullscreenPopGestureRecognizer
-{
-    UIPanGestureRecognizer *panGestureRecognizer = objc_getAssociatedObject(self.base, _cmd);
-    if (!panGestureRecognizer) {
-        panGestureRecognizer = [[UIPanGestureRecognizer alloc] init];
-        panGestureRecognizer.maximumNumberOfTouches = 1;
-        objc_setAssociatedObject(self.base, _cmd, panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return panGestureRecognizer;
 }
 
 @end
@@ -649,6 +500,133 @@
         }));
     });
 }
+
+@end
+
+#pragma mark - FWNavigationControllerWrapper+FWFullscreenPopGesture
+
+@interface FWFullscreenPopGestureRecognizerDelegate : NSObject <UIGestureRecognizerDelegate>
+
+@property (nonatomic, weak) UINavigationController *navigationController;
+
+@end
+
+@implementation FWFullscreenPopGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
+{
+    if (self.navigationController.viewControllers.count <= 1) {
+        return NO;
+    }
+    
+    UIViewController *topViewController = self.navigationController.viewControllers.lastObject;
+    if (topViewController.fw.fullscreenPopGestureDisabled) {
+        return NO;
+    }
+    
+    if ([topViewController respondsToSelector:@selector(popBackBarItem)] &&
+        ![topViewController popBackBarItem]) {
+        return NO;
+    }
+    
+    CGPoint beginningLocation = [gestureRecognizer locationInView:gestureRecognizer.view];
+    CGFloat maxAllowedInitialDistance = topViewController.fw.fullscreenPopGestureDistance;
+    if (maxAllowedInitialDistance > 0 && beginningLocation.x > maxAllowedInitialDistance) {
+        return NO;
+    }
+    
+    if ([[self.navigationController valueForKey:@"_isTransitioning"] boolValue]) {
+        return NO;
+    }
+    
+    CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
+    BOOL isLeftToRight = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
+    CGFloat multiplier = isLeftToRight ? 1 : - 1;
+    if ((translation.x * multiplier) <= 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+@end
+
+@implementation FWViewControllerWrapper (FWFullscreenPopGesture)
+
+- (BOOL)fullscreenPopGestureDisabled
+{
+    return [objc_getAssociatedObject(self.base, _cmd) boolValue];
+}
+
+- (void)setFullscreenPopGestureDisabled:(BOOL)disabled
+{
+    objc_setAssociatedObject(self.base, @selector(fullscreenPopGestureDisabled), @(disabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (CGFloat)fullscreenPopGestureDistance
+{
+#if CGFLOAT_IS_DOUBLE
+    return [objc_getAssociatedObject(self.base, _cmd) doubleValue];
+#else
+    return [objc_getAssociatedObject(self.base, _cmd) floatValue];
+#endif
+}
+
+- (void)setFullscreenPopGestureDistance:(CGFloat)distance
+{
+    objc_setAssociatedObject(self.base, @selector(fullscreenPopGestureDistance), @(MAX(0, distance)), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+
+@implementation FWNavigationControllerWrapper (FWFullscreenPopGesture)
+
+- (BOOL)fullscreenPopGestureEnabled
+{
+    return self.fullscreenPopGestureRecognizer.enabled;
+}
+
+- (void)setFullscreenPopGestureEnabled:(BOOL)enabled
+{
+    if (![self.base.interactivePopGestureRecognizer.view.gestureRecognizers containsObject:self.fullscreenPopGestureRecognizer]) {
+        [self.base.interactivePopGestureRecognizer.view addGestureRecognizer:self.fullscreenPopGestureRecognizer];
+        
+        NSArray *internalTargets = [self.base.interactivePopGestureRecognizer valueForKey:@"targets"];
+        id internalTarget = [internalTargets.firstObject valueForKey:@"target"];
+        SEL internalAction = NSSelectorFromString(@"handleNavigationTransition:");
+        self.fullscreenPopGestureRecognizer.delegate = self.popGestureRecognizerDelegate;
+        [self.fullscreenPopGestureRecognizer addTarget:internalTarget action:internalAction];
+    }
+    
+    self.fullscreenPopGestureRecognizer.enabled = enabled;
+    self.base.interactivePopGestureRecognizer.enabled = !enabled;
+}
+
+- (FWFullscreenPopGestureRecognizerDelegate *)popGestureRecognizerDelegate
+{
+    FWFullscreenPopGestureRecognizerDelegate *delegate = objc_getAssociatedObject(self.base, _cmd);
+    if (!delegate) {
+        delegate = [[FWFullscreenPopGestureRecognizerDelegate alloc] init];
+        delegate.navigationController = self.base;
+        objc_setAssociatedObject(self.base, _cmd, delegate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return delegate;
+}
+
+- (UIPanGestureRecognizer *)fullscreenPopGestureRecognizer
+{
+    UIPanGestureRecognizer *panGestureRecognizer = objc_getAssociatedObject(self.base, _cmd);
+    if (!panGestureRecognizer) {
+        panGestureRecognizer = [[UIPanGestureRecognizer alloc] init];
+        panGestureRecognizer.maximumNumberOfTouches = 1;
+        objc_setAssociatedObject(self.base, _cmd, panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return panGestureRecognizer;
+}
+
+@end
+
+@implementation FWNavigationControllerClassWrapper (FWFullscreenPopGesture)
 
 - (BOOL)isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {

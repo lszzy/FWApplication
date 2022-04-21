@@ -19,7 +19,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.forcePopGesture = YES;
     self.fw.extendedLayoutEdge = UIRectEdgeAll;
     if (self.index < 1) {
         self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
