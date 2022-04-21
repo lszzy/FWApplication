@@ -73,6 +73,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FWNavigationControllerClassWrapper (FWPopGesture)
 
+/// 是否启用返回代理拦截，启用后支持popBackBarItem和forcePopGesture功能，默认NO未启用
+- (void)enablePopProxy;
+
 /// 判断手势是否是全局返回手势对象
 - (BOOL)isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
 

@@ -548,62 +548,7 @@
 
 @end
 
-@implementation FWNavigationControllerClassWrapper (FWPopGesture)
-
-- (BOOL)isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
-{
-    if ([gestureRecognizer.delegate isKindOfClass:[FWFullscreenPopGestureRecognizerDelegate class]]) {
-        return YES;
-    }
-    return NO;
-}
-
-@end
-
 @implementation FWNavigationControllerWrapper (FWPopGesture)
-
-+ (void)load
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        FWSwizzleClass(UINavigationController, @selector(viewDidLoad), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            FWSwizzleOriginal();
-            
-            // 拦截系统返回手势事件代理，加载自定义代理方法
-            if (selfObject.interactivePopGestureRecognizer.delegate != selfObject.fw.delegateProxy) {
-                selfObject.fw.delegateProxy.delegate = selfObject.interactivePopGestureRecognizer.delegate;
-                selfObject.fw.delegateProxy.navigationController = selfObject;
-                selfObject.interactivePopGestureRecognizer.delegate = selfObject.fw.delegateProxy;
-            }
-        }));
-        FWSwizzleClass(UINavigationController, @selector(navigationBar:shouldPopItem:), FWSwizzleReturn(BOOL), FWSwizzleArgs(UINavigationBar *navigationBar, UINavigationItem *item), FWSwizzleCode({
-            // 检查返回按钮点击事件钩子
-            if (selfObject.viewControllers.count >= navigationBar.items.count &&
-                [selfObject.topViewController respondsToSelector:@selector(popBackBarItem)]) {
-                // 调用钩子。如果返回NO，则不pop当前页面；如果返回YES，则使用默认方式
-                if (![selfObject.topViewController popBackBarItem]) {
-                    return NO;
-                }
-            }
-            
-            return FWSwizzleOriginal(navigationBar, item);
-        }));
-        FWSwizzleClass(UINavigationController, @selector(childViewControllerForStatusBarHidden), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(), FWSwizzleCode({
-            if (selfObject.topViewController) {
-                return selfObject.topViewController;
-            } else {
-                return FWSwizzleOriginal();
-            }
-        }));
-        FWSwizzleClass(UINavigationController, @selector(childViewControllerForStatusBarStyle), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(), FWSwizzleCode({
-            if (selfObject.topViewController) {
-                return selfObject.topViewController;
-            } else {
-                return FWSwizzleOriginal();
-            }
-        }));
-    });
-}
 
 - (FWGestureRecognizerDelegateProxy *)delegateProxy
 {
@@ -656,6 +601,61 @@
         objc_setAssociatedObject(self.base, _cmd, panGestureRecognizer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return panGestureRecognizer;
+}
+
+@end
+
+@implementation FWNavigationControllerClassWrapper (FWPopGesture)
+
+- (void)enablePopProxy
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        FWSwizzleClass(UINavigationController, @selector(viewDidLoad), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
+            FWSwizzleOriginal();
+            
+            // 拦截系统返回手势事件代理，加载自定义代理方法
+            if (selfObject.interactivePopGestureRecognizer.delegate != selfObject.fw.delegateProxy) {
+                selfObject.fw.delegateProxy.delegate = selfObject.interactivePopGestureRecognizer.delegate;
+                selfObject.fw.delegateProxy.navigationController = selfObject;
+                selfObject.interactivePopGestureRecognizer.delegate = selfObject.fw.delegateProxy;
+            }
+        }));
+        FWSwizzleClass(UINavigationController, @selector(navigationBar:shouldPopItem:), FWSwizzleReturn(BOOL), FWSwizzleArgs(UINavigationBar *navigationBar, UINavigationItem *item), FWSwizzleCode({
+            // 检查返回按钮点击事件钩子
+            if (selfObject.viewControllers.count >= navigationBar.items.count &&
+                [selfObject.topViewController respondsToSelector:@selector(popBackBarItem)]) {
+                // 调用钩子。如果返回NO，则不pop当前页面；如果返回YES，则使用默认方式
+                if (![selfObject.topViewController popBackBarItem]) {
+                    return NO;
+                }
+            }
+            
+            return FWSwizzleOriginal(navigationBar, item);
+        }));
+        FWSwizzleClass(UINavigationController, @selector(childViewControllerForStatusBarHidden), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(), FWSwizzleCode({
+            if (selfObject.topViewController) {
+                return selfObject.topViewController;
+            } else {
+                return FWSwizzleOriginal();
+            }
+        }));
+        FWSwizzleClass(UINavigationController, @selector(childViewControllerForStatusBarStyle), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(), FWSwizzleCode({
+            if (selfObject.topViewController) {
+                return selfObject.topViewController;
+            } else {
+                return FWSwizzleOriginal();
+            }
+        }));
+    });
+}
+
+- (BOOL)isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+{
+    if ([gestureRecognizer.delegate isKindOfClass:[FWFullscreenPopGestureRecognizerDelegate class]]) {
+        return YES;
+    }
+    return NO;
 }
 
 @end

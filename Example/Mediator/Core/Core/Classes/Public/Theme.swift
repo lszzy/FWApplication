@@ -6,6 +6,7 @@
 //
 
 import FWApplication
+import UIKit
 
 @objcMembers public class Theme: NSObject {
     @FWUserDefaultAnnotation("isLargeTitles", defaultValue: false)
@@ -81,6 +82,8 @@ extension Theme {
         
         // iOS15兼容设置
         UITableView.fwResetTableStyle()
+        // 启用返回代理拦截
+        UINavigationController.fw.enablePopProxy()
         // 控制器样式设置
         FWViewControllerManager.sharedInstance.hookInit = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
