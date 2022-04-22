@@ -81,7 +81,7 @@ extension Theme {
         themeChanged()
         
         // iOS15兼容设置
-        UITableView.fwResetTableStyle()
+        UITableView.fw.resetTableStyle()
         // 启用返回代理拦截
         UINavigationController.fw.enablePopProxy()
         // 控制器样式设置

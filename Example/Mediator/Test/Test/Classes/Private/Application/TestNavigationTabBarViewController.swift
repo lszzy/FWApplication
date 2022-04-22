@@ -130,7 +130,7 @@ class TestNavigationTabBarChildController: TestViewController {
     
     @objc func onButtonClicked(_ sender: UIButton) {
         if let child = childController {
-            fwRemoveChildViewController(child)
+            fw.removeChildViewController(child)
         }
         
         var child: UIViewController
@@ -153,6 +153,6 @@ class TestNavigationTabBarChildController: TestViewController {
             
             child = settingsController
         }
-        fwAddChildViewController(child, in: childView)
+        fw.addChildViewController(child, in: childView)
     }
 }

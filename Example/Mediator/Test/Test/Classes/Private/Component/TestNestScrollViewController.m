@@ -104,7 +104,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     }
     [self.collectionView reloadData];
     FWWeakifySelf();
-    [self.tableView fwReloadDataWithCompletion:^{
+    [self.tableView.fw reloadDataWithCompletion:^{
         FWStrongifySelf();
         [self selectCollectionViewWithOffset:self.tableView.contentOffset.y];
     }];
@@ -125,7 +125,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         }
         [self.collectionView reloadData];
         FWWeakifySelf();
-        [self.tableView fwReloadDataWithCompletion:^{
+        [self.tableView.fw reloadDataWithCompletion:^{
             FWStrongifySelf();
             [self selectCollectionViewWithOffset:self.tableView.contentOffset.y];
         }];
@@ -146,7 +146,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         }
         [self.collectionView reloadData];
         FWWeakifySelf();
-        [self.tableView fwReloadDataWithCompletion:^{
+        [self.tableView.fw reloadDataWithCompletion:^{
             FWStrongifySelf();
             [self selectCollectionViewWithOffset:self.tableView.contentOffset.y];
         }];

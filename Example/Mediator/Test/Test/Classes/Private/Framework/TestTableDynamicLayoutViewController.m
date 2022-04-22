@@ -44,7 +44,7 @@ static BOOL isExpanded = NO;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwSeparatorInset = UIEdgeInsetsZero;
+        self.fw.separatorInset = UIEdgeInsetsZero;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = [Theme cellColor];
         
@@ -171,7 +171,7 @@ static BOOL isExpanded = NO;
     // [self.tableView fwSetTemplateLayout:NO];
     
     FWWeakifySelf();
-    [self.tableView fwResetGroupedStyle];
+    [self.tableView.fw resetGroupedStyle];
     self.tableView.backgroundColor = [Theme tableColor];
     [self.tableView.fw setRefreshingBlock:^{
         FWStrongifySelf();
@@ -287,7 +287,7 @@ static BOOL isExpanded = NO;
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.tableData removeObjectAtIndex:indexPath.row];
-        [self.tableView fwReloadDataWithoutCache];
+        [self.tableView.fw reloadDataWithoutCache];
     }
 }
 
@@ -378,7 +378,7 @@ static BOOL isExpanded = NO;
         for (int i = 0; i < 4; i++) {
             [self.tableData addObject:[self randomObject]];
         }
-        [self.tableView fwReloadDataWithoutCache];
+        [self.tableView.fw reloadDataWithoutCache];
         
         self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
         [self.tableView.fw endRefreshing];
