@@ -10,6 +10,7 @@
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
 #import <WebKit/WebKit.h>
+@import UserNotifications;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -44,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
     macro(UIAlertController, fw, FWAlertControllerWrapper, FWViewControllerWrapper, FWAlertControllerClassWrapper, FWViewControllerClassWrapper); \
     macro(UIImagePickerController, fw, FWImagePickerControllerWrapper, FWNavigationControllerWrapper, FWImagePickerControllerClassWrapper, FWNavigationControllerClassWrapper); \
     macro(WKWebView, fw, FWWebViewWrapper, FWViewWrapper, FWWebViewClassWrapper, FWViewClassWrapper); \
+    macro(UNUserNotificationCenter, fw, FWUserNotificationCenterWrapper, FWObjectWrapper, FWUserNotificationCenterClassWrapper, FWClassWrapper); \
     macro(PHPhotoLibrary, fw, FWPhotoLibraryWrapper, FWObjectWrapper, FWPhotoLibraryClassWrapper, FWClassWrapper); \
     fw_macro_concat(macro, Available)(14.0, PHPickerViewController, fw, FWPickerViewControllerWrapper, FWViewControllerWrapper, FWPickerViewControllerClassWrapper, FWViewControllerClassWrapper);
 
@@ -58,6 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
     macro(UIAlertController, fw, FWAlertControllerWrapper, FWAlertControllerClassWrapper); \
     macro(UIImagePickerController, fw, FWImagePickerControllerWrapper, FWImagePickerControllerClassWrapper); \
     macro(WKWebView, fw, FWWebViewWrapper, FWWebViewClassWrapper); \
+    macro(UNUserNotificationCenter, fw, FWUserNotificationCenterWrapper, FWUserNotificationCenterClassWrapper); \
     macro(PHPhotoLibrary, fw, FWPhotoLibraryWrapper, FWPhotoLibraryClassWrapper); \
     macro(PHPickerViewController, fw, FWPickerViewControllerWrapper, FWPickerViewControllerClassWrapper);
 

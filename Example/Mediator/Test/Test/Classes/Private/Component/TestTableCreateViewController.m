@@ -157,7 +157,7 @@
         UIImageView *imageView = [UIImageView new];
         _imageView = imageView;
         imageView.image = [TestBundle imageNamed:@"test_scale"];
-        [imageView fwSetContentModeAspectFill];
+        [imageView.fw setContentModeAspectFill];
         [imageView.fw setCornerRadius:5];
         [self addSubview:imageView];
         imageView.fw.layoutChain.centerXToView(testView)

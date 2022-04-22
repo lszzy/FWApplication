@@ -56,7 +56,7 @@
     attrLabel2.numberOfLines = 0;
     attrLabel2.font = [UIFont systemFontOfSize:16];
     attrLabel2.lineBreakMode = kCTLineBreakByCharWrapping;
-    attrLabel2.lineSpacing = 8 - attrLabel.font.fwSpaceHeight;
+    attrLabel2.lineSpacing = 8 - attrLabel.font.fw.spaceHeight;
     [self.view addSubview:attrLabel2];
     attrLabel2.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(attrLabel, 10);
     
@@ -111,11 +111,11 @@
     NSMutableString *resultText = [NSMutableString new];
     
     self.label.text = [self testText];
-    size = [self.label fwTextSize];
+    size = [self.label.fw textSize];
     [resultText appendFormat:@"label: %@\n", NSStringFromCGSize(size)];
     
     self.label2.attributedText = [self testAttrText];
-    size = [self.label2 fwAttributedTextSize];
+    size = [self.label2.fw attributedTextSize];
     [resultText appendFormat:@"label2: %@\n", NSStringFromCGSize(size)];
     
     self.attrLabel.text = [self testText];

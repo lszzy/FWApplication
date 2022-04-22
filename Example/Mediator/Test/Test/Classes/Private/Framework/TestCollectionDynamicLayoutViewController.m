@@ -71,7 +71,7 @@ static BOOL isExpanded = NO;
         self.fw.maxYViewPadding = 15;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
-        [imageView fwSetContentModeAspectFill];
+        [imageView.fw setContentModeAspectFill];
         [self.contentView addSubview:imageView];
         [imageView.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];

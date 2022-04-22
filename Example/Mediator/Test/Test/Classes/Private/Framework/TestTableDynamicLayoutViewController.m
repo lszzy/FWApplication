@@ -76,7 +76,7 @@ static BOOL isExpanded = NO;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         imageView.userInteractionEnabled = YES;
-        [imageView fwSetContentModeAspectFill];
+        [imageView.fw setContentModeAspectFill];
         [imageView.fw addTapGestureWithTarget:self action:@selector(onImageClick:)];
         [self.contentView addSubview:imageView];
         [imageView.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
