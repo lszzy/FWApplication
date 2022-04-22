@@ -64,7 +64,7 @@
     [timerButton2 setTitle:@"发送" forState:UIControlStateNormal];
     __block NSTimer *timer1, *timer2;
     [timerButton2 .fw addTouchBlock:^(UIButton *sender) {
-        [timerButton fwCountDown:60 title:@"=>" waitTitle:@"%lds"];
+        [timerButton.fw countDown:60 title:@"=>" waitTitle:@"%lds"];
         [timer1 invalidate];
         timer1 = [NSTimer.fw commonTimerWithCountDown:60 block:^(NSInteger countDown) {
             NSString *title = countDown > 0 ? [NSString stringWithFormat:@"%lds", countDown] : @"=>";
