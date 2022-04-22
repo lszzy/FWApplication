@@ -7,36 +7,37 @@
  @updated    2018/9/18
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- UIColor+FWApplication
- */
-@interface UIColor (FWApplication)
-
-#pragma mark - Image
-
-// 从整个图像初始化UIColor
-+ (UIColor *)fwColorWithImage:(UIImage *)image;
-
-// 从图像的某个点初始化UIColor
-+ (nullable UIColor *)fwColorWithImage:(UIImage *)image point:(CGPoint)point;
+@interface FWColorWrapper (FWApplication)
 
 #pragma mark - Color
 
 // 以指定模式添加混合颜色
-- (UIColor *)fwAddColor:(UIColor *)color blendMode:(CGBlendMode)blendMode;
+- (UIColor *)addColor:(UIColor *)color blendMode:(CGBlendMode)blendMode;
 
 // 当前颜色的反色。http://stackoverflow.com/questions/5893261/how-to-get-inverse-color-from-uicolor
-@property (nonatomic, strong, readonly) UIColor *fwInverseColor;
+@property (nonatomic, strong, readonly) UIColor *inverseColor;
 
 // 判断当前颜色是否为深色。http://stackoverflow.com/questions/19456288/text-color-based-on-background-image
-@property (nonatomic, assign, readonly) BOOL fwIsDarkColor;
+@property (nonatomic, assign, readonly) BOOL isDarkColor;
 
 // 当前颜色修改亮度比率的颜色
-- (UIColor *)fwBrightnessColor:(CGFloat)ratio;
+- (UIColor *)brightnessColor:(CGFloat)ratio;
+
+@end
+
+@interface FWColorClassWrapper (FWApplication)
+
+#pragma mark - Image
+
+// 从整个图像初始化UIColor
+- (UIColor *)colorWithImage:(UIImage *)image;
+
+// 从图像的某个点初始化UIColor
+- (nullable UIColor *)colorWithImage:(UIImage *)image point:(CGPoint)point;
 
 #pragma mark - Gradient
 
@@ -49,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param direction 渐变方向，自动计算startPoint和endPoint，支持四个方向，默认向下Down
  @return 渐变色
  */
-+ (UIColor *)fwGradientColorWithSize:(CGSize)size
+- (UIColor *)gradientColorWithSize:(CGSize)size
                               colors:(NSArray *)colors
                            locations:(nullable const CGFloat *)locations
                            direction:(UISwipeGestureRecognizerDirection)direction;
@@ -64,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param endPoint 渐变结束点，需要根据rect计算
  @return 渐变色
  */
-+ (UIColor *)fwGradientColorWithSize:(CGSize)size
+- (UIColor *)gradientColorWithSize:(CGSize)size
                               colors:(NSArray *)colors
                            locations:(nullable const CGFloat *)locations
                           startPoint:(CGPoint)startPoint

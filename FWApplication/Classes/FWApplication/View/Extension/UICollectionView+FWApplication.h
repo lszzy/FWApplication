@@ -7,48 +7,47 @@
  @updated    2019/5/31
  */
 
-#import <UIKit/UIKit.h>
+#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-// UICollectionView分类
-@interface UICollectionView (FWApplication)
+@interface FWCollectionViewWrapper (FWApplication)
 
 /// reloadData完成回调
-- (void)fwReloadDataWithCompletion:(nullable void (^)(void))completion;
+- (void)reloadDataWithCompletion:(nullable void (^)(void))completion;
 
 /// reloadData清空尺寸缓存
-- (void)fwReloadDataWithoutCache;
+- (void)reloadDataWithoutCache;
 
 /// reloadData禁用动画
-- (void)fwReloadDataWithoutAnimation;
+- (void)reloadDataWithoutAnimation;
 
 /// reloadSections禁用动画
-- (void)fwReloadSectionsWithoutAnimation:(NSIndexSet *)sections;
+- (void)reloadSectionsWithoutAnimation:(NSIndexSet *)sections;
 
 /// reloadItems禁用动画
-- (void)fwReloadItemsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths;
+- (void)reloadItemsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths;
 
 /// 刷新高度等，不触发reload方式
-- (void)fwPerformUpdates:(void (NS_NOESCAPE ^ _Nullable)(void))updates;
+- (void)performUpdates:(void (NS_NOESCAPE ^ _Nullable)(void))updates;
 
 @end
 
-@interface UICollectionViewCell (FWApplication)
+@interface FWCollectionViewCellWrapper (FWApplication)
 
 /// 获取当前所属collectionView
-@property (nonatomic, weak, readonly, nullable) UICollectionView *fwCollectionView;
+@property (nonatomic, weak, readonly, nullable) UICollectionView *collectionView;
 
 /// 获取当前显示indexPath
-@property (nonatomic, readonly, nullable) NSIndexPath *fwIndexPath;
+@property (nonatomic, readonly, nullable) NSIndexPath *indexPath;
 
 @end
 
 // iOS9+可通过UICollectionViewFlowLayout调用sectionHeadersPinToVisibleBounds实现Header悬停效果
-@interface UICollectionViewFlowLayout (FWApplication)
+@interface FWCollectionViewFlowLayoutWrapper (FWApplication)
 
 /// 设置Header和Footer是否悬停，支持iOS9+
-- (void)fwHoverWithHeader:(BOOL)header footer:(BOOL)footer;
+- (void)hoverWithHeader:(BOOL)header footer:(BOOL)footer;
 
 @end
 

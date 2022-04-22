@@ -8,14 +8,13 @@
  */
 
 #import "UICollectionView+FWApplication.h"
-@import FWFramework;
 
-@implementation UICollectionView (FWApplication)
+@implementation FWCollectionViewWrapper (FWApplication)
 
-- (void)fwReloadDataWithCompletion:(void (^)(void))completion
+- (void)reloadDataWithCompletion:(void (^)(void))completion
 {
     [UIView animateWithDuration:0 animations:^{
-        [self reloadData];
+        [self.base reloadData];
     } completion:^(BOOL finished) {
         if (completion) {
             completion();
@@ -23,46 +22,46 @@
     }];
 }
 
-- (void)fwReloadDataWithoutCache
+- (void)reloadDataWithoutCache
 {
-    [self.fw clearSizeCache];
-    [self reloadData];
+    [self clearSizeCache];
+    [self.base reloadData];
 }
 
-- (void)fwReloadDataWithoutAnimation
+- (void)reloadDataWithoutAnimation
 {
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    [self reloadData];
+    [self.base reloadData];
     [CATransaction commit];
 }
 
-- (void)fwReloadSectionsWithoutAnimation:(NSIndexSet *)sections
+- (void)reloadSectionsWithoutAnimation:(NSIndexSet *)sections
 {
-    [self performBatchUpdates:^{
-        [self reloadSections:sections];
+    [self.base performBatchUpdates:^{
+        [self.base reloadSections:sections];
     } completion:nil];
 }
 
-- (void)fwReloadItemsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths
+- (void)reloadItemsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths
 {
-    [self performBatchUpdates:^{
-        [self reloadItemsAtIndexPaths:indexPaths];
+    [self.base performBatchUpdates:^{
+        [self.base reloadItemsAtIndexPaths:indexPaths];
     } completion:nil];
 }
 
-- (void)fwPerformUpdates:(void (NS_NOESCAPE ^)(void))updates
+- (void)performUpdates:(void (NS_NOESCAPE ^)(void))updates
 {
-    [self performBatchUpdates:updates completion:nil];
+    [self.base performBatchUpdates:updates completion:nil];
 }
 
 @end
 
-@implementation UICollectionViewCell (FWApplication)
+@implementation FWCollectionViewCellWrapper (FWApplication)
 
-- (UICollectionView *)fwCollectionView
+- (UICollectionView *)collectionView
 {
-    UIView *superview = self.superview;
+    UIView *superview = self.base.superview;
     while (superview) {
         if ([superview isKindOfClass:[UICollectionView class]]) {
             return (UICollectionView *)superview;
@@ -72,19 +71,19 @@
     return nil;
 }
 
-- (NSIndexPath *)fwIndexPath
+- (NSIndexPath *)indexPath
 {
-    return [[self fwCollectionView] indexPathForCell:self];
+    return [[self collectionView] indexPathForCell:self.base];
 }
 
 @end
 
-@implementation UICollectionViewFlowLayout (FWApplication)
+@implementation FWCollectionViewFlowLayoutWrapper (FWApplication)
 
-- (void)fwHoverWithHeader:(BOOL)header footer:(BOOL)footer
+- (void)hoverWithHeader:(BOOL)header footer:(BOOL)footer
 {
-    self.sectionHeadersPinToVisibleBounds = header;
-    self.sectionFootersPinToVisibleBounds = footer;
+    self.base.sectionHeadersPinToVisibleBounds = header;
+    self.base.sectionFootersPinToVisibleBounds = footer;
 }
 
 @end

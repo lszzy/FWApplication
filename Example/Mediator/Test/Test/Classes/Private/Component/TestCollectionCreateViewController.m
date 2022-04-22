@@ -196,7 +196,7 @@
         NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
         self.collectionView.fw.delegate.collectionData = @[sectionData];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        [self.collectionView.fw reloadDataWithoutAnimation];
     }];
 }
 
@@ -215,7 +215,7 @@
         
         self.collectionView.fw.delegate.collectionData = @[@[[self randomObject], [self randomObject]]];
         [self.collectionView.fw clearSizeCache];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        [self.collectionView.fw reloadDataWithoutAnimation];
         
         [self.collectionView.fw endRefreshing];
     });
@@ -230,7 +230,7 @@
         NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
         self.collectionView.fw.delegate.collectionData = @[sectionData];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        [self.collectionView.fw reloadDataWithoutAnimation];
         
         [self.collectionView.fw endLoading];
     });

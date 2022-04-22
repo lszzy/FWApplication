@@ -376,7 +376,7 @@ static BOOL isExpanded = NO;
             [self.collectionData addObject:[self randomObject]];
         }
         [self.collectionView.fw clearSizeCache];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        [self.collectionView.fw reloadDataWithoutAnimation];
         
         self.collectionView.fw.showRefreshing = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView.fw endRefreshing];
@@ -395,7 +395,7 @@ static BOOL isExpanded = NO;
         for (int i = 0; i < 4; i++) {
             [self.collectionData addObject:[self randomObject]];
         }
-        [self.collectionView fwReloadDataWithoutAnimation];
+        [self.collectionView.fw reloadDataWithoutAnimation];
         
         self.collectionView.fw.showLoading = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView.fw endLoading];

@@ -85,7 +85,7 @@ import FWApplication
             let darkBrightness: CGFloat = 0.5
             colors = [
                 UIColor.fw.themeLight(lightColor, dark: darkColor),
-                UIColor.fw.themeLight(lightColor.fwBrightnessColor(lightBrightness), dark: darkColor.fwBrightnessColor(darkBrightness)),
+                UIColor.fw.themeLight(lightColor.fw.brightnessColor(lightBrightness), dark: darkColor.fw.brightnessColor(darkBrightness)),
                 UIColor.fw.themeLight(lightColor, dark: darkColor)
             ]
         }

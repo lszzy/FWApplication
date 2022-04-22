@@ -21,7 +21,7 @@
     CGSize size = CGSizeMake(FWScreenWidth - 40, 50);
     
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(20, 20, size.width, size.height)];
-    view1.backgroundColor = [UIColor fwGradientColorWithSize:CGSizeMake(size.width, 1) colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
+    view1.backgroundColor = [UIColor.fw gradientColorWithSize:CGSizeMake(size.width, 1) colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
     [self.view addSubview:view1];
     
     UIImageView *view2 = [[UIImageView alloc] initWithFrame:CGRectMake(20, 90, size.width, size.height)];
