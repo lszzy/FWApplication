@@ -129,7 +129,7 @@ extension Theme {
             return "暂无数据"
         }
         FWEmptyPluginImpl.sharedInstance.defaultImage = {
-            return UIImage.fwImageWithAppIcon()
+            return UIImage.fw.imageWithAppIcon()
         }
         FWEmptyPluginImpl.sharedInstance.defaultAction = {
             return "重新加载"

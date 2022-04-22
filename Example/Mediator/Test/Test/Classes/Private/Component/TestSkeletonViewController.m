@@ -26,7 +26,7 @@
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
+        iconView.image = [UIImage.fw imageWithAppIcon];
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
         
@@ -64,7 +64,7 @@
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
+        iconView.image = [UIImage.fw imageWithAppIcon];
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
@@ -102,7 +102,7 @@
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
+        iconView.image = [UIImage.fw imageWithAppIcon];
         [self.contentView addSubview:iconView];
         iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         

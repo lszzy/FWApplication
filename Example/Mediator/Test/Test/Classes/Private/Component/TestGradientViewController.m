@@ -25,7 +25,7 @@
     [self.view addSubview:view1];
     
     UIImageView *view2 = [[UIImageView alloc] initWithFrame:CGRectMake(20, 90, size.width, size.height)];
-    view2.image = [UIImage fwGradientImageWithSize:size colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
+    view2.image = [UIImage.fw gradientImageWithSize:size colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
     [self.view addSubview:view2];
     
     FWGradientView *view3 = [[FWGradientView alloc] initWithFrame:CGRectMake(20, 160, size.width, size.height)];
