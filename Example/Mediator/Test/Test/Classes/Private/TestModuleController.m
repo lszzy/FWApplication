@@ -48,17 +48,17 @@
         _searchBar.placeholder = @"Search";
         _searchBar.delegate = self;
         _searchBar.showsCancelButton = YES;
-        [_searchBar.fwCancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
-        _searchBar.fwForceCancelButtonEnabled = YES;
-        _searchBar.fwBackgroundColor = [Theme barColor];
-        _searchBar.fwTextFieldBackgroundColor = [Theme tableColor];
-        _searchBar.fwContentInset = UIEdgeInsetsMake(6, 16, 6, 0);
-        _searchBar.fwCancelButtonInset = UIEdgeInsetsMake(0, 16, 0, 16);
-        _searchBar.fwSearchIconCenter = YES;
-        _searchBar.fwSearchIconOffset = 10;
-        _searchBar.fwSearchTextOffset = 4;
+        [_searchBar.fw.cancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
+        _searchBar.fw.forceCancelButtonEnabled = YES;
+        _searchBar.fw.backgroundColor = [Theme barColor];
+        _searchBar.fw.textFieldBackgroundColor = [Theme tableColor];
+        _searchBar.fw.contentInset = UIEdgeInsetsMake(6, 16, 6, 0);
+        _searchBar.fw.cancelButtonInset = UIEdgeInsetsMake(0, 16, 0, 16);
+        _searchBar.fw.searchIconCenter = YES;
+        _searchBar.fw.searchIconOffset = 10;
+        _searchBar.fw.searchTextOffset = 4;
         
-        UITextField *textField = [_searchBar fwTextField];
+        UITextField *textField = [_searchBar.fw textField];
         textField.font = [UIFont systemFontOfSize:12];
         [textField.fw setCornerRadius:16];
         textField.fw.touchResign = YES;
@@ -91,7 +91,7 @@
 - (void)renderTableView
 {
     self.tableView.backgroundColor = [Theme tableColor];
-    self.tableView.fwKeyboardDismissOnDrag = YES;
+    self.tableView.fw.keyboardDismissOnDrag = YES;
 }
 
 - (void)renderData
@@ -198,18 +198,18 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.searchBar.fwCancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
+    [self.searchBar.fw.cancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
 }
 
 #pragma mark - UISearchBar
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    searchBar.fwSearchIconCenter = NO;
+    searchBar.fw.searchIconCenter = NO;
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
-    searchBar.fwSearchIconCenter = YES;
+    searchBar.fw.searchIconCenter = YES;
     return YES;
 }
 

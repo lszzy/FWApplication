@@ -8,7 +8,10 @@
 
 #import "UIScrollView+FWApplication.h"
 #import <objc/runtime.h>
-@import FWFramework;
+
+@interface UIScrollView (FWApplication)
+
+@end
 
 @implementation UIScrollView (FWApplication)
 
@@ -16,31 +19,67 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizerShouldBegin:) swizzleMethod:@selector(fwInnerGestureRecognizerShouldBegin:)];
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:) swizzleMethod:@selector(fwInnerGestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)];
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldRequireFailureOfGestureRecognizer:) swizzleMethod:@selector(fwInnerGestureRecognizer:shouldRequireFailureOfGestureRecognizer:)];
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:) swizzleMethod:@selector(fwInnerGestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:)];
+        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizerShouldBegin:) swizzleMethod:@selector(innerGestureRecognizerShouldBegin:)];
+        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)];
+        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldRequireFailureOfGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldRequireFailureOfGestureRecognizer:)];
+        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:)];
     });
 }
 
-#pragma mark - Content
-
-+ (instancetype)fwScrollView
+- (BOOL)innerGestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-    UIScrollView *scrollView = [[self alloc] init];
-    scrollView.showsVerticalScrollIndicator = NO;
-    scrollView.showsHorizontalScrollIndicator = NO;
-    return scrollView;
+    BOOL (^shouldBlock)(UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(shouldBegin));
+    if (shouldBlock) {
+        return shouldBlock(gestureRecognizer);
+    }
+    
+    return [self innerGestureRecognizerShouldBegin:gestureRecognizer];
 }
 
-- (UIView *)fwContentView
+- (BOOL)innerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    UIView *contentView = objc_getAssociatedObject(self, _cmd);
+    BOOL (^shouldBlock)(UIGestureRecognizer *, UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(shouldRecognizeSimultaneously));
+    if (shouldBlock) {
+        return shouldBlock(gestureRecognizer, otherGestureRecognizer);
+    }
+    
+    return [self innerGestureRecognizer:gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:otherGestureRecognizer];
+}
+
+- (BOOL)innerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    BOOL (^shouldBlock)(UIGestureRecognizer *, UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(shouldRequireFailure));
+    if (shouldBlock) {
+        return shouldBlock(gestureRecognizer, otherGestureRecognizer);
+    }
+    
+    return [self innerGestureRecognizer:gestureRecognizer shouldRequireFailureOfGestureRecognizer:otherGestureRecognizer];
+}
+
+- (BOOL)innerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    BOOL (^shouldBlock)(UIGestureRecognizer *, UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(shouldBeRequiredToFail));
+    if (shouldBlock) {
+        return shouldBlock(gestureRecognizer, otherGestureRecognizer);
+    }
+    
+    return [self innerGestureRecognizer:gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:otherGestureRecognizer];
+}
+
+@end
+
+@implementation FWScrollViewWrapper (FWApplication)
+
+#pragma mark - Content
+
+- (UIView *)contentView
+{
+    UIView *contentView = objc_getAssociatedObject(self.base, _cmd);
     if (!contentView) {
         contentView = [[UIView alloc] init];
-        objc_setAssociatedObject(self, _cmd, contentView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self.base, _cmd, contentView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
-        [self addSubview:contentView];
+        [self.base addSubview:contentView];
         [contentView.fw pinEdgesToSuperview];
     }
     return contentView;
@@ -48,172 +87,132 @@
 
 #pragma mark - Frame
 
-- (CGFloat)fwContentWidth
+- (CGFloat)contentWidth
 {
-    return self.contentSize.width;
+    return self.base.contentSize.width;
 }
 
-- (void)setFwContentWidth:(CGFloat)fwContentWidth
+- (void)setContentWidth:(CGFloat)contentWidth
 {
-    self.contentSize = CGSizeMake(fwContentWidth, self.contentSize.height);
+    self.base.contentSize = CGSizeMake(contentWidth, self.base.contentSize.height);
 }
 
-- (CGFloat)fwContentHeight
+- (CGFloat)contentHeight
 {
-    return self.contentSize.height;
+    return self.base.contentSize.height;
 }
 
-- (void)setFwContentHeight:(CGFloat)fwContentHeight
+- (void)setContentHeight:(CGFloat)contentHeight
 {
-    self.contentSize = CGSizeMake(self.contentSize.width, fwContentHeight);
+    self.base.contentSize = CGSizeMake(self.base.contentSize.width, contentHeight);
 }
 
-- (CGFloat)fwContentOffsetX
+- (CGFloat)contentOffsetX
 {
-    return self.contentOffset.x;
+    return self.base.contentOffset.x;
 }
 
-- (void)setFwContentOffsetX:(CGFloat)fwContentOffsetX
+- (void)setContentOffsetX:(CGFloat)contentOffsetX
 {
-    self.contentOffset = CGPointMake(fwContentOffsetX, self.contentOffset.y);
+    self.base.contentOffset = CGPointMake(contentOffsetX, self.base.contentOffset.y);
 }
 
-- (CGFloat)fwContentOffsetY
+- (CGFloat)contentOffsetY
 {
-    return self.contentOffset.y;
+    return self.base.contentOffset.y;
 }
 
-- (void)setFwContentOffsetY:(CGFloat)fwContentOffsetY
+- (void)setContentOffsetY:(CGFloat)contentOffsetY
 {
-    self.contentOffset = CGPointMake(self.contentOffset.x, fwContentOffsetY);
+    self.base.contentOffset = CGPointMake(self.base.contentOffset.x, contentOffsetY);
 }
 
 #pragma mark - Scroll
 
-- (UIEdgeInsets)fwContentInset
+- (UIEdgeInsets)contentInset
 {
-    return self.adjustedContentInset;
+    return self.base.adjustedContentInset;
 }
 
-- (UISwipeGestureRecognizerDirection)fwScrollDirection
+- (UISwipeGestureRecognizerDirection)scrollDirection
 {
-    return [self.panGestureRecognizer fwSwipeDirection];
+    return [self.base.panGestureRecognizer.fw swipeDirection];
 }
 
-- (CGFloat)fwScrollPercent
+- (CGFloat)scrollPercent
 {
-    return [self.panGestureRecognizer fwSwipePercent];
+    return [self.base.panGestureRecognizer.fw swipePercent];
 }
 
-- (CGFloat)fwScrollPercentOfDirection:(UISwipeGestureRecognizerDirection)direction
+- (CGFloat)scrollPercentOfDirection:(UISwipeGestureRecognizerDirection)direction
 {
-    return [self.panGestureRecognizer fwSwipePercentOfDirection:direction];
+    return [self.base.panGestureRecognizer.fw swipePercentOfDirection:direction];
 }
 
 #pragma mark - Content
 
-- (void)fwContentInsetAdjustmentNever
+- (void)contentInsetAdjustmentNever
 {
-    self.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    self.base.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
 }
 
 #pragma mark - Keyboard
 
-- (BOOL)fwKeyboardDismissOnDrag
+- (BOOL)keyboardDismissOnDrag
 {
-    return self.keyboardDismissMode == UIScrollViewKeyboardDismissModeOnDrag;
+    return self.base.keyboardDismissMode == UIScrollViewKeyboardDismissModeOnDrag;
 }
 
-- (void)setFwKeyboardDismissOnDrag:(BOOL)fwKeyboardDismissOnDrag
+- (void)setKeyboardDismissOnDrag:(BOOL)keyboardDismissOnDrag
 {
-    self.keyboardDismissMode = fwKeyboardDismissOnDrag ? UIScrollViewKeyboardDismissModeOnDrag : UIScrollViewKeyboardDismissModeNone;
+    self.base.keyboardDismissMode = keyboardDismissOnDrag ? UIScrollViewKeyboardDismissModeOnDrag : UIScrollViewKeyboardDismissModeNone;
 }
 
 #pragma mark - Gesture
 
-- (BOOL (^)(UIGestureRecognizer *))fwShouldBegin
+- (BOOL (^)(UIGestureRecognizer *))shouldBegin
 {
-    return objc_getAssociatedObject(self, @selector(fwShouldBegin));
+    return objc_getAssociatedObject(self.base, @selector(shouldBegin));
 }
 
-- (void)setFwShouldBegin:(BOOL (^)(UIGestureRecognizer *))fwShouldBegin
+- (void)setShouldBegin:(BOOL (^)(UIGestureRecognizer *))shouldBegin
 {
-    objc_setAssociatedObject(self, @selector(fwShouldBegin), fwShouldBegin, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(shouldBegin), shouldBegin, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))fwShouldRecognizeSimultaneously
+- (BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))shouldRecognizeSimultaneously
 {
-    return objc_getAssociatedObject(self, @selector(fwShouldRecognizeSimultaneously));
+    return objc_getAssociatedObject(self.base, @selector(shouldRecognizeSimultaneously));
 }
 
-- (void)setFwShouldRecognizeSimultaneously:(BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))fwShouldRecognizeSimultaneously
+- (void)setShouldRecognizeSimultaneously:(BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))shouldRecognizeSimultaneously
 {
-    objc_setAssociatedObject(self, @selector(fwShouldRecognizeSimultaneously), fwShouldRecognizeSimultaneously, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(shouldRecognizeSimultaneously), shouldRecognizeSimultaneously, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))fwShouldRequireFailure
+- (BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))shouldRequireFailure
 {
-    return objc_getAssociatedObject(self, @selector(fwShouldRequireFailure));
+    return objc_getAssociatedObject(self.base, @selector(shouldRequireFailure));
 }
 
-- (void)setFwShouldRequireFailure:(BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))fwShouldRequireFailure
+- (void)setShouldRequireFailure:(BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))shouldRequireFailure
 {
-    objc_setAssociatedObject(self, @selector(fwShouldRequireFailure), fwShouldRequireFailure, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(shouldRequireFailure), shouldRequireFailure, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))fwShouldBeRequiredToFail
+- (BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))shouldBeRequiredToFail
 {
-    return objc_getAssociatedObject(self, @selector(fwShouldBeRequiredToFail));
+    return objc_getAssociatedObject(self.base, @selector(shouldBeRequiredToFail));
 }
 
-- (void)setFwShouldBeRequiredToFail:(BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))fwShouldBeRequiredToFail
+- (void)setShouldBeRequiredToFail:(BOOL (^)(UIGestureRecognizer *, UIGestureRecognizer *))shouldBeRequiredToFail
 {
-    objc_setAssociatedObject(self, @selector(fwShouldBeRequiredToFail), fwShouldBeRequiredToFail, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (BOOL)fwInnerGestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    BOOL (^shouldBlock)(UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(fwShouldBegin));
-    if (shouldBlock) {
-        return shouldBlock(gestureRecognizer);
-    }
-    
-    return [self fwInnerGestureRecognizerShouldBegin:gestureRecognizer];
-}
-
-- (BOOL)fwInnerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    BOOL (^shouldBlock)(UIGestureRecognizer *, UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(fwShouldRecognizeSimultaneously));
-    if (shouldBlock) {
-        return shouldBlock(gestureRecognizer, otherGestureRecognizer);
-    }
-    
-    return [self fwInnerGestureRecognizer:gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:otherGestureRecognizer];
-}
-
-- (BOOL)fwInnerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    BOOL (^shouldBlock)(UIGestureRecognizer *, UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(fwShouldRequireFailure));
-    if (shouldBlock) {
-        return shouldBlock(gestureRecognizer, otherGestureRecognizer);
-    }
-    
-    return [self fwInnerGestureRecognizer:gestureRecognizer shouldRequireFailureOfGestureRecognizer:otherGestureRecognizer];
-}
-
-- (BOOL)fwInnerGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    BOOL (^shouldBlock)(UIGestureRecognizer *, UIGestureRecognizer *) = objc_getAssociatedObject(self, @selector(fwShouldBeRequiredToFail));
-    if (shouldBlock) {
-        return shouldBlock(gestureRecognizer, otherGestureRecognizer);
-    }
-    
-    return [self fwInnerGestureRecognizer:gestureRecognizer shouldBeRequiredToFailByGestureRecognizer:otherGestureRecognizer];
+    objc_setAssociatedObject(self.base, @selector(shouldBeRequiredToFail), shouldBeRequiredToFail, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 #pragma mark - Hover
 
-- (CGFloat)fwHoverView:(UIView *)view
+- (CGFloat)hoverView:(UIView *)view
          fromSuperview:(UIView *)fromSuperview
            toSuperview:(UIView *)toSuperview
             toPosition:(CGFloat)toPosition
@@ -241,34 +240,46 @@
 
 @end
 
-#pragma mark - UIGestureRecognizer+FWApplication
+@implementation FWScrollViewClassWrapper (FWApplication)
 
-@implementation UIGestureRecognizer (FWApplication)
-
-- (UIView *)fwTargetView
+- (__kindof UIScrollView *)scrollView
 {
-    CGPoint location = [self locationInView:self.view];
-    UIView *targetView = [self.view hitTest:location withEvent:nil];
-    return targetView;
-}
-
-- (BOOL)fwIsTracking
-{
-    return self.state == UIGestureRecognizerStateBegan || self.state == UIGestureRecognizerStateChanged;
-}
-
-- (BOOL)fwIsActive
-{
-    return self.isEnabled && (self.state == UIGestureRecognizerStateBegan || self.state == UIGestureRecognizerStateChanged);
+    UIScrollView *scrollView = [[self.base alloc] init];
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    return scrollView;
 }
 
 @end
 
-@implementation UIPanGestureRecognizer (FWApplication)
+#pragma mark - FWGestureRecognizerWrapper+FWApplication
 
-- (UISwipeGestureRecognizerDirection)fwSwipeDirection
+@implementation FWGestureRecognizerWrapper (FWApplication)
+
+- (UIView *)targetView
 {
-    CGPoint transition = [self translationInView:self.view];
+    CGPoint location = [self.base locationInView:self.base.view];
+    UIView *targetView = [self.base.view hitTest:location withEvent:nil];
+    return targetView;
+}
+
+- (BOOL)isTracking
+{
+    return self.base.state == UIGestureRecognizerStateBegan || self.base.state == UIGestureRecognizerStateChanged;
+}
+
+- (BOOL)isActive
+{
+    return self.base.isEnabled && (self.base.state == UIGestureRecognizerStateBegan || self.base.state == UIGestureRecognizerStateChanged);
+}
+
+@end
+
+@implementation FWPanGestureRecognizerWrapper (FWApplication)
+
+- (UISwipeGestureRecognizerDirection)swipeDirection
+{
+    CGPoint transition = [self.base translationInView:self.base.view];
     if (fabs(transition.x) > fabs(transition.y)) {
         if (transition.x < 0.0f) {
             return UISwipeGestureRecognizerDirectionLeft;
@@ -285,35 +296,35 @@
     return 0;
 }
 
-- (CGFloat)fwSwipePercent
+- (CGFloat)swipePercent
 {
     CGFloat percent = 0;
-    CGPoint transition = [self translationInView:self.view];
+    CGPoint transition = [self.base translationInView:self.base.view];
     if (fabs(transition.x) > fabs(transition.y)) {
-        percent = fabs(transition.x) / self.view.bounds.size.width;
+        percent = fabs(transition.x) / self.base.view.bounds.size.width;
     } else {
-        percent = fabs(transition.y) / self.view.bounds.size.height;
+        percent = fabs(transition.y) / self.base.view.bounds.size.height;
     }
     return MAX(0, MIN(1, percent));
 }
 
-- (CGFloat)fwSwipePercentOfDirection:(UISwipeGestureRecognizerDirection)direction
+- (CGFloat)swipePercentOfDirection:(UISwipeGestureRecognizerDirection)direction
 {
     CGFloat percent = 0;
-    CGPoint transition = [self translationInView:self.view];
+    CGPoint transition = [self.base translationInView:self.base.view];
     switch (direction) {
         case UISwipeGestureRecognizerDirectionLeft:
-            percent = -transition.x / self.view.bounds.size.width;
+            percent = -transition.x / self.base.view.bounds.size.width;
             break;
         case UISwipeGestureRecognizerDirectionRight:
-            percent = transition.x / self.view.bounds.size.width;
+            percent = transition.x / self.base.view.bounds.size.width;
             break;
         case UISwipeGestureRecognizerDirectionUp:
-            percent = -transition.y / self.view.bounds.size.height;
+            percent = -transition.y / self.base.view.bounds.size.height;
             break;
         case UISwipeGestureRecognizerDirectionDown:
         default:
-            percent = transition.y / self.view.bounds.size.height;
+            percent = transition.y / self.base.view.bounds.size.height;
             break;
     }
     return MAX(0, MIN(1, percent));

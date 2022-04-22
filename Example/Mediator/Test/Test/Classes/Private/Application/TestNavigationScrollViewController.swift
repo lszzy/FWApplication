@@ -44,7 +44,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }
     
     override func renderView() {
-        tableView.fwContentInsetAdjustmentNever()
+        tableView.fw.contentInsetAdjustmentNever()
         tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top
         tableView.fw.setRefreshingTarget(self, action: #selector(onRefreshing))
         

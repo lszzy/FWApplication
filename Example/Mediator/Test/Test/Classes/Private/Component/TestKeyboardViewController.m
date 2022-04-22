@@ -41,7 +41,7 @@ FWPropertyAssign(BOOL, useScrollView);
 {
     _dismissOnDrag = dismissOnDrag;
     [self.view endEditing:YES];
-    self.scrollView.fwKeyboardDismissOnDrag = dismissOnDrag;
+    self.scrollView.fw.keyboardDismissOnDrag = dismissOnDrag;
 }
 
 - (void)setUseScrollView:(BOOL)useScrollView

@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWWrapperApplication_(macro, fw) \
     macro(NSMutableAttributedString, fw, FWMutableAttributedStringWrapper, FWAttributedStringWrapper, FWMutableAttributedStringClassWrapper, FWAttributedStringClassWrapper); \
     macro(UIProgressView, fw, FWProgressViewWrapper, FWViewWrapper, FWProgressViewClassWrapper, FWViewClassWrapper); \
+    macro(UIPanGestureRecognizer, fw, FWPanGestureRecognizerWrapper, FWGestureRecognizerWrapper, FWPanGestureRecognizerClassWrapper, FWGestureRecognizerClassWrapper); \
     macro(UITabBarItem, fw, FWTabBarItemWrapper, FWBarItemWrapper, FWTabBarItemClassWrapper, FWBarItemClassWrapper); \
     macro(UIActivityIndicatorView, fw, FWActivityIndicatorViewWrapper, FWViewWrapper, FWActivityIndicatorViewClassWrapper, FWViewClassWrapper); \
     macro(UICollectionViewFlowLayout, fw, FWCollectionViewFlowLayoutWrapper, FWObjectWrapper, FWCollectionViewFlowLayoutClassWrapper, FWClassWrapper); \
@@ -53,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWDefWrapperApplication_(macro, fw) \
     macro(NSMutableAttributedString, fw, FWMutableAttributedStringWrapper, FWMutableAttributedStringClassWrapper); \
     macro(UIProgressView, fw, FWProgressViewWrapper, FWProgressViewClassWrapper); \
+    macro(UIPanGestureRecognizer, fw, FWPanGestureRecognizerWrapper, FWPanGestureRecognizerClassWrapper); \
     macro(UITabBarItem, fw, FWTabBarItemWrapper, FWTabBarItemClassWrapper); \
     macro(UIActivityIndicatorView, fw, FWActivityIndicatorViewWrapper, FWActivityIndicatorViewClassWrapper); \
     macro(UICollectionViewFlowLayout, fw, FWCollectionViewFlowLayoutWrapper, FWCollectionViewFlowLayoutClassWrapper); \
