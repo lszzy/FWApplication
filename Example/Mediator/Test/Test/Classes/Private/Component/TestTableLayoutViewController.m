@@ -107,7 +107,7 @@
     _object = object;
     // 自动收缩
     self.myTitleLabel.text = object.title;
-    if ([object.imageUrl fwIsFormatUrl]) {
+    if ([object.imageUrl.fw isFormatUrl]) {
         [self.myImageView.fw setImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     } else if (object.imageUrl.length > 0) {
         self.myImageView.image = [TestBundle imageNamed:object.imageUrl];

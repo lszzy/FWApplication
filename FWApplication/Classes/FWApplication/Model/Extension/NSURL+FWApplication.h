@@ -7,15 +7,14 @@
  @updated    2018/12/3
  */
 
-#import <Foundation/Foundation.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- NSURL+FWApplication
- @note 第三方URL生成器，可先判断canOpenURL，再openURL，需添加对应URL SCHEME到LSApplicationQueriesSchemes配置数组
+ 第三方URL生成器，可先判断canOpenURL，再openURL，需添加对应URL SCHEME到LSApplicationQueriesSchemes配置数组
  */
-@interface NSURL (FWApplication)
+@interface FWURLClassWrapper (FWApplication)
 
 #pragma mark - Map
 
@@ -26,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param options 可选附加参数，如@{@"ll": @"latitude,longitude", @"z": @"14"}
  @return NSURL
  */
-+ (nullable instancetype)fwAppleMapsURLWithAddr:(nullable NSString *)addr options:(nullable NSDictionary *)options;
+- (nullable NSURL *)appleMapsURLWithAddr:(nullable NSString *)addr options:(nullable NSDictionary *)options;
 
 /**
  生成苹果地图导航外部URL
@@ -36,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param options 可选附加参数，如@{@"ll": @"latitude,longitude", @"z": @"14"}
  @return NSURL
  */
-+ (nullable instancetype)fwAppleMapsURLWithSaddr:(nullable NSString *)saddr daddr:(nullable NSString *)daddr options:(nullable NSDictionary *)options;
+- (nullable NSURL *)appleMapsURLWithSaddr:(nullable NSString *)saddr daddr:(nullable NSString *)daddr options:(nullable NSDictionary *)options;
 
 /**
  生成谷歌地图外部URL，URL SCHEME为：comgooglemaps
@@ -45,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param options 可选附加参数，如@{@"center": @"latitude,longitude", @"zoom": @"14"}
  @return NSURL
  */
-+ (nullable instancetype)fwGoogleMapsURLWithAddr:(nullable NSString *)addr options:(nullable NSDictionary *)options;
+- (nullable NSURL *)googleMapsURLWithAddr:(nullable NSString *)addr options:(nullable NSDictionary *)options;
 
 /**
  生成谷歌地图导航外部URL，URL SCHEME为：comgooglemaps
@@ -56,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param options 可选附加参数，如@{@"center": @"latitude,longitude", @"zoom": @"14", @"dirflg": @"t,h"}
  @return NSURL
  */
-+ (nullable instancetype)fwGoogleMapsURLWithSaddr:(nullable NSString *)saddr daddr:(nullable NSString *)daddr mode:(nullable NSString *)mode options:(nullable NSDictionary *)options;
+- (nullable NSURL *)googleMapsURLWithSaddr:(nullable NSString *)saddr daddr:(nullable NSString *)daddr mode:(nullable NSString *)mode options:(nullable NSDictionary *)options;
 
 /**
  生成百度地图外部URL，URL SCHEME为：baidumap
@@ -65,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param options 可选附加参数，如@{@"src": @"app", @"zoom": @"14", @"coord_type": @"默认gcj02|wgs84|bd09ll"}
  @return NSURL
  */
-+ (nullable instancetype)fwBaiduMapsURLWithAddr:(nullable NSString *)addr options:(nullable NSDictionary *)options;
+- (nullable NSURL *)baiduMapsURLWithAddr:(nullable NSString *)addr options:(nullable NSDictionary *)options;
 
 /**
  生成百度地图导航外部URL，URL SCHEME为：baidumap
@@ -76,7 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param options 可选附加参数，如@{@"src": @"app", @"zoom": @"14", @"coord_type": @"默认gcj02|wgs84|bd09ll"}
  @return NSURL
  */
-+ (nullable instancetype)fwBaiduMapsURLWithSaddr:(nullable NSString *)saddr daddr:(nullable NSString *)daddr mode:(nullable NSString *)mode options:(nullable NSDictionary *)options;
+- (nullable NSURL *)baiduMapsURLWithSaddr:(nullable NSString *)saddr daddr:(nullable NSString *)daddr mode:(nullable NSString *)mode options:(nullable NSDictionary *)options;
 
 @end
 

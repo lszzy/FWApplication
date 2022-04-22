@@ -99,7 +99,7 @@ static BOOL isExpanded = NO;
     _object = object;
     // 自动收缩
     self.myTitleLabel.text = object.title;
-    if ([object.imageUrl fwIsFormatUrl]) {
+    if ([object.imageUrl.fw isFormatUrl]) {
         [self.myImageView.fw setImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     } else if (object.imageUrl.length > 0) {
         self.myImageView.image = [TestBundle imageNamed:object.imageUrl];
@@ -417,7 +417,7 @@ static BOOL isExpanded = NO;
     for (TestTableDynamicLayoutObject *object in self.tableData) {
         NSString *imageUrl = object.imageUrl;
         imageUrl.fw.tempObject = @(count++);
-        if ([imageUrl fwIsFormatUrl] || imageUrl.length < 1) {
+        if ([imageUrl.fw isFormatUrl] || imageUrl.length < 1) {
             [pictureUrls addObject:imageUrl];
         } else {
             [pictureUrls addObject:[TestBundle imageNamed:object.imageUrl]];

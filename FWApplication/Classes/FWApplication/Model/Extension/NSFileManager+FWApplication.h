@@ -7,7 +7,7 @@
  @updated    2018/9/18
  */
 
-#import <Foundation/Foundation.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -49,58 +49,55 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWPathResource \
     [[NSBundle mainBundle] resourcePath]
 
-/**
- NSFileManager+FWApplication
- */
-@interface NSFileManager (FWApplication)
+@interface FWFileManagerClassWrapper (FWApplication)
 
 #pragma mark - Path
 
 // 搜索路径，参数为NSSearchPathDirectory
-+ (nullable NSString *)fwPathSearch:(NSSearchPathDirectory)directory;
+- (nullable NSString *)pathSearch:(NSSearchPathDirectory)directory;
 
 // 沙盒路径
-@property (class, nonatomic, copy, readonly) NSString *fwPathHome;
+@property (nonatomic, copy, readonly) NSString *pathHome;
 
 // 文档路径，iTunes会同步备份
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwPathDocument;
+@property (nonatomic, copy, readonly, nullable) NSString *pathDocument;
 
 // 缓存路径，系统不会删除，iTunes会删除
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwPathCaches;
+@property (nonatomic, copy, readonly, nullable) NSString *pathCaches;
 
 // Library路径
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwPathLibrary;
+@property (nonatomic, copy, readonly, nullable) NSString *pathLibrary;
 
 // 配置路径，配置文件保存位置
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwPathPreference;
+@property (nonatomic, copy, readonly, nullable) NSString *pathPreference;
 
 // 临时路径，App退出后可能会删除
-@property (class, nonatomic, copy, readonly) NSString *fwPathTmp;
+@property (nonatomic, copy, readonly) NSString *pathTmp;
 
 // bundle路径，不可写
-@property (class, nonatomic, copy, readonly) NSString *fwPathBundle;
+@property (nonatomic, copy, readonly) NSString *pathBundle;
 
 // 资源路径，不可写
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwPathResource;
+@property (nonatomic, copy, readonly, nullable) NSString *pathResource;
 
 // 绝对路径缩短为波浪线路径
-+ (NSString *)fwAbbreviateTildePath:(NSString *)path;
+- (NSString *)abbreviateTildePath:(NSString *)path;
 
 // 波浪线路径展开为绝对路径
-+ (NSString *)fwExpandTildePath:(NSString *)path;
+- (NSString *)expandTildePath:(NSString *)path;
 
 #pragma mark - Size
 
 // 获取目录大小，单位：B
-+ (unsigned long long)fwFolderSize:(NSString *)folderPath;
+- (unsigned long long)folderSize:(NSString *)folderPath;
 
 // 获取磁盘可用空间，单位：MB
-@property (class, nonatomic, assign, readonly) double fwAvailableDiskSize;
+@property (nonatomic, assign, readonly) double availableDiskSize;
 
 #pragma mark - Addition
 
 // 禁止iCloud备份路径
-+ (BOOL)fwSkipBackup:(NSString *)path;
+- (BOOL)skipBackup:(NSString *)path;
 
 @end
 
