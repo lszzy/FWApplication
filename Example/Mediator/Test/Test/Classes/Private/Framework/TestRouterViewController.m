@@ -145,18 +145,18 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME withHandler:^id(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw.mainWindow fwSelectTabBarIndex:0];
+        [UIWindow.fw.mainWindow.fw selectTabBarIndex:0];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME_TEST withHandler:^id(FWRouterContext * _Nonnull context) {
-        TestModuleController *testController = [UIWindow.fw.mainWindow fwSelectTabBarController:[TestModuleController class]];
+        TestModuleController *testController = [UIWindow.fw.mainWindow.fw selectTabBarController:[TestModuleController class]];
         [testController setSelectedIndex:1];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME_SETTINGS withHandler:^id(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw.mainWindow fwSelectTabBarIndex:2];
+        [UIWindow.fw.mainWindow.fw selectTabBarIndex:2];
         return nil;
     }];
     

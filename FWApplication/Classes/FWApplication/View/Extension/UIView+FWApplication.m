@@ -891,7 +891,7 @@
                    locations:(const CGFloat *)locations
                    direction:(UISwipeGestureRecognizerDirection)direction
 {
-    NSArray<NSValue *> *linePoints = [UIBezierPath fwLinePointsWithRect:rect direction:direction];
+    NSArray<NSValue *> *linePoints = [UIBezierPath.fw linePointsWithRect:rect direction:direction];
     CGPoint startPoint = [linePoints.firstObject CGPointValue];
     CGPoint endPoint = [linePoints.lastObject CGPointValue];
     [self fwDrawLinearGradient:rect colors:colors locations:locations startPoint:startPoint endPoint:endPoint];

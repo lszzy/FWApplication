@@ -134,7 +134,7 @@
                             [NSValue valueWithCGPoint:CGPointMake(170, 60)],
                             [NSValue valueWithCGPoint:CGPointMake(190, 30)],
                             ];
-        UIBezierPath *path = [UIBezierPath fwLinesWithPoints:points];
+        UIBezierPath *path = [UIBezierPath.fw linesWithPoints:points];
         CGContextAddPath(context, path.CGPath);
         CGContextStrokePath(context);
         
@@ -144,7 +144,7 @@
                    [NSValue valueWithCGPoint:CGPointMake(230, 60)],
                    [NSValue valueWithCGPoint:CGPointMake(250, 30)],
                    ];
-        path = [UIBezierPath fwQuadCurvedPathWithPoints:points];
+        path = [UIBezierPath.fw quadCurvedPathWithPoints:points];
         CGContextAddPath(context, path.CGPath);
         CGContextStrokePath(context);
         
@@ -188,7 +188,7 @@
     
     // 形状
     {
-        UIBezierPath *path = [UIBezierPath fwShapeHeart:CGRectMake(0, 0, 50, 50)];
+        UIBezierPath *path = [UIBezierPath.fw shapeHeart:CGRectMake(0, 0, 50, 50)];
         [path applyTransform:CGAffineTransformTranslate(CGAffineTransformIdentity, 20, 260)];
         CGContextAddPath(context, path.CGPath);
         CGContextSetLineWidth(context, 2);
@@ -201,80 +201,80 @@
             CGContextFillPath(context);
         }
         
-        path = [UIBezierPath fwShapeStar:CGRectMake(0, 0, 50, 50)];
-        UIImage *image = [path fwShapeImage:CGSizeMake(50, 50) strokeWidth:2.0 strokeColor:[UIColor greenColor] fillColor:[UIColor orangeColor]];
+        path = [UIBezierPath.fw shapeStar:CGRectMake(0, 0, 50, 50)];
+        UIImage *image = [path.fw shapeImage:CGSizeMake(50, 50) strokeWidth:2.0 strokeColor:[UIColor greenColor] fillColor:[UIColor orangeColor]];
         [image drawInRect:CGRectMake(90, 260, 50, 50)];
         
-        path = [UIBezierPath fwShapeStars:5 frame:CGRectMake(0, 0, 120, 20) spacing:5];
+        path = [UIBezierPath.fw shapeStars:5 frame:CGRectMake(0, 0, 120, 20) spacing:5];
         [path applyTransform:CGAffineTransformTranslate(CGAffineTransformIdentity, 160, 260)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeStars:3 frame:CGRectMake(160, 290, 70, 20) spacing:5];
+        path = [UIBezierPath.fw shapeStars:3 frame:CGRectMake(160, 290, 70, 20) spacing:5];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:[UIColor orangeColor]];
-        path = [UIBezierPath fwShapeStars:2 frame:CGRectMake(235, 290, 45, 20) spacing:5];
+        path = [UIBezierPath.fw shapeStars:2 frame:CGRectMake(235, 290, 45, 20) spacing:5];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     }
     
     // Shape
     {
-        UIBezierPath *path = [UIBezierPath fwShapePlus:CGRectMake(20, 470, 30, 30)];
+        UIBezierPath *path = [UIBezierPath.fw shapePlus:CGRectMake(20, 470, 30, 30)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapePlus:CGRectMake(70, 475, 30, 20)];
+        path = [UIBezierPath.fw shapePlus:CGRectMake(70, 475, 30, 20)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeMinus:CGRectMake(120, 470, 30, 30)];
+        path = [UIBezierPath.fw shapeMinus:CGRectMake(120, 470, 30, 30)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeMinus:CGRectMake(170, 475, 30, 20)];
+        path = [UIBezierPath.fw shapeMinus:CGRectMake(170, 475, 30, 20)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeCross:CGRectMake(220, 470, 30, 30)];
+        path = [UIBezierPath.fw shapeCross:CGRectMake(220, 470, 30, 30)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeCross:CGRectMake(270, 475, 30, 20)];
+        path = [UIBezierPath.fw shapeCross:CGRectMake(270, 475, 30, 20)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeCheck:CGRectMake(20, 520, 30, 30)];
+        path = [UIBezierPath.fw shapeCheck:CGRectMake(20, 520, 30, 30)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeCheck:CGRectMake(70, 525, 30, 20)];
+        path = [UIBezierPath.fw shapeCheck:CGRectMake(70, 525, 30, 20)];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeFold:CGRectMake(120, 520, 30, 30) direction:UISwipeGestureRecognizerDirectionLeft];
+        path = [UIBezierPath.fw shapeFold:CGRectMake(120, 520, 30, 30) direction:UISwipeGestureRecognizerDirectionLeft];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeFold:CGRectMake(170, 525, 30, 20) direction:UISwipeGestureRecognizerDirectionRight];
+        path = [UIBezierPath.fw shapeFold:CGRectMake(170, 525, 30, 20) direction:UISwipeGestureRecognizerDirectionRight];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeFold:CGRectMake(220, 520, 30, 30) direction:UISwipeGestureRecognizerDirectionUp];
+        path = [UIBezierPath.fw shapeFold:CGRectMake(220, 520, 30, 30) direction:UISwipeGestureRecognizerDirectionUp];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeFold:CGRectMake(270, 525, 30, 20) direction:UISwipeGestureRecognizerDirectionDown];
+        path = [UIBezierPath.fw shapeFold:CGRectMake(270, 525, 30, 20) direction:UISwipeGestureRecognizerDirectionDown];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeArrow:CGRectMake(20, 570, 30, 30) direction:UISwipeGestureRecognizerDirectionLeft];
+        path = [UIBezierPath.fw shapeArrow:CGRectMake(20, 570, 30, 30) direction:UISwipeGestureRecognizerDirectionLeft];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeArrow:CGRectMake(70, 575, 30, 20) direction:UISwipeGestureRecognizerDirectionRight];
+        path = [UIBezierPath.fw shapeArrow:CGRectMake(70, 575, 30, 20) direction:UISwipeGestureRecognizerDirectionRight];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeArrow:CGRectMake(120, 570, 30, 30) direction:UISwipeGestureRecognizerDirectionUp];
+        path = [UIBezierPath.fw shapeArrow:CGRectMake(120, 570, 30, 30) direction:UISwipeGestureRecognizerDirectionUp];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeArrow:CGRectMake(170, 575, 30, 20) direction:UISwipeGestureRecognizerDirectionDown];
+        path = [UIBezierPath.fw shapeArrow:CGRectMake(170, 575, 30, 20) direction:UISwipeGestureRecognizerDirectionDown];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeTriangle:CGRectMake(220, 570, 30, 30) direction:UISwipeGestureRecognizerDirectionLeft];
+        path = [UIBezierPath.fw shapeTriangle:CGRectMake(220, 570, 30, 30) direction:UISwipeGestureRecognizerDirectionLeft];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeTriangle:CGRectMake(270, 575, 30, 20) direction:UISwipeGestureRecognizerDirectionRight];
+        path = [UIBezierPath.fw shapeTriangle:CGRectMake(270, 575, 30, 20) direction:UISwipeGestureRecognizerDirectionRight];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeTriangle:CGRectMake(20, 620, 30, 30) direction:UISwipeGestureRecognizerDirectionUp];
+        path = [UIBezierPath.fw shapeTriangle:CGRectMake(20, 620, 30, 30) direction:UISwipeGestureRecognizerDirectionUp];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     
-        path = [UIBezierPath fwShapeTriangle:CGRectMake(70, 625, 30, 20) direction:UISwipeGestureRecognizerDirectionDown];
+        path = [UIBezierPath.fw shapeTriangle:CGRectMake(70, 625, 30, 20) direction:UISwipeGestureRecognizerDirectionDown];
         [self fwDrawBezierPath:path strokeWidth:2.0 strokeColor:[UIColor orangeColor] fillColor:nil];
     }
 }

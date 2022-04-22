@@ -300,7 +300,7 @@
                            locations:(const CGFloat *)locations
                            direction:(UISwipeGestureRecognizerDirection)direction
 {
-    NSArray<NSValue *> *linePoints = [UIBezierPath fwLinePointsWithRect:CGRectMake(0, 0, size.width, size.height) direction:direction];
+    NSArray<NSValue *> *linePoints = [UIBezierPath.fw linePointsWithRect:CGRectMake(0, 0, size.width, size.height) direction:direction];
     CGPoint startPoint = [linePoints.firstObject CGPointValue];
     CGPoint endPoint = [linePoints.lastObject CGPointValue];
     return [self fwGradientImageWithSize:size colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
