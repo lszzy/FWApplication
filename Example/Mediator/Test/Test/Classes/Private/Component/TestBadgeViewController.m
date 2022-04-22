@@ -103,7 +103,7 @@
 
 #pragma mark - Action
 
-- (BOOL)popBackBarItem
+- (BOOL)shouldPopController
 {
     [self onClose];
     return NO;

@@ -41,13 +41,20 @@
     self.navigationView.bottomHeight = FWNavigationBarHeight;
     self.navigationView.bottomHidden = YES;
     self.navigationView.bottomView.backgroundColor = UIColor.greenColor;
+    FWWeakifySelf();
     self.navigationView.menuView.leftButton = [FWToolbarButton buttonWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        if (!self.shouldPopController) return;
         [FWRouter closeViewControllerAnimated:YES];
     }];
     self.navigationView.menuView.rightButton = [FWToolbarButton buttonWithObject:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        if (!self.shouldPopController) return;
         [FWRouter closeViewControllerAnimated:YES];
     }];
     self.navigationView.menuView.rightMoreButton = [FWToolbarButton buttonWithObject:FWIcon.actionImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        if (!self.shouldPopController) return;
         [FWRouter closeViewControllerAnimated:YES];
     }];
     [self.view addSubview:self.navigationView];
@@ -59,7 +66,6 @@
     self.toolbarView.topHeight = 44;
     self.toolbarView.topHidden = YES;
     self.toolbarView.topView.backgroundColor = UIColor.greenColor;
-    FWWeakifySelf();
     self.toolbarView.menuView.leftButton = [FWToolbarButton buttonWithObject:@"取消" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
@@ -75,19 +81,6 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
     self.tableView.fw.layoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
-}
-
-- (void)renderModel
-{
-    FWWeakifySelf();
-    self.fw.backBarBlock = ^BOOL{
-        FWStrongifySelf();
-        [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
-            FWStrongifySelf();
-            [self.fw closeViewControllerAnimated:YES];
-        }];
-        return NO;
-    };
 }
 
 - (void)renderData
@@ -111,6 +104,16 @@
         @"工具栏底部切换",
         @"工具栏切换",
     ]];
+}
+
+- (BOOL)shouldPopController
+{
+    FWWeakifySelf();
+    [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
+        FWStrongifySelf();
+        [self.fw closeViewControllerAnimated:YES];
+    }];
+    return NO;
 }
 
 - (UIImage *)accessoryImage

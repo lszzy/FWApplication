@@ -104,7 +104,7 @@
         showClose = NO;
     }
     viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:showClose ? leftItems.firstObject : nil, nil];
-    viewController.fw.popGestureBlock = ^BOOL{
+    viewController.fw.allowsPopGesture = ^BOOL{
         return !weakController.webView.canGoBack;
     };
     [viewController.webView.fw observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary *change) {

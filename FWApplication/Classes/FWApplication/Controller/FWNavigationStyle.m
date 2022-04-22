@@ -259,6 +259,23 @@
     }
 }
 
+- (id)backBarItem
+{
+    return self.base.navigationItem.backBarButtonItem;
+}
+
+- (void)setBackBarItem:(id)object
+{
+    if ([object isKindOfClass:[UIImage class]]) {
+        self.base.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
+        self.base.navigationController.navigationBar.fw.backImage = (UIImage *)object;
+    } else {
+        UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem.fw itemWithObject:object ?: [UIImage new] target:nil action:nil];
+        self.base.navigationItem.backBarButtonItem = backItem;
+        self.base.navigationController.navigationBar.fw.backImage = nil;
+    }
+}
+
 - (id)leftBarItem
 {
     return self.base.navigationItem.leftBarButtonItem;
@@ -271,7 +288,7 @@
     } else {
         __weak UIViewController *weakController = self.base;
         self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
-            if (![weakController popBackBarItem]) return;
+            if (![weakController shouldPopController]) return;
             [weakController.fw closeViewControllerAnimated:YES];
         }];
     }
@@ -289,7 +306,7 @@
     } else {
         __weak UIViewController *weakController = self.base;
         self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
-            if (![weakController popBackBarItem]) return;
+            if (![weakController shouldPopController]) return;
             [weakController.fw closeViewControllerAnimated:YES];
         }];
     }
@@ -345,51 +362,6 @@
     NSMutableArray *items = self.base.navigationItem.rightBarButtonItems ? [self.base.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
     [items addObject:barItem];
     self.base.navigationItem.rightBarButtonItems = [items copy];
-}
-
-#pragma mark - Back
-
-- (id)backBarItem
-{
-    return self.base.navigationItem.backBarButtonItem;
-}
-
-- (void)setBackBarItem:(id)object
-{
-    if ([object isKindOfClass:[UIImage class]]) {
-        self.base.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.base.navigationController.navigationBar.fw.backImage = (UIImage *)object;
-    } else {
-        UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem.fw itemWithObject:object ?: [UIImage new] target:nil action:nil];
-        self.base.navigationItem.backBarButtonItem = backItem;
-        self.base.navigationController.navigationBar.fw.backImage = nil;
-    }
-}
-
-- (BOOL (^)(void))backBarBlock
-{
-    return objc_getAssociatedObject(self.base, @selector(backBarBlock));
-}
-
-- (void)setBackBarBlock:(BOOL (^)(void))block
-{
-    if (block) {
-        objc_setAssociatedObject(self.base, @selector(backBarBlock), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    } else {
-        objc_setAssociatedObject(self.base, @selector(backBarBlock), nil, OBJC_ASSOCIATION_ASSIGN);
-    }
-}
-
-@end
-
-@implementation UIViewController (FWStyle)
-
-- (BOOL)popBackBarItem
-{
-    BOOL shouldPop = YES;
-    BOOL (^block)(void) = objc_getAssociatedObject(self, @selector(backBarBlock));
-    if (block) shouldPop = block();
-    return shouldPop;
 }
 
 @end

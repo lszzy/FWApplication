@@ -93,6 +93,9 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 /// 快捷设置导航栏标题文字或视图
 @property (nonatomic, strong, nullable) id barTitle;
 
+/// 设置导航栏返回按钮，支持UIBarButtonItem|NSString|UIImage等，nil时显示系统箭头，下个页面生效
+@property (nonatomic, strong, nullable) id backBarItem;
+
 /// 设置导航栏左侧按钮，支持UIBarButtonItem|UIImage等，默认事件为关闭当前页面，下个页面生效
 @property (nonatomic, strong, nullable) id leftBarItem;
 
@@ -122,21 +125,6 @@ static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 
 /// 快捷添加导航栏右侧按钮，block事件
 - (void)addRightBarItem:(nullable id)object block:(void (^)(id sender))block;
-
-#pragma mark - Back
-
-/// 设置导航栏返回按钮，支持UIBarButtonItem|NSString|UIImage等，nil时显示系统箭头，下个页面生效
-@property (nonatomic, strong, nullable) id backBarItem;
-
-/// 设置导航栏返回按钮点击block事件，默认popBackBarItem自动调用。逻辑同上
-@property (nonatomic, copy, nullable) BOOL (^backBarBlock)(void);
-
-@end
-
-@interface UIViewController (FWStyle)
-
-/// 导航栏返回按钮点击事件(pop不会触发)，当前页面生效。返回YES关闭页面，NO不关闭，子类可重写。默认调用已设置的block事件
-- (BOOL)popBackBarItem;
 
 @end
 

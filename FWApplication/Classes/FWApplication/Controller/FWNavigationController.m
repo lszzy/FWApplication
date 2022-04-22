@@ -376,133 +376,6 @@
 
 @end
 
-#pragma mark - FWNavigationControllerWrapper+FWPopGesture
-
-@interface FWGestureRecognizerDelegateProxy : FWDelegateProxy <UIGestureRecognizerDelegate>
-
-@property (nonatomic, weak) UINavigationController *navigationController;
-
-@end
-
-@implementation FWGestureRecognizerDelegateProxy
-
-- (BOOL)shouldForceReceive
-{
-    if (self.navigationController.viewControllers.count <= 1) return NO;
-    if (!self.navigationController.interactivePopGestureRecognizer.enabled) return NO;
-    return self.navigationController.topViewController.fw.popGestureEnabled;
-}
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
-{
-    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
-        BOOL shouldPop = YES;
-        if ([self.navigationController.topViewController respondsToSelector:@selector(popBackBarItem)]) {
-            // 调用钩子。如果返回NO，则不开始手势；如果返回YES，则使用系统方式
-            shouldPop = [self.navigationController.topViewController popBackBarItem];
-        }
-        if (shouldPop) {
-            if ([self.delegate respondsToSelector:@selector(gestureRecognizerShouldBegin:)]) {
-                return [self.delegate gestureRecognizerShouldBegin:gestureRecognizer];
-            }
-        }
-        return NO;
-    }
-    return YES;
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
-    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
-        if ([self.delegate respondsToSelector:@selector(gestureRecognizer:shouldReceiveTouch:)]) {
-            BOOL shouldReceive = [self.delegate gestureRecognizer:gestureRecognizer shouldReceiveTouch:touch];
-            if (!shouldReceive && [self shouldForceReceive]) {
-                return YES;
-            }
-            return shouldReceive;
-        }
-    }
-    return YES;
-}
-
-- (BOOL)_gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveEvent:(UIEvent *)event
-{
-    // 修复iOS13.4拦截返回失效问题，返回YES才会走后续流程
-    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
-        if ([self.delegate respondsToSelector:@selector(_gestureRecognizer:shouldReceiveEvent:)]) {
-            BOOL shouldReceive = [self.delegate _gestureRecognizer:gestureRecognizer shouldReceiveEvent:event];
-            if (!shouldReceive && [self shouldForceReceive]) {
-                return YES;
-            }
-            return shouldReceive;
-        }
-    }
-    return YES;
-}
-
-@end
-
-@implementation FWNavigationControllerWrapper (FWPopGesture)
-
-- (FWGestureRecognizerDelegateProxy *)delegateProxy
-{
-    FWGestureRecognizerDelegateProxy *proxy = objc_getAssociatedObject(self.base, _cmd);
-    if (!proxy) {
-        proxy = [[FWGestureRecognizerDelegateProxy alloc] init];
-        objc_setAssociatedObject(self.base, _cmd, proxy, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return proxy;
-}
-
-@end
-
-@implementation FWNavigationControllerClassWrapper (FWPopGesture)
-
-- (void)enablePopProxy
-{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        FWSwizzleClass(UINavigationController, @selector(viewDidLoad), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            FWSwizzleOriginal();
-            
-            // 拦截系统返回手势事件代理，加载自定义代理方法
-            if (selfObject.interactivePopGestureRecognizer.delegate != selfObject.fw.delegateProxy) {
-                selfObject.fw.delegateProxy.delegate = selfObject.interactivePopGestureRecognizer.delegate;
-                selfObject.fw.delegateProxy.navigationController = selfObject;
-                selfObject.interactivePopGestureRecognizer.delegate = selfObject.fw.delegateProxy;
-            }
-        }));
-        FWSwizzleClass(UINavigationController, @selector(navigationBar:shouldPopItem:), FWSwizzleReturn(BOOL), FWSwizzleArgs(UINavigationBar *navigationBar, UINavigationItem *item), FWSwizzleCode({
-            // 检查返回按钮点击事件钩子
-            if (selfObject.viewControllers.count >= navigationBar.items.count &&
-                [selfObject.topViewController respondsToSelector:@selector(popBackBarItem)]) {
-                // 调用钩子。如果返回NO，则不pop当前页面；如果返回YES，则使用默认方式
-                if (![selfObject.topViewController popBackBarItem]) {
-                    return NO;
-                }
-            }
-            
-            return FWSwizzleOriginal(navigationBar, item);
-        }));
-        FWSwizzleClass(UINavigationController, @selector(childViewControllerForStatusBarHidden), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(), FWSwizzleCode({
-            if (selfObject.topViewController) {
-                return selfObject.topViewController;
-            } else {
-                return FWSwizzleOriginal();
-            }
-        }));
-        FWSwizzleClass(UINavigationController, @selector(childViewControllerForStatusBarStyle), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(), FWSwizzleCode({
-            if (selfObject.topViewController) {
-                return selfObject.topViewController;
-            } else {
-                return FWSwizzleOriginal();
-            }
-        }));
-    });
-}
-
-@end
-
 #pragma mark - FWNavigationControllerWrapper+FWFullscreenPopGesture
 
 @interface FWFullscreenPopGestureRecognizerDelegate : NSObject <UIGestureRecognizerDelegate>
@@ -524,8 +397,8 @@
         return NO;
     }
     
-    if ([topViewController respondsToSelector:@selector(popBackBarItem)] &&
-        ![topViewController popBackBarItem]) {
+    if ([topViewController respondsToSelector:@selector(shouldPopController)] &&
+        ![topViewController shouldPopController]) {
         return NO;
     }
     

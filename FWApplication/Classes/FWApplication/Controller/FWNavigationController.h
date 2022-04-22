@@ -55,21 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - FWNavigationControllerWrapper+FWPopGesture
-
-@interface FWNavigationControllerClassWrapper (FWPopGesture)
-
-/// 全局启用返回代理拦截，启用后支持popBackBarItem和popGestureEnabled功能，默认NO未启用
-///
-/// 当自定义left按钮或隐藏导航栏之后，系统返回手势默认失效，可调用此方法全局开启返回手势；开启后自动将开关代理给顶部VC的poppopGestureEnabled属性控制；当interactivePop手势禁用时不生效
-- (void)enablePopProxy;
-
-@end
-
 #pragma mark - FWNavigationControllerWrapper+FWFullscreenPopGesture
 
 /**
- 导航栏全屏返回手势分类，兼容popBackBarItem返回拦截方法
+ 导航栏全屏返回手势分类，兼容shouldPopController返回拦截方法
  @see https://github.com/forkingdog/FDFullscreenPopGesture
  */
 @interface FWNavigationControllerWrapper (FWFullscreenPopGesture)
@@ -90,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /**
- 控制器全屏返回手势分类，兼容popBackBarItem返回拦截方法
+ 控制器全屏返回手势分类，兼容shouldPopController返回拦截方法
  */
 @interface FWViewControllerWrapper (FWFullscreenPopGesture)
 

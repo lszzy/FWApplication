@@ -501,7 +501,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     TestViewController *viewController = [TestViewController new];
     viewController.navigationItem.title = @"iOS14 bug";
     FWWeakifySelf();
-    viewController.fw.backBarBlock = ^BOOL{
+    viewController.fw.shouldPopController = ^BOOL{
         FWStrongifySelf();
         static NSInteger count = 0;
         NSInteger index = count++ % 3;
