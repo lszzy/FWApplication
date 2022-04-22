@@ -176,7 +176,7 @@
     UILabel *themeLabel = [UILabel new];
     themeLabel.frame = CGRectMake(0, 440, FWScreenWidth, 50);
     themeLabel.textAlignment = NSTextAlignmentCenter;
-    themeLabel.attributedText = [NSAttributedString fwAttributedString:@"我是AttributedString" withFont:FWFontSize(16).fwBoldFont textColor:[UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
+    themeLabel.attributedText = [NSAttributedString.fw attributedString:@"我是AttributedString" withFont:FWFontSize(16).fwBoldFont textColor:[UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
     [self.view addSubview:themeLabel];
     
     UIButton *themeButton = [UIButton new];
@@ -185,7 +185,7 @@
     [themeButton setTitleColor:[UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]] forState:UIControlStateNormal];
     
     UIImage *buttonImage = [UIImage.fw themeLight:(FWThemeManager.sharedInstance.style == FWThemeStyleLight ? nil : [TestBundle imageNamed:@"theme_image_light"]) dark:(FWThemeManager.sharedInstance.style == FWThemeStyleDark ? nil : [TestBundle imageNamed:@"theme_image_dark"])];
-    FWThemeObject<NSAttributedString *> *themeString = [NSAttributedString fwThemeObjectWithHtmlString:@"我是<span style='color:red;'>红色</span>AttributedString" defaultAttributes:@{
+    FWThemeObject<NSAttributedString *> *themeString = [NSAttributedString.fw themeObjectWithHtmlString:@"我是<span style='color:red;'>红色</span>AttributedString" defaultAttributes:@{
         NSFontAttributeName: FWFontBold(16),
         NSForegroundColorAttributeName: [UIColor.fw themeLight:[UIColor blackColor] dark:[UIColor whiteColor]],
     }];

@@ -101,7 +101,7 @@
     option.paragraphStyle = [NSMutableParagraphStyle new];
     option.paragraphStyle.alignment = NSTextAlignmentLeft;
     option.paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
-    NSAttributedString *attrText = [NSAttributedString fwAttributedString:[self testText] withOption:option];
+    NSAttributedString *attrText = [NSAttributedString.fw attributedString:[self testText] withOption:option];
     return attrText;
 }
 
