@@ -9,6 +9,12 @@
 
 #import "TestButtonViewController.h"
 
+@interface TestButtonViewController ()
+
+FWPropertyAssign(NSInteger, count);
+
+@end
+
 @implementation TestButtonViewController
 
 - (void)renderView
@@ -38,7 +44,7 @@
     [self.view addSubview:label];
     
     button = [UIButton.fw buttonWithTitle:@"Button1秒内不可重复点击" font:[UIFont.fw fontOfSize:15] titleColor:[Theme textColor]];
-    button.fwTouchEventInterval = 1;
+    button.fw.touchEventInterval = 1;
     button.frame = CGRectMake(25, 105, 200, 30);
     [button.fw addTouchTarget:self action:@selector(onClick5:)];
     [self.view addSubview:button];
@@ -205,41 +211,47 @@
 
 - (void)onClick1:(UIButton *)sender
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Button重复点击触发事件");
-    });
+    self.count += 1;
+    [self showCount];
 }
 
 - (void)onClick2:(UITapGestureRecognizer *)sender
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Label重复点击触发事件");
-    });
+    self.count += 1;
+    [self showCount];
 }
 
 - (void)onClick3:(UIButton *)sender
 {
+    self.count += 1;
+    [self showCount];
+    
     sender.enabled = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Button不可重复点击触发事件");
         sender.enabled = YES;
     });
 }
 
 - (void)onClick4:(UITapGestureRecognizer *)gesture
 {
+    self.count += 1;
+    [self showCount];
+    
     gesture.view.userInteractionEnabled = NO;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Label不可重复点击触发事件");
         gesture.view.userInteractionEnabled = YES;
     });
 }
 
 - (void)onClick5:(UIButton *)sender
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Button1秒内不可重复点击触发事件");
-    });
+    self.count += 1;
+    [self showCount];
+}
+
+- (void)showCount
+{
+    [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"点击计数：%@", @(self.count)]];
 }
 
 @end

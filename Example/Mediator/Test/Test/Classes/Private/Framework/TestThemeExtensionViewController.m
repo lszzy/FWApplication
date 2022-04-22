@@ -90,7 +90,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
             return [UIColor redColor];
         }
     }];
-    themeLabel.attributedText = [NSAttributedString.fw attributedString:@"我是AttributedString" withFont:FWFontSize(16).fwBoldFont textColor:textColor];
+    themeLabel.attributedText = [NSAttributedString.fw attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw.boldFont textColor:textColor];
     [self.view addSubview:themeLabel];
 }
 

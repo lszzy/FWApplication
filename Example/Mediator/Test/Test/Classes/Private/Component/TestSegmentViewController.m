@@ -90,7 +90,7 @@
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗体16 " withFont:attrFont]];
     attrFont = [UIFont italicSystemFontOfSize:16];
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"斜体16 " withFont:attrFont]];
-    attrFont = [[UIFont italicSystemFontOfSize:16] fwBoldFont];
+    attrFont = [[UIFont italicSystemFontOfSize:16].fw boldFont];
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗斜体16 " withFont:attrFont]];
     
     attrFont = [UIFont.fw fontOfSize:16 weight:UIFontWeightLight];
@@ -99,9 +99,9 @@
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"常规16 " withFont:attrFont]];
     attrFont = [UIFont.fw fontOfSize:16 weight:UIFontWeightBold];
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗体16 " withFont:attrFont]];
-    attrFont = [[UIFont.fw fontOfSize:16 weight:UIFontWeightRegular] fwItalicFont];
+    attrFont = [[UIFont.fw fontOfSize:16 weight:UIFontWeightRegular].fw italicFont];
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"斜体16 " withFont:attrFont]];
-    attrFont = [[[[[[UIFont.fw fontOfSize:16 weight:UIFontWeightBold] fwItalicFont] fwNonBoldFont] fwBoldFont] fwNonItalicFont] fwItalicFont];
+    attrFont = [[[[[[UIFont.fw fontOfSize:16 weight:UIFontWeightBold].fw italicFont].fw nonBoldFont].fw boldFont].fw nonItalicFont].fw italicFont];
     [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗斜体16 " withFont:attrFont]];
     textLabel.attributedText = attrStr;
     
