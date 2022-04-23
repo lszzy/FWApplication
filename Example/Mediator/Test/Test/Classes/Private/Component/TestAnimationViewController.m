@@ -233,7 +233,7 @@ FWDefLazyProperty(UIView *, animationView, {
     NSString *title = nil;
     if (animationIndex_ == 1) {
         title = @"Push.FromTop";
-        [self.animationView fwAddTransitionWithType:kCATransitionPush
+        [self.animationView.fw addTransitionWithType:kCATransitionPush
                                             subtype:kCATransitionFromTop
                                      timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                            duration:1.0
@@ -242,7 +242,7 @@ FWDefLazyProperty(UIView *, animationView, {
     
     if (animationIndex_ == 2) {
         title = @"CurlUp";
-        [self.animationView fwAddAnimationWithCurve:UIViewAnimationCurveEaseInOut
+        [self.animationView.fw addAnimationWithCurve:UIViewAnimationCurveEaseInOut
                                          transition:UIViewAnimationTransitionCurlUp
                                            duration:1.0
                                          completion:NULL];
@@ -250,7 +250,7 @@ FWDefLazyProperty(UIView *, animationView, {
     
     if (animationIndex_ == 3) {
         title = @"transform.rotation.y";
-        [self.animationView fwAddAnimationWithKeyPath:@"transform.rotation.y"
+        [self.animationView.fw addAnimationWithKeyPath:@"transform.rotation.y"
                                             fromValue:@(0)
                                               toValue:@(M_PI)
                                              duration:1.0
@@ -259,41 +259,41 @@ FWDefLazyProperty(UIView *, animationView, {
     
     if (animationIndex_ == 4) {
         title = @"Shake";
-        [self.animationView fwShakeWithTimes:10 delta:0 duration:0.1 completion:NULL];
+        [self.animationView.fw shakeWithTimes:10 delta:0 duration:0.1 completion:NULL];
     }
     
     if (animationIndex_ == 5) {
         title = @"Alpha";
-        [self.animationView fwFadeWithAlpha:0.0 duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwFadeWithAlpha:1.0 duration:1.0 completion:NULL];
+        [self.animationView.fw fadeWithAlpha:0.0 duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw fadeWithAlpha:1.0 duration:1.0 completion:NULL];
         }];
     }
     
     if (animationIndex_ == 6) {
         title = @"Rotate";
-        [self.animationView fwRotateWithDegree:180 duration:1.0 completion:NULL];
+        [self.animationView.fw rotateWithDegree:180 duration:1.0 completion:NULL];
     }
     
     if (animationIndex_ == 7) {
         title = @"Scale";
-        [self.animationView fwScaleWithScaleX:0.5 scaleY:0.5 duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwScaleWithScaleX:2.0 scaleY:2.0 duration:1.0 completion:NULL];
+        [self.animationView.fw scaleWithScaleX:0.5 scaleY:0.5 duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw scaleWithScaleX:2.0 scaleY:2.0 duration:1.0 completion:NULL];
         }];
     }
     
     if (animationIndex_ == 8) {
         title = @"Move";
         CGPoint point = self.animationView.frame.origin;
-        [self.animationView fwMoveWithPoint:CGPointMake(10, 10) duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwMoveWithPoint:point duration:1.0 completion:NULL];
+        [self.animationView.fw moveWithPoint:CGPointMake(10, 10) duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw moveWithPoint:point duration:1.0 completion:NULL];
         }];
     }
     
     if (animationIndex_ == 9) {
         title = @"Frame";
         CGRect frame = self.animationView.frame;
-        [self.animationView fwMoveWithFrame:CGRectMake(10, 10, 50, 50) duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwMoveWithFrame:frame duration:1.0 completion:NULL];
+        [self.animationView.fw moveWithFrame:CGRectMake(10, 10, 50, 50) duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw moveWithFrame:frame duration:1.0 completion:NULL];
         }];
     }
     

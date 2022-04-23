@@ -80,6 +80,14 @@
     [sender setTranslation:(CGPoint){0, 0} inView:[self superview]];
 }
 
+- (void)innerAnimationDidStop:(NSString *)animationId finished:(NSNumber *)finished context:(void *)context
+{
+    void (^completion)(BOOL finished) = objc_getAssociatedObject(self, @selector(innerAnimationDidStop:finished:context:));
+    if (completion) {
+        completion([finished boolValue]);
+    }
+}
+
 @end
 
 @implementation FWViewWrapper (FWApplication)
@@ -317,41 +325,13 @@
 
 @end
 
-#pragma mark - UIView+FWAnimation
+#pragma mark - FWViewWrapper+FWAnimation
 
-@implementation UIView (FWAnimation)
-
-#pragma mark - Block
-
-+ (void)fwAnimateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block
-{
-    [UIView performWithoutAnimation:block];
-}
-
-+ (void)fwAnimateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
-{
-    [UIView animateWithDuration:0 animations:block completion:^(BOOL finished) {
-        if (completion) {
-            completion();
-        }
-    }];
-}
-
-+ (void)fwAnimateWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
-{
-    if (!block) {
-        return;
-    }
-    
-    [CATransaction begin];
-    [CATransaction setCompletionBlock:completion];
-    block();
-    [CATransaction commit];
-}
+@implementation FWViewWrapper (FWAnimation)
 
 #pragma mark - Animation
 
-- (void)fwAddAnimationWithBlock:(void (^)(void))block
+- (void)addAnimationWithBlock:(void (^)(void))block
                      completion:(void (^)(BOOL finished))completion
 {
     [UIView animateWithDuration:0.25
@@ -361,7 +341,7 @@
                      completion:completion];
 }
 
-- (void)fwAddAnimationWithBlock:(void (^)(void))block
+- (void)addAnimationWithBlock:(void (^)(void))block
                        duration:(NSTimeInterval)duration
                      completion:(void (^)(BOOL finished))completion
 {
@@ -371,7 +351,7 @@
                      completion:completion];
 }
 
-- (void)fwAddAnimationWithCurve:(UIViewAnimationCurve)curve
+- (void)addAnimationWithCurve:(UIViewAnimationCurve)curve
                      transition:(UIViewAnimationTransition)transition
                        duration:(NSTimeInterval)duration
                      completion:(void (^)(BOOL finished))completion
@@ -380,27 +360,19 @@
     [UIView setAnimationCurve:curve];
     // 默认值0.2
     [UIView setAnimationDuration:duration];
-    [UIView setAnimationTransition:transition forView:self cache:NO];
+    [UIView setAnimationTransition:transition forView:self.base cache:NO];
     
     // 设置完成事件
     if (completion) {
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(fwInnerAnimationDidStop:finished:context:)];
-        objc_setAssociatedObject(self, @selector(fwInnerAnimationDidStop:finished:context:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
+        [UIView setAnimationDelegate:self.base];
+        [UIView setAnimationDidStopSelector:@selector(innerAnimationDidStop:finished:context:)];
+        objc_setAssociatedObject(self.base, @selector(innerAnimationDidStop:finished:context:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     }
     
     [UIView commitAnimations];
 }
 
-- (void)fwInnerAnimationDidStop:(NSString *)animationId finished:(NSNumber *)finished context:(void *)context
-{
-    void (^completion)(BOOL finished) = objc_getAssociatedObject(self, @selector(fwInnerAnimationDidStop:finished:context:));
-    if (completion) {
-        completion([finished boolValue]);
-    }
-}
-
-- (CABasicAnimation *)fwAddAnimationWithKeyPath:(NSString *)keyPath
+- (CABasicAnimation *)addAnimationWithKeyPath:(NSString *)keyPath
                                       fromValue:(id)fromValue
                                         toValue:(id)toValue
                                        duration:(CFTimeInterval)duration
@@ -423,29 +395,29 @@
         };
     }
     
-    [self.layer addAnimation:animation forKey:@"FWAnimation"];
+    [self.base.layer addAnimation:animation forKey:@"FWAnimation"];
     return animation;
 }
 
-- (void)fwAddTransitionWithOption:(UIViewAnimationOptions)option
+- (void)addTransitionWithOption:(UIViewAnimationOptions)option
                             block:(void (^)(void))block
                          duration:(NSTimeInterval)duration
                        completion:(void (^)(BOOL finished))completion
 {
-    [UIView transitionWithView:self
+    [UIView transitionWithView:self.base
                       duration:duration
                        options:option
                     animations:block
                     completion:completion];
 }
 
-- (void)fwAddTransitionWithOption:(UIViewAnimationOptions)option
+- (void)addTransitionWithOption:(UIViewAnimationOptions)option
                             block:(void (^)(void))block
                          duration:(NSTimeInterval)duration
                 animationsEnabled:(BOOL)animationsEnabled
                        completion:(void (^)(BOOL finished))completion
 {
-    [UIView transitionWithView:self
+    [UIView transitionWithView:self.base
                       duration:duration
                        options:option
                     animations:^{
@@ -457,19 +429,19 @@
                     completion:completion];
 }
 
-- (void)fwAddTransitionToView:(UIView *)toView
+- (void)addTransitionToView:(UIView *)toView
                    withOption:(UIViewAnimationOptions)option
                      duration:(NSTimeInterval)duration
                    completion:(void (^)(BOOL finished))completion
 {
-    [UIView transitionFromView:self
+    [UIView transitionFromView:self.base
                         toView:toView
                       duration:duration
                        options:option
                     completion:completion];
 }
 
-- (CATransition *)fwAddTransitionWithType:(NSString *)type
+- (CATransition *)addTransitionWithType:(NSString *)type
                                   subtype:(NSString *)subtype
                            timingFunction:(NSString *)timingFunction
                                  duration:(CFTimeInterval)duration
@@ -548,23 +520,23 @@
     }
     
     // 所有核心动画和特效都是基于CAAnimation(作用于CALayer)
-    [self.layer addAnimation:transition forKey:@"FWAnimation"];
+    [self.base.layer addAnimation:transition forKey:@"FWAnimation"];
     return transition;
 }
 
-- (void)fwRemoveAnimation
+- (void)removeAnimation
 {
-    [self.layer removeAnimationForKey:@"FWAnimation"];
+    [self.base.layer removeAnimationForKey:@"FWAnimation"];
 }
 
-- (void)fwRemoveAllAnimations
+- (void)removeAllAnimations
 {
-    [self.layer removeAllAnimations];
+    [self.base.layer removeAllAnimations];
 }
 
 #pragma mark - Custom
 
-- (CABasicAnimation *)fwStrokeWithLayer:(CAShapeLayer *)layer
+- (CABasicAnimation *)strokeWithLayer:(CAShapeLayer *)layer
                                duration:(NSTimeInterval)duration
                              completion:(void (^)(BOOL finished))completion
 {
@@ -587,12 +559,12 @@
     return animation;
 }
 
-- (void)fwShakeWithTimes:(int)times
+- (void)shakeWithTimes:(int)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
               completion:(void (^)(BOOL finished))completion
 {
-    [self fwShakeWithTimes:(times > 0 ? times : 10)
+    [self shakeWithTimes:(times > 0 ? times : 10)
                      delta:(delta > 0 ? delta : 5)
                   duration:(duration > 0 ? duration : 0.03)
                  direction:1
@@ -600,7 +572,7 @@
                 completion:completion];
 }
 
-- (void)fwShakeWithTimes:(int)times
+- (void)shakeWithTimes:(int)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
                direction:(NSInteger)direction
@@ -608,27 +580,27 @@
               completion:(void (^)(BOOL finished))completion
 {
     // 是否是文本输入框
-    BOOL isTextField = [self isKindOfClass:[UITextField class]];
+    BOOL isTextField = [self.base isKindOfClass:[UITextField class]];
     
     [UIView animateWithDuration:duration animations:^{
         if (isTextField) {
             // 水平摇摆
-            self.transform = CGAffineTransformMakeTranslation(delta * direction, 0);
+            self.base.transform = CGAffineTransformMakeTranslation(delta * direction, 0);
             // 垂直摇摆
-            // self.transform = CGAffineTransformMakeTranslation(0, delta * direction);
+            // self.base.transform = CGAffineTransformMakeTranslation(0, delta * direction);
         } else {
             // 水平摇摆
-            self.layer.affineTransform = CGAffineTransformMakeTranslation(delta * direction, 0);
+            self.base.layer.affineTransform = CGAffineTransformMakeTranslation(delta * direction, 0);
             // 垂直摇摆
-            // self.layer.affineTransform = CGAffineTransformMakeTranslation(0, delta * direction);
+            // self.base.layer.affineTransform = CGAffineTransformMakeTranslation(0, delta * direction);
         }
     } completion:^(BOOL finished) {
         if (currentTimes >= times) {
             [UIView animateWithDuration:duration animations:^{
                 if (isTextField) {
-                    self.transform = CGAffineTransformIdentity;
+                    self.base.transform = CGAffineTransformIdentity;
                 } else {
-                    self.layer.affineTransform = CGAffineTransformIdentity;
+                    self.base.layer.affineTransform = CGAffineTransformIdentity;
                 }
             } completion:^(BOOL finished) {
                 if (completion) {
@@ -637,7 +609,7 @@
             }];
             return;
         }
-        [self fwShakeWithTimes:(times - 1)
+        [self shakeWithTimes:(times - 1)
                          delta:delta
                       duration:duration
                      direction:direction * -1
@@ -646,7 +618,7 @@
     }];
 }
 
-- (void)fwFadeWithAlpha:(float)alpha
+- (void)fadeWithAlpha:(float)alpha
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL finished))completion
 {
@@ -654,23 +626,23 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.alpha = alpha;
+                         self.base.alpha = alpha;
                      }
                      completion:completion];
 }
 
-- (void)fwFadeWithBlock:(void (^)(void))block
+- (void)fadeWithBlock:(void (^)(void))block
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL))completion
 {
-    [UIView transitionWithView:self
+    [UIView transitionWithView:self.base
                       duration:duration
                        options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction
                     animations:block
                     completion:completion];
 }
 
-- (void)fwRotateWithDegree:(CGFloat)degree
+- (void)rotateWithDegree:(CGFloat)degree
                   duration:(NSTimeInterval)duration
                 completion:(void (^)(BOOL finished))completion
 {
@@ -678,12 +650,12 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.transform = CGAffineTransformRotate(self.transform, (degree * M_PI / 180.f));
+                         self.base.transform = CGAffineTransformRotate(self.base.transform, (degree * M_PI / 180.f));
                      }
                      completion:completion];
 }
 
-- (void)fwScaleWithScaleX:(float)scaleX
+- (void)scaleWithScaleX:(float)scaleX
                    scaleY:(float)scaleY
                  duration:(NSTimeInterval)duration
                completion:(void (^)(BOOL finished))completion
@@ -692,11 +664,11 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.transform = CGAffineTransformScale(self.transform, scaleX, scaleY);
+                         self.base.transform = CGAffineTransformScale(self.base.transform, scaleX, scaleY);
                      } completion:completion];
 }
 
-- (void)fwMoveWithPoint:(CGPoint)point
+- (void)moveWithPoint:(CGPoint)point
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL finished))completion
 {
@@ -704,11 +676,11 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.frame = CGRectMake(point.x, point.y, self.frame.size.width, self.frame.size.height);
+                         self.base.frame = CGRectMake(point.x, point.y, self.base.frame.size.width, self.base.frame.size.height);
                      } completion:completion];
 }
 
-- (void)fwMoveWithFrame:(CGRect)frame
+- (void)moveWithFrame:(CGRect)frame
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL finished))completion
 {
@@ -716,8 +688,40 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.frame = frame;
+                         self.base.frame = frame;
                      } completion:completion];
+}
+
+@end
+
+@implementation FWViewClassWrapper (FWAnimation)
+
+#pragma mark - Block
+
+- (void)animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block
+{
+    [UIView performWithoutAnimation:block];
+}
+
+- (void)animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
+{
+    [UIView animateWithDuration:0 animations:block completion:^(BOOL finished) {
+        if (completion) {
+            completion();
+        }
+    }];
+}
+
+- (void)animateWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
+{
+    if (!block) {
+        return;
+    }
+    
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:completion];
+    block();
+    [CATransaction commit];
 }
 
 @end
@@ -799,27 +803,27 @@
 
 @end
 
-#pragma mark - CALayer+FWLayer
+#pragma mark - FWLayerWrapper+FWLayer
 
-@implementation CALayer (FWLayer)
+@implementation FWLayerWrapper (FWLayer)
 
-- (void)fwSetShadowColor:(UIColor *)color
+- (void)setShadowColor:(UIColor *)color
                   offset:(CGSize)offset
                   radius:(CGFloat)radius
 {
-    self.shadowColor = color.CGColor;
-    self.shadowOffset = offset;
-    self.shadowRadius = radius;
-    self.shadowOpacity = 1.0;
+    self.base.shadowColor = color.CGColor;
+    self.base.shadowOffset = offset;
+    self.base.shadowRadius = radius;
+    self.base.shadowOpacity = 1.0;
 }
 
 @end
 
-#pragma mark - CAGradientLayer+FWLayer
+#pragma mark - FWGradientLayerClassWrapper+FWLayer
 
-@implementation CAGradientLayer (FWLayer)
+@implementation FWGradientLayerClassWrapper (FWLayer)
 
-+ (CAGradientLayer *)fwGradientLayer:(CGRect)frame
+- (CAGradientLayer *)gradientLayer:(CGRect)frame
                               colors:(NSArray *)colors
                            locations:(NSArray<NSNumber *> *)locations
                           startPoint:(CGPoint)startPoint
@@ -840,16 +844,16 @@
 
 @end
 
-#pragma mark - UIView+FWLayer
+#pragma mark - FWViewWrapper+FWLayer
 
-@implementation UIView (FWLayer)
+@implementation FWViewWrapper (FWLayer)
 
 #pragma mark - Effect
 
-- (UIVisualEffectView *)fwSetBlurEffect:(UIBlurEffectStyle)style
+- (UIVisualEffectView *)setBlurEffect:(UIBlurEffectStyle)style
 {
     // 移除旧毛玻璃视图
-    for (UIView *subview in self.subviews) {
+    for (UIView *subview in self.base.subviews) {
         if ([subview isKindOfClass:[UIVisualEffectView class]]) {
             [subview removeFromSuperview];
         }
@@ -859,7 +863,7 @@
     if (((NSInteger)style) > -1) {
         UIBlurEffect *effect = [UIBlurEffect effectWithStyle:style];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        [self addSubview:effectView];
+        [self.base addSubview:effectView];
         [effectView.fw pinEdgesToSuperview];
         return effectView;
     }
@@ -868,7 +872,7 @@
 
 #pragma mark - Bezier
 
-- (void)fwDrawBezierPath:(UIBezierPath *)bezierPath
+- (void)drawBezierPath:(UIBezierPath *)bezierPath
              strokeWidth:(CGFloat)strokeWidth
              strokeColor:(UIColor *)strokeColor
                fillColor:(UIColor *)fillColor
@@ -893,7 +897,7 @@
 
 #pragma mark - Gradient
 
-- (void)fwDrawLinearGradient:(CGRect)rect
+- (void)drawLinearGradient:(CGRect)rect
                       colors:(NSArray *)colors
                    locations:(const CGFloat *)locations
                    direction:(UISwipeGestureRecognizerDirection)direction
@@ -901,10 +905,10 @@
     NSArray<NSValue *> *linePoints = [UIBezierPath.fw linePointsWithRect:rect direction:direction];
     CGPoint startPoint = [linePoints.firstObject CGPointValue];
     CGPoint endPoint = [linePoints.lastObject CGPointValue];
-    [self fwDrawLinearGradient:rect colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
+    [self drawLinearGradient:rect colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
 }
 
-- (void)fwDrawLinearGradient:(CGRect)rect
+- (void)drawLinearGradient:(CGRect)rect
                       colors:(NSArray *)colors
                    locations:(const CGFloat *)locations
                   startPoint:(CGPoint)startPoint
@@ -924,7 +928,7 @@
     CGContextRestoreGState(ctx);
 }
 
-- (CAGradientLayer *)fwAddGradientLayer:(CGRect)frame
+- (CAGradientLayer *)addGradientLayer:(CGRect)frame
                                  colors:(NSArray *)colors
                               locations:(NSArray<NSNumber *> *)locations
                              startPoint:(CGPoint)startPoint
@@ -941,13 +945,13 @@
     gradientLayer.startPoint = startPoint;
     gradientLayer.endPoint = endPoint;
     
-    [self.layer addSublayer:gradientLayer];
+    [self.base.layer addSublayer:gradientLayer];
     return gradientLayer;
 }
 
 #pragma mark - Circle
 
-- (CAShapeLayer *)fwAddCircleLayer:(CGRect)rect
+- (CAShapeLayer *)addCircleLayer:(CGRect)rect
                             degree:(CGFloat)degree
                           progress:(CGFloat)progress
                        strokeColor:(UIColor *)strokeColor
@@ -972,11 +976,11 @@
     // path决定layer将被渲染成何种形状
     layer.path = path.CGPath;
     
-    [self.layer addSublayer:layer];
+    [self.base.layer addSublayer:layer];
     return layer;
 }
 
-- (CAShapeLayer *)fwAddCircleLayer:(CGRect)rect
+- (CAShapeLayer *)addCircleLayer:(CGRect)rect
                             degree:(CGFloat)degree
                           progress:(CGFloat)progress
                      progressColor:(UIColor *)progressColor
@@ -984,14 +988,14 @@
                        strokeWidth:(CGFloat)strokeWidth
 {
     // 绘制底色圆
-    [self fwAddCircleLayer:rect degree:degree progress:1.0 strokeColor:strokeColor strokeWidth:strokeWidth];
+    [self addCircleLayer:rect degree:degree progress:1.0 strokeColor:strokeColor strokeWidth:strokeWidth];
     
     // 绘制进度圆
-    CAShapeLayer *layer = [self fwAddCircleLayer:rect degree:degree progress:progress strokeColor:progressColor strokeWidth:strokeWidth];
+    CAShapeLayer *layer = [self addCircleLayer:rect degree:degree progress:progress strokeColor:progressColor strokeWidth:strokeWidth];
     return layer;
 }
 
-- (CALayer *)fwAddCircleLayer:(CGRect)rect
+- (CALayer *)addCircleLayer:(CGRect)rect
                        degree:(CGFloat)degree
                      progress:(CGFloat)progress
                 gradientBlock:(void (^)(CALayer *layer))gradientBlock
@@ -1001,7 +1005,7 @@
     // 添加渐变容器层
     CALayer *gradientLayer = [CALayer layer];
     gradientLayer.frame = rect;
-    [self.layer addSublayer:gradientLayer];
+    [self.base.layer addSublayer:gradientLayer];
     
     // 创建渐变子层，可单个渐变，左右区域，上下区域等
     if (gradientBlock) {
@@ -1044,7 +1048,7 @@
 
 #pragma mark - Dash
 
-- (CALayer *)fwAddDashLayer:(CGRect)rect
+- (CALayer *)addDashLayer:(CGRect)rect
                  lineLength:(CGFloat)lineLength
                 lineSpacing:(CGFloat)lineSpacing
                   lineColor:(UIColor *)lineColor
@@ -1070,7 +1074,7 @@
         [path addLineToPoint:CGPointMake(CGRectGetWidth(rect), CGRectGetHeight(rect) / 2)];
     }
     dashLayer.path = path.CGPath;
-    [self.layer addSublayer:dashLayer];
+    [self.base.layer addSublayer:dashLayer];
     return dashLayer;
 }
 
