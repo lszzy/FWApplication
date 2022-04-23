@@ -119,11 +119,11 @@
     [resultText appendFormat:@"label2: %@\n", NSStringFromCGSize(size)];
     
     self.attrLabel.text = [self testText];
-    size = [self.attrLabel fwFitSize];
+    size = [self.attrLabel.fw fitSize];
     [resultText appendFormat:@"attrLabel: %@\n", NSStringFromCGSize(size)];
     
     self.attrLabel2.attributedText = [self testAttrText];
-    size = [self.attrLabel2 fwFitSize];
+    size = [self.attrLabel2.fw fitSize];
     [resultText appendFormat:@"attrLabel2: %@\n", NSStringFromCGSize(size)];
     
     self.textView.text = [self testText];

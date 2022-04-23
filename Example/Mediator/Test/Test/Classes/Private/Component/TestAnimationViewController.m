@@ -309,11 +309,11 @@ FWDefLazyProperty(UIView *, animationView, {
 
 - (void)onDrag:(UIButton *)sender
 {
-    if (!self.animationView.fwDragEnabled) {
-        self.animationView.fwDragEnabled = YES;
-        self.animationView.fwDragLimit = CGRectMake(0, 0, FWScreenWidth, FWScreenHeight - FWNavigationBarHeight - FWStatusBarHeight);
+    if (!self.animationView.fw.dragEnabled) {
+        self.animationView.fw.dragEnabled = YES;
+        self.animationView.fw.dragLimit = CGRectMake(0, 0, FWScreenWidth, FWScreenHeight - FWNavigationBarHeight - FWStatusBarHeight);
     } else {
-        self.animationView.fwDragEnabled = NO;
+        self.animationView.fw.dragEnabled = NO;
     }
 }
 

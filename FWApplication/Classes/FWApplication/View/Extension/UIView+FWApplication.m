@@ -10,246 +10,18 @@
 #import "UIView+FWApplication.h"
 #import "UIBezierPath+FWApplication.h"
 #import <objc/runtime.h>
-@import FWFramework;
+
+@interface UIView (FWApplication)
+
+@end
 
 @implementation UIView (FWApplication)
 
-#pragma mark - Transform
-
-- (CGFloat)fwScaleX
-{
-    return self.transform.a;
-}
-
-- (CGFloat)fwScaleY
-{
-    return self.transform.d;
-}
-
-- (CGFloat)fwTranslationX
-{
-    return self.transform.tx;
-}
-
-- (CGFloat)fwTranslationY
-{
-    return self.transform.ty;
-}
-
-#pragma mark - Size
-
-- (CGRect)fwFitFrame
-{
-    return self.frame;
-}
-
-- (void)setFwFitFrame:(CGRect)fitFrame
-{
-    fitFrame.size = [self fwFitSizeWithDrawSize:CGSizeMake(fitFrame.size.width, CGFLOAT_MAX)];
-    self.frame = fitFrame;
-}
-
-- (CGSize)fwFitSize
-{
-    if (CGSizeEqualToSize(self.frame.size, CGSizeZero)) {
-        [self setNeedsLayout];
-        [self layoutIfNeeded];
-    }
-    
-    CGSize drawSize = CGSizeMake(self.frame.size.width, CGFLOAT_MAX);
-    return [self fwFitSizeWithDrawSize:drawSize];
-}
-
-- (CGSize)fwFitSizeWithDrawSize:(CGSize)drawSize
-{
-    CGSize size = [self sizeThatFits:drawSize];
-    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)), MIN(drawSize.height, ceilf(size.height)));
-}
-
-#pragma mark - Subview
-
-- (void)fwRemoveAllSubviews
-{
-    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-}
-
-- (UIView *)fwSubviewOfClass:(Class)clazz
-{
-    return [self fwSubviewOfBlock:^BOOL(UIView *view) {
-        return [view isKindOfClass:clazz];
-    }];
-}
-
-- (UIView *)fwSubviewOfBlock:(BOOL (^)(UIView *view))block
-{
-    if (block(self)) {
-        return self;
-    }
-    
-    /* 如果需要顺序查找所有子视图，失败后再递归查找，参考此代码即可
-    for (UIView *subview in self.subviews) {
-        if (block(subview)) {
-            return subview;
-        }
-    } */
-    
-    for (UIView *subview in self.subviews) {
-        UIView *resultView = [subview fwSubviewOfBlock:block];
-        if (resultView) {
-            return resultView;
-        }
-    }
-    
-    return nil;
-}
-
-- (void)fwMoveToSuperview:(UIView *)view
-{
-    if (view) {
-        [view addSubview:self];
-    } else {
-        [self removeFromSuperview];
-    }
-}
-
-#pragma mark - Snapshot
-
-- (UIImage *)fwSnapshotImage
-{
-    return [UIImage.fw imageWithView:self];
-}
-
-- (NSData *)fwSnapshotPdf
-{
-    CGRect bounds = self.bounds;
-    NSMutableData *data = [NSMutableData data];
-    CGDataConsumerRef consumer = CGDataConsumerCreateWithCFData((__bridge CFMutableDataRef)data);
-    CGContextRef context = CGPDFContextCreate(consumer, &bounds, NULL);
-    CGDataConsumerRelease(consumer);
-    if (!context) return nil;
-    CGPDFContextBeginPage(context, NULL);
-    CGContextTranslateCTM(context, 0, bounds.size.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
-    [self.layer renderInContext:context];
-    CGPDFContextEndPage(context);
-    CGPDFContextClose(context);
-    CGContextRelease(context);
-    return data;
-}
-
-#pragma mark - Drag
-
-- (BOOL)fwDragEnabled
-{
-    return self.fwDragGesture.enabled;
-}
-
-- (void)setFwDragEnabled:(BOOL)fwDragEnabled
-{
-    self.fwDragGesture.enabled = fwDragEnabled;
-}
-
-- (CGRect)fwDragLimit
-{
-    return [objc_getAssociatedObject(self, @selector(fwDragLimit)) CGRectValue];
-}
-
-- (void)setFwDragLimit:(CGRect)fwDragLimit
-{
-    if (CGRectEqualToRect(fwDragLimit, CGRectZero) ||
-        CGRectContainsRect(fwDragLimit, self.frame)) {
-        objc_setAssociatedObject(self, @selector(fwDragLimit), [NSValue valueWithCGRect:fwDragLimit], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-}
-
-- (CGRect)fwDragArea
-{
-    return [objc_getAssociatedObject(self, @selector(fwDragArea)) CGRectValue];
-}
-
-- (void)setFwDragArea:(CGRect)fwDragArea
-{
-    CGRect relativeFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    if (CGRectContainsRect(relativeFrame, fwDragArea)) {
-        objc_setAssociatedObject(self, @selector(fwDragArea), [NSValue valueWithCGRect:fwDragArea], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-}
-
-- (BOOL)fwDragVertical
-{
-    NSNumber *value = objc_getAssociatedObject(self, @selector(fwDragVertical));
-    return value ? [value boolValue] : YES;
-}
-
-- (void)setFwDragVertical:(BOOL)fwDragVertical
-{
-    objc_setAssociatedObject(self, @selector(fwDragVertical), [NSNumber numberWithBool:fwDragVertical], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)fwDragHorizontal
-{
-    NSNumber *value = objc_getAssociatedObject(self, @selector(fwDragHorizontal));
-    return value ? [value boolValue] : YES;
-}
-
-- (void)setFwDragHorizontal:(BOOL)fwDragHorizontal
-{
-    objc_setAssociatedObject(self, @selector(fwDragHorizontal), [NSNumber numberWithBool:fwDragHorizontal], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (void (^)(UIView *))fwDragStartedBlock
-{
-    return objc_getAssociatedObject(self, @selector(fwDragStartedBlock));
-}
-
-- (void)setFwDragStartedBlock:(void (^)(UIView *))fwDragStartedBlock
-{
-    objc_setAssociatedObject(self, @selector(fwDragStartedBlock), fwDragStartedBlock, OBJC_ASSOCIATION_COPY);
-}
-
-- (void (^)(UIView *))fwDragMovedBlock
-{
-    return objc_getAssociatedObject(self, @selector(fwDragMovedBlock));
-}
-
-- (void)setFwDragMovedBlock:(void (^)(UIView *))fwDragMovedBlock
-{
-    objc_setAssociatedObject(self, @selector(fwDragMovedBlock), fwDragMovedBlock, OBJC_ASSOCIATION_COPY);
-}
-
-- (void (^)(UIView *))fwDragEndedBlock
-{
-    return objc_getAssociatedObject(self, @selector(fwDragEndedBlock));
-}
-
-- (void)setFwDragEndedBlock:(void (^)(UIView *))fwDragEndedBlock
-{
-    objc_setAssociatedObject(self, @selector(fwDragEndedBlock), fwDragEndedBlock, OBJC_ASSOCIATION_COPY);
-}
-
-- (UIPanGestureRecognizer *)fwDragGesture
-{
-    UIPanGestureRecognizer *gesture = objc_getAssociatedObject(self, _cmd);
-    if (!gesture) {
-        // 初始化拖动手势，默认禁用
-        gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(fwInnerDragHandler:)];
-        gesture.maximumNumberOfTouches = 1;
-        gesture.minimumNumberOfTouches = 1;
-        gesture.cancelsTouchesInView = NO;
-        gesture.enabled = NO;
-        self.fwDragArea = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        [self addGestureRecognizer:gesture];
-        
-        objc_setAssociatedObject(self, _cmd, gesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return gesture;
-}
-
-- (void)fwInnerDragHandler:(UIPanGestureRecognizer *)sender
+- (void)innerDragHandler:(UIPanGestureRecognizer *)sender
 {
     // 检查是否能够在拖动区域拖动
     CGPoint locationInView = [sender locationInView:self];
-    if (!CGRectContainsPoint(self.fwDragArea, locationInView) &&
+    if (!CGRectContainsPoint(self.fw.dragArea, locationInView) &&
         sender.state == UIGestureRecognizerStateBegan) {
         return;
     }
@@ -262,24 +34,24 @@
         self.center = locationInSuperview;
     }
     
-    if (sender.state == UIGestureRecognizerStateBegan && self.fwDragStartedBlock) {
-        self.fwDragStartedBlock(self);
+    if (sender.state == UIGestureRecognizerStateBegan && self.fw.dragStartedBlock) {
+        self.fw.dragStartedBlock(self);
     }
     
-    if (sender.state == UIGestureRecognizerStateChanged && self.fwDragMovedBlock) {
-        self.fwDragMovedBlock(self);
+    if (sender.state == UIGestureRecognizerStateChanged && self.fw.dragMovedBlock) {
+        self.fw.dragMovedBlock(self);
     }
     
-    if (sender.state == UIGestureRecognizerStateEnded && self.fwDragEndedBlock) {
-        self.fwDragEndedBlock(self);
+    if (sender.state == UIGestureRecognizerStateEnded && self.fw.dragEndedBlock) {
+        self.fw.dragEndedBlock(self);
     }
     
     CGPoint translation = [sender translationInView:[self superview]];
     
-    CGFloat newXOrigin = CGRectGetMinX(self.frame) + (([self fwDragHorizontal]) ? translation.x : 0);
-    CGFloat newYOrigin = CGRectGetMinY(self.frame) + (([self fwDragVertical]) ? translation.y : 0);
+    CGFloat newXOrigin = CGRectGetMinX(self.frame) + (([self.fw dragHorizontal]) ? translation.x : 0);
+    CGFloat newYOrigin = CGRectGetMinY(self.frame) + (([self.fw dragVertical]) ? translation.y : 0);
     
-    CGRect cagingArea = self.fwDragLimit;
+    CGRect cagingArea = self.fw.dragLimit;
     
     CGFloat cagingAreaOriginX = CGRectGetMinX(cagingArea);
     CGFloat cagingAreaOriginY = CGRectGetMinY(cagingArea);
@@ -306,6 +78,241 @@
                               CGRectGetHeight(self.frame))];
     
     [sender setTranslation:(CGPoint){0, 0} inView:[self superview]];
+}
+
+@end
+
+@implementation FWViewWrapper (FWApplication)
+
+#pragma mark - Transform
+
+- (CGFloat)scaleX
+{
+    return self.base.transform.a;
+}
+
+- (CGFloat)scaleY
+{
+    return self.base.transform.d;
+}
+
+- (CGFloat)translationX
+{
+    return self.base.transform.tx;
+}
+
+- (CGFloat)translationY
+{
+    return self.base.transform.ty;
+}
+
+#pragma mark - Size
+
+- (CGRect)fitFrame
+{
+    return self.base.frame;
+}
+
+- (void)setFitFrame:(CGRect)fitFrame
+{
+    fitFrame.size = [self fitSizeWithDrawSize:CGSizeMake(fitFrame.size.width, CGFLOAT_MAX)];
+    self.base.frame = fitFrame;
+}
+
+- (CGSize)fitSize
+{
+    if (CGSizeEqualToSize(self.base.frame.size, CGSizeZero)) {
+        [self.base setNeedsLayout];
+        [self.base layoutIfNeeded];
+    }
+    
+    CGSize drawSize = CGSizeMake(self.base.frame.size.width, CGFLOAT_MAX);
+    return [self fitSizeWithDrawSize:drawSize];
+}
+
+- (CGSize)fitSizeWithDrawSize:(CGSize)drawSize
+{
+    CGSize size = [self.base sizeThatFits:drawSize];
+    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)), MIN(drawSize.height, ceilf(size.height)));
+}
+
+#pragma mark - Subview
+
+- (void)removeAllSubviews
+{
+    [self.base.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (UIView *)subviewOfClass:(Class)clazz
+{
+    return [self subviewOfBlock:^BOOL(UIView *view) {
+        return [view isKindOfClass:clazz];
+    }];
+}
+
+- (UIView *)subviewOfBlock:(BOOL (^)(UIView *view))block
+{
+    if (block(self.base)) {
+        return self.base;
+    }
+    
+    /* 如果需要顺序查找所有子视图，失败后再递归查找，参考此代码即可
+    for (UIView *subview in self.base.subviews) {
+        if (block(subview)) {
+            return subview;
+        }
+    } */
+    
+    for (UIView *subview in self.base.subviews) {
+        UIView *resultView = [subview.fw subviewOfBlock:block];
+        if (resultView) {
+            return resultView;
+        }
+    }
+    
+    return nil;
+}
+
+- (void)moveToSuperview:(UIView *)view
+{
+    if (view) {
+        [view addSubview:self.base];
+    } else {
+        [self.base removeFromSuperview];
+    }
+}
+
+#pragma mark - Snapshot
+
+- (UIImage *)snapshotImage
+{
+    return [UIImage.fw imageWithView:self.base];
+}
+
+- (NSData *)snapshotPdf
+{
+    CGRect bounds = self.base.bounds;
+    NSMutableData *data = [NSMutableData data];
+    CGDataConsumerRef consumer = CGDataConsumerCreateWithCFData((__bridge CFMutableDataRef)data);
+    CGContextRef context = CGPDFContextCreate(consumer, &bounds, NULL);
+    CGDataConsumerRelease(consumer);
+    if (!context) return nil;
+    CGPDFContextBeginPage(context, NULL);
+    CGContextTranslateCTM(context, 0, bounds.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    [self.base.layer renderInContext:context];
+    CGPDFContextEndPage(context);
+    CGPDFContextClose(context);
+    CGContextRelease(context);
+    return data;
+}
+
+#pragma mark - Drag
+
+- (BOOL)dragEnabled
+{
+    return self.dragGesture.enabled;
+}
+
+- (void)setDragEnabled:(BOOL)dragEnabled
+{
+    self.dragGesture.enabled = dragEnabled;
+}
+
+- (CGRect)dragLimit
+{
+    return [objc_getAssociatedObject(self.base, @selector(dragLimit)) CGRectValue];
+}
+
+- (void)setDragLimit:(CGRect)dragLimit
+{
+    if (CGRectEqualToRect(dragLimit, CGRectZero) ||
+        CGRectContainsRect(dragLimit, self.base.frame)) {
+        objc_setAssociatedObject(self.base, @selector(dragLimit), [NSValue valueWithCGRect:dragLimit], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (CGRect)dragArea
+{
+    return [objc_getAssociatedObject(self.base, @selector(dragArea)) CGRectValue];
+}
+
+- (void)setDragArea:(CGRect)dragArea
+{
+    CGRect relativeFrame = CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height);
+    if (CGRectContainsRect(relativeFrame, dragArea)) {
+        objc_setAssociatedObject(self.base, @selector(dragArea), [NSValue valueWithCGRect:dragArea], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (BOOL)dragVertical
+{
+    NSNumber *value = objc_getAssociatedObject(self.base, @selector(dragVertical));
+    return value ? [value boolValue] : YES;
+}
+
+- (void)setDragVertical:(BOOL)dragVertical
+{
+    objc_setAssociatedObject(self.base, @selector(dragVertical), [NSNumber numberWithBool:dragVertical], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)dragHorizontal
+{
+    NSNumber *value = objc_getAssociatedObject(self.base, @selector(dragHorizontal));
+    return value ? [value boolValue] : YES;
+}
+
+- (void)setDragHorizontal:(BOOL)dragHorizontal
+{
+    objc_setAssociatedObject(self.base, @selector(dragHorizontal), [NSNumber numberWithBool:dragHorizontal], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void (^)(UIView *))dragStartedBlock
+{
+    return objc_getAssociatedObject(self.base, @selector(dragStartedBlock));
+}
+
+- (void)setDragStartedBlock:(void (^)(UIView *))dragStartedBlock
+{
+    objc_setAssociatedObject(self.base, @selector(dragStartedBlock), dragStartedBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (void (^)(UIView *))dragMovedBlock
+{
+    return objc_getAssociatedObject(self.base, @selector(dragMovedBlock));
+}
+
+- (void)setDragMovedBlock:(void (^)(UIView *))dragMovedBlock
+{
+    objc_setAssociatedObject(self.base, @selector(dragMovedBlock), dragMovedBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (void (^)(UIView *))dragEndedBlock
+{
+    return objc_getAssociatedObject(self.base, @selector(dragEndedBlock));
+}
+
+- (void)setDragEndedBlock:(void (^)(UIView *))dragEndedBlock
+{
+    objc_setAssociatedObject(self.base, @selector(dragEndedBlock), dragEndedBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (UIPanGestureRecognizer *)dragGesture
+{
+    UIPanGestureRecognizer *gesture = objc_getAssociatedObject(self.base, _cmd);
+    if (!gesture) {
+        // 初始化拖动手势，默认禁用
+        gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self.base action:@selector(innerDragHandler:)];
+        gesture.maximumNumberOfTouches = 1;
+        gesture.minimumNumberOfTouches = 1;
+        gesture.cancelsTouchesInView = NO;
+        gesture.enabled = NO;
+        self.dragArea = CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height);
+        [self.base addGestureRecognizer:gesture];
+        
+        objc_setAssociatedObject(self.base, _cmd, gesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return gesture;
 }
 
 @end

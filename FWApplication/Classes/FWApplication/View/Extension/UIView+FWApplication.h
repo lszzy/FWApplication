@@ -7,91 +7,90 @@
  @updated    2018/9/18
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- UIView+FWApplication
- @note 事件穿透实现方法：重写-hitTest:withEvent:方法，当为指定视图(如self)时返回nil排除即可
+ 事件穿透实现方法：重写-hitTest:withEvent:方法，当为指定视图(如self)时返回nil排除即可
  */
-@interface UIView (FWApplication)
+@interface FWViewWrapper (FWApplication)
 
 #pragma mark - Transform
 
 // 获取当前view的transform scale x
-@property (nonatomic, assign, readonly) CGFloat fwScaleX;
+@property (nonatomic, assign, readonly) CGFloat scaleX;
 
 // 获取当前view的transform scale y
-@property (nonatomic, assign, readonly) CGFloat fwScaleY;
+@property (nonatomic, assign, readonly) CGFloat scaleY;
 
 // 获取当前view的transform translation x
-@property (nonatomic, assign, readonly) CGFloat fwTranslationX;
+@property (nonatomic, assign, readonly) CGFloat translationX;
 
 // 获取当前view的transform translation y
-@property (nonatomic, assign, readonly) CGFloat fwTranslationY;
+@property (nonatomic, assign, readonly) CGFloat translationY;
 
 #pragma mark - Size
 
 // 设置自动计算适合高度的frame，需实现sizeThatFits:方法
-@property (nonatomic, assign) CGRect fwFitFrame;
+@property (nonatomic, assign) CGRect fitFrame;
 
 // 计算当前视图适合大小，需实现sizeThatFits:方法
-@property (nonatomic, assign, readonly) CGSize fwFitSize;
+@property (nonatomic, assign, readonly) CGSize fitSize;
 
 // 计算指定边界，当前视图适合大小，需实现sizeThatFits:方法
-- (CGSize)fwFitSizeWithDrawSize:(CGSize)drawSize;
+- (CGSize)fitSizeWithDrawSize:(CGSize)drawSize;
 
 #pragma mark - Subview
 
 // 移除所有子视图
-- (void)fwRemoveAllSubviews;
+- (void)removeAllSubviews;
 
 // 递归查找指定子类的第一个视图
-- (nullable __kindof UIView *)fwSubviewOfClass:(Class)clazz;
+- (nullable __kindof UIView *)subviewOfClass:(Class)clazz;
 
 // 递归查找指定条件的第一个视图
-- (nullable __kindof UIView *)fwSubviewOfBlock:(BOOL (^)(UIView *view))block;
+- (nullable __kindof UIView *)subviewOfBlock:(BOOL (^)(UIView *view))block;
 
 // 添加到父视图，nil时为从父视图移除
-- (void)fwMoveToSuperview:(nullable UIView *)view;
+- (void)moveToSuperview:(nullable UIView *)view;
 
 #pragma mark - Snapshot
 
 // 图片截图
-@property (nonatomic, readonly, nullable) UIImage *fwSnapshotImage;
+@property (nonatomic, readonly, nullable) UIImage *snapshotImage;
 
 // Pdf截图
-@property (nonatomic, readonly, nullable) NSData *fwSnapshotPdf;
+@property (nonatomic, readonly, nullable) NSData *snapshotPdf;
 
 #pragma mark - Drag
 
 // 是否启用拖动，默认NO
-@property (nonatomic, assign) BOOL fwDragEnabled;
+@property (nonatomic, assign) BOOL dragEnabled;
 
 // 拖动手势，延迟加载
-@property (nonatomic, readonly) UIPanGestureRecognizer *fwDragGesture;
+@property (nonatomic, readonly) UIPanGestureRecognizer *dragGesture;
 
 // 设置拖动限制区域，默认CGRectZero，无限制
-@property (nonatomic, assign) CGRect fwDragLimit;
+@property (nonatomic, assign) CGRect dragLimit;
 
 // 设置拖动动作有效区域，默认self.frame
-@property (nonatomic, assign) CGRect fwDragArea;
+@property (nonatomic, assign) CGRect dragArea;
 
 // 是否允许横向拖动(X)，默认YES
-@property (nonatomic, assign) BOOL fwDragHorizontal;
+@property (nonatomic, assign) BOOL dragHorizontal;
 
 // 是否允许纵向拖动(Y)，默认YES
-@property (nonatomic, assign) BOOL fwDragVertical;
+@property (nonatomic, assign) BOOL dragVertical;
 
 // 开始拖动回调
-@property (nullable, nonatomic, copy) void (^fwDragStartedBlock)(UIView *);
+@property (nullable, nonatomic, copy) void (^dragStartedBlock)(UIView *);
 
 // 拖动移动回调
-@property (nullable, nonatomic, copy) void (^fwDragMovedBlock)(UIView *);
+@property (nullable, nonatomic, copy) void (^dragMovedBlock)(UIView *);
 
 // 结束拖动回调
-@property (nullable, nonatomic, copy) void (^fwDragEndedBlock)(UIView *);
+@property (nullable, nonatomic, copy) void (^dragEndedBlock)(UIView *);
 
 @end
 
