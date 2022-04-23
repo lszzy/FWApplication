@@ -239,7 +239,7 @@ NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTr
         [self.base respondsToSelector:@selector(statisticalCellProxyView)]) {
         proxyView = [(id<FWStatisticalDelegate>)self.base statisticalCellProxyView];
     } else {
-        proxyView = [self.base isKindOfClass:[UITableViewCell class]] ? [(UITableViewCell *)self.base fwTableView] : [(UICollectionViewCell *)self.base fwCollectionView];
+        proxyView = [self.base isKindOfClass:[UITableViewCell class]] ? [((UITableViewCell *)self.base).fw tableView] : [((UICollectionViewCell *)self.base).fw collectionView];
     }
     [proxyView.fw statisticalClickRegister];
 }
@@ -416,7 +416,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
 {
     NSIndexPath *indexPath = nil;
     if ([self.base isKindOfClass:[UITableViewCell class]] || [self.base isKindOfClass:[UICollectionViewCell class]]) {
-        indexPath = [(UITableViewCell *)self.base fwIndexPath];
+        indexPath = [((UITableViewCell *)self.base).fw indexPath];
     }
     
     NSString *identifier = [NSString stringWithFormat:@"%@-%@-%@-%@", @(indexPath.section), @(indexPath.row), self.statisticalExposure.name, self.statisticalExposure.object];
@@ -518,9 +518,9 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
         [self setStatisticalExposureIsFully:YES];
         if ([self statisticalExposureCustom]) {
         } else if ([self.base isKindOfClass:[UITableViewCell class]]) {
-            [((UITableViewCell *)self.base).fwTableView.fw statisticalTriggerExposure:self.base indexPath:((UITableViewCell *)self.base).fwIndexPath duration:0];
+            [((UITableViewCell *)self.base).fw.tableView.fw statisticalTriggerExposure:self.base indexPath:((UITableViewCell *)self.base).fw.indexPath duration:0];
         } else if ([self.base isKindOfClass:[UICollectionViewCell class]]) {
-            [((UICollectionViewCell *)self.base).fwCollectionView.fw statisticalTriggerExposure:self.base indexPath:((UICollectionViewCell *)self.base).fwIndexPath duration:0];
+            [((UICollectionViewCell *)self.base).fw.collectionView.fw statisticalTriggerExposure:self.base indexPath:((UICollectionViewCell *)self.base).fw.indexPath duration:0];
         } else {
             [self statisticalTriggerExposure:nil indexPath:nil duration:0];
         }
@@ -567,7 +567,7 @@ typedef NS_ENUM(NSInteger, FWStatisticalExposureState) {
         [self.base respondsToSelector:@selector(statisticalCellProxyView)]) {
         proxyView = [(id<FWStatisticalDelegate>)self.base statisticalCellProxyView];
     } else {
-        proxyView = [self.base isKindOfClass:[UITableViewCell class]] ? [(UITableViewCell *)self.base fwTableView] : [(UICollectionViewCell *)self.base fwCollectionView];
+        proxyView = [self.base isKindOfClass:[UITableViewCell class]] ? [((UITableViewCell *)self.base).fw tableView] : [((UICollectionViewCell *)self.base).fw collectionView];
     }
     [proxyView.fw setStatisticalExposureIsProxy:YES];
     [proxyView.fw statisticalExposureRegister];

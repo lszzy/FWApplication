@@ -34,7 +34,7 @@
     [self.view addSubview:view3];
     
     UIView *view4 = [[UIView alloc] initWithFrame:CGRectMake(20, 230, size.width, size.height)];
-    [view4 fwAddGradientLayer:CGRectMake(0, 0, size.width, size.height) colors:colors locations:@[@0.0, @0.5, @1.0] startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 0)];
+    [view4.fw addGradientLayer:CGRectMake(0, 0, size.width, size.height) colors:colors locations:@[@0.0, @0.5, @1.0] startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 0)];
     [self.view addSubview:view4];
 }
 
