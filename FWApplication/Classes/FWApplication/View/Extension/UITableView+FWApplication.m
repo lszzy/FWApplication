@@ -99,12 +99,12 @@
 
 - (UIEdgeInsets)separatorInset
 {
-    return self.separatorInset;
+    return self.base.separatorInset;
 }
 
 - (void)setSeparatorInset:(UIEdgeInsets)separatorInset
 {
-    self.separatorInset = separatorInset;
+    self.base.separatorInset = separatorInset;
     
     if ([self.base respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
         [self.base setPreservesSuperviewLayoutMargins:NO];
