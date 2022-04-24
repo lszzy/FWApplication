@@ -28,6 +28,11 @@
     }];
 }
 
+- (BOOL)allowsPopGesture
+{
+    return NO;
+}
+
 - (void)renderView
 {
     self.view.backgroundColor = [UIColor brownColor];

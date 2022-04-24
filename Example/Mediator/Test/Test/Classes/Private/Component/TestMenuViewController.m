@@ -22,6 +22,11 @@
     self.fw.extendedLayoutEdge = UIRectEdgeTop;
 }
 
+- (BOOL)shouldPopController
+{
+    return NO;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
