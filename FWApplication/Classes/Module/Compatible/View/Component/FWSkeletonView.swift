@@ -907,17 +907,17 @@ import FWApplication
     private func showSkeleton(delegate: FWSkeletonViewDelegate? = nil, block: ((FWSkeletonLayout) -> Void)? = nil) {
         // UITableView|UICollectionView调用addSubview不会显示，此处使用父视图
         if base is UITableView || base is UICollectionView {
-            base?.superview?.fw.showSkeleton(delegate: delegate, block: block)
+            base.superview?.fw.showSkeleton(delegate: delegate, block: block)
             return
         }
         
         hideSkeleton()
-        base?.setNeedsLayout()
-        base?.layoutIfNeeded()
+        base.setNeedsLayout()
+        base.layoutIfNeeded()
         
-        let layout = FWSkeletonLayout(layoutView: self.base)
+        let layout = FWSkeletonLayout(layoutView: base)
         layout.tag = 2051
-        base?.addSubview(layout)
+        base.addSubview(layout)
         layout.fw.pinEdgesToSuperview()
         
         delegate?.skeletonViewLayout(layout)
@@ -947,11 +947,11 @@ import FWApplication
     open func hideSkeleton() {
         // UITableView|UICollectionView调用addSubview不会显示，此处使用父视图
         if base is UITableView || base is UICollectionView {
-            base?.superview?.fw.hideSkeleton()
+            base.superview?.fw.hideSkeleton()
             return
         }
         
-        if let layout = base?.subviews.first(where: { $0.tag == 2051 }) as? FWSkeletonLayout {
+        if let layout = base.subviews.first(where: { $0.tag == 2051 }) as? FWSkeletonLayout {
             layout.stopAnimating()
             layout.removeFromSuperview()
         }
@@ -961,10 +961,10 @@ import FWApplication
     open var hasSkeleton: Bool {
         // UITableView|UICollectionView调用addSubview不会显示，此处使用父视图
         if base is UITableView || base is UICollectionView {
-            return base?.superview?.fw.hasSkeleton ?? false
+            return base.superview?.fw.hasSkeleton ?? false
         }
         
-        return base?.subviews.firstIndex(where: { $0.tag == 2051 }) != nil
+        return base.subviews.firstIndex(where: { $0.tag == 2051 }) != nil
     }
 }
 
@@ -972,12 +972,12 @@ import FWApplication
 @objc extension FWViewControllerWrapper {
     /// 显示view骨架屏，指定布局代理
     open func showSkeleton(delegate: FWSkeletonViewDelegate? = nil) {
-        base?.view.fw.showSkeleton(delegate: delegate)
+        base.view.fw.showSkeleton(delegate: delegate)
     }
     
     /// 显示view骨架屏，指定布局句柄
     open func showSkeleton(block: ((FWSkeletonLayout) -> Void)? = nil) {
-        base?.view.fw.showSkeleton(block: block)
+        base.view.fw.showSkeleton(block: block)
     }
     
     /// 显示view骨架屏，默认布局代理为self
@@ -987,12 +987,12 @@ import FWApplication
     
     /// 隐藏view骨架屏
     open func hideSkeleton() {
-        base?.view.fw.hideSkeleton()
+        base.view.fw.hideSkeleton()
     }
     
     /// 是否正在显示view骨架屏
     open var hasSkeleton: Bool {
-        return base?.view.fw.hasSkeleton ?? false
+        return base.view.fw.hasSkeleton
     }
 }
 

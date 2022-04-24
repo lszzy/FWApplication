@@ -253,13 +253,13 @@ import FWApplication
 
 @objc public extension FWTableViewWrapper {
     var delegate: FWTableViewDelegate {
-        if let result = base?.fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
             return result
         } else {
             let result = FWTableViewDelegate()
-            base?.fw.setProperty(result, forName: "fwDelegate")
-            base?.dataSource = result
-            base?.delegate = result
+            base.fw.setProperty(result, forName: "fwDelegate")
+            base.dataSource = result
+            base.delegate = result
             return result
         }
     }

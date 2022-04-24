@@ -246,13 +246,13 @@ import FWApplication
 
 @objc public extension FWCollectionViewWrapper {
     var delegate: FWCollectionViewDelegate {
-        if let result = base?.fw.property(forName: "fwDelegate") as? FWCollectionViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? FWCollectionViewDelegate {
             return result
         } else {
             let result = FWCollectionViewDelegate()
-            base?.fw.setProperty(result, forName: "fwDelegate")
-            base?.dataSource = result
-            base?.delegate = result
+            base.fw.setProperty(result, forName: "fwDelegate")
+            base.dataSource = result
+            base.delegate = result
             return result
         }
     }
