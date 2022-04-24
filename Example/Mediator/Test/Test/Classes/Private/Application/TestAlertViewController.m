@@ -42,6 +42,7 @@
                                          @[@"输入框(简单)", @"onPrompt1"],
                                          @[@"输入框(详细)", @"onPrompt2"],
                                          @[@"输入框(复杂)", @"onPrompt3"],
+                                         @[@"警告框(容错)", @"onAlertE"],
                                          @[@"操作表(简单)", @"onSheet1"],
                                          @[@"操作表(详细)", @"onSheet2"],
                                          @[@"弹出框(完整)", @"onAlertF"],
@@ -185,10 +186,20 @@
                     }];
 }
 
+- (void)onAlertE
+{
+    [self.fw showAlertWithTitle:nil
+                       message:nil
+                        cancel:nil
+                   cancelBlock:^{
+                        NSLog(@"顶部控制器：%@", UIWindow.fw.topPresentedController);
+                    }];
+}
+
 - (void)onSheet1
 {
-    [self.fw showSheetWithTitle:@"操作表标题"
-                       message:@"操作表消息"
+    [self.fw showSheetWithTitle:nil
+                       message:nil
                         cancel:@"取消"
                        actions:@[@"操作1"]
                    actionBlock:^(NSInteger index) {
