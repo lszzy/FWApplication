@@ -24,6 +24,8 @@
 
 - (BOOL)shouldPopController
 {
+    FWDrawerView *drawerView = self.contentView.fw.drawerView;
+    [drawerView setPosition:drawerView.openPosition animated:YES];
     return NO;
 }
 
