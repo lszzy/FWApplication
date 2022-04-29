@@ -25,6 +25,7 @@ FWPropertyStrong(FWPopupMenu *, popupMenu);
 FWPropertyAssign(BOOL, canScroll);
 FWPropertyAssign(BOOL, dismissOnDrag);
 FWPropertyAssign(BOOL, useScrollView);
+FWPropertyCopy(NSString *, appendString);
 
 @end
 
@@ -72,9 +73,9 @@ FWPropertyAssign(BOOL, useScrollView);
     
     UITextField *mobileField = [self createTextField];
     self.mobileField = mobileField;
-    mobileField.delegate = self;
     mobileField.fw.maxUnicodeLength = 10;
-    mobileField.placeholder = @"昵称，最多10个中文";
+    mobileField.fw.menuDisabled = YES;
+    mobileField.placeholder = @"禁止粘贴，最多10个中文";
     mobileField.keyboardType = UIKeyboardTypeDefault;
     mobileField.returnKeyType = UIReturnKeyNext;
     [self.contentView addSubview:mobileField];
@@ -86,14 +87,12 @@ FWPropertyAssign(BOOL, useScrollView);
     self.passwordField = passwordField;
     passwordField.delegate = self;
     passwordField.fw.maxLength = 20;
-    passwordField.fw.menuDisabled = YES;
-    passwordField.placeholder = @"密码，最多20个英文";
+    passwordField.placeholder = @"仅数字和字母转大写，最多20个英文";
     passwordField.keyboardType = UIKeyboardTypeDefault;
     passwordField.returnKeyType = UIReturnKeyNext;
     mobileField.fw.returnResponder = passwordField;
     mobileField.fw.nextResponder = passwordField;
     [mobileField.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:mobileField.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
-    passwordField.secureTextEntry = YES;
     passwordField.delegate = self;
     [self.contentView addSubview:passwordField];
     [passwordField.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:mobileField];
@@ -181,14 +180,16 @@ FWPropertyAssign(BOOL, useScrollView);
     
     [self.fw setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换滚动", @"切换滚动时收起键盘", @"切换滚动视图"] actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换滚动", @"切换滚动时收起键盘", @"切换滚动视图", @"自动添加-"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             if (index == 0) {
                 self.canScroll = !self.canScroll;
             } else if (index == 1) {
                 self.dismissOnDrag = !self.dismissOnDrag;
-            } else {
+            } else if (index == 2) {
                 self.useScrollView = !self.useScrollView;
+            } else {
+                self.appendString = self.appendString ? nil : @"-";
             }
         }];
     }];
@@ -226,6 +227,48 @@ FWPropertyAssign(BOOL, useScrollView);
     [textField.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
     [textField.fw setDimension:NSLayoutAttributeHeight toSize:50];
     return textField;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *allowedChars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:allowedChars] invertedSet];
+    NSString *filterString = [[string componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];
+    if (![string isEqualToString:filterString]) {
+        return NO;
+    }
+    
+    if (textField.markedTextRange && !textField.markedTextRange.empty) {
+        // 带有 marked 的输入, 如中文
+    } else {
+        // 删除, 剪切, marked 输入方式等都是没有输入长度的
+        if (string.length > 0) {
+            NSString *filterString = string.uppercaseString;
+            if (self.appendString) filterString = [filterString stringByAppendingString:self.appendString];
+            textField.text = [textField.text stringByReplacingCharactersInRange:range withString:filterString];
+            
+            NSInteger offset = range.location + filterString.length;
+            if (offset > textField.fw.maxLength) offset = textField.fw.maxLength;
+            [self moveCursorPosition:offset textField:textField];
+            
+            if (textField.text.length > textField.fw.maxLength) {
+                textField.text = [textField.text substringToIndex:textField.fw.maxLength];
+            }
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
+- (void)moveCursorPosition:(NSInteger)offset textField:(UITextField *)textField {
+    // 如果文字长度未增加，无需异步处理；文字长度动态增加时必须异步处理
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UITextPosition *position = [textField positionFromPosition:textField.beginningOfDocument offset:offset];
+        textField.selectedTextRange = [textField textRangeFromPosition:position toPosition:position];
+    });
 }
 
 #pragma mark - Action
