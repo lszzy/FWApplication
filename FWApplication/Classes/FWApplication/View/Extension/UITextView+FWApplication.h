@@ -31,8 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取及设置当前选中文字范围
 @property (nonatomic, assign) NSRange selectedRange;
 
-// 选中所有文字
-- (void)selectAllText;
+// 移动光标到最后
+- (void)selectAllRange;
+
+// 移动光标到指定位置，兼容动态text赋值
+- (void)moveCursor:(NSInteger)offset;
 
 #pragma mark - Size
 

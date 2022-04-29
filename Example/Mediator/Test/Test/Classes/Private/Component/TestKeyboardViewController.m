@@ -240,35 +240,19 @@ FWPropertyCopy(NSString *, appendString);
         return NO;
     }
     
-    if (textField.markedTextRange && !textField.markedTextRange.empty) {
-        // 带有 marked 的输入, 如中文
-    } else {
-        // 删除, 剪切, marked 输入方式等都是没有输入长度的
-        if (string.length > 0) {
-            NSString *filterString = string.uppercaseString;
-            if (self.appendString) filterString = [filterString stringByAppendingString:self.appendString];
-            textField.text = [textField.text stringByReplacingCharactersInRange:range withString:filterString];
-            
-            NSInteger offset = range.location + filterString.length;
-            if (offset > textField.fw.maxLength) offset = textField.fw.maxLength;
-            [self moveCursorPosition:offset textField:textField];
-            
-            if (textField.text.length > textField.fw.maxLength) {
-                textField.text = [textField.text substringToIndex:textField.fw.maxLength];
-            }
-            return NO;
-        }
+    if (string.length > 0) {
+        NSString *replaceString = string.uppercaseString;
+        if (self.appendString) replaceString = [replaceString stringByAppendingString:self.appendString];
+        NSString *filterText = [textField.text stringByReplacingCharactersInRange:range withString:replaceString];
+        textField.text = [textField.fw filterText:filterText];
+        
+        NSInteger offset = range.location + replaceString.length;
+        if (offset > textField.fw.maxLength) offset = textField.fw.maxLength;
+        [textField.fw moveCursor:offset];
+        return NO;
     }
     
     return YES;
-}
-
-- (void)moveCursorPosition:(NSInteger)offset textField:(UITextField *)textField {
-    // 如果文字长度未增加，无需异步处理；文字长度动态增加时必须异步处理
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UITextPosition *position = [textField positionFromPosition:textField.beginningOfDocument offset:offset];
-        textField.selectedTextRange = [textField textRangeFromPosition:position toPosition:position];
-    });
 }
 
 #pragma mark - Action

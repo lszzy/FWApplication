@@ -97,10 +97,19 @@
     [self.base setSelectedTextRange:selectionRange];
 }
 
-- (void)selectAllText
+- (void)selectAllRange
 {
     UITextRange *range = [self.base textRangeFromPosition:self.base.beginningOfDocument toPosition:self.base.endOfDocument];
     [self.base setSelectedTextRange:range];
+}
+
+- (void)moveCursor:(NSInteger)offset
+{
+    __weak UITextView *weakBase = self.base;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UITextPosition *position = [weakBase positionFromPosition:weakBase.beginningOfDocument offset:offset];
+        weakBase.selectedTextRange = [weakBase textRangeFromPosition:position toPosition:position];
+    });
 }
 
 #pragma mark - Size
