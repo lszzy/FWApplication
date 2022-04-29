@@ -25,11 +25,11 @@ import FWFramework
 
 @objc extension FWApplicationClassWrapper {
     
-    /// 识别图片文字，完成时主线程回调结果
+    /// 识别图片文字，可设置语言(zh-CN,en-US)等，完成时主线程回调结果
     @available(iOS 13.0, *)
-    public func recognizeText(in image: CGImage, completion: @escaping ([FWOcrObject]) -> Void) {
+    public func recognizeText(in image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([FWOcrObject]) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            UIApplication.fw.performOcr(image: image) { results in
+            UIApplication.fw.performOcr(image: image, configuration: configuration) { results in
                 DispatchQueue.main.async {
                     completion(results)
                 }
@@ -38,7 +38,7 @@ import FWFramework
     }
     
     @available(iOS 13.0, *)
-    private func performOcr(image: CGImage, completion: @escaping ([FWOcrObject]) -> Void) {
+    private func performOcr(image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([FWOcrObject]) -> Void) {
         let textRequest = VNRecognizeTextRequest() { request, error in
             let imageSize = CGSize(width: image.width, height: image.height)
             guard let results = request.results as? [VNRecognizedTextObservation], !results.isEmpty else {
@@ -68,6 +68,7 @@ import FWFramework
        
         textRequest.recognitionLevel = .accurate
         textRequest.usesLanguageCorrection = false
+        configuration?(textRequest)
        
         let handler = VNImageRequestHandler(cgImage: image, options: [:])
         do {

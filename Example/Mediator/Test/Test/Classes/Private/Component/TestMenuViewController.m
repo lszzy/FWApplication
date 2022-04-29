@@ -7,6 +7,7 @@
 //
 
 #import "TestMenuViewController.h"
+@import Vision;
 
 @interface TestMenuViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -119,7 +120,12 @@
     if (!self.imageView.image.CGImage) return;
     
     if (@available(iOS 13.0, *)) {
-        [UIApplication.fw recognizeTextIn:self.imageView.image.CGImage completion:^(NSArray<FWOcrObject *> *results) {
+        [UIWindow.fw showLoading];
+        [UIApplication.fw recognizeTextIn:self.imageView.image.CGImage configuration:^(VNRecognizeTextRequest *request) {
+            request.recognitionLanguages = @[@"zh-CN", @"en-US"];
+            request.usesLanguageCorrection = YES;
+        } completion:^(NSArray<FWOcrObject *> *results) {
+            [UIWindow.fw hideLoading];
             NSMutableString *string = [NSMutableString string];
             for (FWOcrObject *object in results) {
                 [string appendFormat:@"text: %@\nconfidence: %@\n", object.text, @(object.confidence)];
