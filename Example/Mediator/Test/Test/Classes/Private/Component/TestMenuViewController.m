@@ -116,6 +116,18 @@
 - (void)onPickerResult:(UIImage *)image cancelled:(BOOL)cancelled
 {
     self.imageView.image = cancelled ? nil : image;
+    if (!self.imageView.image.CGImage) return;
+    
+    if (@available(iOS 13.0, *)) {
+        [UIApplication.fw recognizeTextIn:self.imageView.image.CGImage completion:^(NSArray<FWOcrObject *> *results) {
+            NSMutableString *string = [NSMutableString string];
+            for (FWOcrObject *object in results) {
+                [string appendFormat:@"text: %@\nconfidence: %@\n", object.text, @(object.confidence)];
+            }
+            NSString *message = string.length > 0 ? string.copy : @"识别结果为空";
+            [UIWindow.fw.mainWindow.fw showAlertWithTitle:@"扫描结果" message:message];
+        }];
+    }
 }
 
 @end
