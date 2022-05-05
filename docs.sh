@@ -18,8 +18,9 @@ find "$framework_name/Classes" -type f ! -regex '*.h' -name '*.h' \
     -exec cp {} $lib_path \;
 
 sourcekitten doc -- -project _Pods.xcodeproj -target $framework_name > "$lib_path/swift.json"
-sourcekitten doc --objc "$lib_path/$umbrella_name" -- -x objective-c -isysroot $sdk_path -I $lib_path -F $vendor_path -fmodules > "$lib_path/objc.json"
+sourcekitten doc --objc "$lib_path/$umbrella_name" -- -x objective-c -isysroot $sdk_path -I $lib_path -F $vendor_path -fobjc-arc -fmodules > "$lib_path/objc.json"
 jazzy --sourcekitten-sourcefile "$lib_path/swift.json","$lib_path/objc.json"
 
 rm -rf $lib_path
+rm -rf Example/build/
 cp *.md docs/
