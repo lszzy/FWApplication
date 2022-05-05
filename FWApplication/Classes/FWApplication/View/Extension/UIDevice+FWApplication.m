@@ -13,6 +13,9 @@
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <net/if.h>
+#if FWApplicationSPM
+@import FWFrameworkCompatible;
+#endif
 
 static NSString *fwStaticDeviceUUID = nil;
 

@@ -25,7 +25,10 @@ let package = Package(
     targets: [
         .target(
             name: "FWApplication",
-            dependencies: ["FWFramework"],
+            dependencies: [
+                "FWFramework",
+                .product(name: "FWFrameworkCompatible", package: "FWFramework")
+            ],
             path: "FWApplication/Classes",
             sources: [
                 "FWApplication/App",

@@ -8,6 +8,9 @@
 
 #import "FWCacheKeychain.h"
 @import FWFramework;
+#if FWApplicationSPM
+@import FWFrameworkCompatible;
+#endif
 
 @interface FWCacheKeychain () <FWCacheEngineProtocol>
 
