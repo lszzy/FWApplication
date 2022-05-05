@@ -6,7 +6,7 @@
 //  Copyright © 2018年 wuyong.site. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -187,67 +187,67 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
 
 @end
 
-#pragma mark - UIViewController+FWTransition
+#pragma mark - FWViewControllerWrapper+FWTransition
 
 /// 视图控制器转场分类，如需半透明，请在init中设置modalPresentationStyle为UIModalPresentationCustom
-@interface UIViewController (FWTransition)
+@interface FWViewControllerWrapper (FWTransition)
 
 /// 视图控制器present|dismiss转场。注意会修改transitioningDelegate，且会强引用之；如需weak引用，请直接设置transitioningDelegate
-@property (nullable, nonatomic, strong) FWAnimatedTransition *fwModalTransition;
+@property (nullable, nonatomic, strong) FWAnimatedTransition *modalTransition;
 
 /// 视图控制器push|pop转场，代理导航控制器转场，需在fwNavigationTransition设置后生效
-@property (nullable, nonatomic, strong) FWAnimatedTransition *fwViewTransition;
+@property (nullable, nonatomic, strong) FWAnimatedTransition *viewTransition;
 
 /// 自定义控制器present系统转场(蒙层渐变，内容向上动画)，会设置fwModalTransition
-- (FWAnimatedTransition *)fwSetPresentTransition:(nullable void (^)(FWPresentationController *))presentationBlock;
+- (FWAnimatedTransition *)setPresentTransition:(nullable void (^)(FWPresentationController *))presentationBlock;
 
 /// 自定义控制器alert缩放转场(蒙层渐变，内容缩放动画)，会设置fwModalTransition
-- (FWAnimatedTransition *)fwSetAlertTransition:(nullable void (^)(FWPresentationController *))presentationBlock;
+- (FWAnimatedTransition *)setAlertTransition:(nullable void (^)(FWPresentationController *))presentationBlock;
 
 /// 自定义控制器fade渐变转场(蒙层和内容渐变动画)，会设置fwModalTransition;
-- (FWAnimatedTransition *)fwSetFadeTransition:(nullable void (^)(FWPresentationController *))presentationBlock;
+- (FWAnimatedTransition *)setFadeTransition:(nullable void (^)(FWPresentationController *))presentationBlock;
 
 /// 设置iOS13默认present手势下拉dismiss时的回调block，仅iOS13生效，自动触发，手工dismiss不会触发。会自动设置presentationController.delegate
-@property (nonatomic, copy, nullable) void (^fwPresentationDidDismiss)(void);
+@property (nonatomic, copy, nullable) void (^presentationDidDismiss)(void);
 
 /// 自定义控制器popover弹出效果(preferredContentSize设置大小)，会自动设置modalPresentationStyle和popoverPresentationController.delegate
-- (void)fwSetPopoverPresentation:(void (NS_NOESCAPE ^ _Nullable)(UIPopoverPresentationController *))presentationBlock shouldDismiss:(BOOL)shouldDismiss;
+- (void)setPopoverPresentation:(void (NS_NOESCAPE ^ _Nullable)(UIPopoverPresentationController *))presentationBlock shouldDismiss:(BOOL)shouldDismiss;
 
 @end
 
-#pragma mark - UIView+FWTransition
+#pragma mark - FWViewWrapper+FWTransition
 
 /// 自定义视图模拟转场分类
-@interface UIView (FWTransition)
+@interface FWViewWrapper (FWTransition)
 
 /// 转场添加到指定控制器(pinEdges占满父视图)，返回父容器视图。VC.tabBarController.view > VC.navigationController.view > VC.view
-- (UIView *)fwTransitionToController:(UIViewController *)viewController pinEdges:(BOOL)pinEdges;
+- (UIView *)transitionToController:(UIViewController *)viewController pinEdges:(BOOL)pinEdges;
 
 /// 包装到转场控制器(pinEdges占满父视图)，返回创建的控制器
-- (UIViewController *)fwWrappedTransitionController:(BOOL)pinEdges;
+- (UIViewController *)wrappedTransitionController:(BOOL)pinEdges;
 
 /// 自定义视图模拟present系统转场(蒙层渐变，内容向上动画)
-- (void)fwSetPresentTransition:(FWAnimatedTransitionType)transitionType
+- (void)setPresentTransition:(FWAnimatedTransitionType)transitionType
                    contentView:(nullable UIView *)contentView
                     completion:(nullable void (^)(BOOL finished))completion;
 
 /// 自定义视图模拟alert缩放转场(蒙层渐变，内容缩放动画)
-- (void)fwSetAlertTransition:(FWAnimatedTransitionType)transitionType
+- (void)setAlertTransition:(FWAnimatedTransitionType)transitionType
                   completion:(nullable void (^)(BOOL finished))completion;
 
 /// 自定义视图模拟fade渐变转场(蒙层和内容渐变动画)
-- (void)fwSetFadeTransition:(FWAnimatedTransitionType)transitionType
+- (void)setFadeTransition:(FWAnimatedTransitionType)transitionType
                   completion:(nullable void (^)(BOOL finished))completion;
 
 @end
 
-#pragma mark - UINavigationController+FWTransition
+#pragma mark - FWNavigationControllerWrapper+FWTransition
 
 /// 导航控制器转场分类
-@interface UINavigationController (FWTransition)
+@interface FWNavigationControllerWrapper (FWTransition)
 
 /// 导航控制器push|pop转场。注意会修改delegate，且会强引用之，一直生效直到设置为nil。如需weak引用，请直接设置delegate
-@property (nullable, nonatomic, strong) FWAnimatedTransition *fwNavigationTransition;
+@property (nullable, nonatomic, strong) FWAnimatedTransition *navigationTransition;
 
 @end
 

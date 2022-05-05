@@ -24,7 +24,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView)
+        let cell = UITableViewCell.fw.cell(with: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -55,17 +55,17 @@ import FWApplication
     func renderState(_ state: FWViewControllerState, with object: Any?) {
         switch state {
         case .success:
-            view.fwShowEmpty(withText: object as? String)
+            view.fw.showEmpty(withText: object as? String)
         case .failure:
-            view.fwShowEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
-                self?.view.fwHideEmpty()
+            view.fw.showEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
+                self?.view.fw.hideEmpty()
                 
                 self?.renderState(.loading, with: nil)
             }
         case .loading:
-            view.fwShowLoading(withText: "开始加载")
+            view.fw.showLoading(withText: "开始加载")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.view.fwHideLoading()
+                self?.view.fw.hideLoading()
                 
                 if [0, 1].randomElement() == 1 {
                     self?.renderState(.success, with: "加载成功")
@@ -115,15 +115,15 @@ import FWApplication
     
     func renderCollectionLayout() {
         view.addSubview(contentView)
-        contentView.fwLayoutChain.edges(excludingEdge: .bottom).height(200)
+        contentView.fw.layoutChain.edges(excludingEdge: .bottom).height(200)
         
         collectionView.removeFromSuperview()
         contentView.addSubview(collectionView)
-        collectionView.fwLayoutChain.edges(excludingEdge: .bottom).height(200)
+        collectionView.fw.layoutChain.edges(excludingEdge: .bottom).height(200)
     }
     
     func renderModel() {
-        fwSetRightBarItem(UIBarButtonItem.SystemItem.refresh.rawValue) { [weak self] (sender) in
+        fw.setRightBarItem(UIBarButtonItem.SystemItem.refresh.rawValue) { [weak self] (sender) in
             guard let self = self else { return }
             
             self.flowLayout.itemRenderVertical = !self.flowLayout.itemRenderVertical
@@ -133,7 +133,7 @@ import FWApplication
     
     func renderData() {
         for _ in 0 ..< 18 {
-            collectionData.add(UIColor.fwRandom)
+            collectionData.add(UIColor.fw.randomColor)
         }
         collectionView.reloadData()
     }
@@ -150,11 +150,11 @@ import FWApplication
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         var label = cell.contentView.viewWithTag(100) as? UILabel
         if label == nil {
-            let textLabel = UILabel.fwLabel(with: .systemFont(ofSize: 16), textColor: .white)
+            let textLabel = UILabel.fw.label(with: .systemFont(ofSize: 16), textColor: .white)
             label = textLabel
             textLabel.tag = 100
             cell.contentView.addSubview(textLabel)
-            textLabel.fwLayoutChain.center()
+            textLabel.fw.layoutChain.center()
         }
         if indexPath.item < collectionData.count {
             label?.text = "\(indexPath.section) : \(indexPath.item)"
@@ -166,13 +166,13 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "view", for: indexPath)
-        view.backgroundColor = UIColor.fwRandom
+        view.backgroundColor = UIColor.fw.randomColor
         return view
     }
     
     func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> FWCollectionViewSectionConfig? {
         let sectionConfig = FWCollectionViewSectionConfig()
-        sectionConfig.backgroundColor = UIColor.fwRandom
+        sectionConfig.backgroundColor = UIColor.fw.randomColor
         return sectionConfig
     }
     
@@ -190,7 +190,7 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < collectionData.count {
-            view.fwShowMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
+            view.fw.showMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
         }
     }
     
@@ -204,16 +204,16 @@ import FWApplication
         } else {
             contentHeight = 80 + (120 * offsetPercent)
         }
-        contentView.fwLayoutChain.height(contentHeight)
+        contentView.fw.layoutChain.height(contentHeight)
     }*/
 }
 
 @objcMembers class SwiftTestScrollViewController: UIViewController, FWScrollViewController {
     func renderScrollView() {
         let view = UIView()
-        view.backgroundColor = UIColor.fwRandom
+        view.backgroundColor = UIColor.fw.randomColor
         contentView.addSubview(view)
-        view.fwLayoutMaker { (make) in
+        view.fw.layoutMaker { (make) in
             make.edges().height(1000).width(FWScreenWidth)
         }
     }

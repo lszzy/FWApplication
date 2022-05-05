@@ -32,7 +32,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
         navigationView.menuView.title = "我是很长很长要多长有多长长得不得了的按钮"
         navigationView.menuView.tintColor = Theme.textColor
         let leftButton = FWToolbarButton(image: FWIcon.backImage)
-        leftButton.fwAddTouch { sender in
+        leftButton.fw.addTouch { sender in
             FWRouter.closeViewController(animated: true)
         }
         navigationView.menuView.leftButton = leftButton
@@ -40,24 +40,24 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }()
     
     override func renderInit() {
-        fwNavigationBarHidden = true
+        fw.navigationBarHidden = true
     }
     
     override func renderView() {
-        tableView.fwContentInsetAdjustmentNever()
-        tableView.fwPullRefreshHeight = FWPullRefreshView.height + UIScreen.fwSafeAreaInsets.top
-        tableView.fwSetRefreshingTarget(self, action: #selector(onRefreshing))
+        tableView.fw.contentInsetAdjustmentNever()
+        tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top
+        tableView.fw.setRefreshingTarget(self, action: #selector(onRefreshing))
         
         let toolbar = UIToolbar()
-        toolbar.fwBarPosition = .bottom
-        toolbar.fwForegroundColor = Theme.textColor
-        toolbar.fwBackgroundColor = Theme.barColor
+        toolbar.fw.barPosition = .bottom
+        toolbar.fw.foregroundColor = Theme.textColor
+        toolbar.fw.backgroundColor = Theme.barColor
         view.addSubview(toolbar)
-        toolbar.fwLayoutChain.edgesToSafeArea(excludingEdge: .top)
+        toolbar.fw.layoutChain.edgesToSafeArea(excludingEdge: .top)
         
-        let leftItem = UIBarButtonItem.fwBarItem(with: "取消", block: nil)
-        let flexibleItem = UIBarButtonItem.fwBarItem(with: NSNumber(value: UIBarButtonItem.SystemItem.flexibleSpace.rawValue), block: nil)
-        let rightItem = UIBarButtonItem.fwBarItem(with: "确定", block: nil)
+        let leftItem = UIBarButtonItem.fw.item(with: "取消", block: nil)
+        let flexibleItem = UIBarButtonItem.fw.item(with: NSNumber(value: UIBarButtonItem.SystemItem.flexibleSpace.rawValue), block: nil)
+        let rightItem = UIBarButtonItem.fw.item(with: "确定", block: nil)
         toolbar.items = [leftItem, flexibleItem, rightItem]
         toolbar.sizeToFit()
     }
@@ -87,7 +87,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView)
+        let cell = UITableViewCell.fw.cell(with: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -119,7 +119,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             NSLog("刷新完成")
             self?.tableView.reloadData()
-            self?.tableView.fwEndRefreshing()
+            self?.tableView.fw.endRefreshing()
         }
     }
 }

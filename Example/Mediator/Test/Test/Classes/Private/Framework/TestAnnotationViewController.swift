@@ -16,7 +16,7 @@ import UIKit
 
 @objc class TestPluginImpl: NSObject, TestPluginProtocol {
     func pluginMethod() {
-        UIWindow.fwMain?.fwShowMessage(withText: "TestPluginImpl")
+        UIWindow.fw.showMessage(withText: "TestPluginImpl")
     }
 }
 
@@ -28,12 +28,14 @@ class TestPluginManager {
 // MARK: - FWRouterAnnotation
 
 class TestRouter {
-    @FWRouterAnnotation("app://plugin/:id", handler: { (object) in
-        let pluginId = FWSafeString(object.urlParameters["id"])
-        UIWindow.fwMain?.fwShowMessage(withText: "plugin - \(pluginId)")
+    @FWRouterAnnotation(TestRouter.pluginRouter(_:))
+    static var pluginUrl: String = "app://plugin/:id"
+    
+    static func pluginRouter(_ context: FWRouterContext) -> Any? {
+        let pluginId = FWSafeString(context.urlParameters["id"])
+        UIWindow.fw.showMessage(withText: "plugin - \(pluginId)")
         return nil
-    })
-    static var pluginUrl: String
+    }
 }
 
 // MARK: - TestAnnotationViewController
@@ -51,37 +53,21 @@ class TestRouter {
         return button
     }()
     
-    var objectButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("路由参数", for: .normal)
-        return button
-    }()
-    
     override func renderView() {
         view.addSubview(pluginButton)
         view.addSubview(routerButton)
-        view.addSubview(objectButton)
-        pluginButton.fwLayoutChain.centerX().top(50).size(CGSize(width: 100, height: 50))
-        routerButton.fwLayoutChain.centerX().top(150).size(CGSize(width: 100, height: 50))
-        objectButton.fwLayoutChain.centerX().top(250).size(CGSize(width: 100, height: 50))
+        pluginButton.fw.layoutChain.centerX().top(50).size(CGSize(width: 100, height: 50))
+        routerButton.fw.layoutChain.centerX().top(150).size(CGSize(width: 100, height: 50))
     }
-    
-    @FWRouterAnnotation(TestRouter.pluginUrl)
-    var pluginUrl: String
     
     override func renderData() {
         TestPluginManager.testPlugin = TestPluginImpl()
-        pluginButton.fwAddTouch { (sender) in
+        pluginButton.fw.addTouch { (sender) in
             TestPluginManager.testPlugin.pluginMethod()
         }
         
-        routerButton.fwAddTouch { (sender) in
+        routerButton.fw.addTouch { (sender) in
             FWRouter.openURL(FWRouter.generateURL(TestRouter.pluginUrl, parameters: 1))
-        }
-        
-        objectButton.fwAddTouch { (sender) in
-            self.pluginUrl = FWRouter.generateURL(TestRouter.pluginUrl, parameters: 2)
-            FWRouter.openURL(self.pluginUrl)
         }
     }
 }

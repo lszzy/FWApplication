@@ -23,12 +23,13 @@
 
 #import "FWBatchRequest.h"
 #import "FWNetworkPrivate.h"
-#import "FWBatchRequestAgent.h"
+#import "FWRequestAgent.h"
 #import "FWRequest.h"
 
 @interface FWBatchRequest() <FWRequestDelegate>
 
 @property (nonatomic) NSInteger finishedCount;
+@property (nonatomic, strong) NSMutableArray<FWRequest *> *failedRequestArray;
 
 @end
 
@@ -38,7 +39,9 @@
     self = [super init];
     if (self) {
         _requestArray = [requestArray copy];
+        _failedRequestArray = [NSMutableArray array];
         _finishedCount = 0;
+        _stoppedOnFailure = YES;
         for (FWRequest * req in _requestArray) {
             if (![req isKindOfClass:[FWRequest class]]) {
                 FWRequestLog(@"Error, request item must be FWRequest instance.");
@@ -54,8 +57,8 @@
         FWRequestLog(@"Error! Batch request has already started.");
         return;
     }
-    _failedRequest = nil;
-    [[FWBatchRequestAgent sharedAgent] addBatchRequest:self];
+    [_failedRequestArray removeAllObjects];
+    [[FWRequestAgent sharedAgent] addBatchRequest:self];
     [self toggleAccessoriesWillStartCallBack];
     for (FWRequest * req in _requestArray) {
         req.delegate = self;
@@ -69,7 +72,7 @@
     _delegate = nil;
     [self clearRequest];
     [self toggleAccessoriesDidStopCallBack];
-    [[FWBatchRequestAgent sharedAgent] removeBatchRequest:self];
+    [[FWRequestAgent sharedAgent] removeBatchRequest:self];
 }
 
 - (void)startWithCompletionBlockWithSuccess:(void (^)(FWBatchRequest *batchRequest))success
@@ -90,6 +93,10 @@
     self.failureCompletionBlock = nil;
 }
 
+- (FWRequest *)failedRequest {
+    return self.failedRequestArray.firstObject;
+}
+
 - (BOOL)isDataFromCache {
     BOOL result = YES;
     for (FWRequest *request in _requestArray) {
@@ -100,7 +107,6 @@
     return result;
 }
 
-
 - (void)dealloc {
     [self clearRequest];
 }
@@ -110,38 +116,48 @@
 - (void)requestFinished:(FWRequest *)request {
     _finishedCount++;
     if (_finishedCount == _requestArray.count) {
-        [self toggleAccessoriesWillStopCallBack];
+        [self requestCompleted];
+    }
+}
+
+- (void)requestFailed:(FWRequest *)request {
+    [_failedRequestArray addObject:request];
+    if (self.stoppedOnFailure) {
+        for (FWRequest *req in _requestArray) {
+            [req stop];
+        }
+        [self requestCompleted];
+        return;
+    }
+    
+    _finishedCount++;
+    if (_finishedCount == _requestArray.count) {
+        [self requestCompleted];
+    }
+}
+
+- (void)requestCompleted {
+    [self toggleAccessoriesWillStopCallBack];
+    
+    if (_failedRequestArray.count < 1) {
         if ([_delegate respondsToSelector:@selector(batchRequestFinished:)]) {
             [_delegate batchRequestFinished:self];
         }
         if (_successCompletionBlock) {
             _successCompletionBlock(self);
         }
-        [self clearCompletionBlock];
-        [self toggleAccessoriesDidStopCallBack];
-        [[FWBatchRequestAgent sharedAgent] removeBatchRequest:self];
+    } else {
+        if ([_delegate respondsToSelector:@selector(batchRequestFailed:)]) {
+            [_delegate batchRequestFailed:self];
+        }
+        if (_failureCompletionBlock) {
+            _failureCompletionBlock(self);
+        }
     }
-}
-
-- (void)requestFailed:(FWRequest *)request {
-    _failedRequest = request;
-    [self toggleAccessoriesWillStopCallBack];
-    // Stop
-    for (FWRequest *req in _requestArray) {
-        [req stop];
-    }
-    // Callback
-    if ([_delegate respondsToSelector:@selector(batchRequestFailed:)]) {
-        [_delegate batchRequestFailed:self];
-    }
-    if (_failureCompletionBlock) {
-        _failureCompletionBlock(self);
-    }
-    // Clear
+    
     [self clearCompletionBlock];
-
     [self toggleAccessoriesDidStopCallBack];
-    [[FWBatchRequestAgent sharedAgent] removeBatchRequest:self];
+    [[FWRequestAgent sharedAgent] removeBatchRequest:self];
 }
 
 - (void)clearRequest {

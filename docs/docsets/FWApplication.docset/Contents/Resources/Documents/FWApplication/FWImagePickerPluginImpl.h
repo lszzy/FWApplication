@@ -10,17 +10,15 @@
 #import "FWImagePickerPlugin.h"
 #import "FWImageCropController.h"
 #import "FWImagePickerControllerImpl.h"
+#import "FWAppWrapper.h"
 #import <Photos/Photos.h>
 #import <PhotosUI/PhotosUI.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - UIImagePickerController+FWImagePickerPluginImpl
+#pragma mark - FWImagePickerControllerClassWrapper+FWImagePickerPluginImpl
 
-/**
- UIImagePickerController+FWImagePickerPluginImpl
- */
-@interface UIImagePickerController (FWImagePickerPluginImpl)
+@interface FWImagePickerControllerClassWrapper (FWImagePickerPluginImpl)
 
 /**
  快速创建单选照片选择器(仅图片)，自动设置delegate
@@ -30,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion 完成回调。参数1为图片，2为信息字典，3为是否取消
  @return 照片选择器，不支持的返回nil
  */
-+ (nullable instancetype)fwPickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
+- (nullable UIImagePickerController *)pickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
                                             allowsEditing:(BOOL)allowsEditing
                                                completion:(void (^)(UIImage * _Nullable image, NSDictionary * _Nullable info, BOOL cancel))completion;
 
@@ -44,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion 完成回调。参数1为照片选择器，2为对象(UIImage|PHLivePhoto|NSURL)，3为信息字典，4为是否取消
  @return 照片选择器，不支持的返回nil
  */
-+ (nullable instancetype)fwPickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
+- (nullable UIImagePickerController *)pickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
                                                filterType:(FWImagePickerFilterType)filterType
                                             allowsEditing:(BOOL)allowsEditing
                                             shouldDismiss:(BOOL)shouldDismiss
@@ -58,16 +56,16 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion 完成回调。参数1为图片，2为信息字典，3为是否取消
  @return 照片选择器，不支持的返回nil
  */
-+ (nullable instancetype)fwPickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
+- (nullable UIImagePickerController *)pickerControllerWithSourceType:(UIImagePickerControllerSourceType)sourceType
                                            cropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
                                                completion:(void (^)(UIImage * _Nullable image, NSDictionary * _Nullable info, BOOL cancel))completion;
 
 @end
 
-#pragma mark - PHPickerViewController+FWImagePickerPluginImpl
+#pragma mark - FWPickerViewControllerClassWrapper+FWImagePickerPluginImpl
 
 API_AVAILABLE(ios(14.0))
-@interface PHPickerViewController (FWImagePickerPluginImpl)
+@interface FWPickerViewControllerClassWrapper (FWImagePickerPluginImpl)
 
 /**
  快速创建多选照片选择器(仅图片)，自动设置delegate
@@ -76,7 +74,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消
  @return 照片选择器
  */
-+ (instancetype)fwPickerControllerWithSelectionLimit:(NSInteger)selectionLimit
+- (PHPickerViewController *)pickerControllerWithSelectionLimit:(NSInteger)selectionLimit
                                           completion:(void (^)(NSArray<UIImage *> *images, NSArray<PHPickerResult *> *results, BOOL cancel))completion;
 
 /**
@@ -89,7 +87,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为照片选择器，2为对象数组(UIImage|PHLivePhoto|NSURL)，3为结果数组，4为是否取消
  @return 照片选择器
  */
-+ (instancetype)fwPickerControllerWithFilterType:(FWImagePickerFilterType)filterType
+- (PHPickerViewController *)pickerControllerWithFilterType:(FWImagePickerFilterType)filterType
                                   selectionLimit:(NSInteger)selectionLimit
                                    shouldDismiss:(BOOL)shouldDismiss
                                       completion:(void (^)(PHPickerViewController * _Nullable picker, NSArray *objects, NSArray<PHPickerResult *> *results, BOOL cancel))completion;
@@ -101,19 +99,19 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
  @return 照片选择器
  */
-+ (instancetype)fwPickerControllerWithCropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
+- (PHPickerViewController *)pickerControllerWithCropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
                                           completion:(void (^)(UIImage * _Nullable image, PHPickerResult * _Nullable result, BOOL cancel))completion;
 
 @end
 
-#pragma mark - PHPhotoLibrary+FWImagePickerPluginImpl
+#pragma mark - FWPhotoLibraryClassWrapper+FWImagePickerPluginImpl
 
-@interface PHPhotoLibrary (FWImagePickerPluginImpl)
+@interface FWPhotoLibraryClassWrapper (FWImagePickerPluginImpl)
 
 /**
  图片选择器选择视频时临时文件存放目录，使用完成后需自行删除
  */
-@property (class, nonatomic, copy, readonly) NSString *fwPickerControllerVideoCachePath;
+@property (nonatomic, copy, readonly) NSString *pickerControllerVideoCachePath;
 
 /**
  快速创建照片选择器(仅图片)
@@ -123,7 +121,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为图片数组，2为结果数组，3为是否取消
  @return 照片选择器
  */
-+ (nullable __kindof UIViewController *)fwPickerControllerWithSelectionLimit:(NSInteger)selectionLimit
+- (nullable __kindof UIViewController *)pickerControllerWithSelectionLimit:(NSInteger)selectionLimit
                                                                allowsEditing:(BOOL)allowsEditing
                                                                   completion:(void (^)(NSArray<UIImage *> *images, NSArray *results, BOOL cancel))completion;
 
@@ -137,7 +135,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为照片选择器，2为对象数组(UIImage|PHLivePhoto|NSURL)，3位结果数组，4为是否取消
  @return 照片选择器
  */
-+ (nullable __kindof UIViewController *)fwPickerControllerWithFilterType:(FWImagePickerFilterType)filterType
+- (nullable __kindof UIViewController *)pickerControllerWithFilterType:(FWImagePickerFilterType)filterType
                                                           selectionLimit:(NSInteger)selectionLimit
                                                            allowsEditing:(BOOL)allowsEditing
                                                            shouldDismiss:(BOOL)shouldDismiss
@@ -150,7 +148,7 @@ API_AVAILABLE(ios(14.0))
  @param completion 完成回调，主线程。参数1为图片，2为结果信息，3为是否取消
  @return 照片选择器
  */
-+ (nullable __kindof UIViewController *)fwPickerControllerWithCropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
+- (nullable __kindof UIViewController *)pickerControllerWithCropController:(nullable FWImageCropController * (^)(UIImage *image))cropController
                                                                   completion:(void (^)(UIImage * _Nullable image, id _Nullable result, BOOL cancel))completion;
 
 @end

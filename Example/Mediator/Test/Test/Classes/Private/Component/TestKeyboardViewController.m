@@ -8,8 +8,6 @@
 
 #import "TestKeyboardViewController.h"
 
-static BOOL keyboardScrollView = NO;
-
 @interface TestKeyboardViewController () <FWScrollViewController, UITextFieldDelegate, UITextViewDelegate>
 
 FWPropertyStrong(UITextField *, mobileField);
@@ -25,105 +23,130 @@ FWPropertyStrong(UIButton *, submitButton);
 FWPropertyStrong(FWPopupMenu *, popupMenu);
 
 FWPropertyAssign(BOOL, canScroll);
+FWPropertyAssign(BOOL, dismissOnDrag);
+FWPropertyAssign(BOOL, useScrollView);
+FWPropertyCopy(NSString *, appendString);
 
 @end
 
 @implementation TestKeyboardViewController
 
+- (void)setCanScroll:(BOOL)canScroll
+{
+    _canScroll = canScroll;
+    [self.view endEditing:YES];
+    [self renderData];
+}
+
+- (void)setDismissOnDrag:(BOOL)dismissOnDrag
+{
+    _dismissOnDrag = dismissOnDrag;
+    [self.view endEditing:YES];
+    self.scrollView.fw.keyboardDismissOnDrag = dismissOnDrag;
+}
+
+- (void)setUseScrollView:(BOOL)useScrollView
+{
+    _useScrollView = useScrollView;
+    [self.view endEditing:YES];
+    self.navigationItem.title = useScrollView ? @"UIScrollView+FWKeyboard" : @"UITextField+FWKeyboard";
+    NSArray<UIView *> *textInputs = @[self.mobileField, self.passwordField, self.textView, self.inputView];
+    for (UIView *textInput in textInputs) {
+        ((UITextField *)textInput).fw.keyboardScrollView = useScrollView ? self.scrollView : nil;
+    }
+}
+
 - (void)renderView
 {
     self.scrollView.backgroundColor = [Theme tableColor];
-    self.scrollView.fwKeyboardDismissOnDrag = YES;
     
     UITextField *textFieldAppearance = [UITextField appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
     UITextView *textViewAppearance = [UITextView appearanceWhenContainedInInstancesOfClasses:@[[TestKeyboardViewController class]]];
-    textFieldAppearance.fwKeyboardManager = YES;
-    textFieldAppearance.fwTouchResign = YES;
-    textFieldAppearance.fwKeyboardResign = YES;
-    textViewAppearance.fwKeyboardManager = YES;
-    textViewAppearance.fwTouchResign = YES;
-    textViewAppearance.fwKeyboardResign = YES;
-    textFieldAppearance.fwKeyboardScrollView = keyboardScrollView ? self.scrollView : nil;
-    textViewAppearance.fwKeyboardScrollView = keyboardScrollView ? self.scrollView : nil;
-    if (keyboardScrollView) {
-        self.navigationItem.title = @"UIScrollView+FWKeyboard";
-    }
-    keyboardScrollView = !keyboardScrollView;
+    textFieldAppearance.fw.keyboardManager = YES;
+    textFieldAppearance.fw.touchResign = YES;
+    textFieldAppearance.fw.keyboardResign = YES;
+    textFieldAppearance.fw.reboundDistance = 200;
+    textViewAppearance.fw.keyboardManager = YES;
+    textViewAppearance.fw.touchResign = YES;
+    textViewAppearance.fw.keyboardResign = YES;
+    textViewAppearance.fw.reboundDistance = 200;
     
     UITextField *mobileField = [self createTextField];
     self.mobileField = mobileField;
-    mobileField.delegate = self;
-    mobileField.fwMaxUnicodeLength = 10;
-    mobileField.placeholder = @"昵称，最多10个中文";
+    mobileField.fw.maxUnicodeLength = 10;
+    mobileField.fw.menuDisabled = YES;
+    mobileField.placeholder = @"禁止粘贴，最多10个中文";
     mobileField.keyboardType = UIKeyboardTypeDefault;
     mobileField.returnKeyType = UIReturnKeyNext;
     [self.contentView addSubview:mobileField];
-    [mobileField fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-    [mobileField fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-    [mobileField fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [mobileField.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+    [mobileField.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+    [mobileField.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextField *passwordField = [self createTextField];
     self.passwordField = passwordField;
     passwordField.delegate = self;
-    passwordField.fwMaxLength = 20;
-    passwordField.fwMenuDisabled = YES;
-    passwordField.placeholder = @"密码，最多20个英文";
+    passwordField.fw.maxLength = 20;
+    passwordField.placeholder = @"仅数字和字母转大写，最多20个英文";
     passwordField.keyboardType = UIKeyboardTypeDefault;
     passwordField.returnKeyType = UIReturnKeyNext;
-    mobileField.fwReturnResponder = passwordField;
-    passwordField.secureTextEntry = YES;
+    mobileField.fw.returnResponder = passwordField;
+    mobileField.fw.nextResponder = passwordField;
+    [mobileField.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:mobileField.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
     passwordField.delegate = self;
-    FWWeakifySelf();
-    [passwordField fwAddToolbar:UIBarStyleDefault title:@"Next" block:^(id sender) {
-        FWStrongifySelf();
-        [self.textView becomeFirstResponder];
-    }];
     [self.contentView addSubview:passwordField];
-    [passwordField fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:mobileField];
-    [passwordField fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [passwordField.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:mobileField];
+    [passwordField.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextView *textView = [self createTextView];
     self.textView = textView;
     textView.delegate = self;
     textView.backgroundColor = [Theme backgroundColor];
-    textView.fwMaxUnicodeLength = 10;
-    textView.fwPlaceholder = @"问题，最多10个中文";
+    textView.fw.maxUnicodeLength = 10;
+    textView.fw.placeholder = @"问题，最多10个中文";
     textView.returnKeyType = UIReturnKeyNext;
-    passwordField.fwReturnResponder = textView;
+    passwordField.fw.returnResponder = textView;
+    passwordField.fw.previousResponder = mobileField;
+    passwordField.fw.nextResponder = textView;
+    [passwordField.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:passwordField.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
     [self.contentView addSubview:textView];
-    [textView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:passwordField withOffset:15];
-    [textView fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [textView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:passwordField withOffset:15];
+    [textView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextView *inputView = [self createTextView];
     self.inputView = inputView;
     inputView.backgroundColor = [Theme backgroundColor];
-    inputView.fwMaxLength = 20;
-    inputView.fwMenuDisabled = YES;
-    inputView.fwPlaceholder = @"建议，最多20个英文";
+    inputView.fw.maxLength = 20;
+    inputView.fw.menuDisabled = YES;
+    inputView.fw.placeholder = @"建议，最多20个英文";
     inputView.returnKeyType = UIReturnKeyDone;
-    inputView.fwReturnResign = YES;
-    inputView.fwKeyboardSpacing = 80;
-    textView.fwReturnResponder = inputView;
-    inputView.fwDelegate = self;
-    [inputView fwAddToolbar:UIBarStyleDefault title:@"Done" block:nil];
+    inputView.fw.returnResign = YES;
+    inputView.fw.keyboardDistance = 80;
+    textView.fw.returnResponder = inputView;
+    textView.fw.previousResponder = passwordField;
+    textView.fw.nextResponder = inputView;
+    [textView.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:textView.fw.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
+    inputView.fw.delegate = self;
+    inputView.fw.previousResponder = textView;
+    [inputView.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:inputView.fw.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
     [self.contentView addSubview:inputView];
-    [inputView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
-    [inputView fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [inputView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
+    [inputView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *submitButton = [Theme largeButton];
     self.submitButton = submitButton;
     [submitButton setTitle:@"提交" forState:UIControlStateNormal];
-    [submitButton fwAddTouchTarget:self action:@selector(onSubmit)];
+    [submitButton.fw addTouchTarget:self action:@selector(onSubmit)];
     [self.contentView addSubview:submitButton];
-    [submitButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:inputView withOffset:15];
-    [submitButton fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-    [submitButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [submitButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:inputView withOffset:15];
+    [submitButton.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+    [submitButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
 }
 
 - (void)renderModel
 {
     FWWeakifySelf();
-    self.mobileField.fwAutoCompleteBlock = ^(NSString * _Nonnull text) {
+    self.mobileField.fw.autoCompleteBlock = ^(NSString * _Nonnull text) {
         FWStrongifySelf();
         if (text.length < 1) {
             [self.popupMenu dismiss];
@@ -132,14 +155,14 @@ FWPropertyAssign(BOOL, canScroll);
             self.popupMenu = [FWPopupMenu showRelyOnView:self.mobileField
                                                   titles:@[text]
                                                    icons:nil
-                                               menuWidth:self.mobileField.fwWidth
+                                               menuWidth:self.mobileField.fw.width
                                            otherSettings:^(FWPopupMenu * _Nonnull popupMenu) {
                 popupMenu.showMaskView = NO;
             }];
         }
     };
     
-    self.inputView.fwAutoCompleteBlock = ^(NSString * _Nonnull text) {
+    self.inputView.fw.autoCompleteBlock = ^(NSString * _Nonnull text) {
         FWStrongifySelf();
         if (text.length < 1) {
             [self.popupMenu dismiss];
@@ -148,53 +171,88 @@ FWPropertyAssign(BOOL, canScroll);
             self.popupMenu = [FWPopupMenu showRelyOnView:self.inputView
                                                   titles:@[text]
                                                    icons:nil
-                                               menuWidth:self.inputView.fwWidth
+                                               menuWidth:self.inputView.fw.width
                                            otherSettings:^(FWPopupMenu * _Nonnull popupMenu) {
                 popupMenu.showMaskView = NO;
             }];
         }
     };
     
-    [self fwSetRightBarItem:@"切换滚动" block:^(id sender) {
+    [self.fw setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
-        [self.view endEditing:YES];
-        self.canScroll = !self.canScroll;
-        [self renderData];
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换滚动", @"切换滚动时收起键盘", @"切换滚动视图", @"自动添加-"] actionBlock:^(NSInteger index) {
+            FWStrongifySelf();
+            if (index == 0) {
+                self.canScroll = !self.canScroll;
+            } else if (index == 1) {
+                self.dismissOnDrag = !self.dismissOnDrag;
+            } else if (index == 2) {
+                self.useScrollView = !self.useScrollView;
+            } else {
+                self.appendString = self.appendString ? nil : @"-";
+            }
+        }];
     }];
 }
 
 - (void)renderData
 {
-    CGFloat marginTop = FWScreenHeight - (390 + 15 + FWTopBarHeight + UIScreen.fwSafeAreaInsets.bottom);
+    CGFloat marginTop = FWScreenHeight - (390 + 15 + FWTopBarHeight + UIScreen.fw.safeAreaInsets.bottom);
     CGFloat topInset = self.canScroll ? FWScreenHeight : marginTop;
-    [self.mobileField fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:topInset];
+    [self.mobileField.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:topInset];
 }
 
 - (UITextView *)createTextView
 {
-    UITextView *textView = [UITextView fwAutoLayoutView];
-    textView.font = [UIFont fwFontOfSize:15];
+    UITextView *textView = [UITextView new];
+    textView.font = [UIFont.fw fontOfSize:15];
     textView.textColor = [Theme textColor];
-    textView.fwCursorColor = Theme.textColor;
-    textView.fwCursorRect = CGRectMake(0, 0, 2, 0);
-    [textView fwSetBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
-    [textView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
-    [textView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    textView.fw.cursorColor = Theme.textColor;
+    textView.fw.cursorRect = CGRectMake(0, 0, 2, 0);
+    [textView.fw setBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
+    [textView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
+    [textView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     return textView;
 }
 
 - (UITextField *)createTextField
 {
-    UITextField *textField = [UITextField fwAutoLayoutView];
-    textField.font = [UIFont fwFontOfSize:15];
+    UITextField *textField = [UITextField new];
+    textField.font = [UIFont.fw fontOfSize:15];
     textField.textColor = [Theme textColor];
-    textField.fwCursorColor = Theme.textColor;
-    textField.fwCursorRect = CGRectMake(0, 0, 2, 0);
+    textField.fw.cursorColor = Theme.textColor;
+    textField.fw.cursorRect = CGRectMake(0, 0, 2, 0);
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [textField fwSetBorderView:UIRectEdgeBottom color:[Theme borderColor] width:0.5];
-    [textField fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
-    [textField fwSetDimension:NSLayoutAttributeHeight toSize:50];
+    [textField.fw setBorderView:UIRectEdgeBottom color:[Theme borderColor] width:0.5];
+    [textField.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
+    [textField.fw setDimension:NSLayoutAttributeHeight toSize:50];
     return textField;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *allowedChars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:allowedChars] invertedSet];
+    NSString *filterString = [[string componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];
+    if (![string isEqualToString:filterString]) {
+        return NO;
+    }
+    
+    if (string.length > 0) {
+        NSString *replaceString = string.uppercaseString;
+        if (self.appendString) replaceString = [replaceString stringByAppendingString:self.appendString];
+        NSString *filterText = [textField.text stringByReplacingCharactersInRange:range withString:replaceString];
+        textField.text = [textField.fw filterText:filterText];
+        
+        NSInteger offset = range.location + replaceString.length;
+        if (offset > textField.fw.maxLength) offset = textField.fw.maxLength;
+        [textField.fw moveCursor:offset];
+        return NO;
+    }
+    
+    return YES;
 }
 
 #pragma mark - Action

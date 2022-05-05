@@ -7,38 +7,35 @@
  @updated    2018/9/18
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- UIDevice+FWApplication
- */
-@interface UIDevice (FWApplication)
+@interface FWDeviceClassWrapper (FWApplication)
 
 #pragma mark - UUID
 
 /// 获取或设置设备UUID，自动keychain持久化。默认获取IDFV(未使用IDFA，避免额外权限)，失败则随机生成一个
-@property (class, nonatomic, copy) NSString *fwDeviceUUID;
+@property (nonatomic, copy) NSString *deviceUUID;
 
 #pragma mark - Jailbroken
 
 // 是否越狱
-@property (class, nonatomic, assign, readonly) BOOL fwIsJailbroken;
+@property (nonatomic, assign, readonly) BOOL isJailbroken;
 
 #pragma mark - Network
 
 // 本地IP地址
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwIpAddress;
+@property (nonatomic, copy, readonly, nullable) NSString *ipAddress;
 
 // 本地主机名称
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwHostName;
+@property (nonatomic, copy, readonly, nullable) NSString *hostName;
 
 // 手机运营商名称
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwCarrierName;
+@property (nonatomic, copy, readonly, nullable) NSString *carrierName;
 
 // 手机蜂窝网络类型，仅区分2G|3G|4G|5G
-@property (class, nonatomic, copy, readonly, nullable) NSString *fwNetworkType;
+@property (nonatomic, copy, readonly, nullable) NSString *networkType;
 
 @end
 

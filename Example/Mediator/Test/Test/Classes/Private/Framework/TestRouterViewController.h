@@ -24,7 +24,7 @@ FWStaticString(ROUTE_CLOSE);
 
 @end
 
-@interface TestRouterResultViewController : TestViewController <FWRouterProtocol>
+@interface TestRouterResultViewController : TestViewController
 
 @property (nonatomic, strong) FWRouterContext *context;
 

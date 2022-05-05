@@ -7,7 +7,7 @@
  @updated    2020/9/3
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -105,28 +105,28 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - UIScrollView+FWScrollOverlayView
+#pragma mark - FWScrollViewWrapper+FWScrollOverlayView
 
 @interface FWScrollOverlayView : UIView
 
 @end
 
-@interface UIScrollView (FWScrollOverlayView)
+@interface FWScrollViewWrapper (FWScrollOverlayView)
 
 /// 滚动视图自定义浮层，用于显示空界面等，兼容UITableView|UICollectionView
-@property (nonatomic, strong, readonly) UIView *fwOverlayView;
+@property (nonatomic, strong, readonly) UIView *overlayView;
 
 /// 是否显示自定义浮层
-@property (nonatomic, assign, readonly) BOOL fwHasOverlayView;
+@property (nonatomic, assign, readonly) BOOL hasOverlayView;
 
 /// 显示自定义浮层，自动添加到滚动视图顶部、表格视图底部
-- (void)fwShowOverlayView;
+- (void)showOverlayView;
 
 /// 显示自定义浮层，执行渐变动画，自动添加到滚动视图顶部、表格视图底部
-- (void)fwShowOverlayViewAnimated:(BOOL)animated;
+- (void)showOverlayViewAnimated:(BOOL)animated;
 
 /// 隐藏自定义浮层，自动从滚动视图移除
-- (void)fwHideOverlayView;
+- (void)hideOverlayView;
 
 @end
 

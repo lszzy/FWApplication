@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FWFramework
 #if FWApplicationSPM
 import FWApplication
 #endif
@@ -100,7 +101,7 @@ import FWApplication
             return UITableViewCell(style: .default, reuseIdentifier: nil)
         }
         
-        let cell = clazz.fwCell(with: tableView)
+        let cell = clazz.fw.cell(with: tableView)
         if let cellBlock = cellConfiguation {
             cellBlock(cell, indexPath)
             return cell
@@ -111,7 +112,7 @@ import FWApplication
            sectionData.count > indexPath.row {
             viewModel = sectionData[indexPath.row]
         }
-        cell.fwViewModel = viewModel
+        cell.fw.viewModel = viewModel
         return cell
     }
     
@@ -132,7 +133,7 @@ import FWApplication
         }
         
         if let cellBlock = cellConfiguation {
-            return tableView.fwHeight(withCellClass: clazz, cacheBy: indexPath) { (cell) in
+            return tableView.fw.height(withCellClass: clazz, cacheBy: indexPath) { (cell) in
                 cellBlock(cell, indexPath)
             }
         }
@@ -142,8 +143,8 @@ import FWApplication
            sectionData.count > indexPath.row {
             viewModel = sectionData[indexPath.row]
         }
-        return tableView.fwHeight(withCellClass: clazz, cacheBy: indexPath) { (cell) in
-            cell.fwViewModel = viewModel
+        return tableView.fw.height(withCellClass: clazz, cacheBy: indexPath) { (cell) in
+            cell.fw.viewModel = viewModel
         }
     }
     
@@ -155,8 +156,8 @@ import FWApplication
             return view
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
-            let view = clazz.fwHeaderFooterView(with: tableView)
-            let viewBlock = headerConfiguration ?? { (header, section) in header.fwViewModel = nil }
+            let view = clazz.fw.headerFooterView(with: tableView)
+            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewModel = nil }
             viewBlock(view, section)
             return view
         }
@@ -178,8 +179,8 @@ import FWApplication
             return view.frame.size.height
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
-            let viewBlock = headerConfiguration ?? { (header, section) in header.fwViewModel = nil }
-            return tableView.fwHeight(withHeaderFooterViewClass: clazz, type: .header, cacheBySection: section) { (headerView) in
+            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewModel = nil }
+            return tableView.fw.height(withHeaderFooterViewClass: clazz, type: .header, cacheBySection: section) { (headerView) in
                 viewBlock(headerView, section)
             }
         }
@@ -194,8 +195,8 @@ import FWApplication
             return view
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
-            let view = clazz.fwHeaderFooterView(with: tableView)
-            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fwViewModel = nil }
+            let view = clazz.fw.headerFooterView(with: tableView)
+            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewModel = nil }
             viewBlock(view, section)
             return view
         }
@@ -217,8 +218,8 @@ import FWApplication
             return view.frame.size.height
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
-            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fwViewModel = nil }
-            return tableView.fwHeight(withHeaderFooterViewClass: clazz, type: .footer, cacheBySection: section) { (footerView) in
+            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewModel = nil }
+            return tableView.fw.height(withHeaderFooterViewClass: clazz, type: .footer, cacheBySection: section) { (footerView) in
                 viewBlock(footerView, section)
             }
         }
@@ -250,28 +251,30 @@ import FWApplication
     }
 }
 
-@objc public extension UITableView {
-    class func fwTableView() -> UITableView {
-        return fwTableView(.plain)
+@objc public extension FWTableViewWrapper {
+    var delegate: FWTableViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
+            return result
+        } else {
+            let result = FWTableViewDelegate()
+            base.fw.setProperty(result, forName: "fwDelegate")
+            base.dataSource = result
+            base.delegate = result
+            return result
+        }
+    }
+}
+
+@objc public extension FWTableViewClassWrapper {
+    func tableView() -> UITableView {
+        return tableView(.plain)
     }
     
-    class func fwTableView(_ style: UITableView.Style) -> UITableView {
+    func tableView(_ style: UITableView.Style) -> UITableView {
         let tableView = UITableView(frame: .zero, style: style)
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.tableFooterView = UIView(frame: .zero)
         return tableView
-    }
-    
-    func fwDelegate() -> FWTableViewDelegate {
-        if let result = fwProperty(forName: "fwDelegate") as? FWTableViewDelegate {
-            return result
-        } else {
-            let result = FWTableViewDelegate()
-            fwSetProperty(result, forName: "fwDelegate")
-            dataSource = result
-            delegate = result
-            return result
-        }
     }
 }

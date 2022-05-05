@@ -19,14 +19,21 @@
     return UITableViewStyleGrouped;
 }
 
+- (void)renderNavbar
+{
+    [self.fw setRightBarItem:@"捕获异常" block:^(id  _Nonnull sender) {
+        [FWException startCaptureExceptions];
+    }];
+}
+
 - (void)renderData
 {
     [self.tableData addObjectsFromArray:@[
-                                         @[[@"NSNull" stringByAppendingString:FWIsDebug ? @"(Debug)" : @"(Release)"], @"onNull"],
-                                         @[@"NSNumber", @"onNumber"],
+                                         @[@"NSNull", @"onNull"],
                                          @[@"NSString", @"onString"],
                                          @[@"NSArray", @"onArray"],
                                          @[@"NSDictionary", @"onDictionary"],
+                                         @[@"KVC", @"onKvc"],
                                          ]];
 }
 
@@ -39,7 +46,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -65,41 +72,94 @@
     [object onNull];
 }
 
-- (void)onNumber
-{
-    id value = nil;
-    [@(1) fwIsEqualToNumber:value];
-    [@(1) fwCompare:value];
-}
-
 - (void)onString
 {
     NSString *str = @"test";
-    [str fwSubstringFromIndex:10];
-    [str fwSubstringToIndex:10];
-    [str fwSubstringWithRange:NSMakeRange(2, 10)];
+    NSString *subStr = [str substringFromIndex:100];
+    subStr = [str substringToIndex:100];
+    NSRange range = NSMakeRange(0, 100);
+    subStr = [str substringWithRange:range];
+    
+    str = [NSString stringWithFormat:@"test"];
+    subStr = [str substringFromIndex:100];
+    subStr = [str substringToIndex:100];
+    subStr = [str substringWithRange:range];
+    
+    str = @"test".mutableCopy;
+    subStr = [str substringFromIndex:100];
+    subStr = [str substringToIndex:100];
+    subStr = [str substringWithRange:range];
 }
 
 - (void)onArray
 {
     NSArray *arr = @[@1, @2, @3];
-    [arr fwObjectAtIndex:10];
-    [arr fwSubarrayWithRange:NSMakeRange(2, 10)];
+    [arr objectAtIndex:10];
+    [arr subarrayWithRange:NSMakeRange(2, 10)];
     
     NSMutableArray *arrm = arr.mutableCopy;
-    [arrm fwAddObject:nil];
-    [arrm fwRemoveObjectAtIndex:10];
-    [arrm fwReplaceObjectAtIndex:10 withObject:@3];
+    id object = nil;
+    [arrm addObject:object];
+    [arrm removeObjectAtIndex:10];
+    [arrm replaceObjectAtIndex:10 withObject:@3];
+    
+    NSString *nilStr = nil;
+    arr = @[@"chenfanfang", nilStr, @"iOSDeveloper"];
+    arr = @[@"chenfanfang", @"iOS_Dev"];
+    object = arr[100];
+    
+    NSMutableArray *marray = @[@"chenfanfang"].mutableCopy;
+    object = marray[2];
+    object = nil;
+    marray[3] = @"iOS";
+    [marray removeObjectAtIndex:5];
+    [marray insertObject:@"cool" atIndex:5];
 }
 
 - (void)onDictionary
 {
     NSDictionary *dict = @{@"a": @1};
-    [dict fwObjectForKey:nil];
+    NSString *nilStr = nil;
+    [dict objectForKey:nilStr];
     
     NSMutableDictionary *dictm = dict.mutableCopy;
-    [dictm fwRemoveObjectForKey:nil];
-    [dictm fwSetObject:nil forKey:nil];
+    [dictm removeObjectForKey:nilStr];
+    [dictm setObject:nilStr forKey:nilStr];
+    
+    dict = @{
+           @"name" : @"chenfanfang",
+           @"age" : nilStr
+           };
+    
+    NSMutableDictionary *mdict = @{
+                                   @"name" : @"chenfanfang"
+                                   
+                                   }.mutableCopy;
+    NSString *ageKey = nil;
+    mdict[ageKey] = @(25);
+    
+    mdict = [NSMutableDictionary dictionary];
+    [mdict setObject:@(25) forKey:ageKey];
+    
+    mdict = @{
+          @"name" : @"chenfanfang",
+          @"age" : @(25)
+          
+          }.mutableCopy;
+    NSString *key = nil;
+    [mdict removeObjectForKey:key];
+}
+
+- (void)onKvc
+{
+    UITableView *anyObject = [UITableView new];
+    [anyObject setValue:self forKey:@"AvoidCrash"];
+    [anyObject setValue:self forKeyPath:@"AvoidCrash"];
+    NSDictionary *dictionary = @{
+                                 @"name" : @"chenfanfang"
+                                 };
+    
+    [anyObject setValuesForKeysWithDictionary:dictionary];
 }
 
 @end

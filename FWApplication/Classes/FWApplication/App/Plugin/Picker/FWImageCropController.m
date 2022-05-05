@@ -563,7 +563,7 @@
     }
 
     __weak __typeof__(self) self_weak_ = self;
-    [self fwShowSheetWithTitle:nil message:nil cancel:cancelButtonTitle actions:itemStrings actionBlock:^(NSInteger index) {
+    [self.fw showSheetWithTitle:nil message:nil cancel:cancelButtonTitle actions:itemStrings actionBlock:^(NSInteger index) {
         __typeof__(self) self = self_weak_;
         [self setAspectRatioPreset:[ratioValues[index] integerValue] animated:YES];
         self.aspectRatioLockEnabled = YES;
@@ -702,7 +702,7 @@
 
     //If cropping circular and the circular generation delegate/block is implemented, call it
     if (self.croppingStyle == FWImageCropCroppingStyleCircular && (isCircularImageDelegateAvailable || isCircularImageCallbackAvailable)) {
-        UIImage *image = [self.image fwCroppedImageWithFrame:cropFrame angle:angle circularClip:YES];
+        UIImage *image = [self.image.fw croppedImageWithFrame:cropFrame angle:angle circularClip:YES];
         
         //Dispatch on the next run-loop so the animation isn't interuppted by the crop operation
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.03f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -723,7 +723,7 @@
             image = self.image;
         }
         else {
-            image = [self.image fwCroppedImageWithFrame:cropFrame angle:angle circularClip:NO];
+            image = [self.image.fw croppedImageWithFrame:cropFrame angle:angle circularClip:NO];
         }
         
         //Dispatch on the next run-loop so the animation isn't interuppted by the crop operation
@@ -926,7 +926,7 @@
 
 - (CGFloat)toolbarHeight
 {
-    return _toolbarHeight > 0 ? _toolbarHeight : FWToolBarHeight - UIScreen.fwSafeAreaInsets.bottom;
+    return _toolbarHeight > 0 ? _toolbarHeight : FWToolBarHeight - UIScreen.fw.safeAreaInsets.bottom;
 }
 
 - (BOOL)verticalLayout
@@ -1005,15 +1005,15 @@
 
 @end
 
-@implementation UIImage (CropRotate)
+@implementation FWImageWrapper (FWCropRotate)
 
-- (UIImage *)fwCroppedImageWithFrame:(CGRect)frame angle:(NSInteger)angle circularClip:(BOOL)circular
+- (UIImage *)croppedImageWithFrame:(CGRect)frame angle:(NSInteger)angle circularClip:(BOOL)circular
 {
     UIImage *croppedImage = nil;
-    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(self.CGImage);
+    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(self.base.CGImage);
     BOOL hasAlpha = (alphaInfo == kCGImageAlphaFirst || alphaInfo == kCGImageAlphaLast ||
                      alphaInfo == kCGImageAlphaPremultipliedFirst || alphaInfo == kCGImageAlphaPremultipliedLast);
-    UIGraphicsBeginImageContextWithOptions(frame.size, !hasAlpha && !circular, self.scale);
+    UIGraphicsBeginImageContextWithOptions(frame.size, !hasAlpha && !circular, self.base.scale);
     {
         CGContextRef context = UIGraphicsGetCurrentContext();
         
@@ -1025,7 +1025,7 @@
         //To conserve memory in not needing to completely re-render the image re-rotated,
         //map the image to a view and then use Core Animation to manipulate its rotation
         if (angle != 0) {
-            UIImageView *imageView = [[UIImageView alloc] initWithImage:self];
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:self.base];
             imageView.layer.minificationFilter = kCAFilterNearest;
             imageView.layer.magnificationFilter = kCAFilterNearest;
             imageView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, angle * (M_PI/180.0f));
@@ -1038,14 +1038,14 @@
         }
         else {
             CGContextTranslateCTM(context, -frame.origin.x, -frame.origin.y);
-            [self drawAtPoint:CGPointZero];
+            [self.base drawAtPoint:CGPointZero];
         }
         
         croppedImage = UIGraphicsGetImageFromCurrentImageContext();
     }
     UIGraphicsEndImageContext();
     
-    return [UIImage imageWithCGImage:croppedImage.CGImage scale: self.scale orientation:UIImageOrientationUp];
+    return [UIImage imageWithCGImage:croppedImage.CGImage scale: self.base.scale orientation:UIImageOrientationUp];
 }
 
 @end

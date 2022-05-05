@@ -10,33 +10,33 @@
 #import <CoreImage/CoreImage.h>
 #import <QuartzCore/QuartzCore.h>
 
-@implementation UIImageView (FWApplication)
+@implementation FWImageViewWrapper (FWApplication)
 
 #pragma mark - Mode
 
-- (void)fwSetContentModeAspectFill
+- (void)setContentModeAspectFill
 {
-    [self fwSetContentMode:UIViewContentModeScaleAspectFill];
+    [self setContentMode:UIViewContentModeScaleAspectFill];
 }
 
-- (void)fwSetContentMode:(UIViewContentMode)contentMode
+- (void)setContentMode:(UIViewContentMode)contentMode
 {
-    self.contentMode = contentMode;
-    self.layer.masksToBounds = YES;
+    self.base.contentMode = contentMode;
+    self.base.layer.masksToBounds = YES;
 }
 
 #pragma mark - Face
 
-- (void)fwFaceAware
+- (void)faceAware
 {
-    if (self.image == nil) {
+    if (self.base.image == nil) {
         return;
     }
     
-    [self fwFaceDetect:self.image];
+    [self faceDetect:self.base.image];
 }
 
-- (void)fwFaceDetect:(UIImage *)aImage
+- (void)faceDetect:(UIImage *)aImage
 {
     // 初始化人脸检测
     static CIDetector *_faceDetector = nil;
@@ -47,6 +47,7 @@
                                            options:@{CIDetectorAccuracy: CIDetectorAccuracyHigh}];
     });
     
+    __weak UIImageView *weakBase = self.base;
     dispatch_queue_t queue = dispatch_queue_create("site.wuyong.FWApplication.FWFaceQueue", NULL);
     dispatch_async(queue, ^{
         CIImage *image = aImage.CIImage;
@@ -56,20 +57,18 @@
         
         NSArray *features = [_faceDetector featuresInImage:image];
         if (features.count == 0) {
-            NSLog(@"detect no faces");
             dispatch_async(dispatch_get_main_queue(), ^{
-                [[self fwFaceLayer:NO] removeFromSuperlayer];
+                [[weakBase.fw faceLayer:NO] removeFromSuperlayer];
             });
         } else {
-            NSLog(@"detect %lu faces", (unsigned long)features.count);
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self fwFaceMark:features size:CGSizeMake(CGImageGetWidth(aImage.CGImage), CGImageGetHeight(aImage.CGImage))];
+                [weakBase.fw faceMark:features size:CGSizeMake(CGImageGetWidth(aImage.CGImage), CGImageGetHeight(aImage.CGImage))];
             });
         }
     });
 }
 
-- (void)fwFaceMark:(NSArray *)features size:(CGSize)size
+- (void)faceMark:(NSArray *)features size:(CGSize)size
 {
     CGRect fixedRect = CGRectMake(MAXFLOAT, MAXFLOAT, 0, 0);
     CGFloat rightBorder = 0, bottomBorder = 0;
@@ -91,44 +90,44 @@
                                       fixedRect.origin.y + fixedRect.size.height / 2.0);
     CGPoint offset = CGPointZero;
     CGSize finalSize = size;
-    if (size.width / size.height > self.bounds.size.width / self.bounds.size.height) {
+    if (size.width / size.height > self.base.bounds.size.width / self.base.bounds.size.height) {
         // 水平移动
-        finalSize.height = self.bounds.size.height;
+        finalSize.height = self.base.bounds.size.height;
         finalSize.width = size.width/size.height * finalSize.height;
         fixedCenter.x = finalSize.width / size.width * fixedCenter.x;
         fixedCenter.y = finalSize.width / size.width * fixedCenter.y;
         
-        offset.x = fixedCenter.x - self.bounds.size.width * 0.5;
+        offset.x = fixedCenter.x - self.base.bounds.size.width * 0.5;
         if (offset.x < 0) {
             offset.x = 0;
-        } else if (offset.x + self.bounds.size.width > finalSize.width) {
-            offset.x = finalSize.width - self.bounds.size.width;
+        } else if (offset.x + self.base.bounds.size.width > finalSize.width) {
+            offset.x = finalSize.width - self.base.bounds.size.width;
         }
         offset.x = - offset.x;
     } else {
         // 垂直移动
-        finalSize.width = self.bounds.size.width;
+        finalSize.width = self.base.bounds.size.width;
         finalSize.height = size.height/size.width * finalSize.width;
         fixedCenter.x = finalSize.width / size.width * fixedCenter.x;
         fixedCenter.y = finalSize.width / size.width * fixedCenter.y;
         
-        offset.y = fixedCenter.y - self.bounds.size.height * (1 - 0.618);
+        offset.y = fixedCenter.y - self.base.bounds.size.height * (1 - 0.618);
         if (offset.y < 0) {
             offset.y = 0;
-        } else if (offset.y + self.bounds.size.height > finalSize.height){
-            offset.y = finalSize.height - self.bounds.size.height;
+        } else if (offset.y + self.base.bounds.size.height > finalSize.height){
+            offset.y = finalSize.height - self.base.bounds.size.height;
         }
         offset.y = - offset.y;
     }
     
-    CALayer *layer = [self fwFaceLayer:YES];
+    CALayer *layer = [self faceLayer:YES];
     layer.frame = CGRectMake(offset.x, offset.y, finalSize.width, finalSize.height);
-    layer.contents = (id)self.image.CGImage;
+    layer.contents = (id)self.base.image.CGImage;
 }
 
-- (CALayer *)fwFaceLayer:(BOOL)lazyload
+- (CALayer *)faceLayer:(BOOL)lazyload
 {
-    for (CALayer *layer in self.layer.sublayers) {
+    for (CALayer *layer in self.base.layer.sublayers) {
         if ([@"FWFaceLayer" isEqualToString:layer.name]) {
             return layer;
         }
@@ -142,7 +141,7 @@
                           @"bounds": [NSNull null],
                           @"position": [NSNull null],
                           };
-        [self.layer addSublayer:layer];
+        [self.base.layer addSublayer:layer];
         return layer;
     }
     
@@ -151,15 +150,15 @@
 
 #pragma mark - Reflect
 
-- (void)fwReflect
+- (void)reflect
 {
-    CGRect frame = self.frame;
+    CGRect frame = self.base.frame;
     frame.origin.y += (frame.size.height + 1);
     
     UIImageView *reflectionImageView = [[UIImageView alloc] initWithFrame:frame];
-    self.clipsToBounds = TRUE;
-    reflectionImageView.contentMode = self.contentMode;
-    [reflectionImageView setImage:self.image];
+    self.base.clipsToBounds = TRUE;
+    reflectionImageView.contentMode = self.base.contentMode;
+    [reflectionImageView setImage:self.base.image];
     reflectionImageView.transform = CGAffineTransformMakeScale(1.0, -1.0);
     
     CALayer *reflectionLayer = [reflectionImageView layer];
@@ -175,48 +174,48 @@
     gradientLayer.endPoint = CGPointMake(0.5, 1.0);
     reflectionLayer.mask = gradientLayer;
     
-    [self.superview addSubview:reflectionImageView];
+    [self.base.superview addSubview:reflectionImageView];
 }
 
 #pragma mark - Watermark
 
-- (void)fwSetImage:(UIImage *)image watermarkImage:(UIImage *)watermarkImage inRect:(CGRect)rect
+- (void)setImage:(UIImage *)image watermarkImage:(UIImage *)watermarkImage inRect:(CGRect)rect
 {
-    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(self.base.frame.size, NO, 0.0);
     
     // 原图和水印图
-    [image drawInRect:self.bounds];
+    [image drawInRect:self.base.bounds];
     [watermarkImage drawInRect:rect];
     
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    self.image = newPic;
+    self.base.image = newPic;
 }
 
-- (void)fwSetImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString inRect:(CGRect)rect
+- (void)setImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString inRect:(CGRect)rect
 {
-    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(self.base.frame.size, NO, 0.0);
     
     // 原图和水印文字
-    [image drawInRect:self.bounds];
+    [image drawInRect:self.base.bounds];
     [watermarkString drawInRect:rect];
     
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    self.image = newPic;
+    self.base.image = newPic;
 }
 
-- (void)fwSetImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString atPoint:(CGPoint)point
+- (void)setImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString atPoint:(CGPoint)point
 {
-    UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, 0.0);
+    UIGraphicsBeginImageContextWithOptions(self.base.frame.size, NO, 0.0);
     
     // 原图和水印文字
-    [image drawInRect:self.bounds];
+    [image drawInRect:self.base.bounds];
     [watermarkString drawAtPoint:point];
     
     UIImage *newPic = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    self.image = newPic;
+    self.base.image = newPic;
 }
 
 @end

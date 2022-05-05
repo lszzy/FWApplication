@@ -20,45 +20,45 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Image
 
-/// 图片，导航栏返回，fwNavBack
+/// 图片，导航栏返回，fw.navBack
 @property (class, nonatomic, strong, readonly, nullable) UIImage *navBackImage;
-/// 图片，导航栏关闭，fwNavClose
+/// 图片，导航栏关闭，fw.navClose
 @property (class, nonatomic, strong, readonly, nullable) UIImage *navCloseImage;
-/// 图片，视频播放大图，fwVideoPlay
+/// 图片，视频播放大图，fw.videoPlay
 @property (class, nonatomic, strong, readonly, nullable) UIImage *videoPlayImage;
-/// 图片，视频暂停，fwVideoPause
+/// 图片，视频暂停，fw.videoPause
 @property (class, nonatomic, strong, readonly, nullable) UIImage *videoPauseImage;
-/// 图片，视频开始，fwVideoStart
+/// 图片，视频开始，fw.videoStart
 @property (class, nonatomic, strong, readonly, nullable) UIImage *videoStartImage;
-/// 图片，相册多选，fwPickerCheck
+/// 图片，相册多选，fw.pickerCheck
 @property (class, nonatomic, strong, readonly, nullable) UIImage *pickerCheckImage;
-/// 图片，相册选中，fwPickerChecked
+/// 图片，相册选中，fw.pickerChecked
 @property (class, nonatomic, strong, readonly, nullable) UIImage *pickerCheckedImage;
 
 #pragma mark - String
 
-/// 多语言，取消，fwCancel
+/// 多语言，取消，fw.cancel
 @property (class, nonatomic, copy, readonly) NSString *cancelButton;
-/// 多语言，确定，fwConfirm
+/// 多语言，确定，fw.confirm
 @property (class, nonatomic, copy, readonly) NSString *confirmButton;
-/// 多语言，关闭，fwClose
+/// 多语言，关闭，fw.close
 @property (class, nonatomic, copy, readonly) NSString *closeButton;
-/// 多语言，完成，fwDone
+/// 多语言，完成，fw.done
 @property (class, nonatomic, copy, readonly) NSString *doneButton;
-/// 多语言，编辑，fwEdit
+/// 多语言，编辑，fw.edit
 @property (class, nonatomic, copy, readonly) NSString *editButton;
-/// 多语言，预览，fwPreview
+/// 多语言，预览，fw.preview
 @property (class, nonatomic, copy, readonly) NSString *previewButton;
-/// 多语言，原图，fwOriginal
+/// 多语言，原图，fw.original
 @property (class, nonatomic, copy, readonly) NSString *originalButton;
 
-/// 多语言，相册，fwPickerAlbum
+/// 多语言，相册，fw.pickerAlbum
 @property (class, nonatomic, copy, readonly) NSString *pickerAlbumTitle;
-/// 多语言，无照片，fwPickerEmpty
+/// 多语言，无照片，fw.pickerEmpty
 @property (class, nonatomic, copy, readonly) NSString *pickerEmptyTitle;
-/// 多语言，无权限，fwPickerDenied
+/// 多语言，无权限，fw.pickerDenied
 @property (class, nonatomic, copy, readonly) NSString *pickerDeniedTitle;
-/// 多语言，超出数量，fwPickerExceed
+/// 多语言，超出数量，fw.pickerExceed
 @property (class, nonatomic, copy, readonly) NSString *pickerExceedTitle;
 
 @end

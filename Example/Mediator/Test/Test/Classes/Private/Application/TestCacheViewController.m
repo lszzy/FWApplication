@@ -23,77 +23,77 @@
 
 - (void)renderView
 {
-    UILabel *cacheLabel = [UILabel fwAutoLayoutView];
+    UILabel *cacheLabel = [UILabel new];
     self.cacheLabel = cacheLabel;
     cacheLabel.numberOfLines = 0;
     cacheLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:cacheLabel]; {
-        [cacheLabel fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
+        [cacheLabel.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
     }
     
     UIButton *refreshButton = [Theme largeButton];
     [refreshButton setTitle:@"读取缓存" forState:UIControlStateNormal];
     FWWeakifySelf();
-    [refreshButton fwAddTouchBlock:^(id sender) {
+    [refreshButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self refreshCache];
     }];
     [self.view addSubview:refreshButton]; {
-        [refreshButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheLabel withOffset:10];
-        [refreshButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [refreshButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheLabel withOffset:10];
+        [refreshButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *cacheButton = [Theme largeButton];
     [cacheButton setTitle:@"写入缓存" forState:UIControlStateNormal];
-    [cacheButton fwAddTouchBlock:^(id sender) {
+    [cacheButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
-        [self.cache setObject:[NSString fwUUIDString] forKey:TestCacheKey];
+        [self.cache setObject:[NSString.fw UUIDString] forKey:TestCacheKey];
         [self refreshCache];
     }];
     [self.view addSubview:cacheButton]; {
-        [cacheButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:refreshButton withOffset:10];
-        [cacheButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [cacheButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:refreshButton withOffset:10];
+        [cacheButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *expireButton = [Theme largeButton];
     [expireButton setTitle:@"写入缓存(10s)" forState:UIControlStateNormal];
-    [expireButton fwAddTouchBlock:^(id sender) {
+    [expireButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
-        [self.cache setObject:[NSString fwUUIDString] forKey:TestCacheKey withExpire:10];
+        [self.cache setObject:[NSString.fw UUIDString] forKey:TestCacheKey withExpire:10];
         [self refreshCache];
     }];
     [self.view addSubview:expireButton]; {
-        [expireButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheButton withOffset:10];
-        [expireButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [expireButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheButton withOffset:10];
+        [expireButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *deleteButton = [Theme largeButton];
     [deleteButton setTitle:@"删除缓存" forState:UIControlStateNormal];
-    [deleteButton fwAddTouchBlock:^(id sender) {
+    [deleteButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache removeObjectForKey:TestCacheKey];
         [self refreshCache];
     }];
     [self.view addSubview:deleteButton]; {
-        [deleteButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:expireButton withOffset:10];
-        [deleteButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [deleteButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:expireButton withOffset:10];
+        [deleteButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *clearButton = [Theme largeButton];
     [clearButton setTitle:@"清空缓存" forState:UIControlStateNormal];
-    [clearButton fwAddTouchBlock:^(id sender) {
+    [clearButton.fw addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache removeAllObjects];
         [self refreshCache];
     }];
     [self.view addSubview:clearButton]; {
-        [clearButton fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:deleteButton withOffset:10];
-        [clearButton fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [clearButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:deleteButton withOffset:10];
+        [clearButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
 }
 
@@ -108,10 +108,10 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"切换" block:^(id sender) {
+    [self.fw setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
         
-        [self fwShowSheetWithTitle:@"选择缓存类型" message:nil cancel:@"取消" actions:@[@"FWCacheMemory", @"FWCacheUserDefaults", @"FWCacheKeychain", @"FWCacheFile", @"FWCacheSqlite"] actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:@"选择缓存类型" message:nil cancel:@"取消" actions:@[@"FWCacheMemory", @"FWCacheUserDefaults", @"FWCacheKeychain", @"FWCacheFile", @"FWCacheSqlite"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             if (index == 0) {
@@ -137,17 +137,17 @@
     [statusStr appendString:NSStringFromClass([self.cache class])];
     [statusStr appendString:@"\n"];
     NSString *cacheStr = [self.cache objectForKey:TestCacheKey];
-    if ([cacheStr fwIsNotEmpty]) {
+    if ([cacheStr.fw isNotEmpty]) {
         [statusStr appendString:cacheStr];
     } else {
         [statusStr appendString:@"缓存不存在"];
     }
     [statusStr appendString:@"\n"];
     NSNumber *expireNum = [self.cache objectForKey:TestExpireKey];
-    if ([expireNum fwIsNotEmpty]) {
+    if ([expireNum.fw isNotEmpty]) {
         [statusStr appendString:[NSString stringWithFormat:@"%.1fs有效", [expireNum doubleValue] - [[NSDate date] timeIntervalSince1970]]];
     } else {
-        [statusStr appendString:cacheStr.fwIsNotEmpty ? @"永久有效" : @"缓存无效"];
+        [statusStr appendString:cacheStr.fw.isNotEmpty ? @"永久有效" : @"缓存无效"];
     }
     self.cacheLabel.text = statusStr;
 }

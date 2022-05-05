@@ -47,7 +47,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self didInitializeWithStyle:style];
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }
@@ -57,7 +57,7 @@
     self.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFill;
     self.imageView.clipsToBounds = YES;
-    self.imageView.layer.borderWidth = [UIScreen fwPixelOne];
+    self.imageView.layer.borderWidth = [UIScreen.fw pixelOne];
     self.imageView.layer.borderColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.1].CGColor;
     
     _maskView = [[UIView alloc] init];
@@ -72,14 +72,14 @@
     CGFloat imageEdgeLeft = self.albumImageMarginLeft == -1 ? imageEdgeTop : self.albumImageMarginLeft;
     self.imageView.frame = CGRectMake(imageEdgeLeft, imageEdgeTop, self.albumImageSize, self.albumImageSize);
     
-    self.textLabel.fwOrigin = CGPointMake(CGRectGetMaxX(self.imageView.frame) + self.albumNameInsets.left, (CGRectGetHeight(self.textLabel.superview.bounds) - CGRectGetHeight(self.textLabel.frame)) / 2.0);
+    self.textLabel.fw.origin = CGPointMake(CGRectGetMaxX(self.imageView.frame) + self.albumNameInsets.left, (CGRectGetHeight(self.textLabel.superview.bounds) - CGRectGetHeight(self.textLabel.frame)) / 2.0);
     
     CGFloat textLabelMaxWidth = CGRectGetWidth(self.contentView.bounds) - CGRectGetMinX(self.textLabel.frame) - CGRectGetWidth(self.detailTextLabel.bounds) - self.albumNameInsets.right;
     if (CGRectGetWidth(self.textLabel.bounds) > textLabelMaxWidth) {
-        self.textLabel.fwWidth = textLabelMaxWidth;
+        self.textLabel.fw.width = textLabelMaxWidth;
     }
     
-    self.detailTextLabel.fwOrigin = CGPointMake(CGRectGetMaxX(self.textLabel.frame) + self.albumNameInsets.right, (CGRectGetHeight(self.detailTextLabel.superview.bounds) - CGRectGetHeight(self.detailTextLabel.frame)) / 2.0);
+    self.detailTextLabel.fw.origin = CGPointMake(CGRectGetMaxX(self.textLabel.frame) + self.albumNameInsets.right, (CGRectGetHeight(self.detailTextLabel.superview.bounds) - CGRectGetHeight(self.detailTextLabel.frame)) / 2.0);
 }
 
 - (void)setAlbumNameFont:(UIFont *)albumNameFont {
@@ -152,6 +152,7 @@
     _toolBarTintColor = UIColor.whiteColor;
     _showsDefaultLoading = YES;
     
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelButtonClick:)];
 }
 
@@ -178,12 +179,12 @@
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
     _toolBarBackgroundColor = toolBarBackgroundColor;
-    self.navigationController.navigationBar.fwBackgroundColor = toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw.backgroundColor = toolBarBackgroundColor;
 }
 
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
-    self.navigationController.navigationBar.fwForegroundColor = toolBarTintColor;
+    self.navigationController.navigationBar.fw.foregroundColor = toolBarTintColor;
 }
 
 - (void)setAssetsGroup:(FWAssetGroup *)assetsGroup {
@@ -207,7 +208,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationController.navigationBar.fwBackImage = FWAppBundle.navBackImage;
+    self.navigationController.navigationBar.fw.backImage = FWAppBundle.navBackImage;
     if (!self.title) self.title = FWAppBundle.pickerAlbumTitle;
     [self.view addSubview:self.backgroundView];
     [self.view addSubview:self.tableView];
@@ -236,10 +237,10 @@
     if (self.navigationController.navigationBarHidden != NO) {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
     }
-    self.navigationController.navigationBar.fwIsTranslucent = NO;
-    self.navigationController.navigationBar.fwShadowColor = nil;
-    self.navigationController.navigationBar.fwBackgroundColor = self.toolBarBackgroundColor;
-    self.navigationController.navigationBar.fwForegroundColor = self.toolBarTintColor;
+    self.navigationController.navigationBar.fw.isTranslucent = NO;
+    self.navigationController.navigationBar.fw.shadowColor = nil;
+    self.navigationController.navigationBar.fw.backgroundColor = self.toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw.foregroundColor = self.toolBarTintColor;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -256,7 +257,7 @@
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillStartLoading:)]) {
         [self.albumControllerDelegate albumControllerWillStartLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwShowLoading];
+        [self.fw showLoading];
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -293,7 +294,7 @@
     if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerDidFinishLoading:)]) {
         [self.albumControllerDelegate albumControllerDidFinishLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwHideLoading];
+        [self.fw hideLoading];
     }
     
     if (self.maximumTableViewHeight > 0) {
@@ -311,7 +312,7 @@
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowEmpty:)]) {
             [self.albumControllerDelegate albumControllerWillShowEmpty:self];
         } else {
-            [self fwShowEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
+            [self.fw showEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
         }
     }
     
@@ -333,7 +334,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
         NSString *tipText = [NSString stringWithFormat:FWAppBundle.pickerDeniedTitle, appName];
-        [self fwShowEmptyViewWithText:tipText];
+        [self.fw showEmptyViewWithText:tipText];
     }
     
     if (self.albumArrayLoaded) {
@@ -503,7 +504,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self didInitialize];
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }
@@ -530,12 +531,12 @@
     
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
-        self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+        self.videoDurationLabel.fw.origin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
     }
     
     if (!self.iconImageView.hidden) {
         [self.iconImageView sizeToFit];
-        self.iconImageView.fwOrigin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
+        self.iconImageView.fw.origin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
     }
 }
 
@@ -667,6 +668,7 @@
         _showsEditCollectionView = YES;
         _shouldUseOriginImage = YES;
         _editCheckedIndex = NSNotFound;
+        self.extendedLayoutIncludesOpaqueBars = YES;
         self.editCollectionViewHeight = 80;
         self.editCollectionCellSize = CGSizeMake(60, 60);
         self.maximumSelectImageCount = 9;
@@ -679,8 +681,8 @@
         
         _checkboxImage = FWAppBundle.pickerCheckImage;
         _checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
-        _originImageCheckboxImage = [FWAppBundle.pickerCheckImage fwImageWithScaleSize:CGSizeMake(18, 18)];
-        _originImageCheckboxCheckedImage = [FWAppBundle.pickerCheckedImage fwImageWithScaleSize:CGSizeMake(18, 18)];
+        _originImageCheckboxImage = [FWAppBundle.pickerCheckImage.fw imageWithScaleSize:CGSizeMake(18, 18)];
+        _originImageCheckboxCheckedImage = [FWAppBundle.pickerCheckedImage.fw imageWithScaleSize:CGSizeMake(18, 18)];
     }
     return self;
 }
@@ -713,9 +715,9 @@
     self.topToolBarView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), FWTopBarHeight);
     CGFloat topToolbarPaddingTop = self.view.safeAreaInsets.top;
     CGFloat topToolbarContentHeight = CGRectGetHeight(self.topToolBarView.bounds) - topToolbarPaddingTop;
-    self.backButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
+    self.backButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
     if (!self.checkboxButton.hidden) {
-        self.checkboxButton.fwOrigin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
+        self.checkboxButton.fw.origin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
     }
     
     CGFloat bottomToolBarHeight = self.bottomToolBarHeight;
@@ -723,11 +725,11 @@
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
     [self updateSendButtonLayout];
     
-    self.editButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
+    self.editButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
     if (self.showsEditButton) {
-        self.originImageCheckboxButton.fwOrigin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+        self.originImageCheckboxButton.fw.origin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     } else {
-        self.originImageCheckboxButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+        self.originImageCheckboxButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     }
     
     self.editCollectionView.frame = CGRectMake(0, CGRectGetMinY(self.bottomToolBarView.frame) - self.editCollectionViewHeight, CGRectGetWidth(self.view.bounds), self.editCollectionViewHeight);
@@ -795,9 +797,9 @@
         [_backButton setImage:FWAppBundle.navBackImage forState:UIControlStateNormal];
         [_backButton sizeToFit];
         [_backButton addTarget:self action:@selector(handleCancelButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _backButton.fwTouchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
-        _backButton.fwDisabledAlpha = 0.3;
-        _backButton.fwHighlightedAlpha = 0.5;
+        _backButton.fw.touchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
+        _backButton.fw.disabledAlpha = 0.3;
+        _backButton.fw.highlightedAlpha = 0.5;
     }
     return _backButton;
 }
@@ -811,9 +813,9 @@
         [_checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
         [_checkboxButton sizeToFit];
         [_checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _checkboxButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        _checkboxButton.fwDisabledAlpha = 0.3;
-        _checkboxButton.fwHighlightedAlpha = 0.5;
+        _checkboxButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _checkboxButton.fw.disabledAlpha = 0.3;
+        _checkboxButton.fw.highlightedAlpha = 0.5;
     }
     return _checkboxButton;
 }
@@ -839,12 +841,12 @@
     if (!_editButton) {
         _editButton = [[UIButton alloc] init];
         _editButton.hidden = !self.showsEditButton;
-        _editButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _editButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [_editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
         _editButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_editButton sizeToFit];
-        _editButton.fwDisabledAlpha = 0.3;
-        _editButton.fwHighlightedAlpha = 0.5;
+        _editButton.fw.disabledAlpha = 0.3;
+        _editButton.fw.highlightedAlpha = 0.5;
         [_editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _editButton;
@@ -854,12 +856,12 @@
 - (UIButton *)sendButton {
     if (!_sendButton) {
         _sendButton = [[UIButton alloc] init];
-        _sendButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _sendButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
         _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_sendButton sizeToFit];
-        _sendButton.fwDisabledAlpha = 0.3;
-        _sendButton.fwHighlightedAlpha = 0.5;
+        _sendButton.fw.disabledAlpha = 0.3;
+        _sendButton.fw.highlightedAlpha = 0.5;
         [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sendButton;
@@ -878,9 +880,9 @@
         [_originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
         [_originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
         [_originImageCheckboxButton sizeToFit];
-        _originImageCheckboxButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        _originImageCheckboxButton.fwDisabledAlpha = 0.3;
-        _originImageCheckboxButton.fwHighlightedAlpha = 0.5;
+        _originImageCheckboxButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _originImageCheckboxButton.fw.disabledAlpha = 0.3;
+        _originImageCheckboxButton.fw.highlightedAlpha = 0.5;
         [_originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _originImageCheckboxButton;
@@ -1086,7 +1088,7 @@
         } else if (imageAsset.assetSubType == FWAssetSubTypeGIF) {
             [imageAsset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    UIImage *resultImage = [UIImage fwImageWithData:imageData];
+                    UIImage *resultImage = [UIImage.fw imageWithData:imageData];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (resultImage) {
                             imageView.image = resultImage;
@@ -1218,7 +1220,7 @@
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
                 [self.delegate imagePickerPreviewControllerWillShowExceed:self];
             } else {
-                [self fwShowAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
+                [self.fw showAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
             }
             return;
         }
@@ -1296,13 +1298,13 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerWillStartLoading:)]) {
             [self.delegate imagePickerPreviewControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
-            [self fwShowLoading];
+            [self.fw showLoading];
         }
         [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.imagePickerController.filterType useOrigin:self.shouldUseOriginImage completion:^{
             if (self.delegate && [self.delegate respondsToSelector:@selector(imagePickerPreviewControllerDidFinishLoading:)]) {
                 [self.delegate imagePickerPreviewControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
-                [self fwHideLoading];
+                [self.fw hideLoading];
             }
             
             [self dismissViewControllerAnimated:YES completion:^(void) {
@@ -1398,7 +1400,7 @@
 - (void)updateSendButtonLayout {
     CGFloat bottomToolBarContentHeight = self.bottomToolBarHeight - self.view.safeAreaInsets.bottom;
     [self.sendButton sizeToFit];
-    self.sendButton.fwOrigin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
+    self.sendButton.fw.origin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
 }
 
 - (void)updateImageCountAndCollectionView:(BOOL)animated {
@@ -1501,7 +1503,7 @@
     if (self) {
         _checkedIndex = NSNotFound;
         [self didInitialize];
-        [self fwApplyAppearance];
+        [self.fw applyAppearance];
     }
     return self;
 }
@@ -1520,7 +1522,7 @@
     [self.contentView addSubview:self.iconImageView];
     
     self.checkboxButton = [[UIButton alloc] init];
-    self.checkboxButton.fwTouchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    self.checkboxButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
     self.checkboxButton.hidden = YES;
     [self.contentView addSubview:self.checkboxButton];
 }
@@ -1579,12 +1581,12 @@
     
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
-        self.videoDurationLabel.fwOrigin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+        self.videoDurationLabel.fw.origin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
     }
     
     if (!self.iconImageView.hidden) {
         [self.iconImageView sizeToFit];
-        self.iconImageView.fwOrigin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
+        self.iconImageView.fw.origin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
     }
 }
 
@@ -1841,18 +1843,19 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     FWToolbarTitleView *titleView = [[FWToolbarTitleView alloc] init];
     _titleView = titleView;
     titleView.delegate = self;
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.navigationItem.titleView = titleView;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelButtonClick:)];
 }
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
     _toolBarBackgroundColor = toolBarBackgroundColor;
-    self.navigationController.navigationBar.fwBackgroundColor = toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw.backgroundColor = toolBarBackgroundColor;
 }
 
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
-    self.navigationController.navigationBar.fwForegroundColor = toolBarTintColor;
+    self.navigationController.navigationBar.fw.foregroundColor = toolBarTintColor;
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1878,10 +1881,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.navigationController.navigationBarHidden != NO) {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
     }
-    self.navigationController.navigationBar.fwIsTranslucent = NO;
-    self.navigationController.navigationBar.fwShadowColor = nil;
-    self.navigationController.navigationBar.fwBackgroundColor = self.toolBarBackgroundColor;
-    self.navigationController.navigationBar.fwForegroundColor = self.toolBarTintColor;
+    self.navigationController.navigationBar.fw.isTranslucent = NO;
+    self.navigationController.navigationBar.fw.shadowColor = nil;
+    self.navigationController.navigationBar.fw.backgroundColor = self.toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw.foregroundColor = self.toolBarTintColor;
     
     // 由于被选中的图片 selectedImageAssetArray 可以由外部改变，因此检查一下图片被选中的情况，并刷新 collectionView
     if (self.allowsMultipleSelection) {
@@ -1898,7 +1901,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.allowsMultipleSelection) {
         operationToolBarViewHeight = self.operationToolBarHeight;
         self.operationToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - operationToolBarViewHeight, CGRectGetWidth(self.view.bounds), operationToolBarViewHeight);
-        self.previewButton.fwOrigin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (CGRectGetHeight(self.operationToolBarView.bounds) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
+        self.previewButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (CGRectGetHeight(self.operationToolBarView.bounds) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
         [self updateSendButtonLayout];
         operationToolBarViewHeight = CGRectGetHeight(self.operationToolBarView.frame);
     }
@@ -1939,7 +1942,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
-            [self fwShowLoading];
+            [self.fw showLoading];
         }
     }
     if (!assetsGroup) {
@@ -1967,7 +1970,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwShowLoading];
+        [self.fw showLoading];
     }
     self.isImagesAssetLoading = YES;
     [self initAlbumControllerIfNeeded];
@@ -1979,7 +1982,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
         [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
     } else if (self.showsDefaultLoading) {
-        [self fwHideLoading];
+        [self.fw hideLoading];
     }
     self.isImagesAssetLoading = NO;
     if (self.imagesAssetArray.count > 0) {
@@ -2000,13 +2003,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
                 NSString *tipText = [NSString stringWithFormat:FWAppBundle.pickerDeniedTitle, appName];
-                [self fwShowEmptyViewWithText:tipText];
+                [self.fw showEmptyViewWithText:tipText];
             }
         } else {
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerWillShowEmpty:self];
             } else {
-                [self fwShowEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
+                [self.fw showEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
             }
         }
     }
@@ -2163,7 +2166,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 - (UICollectionViewFlowLayout *)collectionViewLayout {
     if (!_collectionViewLayout) {
         _collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-        CGFloat inset = [UIScreen fwPixelOne] * 2; // no why, just beautiful
+        CGFloat inset = [UIScreen.fw pixelOne] * 2; // no why, just beautiful
         _collectionViewLayout.sectionInset = UIEdgeInsetsMake(inset, inset, inset, inset);
         _collectionViewLayout.minimumLineSpacing = _collectionViewLayout.sectionInset.bottom;
         _collectionViewLayout.minimumInteritemSpacing = _collectionViewLayout.sectionInset.left;
@@ -2213,9 +2216,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_sendButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
-        _sendButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
-        _sendButton.fwDisabledAlpha = 0.3;
-        _sendButton.fwHighlightedAlpha = 0.5;
+        _sendButton.fw.touchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
+        _sendButton.fw.disabledAlpha = 0.3;
+        _sendButton.fw.highlightedAlpha = 0.5;
         [_sendButton sizeToFit];
         [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -2230,9 +2233,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _previewButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_previewButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_previewButton setTitle:FWAppBundle.previewButton forState:UIControlStateNormal];
-        _previewButton.fwTouchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
-        _previewButton.fwDisabledAlpha = 0.3;
-        _previewButton.fwHighlightedAlpha = 0.5;
+        _previewButton.fw.touchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
+        _previewButton.fw.disabledAlpha = 0.3;
+        _previewButton.fw.highlightedAlpha = 0.5;
         [_previewButton sizeToFit];
         [_previewButton addTarget:self action:@selector(handlePreviewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -2301,7 +2304,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillShowExceed:self];
         } else {
-            [self fwShowAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
+            [self.fw showAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
         }
         return;
     }
@@ -2349,14 +2352,14 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillStartLoading:)]) {
             [self.imagePickerControllerDelegate imagePickerControllerWillStartLoading:self];
         } else if (self.showsDefaultLoading) {
-            [self fwShowLoading];
+            [self.fw showLoading];
         }
         [self initPreviewViewControllerIfNeeded];
         [FWImagePickerController requestImagesAssetArray:self.selectedImageAssetArray filterType:self.filterType useOrigin:self.imagePickerPreviewController.shouldUseOriginImage completion:^{
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerDidFinishLoading:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerDidFinishLoading:self];
             } else if (self.showsDefaultLoading) {
-                [self fwHideLoading];
+                [self.fw hideLoading];
             }
             
             [self dismissViewControllerAnimated:YES completion:^{
@@ -2438,7 +2441,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             if (self.imagePickerControllerDelegate && [self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerPreviewControllerWillShowExceed:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerWillShowExceed:self];
             } else {
-                [self fwShowAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
+                [self.fw showAlertWithTitle:[NSString stringWithFormat:FWAppBundle.pickerExceedTitle, @(self.maximumSelectImageCount)] message:nil cancel:FWAppBundle.closeButton cancelBlock:nil];
             }
             return;
         }
@@ -2596,9 +2599,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     BOOL checkVideo = (filterType & FWImagePickerFilterTypeVideo) || filterType < 1;
     [imagesAssetArray enumerateObjectsUsingBlock:^(FWAsset *asset, NSUInteger index, BOOL *stop) {
         if (checkVideo && asset.assetType == FWAssetTypeVideo) {
-            NSString *filePath = [PHPhotoLibrary fwPickerControllerVideoCachePath];
+            NSString *filePath = [PHPhotoLibrary.fw pickerControllerVideoCachePath];
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
-            filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fwMd5Encode]] stringByAppendingPathExtension:@"mp4"];
+            filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString.fw md5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             [asset requestVideoURLWithOutputURL:fileURL exportPreset:useOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -2622,7 +2625,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             } else if (asset.assetSubType == FWAssetSubTypeGIF) {
                 [asset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        UIImage *resultImage = imageData ? [UIImage fwImageWithData:imageData] : nil;
+                        UIImage *resultImage = imageData ? [UIImage.fw imageWithData:imageData] : nil;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completionHandler(asset, resultImage, info);
                         });

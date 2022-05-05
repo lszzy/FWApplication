@@ -80,7 +80,7 @@ static NSString * const kTestCollectionFooterViewID = @"kTestCollectionFooterVie
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTestCollectionCellID forIndexPath:indexPath];
-    cell.contentView.backgroundColor = [UIColor fwRandomColor];
+    cell.contentView.backgroundColor = UIColor.fw.randomColor;
     return cell;
 }
 
@@ -98,11 +98,11 @@ static NSString * const kTestCollectionFooterViewID = @"kTestCollectionFooterVie
 {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         UICollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kTestCollectionHeaderViewID forIndexPath:indexPath];
-        headerView.backgroundColor = [UIColor fwRandomColor];
+        headerView.backgroundColor = UIColor.fw.randomColor;
         return headerView;
     } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         UICollectionReusableView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kTestCollectionFooterViewID forIndexPath:indexPath];
-        footerView.backgroundColor = [UIColor fwRandomColor];
+        footerView.backgroundColor = UIColor.fw.randomColor;
         return footerView;
     }
     return nil;

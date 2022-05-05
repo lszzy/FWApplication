@@ -7,50 +7,25 @@
  @updated    2018/9/18
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- NSString+FWApplication
- */
-@interface NSString (FWApplication)
-
-#pragma mark - Convert
-
-/**
- *  首字母大写
- */
-@property (nonatomic, copy, readonly) NSString *fwUcfirstString;
-
-/**
- *  首字母小写
- */
-@property (nonatomic, copy, readonly) NSString *fwLcfirstString;
-
-/**
- *  驼峰转下划线
- */
-@property (nonatomic, copy, readonly) NSString *fwUnderlineString;
-
-/**
- *  下划线转驼峰
- */
-@property (nonatomic, copy, readonly) NSString *fwCamelString;
+@interface FWStringWrapper (FWApplication)
 
 #pragma mark - Pinyin
 
 /**
- *  转拼音
+ 中文转拼音
  */
-@property (nonatomic, copy, readonly) NSString *fwPinyinString;
+@property (nonatomic, copy, readonly) NSString *pinyinString;
 
 /**
  *  中文转拼音并进行比较
  *
  *  @param string 中文字符串
  */
-- (NSComparisonResult)fwPinyinCompare:(NSString *)string;
+- (NSComparisonResult)pinyinCompare:(NSString *)string;
 
 #pragma mark - Regex
 
@@ -59,14 +34,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param index 目标索引
  */
-- (NSString *)fwEmojiSubstring:(NSUInteger)index;
+- (NSString *)emojiSubstring:(NSUInteger)index;
 
 /**
  *  正则搜索子串
  *
  *  @param regex 正则表达式
  */
-- (nullable NSString *)fwRegexSubstring:(NSString *)regex;
+- (nullable NSString *)regexSubstring:(NSString *)regex;
 
 /**
  *  正则替换字符串
@@ -76,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return 替换后的字符串
  */
-- (NSString *)fwRegexReplace:(NSString *)regex withString:(NSString *)string;
+- (NSString *)regexReplace:(NSString *)regex withString:(NSString *)string;
 
 /**
  *  正则匹配回调
@@ -84,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param regex 正则表达式
  *  @param block 回调句柄。range从大至小，方便replace
  */
-- (void)fwRegexMatches:(NSString *)regex withBlock:(void (^)(NSRange range))block;
+- (void)regexMatches:(NSString *)regex withBlock:(void (^)(NSRange range))block;
 
 #pragma mark - Html
 
@@ -93,16 +68,18 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return 转义后的字符串
  */
-@property (nonatomic, copy, readonly) NSString *fwEscapeHtml;
-
-#pragma mark - Static
-
-// 创建一个UUID字符串，示例："D1178E50-2A4D-4F1F-9BD3-F6AAB00E06B1"。也可调用NSUUID.UUID.UUIDString
-@property (class, nonatomic, copy, readonly) NSString *fwUUIDString;
+@property (nonatomic, copy, readonly) NSString *escapeHtml;
 
 @end
 
-#pragma mark - NSString+FWFormat
+@interface FWStringClassWrapper (FWApplication)
+
+// 创建一个UUID字符串，示例："D1178E50-2A4D-4F1F-9BD3-F6AAB00E06B1"。也可调用NSUUID.UUID.UUIDString
+@property (nonatomic, copy, readonly) NSString *UUIDString;
+
+@end
+
+#pragma mark - FWStringWrapper+FWFormat
 
 /**
  *  正则表达式简单说明
@@ -175,7 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  首先是一个转义字符\(,它能出现0次或1次(?),然后是一个0，后面跟着2个数字(\d{2})，然后是)或-或空格中的一个，它出现1次或不出现(?)，
  *  最后是8个数字(\d{8})
  */
-@interface NSString (FWFormat)
+@interface FWStringWrapper (FWFormat)
 
 /**
  *  是否符合正则表达式
@@ -185,97 +162,97 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param regex 正则表达式
  */
-- (BOOL)fwIsFormatRegex:(NSString *)regex;
+- (BOOL)isFormatRegex:(NSString *)regex;
 
 /**
  *  是否是手机号
  */
-- (BOOL)fwIsFormatMobile;
+- (BOOL)isFormatMobile;
 
 /**
  *  是否是座机号
  */
-- (BOOL)fwIsFormatTelephone;
+- (BOOL)isFormatTelephone;
 
 /**
  *  是否是整数
  */
-- (BOOL)fwIsFormatInteger;
+- (BOOL)isFormatInteger;
 
 /**
  *  是否是数字
  */
-- (BOOL)fwIsFormatNumber;
+- (BOOL)isFormatNumber;
 
 /**
  *  是否是合法金额，两位小数点
  */
-- (BOOL)fwIsFormatMoney;
+- (BOOL)isFormatMoney;
 
 /**
  *  是否是身份证号
  */
-- (BOOL)fwIsFormatIdcard;
+- (BOOL)isFormatIdcard;
 
 /**
  *  是否是银行卡号
  */
-- (BOOL)fwIsFormatBankcard;
+- (BOOL)isFormatBankcard;
 
 /**
  *  是否是车牌号
  */
-- (BOOL)fwIsFormatCarno;
+- (BOOL)isFormatCarno;
 
 /**
  *  是否是邮政编码
  */
-- (BOOL)fwIsFormatPostcode;
+- (BOOL)isFormatPostcode;
 
 /**
  *  是否是工商税号
  */
-- (BOOL)fwIsFormatTaxno;
+- (BOOL)isFormatTaxno;
 
 /**
  *  是否是邮箱
  */
-- (BOOL)fwIsFormatEmail;
+- (BOOL)isFormatEmail;
 
 /**
  *  是否是URL
  */
-- (BOOL)fwIsFormatUrl;
+- (BOOL)isFormatUrl;
 
 /**
  *  是否是HTML
  */
-- (BOOL)fwIsFormatHtml;
+- (BOOL)isFormatHtml;
 
 /**
  *  是否是IP
  */
-- (BOOL)fwIsFormatIp;
+- (BOOL)isFormatIp;
 
 /**
  *  是否全是中文
  */
-- (BOOL)fwIsFormatChinese;
+- (BOOL)isFormatChinese;
 
 /**
  *  是否是合法时间，格式：yyyy-MM-dd HH:mm:ss
  */
-- (BOOL)fwIsFormatDatetime;
+- (BOOL)isFormatDatetime;
 
 /**
  *  是否是合法时间戳，格式：1301234567
  */
-- (BOOL)fwIsFormatTimestamp;
+- (BOOL)isFormatTimestamp;
 
 /**
  *  是否是坐标点字符串，格式：latitude,longitude
  */
-- (BOOL)fwIsFormatCoordinate;
+- (BOOL)isFormatCoordinate;
 
 @end
 

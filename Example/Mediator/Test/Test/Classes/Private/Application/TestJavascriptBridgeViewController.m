@@ -14,7 +14,7 @@
 - (void)renderWebBridge:(FWWebViewJsBridge *)bridge {
     [FWWebViewJsBridge enableLogging];
     [bridge setErrorHandler:^(NSString *handlerName, id data, FWJsBridgeResponseCallback responseCallback) {
-        [UIWindow.fwMainWindow fwShowMessageWithText:[NSString stringWithFormat:@"handler %@ undefined: %@", handlerName, data] style:FWToastStyleDefault completion:^{
+        [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"handler %@ undefined: %@", handlerName, data] style:FWToastStyleDefault completion:^{
             responseCallback(@"Response from errorHandler");
         }];
     }];
@@ -38,21 +38,21 @@
 
 - (void)callHandler:(id)sender {
     id data = @{ @"greetingFromObjC": @"Hi there, JS!" };
-    [self.webView.fwJsBridge callHandler:@"testJavascriptHandler" data:data responseCallback:^(id response) {
+    [self.webView.fw.jsBridge callHandler:@"testJavascriptHandler" data:data responseCallback:^(id response) {
         NSLog(@"testJavascriptHandler responded: %@", response);
     }];
 }
 
 - (void)errorHandler:(id)sender {
     id data = @{ @"greetingFromObjC": @"Hi there, Error!" };
-    [self.webView.fwJsBridge callHandler:@"notFoundHandler" data:data responseCallback:^(id  _Nonnull responseData) {
+    [self.webView.fw.jsBridge callHandler:@"notFoundHandler" data:data responseCallback:^(id  _Nonnull responseData) {
         NSLog(@"notFoundHandler responded: %@", responseData);
     }];
 }
 
 - (void)filterHandler:(id)sender {
     id data = @{ @"greetingFromObjC": @"Hi there, Error!" };
-    [self.webView.fwJsBridge callHandler:@"testFilterHandler" data:data responseCallback:^(id  _Nonnull responseData) {
+    [self.webView.fw.jsBridge callHandler:@"testFilterHandler" data:data responseCallback:^(id  _Nonnull responseData) {
         NSLog(@"testFilterHandler responded: %@", responseData);
     }];
 }
@@ -66,7 +66,7 @@
 
 - (void)renderButtons:(WKWebView*)webView {
     UIFont* font = [UIFont fontWithName:@"HelveticaNeue" size:12.0];
-    CGFloat y = FWScreenHeight - FWTopBarHeight - UIScreen.fwSafeAreaInsets.bottom - 45;
+    CGFloat y = FWScreenHeight - FWTopBarHeight - UIScreen.fw.safeAreaInsets.bottom - 45;
     
     UIButton *callbackButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [callbackButton setTitle:@"Call" forState:UIControlStateNormal];
@@ -99,7 +99,7 @@
     UIButton* jumpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [jumpButton setTitle:@"Jump" forState:UIControlStateNormal];
     FWWeakifySelf();
-    [jumpButton fwAddTouchBlock:^(id  _Nonnull sender) {
+    [jumpButton.fw addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.webRequest = @"http://kvm.wuyong.site/jssdk.html";
     }];

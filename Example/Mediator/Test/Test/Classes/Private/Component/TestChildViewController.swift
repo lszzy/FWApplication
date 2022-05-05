@@ -17,10 +17,10 @@ import FWApplication
         label.textColor = Theme.textColor
         label.text = "我是父控制器"
         view.addSubview(label)
-        label.fwLayoutChain.center()
+        label.fw.layoutChain.center()
         
         let childController = TestChildSubViewController()
-        fwAddChildViewController(childController)
+        fw.addChildViewController(childController)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +43,7 @@ import FWApplication
         label.textColor = Theme.textColor
         label.text = "我是子控制器"
         view.addSubview(label)
-        label.fwLayoutChain.center()
+        label.fw.layoutChain.center()
     }
     
     override func viewWillAppear(_ animated: Bool) {

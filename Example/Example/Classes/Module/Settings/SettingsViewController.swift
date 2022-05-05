@@ -15,7 +15,7 @@ import FWFramework
 class SettingsViewController: UIViewController, FWTableViewController {
     private lazy var loginButton: UIButton = {
         let button = Theme.largeButton()
-        button.fwAddTouchTarget(self, action: #selector(onMediator))
+        button.fw.addTouchTarget(self, action: #selector(onMediator))
         return button
     }()
     
@@ -34,14 +34,14 @@ class SettingsViewController: UIViewController, FWTableViewController {
         tableView.tableFooterView = footerView
         
         footerView.addSubview(loginButton)
-        loginButton.fwLayoutChain.center()
+        loginButton.fw.layoutChain.center()
     }
     
     func renderData() {
-        fwBarTitle = FWLocalizedString("settingTitle")
+        fw.barTitle = FWLocalizedString("settingTitle")
         
         #if DEBUG
-        fwSetRightBarItem(FWLocalizedString("debugButton")) { (sender) in
+        fw.setRightBarItem(FWLocalizedString("debugButton")) { (sender) in
             if FWDebugManager.sharedInstance().isHidden {
                 FWDebugManager.sharedInstance().show()
             } else {
@@ -80,7 +80,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onLogout() {
-        fwShowConfirm(withTitle: FWLocalizedString("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
+        fw.showConfirm(withTitle: FWLocalizedString("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
             Mediator.userModule.logout {
                 self?.renderData()
             }
@@ -88,15 +88,15 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onLanguage() {
-        fwShowSheet(withTitle: FWLocalizedString("languageTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [FWLocalizedString("systemTitle"), "中文", "English", FWLocalizedString("changeTitle")]) { [weak self] (index) in
+        fw.showSheet(withTitle: FWLocalizedString("languageTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [FWLocalizedString("systemTitle"), "中文", "English", FWLocalizedString("changeTitle")]) { [weak self] (index) in
             if index < 3 {
                 let language: String? = index == 1 ? "zh-Hans" : (index == 2 ? "en" : nil)
-                Bundle.fwLocalizedLanguage = language
+                Bundle.fw.localizedLanguage = language
                 UITabBarController.refreshController()
             } else {
-                let localized = Bundle.fwLocalizedLanguage
+                let localized = Bundle.fw.localizedLanguage
                 let language: String? = localized == nil ? "zh-Hans" : (localized!.hasPrefix("zh") ? "en" : nil)
-                Bundle.fwLocalizedLanguage = language
+                Bundle.fw.localizedLanguage = language
                 self?.renderData()
             }
         }
@@ -109,7 +109,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
         }
         actions.append(FWLocalizedString("changeTitle"))
         
-        fwShowSheet(withTitle: FWLocalizedString("themeTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: actions) { (index) in
+        fw.showSheet(withTitle: FWLocalizedString("themeTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: actions) { (index) in
             var mode = FWThemeMode(index)
             if index > actions.count - 2 {
                 let currentMode = FWThemeManager.sharedInstance.mode
@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onRoot() {
-        fwShowSheet(withTitle: FWLocalizedString("rootTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
+        fw.showSheet(withTitle: FWLocalizedString("rootTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootNavigation = false
@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onOption() {
-        fwShowSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? FWLocalizedString("defaultTitles") : FWLocalizedString("translucentTitles")]) { (index) in
+        fw.showSheet(withTitle: FWLocalizedString("optionTitle"), message: nil, cancel: FWLocalizedString("取消"), actions: [AppConfig.isRootLogin ? FWLocalizedString("loginOptional") : FWLocalizedString("loginRequired"), Theme.isLargeTitles ? FWLocalizedString("normalTitles") : FWLocalizedString("largeTitles"), Theme.isBarTranslucent ? FWLocalizedString("defaultTitles") : FWLocalizedString("translucentTitles")]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
@@ -166,7 +166,7 @@ extension SettingsViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView, style: .value1)
+        let cell = UITableViewCell.fw.cell(with: tableView, style: .value1)
         cell.accessoryType = .disclosureIndicator
         
         let rowData = tableData[indexPath.row] as! NSArray
@@ -176,10 +176,10 @@ extension SettingsViewController {
         
         if "onLanguage" == action {
             var language = FWLocalizedString("systemTitle")
-            if let localized = Bundle.fwLocalizedLanguage, localized.count > 0 {
+            if let localized = Bundle.fw.localizedLanguage, localized.count > 0 {
                 language = localized.hasPrefix("zh") ? "中文" : "English"
             } else {
-                language = language.appending("(\(FWSafeString(Bundle.fwSystemLanguage)))")
+                language = language.appending("(\(FWSafeString(Bundle.fw.systemLanguage)))")
             }
             cell.detailTextLabel?.text = language
         } else if "onTheme" == action {
@@ -206,6 +206,6 @@ extension SettingsViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         let rowData = tableData[indexPath.row] as! NSArray
         let action = FWSafeValue(rowData[1] as? String)
-        fwPerform(Selector(action))
+        fw.invokeMethod(Selector(action))
     }
 }

@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,13 +41,13 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  通用布局section配置分类
  */
-@interface UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
+@interface FWCollectionViewFlowLayoutWrapper (FWCollectionViewSectionConfig)
 
 /// 初始化布局section配置，在prepareLayout调用即可
-- (void)fwSectionConfigPrepareLayout;
+- (void)sectionConfigPrepareLayout;
 
 /// 获取布局section属性，在layoutAttributesForElementsInRect:调用并添加即可
-- (NSArray<UICollectionViewLayoutAttributes *> *)fwSectionConfigLayoutAttributesForElementsInRect:(CGRect)rect;
+- (NSArray<UICollectionViewLayoutAttributes *> *)sectionConfigLayoutAttributesForElementsInRect:(CGRect)rect;
 
 @end
 

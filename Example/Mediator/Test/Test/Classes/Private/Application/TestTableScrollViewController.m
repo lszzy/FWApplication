@@ -40,43 +40,43 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwSeparatorInset = UIEdgeInsetsZero;
+        self.fw.separatorInset = UIEdgeInsetsZero;
         
-        UILabel *titleLabel = [UILabel fwAutoLayoutView];
+        UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel]; {
-            [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
-            [titleLabel fwAddCollapseConstraint:constraint];
-            titleLabel.fwAutoCollapse = YES;
+            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
+            [titleLabel.fw addCollapseConstraint:constraint];
+            titleLabel.fw.autoCollapse = YES;
         }
         
-        UILabel *textLabel = [UILabel fwAutoLayoutView];
+        UILabel *textLabel = [[UILabel alloc] init];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
-        textLabel.fwHiddenCollapse = YES;
+        textLabel.fw.hiddenCollapse = YES;
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel]; {
-            [textLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [textLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [textLabel fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel fwAddCollapseConstraint:constraint];
+            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel.fw addCollapseConstraint:constraint];
         }
         
-        UIImageView *imageView = [UIImageView fwAutoLayoutView];
+        UIImageView *imageView = [[UIImageView alloc] init];
         self.myImageView = imageView;
         [self.contentView addSubview:imageView]; {
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *constraint = [imageView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView fwAddCollapseConstraint:constraint];
-            imageView.fwAutoCollapse = YES;
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView.fw addCollapseConstraint:constraint];
+            imageView.fw.autoCollapse = YES;
         }
     }
     return self;
@@ -109,22 +109,22 @@
 - (void)renderView
 {
     FWInfiniteScrollView.height = 64;
-    [self.tableView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.tableView fwSetLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
     
     UIImageView *pullView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     pullView.image = [TestBundle imageNamed:@"test.gif"];
-    self.tableView.fwPullRefreshView.shouldChangeAlpha = NO;
-    [self.tableView.fwPullRefreshView setCustomView:pullView forState:FWPullRefreshStateAll];
+    self.tableView.fw.pullRefreshView.shouldChangeAlpha = NO;
+    [self.tableView.fw.pullRefreshView setCustomView:pullView forState:FWPullRefreshStateAll];
     
     UIImageView *infiniteView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     infiniteView.image = [TestBundle imageNamed:@"LoadingPlaceholder.gif"];
-    [self.tableView.fwInfiniteScrollView setCustomView:infiniteView forState:FWInfiniteScrollStateAll];
+    [self.tableView.fw.infiniteScrollView setCustomView:infiniteView forState:FWInfiniteScrollStateAll];
 }
 
 - (void)renderData
 {
-    [self.tableView fwBeginLoading];
+    [self.tableView.fw beginLoading];
 }
 
 #pragma mark - TableView
@@ -150,7 +150,7 @@
 
 - (TestTableScrollObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -181,9 +181,9 @@
     });
     
     TestTableScrollObject *object = [TestTableScrollObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.image = [TestBundle imageNamed:imageName];
     }
@@ -202,8 +202,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndRefreshing];
+        self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endRefreshing];
     });
 }
 
@@ -218,8 +218,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndLoading];
+        self.tableView.fw.showLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endLoading];
     });
 }
 

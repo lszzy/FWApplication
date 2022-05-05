@@ -7,7 +7,7 @@
  @updated    2018/12/27
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -32,39 +32,63 @@ NS_ASSUME_NONNULL_BEGIN
     + (NSString *)name { return [NSString stringWithFormat:@"%@.%@.%s", @"event", NSStringFromClass([self class]), #name]; }
 
 /**
- FWViewDelegate
+ 视图挂钩协议，可覆写
  */
-@protocol FWViewDelegate <NSObject>
+@protocol FWView <NSObject>
 
-/// 通用事件代理方法，通知名称即为事件名称
-- (void)fwEventReceived:(__kindof UIView *)view withNotification:(NSNotification *)notification;
+@optional
+
+/// 渲染初始化方法，init自动调用，默认未实现
+- (void)renderInit;
+
+/// 渲染视图方法，init自动调用，默认未实现
+- (void)renderView;
+
+/// 渲染布局方法，init自动调用，默认未实现
+- (void)renderLayout;
+
+/// 渲染数据方法，init和viewModel改变时自动调用，默认未实现
+- (void)renderData;
+
+/// 渲染事件方法，事件完成时自动调用，默认未实现
+- (void)renderEvent:(NSNotification *)notification;
 
 @end
 
-/**
- UIView+FWView
- */
-@interface UIView (FWView)
+/// 通用视图事件代理
+@protocol FWViewDelegate <NSObject>
 
-/// 通用视图模型，可监听
-@property (nonatomic, strong, nullable) id fwViewModel;
+@optional
+
+/// 通用事件代理方法，通知名称即为事件名称
+- (void)eventReceived:(__kindof UIView *)view withNotification:(NSNotification *)notification;
+
+@end
+
+@interface FWViewWrapper (FWView)
+
+/// 通用视图绑定数据，改变时自动触发viewModelChanged和FWView.renderData
+@property (nullable, nonatomic, strong) id viewModel;
+
+/// 通用视图数据改变句柄钩子，viewData改变时自动调用
+@property (nullable, nonatomic, copy) void (^viewModelChanged)(__kindof UIView *view);
 
 /// 通用事件接收代理，弱引用，Delegate方式
-@property (nonatomic, weak, nullable) id<FWViewDelegate> fwViewDelegate;
+@property (nonatomic, weak, nullable) id<FWViewDelegate> viewDelegate;
 
 /// 通用事件接收句柄，Block方式
-@property (nonatomic, copy, nullable) void (^fwEventReceived)(__kindof UIView *view, NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^eventReceived)(__kindof UIView *view, NSNotification *notification);
 
 /// 通用事件完成回调句柄，Block方式
-@property (nonatomic, copy, nullable) void (^fwEventFinished)(NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^eventFinished)(__kindof UIView *view, NSNotification *notification);
 
 /// 发送指定事件，通知代理，支持附带对象和用户信息
-- (void)fwSendEvent:(NSString *)name;
-- (void)fwSendEvent:(NSString *)name object:(nullable id)object;
-- (void)fwSendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
+- (void)sendEvent:(NSString *)name;
+- (void)sendEvent:(NSString *)name object:(nullable id)object;
+- (void)sendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
 
-/// 通用事件完成回调，子类可重写，默认调用fwEventFinished句柄
-- (void)fwEventFinished:(NSNotification *)notification;
+/// 通知事件完成，自动调用eventFinished句柄和FWView.renderEvent钩子
+- (void)finishEvent:(NSNotification *)notification;
 
 @end
 

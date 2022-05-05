@@ -262,7 +262,7 @@ id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
     // 兼容\uD800-\uDFFF引起JSON解码报错3840问题
     if (serializationError && serializationError.code == 3840) {
         NSString *escapeString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSData *escapeData = [[escapeString fwEscapeJson] dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *escapeData = [escapeString.fw.escapeJson dataUsingEncoding:NSUTF8StringEncoding];
         if (escapeData && escapeData.length != data.length) {
             serializationError = nil;
             responseObject = [NSJSONSerialization JSONObjectWithData:escapeData options:self.readingOptions error:&serializationError];
@@ -544,9 +544,9 @@ id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
 
 #pragma mark -
 
-@interface UIImage ()
+@interface FWImageClassWrapper ()
 
-+ (UIImage *)fwImageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary *)options;
+- (UIImage *)imageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary *)options;
 
 @end
 
@@ -560,14 +560,14 @@ static UIImage * FWImageWithDataAtScale(NSData *data, CGFloat scale, NSDictionar
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         imageLock = [[NSLock alloc] init];
-        imageHook = [UIImage respondsToSelector:@selector(fwImageWithData:scale:options:)];
+        imageHook = [UIImage.fw respondsToSelector:@selector(imageWithData:scale:options:)];
     });
     
     // Use hook method if exists
     if (imageHook) {
         UIImage *image = nil;
         [imageLock lock];
-        image = [UIImage fwImageWithData:data scale:scale options:options];
+        image = [UIImage.fw imageWithData:data scale:scale options:options];
         [imageLock unlock];
         
         return image;

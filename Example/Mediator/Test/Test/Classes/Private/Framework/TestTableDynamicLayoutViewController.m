@@ -44,51 +44,51 @@ static BOOL isExpanded = NO;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwSeparatorInset = UIEdgeInsetsZero;
+        self.fw.separatorInset = UIEdgeInsetsZero;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = [Theme cellColor];
         
-        UILabel *titleLabel = [UILabel fwAutoLayoutView];
+        UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        [titleLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [titleLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftWithInset(15).rightWithInset(15).topWithInset(15);
         }];
         
-        UILabel *textLabel = [UILabel fwAutoLayoutView];
+        UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel];
-        [textLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [textLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftToView(titleLabel).rightToView(titleLabel);
-            NSLayoutConstraint *constraint = [textLabel fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel fwAddCollapseConstraint:constraint];
-            textLabel.fwAutoCollapse = YES;
+            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel.fw addCollapseConstraint:constraint];
+            textLabel.fw.autoCollapse = YES;
         }];
         
         // maxY视图不需要和bottom布局，默认平齐，可设置底部间距
-        self.fwMaxYViewPadding = 15;
-        UIImageView *imageView = [UIImageView fwAutoLayoutView];
+        self.fw.maxYViewPadding = 15;
+        UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         imageView.userInteractionEnabled = YES;
-        [imageView fwSetContentModeAspectFill];
-        [imageView fwAddTapGestureWithTarget:self action:@selector(onImageClick:)];
+        [imageView.fw setContentModeAspectFill];
+        [imageView.fw addTapGestureWithTarget:self action:@selector(onImageClick:)];
         [self.contentView addSubview:imageView];
-        [imageView fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *widthCons = [imageView fwSetDimension:NSLayoutAttributeWidth toSize:100];
-            NSLayoutConstraint *heightCons = [imageView fwSetDimension:NSLayoutAttributeHeight toSize:100];
-            NSLayoutConstraint *constraint = [imageView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView fwAddCollapseConstraint:widthCons];
-            [imageView fwAddCollapseConstraint:heightCons];
-            [imageView fwAddCollapseConstraint:constraint];
-            imageView.fwAutoCollapse = YES;
+        [imageView.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *widthCons = [imageView.fw setDimension:NSLayoutAttributeWidth toSize:100];
+            NSLayoutConstraint *heightCons = [imageView.fw setDimension:NSLayoutAttributeHeight toSize:100];
+            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView.fw addCollapseConstraint:widthCons];
+            [imageView.fw addCollapseConstraint:heightCons];
+            [imageView.fw addCollapseConstraint:constraint];
+            imageView.fw.autoCollapse = YES;
         }];
     }
     return self;
@@ -99,8 +99,8 @@ static BOOL isExpanded = NO;
     _object = object;
     // 自动收缩
     self.myTitleLabel.text = object.title;
-    if ([object.imageUrl fwIsFormatUrl]) {
-        [self.myImageView fwSetImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
+    if ([object.imageUrl.fw isFormatUrl]) {
+        [self.myImageView.fw setImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     } else if (object.imageUrl.length > 0) {
         self.myImageView.image = [TestBundle imageNamed:object.imageUrl];
     } else {
@@ -109,8 +109,8 @@ static BOOL isExpanded = NO;
     // 手工收缩
     self.myTextLabel.text = object.text;
     
-    [self.myImageView fwConstraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
-    self.fwMaxYViewExpanded = isExpanded;
+    [self.myImageView.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
+    self.fw.maxYViewExpanded = isExpanded;
 }
 
 - (void)onImageClick:(UIGestureRecognizer *)gesture
@@ -122,7 +122,7 @@ static BOOL isExpanded = NO;
 
 @end
 
-@interface TestTableDynamicLayoutHeaderView : UITableViewHeaderFooterView
+@interface TestTableDynamicLayoutHeaderView : UITableViewHeaderFooterView <FWView>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -135,25 +135,22 @@ static BOOL isExpanded = NO;
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.backgroundColor = [Theme cellColor];
-        self.fwMaxYViewPadding = 15;
+        self.fw.maxYViewPadding = 15;
         
-        UILabel *titleLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
         titleLabel.numberOfLines = 0;
         _titleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        titleLabel.fwLayoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15).bottomWithInset(15);
+        titleLabel.fw.layoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15).bottomWithInset(15);
     }
     return self;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)renderData
 {
-    [super setFwViewModel:fwViewModel];
-    
-    self.titleLabel.text = FWSafeString(fwViewModel);
-    
-    [self.titleLabel fwConstraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
-    self.fwMaxYViewExpanded = isExpanded;
+    self.titleLabel.text = FWSafeString(self.fw.viewModel);
+    [self.titleLabel.fw constraintToSuperview:NSLayoutAttributeBottom].active = isExpanded;
+    self.fw.maxYViewExpanded = isExpanded;
 }
 
 @end
@@ -174,37 +171,37 @@ static BOOL isExpanded = NO;
     // [self.tableView fwSetTemplateLayout:NO];
     
     FWWeakifySelf();
-    [self.tableView fwResetGroupedStyle];
+    [self.tableView.fw resetGroupedStyle];
     self.tableView.backgroundColor = [Theme tableColor];
-    [self.tableView fwSetRefreshingBlock:^{
+    [self.tableView.fw setRefreshingBlock:^{
         FWStrongifySelf();
         
         [self onRefreshing];
     }];
-    self.tableView.fwPullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
+    self.tableView.fw.pullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh state-%@", @(state)];
     };
-    self.tableView.fwPullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw.pullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh progress-%.2f", progress];
     };
     
     FWInfiniteScrollView.height = 64;
-    [self.tableView fwSetLoadingBlock:^{
+    [self.tableView.fw setLoadingBlock:^{
         FWStrongifySelf();
         
         [self onLoading];
     }];
-    self.tableView.fwInfiniteScrollView.preloadHeight = 200;
-    self.tableView.fwInfiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
+    self.tableView.fw.infiniteScrollView.preloadHeight = 200;
+    self.tableView.fw.infiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load state-%@", @(state)];
     };
-    self.tableView.fwInfiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw.infiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load progress-%.2f", progress];
@@ -214,9 +211,9 @@ static BOOL isExpanded = NO;
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"刷新", @"布局撑开", @"布局不撑开"] actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"刷新", @"布局撑开", @"布局不撑开"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             if (index == 1) {
@@ -231,7 +228,7 @@ static BOOL isExpanded = NO;
 
 - (void)renderData
 {
-    [self.tableView fwBeginRefreshing];
+    [self.tableView.fw beginRefreshing];
 }
 
 #pragma mark - TableView
@@ -244,7 +241,7 @@ static BOOL isExpanded = NO;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     // 渲染可重用Cell
-    TestTableDynamicLayoutCell *cell = [TestTableDynamicLayoutCell fwCellWithTableView:tableView];
+    TestTableDynamicLayoutCell *cell = [TestTableDynamicLayoutCell.fw cellWithTableView:tableView];
     FWWeakifySelf();
     FWWeakify(cell);
     cell.imageClicked = ^(TestTableDynamicLayoutObject *object) {
@@ -264,7 +261,7 @@ static BOOL isExpanded = NO;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [tableView fwHeightWithCellClass:[TestTableDynamicLayoutCell class]
+    return [tableView.fw heightWithCellClass:[TestTableDynamicLayoutCell class]
                            cacheByIndexPath:indexPath
                               configuration:^(TestTableDynamicLayoutCell * _Nonnull cell) {
         cell.object = [self.tableData objectAtIndex:indexPath.row];
@@ -289,44 +286,44 @@ static BOOL isExpanded = NO;
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableData fwRemoveObjectAtIndex:indexPath.row];
-        [self.tableView fwReloadDataWithoutCache];
+        [self.tableData removeObjectAtIndex:indexPath.row];
+        [self.tableView.fw reloadDataWithoutCache];
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    TestTableDynamicLayoutHeaderView *headerView = [TestTableDynamicLayoutHeaderView fwHeaderFooterViewWithTableView:tableView];
-    headerView.fwViewModel = @"我是表格Header\n我是表格Header";
+    TestTableDynamicLayoutHeaderView *headerView = [TestTableDynamicLayoutHeaderView.fw headerFooterViewWithTableView:tableView];
+    headerView.fw.viewModel = @"我是表格Header\n我是表格Header";
     return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGFloat height = [tableView fwHeightWithHeaderFooterViewClass:[TestTableDynamicLayoutHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableDynamicLayoutHeaderView *headerView) {
-        headerView.fwViewModel = @"我是表格Header\n我是表格Header";
+    CGFloat height = [tableView.fw heightWithHeaderFooterViewClass:[TestTableDynamicLayoutHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableDynamicLayoutHeaderView *headerView) {
+        headerView.fw.viewModel = @"我是表格Header\n我是表格Header";
     }];
     return height;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    TestTableDynamicLayoutHeaderView *footerView = [TestTableDynamicLayoutHeaderView fwHeaderFooterViewWithTableView:tableView];
-    footerView.fwViewModel = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
+    TestTableDynamicLayoutHeaderView *footerView = [TestTableDynamicLayoutHeaderView.fw headerFooterViewWithTableView:tableView];
+    footerView.fw.viewModel = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
     return footerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    CGFloat height = [tableView fwHeightWithHeaderFooterViewClass:[TestTableDynamicLayoutHeaderView class] type:FWHeaderFooterViewTypeFooter configuration:^(TestTableDynamicLayoutHeaderView *footerView) {
-        footerView.fwViewModel = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
+    CGFloat height = [tableView.fw heightWithHeaderFooterViewClass:[TestTableDynamicLayoutHeaderView class] type:FWHeaderFooterViewTypeFooter configuration:^(TestTableDynamicLayoutHeaderView *footerView) {
+        footerView.fw.viewModel = @"我是表格Footer\n我是表格Footer\n我是表格Footer";
     }];
     return height;
 }
 
 - (TestTableDynamicLayoutObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -365,9 +362,9 @@ static BOOL isExpanded = NO;
     });
     
     TestTableDynamicLayoutObject *object = [TestTableDynamicLayoutObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    object.imageUrl =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    object.imageUrl =[[randomArray objectAtIndex:2].fw randomObject];
     return object;
 }
 
@@ -381,11 +378,11 @@ static BOOL isExpanded = NO;
         for (int i = 0; i < 4; i++) {
             [self.tableData addObject:[self randomObject]];
         }
-        [self.tableView fwReloadDataWithoutCache];
+        [self.tableView.fw reloadDataWithoutCache];
         
-        self.tableView.fwShowRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndRefreshing];
-        if (!self.tableView.fwShowRefreshing) {
+        self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endRefreshing];
+        if (!self.tableView.fw.showRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -402,8 +399,8 @@ static BOOL isExpanded = NO;
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndLoading];
+        self.tableView.fw.showLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endLoading];
     });
 }
 
@@ -419,8 +416,8 @@ static BOOL isExpanded = NO;
     NSInteger count = 0;
     for (TestTableDynamicLayoutObject *object in self.tableData) {
         NSString *imageUrl = object.imageUrl;
-        imageUrl.fwTempObject = @(count++);
-        if ([imageUrl fwIsFormatUrl] || imageUrl.length < 1) {
+        imageUrl.fw.tempObject = @(count++);
+        if ([imageUrl.fw isFormatUrl] || imageUrl.length < 1) {
             [pictureUrls addObject:imageUrl];
         } else {
             [pictureUrls addObject:[TestBundle imageNamed:object.imageUrl]];
@@ -428,7 +425,7 @@ static BOOL isExpanded = NO;
     }
     
     FWWeakifySelf();
-    [self fwShowImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:indexPath.row sourceView:^id _Nullable(NSInteger index) {
+    [self.fw showImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:indexPath.row sourceView:^id _Nullable(NSInteger index) {
         FWStrongifySelf();
         TestTableDynamicLayoutCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
         return cell.myImageView;

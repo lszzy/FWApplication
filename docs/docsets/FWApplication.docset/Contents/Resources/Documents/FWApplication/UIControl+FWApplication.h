@@ -7,18 +7,17 @@
  @updated    2019/6/21
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- UIControl+FWApplication
- @note 防重复点击可以手工控制enabled或userInteractionEnabled，如request开始时禁用，结束时启用等
+ 防重复点击可以手工控制enabled或userInteractionEnabled，如request开始时禁用，结束时启用等
  */
-@interface UIControl (FWApplication)
+@interface FWControlWrapper (FWApplication)
 
 // 设置Touch事件触发间隔，防止短时间多次触发事件，默认0
-@property (nonatomic, assign) NSTimeInterval fwTouchEventInterval UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSTimeInterval touchEventInterval UI_APPEARANCE_SELECTOR;
 
 @end
 

@@ -7,6 +7,7 @@
 //
 
 #import "TestMenuViewController.h"
+@import Vision;
 
 @interface TestMenuViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
@@ -19,7 +20,14 @@
 
 - (void)renderInit
 {
-    self.fwExtendedLayoutEdge = UIRectEdgeTop;
+    self.fw.extendedLayoutEdge = UIRectEdgeTop;
+}
+
+- (BOOL)shouldPopController
+{
+    FWDrawerView *drawerView = self.contentView.fw.drawerView;
+    [drawerView setPosition:drawerView.openPosition animated:YES];
+    return NO;
 }
 
 - (void)viewDidLoad
@@ -27,27 +35,27 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetLeftBarItem:@"Menu" block:^(id sender) {
+    [self.fw setLeftBarItem:@"Menu" block:^(id sender) {
         FWStrongifySelf();
-        FWDrawerView *drawerView = self.contentView.fwDrawerView;
+        FWDrawerView *drawerView = self.contentView.fw.drawerView;
         CGFloat position = (drawerView.position == drawerView.openPosition) ? drawerView.closePosition : drawerView.openPosition;
         [drawerView setPosition:position animated:YES];
     }];
     
-    [self fwAddRightBarItem:@"相册" target:self action:@selector(onPhotoSheet:)];
+    [self.fw addRightBarItem:@"相册" target:self action:@selector(onPhotoSheet:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.fwBackgroundTransparent = YES;
+    self.navigationController.navigationBar.fw.backgroundTransparent = YES;
 }
 
 - (void)renderView
 {
     self.view.backgroundColor = [Theme tableColor];
     
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 2.0, 0, FWScreenWidth / 2.0, self.view.fwHeight)];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 2.0, 0, FWScreenWidth / 2.0, self.view.fw.height)];
     _contentView = contentView;
     contentView.backgroundColor = [UIColor brownColor];
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 200, 100, 30)];
@@ -63,14 +71,14 @@
     closeLabel.text = @"Back";
     FWWeakifySelf();
     closeLabel.userInteractionEnabled = YES;
-    [closeLabel fwAddTapGestureWithBlock:^(id sender) {
+    [closeLabel.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
-        [self fwCloseViewControllerAnimated:YES];
+        [self.fw closeViewControllerAnimated:YES];
     }];
     [contentView addSubview:closeLabel];
     [self.view addSubview:contentView];
     
-    [contentView fwDrawerView:UISwipeGestureRecognizerDirectionRight
+    [contentView.fw drawerView:UISwipeGestureRecognizerDirectionRight
                     positions:@[@(-FWScreenWidth / 2.0), @(0)]
                kickbackHeight:25
                      callback:nil];
@@ -79,26 +87,26 @@
     _imageView = imageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
-    imageView.fwLayoutChain.center().size(CGSizeMake(200, 200));
+    imageView.fw.layoutChain.center().size(CGSizeMake(200, 200));
 }
 
 - (void)onPhotoSheet:(UIBarButtonItem *)sender
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"拍照", @"选取相册"] actionBlock:^(NSInteger index) {
+    [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"拍照", @"选取相册"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index == 0) {
             if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                [self fwShowAlertWithTitle:@"未检测到您的摄像头" message:nil cancel:nil cancelBlock:nil];
+                [self.fw showAlertWithTitle:@"未检测到您的摄像头" message:nil cancel:nil cancelBlock:nil];
                 return;
             }
             
-            [self fwShowImageCameraWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
+            [self.fw showImageCameraWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
                 FWStrongifySelf();
                 [self onPickerResult:image cancelled:cancel];
             }];
         } else {
-            [self fwShowImagePickerWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
+            [self.fw showImagePickerWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
                 FWStrongifySelf();
                 [self onPickerResult:image cancelled:cancel];
             }];
@@ -109,6 +117,23 @@
 - (void)onPickerResult:(UIImage *)image cancelled:(BOOL)cancelled
 {
     self.imageView.image = cancelled ? nil : image;
+    if (!self.imageView.image.CGImage) return;
+    
+    if (@available(iOS 13.0, *)) {
+        [UIWindow.fw showLoading];
+        [UIApplication.fw recognizeTextIn:self.imageView.image.CGImage configuration:^(VNRecognizeTextRequest *request) {
+            request.recognitionLanguages = @[@"zh-CN", @"en-US"];
+            request.usesLanguageCorrection = YES;
+        } completion:^(NSArray<FWOcrObject *> *results) {
+            [UIWindow.fw hideLoading];
+            NSMutableString *string = [NSMutableString string];
+            for (FWOcrObject *object in results) {
+                [string appendFormat:@"text: %@\nconfidence: %@\n", object.text, @(object.confidence)];
+            }
+            NSString *message = string.length > 0 ? string.copy : @"识别结果为空";
+            [UIWindow.fw.mainWindow.fw showAlertWithTitle:@"扫描结果" message:message];
+        }];
+    }
 }
 
 @end

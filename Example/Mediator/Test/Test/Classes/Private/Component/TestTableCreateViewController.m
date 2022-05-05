@@ -8,7 +8,7 @@
 
 #import "TestTableCreateViewController.h"
 
-@interface TestTableCreateCell : UITableViewCell
+@interface TestTableCreateCell : UITableViewCell <FWView>
 
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UILabel *iconLabel;
@@ -17,30 +17,28 @@
 
 @implementation TestTableCreateCell
 
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (void)renderInit
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        self.fwMaxYViewPadding = 20;
-        
-        UIImageView *iconView = [UIImageView new];
-        _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
-        [self.contentView addSubview:iconView];
-        iconView.fwLayoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
-        
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
-        _iconLabel = iconLabel;
-        [self.contentView addSubview:iconLabel];
-        iconLabel.fwLayoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
-    }
-    return self;
+    self.fw.maxYViewPadding = 20;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)renderView
 {
-    [super setFwViewModel:fwViewModel];
-    self.iconLabel.text = [NSString stringWithFormat:@"我是文本%@", fwViewModel];
+    UIImageView *iconView = [UIImageView new];
+    _iconView = iconView;
+    iconView.image = [UIImage.fw imageWithAppIcon];
+    [self.contentView addSubview:iconView];
+    iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
+    
+    UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
+    _iconLabel = iconLabel;
+    [self.contentView addSubview:iconLabel];
+    iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
+}
+
+- (void)renderData
+{
+    self.iconLabel.text = [NSString stringWithFormat:@"我是文本%@", self.fw.viewModel];
 }
 
 @end
@@ -59,18 +57,18 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
+        iconView.image = [UIImage.fw imageWithAppIcon];
         [self.contentView addSubview:iconView];
-        iconView.fwLayoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
+        iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
-        iconLabel.fwLayoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
+        iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
     }
     return self;
 }
@@ -97,18 +95,18 @@
 {
     self = [super initWithReuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwMaxYViewPadding = 20;
+        self.fw.maxYViewPadding = 20;
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage fwImageWithAppIcon];
+        iconView.image = [UIImage.fw imageWithAppIcon];
         [self.contentView addSubview:iconView];
-        iconView.fwLayoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
+        iconView.fw.layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
-        UILabel *iconLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
+        UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
-        iconLabel.fwLayoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
+        iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
     }
     return self;
 }
@@ -138,37 +136,37 @@
         UIView *testView = [UIView new];
         _testView = testView;
         testView.backgroundColor = [UIColor redColor];
-        [testView fwSetCornerRadius:5];
+        [testView.fw setCornerRadius:5];
         [self addSubview:testView];
-        testView.fwLayoutChain.leftWithInset(20).topWithInset(20)
+        testView.fw.layoutChain.leftWithInset(20).topWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
         UIView *rightView = [UIView new];
         rightView.backgroundColor = [UIColor redColor];
-        [rightView fwSetCornerRadius:5];
+        [rightView.fw setCornerRadius:5];
         [self addSubview:rightView];
-        rightView.fwLayoutChain.rightWithInset(20).topWithInset(20)
+        rightView.fw.layoutChain.rightWithInset(20).topWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
         UIView *childView = [UIView new];
         _childView = childView;
         childView.backgroundColor = [UIColor yellowColor];
         [rightView addSubview:childView];
-        childView.fwLayoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
+        childView.fw.layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
         
         UIImageView *imageView = [UIImageView new];
         _imageView = imageView;
         imageView.image = [TestBundle imageNamed:@"test_scale"];
-        [imageView fwSetContentModeAspectFill];
-        [imageView fwSetCornerRadius:5];
+        [imageView.fw setContentModeAspectFill];
+        [imageView.fw setCornerRadius:5];
         [self addSubview:imageView];
-        imageView.fwLayoutChain.centerXToView(testView)
+        imageView.fw.layoutChain.centerXToView(testView)
             .topToBottomOfViewWithOffset(testView, 20).size(CGSizeMake(50, 50));
         
         UIView *childView2 = [UIView new];
         childView2.backgroundColor = [UIColor yellowColor];
         [self addSubview:childView2];
-        childView2.fwLayoutChain.centerXToView(childView)
+        childView2.fw.layoutChain.centerXToView(childView)
             .centerYToView(imageView).sizeToView(childView)
             .bottomWithInset(20);
     }
@@ -197,7 +195,7 @@
         label1.textColor = [Theme textColor];
         label1.text = @"我是Label1";
         [self addSubview:label1];
-        label1.fwLayoutChain.leftWithInset(20).topWithInset(20);
+        label1.fw.layoutChain.leftWithInset(20).topWithInset(20);
         
         UILabel *label2 = [UILabel new];
         _label2 = label2;
@@ -206,7 +204,7 @@
         label2.numberOfLines = 0;
         label2.text = @"我是Label2222222222\n我是Label22222\n我是Label2";
         [self addSubview:label2];
-        label2.fwLayoutChain.topWithInset(20).rightWithInset(20)
+        label2.fw.layoutChain.topWithInset(20).rightWithInset(20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
         UITextView *textView1 = [UITextView new];
@@ -215,7 +213,7 @@
         textView1.textColor = [Theme textColor];
         textView1.text = @"我是TextView1";
         [self addSubview:textView1];
-        textView1.fwLayoutChain.leftWithInset(20)
+        textView1.fw.layoutChain.leftWithInset(20)
             .topToBottomOfViewWithOffset(label1, 20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
@@ -226,7 +224,7 @@
         textView2.textColor = [Theme textColor];
         textView2.text = @"我是TextView2222\n我是TextView2\n我是TextView";
         [self addSubview:textView2];
-        textView2.fwLayoutChain.rightWithInset(20)
+        textView2.fw.layoutChain.rightWithInset(20)
             .topToBottomOfViewWithOffset(label2, 20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50))
             .bottomWithInset(20);
@@ -246,32 +244,32 @@
 
 - (void)renderView
 {
-    self.tableView = [UITableView fwTableView];
+    self.tableView = [UITableView.fw tableView];
     FWWeakifySelf();
-    self.tableView.fwDelegate.cellClass = [TestTableCreateCell class];
-    self.tableView.fwDelegate.didSelectRow = ^(NSIndexPath * indexPath) {
+    self.tableView.fw.delegate.cellClass = [TestTableCreateCell class];
+    self.tableView.fw.delegate.didSelectRow = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
-        [self fwShowAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
+        [self.fw showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
     };
-    self.tableView.fwDelegate.deleteTitle = @"删除";
-    self.tableView.fwDelegate.didDeleteRow = ^(NSIndexPath * indexPath) {
+    self.tableView.fw.delegate.deleteTitle = @"删除";
+    self.tableView.fw.delegate.didDeleteRow = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
-        [self fwShowAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了删除%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
+        [self.fw showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了删除%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
     };
     
-    self.tableView.fwDelegate.viewForHeader = ^id _Nullable(NSInteger section) {
+    self.tableView.fw.delegate.viewForHeader = ^id _Nullable(NSInteger section) {
         FWStrongifySelf();
-        TestTableCreateHeaderView *viewForHeader = [TestTableCreateHeaderView fwHeaderFooterViewWithTableView:self.tableView];
+        TestTableCreateHeaderView *viewForHeader = [TestTableCreateHeaderView.fw headerFooterViewWithTableView:self.tableView];
         viewForHeader.object = @1;
         
-        CGFloat height = [self.tableView fwHeightWithHeaderFooterViewClass:[TestTableCreateHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableCreateHeaderView * _Nonnull headerFooterView) {
+        CGFloat height = [self.tableView.fw heightWithHeaderFooterViewClass:[TestTableCreateHeaderView class] type:FWHeaderFooterViewTypeHeader configuration:^(TestTableCreateHeaderView * _Nonnull headerFooterView) {
             headerFooterView.object = @1;
         }];
-        viewForHeader.frame = CGRectMake(0, 0, self.tableView.fwWidth, height);
+        viewForHeader.frame = CGRectMake(0, 0, self.tableView.fw.width, height);
         return viewForHeader;
     };
-    self.tableView.fwDelegate.footerViewClass = [TestTableCreateFooterView class];
-    self.tableView.fwDelegate.footerConfiguration = ^(TestTableCreateFooterView * _Nonnull headerFooterView, NSInteger section) {
+    self.tableView.fw.delegate.footerViewClass = [TestTableCreateFooterView class];
+    self.tableView.fw.delegate.footerConfiguration = ^(TestTableCreateFooterView * _Nonnull headerFooterView, NSInteger section) {
         headerFooterView.object = @1;
     };
     
@@ -279,32 +277,32 @@
     UIView *footerView = [[TestTableCreateTableFooterView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 0)];
     self.tableView.tableHeaderView = headerView;
     self.tableView.tableFooterView = footerView;
-    [headerView fwAutoLayoutSubviews];
-    [footerView fwAutoLayoutSubviews];
+    [headerView.fw autoLayoutSubviews];
+    [footerView.fw autoLayoutSubviews];
     
     [self.view addSubview:self.tableView];
-    [self.tableView fwPinEdgesToSuperview];
+    [self.tableView.fw pinEdgesToSuperview];
     
-    [self.tableView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.tableView fwSetLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.addImage block:^(id sender) {
+    [self.fw setRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
-        NSMutableArray *sectionData = self.tableView.fwDelegate.tableData[0].mutableCopy;
-        NSInteger lastIndex = [sectionData.lastObject fwAsInteger];
+        NSMutableArray *sectionData = self.tableView.fw.delegate.tableData[0].mutableCopy;
+        NSInteger lastIndex = [sectionData.lastObject fw].safeInteger;
         [sectionData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
-        self.tableView.fwDelegate.tableData = @[sectionData];
+        self.tableView.fw.delegate.tableData = @[sectionData];
         [self.tableView reloadData];
     }];
 }
 
 - (void)renderData
 {
-    [self.tableView fwBeginRefreshing];
+    [self.tableView.fw beginRefreshing];
 }
 
 - (void)onRefreshing
@@ -313,10 +311,10 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"刷新完成");
         
-        self.tableView.fwDelegate.tableData = @[@[@1, @2]];
+        self.tableView.fw.delegate.tableData = @[@[@1, @2]];
         [self.tableView reloadData];
         
-        [self.tableView fwEndRefreshing];
+        [self.tableView.fw endRefreshing];
     });
 }
 
@@ -326,13 +324,13 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"加载完成");
         
-        NSMutableArray *sectionData = self.tableView.fwDelegate.tableData[0].mutableCopy;
-        NSInteger lastIndex = [sectionData.lastObject fwAsInteger];
+        NSMutableArray *sectionData = self.tableView.fw.delegate.tableData[0].mutableCopy;
+        NSInteger lastIndex = [sectionData.lastObject fw].safeInteger;
         [sectionData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
-        self.tableView.fwDelegate.tableData = @[sectionData];
+        self.tableView.fw.delegate.tableData = @[sectionData];
         [self.tableView reloadData];
         
-        [self.tableView fwEndLoading];
+        [self.tableView.fw endLoading];
     });
 }
 

@@ -23,7 +23,7 @@
     return instance;
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
         showImagePreview:(NSArray *)imageURLs
               imageInfos:(NSArray *)imageInfos
             currentIndex:(NSInteger)currentIndex

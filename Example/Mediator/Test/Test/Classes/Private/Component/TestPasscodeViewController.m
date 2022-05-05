@@ -40,35 +40,35 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
     _valueLabel.font = [UIFont boldSystemFontOfSize:24];
     _valueLabel.text = @"Empty";
     [self.view addSubview:_valueLabel];
-    _valueLabel.fwLayoutChain.centerX().topWithInset(30);
+    _valueLabel.fw.layoutChain.centerX().topWithInset(30);
     
     _boxContainerView = [UIView new];
     [self.view addSubview:_boxContainerView];
-    _boxContainerView.fwLayoutChain.leftWithInset(35).rightWithInset(35)
+    _boxContainerView.fw.layoutChain.leftWithInset(35).rightWithInset(35)
         .height(52).topToBottomOfViewWithOffset(_valueLabel, 30);
     
     _clearButton = [Theme largeButton];
     [_clearButton setTitle:@"Clear" forState:UIControlStateNormal];
     [_clearButton addTarget:self action:@selector(clearBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_clearButton];
-    _clearButton.fwLayoutChain.centerX().topToBottomOfViewWithOffset(_boxContainerView, 30);
+    _clearButton.fw.layoutChain.centerX().topToBottomOfViewWithOffset(_boxContainerView, 30);
     
     _securityButton = [Theme largeButton];
     [_securityButton setTitle:@"Security" forState:UIControlStateNormal];
     [_securityButton addTarget:self action:@selector(securityBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_securityButton];
-    _securityButton.fwLayoutChain.centerX().topToBottomOfViewWithOffset(_clearButton, 30);
+    _securityButton.fw.layoutChain.centerX().topToBottomOfViewWithOffset(_clearButton, 30);
 }
 
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Toggle" block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@"Toggle" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        NSArray *titles = [self.dataArr fwMapWithBlock:^id _Nullable(NSArray *obj) {
+        NSArray *titles = [self.dataArr.fw mapWithBlock:^id _Nullable(NSArray *obj) {
             return obj.firstObject;
         }];
-        [self fwShowSheetWithTitle:nil message:nil cancel:@"Cancel" actions:titles actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"Cancel" actions:titles actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             self.boxInputModelType = index;
         }];
@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
     }
     
     [self.boxContainerView addSubview:_boxInputView];
-    _boxInputView.fwLayoutChain.edges();
+    _boxInputView.fw.layoutChain.edges();
 }
 
 #pragma mark - Normal
@@ -263,13 +263,13 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
         lineView.underlineColorNormal = [Theme.textColor colorWithAlphaComponent:0.3];
         lineView.underlineColorSelected = [Theme.textColor colorWithAlphaComponent:0.7];
         lineView.underlineColorFilled = Theme.textColor;
-        lineView.lineView.fwLayoutChain.remake().height(4).edgesWithInsetsExcludingEdge(UIEdgeInsetsZero, NSLayoutAttributeTop);
+        lineView.lineView.fw.layoutChain.remake().height(4).edgesWithInsetsExcludingEdge(UIEdgeInsetsZero, NSLayoutAttributeTop);
         
         lineView.selectChangeBlock = ^(FWPasscodeLineView * _Nonnull lineView, BOOL selected) {
             if (selected) {
-                lineView.lineView.fwLayoutChain.height(6);
+                lineView.lineView.fw.layoutChain.height(6);
             } else {
-                lineView.lineView.fwLayoutChain.height(4);
+                lineView.lineView.fw.layoutChain.height(4);
             }
         };
 
@@ -379,7 +379,7 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
         circleView.backgroundColor = Theme.textColor;
         circleView.layer.cornerRadius = 4;
         [customSecurityView addSubview:circleView];
-        circleView.fwLayoutChain.center().width(circleViewWidth).height(circleViewWidth);
+        circleView.fw.layoutChain.center().width(circleViewWidth).height(circleViewWidth);
 
         return customSecurityView;
     };

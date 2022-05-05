@@ -47,7 +47,7 @@
     self.dismissTappedVideo = YES;
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         NSString *pluginText = self.usePlugin ? @"不使用插件" : @"使用插件";
         NSString *progressText = self.mockProgress ? @"关闭进度" : @"开启进度";
@@ -57,7 +57,7 @@
         NSString *dismissImageText = self.dismissTappedImage ? @"单击图片时不关闭" : @"单击图片时自动关闭";
         NSString *dismissVideoText = self.dismissTappedVideo ? @"单击视频时不关闭" : @"单击视频时自动关闭";
         NSString *closeText = self.showsClose ? @"隐藏视频关闭按钮" : @"开启视频关闭按钮";
-        [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[pluginText, progressText, fadeText, toolbarText, autoText, dismissImageText, dismissVideoText, closeText] actionBlock:^(NSInteger index) {
+        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[pluginText, progressText, fadeText, toolbarText, autoText, dismissImageText, dismissVideoText, closeText] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             if (index == 0) {
                 self.usePlugin = !self.usePlugin;
@@ -80,7 +80,7 @@
     }];
     
     self.floatLayoutView = [[FWFloatLayoutView alloc] init];
-    self.floatLayoutView.itemMargins = UIEdgeInsetsMake(UIScreen.fwPixelOne, UIScreen.fwPixelOne, 0, 0);
+    self.floatLayoutView.itemMargins = UIEdgeInsetsMake(UIScreen.fw.pixelOne, UIScreen.fw.pixelOne, 0, 0);
     for (id image in self.images) {
         UIButton *button = [[UIButton alloc] init];
         button.imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -91,7 +91,7 @@
             if ([image hasSuffix:@".mp4"]) {
                 [button setImage:[TestBundle imageNamed:@"public_icon"] forState:UIControlStateNormal];
             } else {
-                [UIImage fwDownloadImage:imageUrl completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+                [UIImage.fw downloadImage:imageUrl completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
                     [button setImage:image ?: [TestBundle imageNamed:@"public_icon"] forState:UIControlStateNormal];
                 } progress:nil];
             }
@@ -113,8 +113,8 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    UIEdgeInsets margins = UIEdgeInsetsMake(24 + self.fwTopBarHeight, 24 + self.view.safeAreaInsets.left, 24, 24 + self.view.safeAreaInsets.right);
-    CGFloat contentWidth = self.view.fwWidth - (margins.left + margins.right);
+    UIEdgeInsets margins = UIEdgeInsetsMake(24 + self.fw.topBarHeight, 24 + self.view.safeAreaInsets.left, 24, 24 + self.view.safeAreaInsets.right);
+    CGFloat contentWidth = self.view.fw.width - (margins.left + margins.right);
     NSInteger column = FWIsIpad || FWIsLandscape ? self.images.count : 3;
     CGFloat imageWidth = contentWidth / column - (column - 1) * (self.floatLayoutView.itemMargins.left + self.floatLayoutView.itemMargins.right);
     self.floatLayoutView.minimumItemSize = CGSizeMake(imageWidth, imageWidth);
@@ -128,7 +128,7 @@
     if (self.usePlugin) {
         NSInteger buttonIndex = [self.floatLayoutView.subviews indexOfObject:button];
         __weak __typeof(self) weakSelf = self;
-        [self fwShowImagePreviewWithImageURLs:self.images imageInfos:nil currentIndex:buttonIndex sourceView:^id _Nullable(NSInteger index) {
+        [self.fw showImagePreviewWithImageURLs:self.images imageInfos:nil currentIndex:buttonIndex sourceView:^id _Nullable(NSInteger index) {
             return weakSelf.floatLayoutView.subviews[index];
         }];
         return;
@@ -150,8 +150,8 @@
             if (!tipLabel) {
                 tipLabel = [UILabel new];
                 tipLabel.tag = 102;
-                tipLabel.fwContentInset = UIEdgeInsetsMake(2, 8, 2, 8);
-                [tipLabel fwSetCornerRadius:FWFontRegular(12).lineHeight / 2 + 2];
+                tipLabel.fw.contentInset = UIEdgeInsetsMake(2, 8, 2, 8);
+                [tipLabel.fw setCornerRadius:FWFontRegular(12).lineHeight / 2 + 2];
                 tipLabel.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
                 tipLabel.text = @"图片仅供参考";
                 tipLabel.font = FWFontRegular(12);
@@ -164,12 +164,12 @@
                 tipLabel.transform = CGAffineTransformMakeScale(labelScale, labelScale);
                 CGSize imageSize = zoomImageView.image.size;
                 CGSize labelSize = tipLabel.frame.size;
-                tipLabel.fwOrigin = CGPointMake(imageSize.width - 16 * labelScale - labelSize.width, imageSize.height - 16 * labelScale - labelSize.height);
-                tipLabel.hidden = tipLabel.fwY < 0;
+                tipLabel.fw.origin = CGPointMake(imageSize.width - 16 * labelScale - labelSize.width, imageSize.height - 16 * labelScale - labelSize.height);
+                tipLabel.hidden = tipLabel.fw.y < 0;
             }
         };
         
-        self.imagePreviewViewController.fwVisibleStateChanged = ^(FWImagePreviewController *viewController, FWViewControllerVisibleState visibleState) {
+        self.imagePreviewViewController.fw.visibleStateChanged = ^(FWImagePreviewController *viewController, FWViewControllerVisibleState visibleState) {
             if (visibleState == FWViewControllerVisibleStateWillDisappear) {
                 NSInteger exitAtIndex = viewController.imagePreviewView.currentImageIndex;
                 weakSelf.tipsLabel.text = [NSString stringWithFormat:@"浏览到第%@张就退出了", @(exitAtIndex + 1)];
@@ -203,7 +203,7 @@
         FWWeakifySelf();
         [self mockProgress:^(double progress, BOOL finished) {
             FWStrongifySelf();
-            if (zoomImageView.reusedIdentifier.fwAsInteger != index) return;
+            if (zoomImageView.reusedIdentifier.fw.safeInteger != index) return;
             
             zoomImageView.progress = progress;
             if (finished) {

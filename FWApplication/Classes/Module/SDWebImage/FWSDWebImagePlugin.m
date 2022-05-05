@@ -40,12 +40,12 @@
     return instance;
 }
 
-- (Class)fwImageViewAnimatedClass
+- (Class)imageViewAnimatedClass
 {
     return [SDAnimatedImageView class];
 }
 
-- (UIImage *)fwImageDecode:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
+- (UIImage *)imageDecode:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     NSNumber *scaleFactor = options[FWImageCoderOptionScaleFactor];
     if (scaleFactor != nil) scale = [scaleFactor doubleValue];
@@ -56,7 +56,7 @@
     return [[SDImageCodersManager sharedManager] decodedImageWithData:data options:[coderOptions copy]];
 }
 
-- (NSData *)fwImageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
+- (NSData *)imageEncode:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     SDImageCoderMutableOptions *coderOptions = [[NSMutableDictionary alloc] init];
     coderOptions[SDImageCoderEncodeCompressionQuality] = @(1);
@@ -69,12 +69,12 @@
     return [[SDImageCodersManager sharedManager] encodedDataWithImage:image format:SDImageFormatUndefined options:[coderOptions copy]];
 }
 
-- (NSURL *)fwImageURL:(UIImageView *)imageView
+- (NSURL *)imageURL:(UIImageView *)imageView
 {
     return imageView.sd_imageURL;
 }
 
-- (void)fwImageView:(UIImageView *)imageView
+- (void)imageView:(UIImageView *)imageView
         setImageURL:(NSURL *)imageURL
         placeholder:(UIImage *)placeholder
             options:(FWWebImageOptions)options
@@ -109,12 +109,12 @@
                         } : nil];
 }
 
-- (void)fwCancelImageRequest:(UIImageView *)imageView
+- (void)cancelImageRequest:(UIImageView *)imageView
 {
     [imageView sd_cancelCurrentImageLoad];
 }
 
-- (id)fwDownloadImage:(NSURL *)imageURL
+- (id)downloadImage:(NSURL *)imageURL
               options:(FWWebImageOptions)options
               context:(NSDictionary<FWImageCoderOptions,id> *)context
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
@@ -142,7 +142,7 @@
             }];
 }
 
-- (void)fwCancelImageDownload:(id)receipt
+- (void)cancelImageDownload:(id)receipt
 {
     if (receipt && [receipt isKindOfClass:[SDWebImageCombinedOperation class]]) {
         [(SDWebImageCombinedOperation *)receipt cancel];

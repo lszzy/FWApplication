@@ -21,11 +21,11 @@
     CGSize size = CGSizeMake(FWScreenWidth - 40, 50);
     
     UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(20, 20, size.width, size.height)];
-    view1.backgroundColor = [UIColor fwGradientColorWithSize:CGSizeMake(size.width, 1) colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
+    view1.backgroundColor = [UIColor.fw gradientColorWithSize:CGSizeMake(size.width, 1) colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
     [self.view addSubview:view1];
     
     UIImageView *view2 = [[UIImageView alloc] initWithFrame:CGRectMake(20, 90, size.width, size.height)];
-    view2.image = [UIImage fwGradientImageWithSize:size colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
+    view2.image = [UIImage.fw gradientImageWithSize:size colors:colors locations:locations direction:UISwipeGestureRecognizerDirectionRight];
     [self.view addSubview:view2];
     
     FWGradientView *view3 = [[FWGradientView alloc] initWithFrame:CGRectMake(20, 160, size.width, size.height)];
@@ -34,7 +34,7 @@
     [self.view addSubview:view3];
     
     UIView *view4 = [[UIView alloc] initWithFrame:CGRectMake(20, 230, size.width, size.height)];
-    [view4 fwAddGradientLayer:CGRectMake(0, 0, size.width, size.height) colors:colors locations:@[@0.0, @0.5, @1.0] startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 0)];
+    [view4.fw addGradientLayer:CGRectMake(0, 0, size.width, size.height) colors:colors locations:@[@0.0, @0.5, @1.0] startPoint:CGPointMake(0, 0) endPoint:CGPointMake(1, 0)];
     [self.view addSubview:view4];
 }
 

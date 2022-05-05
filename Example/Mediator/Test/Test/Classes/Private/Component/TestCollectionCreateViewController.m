@@ -22,7 +22,7 @@
 
 @end
 
-@interface TestCollectionCreateCell : UICollectionViewCell
+@interface TestCollectionCreateCell : UICollectionViewCell <FWView>
 
 @property (nonatomic, strong) TestCollectionCreateObject *object;
 
@@ -40,46 +40,46 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor fwRandomColor];
+        self.contentView.backgroundColor = UIColor.fw.randomColor;
         
-        UILabel *titleLabel = [UILabel fwAutoLayoutView];
+        UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        [titleLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [titleLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftWithInset(15).rightWithInset(15).topWithInset(15);
         }];
         
-        UILabel *textLabel = [UILabel fwAutoLayoutView];
+        UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel];
-        [textLabel fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [textLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftToView(titleLabel).rightToView(titleLabel);
-            NSLayoutConstraint *constraint = [textLabel fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel fwAddCollapseConstraint:constraint];
-            textLabel.fwAutoCollapse = YES;
+            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel.fw addCollapseConstraint:constraint];
+            textLabel.fw.autoCollapse = YES;
         }];
         
         // maxY视图不需要和bottom布局，默认平齐，可设置底部间距
-        self.fwMaxYViewPadding = 15;
-        UIImageView *imageView = [UIImageView fwAutoLayoutView];
+        self.fw.maxYViewPadding = 15;
+        UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
-        [imageView fwSetContentModeAspectFill];
+        [imageView.fw setContentModeAspectFill];
         [self.contentView addSubview:imageView];
-        [imageView fwLayoutMaker:^(FWLayoutChain * _Nonnull make) {
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            NSLayoutConstraint *widthCons = [imageView fwSetDimension:NSLayoutAttributeWidth toSize:100];
-            NSLayoutConstraint *heightCons = [imageView fwSetDimension:NSLayoutAttributeHeight toSize:100];
-            NSLayoutConstraint *constraint = [imageView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView fwAddCollapseConstraint:widthCons];
-            [imageView fwAddCollapseConstraint:heightCons];
-            [imageView fwAddCollapseConstraint:constraint];
-            imageView.fwAutoCollapse = YES;
+        [imageView.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            NSLayoutConstraint *widthCons = [imageView.fw setDimension:NSLayoutAttributeWidth toSize:100];
+            NSLayoutConstraint *heightCons = [imageView.fw setDimension:NSLayoutAttributeHeight toSize:100];
+            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView.fw addCollapseConstraint:widthCons];
+            [imageView.fw addCollapseConstraint:heightCons];
+            [imageView.fw addCollapseConstraint:constraint];
+            imageView.fw.autoCollapse = YES;
         }];
     }
     return self;
@@ -90,8 +90,8 @@
     _object = object;
     // 自动收缩
     self.myTitleLabel.text = object.title;
-    if ([object.imageUrl fwIsFormatUrl]) {
-        [self.myImageView fwSetImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
+    if ([object.imageUrl.fw isFormatUrl]) {
+        [self.myImageView.fw setImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     } else if (object.imageUrl.length > 0) {
         self.myImageView.image = [TestBundle imageNamed:object.imageUrl];
     } else {
@@ -101,10 +101,8 @@
     self.myTextLabel.text = object.text;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)renderData
 {
-    [super setFwViewModel:fwViewModel];
-    
     self.myTitleLabel.text = @"我是标题";
     self.myImageView.image = [TestBundle imageNamed:@"public_icon"];
     self.myTextLabel.text = @"我是文本";
@@ -112,7 +110,7 @@
 
 @end
 
-@interface TestCollectionCreateHeaderView : UICollectionReusableView
+@interface TestCollectionCreateHeaderView : UICollectionReusableView <FWView>
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -124,23 +122,21 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor fwRandomColor];
-        self.fwMaxYViewPadding = 15;
+        self.backgroundColor = UIColor.fw.randomColor;
+        self.fw.maxYViewPadding = 15;
         
-        UILabel *titleLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
         titleLabel.numberOfLines = 0;
         _titleLabel = titleLabel;
         [self addSubview:titleLabel];
-        titleLabel.fwLayoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15);
+        titleLabel.fw.layoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15);
     }
     return self;
 }
 
-- (void)setFwViewModel:(id)fwViewModel
+- (void)renderData
 {
-    [super setFwViewModel:fwViewModel];
-    
-    self.titleLabel.text = FWSafeString(fwViewModel ? fwViewModel : @"我是Header");
+    self.titleLabel.text = FWSafeString(self.fw.viewModel ?: @"我是Header");
 }
 
 @end
@@ -155,8 +151,8 @@
 
 - (void)renderView
 {
-    self.collectionView = [UICollectionView fwCollectionView];
-    self.collectionView.fwDelegate.collectionData = @[@[]];
+    self.collectionView = [UICollectionView.fw collectionView];
+    self.collectionView.fw.delegate.collectionData = @[@[]];
     self.collectionView.backgroundColor = [Theme backgroundColor];
     self.collectionView.alwaysBounceVertical = YES;
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
@@ -164,64 +160,64 @@
     flowLayout.minimumInteritemSpacing = 0;
     flowLayout.sectionInset = UIEdgeInsetsMake(10, 10, 10, 10);
     FWWeakifySelf();
-    self.collectionView.fwDelegate.cellClass = [TestCollectionCreateCell class];
-    self.collectionView.fwDelegate.cellConfiguration = ^(TestCollectionCreateCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
+    self.collectionView.fw.delegate.cellClass = [TestCollectionCreateCell class];
+    self.collectionView.fw.delegate.cellConfiguration = ^(TestCollectionCreateCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
         FWStrongifySelf();
-        cell.object = self.collectionView.fwDelegate.collectionData[indexPath.section][indexPath.row];
+        cell.object = self.collectionView.fw.delegate.collectionData[indexPath.section][indexPath.row];
     };
-    self.collectionView.fwDelegate.didSelectItem = ^(NSIndexPath * indexPath) {
+    self.collectionView.fw.delegate.didSelectItem = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
-        [self fwShowAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.item)] cancel:nil cancelBlock:nil];
+        [self.fw showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.item)] cancel:nil cancelBlock:nil];
     };
     
-    self.collectionView.fwDelegate.headerViewClass = [TestCollectionCreateHeaderView class];
-    self.collectionView.fwDelegate.footerViewClass = [TestCollectionCreateHeaderView class];
-    self.collectionView.fwDelegate.headerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
-        headerView.fwViewModel = @"我是Header\n我是Header";
+    self.collectionView.fw.delegate.headerViewClass = [TestCollectionCreateHeaderView class];
+    self.collectionView.fw.delegate.footerViewClass = [TestCollectionCreateHeaderView class];
+    self.collectionView.fw.delegate.headerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
+        headerView.fw.viewModel = @"我是Header\n我是Header";
     };
-    self.collectionView.fwDelegate.footerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
-        headerView.fwViewModel = @"我是Footer\n我是Footer\n我是Footer";
+    self.collectionView.fw.delegate.footerConfiguration = ^(TestCollectionCreateHeaderView * _Nonnull headerView, NSIndexPath *indexPath) {
+        headerView.fw.viewModel = @"我是Footer\n我是Footer\n我是Footer";
     };
     
     [self.view addSubview:self.collectionView];
-    [self.collectionView fwPinEdgesToSuperview];
+    [self.collectionView.fw pinEdgesToSuperview];
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
     
-    [self.collectionView fwSetRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.collectionView fwSetLoadingTarget:self action:@selector(onLoading)];
+    [self.collectionView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.collectionView.fw setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.addImage block:^(id sender) {
+    [self.fw setRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
-        NSMutableArray *sectionData = self.collectionView.fwDelegate.collectionData[0].mutableCopy;
+        NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
-        self.collectionView.fwDelegate.collectionData = @[sectionData];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        self.collectionView.fw.delegate.collectionData = @[sectionData];
+        [self.collectionView.fw reloadDataWithoutAnimation];
     }];
 }
 
 - (void)renderData
 {
-    [self.collectionView fwBeginRefreshing];
+    [self.collectionView.fw beginRefreshing];
 }
 
 - (void)onRefreshing
 {
     NSLog(@"开始刷新");
-    [self fwShowSkeleton];
+    [self.fw showSkeleton];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"刷新完成");
-        [self fwHideSkeleton];
+        [self.fw hideSkeleton];
         
-        self.collectionView.fwDelegate.collectionData = @[@[[self randomObject], [self randomObject]]];
-        [self.collectionView fwClearSizeCache];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        self.collectionView.fw.delegate.collectionData = @[@[[self randomObject], [self randomObject]]];
+        [self.collectionView.fw clearSizeCache];
+        [self.collectionView.fw reloadDataWithoutAnimation];
         
-        [self.collectionView fwEndRefreshing];
+        [self.collectionView.fw endRefreshing];
     });
 }
 
@@ -231,18 +227,18 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"加载完成");
         
-        NSMutableArray *sectionData = self.collectionView.fwDelegate.collectionData[0].mutableCopy;
+        NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
-        self.collectionView.fwDelegate.collectionData = @[sectionData];
-        [self.collectionView fwReloadDataWithoutAnimation];
+        self.collectionView.fw.delegate.collectionData = @[sectionData];
+        [self.collectionView.fw reloadDataWithoutAnimation];
         
-        [self.collectionView fwEndLoading];
+        [self.collectionView.fw endLoading];
     });
 }
 
 - (TestCollectionCreateObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -281,9 +277,9 @@
     });
     
     TestCollectionCreateObject *object = [TestCollectionCreateObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }

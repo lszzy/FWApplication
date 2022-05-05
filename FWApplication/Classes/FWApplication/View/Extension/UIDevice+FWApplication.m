@@ -13,18 +13,20 @@
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <net/if.h>
-@import FWFramework;
+#if FWApplicationSPM
+@import FWFrameworkCompatible;
+#endif
 
 static NSString *fwStaticDeviceUUID = nil;
 
-@implementation UIDevice (FWApplication)
+@implementation FWDeviceClassWrapper (FWApplication)
 
 #pragma mark - UUID
 
-+ (NSString *)fwDeviceUUID
+- (NSString *)deviceUUID
 {
     if (!fwStaticDeviceUUID) {
-        @synchronized ([self class]) {
+        @synchronized (self.base) {
             NSString *deviceUUID = [[FWKeychainManager sharedInstance] passwordForService:@"FWDeviceUUID" account:NSBundle.mainBundle.bundleIdentifier];
             if (deviceUUID.length > 0) {
                 fwStaticDeviceUUID = deviceUUID;
@@ -33,7 +35,7 @@ static NSString *fwStaticDeviceUUID = nil;
                 if (deviceUUID.length < 1) {
                     deviceUUID = [[NSUUID UUID] UUIDString];
                 }
-                [self setFwDeviceUUID:deviceUUID];
+                [self setDeviceUUID:deviceUUID];
             }
         }
     }
@@ -41,16 +43,16 @@ static NSString *fwStaticDeviceUUID = nil;
     return fwStaticDeviceUUID;
 }
 
-+ (void)setFwDeviceUUID:(NSString *)fwDeviceUUID
+- (void)setDeviceUUID:(NSString *)deviceUUID
 {
-    fwStaticDeviceUUID = fwDeviceUUID;
+    fwStaticDeviceUUID = deviceUUID;
     
-    [[FWKeychainManager sharedInstance] setPassword:fwDeviceUUID forService:@"FWDeviceUUID" account:NSBundle.mainBundle.bundleIdentifier];
+    [[FWKeychainManager sharedInstance] setPassword:deviceUUID forService:@"FWDeviceUUID" account:NSBundle.mainBundle.bundleIdentifier];
 }
 
 #pragma mark - Jailbroken
 
-+ (BOOL)fwIsJailbroken
+- (BOOL)isJailbroken
 {
 #if TARGET_OS_SIMULATOR
     return NO;
@@ -90,7 +92,7 @@ static NSString *fwStaticDeviceUUID = nil;
 
 #pragma mark - Network
 
-+ (NSString *)fwIpAddress
+- (NSString *)ipAddress
 {
     NSString *ipAddr = nil;
     struct ifaddrs *addrs = NULL;
@@ -114,7 +116,7 @@ static NSString *fwStaticDeviceUUID = nil;
     return ipAddr;
 }
 
-+ (NSString *)fwHostName
+- (NSString *)hostName
 {
     char hostName[256];
     int success = gethostname(hostName, 255);
@@ -128,7 +130,7 @@ static NSString *fwStaticDeviceUUID = nil;
 #endif
 }
 
-+ (CTTelephonyNetworkInfo *)fwNetworkInfo
+- (CTTelephonyNetworkInfo *)networkInfo
 {
     static CTTelephonyNetworkInfo *networkInfo = nil;
     static dispatch_once_t onceToken;
@@ -138,15 +140,15 @@ static NSString *fwStaticDeviceUUID = nil;
     return networkInfo;
 }
 
-+ (NSString *)fwCarrierName
+- (NSString *)carrierName
 {
-    return [self fwNetworkInfo].subscriberCellularProvider.carrierName;
+    return [self networkInfo].subscriberCellularProvider.carrierName;
 }
 
-+ (NSString *)fwNetworkType
+- (NSString *)networkType
 {
     NSString *networkType = nil;
-    NSString *accessTechnology = [self fwNetworkInfo].currentRadioAccessTechnology;
+    NSString *accessTechnology = [self networkInfo].currentRadioAccessTechnology;
     if (!accessTechnology) return networkType;
     
     NSArray *types2G = @[CTRadioAccessTechnologyGPRS,

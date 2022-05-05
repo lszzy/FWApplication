@@ -1731,7 +1731,7 @@ static NSTimeInterval kDelay = 0.0618; // 按钮接着上一个按钮的延时�
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.numberOfLines = 0;
     cell.textLabel.text = [rowData objectAtIndex:0];
@@ -2132,13 +2132,13 @@ static NSTimeInterval kDelay = 0.0618; // 按钮接着上一个按钮的延时�
     titleLabel.textColor = Theme.textColor;
     titleLabel.text = @"请输入验证码";
     [headerView addSubview:titleLabel];
-    titleLabel.fwLayoutChain.centerX().topWithInset(40);
+    titleLabel.fw.layoutChain.centerX().topWithInset(40);
     
     FWPasscodeView *boxInputView = [[FWPasscodeView alloc] initWithCodeLength:4];
     boxInputView.endEditWhenEditingFinished = NO;
     [boxInputView prepareViewWithBeginEdit:YES];
     [headerView addSubview:boxInputView];
-    boxInputView.fwLayoutChain.topToBottomOfViewWithOffset(titleLabel, 40).centerX().size(CGSizeMake(260, 50));
+    boxInputView.fw.layoutChain.topToBottomOfViewWithOffset(titleLabel, 40).centerX().size(CGSizeMake(260, 50));
     
     FWAlertController *alertController = [FWAlertController alertControllerWithCustomHeaderView:headerView preferredStyle:FWAlertControllerStyleAlert animationType:FWAlertAnimationTypeDefault];
     alertController.customTextField = YES;

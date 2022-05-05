@@ -24,20 +24,20 @@
 
 - (void)renderView
 {
-    UILabel *label = [UILabel fwAutoLayoutView];
+    UILabel *label = [UILabel new];
     self.label = label;
     label.numberOfLines = 0;
     label.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:label]; {
-        [label fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
+        [label.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
     }
     
     UIButton *button = [Theme largeButton];
     self.button = button;
-    [button fwAddTouchTarget:self action:@selector(onClick:)];
+    [button.fw addTouchTarget:self action:@selector(onClick:)];
     [self.view addSubview:button]; {
-        [button fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:label withOffset:10];
-        [button fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+        [button.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:label withOffset:10];
+        [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
 }
 
@@ -80,14 +80,14 @@
     viewEvent.fireBlock = ^(FWStateTransition *transition, void (^completion)(BOOL finished)){
         FWStrongifySelf();
         
-        [self fwShowLoadingWithText:@"正在请求"];
+        [self.fw showLoadingWithText:@"正在请求"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self fwHideLoading];
+            [self.fw hideLoading];
             
-            if (![[@[@1, @2, @3, @4] fwRandomObject] isEqual:@3]) {
+            if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
-                [self fwShowMessageWithText:@"请求失败"];
+                [self.fw showMessageWithText:@"请求失败"];
                 completion(NO);
             }
         });
@@ -97,7 +97,7 @@
         FWStrongifySelf();
         
         if (self.isLock) {
-            [self fwShowMessageWithText:@"已锁定，不能删除"];
+            [self.fw showMessageWithText:@"已锁定，不能删除"];
             return NO;
         }
         return YES;
@@ -105,14 +105,14 @@
     deleteEvent.fireBlock = ^(FWStateTransition *transition, void (^completion)(BOOL finished)){
         FWStrongifySelf();
         
-        [self fwShowLoadingWithText:@"正在请求"];
+        [self.fw showLoadingWithText:@"正在请求"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self fwHideLoading];
+            [self.fw hideLoading];
             
-            if (![[@[@1, @2, @3, @4] fwRandomObject] isEqual:@3]) {
+            if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
-                [self fwShowMessageWithText:@"请求失败"];
+                [self.fw showMessageWithText:@"请求失败"];
                 completion(NO);
             }
         });
@@ -122,7 +122,7 @@
         FWStrongifySelf();
         
         if (self.isLock) {
-            [self fwShowMessageWithText:@"已锁定，不能恢复"];
+            [self.fw showMessageWithText:@"已锁定，不能恢复"];
             return NO;
         }
         return YES;
@@ -130,14 +130,14 @@
     unreadEvent.fireBlock = ^(FWStateTransition *transition, void (^completion)(BOOL finished)){
         FWStrongifySelf();
         
-        [self fwShowLoadingWithText:@"正在请求"];
+        [self.fw showLoadingWithText:@"正在请求"];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self fwHideLoading];
+            [self.fw hideLoading];
             
-            if (![[@[@1, @2, @3, @4] fwRandomObject] isEqual:@3]) {
+            if (![[@[@1, @2, @3, @4].fw randomObject] isEqual:@3]) {
                 completion(YES);
             } else {
-                [self fwShowMessageWithText:@"请求失败"];
+                [self.fw showMessageWithText:@"请求失败"];
                 completion(NO);
             }
         });
@@ -151,7 +151,7 @@
 - (void)renderData
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"锁定" block:^(UIBarButtonItem *sender) {
+    [self.fw setRightBarItem:@"锁定" block:^(UIBarButtonItem *sender) {
         FWStrongifySelf();
         
         self.lock = !self.lock;

@@ -47,40 +47,34 @@ static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKi
 
 @end
 
-@interface UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
+@implementation FWCollectionViewFlowLayoutWrapper (FWCollectionViewSectionConfig)
 
-@property (nonatomic, strong, readonly) NSMutableArray *fwSectionConfigAttributes;
-
-@end
-
-@implementation UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
-
-- (NSMutableArray *)fwSectionConfigAttributes {
-    NSMutableArray *attributes = objc_getAssociatedObject(self, _cmd);
+- (NSMutableArray *)sectionConfigAttributes {
+    NSMutableArray *attributes = objc_getAssociatedObject(self.base, _cmd);
     if (!attributes) {
         attributes = [NSMutableArray array];
-        objc_setAssociatedObject(self, _cmd, attributes, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self.base, _cmd, attributes, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return attributes;
 }
 
-- (void)fwSectionConfigPrepareLayout {
-    if (![self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:configForSectionAtIndex:)]) return;
-    [self registerClass:[FWCollectionViewReusableView class] forDecorationViewOfKind:FWCollectionViewElementKind];
-    [self.fwSectionConfigAttributes removeAllObjects];
-    id<FWCollectionViewDelegateFlowLayout> delegate = (id<FWCollectionViewDelegateFlowLayout>)self.collectionView.delegate;
-    NSUInteger sectionCount = [self.collectionView numberOfSections];
+- (void)sectionConfigPrepareLayout {
+    if (![self.base.collectionView.delegate respondsToSelector:@selector(collectionView:layout:configForSectionAtIndex:)]) return;
+    [self.base registerClass:[FWCollectionViewReusableView class] forDecorationViewOfKind:FWCollectionViewElementKind];
+    [self.sectionConfigAttributes removeAllObjects];
+    id<FWCollectionViewDelegateFlowLayout> delegate = (id<FWCollectionViewDelegateFlowLayout>)self.base.collectionView.delegate;
+    NSUInteger sectionCount = [self.base.collectionView numberOfSections];
     for (NSUInteger section = 0; section < sectionCount; section++) {
-        NSUInteger itemCount = [self.collectionView numberOfItemsInSection:section];
+        NSUInteger itemCount = [self.base.collectionView numberOfItemsInSection:section];
         if (itemCount < 1) continue;
 
-        UICollectionViewLayoutAttributes *firstAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
-        UICollectionViewLayoutAttributes *lastAttr = [self layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemCount - 1 inSection:section]];
+        UICollectionViewLayoutAttributes *firstAttr = [self.base layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:section]];
+        UICollectionViewLayoutAttributes *lastAttr = [self.base layoutAttributesForItemAtIndexPath:[NSIndexPath indexPathForItem:itemCount - 1 inSection:section]];
         if (!firstAttr || !lastAttr) continue;
         
-        UIEdgeInsets sectionInset = self.sectionInset;
+        UIEdgeInsets sectionInset = self.base.sectionInset;
         if ([delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
-            UIEdgeInsets inset = [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
+            UIEdgeInsets inset = [delegate collectionView:self.base.collectionView layout:self.base insetForSectionAtIndex:section];
             if (!UIEdgeInsetsEqualToEdgeInsets(inset, sectionInset)) {
                 sectionInset = inset;
             }
@@ -89,25 +83,25 @@ static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKi
         CGRect sectionFrame = CGRectUnion(firstAttr.frame, lastAttr.frame);
         sectionFrame.origin.x -= sectionInset.left;
         sectionFrame.origin.y -= sectionInset.top;
-        if (self.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
+        if (self.base.scrollDirection == UICollectionViewScrollDirectionHorizontal) {
             sectionFrame.size.width += sectionInset.left + sectionInset.right;
-            sectionFrame.size.height = self.collectionView.frame.size.height;
+            sectionFrame.size.height = self.base.collectionView.frame.size.height;
         } else {
-            sectionFrame.size.width = self.collectionView.frame.size.width;
+            sectionFrame.size.width = self.base.collectionView.frame.size.width;
             sectionFrame.size.height += sectionInset.top + sectionInset.bottom;
         }
         
         FWCollectionViewLayoutAttributes *attributes = [FWCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:FWCollectionViewElementKind withIndexPath:[NSIndexPath indexPathForRow:0 inSection:section]];
         attributes.frame = sectionFrame;
         attributes.zIndex = -1;
-        attributes.sectionConfig = [delegate collectionView:self.collectionView layout:self configForSectionAtIndex:section];
-        [self.fwSectionConfigAttributes addObject:attributes];
+        attributes.sectionConfig = [delegate collectionView:self.base.collectionView layout:self.base configForSectionAtIndex:section];
+        [self.sectionConfigAttributes addObject:attributes];
     }
 }
 
-- (NSArray<UICollectionViewLayoutAttributes *> *)fwSectionConfigLayoutAttributesForElementsInRect:(CGRect)rect {
+- (NSArray<UICollectionViewLayoutAttributes *> *)sectionConfigLayoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *attrs = [NSMutableArray array];
-    for (UICollectionViewLayoutAttributes *attr in self.fwSectionConfigAttributes) {
+    for (UICollectionViewLayoutAttributes *attr in self.sectionConfigAttributes) {
         if (CGRectIntersectsRect(rect, attr.frame)) {
             [attrs addObject:attr];
         }
@@ -131,7 +125,7 @@ static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKi
 
 - (void)prepareLayout {
     [super prepareLayout];
-    [self fwSectionConfigPrepareLayout];
+    [self.fw sectionConfigPrepareLayout];
     
     if (self.itemRenderVertical && self.columnCount > 0 && self.rowCount > 0) {
         self.allAttributes = [NSMutableArray array];
@@ -181,7 +175,7 @@ static NSString *const FWCollectionViewElementKind = @"FWCollectionViewElementKi
         if (attributes) newAttributes = [attributes mutableCopy];
     }
     
-    NSArray *sectionAttributes = [self fwSectionConfigLayoutAttributesForElementsInRect:rect];
+    NSArray *sectionAttributes = [self.fw sectionConfigLayoutAttributesForElementsInRect:rect];
     [newAttributes addObjectsFromArray:sectionAttributes];
     return [newAttributes copy];
 }
@@ -764,7 +758,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 @implementation FWCollectionViewAlignLayout
 
-- (CGFloat)fw_minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+- (CGFloat)innerMinimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:minimumInteritemSpacingForSectionAtIndex:)]) {
         id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self minimumInteritemSpacingForSectionAtIndex:section];
@@ -773,7 +767,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
 }
 
-- (UIEdgeInsets)fw_insetForSectionAtIndex:(NSInteger)section {
+- (UIEdgeInsets)innerInsetForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:insetForSectionAtIndex:)]) {
         id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self insetForSectionAtIndex:section];
@@ -782,7 +776,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
 }
 
-- (FWCollectionViewItemsHorizontalAlignment)fw_itemsHorizontalAlignmentForSectionAtIndex:(NSInteger)section {
+- (FWCollectionViewItemsHorizontalAlignment)innerItemsHorizontalAlignmentForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsHorizontalAlignmentInSection:)]) {
         id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self itemsHorizontalAlignmentInSection:section];
@@ -791,7 +785,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
 }
 
-- (FWCollectionViewItemsVerticalAlignment)fw_itemsVerticalAlignmentForSectionAtIndex:(NSInteger)section {
+- (FWCollectionViewItemsVerticalAlignment)innerItemsVerticalAlignmentForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsVerticalAlignmentInSection:)]) {
         id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self itemsVerticalAlignmentInSection:section];
@@ -800,7 +794,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
 }
 
-- (FWCollectionViewItemsDirection)fw_itemsDirectionForSectionAtIndex:(NSInteger)section {
+- (FWCollectionViewItemsDirection)innerItemsDirectionForSectionAtIndex:(NSInteger)section {
     if (self.collectionView.delegate && [self.collectionView.delegate respondsToSelector:@selector(collectionView:layout:itemsDirectionInSection:)]) {
         id<FWCollectionViewDelegateAlignLayout> delegate = (id<FWCollectionViewDelegateAlignLayout>) self.collectionView.delegate;
         return [delegate collectionView:self.collectionView layout:self itemsDirectionInSection:section];
@@ -809,7 +803,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     }
 }
 
-- (BOOL)fw_isLineStartAtIndexPath:(NSIndexPath *)indexPath {
+- (BOOL)innerIsLineStartAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.item == 0) {
         return YES;
     }
@@ -821,18 +815,18 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     CGRect currentFrame = currentAttributes.frame;
     CGRect previousFrame = previousAttributes ? previousAttributes.frame : CGRectZero;
 
-    UIEdgeInsets insets = [self fw_insetForSectionAtIndex:currentIndexPath.section];
+    UIEdgeInsets insets = [self innerInsetForSectionAtIndex:currentIndexPath.section];
     CGRect currentLineFrame = CGRectMake(insets.left, currentFrame.origin.y, CGRectGetWidth(self.collectionView.frame), currentFrame.size.height);
     CGRect previousLineFrame = CGRectMake(insets.left, previousFrame.origin.y, CGRectGetWidth(self.collectionView.frame), previousFrame.size.height);
 
     return !CGRectIntersectsRect(currentLineFrame, previousLineFrame);
 }
 
-- (NSArray *)fw_lineAttributesArrayWithStartAttributes:(UICollectionViewLayoutAttributes *)startAttributes {
+- (NSArray *)innerLineAttributesArrayWithStartAttributes:(UICollectionViewLayoutAttributes *)startAttributes {
     NSMutableArray *lineAttributesArray = [[NSMutableArray alloc] init];
     [lineAttributesArray addObject:startAttributes];
     NSInteger itemCount = [self.collectionView numberOfItemsInSection:startAttributes.indexPath.section];
-    UIEdgeInsets insets = [self fw_insetForSectionAtIndex:startAttributes.indexPath.section];
+    UIEdgeInsets insets = [self innerInsetForSectionAtIndex:startAttributes.indexPath.section];
     NSInteger index = startAttributes.indexPath.item;
     BOOL isLineEnd = index == itemCount - 1;
     while (!isLineEnd) {
@@ -850,24 +844,24 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     return lineAttributesArray;
 }
 
-- (void)fw_cacheTheItemFrame:(CGRect)frame forIndexPath:(NSIndexPath *)indexPath {
+- (void)innerCacheTheItemFrame:(CGRect)frame forIndexPath:(NSIndexPath *)indexPath {
     self.cachedFrame[indexPath] = @(frame);
 }
 
-- (NSValue *)fw_cachedItemFrameAtIndexPath:(NSIndexPath *)indexPath {
+- (NSValue *)innerCachedItemFrameAtIndexPath:(NSIndexPath *)indexPath {
     return self.cachedFrame[indexPath];
 }
 
-- (void)fw_calculateAndCacheFrameForItemAttributesArray:(NSArray<UICollectionViewLayoutAttributes *> *)array {
+- (void)innerCalculateAndCacheFrameForItemAttributesArray:(NSArray<UICollectionViewLayoutAttributes *> *)array {
     NSInteger section = [array firstObject].indexPath.section;
 
     //******************** 相关布局属性 ********************//
-    FWCollectionViewItemsHorizontalAlignment horizontalAlignment = [self fw_itemsHorizontalAlignmentForSectionAtIndex:section];
-    FWCollectionViewItemsVerticalAlignment verticalAlignment = [self fw_itemsVerticalAlignmentForSectionAtIndex:section];
-    FWCollectionViewItemsDirection direction = [self fw_itemsDirectionForSectionAtIndex:section];
+    FWCollectionViewItemsHorizontalAlignment horizontalAlignment = [self innerItemsHorizontalAlignmentForSectionAtIndex:section];
+    FWCollectionViewItemsVerticalAlignment verticalAlignment = [self innerItemsVerticalAlignmentForSectionAtIndex:section];
+    FWCollectionViewItemsDirection direction = [self innerItemsDirectionForSectionAtIndex:section];
     BOOL isR2L = direction == FWCollectionViewItemsDirectionRTL;
-    UIEdgeInsets sectionInsets = [self fw_insetForSectionAtIndex:section];
-    CGFloat minimumInteritemSpacing = [self fw_minimumInteritemSpacingForSectionAtIndex:section];
+    UIEdgeInsets sectionInsets = [self innerInsetForSectionAtIndex:section];
+    CGFloat minimumInteritemSpacing = [self innerMinimumInteritemSpacingForSectionAtIndex:section];
     UIEdgeInsets contentInsets = self.collectionView.contentInset;
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     NSMutableArray *widthArray = [[NSMutableArray alloc] init];
@@ -954,7 +948,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
         frame.origin.x = originX;
         frame.origin.y = originY;
         frame.size.width = width;
-        [self fw_cacheTheItemFrame:frame forIndexPath:array[i].indexPath];
+        [self innerCacheTheItemFrame:frame forIndexPath:array[i].indexPath];
     }
 }
 
@@ -962,7 +956,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
 
 - (void)prepareLayout {
     [super prepareLayout];
-    [self fwSectionConfigPrepareLayout];
+    [self.fw sectionConfigPrepareLayout];
     self.cachedFrame = @{}.mutableCopy;
 }
 
@@ -975,7 +969,7 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
             updatedAttributes[index] = [self layoutAttributesForItemAtIndexPath:attributes.indexPath];
         }
     }
-    NSArray *sectionAttributes = [self fwSectionConfigLayoutAttributesForElementsInRect:rect];
+    NSArray *sectionAttributes = [self.fw sectionConfigLayoutAttributesForElementsInRect:rect];
     [updatedAttributes addObjectsFromArray:sectionAttributes];
     return updatedAttributes;
 }
@@ -985,22 +979,22 @@ static CGFloat FWFloorCGFloat(CGFloat value) {
     UICollectionViewLayoutAttributes *currentAttributes = [[super layoutAttributesForItemAtIndexPath:indexPath] copy];
 
     // 获取缓存的当前 indexPath 的 item frame value
-    NSValue *frameValue = [self fw_cachedItemFrameAtIndexPath:indexPath];
+    NSValue *frameValue = [self innerCachedItemFrameAtIndexPath:indexPath];
     // 如果没有缓存的 item frame value，则计算并缓存然后获取
     if (!frameValue) {
         // 判断是否为一行中的首个
-        BOOL isLineStart = [self fw_isLineStartAtIndexPath:indexPath];
+        BOOL isLineStart = [self innerIsLineStartAtIndexPath:indexPath];
         // 如果是一行中的首个
         if (isLineStart) {
             // 获取当前行的所有 UICollectionViewLayoutAttributes
-            NSArray *line = [self fw_lineAttributesArrayWithStartAttributes:currentAttributes];
+            NSArray *line = [self innerLineAttributesArrayWithStartAttributes:currentAttributes];
             if (line.count) {
                 // 计算并缓存当前行的所有 UICollectionViewLayoutAttributes frame
-                [self fw_calculateAndCacheFrameForItemAttributesArray:line];
+                [self innerCalculateAndCacheFrameForItemAttributesArray:line];
             }
         }
         // 获取位于当前 indexPath 的 item frame
-        frameValue = [self fw_cachedItemFrameAtIndexPath:indexPath];
+        frameValue = [self innerCachedItemFrameAtIndexPath:indexPath];
     }
     if (frameValue) {
         // 设置缓存的当前 indexPath 的 item frame

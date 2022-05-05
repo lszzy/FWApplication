@@ -24,40 +24,40 @@
 
 - (void)renderView
 {
-    UIButton *button = [UIButton fwButtonWithImage:[TestBundle imageNamed:@"icon_scan"]];
-    [button fwAddTouchTarget:self action:@selector(onPopupClick:)];
+    UIButton *button = [UIButton.fw buttonWithImage:[TestBundle imageNamed:@"icon_scan"]];
+    [button.fw addTouchTarget:self action:@selector(onPopupClick:)];
     [self.view addSubview:button];
-    button.fwLayoutChain.leftWithInset(10).topWithInset(10).size(CGSizeMake(44, 44));
+    button.fw.layoutChain.leftWithInset(10).topWithInset(10).size(CGSizeMake(44, 44));
     
-    button = [UIButton fwButtonWithImage:[TestBundle imageNamed:@"icon_scan"]];
-    [button fwAddTouchTarget:self action:@selector(onPopupClick:)];
+    button = [UIButton.fw buttonWithImage:[TestBundle imageNamed:@"icon_scan"]];
+    [button.fw addTouchTarget:self action:@selector(onPopupClick:)];
     [self.view addSubview:button];
-    button.fwLayoutChain.rightWithInset(10).topWithInset(10).size(CGSizeMake(44, 44));
+    button.fw.layoutChain.rightWithInset(10).topWithInset(10).size(CGSizeMake(44, 44));
     
-    button = [UIButton fwButtonWithImage:[TestBundle imageNamed:@"icon_scan"]];
-    [button fwAddTouchTarget:self action:@selector(onPopupClick:)];
+    button = [UIButton.fw buttonWithImage:[TestBundle imageNamed:@"icon_scan"]];
+    [button.fw addTouchTarget:self action:@selector(onPopupClick:)];
     [self.view addSubview:button];
-    button.fwLayoutChain.leftWithInset(10).bottomWithInset(10).size(CGSizeMake(44, 44));
+    button.fw.layoutChain.leftWithInset(10).bottomWithInset(10).size(CGSizeMake(44, 44));
     
-    button = [UIButton fwButtonWithImage:[TestBundle imageNamed:@"icon_scan"]];
-    [button fwAddTouchTarget:self action:@selector(onPopupClick:)];
+    button = [UIButton.fw buttonWithImage:[TestBundle imageNamed:@"icon_scan"]];
+    [button.fw addTouchTarget:self action:@selector(onPopupClick:)];
     [self.view addSubview:button];
-    button.fwLayoutChain.rightWithInset(10).bottomWithInset(10).size(CGSizeMake(44, 44));
+    button.fw.layoutChain.rightWithInset(10).bottomWithInset(10).size(CGSizeMake(44, 44));
     
     UITextField *textField = [UITextField new];
     textField.placeholder = @"我是输入框";
     textField.textColor = [Theme textColor];
-    [textField fwSetBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
+    [textField.fw setBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
     _textField = textField;
     textField.delegate = self;
     [self.view addSubview:textField];
-    textField.fwLayoutChain.leftWithInset(50).rightWithInset(50).topWithInset(200).height(45);
+    textField.fw.layoutChain.leftWithInset(50).rightWithInset(50).topWithInset(200).height(45);
     
-    UILabel *customLabel = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:16] textColor:[Theme textColor] text:@"我是自定义标签"];
+    UILabel *customLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:16] textColor:[Theme textColor] text:@"我是自定义标签"];
     _customCellView = customLabel;
     customLabel.backgroundColor = [Theme cellColor];
     [self.view addSubview:customLabel];
-    customLabel.fwLayoutChain.centerX().topToBottomOfViewWithOffset(textField, 50).size(CGSizeMake(200, 50));
+    customLabel.fw.layoutChain.centerX().topToBottomOfViewWithOffset(textField, 50).size(CGSizeMake(200, 50));
     
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];

@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 #import <Foundation/Foundation.h>
+#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -149,19 +150,19 @@ CGFloat fwAttributedWidthCallback(void* ref);
 
 @end
 
-#pragma mark - NSMutableAttributedString+FWAttributedLabel
+#pragma mark - FWMutableAttributedStringWrapper+FWAttributedLabel
 
-@interface NSMutableAttributedString (FWAttributedLabel)
+@interface FWMutableAttributedStringWrapper (FWAttributedLabel)
 
-@property (nonatomic, strong, nullable) UIColor *fwTextColor;
-- (void)fwSetTextColor:(UIColor*)color range:(NSRange)range;
+@property (nonatomic, strong, nullable) UIColor *textColor;
+- (void)setTextColor:(UIColor*)color range:(NSRange)range;
 
-@property (nonatomic, strong, nullable) UIFont *fwFont;
-- (void)fwSetFont:(UIFont*)font range:(NSRange)range;
+@property (nonatomic, strong, nullable) UIFont *font;
+- (void)setFont:(UIFont*)font range:(NSRange)range;
 
-- (void)fwSetUnderlineStyle:(CTUnderlineStyle)style
+- (void)setUnderlineStyle:(CTUnderlineStyle)style
                    modifier:(CTUnderlineStyleModifiers)modifier;
-- (void)fwSetUnderlineStyle:(CTUnderlineStyle)style
+- (void)setUnderlineStyle:(CTUnderlineStyle)style
                    modifier:(CTUnderlineStyleModifiers)modifier
                       range:(NSRange)range;
 

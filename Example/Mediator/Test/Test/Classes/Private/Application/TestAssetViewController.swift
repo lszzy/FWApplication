@@ -23,14 +23,14 @@ import FWApplication
     }
     
     private func loadAlbums() {
-        fwShowLoading()
+        fw.showLoading()
         DispatchQueue.global().async {
             FWAssetManager.sharedInstance.enumerateAllAlbums(with: .all) { [weak self] group in
                 if let album = group {
                     self?.albums.append(album)
                 } else {
                     DispatchQueue.main.async {
-                        self?.fwHideLoading()
+                        self?.fw.hideLoading()
                         self?.tableView.reloadData()
                     }
                 }
@@ -39,14 +39,14 @@ import FWApplication
     }
     
     private func loadPhotos() {
-        fwShowLoading()
+        fw.showLoading()
         DispatchQueue.global().async { [weak self] in
             self?.album.enumerateAssets(withOptions: .reverse, using: { asset in
                 if let photo = asset {
                     self?.photos.append(photo)
                 } else {
                     DispatchQueue.main.async {
-                        self?.fwHideLoading()
+                        self?.fw.hideLoading()
                         self?.tableView.reloadData()
                     }
                 }
@@ -63,31 +63,31 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fwCell(with: tableView, style: .subtitle)
+        let cell = UITableViewCell.fw.cell(with: tableView, style: .subtitle)
         cell.selectionStyle = .none
         
         if isAlbum {
             cell.accessoryType = .none
             
             let photo = photos[indexPath.row]
-            cell.fwTempObject = photo.identifier
+            cell.fw.tempObject = photo.identifier
             photo.requestThumbnailImage(with: CGSize(width: 88, height: 88)) { image, info, finished in
-                if cell.fwTempObject.fwAsString == photo.identifier {
-                    cell.imageView?.image = image?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
+                if cell.fw.tempObject.safeString == photo.identifier {
+                    cell.imageView?.image = image?.fw.image(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
                 } else {
                     cell.imageView?.image = nil
                 }
             }
             photo.assetSize { size in
-                if cell.fwTempObject.fwAsString == photo.identifier {
-                    cell.textLabel?.text = NSString.fwSizeString(UInt(size))
+                if cell.fw.tempObject.safeString == photo.identifier {
+                    cell.textLabel?.text = NSString.fw.sizeString(UInt(size))
                 } else {
                     cell.textLabel?.text = nil
                 }
             }
             
             if photo.assetType == .video {
-                cell.detailTextLabel?.text = NSDate.fwFormatDuration(photo.duration(), hasHour: false)
+                cell.detailTextLabel?.text = NSDate.fw.formatDuration(photo.duration(), hasHour: false)
             } else if photo.assetType == .audio {
                 cell.detailTextLabel?.text = "audio"
             } else if photo.assetSubType == .livePhoto {
@@ -102,7 +102,8 @@ import FWApplication
             
             let album = albums[indexPath.row]
             cell.textLabel?.text = album.name()
-            cell.imageView?.image = album.posterImage(with: CGSize(width: 88, height: 88))?.fwImage(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
+            let image = album.posterImage(with: CGSize(width: 88, height: 88))
+            cell.imageView?.image = image?.fw.image(withScale: CGSize(width: 88, height: 88), contentMode: .scaleAspectFill)
             cell.detailTextLabel?.text = "\(album.numberOfAssets())"
         }
         
@@ -111,7 +112,7 @@ import FWApplication
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isAlbum {
-            fwShowImagePreview(withImageURLs: photos, imageInfos:nil, currentIndex: indexPath.row) { [weak self] index in
+            fw.showImagePreview(withImageURLs: photos, imageInfos:nil, currentIndex: indexPath.row) { [weak self] index in
                 let cell = self?.tableView.cellForRow(at: IndexPath(row: index, section: 0))
                 return cell?.imageView
             } placeholderImage: { index in
@@ -123,7 +124,7 @@ import FWApplication
                         zoomImageView.progress = 0.01
                         photo.requestImageData { data, info, _, _ in
                             zoomImageView.progress = 1
-                            zoomImageView.image = UIImage.fwImage(with:data)
+                            zoomImageView.image = UIImage.fw.image(with:data)
                         }
                     } else if photo.assetSubType == .livePhoto {
                         zoomImageView.progress = 0.01
@@ -164,11 +165,11 @@ import FWApplication
                         guard let controller = previewController else { return }
                         var titleLabel: UILabel? = controller.view.viewWithTag(100) as? UILabel
                         if titleLabel == nil {
-                            let label = UILabel.fwLabel(with: FWFontSize(16), textColor: UIColor.white)
+                            let label = UILabel.fw.label(with: FWFontSize(16), textColor: UIColor.white)
                             label.tag = 100
                             titleLabel = label
                             controller.view.addSubview(label)
-                            label.fwLayoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
+                            label.fw.layoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
                         }
                         
                         guard let photo = self?.photos[index] else { return }
@@ -192,7 +193,7 @@ import FWApplication
             viewController.navigationItem.title = album.name()
             viewController.album = album
             viewController.isAlbum = true
-            fwOpen(viewController, animated: true)
+            fw.open(viewController, animated: true)
         }
     }
 }

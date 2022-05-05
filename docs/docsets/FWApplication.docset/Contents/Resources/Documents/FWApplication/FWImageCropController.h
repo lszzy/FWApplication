@@ -7,7 +7,7 @@
  @updated    2020/6/22
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -359,9 +359,9 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 @end
 
-@interface UIImage (FWCropRotate)
+@interface FWImageWrapper (FWCropRotate)
 
-- (nonnull UIImage *)fwCroppedImageWithFrame:(CGRect)frame angle:(NSInteger)angle circularClip:(BOOL)circular;
+- (nonnull UIImage *)croppedImageWithFrame:(CGRect)frame angle:(NSInteger)angle circularClip:(BOOL)circular;
 
 @end
 

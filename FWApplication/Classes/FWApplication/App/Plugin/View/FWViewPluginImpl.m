@@ -10,22 +10,9 @@
 #import "FWViewPluginImpl.h"
 #import <objc/runtime.h>
 
-#pragma mark - UIActivityIndicatorView+FWViewPlugin
+#pragma mark - FWActivityIndicatorViewClassWrapper+FWViewPlugin
 
 @implementation UIActivityIndicatorView (FWViewPlugin)
-
-+ (instancetype)fwIndicatorViewWithColor:(UIColor *)color {
-    UIActivityIndicatorViewStyle indicatorStyle;
-    if (@available(iOS 13.0, *)) {
-        indicatorStyle = UIActivityIndicatorViewStyleMedium;
-    } else {
-        indicatorStyle = UIActivityIndicatorViewStyleWhite;
-    }
-    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:indicatorStyle];
-    indicatorView.color = color ?: UIColor.whiteColor;
-    indicatorView.hidesWhenStopped = YES;
-    return indicatorView;
-}
 
 - (CGSize)size {
     return self.bounds.size;
@@ -60,6 +47,23 @@
 
 @end
 
+@implementation FWActivityIndicatorViewClassWrapper (FWViewPlugin)
+
+- (UIActivityIndicatorView *)indicatorViewWithColor:(UIColor *)color {
+    UIActivityIndicatorViewStyle indicatorStyle;
+    if (@available(iOS 13.0, *)) {
+        indicatorStyle = UIActivityIndicatorViewStyleMedium;
+    } else {
+        indicatorStyle = UIActivityIndicatorViewStyleWhite;
+    }
+    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:indicatorStyle];
+    indicatorView.color = color ?: UIColor.whiteColor;
+    indicatorView.hidesWhenStopped = YES;
+    return indicatorView;
+}
+
+@end
+
 #pragma mark - FWViewPluginImpl
 
 @implementation FWViewPluginImpl
@@ -87,7 +91,7 @@
         return self.customIndicatorView(style);
     }
     
-    UIActivityIndicatorView *indicatorView = [UIActivityIndicatorView fwIndicatorViewWithColor:nil];
+    UIActivityIndicatorView *indicatorView = [UIActivityIndicatorView.fw indicatorViewWithColor:nil];
     return indicatorView;
 }
 

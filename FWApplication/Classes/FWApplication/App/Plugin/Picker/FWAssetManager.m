@@ -35,7 +35,7 @@ static NSString * const kAssetInfoSize = @"size";
         switch (phAsset.mediaType) {
             case PHAssetMediaTypeImage:
                 _assetType = FWAssetTypeImage;
-                if ([[phAsset fwPerformGetter:@"uniformTypeIdentifier"] isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
+                if ([[phAsset.fw invokeGetter:@"uniformTypeIdentifier"] isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
                     _assetSubType = FWAssetSubTypeGIF;
                 } else {
                     if (phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive) {
@@ -541,10 +541,10 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
 
 - (void)enumerateAllAlbumsWithAlbumContentType:(FWAlbumContentType)contentType showEmptyAlbum:(BOOL)showEmptyAlbum showSmartAlbumIfSupported:(BOOL)showSmartAlbumIfSupported usingBlock:(void (^)(FWAssetGroup *resultAssetsGroup))enumerationBlock {
     // 根据条件获取所有合适的相册，并保存到临时数组中
-    NSArray<PHAssetCollection *> *tempAlbumsArray = [PHPhotoLibrary fetchAllAlbumsWithAlbumContentType:contentType showEmptyAlbum:showEmptyAlbum showSmartAlbum:showSmartAlbumIfSupported];
+    NSArray<PHAssetCollection *> *tempAlbumsArray = [PHPhotoLibrary.fw fetchAllAlbumsWithAlbumContentType:contentType showEmptyAlbum:showEmptyAlbum showSmartAlbum:showSmartAlbumIfSupported];
     
     // 创建一个 PHFetchOptions，用于 FWAssetGroup 对资源的排序以及对内容类型进行控制
-    PHFetchOptions *phFetchOptions = [PHPhotoLibrary createFetchOptionsWithAlbumContentType:contentType];
+    PHFetchOptions *phFetchOptions = [PHPhotoLibrary.fw createFetchOptionsWithAlbumContentType:contentType];
     
     // 遍历结果，生成对应的 FWAssetGroup，并调用 enumerationBlock
     for (NSUInteger i = 0; i < tempAlbumsArray.count; i++) {
@@ -570,7 +570,7 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
 - (void)saveImageWithImageRef:(CGImageRef)imageRef albumAssetsGroup:(FWAssetGroup *)albumAssetsGroup orientation:(UIImageOrientation)orientation completionBlock:(FWWriteAssetCompletionBlock)completionBlock {
     PHAssetCollection *albumPhAssetCollection = albumAssetsGroup.phAssetCollection;
     // 把图片加入到指定的相册对应的 PHAssetCollection
-    [[PHPhotoLibrary sharedPhotoLibrary] addImageToAlbum:imageRef
+    [[PHPhotoLibrary sharedPhotoLibrary].fw addImageToAlbum:imageRef
                                     albumAssetCollection:albumPhAssetCollection
                                              orientation:orientation
                                        completionHandler:^(BOOL success, NSDate *creationDate, NSError *error) {
@@ -590,7 +590,7 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
 - (void)saveImageWithImagePathURL:(NSURL *)imagePathURL albumAssetsGroup:(FWAssetGroup *)albumAssetsGroup completionBlock:(FWWriteAssetCompletionBlock)completionBlock {
     PHAssetCollection *albumPhAssetCollection = albumAssetsGroup.phAssetCollection;
     // 把图片加入到指定的相册对应的 PHAssetCollection
-    [[PHPhotoLibrary sharedPhotoLibrary] addImageToAlbum:imagePathURL
+    [[PHPhotoLibrary sharedPhotoLibrary].fw addImageToAlbum:imagePathURL
                                     albumAssetCollection:albumPhAssetCollection
                                        completionHandler:^(BOOL success, NSDate *creationDate, NSError *error) {
                                            if (success) {
@@ -609,7 +609,7 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
 - (void)saveVideoWithVideoPathURL:(NSURL *)videoPathURL albumAssetsGroup:(FWAssetGroup *)albumAssetsGroup completionBlock:(FWWriteAssetCompletionBlock)completionBlock {
     PHAssetCollection *albumPhAssetCollection = albumAssetsGroup.phAssetCollection;
     // 把视频加入到指定的相册对应的 PHAssetCollection
-    [[PHPhotoLibrary sharedPhotoLibrary] addVideoToAlbum:videoPathURL
+    [[PHPhotoLibrary sharedPhotoLibrary].fw addVideoToAlbum:videoPathURL
                                     albumAssetCollection:albumPhAssetCollection
                                        completionHandler:^(BOOL success, NSDate *creationDate, NSError *error) {
                                            if (success) {
@@ -634,10 +634,99 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
 
 @end
 
+@implementation FWPhotoLibraryWrapper (FWAssetManager)
 
-@implementation PHPhotoLibrary (FWAssetManager)
+- (void)addImageToAlbum:(CGImageRef)imageRef albumAssetCollection:(PHAssetCollection *)albumAssetCollection orientation:(UIImageOrientation)orientation completionHandler:(void(^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
+    UIImage *targetImage = [UIImage imageWithCGImage:imageRef scale:UIScreen.mainScreen.scale orientation:orientation];
+    [self addImageToAlbum:targetImage imagePathURL:nil albumAssetCollection:albumAssetCollection completionHandler:completionHandler];
+}
 
-+ (PHFetchOptions *)createFetchOptionsWithAlbumContentType:(FWAlbumContentType)contentType {
+- (void)addImageToAlbum:(NSURL *)imagePathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(void (^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
+    [self addImageToAlbum:nil imagePathURL:imagePathURL albumAssetCollection:albumAssetCollection completionHandler:completionHandler];
+}
+
+- (void)addImageToAlbum:(UIImage *)image imagePathURL:(NSURL *)imagePathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(void(^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
+    __block NSDate *creationDate = nil;
+    [self.base performChanges:^{
+        // 创建一个以图片生成新的 PHAsset，这时图片已经被添加到“相机胶卷”
+        
+        PHAssetChangeRequest *assetChangeRequest;
+        if (image) {
+            assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+        } else if (imagePathURL) {
+            assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:imagePathURL];
+        } else {
+            return;
+        }
+        assetChangeRequest.creationDate = [NSDate date];
+        creationDate = assetChangeRequest.creationDate;
+        
+        if (albumAssetCollection.assetCollectionType == PHAssetCollectionTypeAlbum) {
+            // 如果传入的相册类型为标准的相册（非“智能相册”和“时刻”），则把刚刚创建的 Asset 添加到传入的相册中。
+            
+            // 创建一个改变 PHAssetCollection 的请求，并指定相册对应的 PHAssetCollection
+            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:albumAssetCollection];
+            /**
+             *  把 PHAsset 加入到对应的 PHAssetCollection 中，系统推荐的方法是调用 placeholderForCreatedAsset ，
+             *  返回一个的 placeholder 来代替刚创建的 PHAsset 的引用，并把该引用加入到一个 PHAssetCollectionChangeRequest 中。
+             */
+            [assetCollectionChangeRequest addAssets:@[[assetChangeRequest placeholderForCreatedAsset]]];
+        }
+        
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (completionHandler) {
+            /**
+             *  performChanges:completionHandler 不在主线程执行，若用户在该 block 中操作 UI 时会产生一些问题，
+             *  为了避免这种情况，这里该 block 主动放到主线程执行。
+             */
+            dispatch_async(dispatch_get_main_queue(), ^{
+                BOOL creatingSuccess = success && creationDate; // 若创建时间为 nil，则说明 performChanges 中传入的资源为空，因此需要同时判断 performChanges 是否执行成功以及资源是否有创建时间。
+                completionHandler(creatingSuccess, creationDate, error);
+            });
+        }
+    }];
+}
+
+
+- (void)addVideoToAlbum:(NSURL *)videoPathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(void(^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
+    __block NSDate *creationDate = nil;
+    [self.base performChanges:^{
+        // 创建一个以视频生成新的 PHAsset 的请求
+        PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:videoPathURL];
+        assetChangeRequest.creationDate = [NSDate date];
+        creationDate = assetChangeRequest.creationDate;
+        
+        if (albumAssetCollection.assetCollectionType == PHAssetCollectionTypeAlbum) {
+            // 如果传入的相册类型为标准的相册（非“智能相册”和“时刻”），则把刚刚创建的 Asset 添加到传入的相册中。
+            
+            // 创建一个改变 PHAssetCollection 的请求，并指定相册对应的 PHAssetCollection
+            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:albumAssetCollection];
+            /**
+             *  把 PHAsset 加入到对应的 PHAssetCollection 中，系统推荐的方法是调用 placeholderForCreatedAsset ，
+             *  返回一个的 placeholder 来代替刚创建的 PHAsset 的引用，并把该引用加入到一个 PHAssetCollectionChangeRequest 中。
+             */
+            [assetCollectionChangeRequest addAssets:@[[assetChangeRequest placeholderForCreatedAsset]]];
+        }
+        
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (completionHandler) {
+            /**
+             *  performChanges:completionHandler 不在主线程执行，若用户在该 block 中操作 UI 时会产生一些问题，
+             *  为了避免这种情况，这里该 block 主动放到主线程执行。
+             */
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionHandler(success, creationDate, error);
+            });
+        }
+    }];
+}
+
+
+@end
+
+@implementation FWPhotoLibraryClassWrapper (FWAssetManager)
+
+- (PHFetchOptions *)createFetchOptionsWithAlbumContentType:(FWAlbumContentType)contentType {
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     // 根据输入的内容类型过滤相册内的资源
     switch (contentType) {
@@ -659,11 +748,11 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
     return fetchOptions;
 }
 
-+ (NSArray<PHAssetCollection *> *)fetchAllAlbumsWithAlbumContentType:(FWAlbumContentType)contentType showEmptyAlbum:(BOOL)showEmptyAlbum showSmartAlbum:(BOOL)showSmartAlbum {
+- (NSArray<PHAssetCollection *> *)fetchAllAlbumsWithAlbumContentType:(FWAlbumContentType)contentType showEmptyAlbum:(BOOL)showEmptyAlbum showSmartAlbum:(BOOL)showSmartAlbum {
     NSMutableArray<PHAssetCollection *> *tempAlbumsArray = [[NSMutableArray alloc] init];
     
     // 创建一个 PHFetchOptions，用于创建 FWAssetGroup 对资源的排序和类型进行控制
-    PHFetchOptions *fetchOptions = [PHPhotoLibrary createFetchOptionsWithAlbumContentType:contentType];
+    PHFetchOptions *fetchOptions = [self createFetchOptionsWithAlbumContentType:contentType];
     
     PHFetchResult *fetchResult;
     if (showSmartAlbum) {
@@ -735,7 +824,7 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
     return resultAlbumsArray;
 }
 
-+ (PHAsset *)fetchLatestAssetWithAssetCollection:(PHAssetCollection *)assetCollection {
+- (PHAsset *)fetchLatestAssetWithAssetCollection:(PHAssetCollection *)assetCollection {
     PHFetchOptions *fetchOptions = [[PHFetchOptions alloc] init];
     // 按时间的先后对 PHAssetCollection 内的资源进行排序，最新的资源排在数组最后面
     fetchOptions.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
@@ -743,91 +832,6 @@ void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath
     // 获取 PHAssetCollection 内最后一个资源，即最新的资源
     PHAsset *latestAsset = fetchResult.lastObject;
     return latestAsset;
-}
-
-- (void)addImageToAlbum:(CGImageRef)imageRef albumAssetCollection:(PHAssetCollection *)albumAssetCollection orientation:(UIImageOrientation)orientation completionHandler:(void(^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
-    UIImage *targetImage = [UIImage imageWithCGImage:imageRef scale:UIScreen.mainScreen.scale orientation:orientation];
-    [[PHPhotoLibrary sharedPhotoLibrary] addImageToAlbum:targetImage imagePathURL:nil albumAssetCollection:albumAssetCollection completionHandler:completionHandler];
-}
-
-- (void)addImageToAlbum:(NSURL *)imagePathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(void (^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
-    [[PHPhotoLibrary sharedPhotoLibrary] addImageToAlbum:nil imagePathURL:imagePathURL albumAssetCollection:albumAssetCollection completionHandler:completionHandler];
-}
-
-- (void)addImageToAlbum:(UIImage *)image imagePathURL:(NSURL *)imagePathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(void(^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
-    __block NSDate *creationDate = nil;
-    [self performChanges:^{
-        // 创建一个以图片生成新的 PHAsset，这时图片已经被添加到“相机胶卷”
-        
-        PHAssetChangeRequest *assetChangeRequest;
-        if (image) {
-            assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-        } else if (imagePathURL) {
-            assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImageAtFileURL:imagePathURL];
-        } else {
-            return;
-        }
-        assetChangeRequest.creationDate = [NSDate date];
-        creationDate = assetChangeRequest.creationDate;
-        
-        if (albumAssetCollection.assetCollectionType == PHAssetCollectionTypeAlbum) {
-            // 如果传入的相册类型为标准的相册（非“智能相册”和“时刻”），则把刚刚创建的 Asset 添加到传入的相册中。
-            
-            // 创建一个改变 PHAssetCollection 的请求，并指定相册对应的 PHAssetCollection
-            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:albumAssetCollection];
-            /**
-             *  把 PHAsset 加入到对应的 PHAssetCollection 中，系统推荐的方法是调用 placeholderForCreatedAsset ，
-             *  返回一个的 placeholder 来代替刚创建的 PHAsset 的引用，并把该引用加入到一个 PHAssetCollectionChangeRequest 中。
-             */
-            [assetCollectionChangeRequest addAssets:@[[assetChangeRequest placeholderForCreatedAsset]]];
-        }
-        
-    } completionHandler:^(BOOL success, NSError *error) {
-        if (completionHandler) {
-            /**
-             *  performChanges:completionHandler 不在主线程执行，若用户在该 block 中操作 UI 时会产生一些问题，
-             *  为了避免这种情况，这里该 block 主动放到主线程执行。
-             */
-            dispatch_async(dispatch_get_main_queue(), ^{
-                BOOL creatingSuccess = success && creationDate; // 若创建时间为 nil，则说明 performChanges 中传入的资源为空，因此需要同时判断 performChanges 是否执行成功以及资源是否有创建时间。
-                completionHandler(creatingSuccess, creationDate, error);
-            });
-        }
-    }];
-}
-
-
-- (void)addVideoToAlbum:(NSURL *)videoPathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(void(^)(BOOL success, NSDate *creationDate, NSError *error))completionHandler {
-    __block NSDate *creationDate = nil;
-    [self performChanges:^{
-        // 创建一个以视频生成新的 PHAsset 的请求
-        PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:videoPathURL];
-        assetChangeRequest.creationDate = [NSDate date];
-        creationDate = assetChangeRequest.creationDate;
-        
-        if (albumAssetCollection.assetCollectionType == PHAssetCollectionTypeAlbum) {
-            // 如果传入的相册类型为标准的相册（非“智能相册”和“时刻”），则把刚刚创建的 Asset 添加到传入的相册中。
-            
-            // 创建一个改变 PHAssetCollection 的请求，并指定相册对应的 PHAssetCollection
-            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:albumAssetCollection];
-            /**
-             *  把 PHAsset 加入到对应的 PHAssetCollection 中，系统推荐的方法是调用 placeholderForCreatedAsset ，
-             *  返回一个的 placeholder 来代替刚创建的 PHAsset 的引用，并把该引用加入到一个 PHAssetCollectionChangeRequest 中。
-             */
-            [assetCollectionChangeRequest addAssets:@[[assetChangeRequest placeholderForCreatedAsset]]];
-        }
-        
-    } completionHandler:^(BOOL success, NSError *error) {
-        if (completionHandler) {
-            /**
-             *  performChanges:completionHandler 不在主线程执行，若用户在该 block 中操作 UI 时会产生一些问题，
-             *  为了避免这种情况，这里该 block 主动放到主线程执行。
-             */
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completionHandler(success, creationDate, error);
-            });
-        }
-    }];
 }
 
 @end

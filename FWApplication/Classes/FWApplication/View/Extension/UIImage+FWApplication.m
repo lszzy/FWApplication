@@ -12,62 +12,41 @@
 #import <CoreText/CoreText.h>
 #import <Accelerate/Accelerate.h>
 #import <objc/runtime.h>
-@import FWFramework;
+
+@interface UIImage (FWApplication)
+
+@end
 
 @implementation UIImage (FWApplication)
 
-#pragma mark - View
-
-+ (UIImage *)fwImageWithView:(UIView *)view limitWidth:(CGFloat)limitWidth
+- (void)innerImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    if (!view) return nil;
-    
-    CGAffineTransform oldTransform = view.transform;
-    CGAffineTransform scaleTransform = CGAffineTransformIdentity;
-    if (!isnan(limitWidth) && limitWidth > 0 && CGRectGetWidth(view.frame) > 0) {
-        CGFloat maxScale = limitWidth / CGRectGetWidth(view.frame);
-        CGAffineTransform transformScale = CGAffineTransformMakeScale(maxScale, maxScale);
-        scaleTransform = CGAffineTransformConcat(oldTransform, transformScale);
+    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveImageWithBlock:));
+    objc_setAssociatedObject(self, @selector(saveImageWithBlock:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (block) {
+        block(error);
     }
-    if(!CGAffineTransformEqualToTransform(scaleTransform, CGAffineTransformIdentity)){
-        view.transform = scaleTransform;
-    }
-    
-    // 已经变换过后的frame
-    CGRect actureFrame = view.frame;
-    // CGRectApplyAffineTransform();
-    CGRect actureBounds= view.bounds;
-    
-    // 开始截图
-    UIGraphicsBeginImageContextWithOptions(actureFrame.size, NO, 0.0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    // CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1, -1);
-    CGContextTranslateCTM(context, actureFrame.size.width / 2, actureFrame.size.height / 2);
-    CGContextConcatCTM(context, view.transform);
-    CGPoint anchorPoint = view.layer.anchorPoint;
-    CGContextTranslateCTM(context, -actureBounds.size.width * anchorPoint.x, -actureBounds.size.height * anchorPoint.y);
-    if (view.window) {
-        // iOS7+：更新屏幕后再截图，防止刚添加还未显示时截图失败，效率高
-        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
-    } else {
-        // iOS6+：截取当前状态，未添加到界面时也可截图，效率偏低
-        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    }
-    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    // 截图完成
-    view.transform = oldTransform;
-    
-    return screenshot;
 }
+
++ (void)innerVideo:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveVideo:withBlock:));
+    objc_setAssociatedObject(self, @selector(saveVideo:withBlock:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    if (block) {
+        block(error);
+    }
+}
+
+@end
+
+@implementation FWImageWrapper (FWApplication)
 
 #pragma mark - Color
 
-- (UIImage *)fwGrayImage
+- (UIImage *)grayImage
 {
-    int width = self.size.width;
-    int height = self.size.height;
+    int width = self.base.size.width;
+    int height = self.base.size.height;
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
     CGContextRef context = CGBitmapContextCreate(nil, width, height, 8, 0, colorSpace, kCGImageAlphaNone);
@@ -76,7 +55,7 @@
         return nil;
     }
     
-    CGContextDrawImage(context,CGRectMake(0, 0, width, height), self.CGImage);
+    CGContextDrawImage(context,CGRectMake(0, 0, width, height), self.base.CGImage);
     CGImageRef contextRef = CGBitmapContextCreateImage(context);
     UIImage *grayImage = [UIImage imageWithCGImage:contextRef];
     CGContextRelease(context);
@@ -85,11 +64,11 @@
     return grayImage;
 }
 
-- (UIColor *)fwColorAtPoint:(CGPoint)point
+- (UIColor *)colorAtPoint:(CGPoint)point
 {
     if (point.x < 0 || point.y < 0) return nil;
     
-    CGImageRef imageRef = self.CGImage;
+    CGImageRef imageRef = self.base.CGImage;
     NSUInteger width = CGImageGetWidth(imageRef);
     NSUInteger height = CGImageGetHeight(imageRef);
     if (point.x >= width || point.y >= height) return nil;
@@ -129,10 +108,10 @@
     return result;
 }
 
-- (UIColor *)fwColorAtPixel:(CGPoint)point
+- (UIColor *)colorAtPixel:(CGPoint)point
 {
     // 点是否在范围内
-    if (!CGRectContainsPoint(CGRectMake(0.0f, 0.0f, self.size.width, self.size.height), point)) {
+    if (!CGRectContainsPoint(CGRectMake(0.0f, 0.0f, self.base.size.width, self.base.size.height), point)) {
         return nil;
     }
     
@@ -140,9 +119,9 @@
     // 参考: http://stackoverflow.com/questions/1042830/retrieving-a-pixel-alpha-value-for-a-uiimage
     NSInteger pointX = trunc(point.x);
     NSInteger pointY = trunc(point.y);
-    CGImageRef cgImage = self.CGImage;
-    NSUInteger width = self.size.width;
-    NSUInteger height = self.size.height;
+    CGImageRef cgImage = self.base.CGImage;
+    NSUInteger width = self.base.size.width;
+    NSUInteger height = self.base.size.height;
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     int bytesPerPixel = 4;
     int bytesPerRow = bytesPerPixel * 1;
@@ -171,13 +150,13 @@
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
-- (UIColor *)fwAverageColor
+- (UIColor *)averageColor
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     unsigned char rgba[4];
     CGContextRef context = CGBitmapContextCreate(rgba, 1, 1, 8, 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     
-    CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), self.CGImage);
+    CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), self.base.CGImage);
     CGColorSpaceRelease(colorSpace);
     CGContextRelease(context);
     
@@ -196,143 +175,9 @@
     }
 }
 
-#pragma mark - Icon
-
-+ (UIImage *)fwImageWithAppIcon
-{
-    // 获取最后一张图片
-    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
-    NSString *iconName = [[infoPlist valueForKeyPath:@"CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles"] lastObject];
-    return [UIImage imageNamed:iconName];
-}
-
-+ (UIImage *)fwImageWithAppIcon:(CGSize)size
-{
-    NSString *iconName = [NSString stringWithFormat:@"AppIcon%.0fx%.0f", size.width, size.height];
-    return [UIImage imageNamed:iconName];
-}
-
-#pragma mark - Pdf
-
-+ (UIImage *)fwImageWithPdf:(id)path
-{
-    return [self fwImageWithPdf:path size:CGSizeZero];
-}
-
-+ (UIImage *)fwImageWithPdf:(id)path size:(CGSize)size
-{
-    CGPDFDocumentRef pdf = NULL;
-    if ([path isKindOfClass:[NSData class]]) {
-        CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)path);
-        pdf = CGPDFDocumentCreateWithProvider(provider);
-        CGDataProviderRelease(provider);
-    } else if ([path isKindOfClass:[NSString class]]) {
-        pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path]);
-    }
-    if (!pdf) return nil;
-    
-    CGPDFPageRef page = CGPDFDocumentGetPage(pdf, 1);
-    if (!page) {
-        CGPDFDocumentRelease(pdf);
-        return nil;
-    }
-    
-    CGRect pdfRect = CGPDFPageGetBoxRect(page, kCGPDFCropBox);
-    CGSize pdfSize = CGSizeEqualToSize(size, CGSizeZero) ? pdfRect.size : size;
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef ctx = CGBitmapContextCreate(NULL, pdfSize.width * scale, pdfSize.height * scale, 8, 0, colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
-    if (!ctx) {
-        CGColorSpaceRelease(colorSpace);
-        CGPDFDocumentRelease(pdf);
-        return nil;
-    }
-    
-    CGContextScaleCTM(ctx, scale, scale);
-    CGContextTranslateCTM(ctx, -pdfRect.origin.x, -pdfRect.origin.y);
-    CGContextDrawPDFPage(ctx, page);
-    CGPDFDocumentRelease(pdf);
-    
-    CGImageRef image = CGBitmapContextCreateImage(ctx);
-    UIImage *pdfImage = [[UIImage alloc] initWithCGImage:image scale:scale orientation:UIImageOrientationUp];
-    CGImageRelease(image);
-    CGContextRelease(ctx);
-    CGColorSpaceRelease(colorSpace);
-    
-    return pdfImage;
-}
-
-#pragma mark - Emoji
-
-+ (UIImage *)fwImageWithEmoji:(NSString *)emoji size:(CGFloat)size
-{
-    if (emoji.length == 0) return nil;
-    if (size < 1) return nil;
-    
-    CGFloat scale = [UIScreen mainScreen].scale;
-    CTFontRef font = CTFontCreateWithName(CFSTR("AppleColorEmoji"), size * scale, NULL);
-    if (!font) return nil;
-    
-    NSAttributedString *str = [[NSAttributedString alloc] initWithString:emoji attributes:@{ (__bridge id)kCTFontAttributeName:(__bridge id)font, (__bridge id)kCTForegroundColorAttributeName:(__bridge id)[UIColor clearColor].CGColor }];
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef ctx = CGBitmapContextCreate(NULL, size * scale, size * scale, 8, 0, colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
-    CGContextSetInterpolationQuality(ctx, kCGInterpolationHigh);
-    CTLineRef line = CTLineCreateWithAttributedString((__bridge CFTypeRef)str);
-    CGRect bounds = CTLineGetBoundsWithOptions(line, kCTLineBoundsUseGlyphPathBounds);
-    CGContextSetTextPosition(ctx, 0, -bounds.origin.y);
-    CTLineDraw(line, ctx);
-    CGImageRef imageRef = CGBitmapContextCreateImage(ctx);
-    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
-    
-    CFRelease(font);
-    CGColorSpaceRelease(colorSpace);
-    CGContextRelease(ctx);
-    if (line)CFRelease(line);
-    if (imageRef) CFRelease(imageRef);
-    
-    return image;
-}
-
-#pragma mark - Gradient
-
-+ (UIImage *)fwGradientImageWithSize:(CGSize)size
-                              colors:(NSArray *)colors
-                           locations:(const CGFloat *)locations
-                           direction:(UISwipeGestureRecognizerDirection)direction
-{
-    NSArray<NSValue *> *linePoints = [UIBezierPath fwLinePointsWithRect:CGRectMake(0, 0, size.width, size.height) direction:direction];
-    CGPoint startPoint = [linePoints.firstObject CGPointValue];
-    CGPoint endPoint = [linePoints.lastObject CGPointValue];
-    return [self fwGradientImageWithSize:size colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
-}
-
-+ (UIImage *)fwGradientImageWithSize:(CGSize)size
-                              colors:(NSArray *)colors
-                           locations:(const CGFloat *)locations
-                          startPoint:(CGPoint)startPoint
-                            endPoint:(CGPoint)endPoint
-{
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    if (!ctx) return nil;
-    
-    CGRect rect = CGRectMake(0, 0, size.width, size.height);
-    CGContextAddRect(ctx, rect);
-    CGContextClip(ctx);
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);
-    CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
-    CGGradientRelease(gradient);
-    CGColorSpaceRelease(colorSpace);
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
 #pragma mark - Effect
 
-- (UIImage *)fwImageWithReflectScale:(CGFloat)scale
+- (UIImage *)imageWithReflectScale:(CGFloat)scale
 {
     // 创建渐变mask
     static CGImageRef sharedMask = NULL;
@@ -354,8 +199,8 @@
     });
     
     // 获取反射尺寸
-    CGFloat height = ceil(self.size.height * scale);
-    CGSize size = CGSizeMake(self.size.width, height);
+    CGFloat height = ceil(self.base.size.height * scale);
+    CGSize size = CGSizeMake(self.base.size.width, height);
     CGRect bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
     
     // 创建上下文
@@ -367,8 +212,8 @@
     
     // 绘制反射图片
     CGContextScaleCTM(context, 1.0f, -1.0f);
-    CGContextTranslateCTM(context, 0.0f, -self.size.height);
-    [self drawInRect:CGRectMake(0.0f, 0.0f, self.size.width, self.size.height)];
+    CGContextTranslateCTM(context, 0.0f, -self.base.size.height);
+    [self.base drawInRect:CGRectMake(0.0f, 0.0f, self.base.size.width, self.base.size.height)];
     
     // 捕获目标图片
     UIImage *reflection = UIGraphicsGetImageFromCurrentImageContext();
@@ -376,20 +221,20 @@
     return reflection;
 }
 
-- (UIImage *)fwImageWithReflectScale:(CGFloat)scale gap:(CGFloat)gap alpha:(CGFloat)alpha
+- (UIImage *)imageWithReflectScale:(CGFloat)scale gap:(CGFloat)gap alpha:(CGFloat)alpha
 {
     // 生成反射图片
-    UIImage *reflection = [self fwImageWithReflectScale:scale];
+    UIImage *reflection = [self imageWithReflectScale:scale];
     CGFloat reflectionOffset = reflection.size.height + gap;
     
     // 创建上下文
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.size.width, self.size.height + reflectionOffset * 2.0f), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.base.size.width, self.base.size.height + reflectionOffset * 2.0f), NO, 0.0f);
     
     // 绘制反射
-    [reflection drawAtPoint:CGPointMake(0.0f, reflectionOffset + self.size.height + gap) blendMode:kCGBlendModeNormal alpha:alpha];
+    [reflection drawAtPoint:CGPointMake(0.0f, reflectionOffset + self.base.size.height + gap) blendMode:kCGBlendModeNormal alpha:alpha];
     
     // 绘制图片
-    [self drawAtPoint:CGPointMake(0.0f, reflectionOffset)];
+    [self.base drawAtPoint:CGPointMake(0.0f, reflectionOffset)];
     
     // 获取结果图片
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -397,11 +242,11 @@
     return image;
 }
 
-- (UIImage *)fwImageWithShadowColor:(UIColor *)color offset:(CGSize)offset blur:(CGFloat)blur
+- (UIImage *)imageWithShadowColor:(UIColor *)color offset:(CGSize)offset blur:(CGFloat)blur
 {
     // 计算尺寸
     CGSize border = CGSizeMake(fabs(offset.width) + blur, fabs(offset.height) + blur);
-    CGSize size = CGSizeMake(self.size.width + border.width * 2.0f, self.size.height + border.height * 2.0f);
+    CGSize size = CGSizeMake(self.base.size.width + border.width * 2.0f, self.base.size.height + border.height * 2.0f);
     
     // 创建上下文
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
@@ -410,7 +255,7 @@
     // 设置阴影
     CGContextSetShadowWithColor(context, offset, blur, color.CGColor);
     // 绘制阴影
-    [self drawAtPoint:CGPointMake(border.width, border.height)];
+    [self.base drawAtPoint:CGPointMake(border.width, border.height)];
     
     // 获取图片
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -418,17 +263,17 @@
     return image;
 }
 
-- (UIImage *)fwMaskImage
+- (UIImage *)maskImage
 {
     // 获取尺寸
-    NSInteger width = CGImageGetWidth(self.CGImage);
-    NSInteger height = CGImageGetHeight(self.CGImage);
+    NSInteger width = CGImageGetWidth(self.base.CGImage);
+    NSInteger height = CGImageGetHeight(self.base.CGImage);
     
     // 创建透明图片
     NSInteger bytesPerRow = ((width + 3) / 4) * 4;
     void *data = calloc(bytesPerRow * height, sizeof(unsigned char *));
     CGContextRef context = CGBitmapContextCreate(data, width, height, 8, bytesPerRow, NULL, kCGImageAlphaOnly);
-    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), self.CGImage);
+    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), self.base.CGImage);
     
     // 颠倒透明像素
     for (int y = 0; y < height; y++) {
@@ -448,29 +293,29 @@
     return mask;
 }
 
-- (UIImage *)fwImageWithBlurRadius:(CGFloat)blurRadius saturationDelta:(CGFloat)saturationDelta tintColor:(UIColor *)tintColor maskImage:(UIImage *)maskImage
+- (UIImage *)imageWithBlurRadius:(CGFloat)blurRadius saturationDelta:(CGFloat)saturationDelta tintColor:(UIColor *)tintColor maskImage:(UIImage *)maskImage
 {
-    if (self.size.width < 1 || self.size.height < 1) {
+    if (self.base.size.width < 1 || self.base.size.height < 1) {
         return nil;
     }
-    if (!self.CGImage) {
+    if (!self.base.CGImage) {
         return nil;
     }
     if (maskImage && !maskImage.CGImage) {
         return nil;
     }
     
-    CGRect imageRect = { CGPointZero, self.size };
-    UIImage *effectImage = self;
+    CGRect imageRect = { CGPointZero, self.base.size };
+    UIImage *effectImage = self.base;
     
     BOOL hasBlur = blurRadius > __FLT_EPSILON__;
     BOOL hasSaturationChange = fabs(saturationDelta - 1.) > __FLT_EPSILON__;
     if (hasBlur || hasSaturationChange) {
-        UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+        UIGraphicsBeginImageContextWithOptions(self.base.size, NO, 0.0f);
         CGContextRef effectInContext = UIGraphicsGetCurrentContext();
         CGContextScaleCTM(effectInContext, 1.0, -1.0);
-        CGContextTranslateCTM(effectInContext, 0, -self.size.height);
-        CGContextDrawImage(effectInContext, imageRect, self.CGImage);
+        CGContextTranslateCTM(effectInContext, 0, -self.base.size.height);
+        CGContextDrawImage(effectInContext, imageRect, self.base.CGImage);
         
         vImage_Buffer effectInBuffer;
         effectInBuffer.data     = CGBitmapContextGetData(effectInContext);
@@ -478,7 +323,7 @@
         effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);
         effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);
         
-        UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+        UIGraphicsBeginImageContextWithOptions(self.base.size, NO, 0.0f);
         CGContextRef effectOutContext = UIGraphicsGetCurrentContext();
         vImage_Buffer effectOutBuffer;
         effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);
@@ -529,11 +374,11 @@
         UIGraphicsEndImageContext();
     }
     
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(self.base.size, NO, 0.0f);
     CGContextRef outputContext = UIGraphicsGetCurrentContext();
     CGContextScaleCTM(outputContext, 1.0, -1.0);
-    CGContextTranslateCTM(outputContext, 0, -self.size.height);
-    CGContextDrawImage(outputContext, imageRect, self.CGImage);
+    CGContextTranslateCTM(outputContext, 0, -self.base.size.height);
+    CGContextDrawImage(outputContext, imageRect, self.base.CGImage);
     
     if (hasBlur) {
         CGContextSaveGState(outputContext);
@@ -558,13 +403,13 @@
 
 #pragma mark - Alpha
 
-- (UIImage *)fwAlphaImage
+- (UIImage *)alphaImage
 {
-    if ([self fwHasAlpha]) {
-        return self;
+    if ([self hasAlpha]) {
+        return self.base;
     }
     
-    CGImageRef imageRef = self.CGImage;
+    CGImageRef imageRef = self.base.CGImage;
     size_t width = CGImageGetWidth(imageRef);
     size_t height = CGImageGetHeight(imageRef);
     
@@ -590,35 +435,203 @@
 
 #pragma mark - Album
 
-- (void)fwSaveImageWithBlock:(void (^)(NSError *error))block
+- (void)saveImageWithBlock:(void (^)(NSError *error))block
 {
-    objc_setAssociatedObject(self, @selector(fwSaveImageWithBlock:), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    UIImageWriteToSavedPhotosAlbum(self, self, @selector(fwInnerImage:didFinishSavingWithError:contextInfo:), NULL);
+    objc_setAssociatedObject(self.base, @selector(saveImageWithBlock:), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    UIImageWriteToSavedPhotosAlbum(self.base, self.base, @selector(innerImage:didFinishSavingWithError:contextInfo:), NULL);
 }
 
-- (void)fwInnerImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+@end
+
+@implementation FWImageClassWrapper (FWApplication)
+
+#pragma mark - View
+
+- (UIImage *)imageWithView:(UIView *)view limitWidth:(CGFloat)limitWidth
 {
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(fwSaveImageWithBlock:));
-    objc_setAssociatedObject(self, @selector(fwSaveImageWithBlock:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (block) {
-        block(error);
+    if (!view) return nil;
+    
+    CGAffineTransform oldTransform = view.transform;
+    CGAffineTransform scaleTransform = CGAffineTransformIdentity;
+    if (!isnan(limitWidth) && limitWidth > 0 && CGRectGetWidth(view.frame) > 0) {
+        CGFloat maxScale = limitWidth / CGRectGetWidth(view.frame);
+        CGAffineTransform transformScale = CGAffineTransformMakeScale(maxScale, maxScale);
+        scaleTransform = CGAffineTransformConcat(oldTransform, transformScale);
     }
+    if(!CGAffineTransformEqualToTransform(scaleTransform, CGAffineTransformIdentity)){
+        view.transform = scaleTransform;
+    }
+    
+    // 已经变换过后的frame
+    CGRect actureFrame = view.frame;
+    // CGRectApplyAffineTransform();
+    CGRect actureBounds= view.bounds;
+    
+    // 开始截图
+    UIGraphicsBeginImageContextWithOptions(actureFrame.size, NO, 0.0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(context);
+    // CGContextScaleCTM(UIGraphicsGetCurrentContext(), 1, -1);
+    CGContextTranslateCTM(context, actureFrame.size.width / 2, actureFrame.size.height / 2);
+    CGContextConcatCTM(context, view.transform);
+    CGPoint anchorPoint = view.layer.anchorPoint;
+    CGContextTranslateCTM(context, -actureBounds.size.width * anchorPoint.x, -actureBounds.size.height * anchorPoint.y);
+    if (view.window) {
+        // iOS7+：更新屏幕后再截图，防止刚添加还未显示时截图失败，效率高
+        [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:YES];
+    } else {
+        // iOS6+：截取当前状态，未添加到界面时也可截图，效率偏低
+        [view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    }
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    // 截图完成
+    view.transform = oldTransform;
+    
+    return screenshot;
 }
 
-+ (void)fwSaveVideo:(NSString *)videoPath withBlock:(void (^)(NSError *error))block
+#pragma mark - Icon
+
+- (UIImage *)imageWithAppIcon
 {
-    objc_setAssociatedObject(self, @selector(fwSaveVideo:withBlock:), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    // 获取最后一张图片
+    NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
+    NSString *iconName = [[infoPlist valueForKeyPath:@"CFBundleIcons.CFBundlePrimaryIcon.CFBundleIconFiles"] lastObject];
+    return [UIImage imageNamed:iconName];
+}
+
+- (UIImage *)imageWithAppIcon:(CGSize)size
+{
+    NSString *iconName = [NSString stringWithFormat:@"AppIcon%.0fx%.0f", size.width, size.height];
+    return [UIImage imageNamed:iconName];
+}
+
+#pragma mark - Pdf
+
+- (UIImage *)imageWithPdf:(id)path
+{
+    return [self imageWithPdf:path size:CGSizeZero];
+}
+
+- (UIImage *)imageWithPdf:(id)path size:(CGSize)size
+{
+    CGPDFDocumentRef pdf = NULL;
+    if ([path isKindOfClass:[NSData class]]) {
+        CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)path);
+        pdf = CGPDFDocumentCreateWithProvider(provider);
+        CGDataProviderRelease(provider);
+    } else if ([path isKindOfClass:[NSString class]]) {
+        pdf = CGPDFDocumentCreateWithURL((__bridge CFURLRef)[NSURL fileURLWithPath:path]);
+    }
+    if (!pdf) return nil;
+    
+    CGPDFPageRef page = CGPDFDocumentGetPage(pdf, 1);
+    if (!page) {
+        CGPDFDocumentRelease(pdf);
+        return nil;
+    }
+    
+    CGRect pdfRect = CGPDFPageGetBoxRect(page, kCGPDFCropBox);
+    CGSize pdfSize = CGSizeEqualToSize(size, CGSizeZero) ? pdfRect.size : size;
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef ctx = CGBitmapContextCreate(NULL, pdfSize.width * scale, pdfSize.height * scale, 8, 0, colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+    if (!ctx) {
+        CGColorSpaceRelease(colorSpace);
+        CGPDFDocumentRelease(pdf);
+        return nil;
+    }
+    
+    CGContextScaleCTM(ctx, scale, scale);
+    CGContextTranslateCTM(ctx, -pdfRect.origin.x, -pdfRect.origin.y);
+    CGContextDrawPDFPage(ctx, page);
+    CGPDFDocumentRelease(pdf);
+    
+    CGImageRef image = CGBitmapContextCreateImage(ctx);
+    UIImage *pdfImage = [[UIImage alloc] initWithCGImage:image scale:scale orientation:UIImageOrientationUp];
+    CGImageRelease(image);
+    CGContextRelease(ctx);
+    CGColorSpaceRelease(colorSpace);
+    
+    return pdfImage;
+}
+
+#pragma mark - Emoji
+
+- (UIImage *)imageWithEmoji:(NSString *)emoji size:(CGFloat)size
+{
+    if (emoji.length == 0) return nil;
+    if (size < 1) return nil;
+    
+    CGFloat scale = [UIScreen mainScreen].scale;
+    CTFontRef font = CTFontCreateWithName(CFSTR("AppleColorEmoji"), size * scale, NULL);
+    if (!font) return nil;
+    
+    NSAttributedString *str = [[NSAttributedString alloc] initWithString:emoji attributes:@{ (__bridge id)kCTFontAttributeName:(__bridge id)font, (__bridge id)kCTForegroundColorAttributeName:(__bridge id)[UIColor clearColor].CGColor }];
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef ctx = CGBitmapContextCreate(NULL, size * scale, size * scale, 8, 0, colorSpace, kCGBitmapByteOrderDefault | kCGImageAlphaPremultipliedFirst);
+    CGContextSetInterpolationQuality(ctx, kCGInterpolationHigh);
+    CTLineRef line = CTLineCreateWithAttributedString((__bridge CFTypeRef)str);
+    CGRect bounds = CTLineGetBoundsWithOptions(line, kCTLineBoundsUseGlyphPathBounds);
+    CGContextSetTextPosition(ctx, 0, -bounds.origin.y);
+    CTLineDraw(line, ctx);
+    CGImageRef imageRef = CGBitmapContextCreateImage(ctx);
+    UIImage *image = [[UIImage alloc] initWithCGImage:imageRef scale:scale orientation:UIImageOrientationUp];
+    
+    CFRelease(font);
+    CGColorSpaceRelease(colorSpace);
+    CGContextRelease(ctx);
+    if (line)CFRelease(line);
+    if (imageRef) CFRelease(imageRef);
+    
+    return image;
+}
+
+#pragma mark - Gradient
+
+- (UIImage *)gradientImageWithSize:(CGSize)size
+                              colors:(NSArray *)colors
+                           locations:(const CGFloat *)locations
+                           direction:(UISwipeGestureRecognizerDirection)direction
+{
+    NSArray<NSValue *> *linePoints = [UIBezierPath.fw linePointsWithRect:CGRectMake(0, 0, size.width, size.height) direction:direction];
+    CGPoint startPoint = [linePoints.firstObject CGPointValue];
+    CGPoint endPoint = [linePoints.lastObject CGPointValue];
+    return [self gradientImageWithSize:size colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
+}
+
+- (UIImage *)gradientImageWithSize:(CGSize)size
+                              colors:(NSArray *)colors
+                           locations:(const CGFloat *)locations
+                          startPoint:(CGPoint)startPoint
+                            endPoint:(CGPoint)endPoint
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    if (!ctx) return nil;
+    
+    CGRect rect = CGRectMake(0, 0, size.width, size.height);
+    CGContextAddRect(ctx, rect);
+    CGContextClip(ctx);
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)colors, locations);
+    CGContextDrawLinearGradient(ctx, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient);
+    CGColorSpaceRelease(colorSpace);
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+#pragma mark - Album
+
+- (void)saveVideo:(NSString *)videoPath withBlock:(void (^)(NSError *error))block
+{
+    objc_setAssociatedObject(self.base, @selector(saveVideo:withBlock:), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoPath)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(videoPath, self, @selector(fwInnerVideo:didFinishSavingWithError:contextInfo:), NULL);
-    }
-}
-
-+ (void)fwInnerVideo:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(fwSaveVideo:withBlock:));
-    objc_setAssociatedObject(self, @selector(fwSaveVideo:withBlock:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (block) {
-        block(error);
+        UISaveVideoAtPathToSavedPhotosAlbum(videoPath, self.base, @selector(innerVideo:didFinishSavingWithError:contextInfo:), NULL);
     }
 }
 

@@ -8,6 +8,7 @@
  */
 
 #import <WebKit/WebKit.h>
+#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -50,10 +51,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface UIProgressView (FWWebView)
+@interface FWProgressViewWrapper (FWWebView)
 
 /// 设置Web加载进度，0和1自动切换隐藏。可设置trackTintColor为clear，隐藏背景色
-@property (nonatomic, assign) float fwWebProgress;
+@property (nonatomic, assign) float webProgress;
 
 @end
 
@@ -152,22 +153,26 @@ WKWebView实现Javascript桥接器
 
 NSString * FWWebViewJsBridge_js(void);
 
-@interface WKWebView (FWWebViewBridge)
+@interface FWWebViewWrapper (FWWebViewBridge)
 
 /// 设置Javascript桥接器强引用属性，防止使用过程中被释放
-@property (nonatomic, strong, nullable) FWWebViewJsBridge *fwJsBridge;
+@property (nonatomic, strong, nullable) FWWebViewJsBridge *jsBridge;
 
 /// 获取当前UserAgent，未自定义时为默认，示例：Mozilla/5.0 (iPhone; CPU OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148
-@property (nonatomic, copy, readonly) NSString *fwUserAgent;
+@property (nonatomic, copy, readonly) NSString *userAgent;
+
+@end
+
+@interface FWWebViewClassWrapper (FWWebViewBridge)
 
 /// 获取默认浏览器UserAgent，包含应用信息，示例：Mozilla/5.0 (iPhone; CPU OS 14_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Safari/605.1.15 Example/1.0.0
-@property (class, nonatomic, copy, readonly) NSString *fwBrowserUserAgent;
+@property (nonatomic, copy, readonly) NSString *browserUserAgent;
 
 /// 获取默认浏览器扩展UserAgent，不含平台信息，可用于applicationNameForUserAgent，示例：Mobile/15E148 Safari/605.1.15 Example/1.0.0
-@property (class, nonatomic, copy, readonly) NSString *fwExtensionUserAgent;
+@property (nonatomic, copy, readonly) NSString *extensionUserAgent;
 
 /// 获取默认请求UserAgent，可用于网络请求，示例：Example/1.0.0 (iPhone; iOS 14.2; Scale/3.00)
-@property (class, nonatomic, copy, readonly) NSString *fwRequestUserAgent;
+@property (nonatomic, copy, readonly) NSString *requestUserAgent;
 
 @end
 

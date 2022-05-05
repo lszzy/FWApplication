@@ -43,60 +43,60 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fwSeparatorInset = UIEdgeInsetsZero;
+        self.fw.separatorInset = UIEdgeInsetsZero;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [Theme backgroundColor];
         
-        UIView *bgView = [UIView fwAutoLayoutView];
+        UIView *bgView = [UIView new];
         bgView.backgroundColor = [Theme cellColor];
         bgView.layer.masksToBounds = NO;
         bgView.layer.cornerRadius = 10;
-        [bgView fwSetShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:5];
+        [bgView.fw setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:5];
         [self.contentView addSubview:bgView];
-        bgView.fwLayoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
+        bgView.fw.layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
         
-        UIView *expectView = [UIView fwAutoLayoutView];
+        UIView *expectView = [UIView new];
         expectView.backgroundColor = [UIColor redColor];
         expectView.hidden = YES;
         [bgView addSubview:expectView];
-        expectView.fwLayoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
+        expectView.fw.layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
         
-        UILabel *titleLabel = [UILabel fwAutoLayoutView];
+        UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont fwFontOfSize:15];
+        titleLabel.font = [UIFont.fw fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [bgView addSubview:titleLabel]; {
-            [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [titleLabel fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
-            [titleLabel fwAddCollapseConstraint:constraint];
-            titleLabel.fwAutoCollapse = YES;
+            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
+            [titleLabel.fw addCollapseConstraint:constraint];
+            titleLabel.fw.autoCollapse = YES;
         }
         
-        UILabel *textLabel = [UILabel fwAutoLayoutView];
+        UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont fwFontOfSize:13];
+        textLabel.font = [UIFont.fw fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [bgView addSubview:textLabel]; {
-            [textLabel fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [textLabel fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [textLabel fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel fwAddCollapseConstraint:constraint];
+            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel.fw addCollapseConstraint:constraint];
         }
         
-        UIImageView *imageView = [UIImageView fwAutoLayoutView];
+        UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         imageView.userInteractionEnabled = YES;
-        [imageView fwAddTapGestureWithTarget:self action:@selector(onImageClick:)];
+        [imageView.fw addTapGestureWithTarget:self action:@selector(onImageClick:)];
         [bgView addSubview:imageView]; {
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
-            [imageView fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *constraint = [imageView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView fwAddCollapseConstraint:constraint];
-            imageView.fwAutoCollapse = YES;
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
+            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView.fw addCollapseConstraint:constraint];
+            imageView.fw.autoCollapse = YES;
         }
     }
     return self;
@@ -107,8 +107,8 @@
     _object = object;
     // 自动收缩
     self.myTitleLabel.text = object.title;
-    if ([object.imageUrl fwIsFormatUrl]) {
-        [self.myImageView fwSetImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
+    if ([object.imageUrl.fw isFormatUrl]) {
+        [self.myImageView.fw setImageWithURL:[NSURL URLWithString:object.imageUrl] placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     } else if (object.imageUrl.length > 0) {
         self.myImageView.image = [TestBundle imageNamed:object.imageUrl];
     } else {
@@ -117,9 +117,9 @@
     // 手工收缩
     self.myTextLabel.text = object.text;
     if (object.text.length > 0) {
-        self.myTextLabel.fwCollapsed = NO;
+        self.myTextLabel.fw.collapsed = NO;
     } else {
-        self.myTextLabel.fwCollapsed = YES;
+        self.myTextLabel.fw.collapsed = YES;
     }
 }
 
@@ -142,37 +142,37 @@
 
 - (void)renderView
 {
-    self.isShort = [@[@0, @1].fwRandomObject fwAsInteger] == 0;
+    self.isShort = [@[@0, @1].fw.randomObject fw].safeInteger == 0;
     FWWeakifySelf();
-    [self.tableView fwSetRefreshingBlock:^{
+    [self.tableView.fw setRefreshingBlock:^{
         FWStrongifySelf();
         
         [self onRefreshing];
     }];
-    self.tableView.fwPullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
+    self.tableView.fw.pullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh state-%@", @(state)];
     };
-    self.tableView.fwPullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw.pullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh progress-%.2f", progress];
     };
     
     FWInfiniteScrollView.height = 64;
-    [self.tableView fwSetLoadingBlock:^{
+    [self.tableView.fw setLoadingBlock:^{
         FWStrongifySelf();
         
         [self onLoading];
     }];
-    self.tableView.fwInfiniteScrollView.preloadHeight = self.isShort ? 0 : 200;
-    self.tableView.fwInfiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
+    self.tableView.fw.infiniteScrollView.preloadHeight = self.isShort ? 0 : 200;
+    self.tableView.fw.infiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load state-%@", @(state)];
     };
-    self.tableView.fwInfiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw.infiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load progress-%.2f", progress];
@@ -181,12 +181,12 @@
 
 - (void)renderModel
 {
-    [self fwSetRightBarItem:FWIcon.refreshImage target:self action:@selector(renderData)];
+    [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(renderData)];
 }
 
 - (void)renderData
 {
-    [self.tableView fwBeginRefreshing];
+    [self.tableView.fw beginRefreshing];
 }
 
 #pragma mark - TableView
@@ -236,14 +236,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.tableData fwRemoveObjectAtIndex:indexPath.row];
+        [self.tableData removeObjectAtIndex:indexPath.row];
         [self.tableView reloadData];
     }
 }
 
 - (TestTableLayoutObject *)randomObject
 {
-    static NSMutableArray *randomArray;
+    static NSMutableArray<NSArray *> *randomArray;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         randomArray = [NSMutableArray array];
@@ -282,9 +282,9 @@
     });
     
     TestTableLayoutObject *object = [TestTableLayoutObject new];
-    object.title = [[randomArray objectAtIndex:0] fwRandomObject];
-    object.text = [[randomArray objectAtIndex:1] fwRandomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2] fwRandomObject];
+    object.title = [[randomArray objectAtIndex:0].fw randomObject];
+    object.text = [[randomArray objectAtIndex:1].fw randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }
@@ -303,9 +303,9 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndRefreshing];
-        if (!self.tableView.fwShowRefreshing) {
+        self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endRefreshing];
+        if (!self.tableView.fw.showRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -322,8 +322,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fwShowLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView fwEndLoading];
+        self.tableView.fw.showLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView.fw endLoading];
     });
 }
 
@@ -354,7 +354,7 @@
     // 设置打开Index
     NSString *fromImageUrl = [cell.object.imageUrl stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
     NSInteger currentIndex = [pictureUrls indexOfObject:fromImageUrl];
-    [self fwShowImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:currentIndex != NSNotFound ? currentIndex : 0 sourceView:nil];
+    [self.fw showImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:currentIndex != NSNotFound ? currentIndex : 0 sourceView:nil];
 }
 
 @end

@@ -15,7 +15,7 @@
 
 @interface UIViewController (FWViewController)
 
-- (SEL)fwInnerIntercepterForwardSelector:(SEL)aSelector;
+- (SEL)innerIntercepterForwardSelector:(SEL)aSelector;
 
 @end
 
@@ -68,7 +68,7 @@
 
 - (id)performIntercepter:(SEL)intercepter withObject:(UIViewController *)object
 {
-    SEL forwardSelector = [object fwInnerIntercepterForwardSelector:intercepter];
+    SEL forwardSelector = [object innerIntercepterForwardSelector:intercepter];
     if (forwardSelector) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -87,7 +87,7 @@
 
 - (id)performIntercepter:(SEL)intercepter withObject:(UIViewController *)object parameter:(id)parameter
 {
-    SEL forwardSelector = [object fwInnerIntercepterForwardSelector:intercepter];
+    SEL forwardSelector = [object innerIntercepterForwardSelector:intercepter];
     if (forwardSelector) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -161,107 +161,106 @@
 
 - (void)hookInit:(UIViewController *)viewController
 {
-    if ([viewController conformsToProtocol:@protocol(FWViewController)]) {
-        /*
-        // FWViewController全局拦截器init方法示例：
-        // 视图默认不被顶部导航栏遮挡，如果UIToolbar顶部出现空白，需设为Bottom|All
-        viewController.edgesForExtendedLayout = UIRectEdgeBottom;
-        // 开启不透明bar(translucent为NO)情况下延伸包括bar，占满全屏
-        viewController.extendedLayoutIncludesOpaqueBars = YES;
-        // 默认push时隐藏TabBar，TabBar初始化控制器时设置为NO
-        viewController.hidesBottomBarWhenPushed = YES;
-        */
-        
-        // 1. 默认init
-        if (self.hookInit) {
-            self.hookInit(viewController);
-        }
-        
-        // 2. 拦截器init
-        NSArray *protocolNames = [self protocolsWithClass:viewController.class];
-        for (NSString *protocolName in protocolNames) {
-            FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
-            if (intercepter.initIntercepter && [self respondsToSelector:intercepter.initIntercepter]) {
+    /*
+    // FWViewController全局拦截器init方法示例：
+    // 视图默认不被顶部导航栏遮挡，如果UIToolbar顶部出现空白，需设为Bottom|All
+    viewController.edgesForExtendedLayout = UIRectEdgeBottom;
+    // 开启不透明bar(translucent为NO)情况下延伸包括bar，占满全屏
+    viewController.extendedLayoutIncludesOpaqueBars = YES;
+    // 默认push时隐藏TabBar，TabBar初始化控制器时设置为NO
+    viewController.hidesBottomBarWhenPushed = YES;
+    */
+    
+    // 1. 默认init
+    if (self.hookInit) {
+        self.hookInit(viewController);
+    }
+    
+    // 2. 拦截器init
+    NSArray *protocolNames = [self protocolsWithClass:viewController.class];
+    for (NSString *protocolName in protocolNames) {
+        FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
+        if (intercepter.initIntercepter && [self respondsToSelector:intercepter.initIntercepter]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                [self performSelector:intercepter.initIntercepter withObject:viewController];
+            [self performSelector:intercepter.initIntercepter withObject:viewController];
 #pragma clang diagnostic pop
-            }
         }
-        
-        // 3. 控制器renderInit
-        if ([viewController respondsToSelector:@selector(renderInit)]) {
-            [(id<FWViewController>)viewController renderInit];
-        }
+    }
+    
+    // 3. 控制器renderInit
+    if ([viewController respondsToSelector:@selector(renderInit)]) {
+        [(id<FWViewController>)viewController renderInit];
     }
 }
 
 - (void)hookLoadView:(UIViewController *)viewController
 {
-    if ([viewController conformsToProtocol:@protocol(FWViewController)]) {
-        // 1. 默认loadView
-        if (self.hookLoadView) {
-            self.hookLoadView(viewController);
-        }
-        
-        // 2. 拦截器loadView
-        NSArray *protocolNames = [self protocolsWithClass:viewController.class];
-        for (NSString *protocolName in protocolNames) {
-            FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
-            if (intercepter.loadViewIntercepter && [self respondsToSelector:intercepter.loadViewIntercepter]) {
+    // 1. 默认loadView
+    if (self.hookLoadView) {
+        self.hookLoadView(viewController);
+    }
+    
+    // 2. 拦截器loadView
+    NSArray *protocolNames = [self protocolsWithClass:viewController.class];
+    for (NSString *protocolName in protocolNames) {
+        FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
+        if (intercepter.loadViewIntercepter && [self respondsToSelector:intercepter.loadViewIntercepter]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                [self performSelector:intercepter.loadViewIntercepter withObject:viewController];
+            [self performSelector:intercepter.loadViewIntercepter withObject:viewController];
 #pragma clang diagnostic pop
-            }
         }
-        
-        // 3. 控制器renderView
-        if ([viewController respondsToSelector:@selector(renderView)]) {
-            [(id<FWViewController>)viewController renderView];
-        }
-        
-        // 3. 控制器renderLayout
-        if ([viewController respondsToSelector:@selector(renderLayout)]) {
-            [(id<FWViewController>)viewController renderLayout];
-        }
+    }
+    
+    // 3. 控制器renderView
+    if ([viewController respondsToSelector:@selector(renderView)]) {
+        [(id<FWViewController>)viewController renderView];
+    }
+    
+    // 4. 控制器renderLayout
+    if ([viewController respondsToSelector:@selector(renderLayout)]) {
+        [(id<FWViewController>)viewController renderLayout];
     }
 }
 
 - (void)hookViewDidLoad:(UIViewController *)viewController
 {
-    if ([viewController conformsToProtocol:@protocol(FWViewController)]) {
-        // 1. 默认viewDidLoad
-        if (self.hookViewDidLoad) {
-            self.hookViewDidLoad(viewController);
-        }
-        
-        // 2. 拦截器viewDidLoad
-        NSArray *protocolNames = [self protocolsWithClass:viewController.class];
-        for (NSString *protocolName in protocolNames) {
-            FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
-            if (intercepter.viewDidLoadIntercepter && [self respondsToSelector:intercepter.viewDidLoadIntercepter]) {
+    // 1. 默认viewDidLoad
+    if (self.hookViewDidLoad) {
+        self.hookViewDidLoad(viewController);
+    }
+    
+    // 2. 拦截器viewDidLoad
+    NSArray *protocolNames = [self protocolsWithClass:viewController.class];
+    for (NSString *protocolName in protocolNames) {
+        FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
+        if (intercepter.viewDidLoadIntercepter && [self respondsToSelector:intercepter.viewDidLoadIntercepter]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                [self performSelector:intercepter.viewDidLoadIntercepter withObject:viewController];
+            [self performSelector:intercepter.viewDidLoadIntercepter withObject:viewController];
 #pragma clang diagnostic pop
-            }
         }
-        
-        // 3. 控制器renderModel
-        if ([viewController respondsToSelector:@selector(renderModel)]) {
-            [(id<FWViewController>)viewController renderModel];
-        }
-        
-        // 4. 控制器renderData
-        if ([viewController respondsToSelector:@selector(renderData)]) {
-            [(id<FWViewController>)viewController renderData];
-        }
-        
-        // 5. 控制器renderState
-        if ([viewController respondsToSelector:@selector(renderState:withObject:)]) {
-            [(id<FWViewController>)viewController renderState:FWViewControllerStateReady withObject:nil];
-        }
+    }
+    
+    // 3. 控制器renderNavbar
+    if ([viewController respondsToSelector:@selector(renderNavbar)]) {
+        [(id<FWViewController>)viewController renderNavbar];
+    }
+    
+    // 4. 控制器renderModel
+    if ([viewController respondsToSelector:@selector(renderModel)]) {
+        [(id<FWViewController>)viewController renderModel];
+    }
+    
+    // 5. 控制器renderData
+    if ([viewController respondsToSelector:@selector(renderData)]) {
+        [(id<FWViewController>)viewController renderData];
+    }
+    
+    // 6. 控制器renderState
+    if ([viewController respondsToSelector:@selector(renderState:withObject:)]) {
+        [(id<FWViewController>)viewController renderState:FWViewControllerStateReady withObject:nil];
     }
 }
 
@@ -277,34 +276,40 @@
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UIViewController, @selector(initWithNibName:bundle:), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(NSString *nibNameOrNil, NSBundle *nibBundleOrNil), FWSwizzleCode({
             UIViewController *viewController = FWSwizzleOriginal(nibNameOrNil, nibBundleOrNil);
-            [[FWViewControllerManager sharedInstance] hookInit:viewController];
+            if ([viewController conformsToProtocol:@protocol(FWViewController)]) {
+                [[FWViewControllerManager sharedInstance] hookInit:viewController];
+            }
             return viewController;
         }));
         FWSwizzleClass(UIViewController, @selector(initWithCoder:), FWSwizzleReturn(UIViewController *), FWSwizzleArgs(NSCoder *coder), FWSwizzleCode({
             UIViewController *viewController = FWSwizzleOriginal(coder);
-            if (viewController) {
+            if (viewController && [viewController conformsToProtocol:@protocol(FWViewController)]) {
                 [[FWViewControllerManager sharedInstance] hookInit:viewController];
             }
             return viewController;
         }));
         FWSwizzleClass(UIViewController, @selector(loadView), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             FWSwizzleOriginal();
-            [[FWViewControllerManager sharedInstance] hookLoadView:selfObject];
+            if ([selfObject conformsToProtocol:@protocol(FWViewController)]) {
+                [[FWViewControllerManager sharedInstance] hookLoadView:selfObject];
+            }
         }));
         FWSwizzleClass(UIViewController, @selector(viewDidLoad), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
             FWSwizzleOriginal();
-            [[FWViewControllerManager sharedInstance] hookViewDidLoad:selfObject];
+            if ([selfObject conformsToProtocol:@protocol(FWViewController)]) {
+                [[FWViewControllerManager sharedInstance] hookViewDidLoad:selfObject];
+            }
         }));
         
-        [UIViewController fwSwizzleInstanceMethod:@selector(respondsToSelector:) with:@selector(fwInnerIntercepterRespondsToSelector:)];
-        [UIViewController fwSwizzleInstanceMethod:@selector(methodSignatureForSelector:) with:@selector(fwInnerIntercepterMethodSignatureForSelector:)];
-        [UIViewController fwSwizzleInstanceMethod:@selector(forwardInvocation:) with:@selector(fwInnerIntercepterForwardInvocation:)];
+        [UIViewController.fw exchangeInstanceMethod:@selector(respondsToSelector:) swizzleMethod:@selector(innerIntercepterRespondsToSelector:)];
+        [UIViewController.fw exchangeInstanceMethod:@selector(methodSignatureForSelector:) swizzleMethod:@selector(innerIntercepterMethodSignatureForSelector:)];
+        [UIViewController.fw exchangeInstanceMethod:@selector(forwardInvocation:) swizzleMethod:@selector(innerIntercepterForwardInvocation:)];
     });
 }
 
 #pragma mark - Forward
 
-- (NSMutableDictionary *)fwInnerIntercepterForwardSelectors
+- (NSMutableDictionary *)innerIntercepterForwardSelectors
 {
     NSMutableDictionary *forwardSelectors = objc_getAssociatedObject(self, _cmd);
     if (!forwardSelectors) {
@@ -314,60 +319,60 @@
     return forwardSelectors;
 }
 
-- (SEL)fwInnerIntercepterForwardSelector:(SEL)aSelector
+- (SEL)innerIntercepterForwardSelector:(SEL)aSelector
 {
     if ([self conformsToProtocol:@protocol(FWViewController)]) {
         // 查找forward方法缓存是否存在
         NSString *selectorName = NSStringFromSelector(aSelector);
-        NSString *forwardName = [[self fwInnerIntercepterForwardSelectors] objectForKey:selectorName];
+        NSString *forwardName = [[self innerIntercepterForwardSelectors] objectForKey:selectorName];
         if (!forwardName) {
             // 如果缓存不存在，查找一次并生成缓存
             forwardName = [[FWViewControllerManager sharedInstance] forwardSelector:selectorName withClass:self.class];
-            [[self fwInnerIntercepterForwardSelectors] setObject:(forwardName ?: @"") forKey:selectorName];
+            [[self innerIntercepterForwardSelectors] setObject:(forwardName ?: @"") forKey:selectorName];
         }
         
         SEL forwardSelector = forwardName.length > 0 ? NSSelectorFromString(forwardName) : NULL;
-        if (forwardSelector && [self fwInnerIntercepterRespondsToSelector:forwardSelector]) {
+        if (forwardSelector && [self innerIntercepterRespondsToSelector:forwardSelector]) {
             return forwardSelector;
         }
     }
     return NULL;
 }
 
-- (BOOL)fwInnerIntercepterRespondsToSelector:(SEL)aSelector
+- (BOOL)innerIntercepterRespondsToSelector:(SEL)aSelector
 {
-    if ([self fwInnerIntercepterRespondsToSelector:aSelector]) {
+    if ([self innerIntercepterRespondsToSelector:aSelector]) {
         return YES;
     } else {
-        SEL forwardSelector = [self fwInnerIntercepterForwardSelector:aSelector];
+        SEL forwardSelector = [self innerIntercepterForwardSelector:aSelector];
         return forwardSelector ? YES : NO;
     }
 }
 
-- (NSMethodSignature *)fwInnerIntercepterMethodSignatureForSelector:(SEL)aSelector
+- (NSMethodSignature *)innerIntercepterMethodSignatureForSelector:(SEL)aSelector
 {
     SEL forwardSelector = NULL;
-    if (![self fwInnerIntercepterRespondsToSelector:aSelector]) {
-        forwardSelector = [self fwInnerIntercepterForwardSelector:aSelector];
+    if (![self innerIntercepterRespondsToSelector:aSelector]) {
+        forwardSelector = [self innerIntercepterForwardSelector:aSelector];
     }
     if (forwardSelector) {
         return [self.class instanceMethodSignatureForSelector:forwardSelector];
     } else {
-        return [self fwInnerIntercepterMethodSignatureForSelector:aSelector];
+        return [self innerIntercepterMethodSignatureForSelector:aSelector];
     }
 }
 
-- (void)fwInnerIntercepterForwardInvocation:(NSInvocation *)anInvocation
+- (void)innerIntercepterForwardInvocation:(NSInvocation *)anInvocation
 {
     SEL forwardSelector = NULL;
-    if (![self fwInnerIntercepterRespondsToSelector:anInvocation.selector]) {
-        forwardSelector = [self fwInnerIntercepterForwardSelector:anInvocation.selector];
+    if (![self innerIntercepterRespondsToSelector:anInvocation.selector]) {
+        forwardSelector = [self innerIntercepterForwardSelector:anInvocation.selector];
     }
     if (forwardSelector) {
         anInvocation.selector = forwardSelector;
         [anInvocation invoke];
     } else {
-        [self fwInnerIntercepterForwardInvocation:anInvocation];
+        [self innerIntercepterForwardInvocation:anInvocation];
     }
 }
 

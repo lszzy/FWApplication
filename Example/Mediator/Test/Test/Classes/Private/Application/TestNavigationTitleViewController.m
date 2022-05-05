@@ -21,7 +21,7 @@
 
 - (void)renderInit
 {
-    self.fwNavigationBarHidden = YES;
+    self.fw.navigationBarHidden = YES;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -41,17 +41,24 @@
     self.navigationView.bottomHeight = FWNavigationBarHeight;
     self.navigationView.bottomHidden = YES;
     self.navigationView.bottomView.backgroundColor = UIColor.greenColor;
+    FWWeakifySelf();
     self.navigationView.menuView.leftButton = [FWToolbarButton buttonWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        if (!self.shouldPopController) return;
         [FWRouter closeViewControllerAnimated:YES];
     }];
     self.navigationView.menuView.rightButton = [FWToolbarButton buttonWithObject:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        if (!self.shouldPopController) return;
         [FWRouter closeViewControllerAnimated:YES];
     }];
     self.navigationView.menuView.rightMoreButton = [FWToolbarButton buttonWithObject:FWIcon.actionImage block:^(id  _Nonnull sender) {
+        FWStrongifySelf();
+        if (!self.shouldPopController) return;
         [FWRouter closeViewControllerAnimated:YES];
     }];
     [self.view addSubview:self.navigationView];
-    self.navigationView.fwLayoutChain.left().right().top();
+    self.navigationView.fw.layoutChain.left().right().top();
     
     self.toolbarView = [[FWToolbarView alloc] init];
     self.toolbarView.tintColor = Theme.textColor;
@@ -59,35 +66,21 @@
     self.toolbarView.topHeight = 44;
     self.toolbarView.topHidden = YES;
     self.toolbarView.topView.backgroundColor = UIColor.greenColor;
-    FWWeakifySelf();
     self.toolbarView.menuView.leftButton = [FWToolbarButton buttonWithObject:@"取消" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
-        [self fwShowMessageWithText:@"点击了取消"];
+        [self.fw showMessageWithText:@"点击了取消"];
     }];
     self.toolbarView.menuView.rightButton = [FWToolbarButton buttonWithObject:@"确定" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
-        [self fwShowMessageWithText:@"点击了确定"];
+        [self.fw showMessageWithText:@"点击了确定"];
     }];
     [self.view addSubview:self.toolbarView];
-    self.toolbarView.fwLayoutChain.left().right().bottom();
+    self.toolbarView.fw.layoutChain.left().right().bottom();
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
-    self.tableView.fwLayoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
-}
-
-- (void)renderModel
-{
-    FWWeakifySelf();
-    self.fwBackBarBlock = ^BOOL{
-        FWStrongifySelf();
-        [self fwShowConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
-            FWStrongifySelf();
-            [self fwCloseViewControllerAnimated:YES];
-        }];
-        return NO;
-    };
+    self.tableView.fw.layoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
 }
 
 - (void)renderData
@@ -113,10 +106,20 @@
     ]];
 }
 
+- (BOOL)shouldPopController
+{
+    FWWeakifySelf();
+    [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
+        FWStrongifySelf();
+        [self.fw closeViewControllerAnimated:YES];
+    }];
+    return NO;
+}
+
 - (UIImage *)accessoryImage
 {
-    UIBezierPath *bezierPath = [UIBezierPath fwShapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
-    UIImage *accessoryImage = [[bezierPath fwShapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIBezierPath *bezierPath = [UIBezierPath.fw shapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
+    UIImage *accessoryImage = [[bezierPath.fw shapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     return accessoryImage;
 }
 
@@ -150,7 +153,7 @@
         case 4:
         {
             FWWeakifySelf();
-            [self fwShowSheetWithTitle:@"水平对齐方式" message:nil cancel:@"取消" actions:@[@"左对齐", @"居中对齐", @"右对齐"] actionBlock:^(NSInteger index) {
+            [self.fw showSheetWithTitle:@"水平对齐方式" message:nil cancel:@"取消" actions:@[@"左对齐", @"居中对齐", @"右对齐"] actionBlock:^(NSInteger index) {
                 FWStrongifySelf();
                 if (index == 0) {
                     self.titleView.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -239,7 +242,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView style:UITableViewCellStyleValue1];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleValue1];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.detailTextLabel.text = nil;
     
@@ -257,11 +260,11 @@
             cell.textLabel.text = self.titleView.style == FWToolbarTitleViewStyleHorizontal ? @"切换为上下两行显示" : @"切换为水平一行显示";
             break;
         case 4:
-            cell.textLabel.text = [self.tableData fwObjectAtIndex:indexPath.row];
+            cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
             cell.detailTextLabel.text = (self.horizontalAlignment == UIControlContentHorizontalAlignmentLeft ? @"左对齐" : (self.horizontalAlignment == UIControlContentHorizontalAlignmentRight ? @"右对齐" : @"居中对齐"));
             break;
         default:
-            cell.textLabel.text = [self.tableData fwObjectAtIndex:indexPath.row];
+            cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
             break;
     }
     return cell;

@@ -324,7 +324,7 @@ static dispatch_queue_t fwrequest_cache_writing_queue() {
                 // 兼容\uD800-\uDFFF引起JSON解码报错3840问题
                 if (error && error.code == 3840) {
                     NSString *escapeString = [[NSString alloc] initWithData:_cacheData encoding:NSUTF8StringEncoding];
-                    NSData *escapeData = [[escapeString fwEscapeJson] dataUsingEncoding:NSUTF8StringEncoding];
+                    NSData *escapeData = [escapeString.fw.escapeJson dataUsingEncoding:NSUTF8StringEncoding];
                     if (escapeData && escapeData.length != _cacheData.length) {
                         error = nil;
                         _cacheJSON = [NSJSONSerialization JSONObjectWithData:escapeData options:(NSJSONReadingOptions)0 error:&error];

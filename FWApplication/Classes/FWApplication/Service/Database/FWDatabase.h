@@ -18,13 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
  自定义数据存储路径
  @return 自定义数据库路径(目录即可)
  */
-+ (nullable NSString *)fwDatabasePath;
++ (nullable NSString *)databasePath;
 
 /// 自定义模型类数据库版本号
 /** 注意：
  ***该返回值在改变数据模型属性类型/增加/删除属性时需要更改否则无法自动更新原来模型数据表字段以及类型***
  */
-+ (nullable NSString *)fwDatabaseVersion;
++ (nullable NSString *)databaseVersion;
 
 /// 自定义数据库加密密码
 /** 注意：
@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
  *** 手动引入 ***
  *** pod 'Component/SQLCipher' ***
  */
-+ (nullable NSString *)fwDatabasePasswordKey;
++ (nullable NSString *)databasePasswordKey;
 
 /**
  引入第三方创建的数据库存储路径比如:FMDB
@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return 存储路径
  */
-+ (nullable NSString *)fwDatabaseVendorPath;
++ (nullable NSString *)databaseVendorPath;
 
 /**
  指定自定义表名，默认类名
@@ -50,27 +50,27 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return 表名
  */
-+ (nullable NSString *)fwTableName;
++ (nullable NSString *)tableName;
 
 /// 自定义数据表主键名称，默认pkid
 /**
  *** 返回自定义主键名称
  */
-+ (nullable NSString *)fwTablePrimaryKey;
++ (nullable NSString *)tablePrimaryKey;
 
 /**
  指定数据库表属性黑名单集合
 
  @return 返回数据库表属性黑名单集合
  */
-+ (nullable NSArray<NSString *> *)fwTablePropertyBlacklist;
++ (nullable NSArray<NSString *> *)tablePropertyBlacklist;
 
 /**
  指定数据库表属性白名单集合
 
  @return 返回数据库表属性白名单集合
  */
-+ (nullable NSArray<NSString *> *)fwTablePropertyWhitelist;
++ (nullable NSArray<NSString *> *)tablePropertyWhitelist;
 
 @end
 

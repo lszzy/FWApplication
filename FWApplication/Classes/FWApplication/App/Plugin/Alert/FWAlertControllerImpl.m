@@ -18,20 +18,20 @@
 
 @implementation FWAlertAction (FWAlertControllerPlugin)
 
-- (BOOL)fwIsPreferred
+- (BOOL)isPreferred
 {
-    return [objc_getAssociatedObject(self, @selector(fwIsPreferred)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(isPreferred)) boolValue];
 }
 
-- (void)setFwIsPreferred:(BOOL)fwIsPreferred
+- (void)setIsPreferred:(BOOL)isPreferred
 {
-    objc_setAssociatedObject(self, @selector(fwIsPreferred), @(fwIsPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(isPreferred), @(isPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     if (self.attributedTitle || self.title.length < 1 || !self.alertAppearance.actionEnabled) return;
     
     UIColor *titleColor = nil;
     if (!self.enabled) {
         titleColor = self.alertAppearance.disabledActionColor;
-    } else if (fwIsPreferred) {
+    } else if (isPreferred) {
         titleColor = self.alertAppearance.preferredActionColor;
     } else if (self.style == UIAlertActionStyleDestructive) {
         titleColor = self.alertAppearance.destructiveActionColor;
@@ -57,7 +57,7 @@
     return instance;
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
                    title:(id)title
                  message:(id)message
@@ -68,7 +68,6 @@
              actionBlock:(void (^)(NSArray<NSString *> * _Nonnull, NSInteger))actionBlock
              cancelBlock:(void (^)(void))cancelBlock
              customBlock:(void (^)(id))customBlock
-                priority:(FWAlertPriority)priority
 {
     // 初始化Alert
     FWAlertController *alertController = [self alertControllerWithTitle:title
@@ -118,12 +117,10 @@
     if (customBlock) customBlock(alertController);
     
     // 显示Alert
-    alertController.fwAlertPriorityEnabled = YES;
-    alertController.fwAlertPriority = priority;
-    [alertController fwAlertPriorityPresentIn:viewController];
+    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
                showAlert:(UIAlertControllerStyle)style
               headerView:(UIView *)headerView
                   cancel:(id)cancel
@@ -131,7 +128,6 @@
              actionBlock:(void (^)(NSInteger))actionBlock
              cancelBlock:(void (^)(void))cancelBlock
              customBlock:(void (^)(id _Nonnull))customBlock
-                priority:(FWAlertPriority)priority
 {
     // 初始化Alert
     FWAlertController *alertController = [self alertControllerWithHeaderView:headerView
@@ -166,9 +162,7 @@
     if (customBlock) customBlock(alertController);
     
     // 显示Alert
-    alertController.fwAlertPriorityEnabled = YES;
-    alertController.fwAlertPriority = priority;
-    [alertController fwAlertPriorityPresentIn:viewController];
+    [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (FWAlertController *)alertControllerWithTitle:(id)title message:(id)message preferredStyle:(FWAlertControllerStyle)preferredStyle
@@ -208,11 +202,11 @@
         alertController.attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
     
-    [alertController fwObserveProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
+    [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
-            if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
+            if (obj.isPreferred) obj.isPreferred = NO;
         }];
-        object.preferredAction.fwIsPreferred = YES;
+        object.preferredAction.isPreferred = YES;
     }];
     
     return alertController;
@@ -226,11 +220,11 @@
                                                                                      appearance:self.customAppearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
-    [alertController fwObserveProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
+    [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
-            if (obj.fwIsPreferred) obj.fwIsPreferred = NO;
+            if (obj.isPreferred) obj.isPreferred = NO;
         }];
-        object.preferredAction.fwIsPreferred = YES;
+        object.preferredAction.isPreferred = YES;
     }];
     
     return alertController;
@@ -247,11 +241,11 @@
     if (attributedTitle) {
         alertAction.attributedTitle = attributedTitle;
     } else {
-        alertAction.fwIsPreferred = NO;
+        alertAction.isPreferred = NO;
     }
     
-    [alertAction fwObserveProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
-        object.fwIsPreferred = object.fwIsPreferred;
+    [alertAction.fw observeProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
+        object.isPreferred = object.isPreferred;
     }];
     
     return alertAction;

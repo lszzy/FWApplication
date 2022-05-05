@@ -1,7 +1,6 @@
 /**
  @header     UIBezierPath+FWApplication.m
  @indexgroup FWApplication
-      UIBezierPath+FWApplication
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/18
@@ -17,11 +16,58 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return ((180.f * radian) / M_PI);
 }
 
-@implementation UIBezierPath (FWApplication)
+@implementation FWBezierPathWrapper (FWApplication)
+
+- (UIImage *)shapeImage:(CGSize)size
+              strokeWidth:(CGFloat)strokeWidth
+              strokeColor:(UIColor *)strokeColor
+                fillColor:(UIColor *)fillColor
+{
+    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    if (!context) return nil;
+    
+    CGContextSetLineWidth(context, strokeWidth);
+    CGContextSetLineCap(context, kCGLineCapRound);
+    [strokeColor setStroke];
+    CGContextAddPath(context, self.base.CGPath);
+    CGContextStrokePath(context);
+    
+    if (fillColor) {
+        [fillColor setFill];
+        CGContextAddPath(context, self.base.CGPath);
+        CGContextFillPath(context);
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
+
+- (CAShapeLayer *)shapeLayer:(CGRect)rect
+                   strokeWidth:(CGFloat)strokeWidth
+                   strokeColor:(UIColor *)strokeColor
+                     fillColor:(UIColor *)fillColor
+{
+    CAShapeLayer *layer = [CAShapeLayer layer];
+    layer.frame = rect;
+    layer.lineWidth = strokeWidth;
+    layer.lineCap = kCALineCapRound;
+    layer.strokeColor = strokeColor.CGColor;
+    if (fillColor) {
+        layer.fillColor = fillColor.CGColor;
+    }
+    layer.path = self.base.CGPath;
+    return layer;
+}
+
+@end
+
+@implementation FWBezierPathClassWrapper (FWApplication)
 
 #pragma mark - Bezier
 
-+ (UIBezierPath *)fwLinesWithPoints:(NSArray *)points
+- (UIBezierPath *)linesWithPoints:(NSArray *)points
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     NSValue *value = points[0];
@@ -36,7 +82,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return path;
 }
 
-+ (UIBezierPath *)fwQuadCurvedPathWithPoints:(NSArray *)points
+- (UIBezierPath *)quadCurvedPathWithPoints:(NSArray *)points
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     
@@ -55,23 +101,23 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
         value = points[i];
         CGPoint p2 = [value CGPointValue];
         
-        CGPoint midPoint = [self fwMiddlePoint:p1 withPoint:p2];
-        [path addQuadCurveToPoint:midPoint controlPoint:[self fwControlPoint:midPoint withPoint:p1]];
-        [path addQuadCurveToPoint:p2 controlPoint:[self fwControlPoint:midPoint withPoint:p2]];
+        CGPoint midPoint = [self middlePoint:p1 withPoint:p2];
+        [path addQuadCurveToPoint:midPoint controlPoint:[self controlPoint:midPoint withPoint:p1]];
+        [path addQuadCurveToPoint:p2 controlPoint:[self controlPoint:midPoint withPoint:p2]];
         
         p1 = p2;
     }
     return path;
 }
 
-+ (CGPoint)fwMiddlePoint:(CGPoint)p1 withPoint:(CGPoint)p2
+- (CGPoint)middlePoint:(CGPoint)p1 withPoint:(CGPoint)p2
 {
     return CGPointMake((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 }
 
-+ (CGPoint)fwControlPoint:(CGPoint)p1 withPoint:(CGPoint)p2
+- (CGPoint)controlPoint:(CGPoint)p1 withPoint:(CGPoint)p2
 {
-    CGPoint controlPoint = [self fwMiddlePoint:p1 withPoint:p2];
+    CGPoint controlPoint = [self middlePoint:p1 withPoint:p2];
     CGFloat diffY = fabs(p2.y - controlPoint.y);
     
     if (p1.y < p2.y)
@@ -82,17 +128,17 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return controlPoint;
 }
 
-+ (CGFloat)fwRadianWithDegree:(CGFloat)degree
+- (CGFloat)radianWithDegree:(CGFloat)degree
 {
     return (M_PI * degree) / 180.f;
 }
 
-+ (CGFloat)fwDegreeWithRadian:(CGFloat)radian
+- (CGFloat)degreeWithRadian:(CGFloat)radian
 {
     return (180.f * radian) / M_PI;
 }
 
-+ (NSArray<NSValue *> *)fwLinePointsWithRect:(CGRect)rect direction:(UISwipeGestureRecognizerDirection)direction
+- (NSArray<NSValue *> *)linePointsWithRect:(CGRect)rect direction:(UISwipeGestureRecognizerDirection)direction
 {
     CGPoint startPoint;
     CGPoint endPoint;
@@ -128,58 +174,15 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
 
 #pragma mark - Shape
 
-- (UIImage *)fwShapeImage:(CGSize)size
-              strokeWidth:(CGFloat)strokeWidth
-              strokeColor:(UIColor *)strokeColor
-                fillColor:(UIColor *)fillColor
-{
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    if (!context) return nil;
-    
-    CGContextSetLineWidth(context, strokeWidth);
-    CGContextSetLineCap(context, kCGLineCapRound);
-    [strokeColor setStroke];
-    CGContextAddPath(context, self.CGPath);
-    CGContextStrokePath(context);
-    
-    if (fillColor) {
-        [fillColor setFill];
-        CGContextAddPath(context, self.CGPath);
-        CGContextFillPath(context);
-    }
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (CAShapeLayer *)fwShapeLayer:(CGRect)rect
-                   strokeWidth:(CGFloat)strokeWidth
-                   strokeColor:(UIColor *)strokeColor
-                     fillColor:(UIColor *)fillColor
-{
-    CAShapeLayer *layer = [CAShapeLayer layer];
-    layer.frame = rect;
-    layer.lineWidth = strokeWidth;
-    layer.lineCap = kCALineCapRound;
-    layer.strokeColor = strokeColor.CGColor;
-    if (fillColor) {
-        layer.fillColor = fillColor.CGColor;
-    }
-    layer.path = self.CGPath;
-    return layer;
-}
-
-+ (CGRect)fwInnerSquareFrame:(CGRect)frame;
+- (CGRect)innerSquareFrame:(CGRect)frame;
 {
     CGFloat a = MIN(frame.size.width, frame.size.height);
     return CGRectMake(frame.origin.x + frame.size.width / 2 - a / 2, frame.origin.y + frame.size.height / 2 - a / 2, a, a);
 }
 
-+ (UIBezierPath *)fwShapeCircle:(CGRect)aFrame percent:(float)percent degree:(CGFloat)degree
+- (UIBezierPath *)shapeCircle:(CGRect)aFrame percent:(float)percent degree:(CGFloat)degree
 {
-    CGRect frame = [self fwInnerSquareFrame:aFrame];
+    CGRect frame = [self innerSquareFrame:aFrame];
     
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(frame.origin.x + frame.size.width / 2.0, frame.origin.y + frame.size.height / 2.0)
                                                               radius:frame.size.width / 2.0
@@ -189,9 +192,9 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeHeart:(CGRect)aFrame
+- (UIBezierPath *)shapeHeart:(CGRect)aFrame
 {
-    CGRect frame = [self fwInnerSquareFrame:aFrame];
+    CGRect frame = [self innerSquareFrame:aFrame];
     
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.74182 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.04948 * CGRectGetHeight(frame))];
@@ -210,9 +213,9 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeStar:(CGRect)aFrame
+- (UIBezierPath *)shapeStar:(CGRect)aFrame
 {
-    CGRect frame = [self fwInnerSquareFrame:aFrame];
+    CGRect frame = [self innerSquareFrame:aFrame];
     
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.50000 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.05000 * CGRectGetHeight(frame))];
@@ -230,21 +233,21 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeStars:(NSUInteger)count frame:(CGRect)aFrame spacing:(CGFloat)spacing
+- (UIBezierPath *)shapeStars:(NSUInteger)count frame:(CGRect)aFrame spacing:(CGFloat)spacing
 {
     CGFloat width = (aFrame.size.width - spacing * (count - 1)) / count;
     CGRect babyFrame = CGRectMake(aFrame.origin.x, aFrame.origin.y, width, aFrame.size.height);
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     
     for (int i = 0; i < count; i++) {
-        UIBezierPath *startPath = [UIBezierPath fwShapeStar:babyFrame];
+        UIBezierPath *startPath = [self shapeStar:babyFrame];
         [startPath applyTransform:CGAffineTransformTranslate(CGAffineTransformIdentity, i * (width + spacing), 0)];
         [bezierPath appendPath:startPath];
     }
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapePlus:(CGRect)frame
+- (UIBezierPath *)shapePlus:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMidY(frame))];
@@ -254,7 +257,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeMinus:(CGRect)frame
+- (UIBezierPath *)shapeMinus:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMidY(frame))];
@@ -262,7 +265,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeCross:(CGRect)frame
+- (UIBezierPath *)shapeCross:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMinY(frame))];
@@ -272,7 +275,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeCheck:(CGRect)frame
+- (UIBezierPath *)shapeCheck:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMidY(frame))];
@@ -281,7 +284,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeFold:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
+- (UIBezierPath *)shapeFold:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     switch (direction) {
@@ -315,7 +318,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeArrow:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
+- (UIBezierPath *)shapeArrow:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     switch (direction) {
@@ -357,7 +360,7 @@ CGFloat FWDegreeWithRadian(CGFloat radian) {
     return bezierPath;
 }
 
-+ (UIBezierPath *)fwShapeTriangle:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
+- (UIBezierPath *)shapeTriangle:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     switch (direction) {

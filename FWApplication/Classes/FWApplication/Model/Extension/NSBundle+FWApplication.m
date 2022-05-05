@@ -9,11 +9,10 @@
 
 #import "NSBundle+FWApplication.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
-@implementation NSBundle (FWApplication)
+@implementation FWBundleClassWrapper (FWApplication)
 
-+ (void)fwSetGoogleMapsLanguage:(NSString *)language
+- (void)setGoogleMapsLanguage:(NSString *)language
 {
     static NSString *customLanguage = nil;
     static dispatch_once_t onceToken;
@@ -32,7 +31,7 @@
     customLanguage = language;
 }
 
-+ (void)fwSetGooglePlacesLanguage:(NSString *)language
+- (void)setGooglePlacesLanguage:(NSString *)language
 {
     static NSString *customLanguage = nil;
     static dispatch_once_t onceToken;

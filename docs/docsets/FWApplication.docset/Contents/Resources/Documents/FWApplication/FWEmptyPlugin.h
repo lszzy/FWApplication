@@ -7,7 +7,7 @@
  @updated    2020/9/3
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,13 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 @optional
 
 /// 显示空界面，指定文本、图片和动作按钮
-- (void)fwShowEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image loading:(BOOL)loading action:(nullable NSString *)action block:(nullable void (^)(id sender))block inView:(UIView *)view;
+- (void)showEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image loading:(BOOL)loading action:(nullable NSString *)action block:(nullable void (^)(id sender))block inView:(UIView *)view;
 
 /// 隐藏空界面
-- (void)fwHideEmptyView:(UIView *)view;
+- (void)hideEmptyView:(UIView *)view;
 
 /// 是否显示空界面
-- (BOOL)fwHasEmptyView:(UIView *)view;
+- (BOOL)hasEmptyView:(UIView *)view;
 
 @end
 
@@ -36,70 +36,70 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 
 /// 设置空界面外间距，默认zero
-@property (nonatomic, assign) UIEdgeInsets fwEmptyInsets;
+@property (nonatomic, assign) UIEdgeInsets emptyInsets;
 
 /// 是否显示空界面
-@property (nonatomic, assign, readonly) BOOL fwHasEmptyView;
+@property (nonatomic, assign, readonly) BOOL hasEmptyView;
 
 /// 显示空界面
-- (void)fwShowEmptyView;
+- (void)showEmptyView;
 
 /// 显示空界面加载视图
-- (void)fwShowEmptyViewLoading;
+- (void)showEmptyViewLoading;
 
 /// 显示空界面，指定文本
-- (void)fwShowEmptyViewWithText:(nullable NSString *)text;
+- (void)showEmptyViewWithText:(nullable NSString *)text;
 
 /// 显示空界面，指定文本和详细文本
-- (void)fwShowEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail;
+- (void)showEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail;
 
 /// 显示空界面，指定文本、详细文本和图片
-- (void)fwShowEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image;
+- (void)showEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image;
 
 /// 显示空界面，指定文本、详细文本、图片和动作按钮
-- (void)fwShowEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image action:(nullable NSString *)action block:(nullable void (^)(id sender))block;
+- (void)showEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image action:(nullable NSString *)action block:(nullable void (^)(id sender))block;
 
 /// 显示空界面，指定文本、详细文本、图片、是否显示加载视图和动作按钮
-- (void)fwShowEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image loading:(BOOL)loading action:(nullable NSString *)action block:(nullable void (^)(id sender))block;
+- (void)showEmptyViewWithText:(nullable NSString *)text detail:(nullable NSString *)detail image:(nullable UIImage *)image loading:(BOOL)loading action:(nullable NSString *)action block:(nullable void (^)(id sender))block;
 
 /// 隐藏空界面
-- (void)fwHideEmptyView;
+- (void)hideEmptyView;
 
 @end
 
 /// UIView使用空界面插件，兼容UITableView|UICollectionView
-@interface UIView (FWEmptyPluginView) <FWEmptyPluginView>
+@interface FWViewWrapper (FWEmptyPluginView) <FWEmptyPluginView>
 
 /// 自定义空界面插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWEmptyPlugin> fwEmptyPlugin;
+@property (nonatomic, strong, nullable) id<FWEmptyPlugin> emptyPlugin;
 
 @end
 
 /// UIViewController使用空界面插件，内部使用UIViewController.view
-@interface UIViewController (FWEmptyPluginView) <FWEmptyPluginView>
+@interface FWViewControllerWrapper (FWEmptyPluginView) <FWEmptyPluginView>
 
 @end
 
-#pragma mark - UIScrollView+FWEmptyPlugin
+#pragma mark - FWScrollViewWrapper+FWEmptyPlugin
 
 /// 空界面代理协议
 @protocol FWEmptyViewDelegate <NSObject>
 @optional
 
 /// 显示空界面，默认调用UIScrollView.fwShowEmptyView
-- (void)fwShowEmptyView:(UIScrollView *)scrollView;
+- (void)showEmptyView:(UIScrollView *)scrollView;
 
 /// 隐藏空界面，默认调用UIScrollView.fwHideEmptyView
-- (void)fwHideEmptyView:(UIScrollView *)scrollView;
+- (void)hideEmptyView:(UIScrollView *)scrollView;
 
 /// 显示空界面时是否允许滚动，默认NO
-- (BOOL)fwEmptyViewShouldScroll:(UIScrollView *)scrollView;
+- (BOOL)emptyViewShouldScroll:(UIScrollView *)scrollView;
 
 /// 无数据时是否显示空界面，默认YES
-- (BOOL)fwEmptyViewShouldDisplay:(UIScrollView *)scrollView;
+- (BOOL)emptyViewShouldDisplay:(UIScrollView *)scrollView;
 
 /// 有数据时是否强制显示空界面，默认NO
-- (BOOL)fwEmptyViewForceDisplay:(UIScrollView *)scrollView;
+- (BOOL)emptyViewForceDisplay:(UIScrollView *)scrollView;
 
 @end
 
@@ -108,13 +108,13 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/dzenbot/DZNEmptyDataSet
  */
-@interface UIScrollView (FWEmptyPlugin)
+@interface FWScrollViewWrapper (FWEmptyPlugin)
 
 /// 空界面代理，默认nil
-@property (nonatomic, weak, nullable) IBOutlet id<FWEmptyViewDelegate> fwEmptyViewDelegate;
+@property (nonatomic, weak, nullable) id<FWEmptyViewDelegate> emptyViewDelegate;
 
 /// 刷新空界面
-- (void)fwReloadEmptyView;
+- (void)reloadEmptyView;
 
 @end
 

@@ -34,8 +34,8 @@
 
 - (void)requestCompleteFilter
 {
-    NSDictionary *dict = [self.responseJSONObject fwAsNSDictionary];
-    _responseName = [dict[@"name"] fwAsNSString];
+    NSDictionary *dict = [self.responseJSONObject fw].safeDictionary;
+    _responseName = [dict[@"name"] fw].safeString;
 }
 
 @end
@@ -51,7 +51,7 @@
 
 @implementation TestModelUser
 
-+ (NSDictionary<NSString *,id> *)fwModelPropertyMapper
++ (NSDictionary<NSString *,id> *)modelPropertyMapper
 {
     return @{
              @"userId": @[@"userId", @"user_id"],
@@ -79,7 +79,7 @@ FWModelArray(TestModelUser);
 
 @implementation TestModelObj
 
-+ (NSDictionary<NSString *,id> *)fwModelClassMapper
++ (NSDictionary<NSString *,id> *)modelClassMapper
 {
     return @{
              @"users": [TestModelUser class],
@@ -112,9 +112,9 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
 {
     TestModelRequest *request = [TestModelRequest new];
     [request startWithCompletionBlockWithSuccess:^(TestModelRequest *request) {
-        [self fwShowMessageWithText:[NSString stringWithFormat:@"json请求成功: \n%@", request.responseName]];
+        [self.fw showMessageWithText:[NSString stringWithFormat:@"json请求成功: \n%@", request.responseName]];
     } failure:^(TestModelRequest *request) {
-        [self fwShowAlertWithTitle:@"json请求失败" message:[NSString stringWithFormat:@"%@", request.error] cancel:nil cancelBlock:nil];
+        [self.fw showAlertWithTitle:@"json请求失败" message:[NSString stringWithFormat:@"%@", request.error] cancel:nil cancelBlock:nil];
     }];
 }
 
@@ -146,17 +146,17 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
                                            }
                                        ],
                                };
-    TestModelObj *obj = [TestModelObj fwModelWithJson:jsonDict];
-    self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj fwModelToJsonObject]];
+    TestModelObj *obj = [TestModelObj modelWithJson:jsonDict];
+    self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj.fw modelToJsonObject]];
     
     // 测试\udf36|\udd75等字符会导致json解码失败问题
     NSString *jsonString = @"{\"name\": \"\\u8499\\u81ea\\u7f8e\\u5473\\u6ce1\\u6912\\u7b0b\\ud83d\\ude04\\\\udf36\\ufe0f\"}";
-    id jsonObject = [jsonString fwJsonDecode];
-    self.textView.text = [NSString stringWithFormat:@"%@\nname: %@\njson: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString fwJsonEncode:jsonObject]];
+    id jsonObject = [jsonString.fw jsonDecode];
+    self.textView.text = [NSString stringWithFormat:@"%@\nname: %@\njson: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString.fw jsonEncode:jsonObject]];
     
     jsonString = @"{\"name\": \"Test1\\udd75Test2\\ud83dTest3\\u8499\\u81ea\\u7f8e\\u5473\\u6ce1\\u6912\\u7b0b\\ud83d\\ude04\\udf36\\ufe0f\"}";
-    jsonObject = [jsonString fwJsonDecode];
-    self.textView.text = [NSString stringWithFormat:@"%@\nname2: %@\njson2: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString fwJsonEncode:jsonObject]];
+    jsonObject = [jsonString.fw jsonDecode];
+    self.textView.text = [NSString stringWithFormat:@"%@\nname2: %@\njson2: %@", self.textView.text, [jsonObject objectForKey:@"name"], [NSString.fw jsonEncode:jsonObject]];
     
     // 测试%导致stringByRemovingPercentEncoding返回nil问题
     NSString *queryValue = @"我是字符串100%测试";

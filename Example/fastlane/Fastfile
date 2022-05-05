@@ -13,6 +13,8 @@ PGYER_APIKEY="{PGYER_APIKEY}"
 PGYER_USERKEY="{PGYER_USERKEY}"
 PGYER_PASSWD="{PGYER_PASSWD}"
 APPSTORE_ID="{APPSTORE_ID}"
+KEYCHAIN_PATH="{KEYCHAIN_PATH}"
+KEYCHAIN_PASSWD="{KEYCHAIN_PASSWD}"
 
 # .env
 # PGYER_APIKEY="{PGYER_APIKEY}"
@@ -59,6 +61,13 @@ platform :ios do
       CHANGELOG_TEXT = "[#{BUILD_NUMBER}+testing] - #{CURRENT_DATE}\n\n#{CHANGELOG_TEXT}"
     else
       CHANGELOG_TEXT = "[#{BUILD_NUMBER}+production] - #{CURRENT_DATE}\n\n#{CHANGELOG_TEXT}"
+    end
+
+    if KEYCHAIN_PATH.include? "keychain"
+      unlock_keychain(
+        path: KEYCHAIN_PATH,
+        password: KEYCHAIN_PASSWD
+      )
     end
 
     puts "Changelog: #{CHANGELOG_TEXT}"

@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Push" block:^(id sender) {
+    [self.fw setRightBarItem:@"Push" block:^(id sender) {
         FWStrongifySelf();
         TestNavigationViewController *viewController = [TestNavigationViewController new];
         viewController.fullscreenPop = YES;
@@ -34,10 +34,10 @@
     [super viewWillAppear:animated];
     
     if (self.fullscreenPop) {
-        if (!self.fwTempObject) {
-            self.fwTempObject = [UIColor fwRandomColor];
+        if (!self.fw.tempObject) {
+            self.fw.tempObject = UIColor.fw.randomColor;
         }
-        self.navigationController.navigationBar.fwBackgroundColor = self.fwTempObject;
+        self.navigationController.navigationBar.fw.backgroundColor = self.fw.tempObject;
     }
 }
 
@@ -46,9 +46,9 @@
     [super viewDidAppear:animated];
     
     if (self.fullscreenPop) {
-        self.navigationController.fwFullscreenPopGestureEnabled = YES;
+        self.navigationController.fw.fullscreenPopGestureEnabled = YES;
     } else {
-        self.navigationController.fwFullscreenPopGestureEnabled = NO;
+        self.navigationController.fw.fullscreenPopGestureEnabled = NO;
     }
 }
 
@@ -57,10 +57,10 @@
     // 允许同时识别手势处理
     if (self.fullscreenPop) {
         FWWeakifySelf();
-        self.scrollView.fwShouldRecognizeSimultaneously = ^BOOL(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer) {
+        self.scrollView.fw.shouldRecognizeSimultaneously = ^BOOL(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer) {
             FWStrongifySelf();
             if (self.scrollView.contentOffset.x <= 0) {
-                if ([UINavigationController fwIsFullscreenPopGestureRecognizer:otherGestureRecognizer]) {
+                if ([UINavigationController.fw isFullscreenPopGestureRecognizer:otherGestureRecognizer]) {
                     return YES;
                 }
             }
@@ -69,12 +69,12 @@
     }
     
     // 添加内容
-    UIImageView *imageView = [UIImageView fwAutoLayoutView];
+    UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [TestBundle imageNamed:@"public_picture"];
     [self.contentView addSubview:imageView]; {
-        [imageView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-        [imageView fwPinEdgesToSuperviewWithInsets:UIEdgeInsetsZero];
-        [imageView fwSetDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
+        [imageView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+        [imageView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero];
+        [imageView.fw setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
     }
 }
 

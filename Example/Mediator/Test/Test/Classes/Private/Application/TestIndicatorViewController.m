@@ -44,7 +44,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -66,33 +66,33 @@
 
 - (void)onIndicator
 {
-    [self fwShowLoadingWithText:@""];
+    [self.fw showLoadingWithText:@""];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self fwHideLoading];
+        [self.fw hideLoading];
     });
 }
 
 - (void)onIndicator2
 {
-    [self fwShowLoading];
+    [self.fw showLoading];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self fwHideLoading];
+        [self.fw hideLoading];
     });
 }
 
 - (void)onIndicator3
 {
-    [self fwShowLoadingWithText:@"我是很长很长很长很长很长很长很长很长很长很长的加载文案"];
+    [self.fw showLoadingWithText:@"我是很长很长很长很长很长很长很长很长很长很长的加载文案"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self fwHideLoading];
+        [self.fw hideLoading];
     });
 }
 
 - (void)onLoading
 {
-    [self fwShowLoadingWithText:@"加载中\n请耐心等待"];
+    [self.fw showLoadingWithText:@"加载中\n请耐心等待"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self fwHideLoading];
+        [self.fw hideLoading];
     });
 }
 
@@ -102,20 +102,20 @@
     [self mockProgress:^(double progress, BOOL finished) {
         FWStrongifySelf();
         if (!finished) {
-            [self fwShowProgressWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100] progress:progress];
+            [self.fw showProgressWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100] progress:progress];
         } else {
-            [self fwHideProgress];
+            [self.fw hideProgress];
         }
     }];
 }
 
 - (void)onLoadingWindow
 {
-    self.view.window.fwToastInsets = UIEdgeInsetsMake(FWTopBarHeight, 0, 0, 0);
-    [self.view.window fwShowLoadingWithText:@"加载中"];
+    self.view.window.fw.toastInsets = UIEdgeInsetsMake(FWTopBarHeight, 0, 0, 0);
+    [self.view.window.fw showLoadingWithText:@"加载中"];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.view.window.fwToastInsets = UIEdgeInsetsZero;
-        [self.view.window fwHideLoading];
+        self.view.window.fw.toastInsets = UIEdgeInsetsZero;
+        [self.view.window.fw hideLoading];
     });
 }
 
@@ -125,9 +125,9 @@
     [self mockProgress:^(double progress, BOOL finished) {
         FWStrongifySelf();
         if (!finished) {
-            [self.view.window fwShowLoadingWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100]];
+            [self.view.window.fw showLoadingWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100]];
         } else {
-            [self.view.window fwHideLoading];
+            [self.view.window.fw hideLoading];
         }
     }];
 }
@@ -136,14 +136,14 @@
 {
     self.view.tag = 100;
     static int count = 0;
-    [self fwShowMessageWithText:[NSString stringWithFormat:@"吐司消息%@", @(++count)]];
+    [self.fw showMessageWithText:[NSString stringWithFormat:@"吐司消息%@", @(++count)]];
 }
 
 - (void)onToast2
 {
     NSString *text = @"我是很长很长很长很长很长很长很长很长很长很长很长的吐司消息";
     FWWeakifySelf();
-    [self fwShowMessageWithText:text style:FWToastStyleDefault completion:^{
+    [self.fw showMessageWithText:text style:FWToastStyleDefault completion:^{
         FWStrongifySelf();
         [self onToast];
     }];

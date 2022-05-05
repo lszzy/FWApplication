@@ -22,7 +22,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.tableData removeAllObjects];
         [self.tableView reloadData];
@@ -31,15 +31,15 @@
 
 - (void)renderView
 {
-    self.tableView.fwEmptyViewDelegate = self;
+    self.tableView.fw.emptyViewDelegate = self;
     FWWeakifySelf();
-    [self.tableView fwAddPullRefreshWithBlock:^{
+    [self.tableView.fw addPullRefreshWithBlock:^{
         FWStrongifySelf();
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             FWStrongifySelf();
             [self.tableData removeAllObjects];
             [self.tableView reloadData];
-            [self.tableView fwEndRefreshing];
+            [self.tableView.fw endRefreshing];
         });
     }];
     [self.tableView reloadData];
@@ -55,9 +55,9 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 100)];
     view.backgroundColor = Theme.cellColor;
     
-    UILabel *label = [UILabel fwLabelWithFont:[UIFont fwFontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
+    UILabel *label = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
     [view addSubview:label];
-    label.fwLayoutChain.leftWithInset(15).centerY();
+    label.fw.layoutChain.leftWithInset(15).centerY();
     return view;
 }
 
@@ -68,20 +68,20 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.textLabel.textColor = Theme.textColor;
-    cell.textLabel.text = FWSafeString([self.tableData fwObjectAtIndex:indexPath.row]);
+    cell.textLabel.text = FWSafeString([self.tableData objectAtIndex:indexPath.row]);
     return cell;
 }
 
 #pragma mark - FWEmptyViewDelegate
 
-- (void)fwShowEmptyView:(UIScrollView *)scrollView
+- (void)showEmptyView:(UIScrollView *)scrollView
 {
     FWWeakifySelf();
-    scrollView.fwOverlayView.backgroundColor = Theme.tableColor;
-    scrollView.fwOverlayView.fwEmptyInsets = UIEdgeInsetsMake(35 + 50, 0, 0, 0);
-    [scrollView fwShowEmptyViewWithText:nil detail:nil image:nil action:nil block:^(id  _Nonnull sender) {
+    scrollView.fw.overlayView.backgroundColor = Theme.tableColor;
+    scrollView.fw.overlayView.fw.emptyInsets = UIEdgeInsetsMake(35 + 50, 0, 0, 0);
+    [scrollView.fw showEmptyViewWithText:nil detail:nil image:nil action:nil block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         [self.tableData addObjectsFromArray:@[@1, @2, @3, @4, @5, @6, @7, @8]];
@@ -89,9 +89,9 @@
     }];
 }
 
-- (void)fwHideEmptyView:(UIScrollView *)scrollView
+- (void)hideEmptyView:(UIScrollView *)scrollView
 {
-    [self fwHideEmptyView];
+    [self.fw hideEmptyView];
 }
 
 @end

@@ -310,9 +310,6 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     return value;
 }
 
-
-
-
 /// A property info in object model.
 @interface FWInnerModelPropertyMeta : NSObject {
     @package
@@ -397,9 +394,9 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     meta->_cls = propertyInfo.cls;
     
     if (generic) {
-        meta->_hasCustomClassFromDictionary = [generic respondsToSelector:@selector(fwModelClassForDictionary:)];
+        meta->_hasCustomClassFromDictionary = [generic respondsToSelector:@selector(modelClassForDictionary:)];
     } else if (meta->_cls && meta->_nsType == FWEncodingTypeNSUnknown) {
-        meta->_hasCustomClassFromDictionary = [meta->_cls respondsToSelector:@selector(fwModelClassForDictionary:)];
+        meta->_hasCustomClassFromDictionary = [meta->_cls respondsToSelector:@selector(modelClassForDictionary:)];
     }
     
     if (propertyInfo.getter) {
@@ -479,8 +476,8 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     
     // Get black list
     NSSet *blacklist = nil;
-    if ([cls respondsToSelector:@selector(fwModelPropertyBlacklist)]) {
-        NSArray *properties = [(id<FWModel>)cls fwModelPropertyBlacklist];
+    if ([cls respondsToSelector:@selector(modelPropertyBlacklist)]) {
+        NSArray *properties = [(id<FWModel>)cls modelPropertyBlacklist];
         if (properties) {
             blacklist = [NSSet setWithArray:properties];
         }
@@ -488,8 +485,8 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     
     // Get white list
     NSSet *whitelist = nil;
-    if ([cls respondsToSelector:@selector(fwModelPropertyWhitelist)]) {
-        NSArray *properties = [(id<FWModel>)cls fwModelPropertyWhitelist];
+    if ([cls respondsToSelector:@selector(modelPropertyWhitelist)]) {
+        NSArray *properties = [(id<FWModel>)cls modelPropertyWhitelist];
         if (properties) {
             whitelist = [NSSet setWithArray:properties];
         }
@@ -497,8 +494,8 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     
     // Get container property's generic class
     NSDictionary *genericMapper = nil;
-    if ([cls respondsToSelector:@selector(fwModelClassMapper)]) {
-        genericMapper = [(id<FWModel>)cls fwModelClassMapper];
+    if ([cls respondsToSelector:@selector(modelClassMapper)]) {
+        genericMapper = [(id<FWModel>)cls modelClassMapper];
         if (genericMapper) {
             NSMutableDictionary *tmp = [NSMutableDictionary new];
             [genericMapper enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
@@ -543,8 +540,8 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     NSMutableArray *keyPathPropertyMetas = [NSMutableArray new];
     NSMutableArray *multiKeysPropertyMetas = [NSMutableArray new];
     
-    if ([cls respondsToSelector:@selector(fwModelPropertyMapper)]) {
-        NSDictionary *customMapper = [(id <FWModel>)cls fwModelPropertyMapper];
+    if ([cls respondsToSelector:@selector(modelPropertyMapper)]) {
+        NSDictionary *customMapper = [(id <FWModel>)cls modelPropertyMapper];
         [customMapper enumerateKeysAndObjectsUsingBlock:^(NSString *propertyName, NSString *mappedToKey, BOOL *stop) {
             FWInnerModelPropertyMeta *propertyMeta = allPropertyMetas[propertyName];
             if (!propertyMeta) return;
@@ -613,10 +610,10 @@ static force_inline id FWValueForMultiKeys(__unsafe_unretained NSDictionary *dic
     _classInfo = classInfo;
     _keyMappedCount = _allPropertyMetas.count;
     _nsType = FWClassGetNSType(cls);
-    _hasCustomWillTransformFromDictionary = ([cls instancesRespondToSelector:@selector(fwModelWillTransformFromDictionary:)]);
-    _hasCustomTransformFromDictionary = ([cls instancesRespondToSelector:@selector(fwModelTransformFromDictionary:)]);
-    _hasCustomTransformToDictionary = ([cls instancesRespondToSelector:@selector(fwModelTransformToDictionary:)]);
-    _hasCustomClassFromDictionary = ([cls respondsToSelector:@selector(fwModelClassForDictionary:)]);
+    _hasCustomWillTransformFromDictionary = ([cls instancesRespondToSelector:@selector(modelWillTransformFromDictionary:)]);
+    _hasCustomTransformFromDictionary = ([cls instancesRespondToSelector:@selector(modelTransformFromDictionary:)]);
+    _hasCustomTransformToDictionary = ([cls instancesRespondToSelector:@selector(modelTransformToDictionary:)]);
+    _hasCustomClassFromDictionary = ([cls respondsToSelector:@selector(modelClassForDictionary:)]);
     
     return self;
 }
@@ -906,11 +903,11 @@ static void FWModelSetValueForProperty(__unsafe_unretained id model,
                                 } else if ([one isKindOfClass:[NSDictionary class]]) {
                                     Class cls = meta->_genericCls;
                                     if (meta->_hasCustomClassFromDictionary) {
-                                        cls = [cls fwModelClassForDictionary:one];
+                                        cls = [cls modelClassForDictionary:one];
                                         if (!cls) cls = meta->_genericCls; // for xcode code coverage
                                     }
                                     NSObject *newOne = [cls new];
-                                    [newOne fwModelSetWithDictionary:one];
+                                    [newOne.fw modelSetWithDictionary:one];
                                     if (newOne) [objectArr addObject:newOne];
                                 }
                             }
@@ -946,11 +943,11 @@ static void FWModelSetValueForProperty(__unsafe_unretained id model,
                                 if ([oneValue isKindOfClass:[NSDictionary class]]) {
                                     Class cls = meta->_genericCls;
                                     if (meta->_hasCustomClassFromDictionary) {
-                                        cls = [cls fwModelClassForDictionary:oneValue];
+                                        cls = [cls modelClassForDictionary:oneValue];
                                         if (!cls) cls = meta->_genericCls; // for xcode code coverage
                                     }
                                     NSObject *newOne = [cls new];
-                                    [newOne fwModelSetWithDictionary:(id)oneValue];
+                                    [newOne.fw modelSetWithDictionary:(id)oneValue];
                                     if (newOne) dic[oneKey] = newOne;
                                 }
                             }];
@@ -981,11 +978,11 @@ static void FWModelSetValueForProperty(__unsafe_unretained id model,
                             } else if ([one isKindOfClass:[NSDictionary class]]) {
                                 Class cls = meta->_genericCls;
                                 if (meta->_hasCustomClassFromDictionary) {
-                                    cls = [cls fwModelClassForDictionary:one];
+                                    cls = [cls modelClassForDictionary:one];
                                     if (!cls) cls = meta->_genericCls; // for xcode code coverage
                                 }
                                 NSObject *newOne = [cls new];
-                                [newOne fwModelSetWithDictionary:one];
+                                [newOne.fw modelSetWithDictionary:one];
                                 if (newOne) [set addObject:newOne];
                             }
                         }
@@ -1019,13 +1016,13 @@ static void FWModelSetValueForProperty(__unsafe_unretained id model,
                         one = ((id (*)(id, SEL))(void *) objc_msgSend)((id)model, meta->_getter);
                     }
                     if (one) {
-                        [one fwModelSetWithDictionary:value];
+                        [one.fw modelSetWithDictionary:value];
                     } else {
                         if (meta->_hasCustomClassFromDictionary) {
-                            cls = [cls fwModelClassForDictionary:value] ?: cls;
+                            cls = [cls modelClassForDictionary:value] ?: cls;
                         }
                         one = [cls new];
-                        [one fwModelSetWithDictionary:value];
+                        [one.fw modelSetWithDictionary:value];
                         ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)model, meta->_setter, (id)one);
                     }
                 }
@@ -1274,7 +1271,7 @@ static id FWModelToJSONObjectRecursive(NSObject *model) {
     }];
     
     if (modelMeta->_hasCustomTransformToDictionary) {
-        BOOL suc = [((id<FWModel>)model) fwModelTransformToDictionary:dic];
+        BOOL suc = [((id<FWModel>)model) modelTransformToDictionary:dic];
         if (!suc) return nil;
     }
     return result;
@@ -1301,7 +1298,6 @@ static NSString *FWModelDescription(NSObject *model) {
     if (!model) return @"<nil>";
     if (model == (id)kCFNull) return @"<null>";
     if (![model isKindOfClass:[NSObject class]]) return [NSString stringWithFormat:@"%@",model];
-    
     
     FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:model.class];
     switch (modelMeta->_nsType) {
@@ -1429,10 +1425,29 @@ static NSString *FWModelDescription(NSObject *model) {
     }
 }
 
-
 @implementation NSObject (FWModel)
 
-+ (NSDictionary *)fwInnerDictionaryWithJson:(id)json {
++ (instancetype)modelWithJson:(id)json {
+    return [[self fw] modelWithJson:json];
+}
+
++ (instancetype)modelWithDictionary:(NSDictionary *)dictionary {
+    return [[self fw] modelWithDictionary:dictionary];
+}
+
++ (NSArray *)modelArrayWithJson:(id)json {
+    return [[self fw] modelArrayWithJson:json];
+}
+
++ (NSDictionary *)modelDictionaryWithJson:(id)json {
+    return [[self fw] modelDictionaryWithJson:json];
+}
+
+@end
+
+@implementation FWClassWrapper (FWModel)
+
+- (NSDictionary *)innerDictionaryWithJson:(id)json {
     if (!json || json == (id)kCFNull) return nil;
     NSDictionary *dic = nil;
     NSData *jsonData = nil;
@@ -1450,27 +1465,27 @@ static NSString *FWModelDescription(NSObject *model) {
     return dic;
 }
 
-+ (instancetype)fwModelWithJson:(id)json {
-    NSDictionary *dic = [self fwInnerDictionaryWithJson:json];
-    return [self fwModelWithDictionary:dic];
+- (__kindof NSObject *)modelWithJson:(id)json {
+    NSDictionary *dic = [self innerDictionaryWithJson:json];
+    return [self modelWithDictionary:dic];
 }
 
-+ (instancetype)fwModelWithDictionary:(NSDictionary *)dictionary {
+- (__kindof NSObject *)modelWithDictionary:(NSDictionary *)dictionary {
     if (!dictionary || dictionary == (id)kCFNull) return nil;
     if (![dictionary isKindOfClass:[NSDictionary class]]) return nil;
     
-    Class cls = [self class];
+    Class cls = [self base];
     FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:cls];
     if (modelMeta->_hasCustomClassFromDictionary) {
-        cls = [cls fwModelClassForDictionary:dictionary] ?: cls;
+        cls = [cls modelClassForDictionary:dictionary] ?: cls;
     }
     
     NSObject *one = [cls new];
-    if ([one fwModelSetWithDictionary:dictionary]) return one;
+    if ([one.fw modelSetWithDictionary:dictionary]) return one;
     return nil;
 }
 
-+ (NSArray *)fwModelArrayWithJson:(id)json {
+- (NSArray *)modelArrayWithJson:(id)json {
     if (!json) return nil;
     NSArray *arr = nil;
     NSData *jsonData = nil;
@@ -1485,22 +1500,22 @@ static NSString *FWModelDescription(NSObject *model) {
         arr = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:NULL];
         if (![arr isKindOfClass:[NSArray class]]) arr = nil;
     }
-    return [self fwModelArrayWithArray:arr];
+    return [self modelArrayWithArray:arr];
 }
 
-+ (NSArray *)fwModelArrayWithArray:(NSArray *)arr {
-    Class cls = [self class];
+- (NSArray *)modelArrayWithArray:(NSArray *)arr {
+    Class cls = [self base];
     if (!cls || !arr) return nil;
     NSMutableArray *result = [NSMutableArray new];
     for (NSDictionary *dic in arr) {
         if (![dic isKindOfClass:[NSDictionary class]]) continue;
-        NSObject *obj = [cls fwModelWithDictionary:dic];
+        NSObject *obj = [cls modelWithDictionary:dic];
         if (obj) [result addObject:obj];
     }
     return result;
 }
 
-+ (NSDictionary *)fwModelDictionaryWithJson:(id)json {
+- (NSDictionary *)modelDictionaryWithJson:(id)json {
     if (!json) return nil;
     NSDictionary *dic = nil;
     NSData *jsonData = nil;
@@ -1515,42 +1530,45 @@ static NSString *FWModelDescription(NSObject *model) {
         dic = [NSJSONSerialization JSONObjectWithData:jsonData options:kNilOptions error:NULL];
         if (![dic isKindOfClass:[NSDictionary class]]) dic = nil;
     }
-    return [self fwModelDictionaryWithDictionary:dic];
+    return [self modelDictionaryWithDictionary:dic];
 }
 
-+ (NSDictionary *)fwModelDictionaryWithDictionary:(NSDictionary *)dic {
-    Class cls = [self class];
+- (NSDictionary *)modelDictionaryWithDictionary:(NSDictionary *)dic {
+    Class cls = [self base];
     if (!cls || !dic) return nil;
     NSMutableDictionary *result = [NSMutableDictionary new];
     for (NSString *key in dic.allKeys) {
         if (![key isKindOfClass:[NSString class]]) continue;
-        NSObject *obj = [cls fwModelWithDictionary:dic[key]];
+        NSObject *obj = [cls modelWithDictionary:dic[key]];
         if (obj) result[key] = obj;
     }
     return result;
 }
 
-- (BOOL)fwModelSetWithJson:(id)json {
-    NSDictionary *dic = [NSObject fwInnerDictionaryWithJson:json];
-    return [self fwModelSetWithDictionary:dic];
+@end
+
+@implementation FWObjectWrapper (FWModel)
+
+- (BOOL)modelSetWithJson:(id)json {
+    NSDictionary *dic = [NSObject.fw innerDictionaryWithJson:json];
+    return [self modelSetWithDictionary:dic];
 }
 
-- (BOOL)fwModelSetWithDictionary:(NSDictionary *)dic {
+- (BOOL)modelSetWithDictionary:(NSDictionary *)dic {
     if (!dic || dic == (id)kCFNull) return NO;
     if (![dic isKindOfClass:[NSDictionary class]]) return NO;
     
-    
-    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:object_getClass(self)];
+    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:object_getClass(self.base)];
     if (modelMeta->_keyMappedCount == 0) return NO;
     
     if (modelMeta->_hasCustomWillTransformFromDictionary) {
-        dic = [((id<FWModel>)self) fwModelWillTransformFromDictionary:dic];
+        dic = [((id<FWModel>)self.base) modelWillTransformFromDictionary:dic];
         if (![dic isKindOfClass:[NSDictionary class]]) return NO;
     }
     
     FWModelSetContext context = {0};
     context.modelMeta = (__bridge void *)(modelMeta);
-    context.model = (__bridge void *)(self);
+    context.model = (__bridge void *)(self.base);
     context.dictionary = (__bridge void *)(dic);
     
     
@@ -1576,12 +1594,12 @@ static NSString *FWModelDescription(NSObject *model) {
     }
     
     if (modelMeta->_hasCustomTransformFromDictionary) {
-        return [((id<FWModel>)self) fwModelTransformFromDictionary:dic];
+        return [((id<FWModel>)self.base) modelTransformFromDictionary:dic];
     }
     return YES;
 }
 
-- (id)fwModelToJsonObject {
+- (id)modelToJsonObject {
     /*
      Apple said:
      The top level object is an NSArray or NSDictionary.
@@ -1589,69 +1607,69 @@ static NSString *FWModelDescription(NSObject *model) {
      All dictionary keys are instances of NSString.
      Numbers are not NaN or infinity.
      */
-    id jsonObject = FWModelToJSONObjectRecursive(self);
+    id jsonObject = FWModelToJSONObjectRecursive(self.base);
     if ([jsonObject isKindOfClass:[NSArray class]]) return jsonObject;
     if ([jsonObject isKindOfClass:[NSDictionary class]]) return jsonObject;
     return nil;
 }
 
-- (NSData *)fwModelToJsonData {
-    id jsonObject = [self fwModelToJsonObject];
+- (NSData *)modelToJsonData {
+    id jsonObject = [self modelToJsonObject];
     if (!jsonObject) return nil;
     return [NSJSONSerialization dataWithJSONObject:jsonObject options:0 error:NULL];
 }
 
-- (NSString *)fwModelToJsonString {
-    NSData *jsonData = [self fwModelToJsonData];
+- (NSString *)modelToJsonString {
+    NSData *jsonData = [self modelToJsonData];
     if (jsonData.length == 0) return nil;
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
 }
 
-- (id)fwModelCopy{
-    if (self == (id)kCFNull) return self;
-    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:self.class];
-    if (modelMeta->_nsType) return [self copy];
+- (id)modelCopy {
+    if (self.base == (id)kCFNull) return self.base;
+    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:[self.base class]];
+    if (modelMeta->_nsType) return [self.base copy];
     
-    NSObject *one = [self.class new];
+    NSObject *one = [[self.base class] new];
     for (FWInnerModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
         if (!propertyMeta->_getter || !propertyMeta->_setter) continue;
         
         if (propertyMeta->_isCNumber) {
             switch (propertyMeta->_type & FWEncodingTypeMask) {
                 case FWEncodingTypeBool: {
-                    bool num = ((bool (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    bool num = ((bool (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, bool))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeInt8:
                 case FWEncodingTypeUInt8: {
-                    uint8_t num = ((bool (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    uint8_t num = ((bool (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, uint8_t))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeInt16:
                 case FWEncodingTypeUInt16: {
-                    uint16_t num = ((uint16_t (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    uint16_t num = ((uint16_t (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, uint16_t))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeInt32:
                 case FWEncodingTypeUInt32: {
-                    uint32_t num = ((uint32_t (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    uint32_t num = ((uint32_t (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, uint32_t))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeInt64:
                 case FWEncodingTypeUInt64: {
-                    uint64_t num = ((uint64_t (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    uint64_t num = ((uint64_t (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, uint64_t))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeFloat: {
-                    float num = ((float (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    float num = ((float (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, float))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeDouble: {
-                    double num = ((double (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    double num = ((double (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, double))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } break;
                 case FWEncodingTypeLongDouble: {
-                    long double num = ((long double (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    long double num = ((long double (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, long double))(void *) objc_msgSend)((id)one, propertyMeta->_setter, num);
                 } // break; commented for code coverage in next line
                 default: break;
@@ -1661,19 +1679,19 @@ static NSString *FWModelDescription(NSObject *model) {
                 case FWEncodingTypeObject:
                 case FWEncodingTypeClass:
                 case FWEncodingTypeBlock: {
-                    id value = ((id (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    id value = ((id (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)one, propertyMeta->_setter, value);
                 } break;
                 case FWEncodingTypeSEL:
                 case FWEncodingTypePointer:
                 case FWEncodingTypeCString: {
-                    size_t value = ((size_t (*)(id, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_getter);
+                    size_t value = ((size_t (*)(id, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_getter);
                     ((void (*)(id, SEL, size_t))(void *) objc_msgSend)((id)one, propertyMeta->_setter, value);
                 } break;
                 case FWEncodingTypeStruct:
                 case FWEncodingTypeUnion: {
                     @try {
-                        NSValue *value = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+                        NSValue *value = [self.base valueForKey:NSStringFromSelector(propertyMeta->_getter)];
                         if (value) {
                             [one setValue:value forKey:propertyMeta->_name];
                         }
@@ -1686,16 +1704,16 @@ static NSString *FWModelDescription(NSObject *model) {
     return one;
 }
 
-- (void)fwModelEncodeWithCoder:(NSCoder *)aCoder {
+- (void)modelEncodeWithCoder:(NSCoder *)aCoder {
     if (!aCoder) return;
-    if (self == (id)kCFNull) {
-        [((id<NSCoding>)self)encodeWithCoder:aCoder];
+    if (self.base == (id)kCFNull) {
+        [((id<NSCoding>)self.base)encodeWithCoder:aCoder];
         return;
     }
     
-    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:self.class];
+    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:[self.base class]];
     if (modelMeta->_nsType) {
-        [((id<NSCoding>)self)encodeWithCoder:aCoder];
+        [((id<NSCoding>)self.base)encodeWithCoder:aCoder];
         return;
     }
     
@@ -1703,12 +1721,12 @@ static NSString *FWModelDescription(NSObject *model) {
         if (!propertyMeta->_getter) return;
         
         if (propertyMeta->_isCNumber) {
-            NSNumber *value = FWModelCreateNumberFromProperty(self, propertyMeta);
+            NSNumber *value = FWModelCreateNumberFromProperty(self.base, propertyMeta);
             if (value != nil) [aCoder encodeObject:value forKey:propertyMeta->_name];
         } else {
             switch (propertyMeta->_type & FWEncodingTypeMask) {
                 case FWEncodingTypeObject: {
-                    id value = ((id (*)(id, SEL))(void *)objc_msgSend)((id)self, propertyMeta->_getter);
+                    id value = ((id (*)(id, SEL))(void *)objc_msgSend)((id)self.base, propertyMeta->_getter);
                     if (value && (propertyMeta->_nsType || [value respondsToSelector:@selector(encodeWithCoder:)])) {
                         if ([value isKindOfClass:[NSValue class]]) {
                             if ([value isKindOfClass:[NSNumber class]]) {
@@ -1720,7 +1738,7 @@ static NSString *FWModelDescription(NSObject *model) {
                     }
                 } break;
                 case FWEncodingTypeSEL: {
-                    SEL value = ((SEL (*)(id, SEL))(void *)objc_msgSend)((id)self, propertyMeta->_getter);
+                    SEL value = ((SEL (*)(id, SEL))(void *)objc_msgSend)((id)self.base, propertyMeta->_getter);
                     if (value) {
                         NSString *str = NSStringFromSelector(value);
                         [aCoder encodeObject:str forKey:propertyMeta->_name];
@@ -1730,7 +1748,7 @@ static NSString *FWModelDescription(NSObject *model) {
                 case FWEncodingTypeUnion: {
                     if (propertyMeta->_isKVCCompatible && propertyMeta->_isStructAvailableForKeyedArchiver) {
                         @try {
-                            NSValue *value = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+                            NSValue *value = [self.base valueForKey:NSStringFromSelector(propertyMeta->_getter)];
                             [aCoder encodeObject:value forKey:propertyMeta->_name];
                         } @catch (NSException *exception) {}
                     }
@@ -1743,11 +1761,11 @@ static NSString *FWModelDescription(NSObject *model) {
     }
 }
 
-- (id)fwModelInitWithCoder:(NSCoder *)aDecoder {
-    if (!aDecoder) return self;
-    if (self == (id)kCFNull) return self;
-    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:self.class];
-    if (modelMeta->_nsType) return self;
+- (id)modelInitWithCoder:(NSCoder *)aDecoder {
+    if (!aDecoder) return self.base;
+    if (self.base == (id)kCFNull) return self.base;
+    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:[self.base class]];
+    if (modelMeta->_nsType) return self.base;
     
     for (FWInnerModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
         if (!propertyMeta->_setter) continue;
@@ -1755,7 +1773,7 @@ static NSString *FWModelDescription(NSObject *model) {
         if (propertyMeta->_isCNumber) {
             NSNumber *value = [aDecoder decodeObjectForKey:propertyMeta->_name];
             if ([value isKindOfClass:[NSNumber class]]) {
-                FWModelSetNumberToProperty(self, value, propertyMeta);
+                FWModelSetNumberToProperty(self.base, value, propertyMeta);
                 [value class];
             }
         } else {
@@ -1763,13 +1781,13 @@ static NSString *FWModelDescription(NSObject *model) {
             switch (type) {
                 case FWEncodingTypeObject: {
                     id value = [aDecoder decodeObjectForKey:propertyMeta->_name];
-                    ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)self, propertyMeta->_setter, value);
+                    ((void (*)(id, SEL, id))(void *) objc_msgSend)((id)self.base, propertyMeta->_setter, value);
                 } break;
                 case FWEncodingTypeSEL: {
                     NSString *str = [aDecoder decodeObjectForKey:propertyMeta->_name];
                     if ([str isKindOfClass:[NSString class]]) {
                         SEL sel = NSSelectorFromString(str);
-                        ((void (*)(id, SEL, SEL))(void *) objc_msgSend)((id)self, propertyMeta->_setter, sel);
+                        ((void (*)(id, SEL, SEL))(void *) objc_msgSend)((id)self.base, propertyMeta->_setter, sel);
                     }
                 } break;
                 case FWEncodingTypeStruct:
@@ -1777,7 +1795,7 @@ static NSString *FWModelDescription(NSObject *model) {
                     if (propertyMeta->_isKVCCompatible) {
                         @try {
                             NSValue *value = [aDecoder decodeObjectForKey:propertyMeta->_name];
-                            if (value) [self setValue:value forKey:propertyMeta->_name];
+                            if (value) [self.base setValue:value forKey:propertyMeta->_name];
                         } @catch (NSException *exception) {}
                     }
                 } break;
@@ -1787,35 +1805,35 @@ static NSString *FWModelDescription(NSObject *model) {
             }
         }
     }
-    return self;
+    return self.base;
 }
 
-- (NSUInteger)fwModelHash {
-    if (self == (id)kCFNull) return [self hash];
-    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:self.class];
-    if (modelMeta->_nsType) return [self hash];
+- (NSUInteger)modelHash {
+    if (self.base == (id)kCFNull) return [self.base hash];
+    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:[self.base class]];
+    if (modelMeta->_nsType) return [self.base hash];
     
     NSUInteger value = 0;
     NSUInteger count = 0;
     for (FWInnerModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
         if (!propertyMeta->_isKVCCompatible) continue;
-        value ^= [[self valueForKey:NSStringFromSelector(propertyMeta->_getter)] hash];
+        value ^= [[self.base valueForKey:NSStringFromSelector(propertyMeta->_getter)] hash];
         count++;
     }
-    if (count == 0) value = (long)((__bridge void *)self);
+    if (count == 0) value = (long)((__bridge void *)self.base);
     return value;
 }
 
-- (BOOL)fwModelIsEqual:(id)model {
-    if (self == model) return YES;
-    if (![model isMemberOfClass:self.class]) return NO;
-    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:self.class];
-    if (modelMeta->_nsType) return [self isEqual:model];
-    if ([self hash] != [model hash]) return NO;
+- (BOOL)modelIsEqual:(id)model {
+    if (self.base == model) return YES;
+    if (![model isMemberOfClass:[self.base class]]) return NO;
+    FWInnerModelMeta *modelMeta = [FWInnerModelMeta metaWithClass:[self.base class]];
+    if (modelMeta->_nsType) return [self.base isEqual:model];
+    if ([self.base hash] != [model hash]) return NO;
     
     for (FWInnerModelPropertyMeta *propertyMeta in modelMeta->_allPropertyMetas) {
         if (!propertyMeta->_isKVCCompatible) continue;
-        id this = [self valueForKey:NSStringFromSelector(propertyMeta->_getter)];
+        id this = [self.base valueForKey:NSStringFromSelector(propertyMeta->_getter)];
         id that = [model valueForKey:NSStringFromSelector(propertyMeta->_getter)];
         if (this == that) continue;
         if (this == nil || that == nil) return NO;
@@ -1824,8 +1842,8 @@ static NSString *FWModelDescription(NSObject *model) {
     return YES;
 }
 
-- (NSString *)fwModelDescription {
-    return FWModelDescription(self);
+- (NSString *)modelDescription {
+    return FWModelDescription(self.base);
 }
 
 @end

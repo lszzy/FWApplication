@@ -1,7 +1,6 @@
 /**
  @header     FWEmptyPluginImpl.m
  @indexgroup FWApplication
-      FWEmptyPluginImpl
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/9/3
@@ -33,7 +32,7 @@
     return self;
 }
 
-- (void)fwShowEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id))block inView:(UIView *)view
+- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id))block inView:(UIView *)view
 {
     NSString *emptyText = text;
     if (!loading && !emptyText && self.defaultText) {
@@ -59,13 +58,13 @@
     emptyView = [[FWEmptyView alloc] initWithFrame:view.bounds];
     emptyView.tag = 2021;
     [view addSubview:emptyView];
-    [emptyView fwPinEdgesToSuperviewWithInsets:view.fwEmptyInsets];
+    [emptyView.fw pinEdgesToSuperviewWithInsets:view.fw.emptyInsets];
     [emptyView setLoadingViewHidden:!loading];
     [emptyView setImage:emptyImage];
     [emptyView setTextLabelText:emptyText];
     [emptyView setDetailTextLabelText:emptyDetail];
     [emptyView setActionButtonTitle:emptyAction];
-    if (block) [emptyView.actionButton fwAddTouchBlock:block];
+    if (block) [emptyView.actionButton.fw addTouchBlock:block];
 
     if (self.customBlock) {
         self.customBlock(emptyView);
@@ -79,7 +78,7 @@
     }
 }
 
-- (void)fwHideEmptyView:(UIView *)view
+- (void)hideEmptyView:(UIView *)view
 {
     UIView *emptyView = [view viewWithTag:2021];
     if (!emptyView) return;
@@ -93,7 +92,7 @@
     }
 }
 
-- (BOOL)fwHasEmptyView:(UIView *)view
+- (BOOL)hasEmptyView:(UIView *)view
 {
     UIView *emptyView = [view viewWithTag:2021];
     return emptyView != nil ? YES : NO;

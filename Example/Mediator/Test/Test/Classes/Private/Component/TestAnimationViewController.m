@@ -25,32 +25,32 @@
         if (self.transitionType > 8) {
             self.backgroundColor = [UIColor clearColor];
         } else {
-            self.backgroundColor = [UIColor fwColorWithHex:0x000000 alpha:0.5];
+            self.backgroundColor = [UIColor.fw colorWithHex:0x000000 alpha:0.5];
         }
         
         self.bottomView = [UIView new];
         self.bottomView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.bottomView];
         if (self.transitionType == 6 || self.transitionType == 9) {
-            self.bottomView.fwLayoutChain.left().right().bottom().height(FWScreenHeight / 2);
+            self.bottomView.fw.layoutChain.left().right().bottom().height(FWScreenHeight / 2);
         } else {
-            self.bottomView.fwLayoutChain.center().width(300).height(200);
+            self.bottomView.fw.layoutChain.center().width(300).height(200);
         }
         
         FWWeakifySelf();
-        [self fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+        [self.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
             FWStrongifySelf();
             if (self.transitionType > 8) {
-                [self.fwViewController dismissViewControllerAnimated:YES completion:nil];
+                [self.fw.viewController dismissViewControllerAnimated:YES completion:nil];
                 return;
             }
             
             if (self.transitionType == 6) {
-                [self fwSetPresentTransition:FWAnimatedTransitionTypeDismiss contentView:self.bottomView completion:nil];
+                [self.fw setPresentTransition:FWAnimatedTransitionTypeDismiss contentView:self.bottomView completion:nil];
             } else if (self.transitionType == 7) {
-                [self fwSetAlertTransition:FWAnimatedTransitionTypeDismiss completion:nil];
+                [self.fw setAlertTransition:FWAnimatedTransitionTypeDismiss completion:nil];
             } else {
-                [self fwSetFadeTransition:FWAnimatedTransitionTypeDismiss completion:nil];
+                [self.fw setFadeTransition:FWAnimatedTransitionTypeDismiss completion:nil];
             }
         }];
     }
@@ -60,25 +60,25 @@
 - (void)showInViewController:(UIViewController *)viewController
 {
     if (self.transitionType > 8) {
-        UIViewController *wrappedController = [self fwWrappedTransitionController:YES];
+        UIViewController *wrappedController = [self.fw wrappedTransitionController:YES];
         if (self.transitionType == 9) {
-            [wrappedController fwSetPresentTransition:nil];
+            [wrappedController.fw setPresentTransition:nil];
         } else if (self.transitionType == 10) {
-            [wrappedController fwSetAlertTransition:nil];
+            [wrappedController.fw setAlertTransition:nil];
         } else {
-            [wrappedController fwSetFadeTransition:nil];
+            [wrappedController.fw setFadeTransition:nil];
         }
         [viewController presentViewController:wrappedController animated:YES completion:nil];
         return;
     }
     
-    [self fwTransitionToController:viewController pinEdges:YES];
+    [self.fw transitionToController:viewController pinEdges:YES];
     if (self.transitionType == 6) {
-        [self fwSetPresentTransition:FWAnimatedTransitionTypePresent contentView:self.bottomView completion:nil];
+        [self.fw setPresentTransition:FWAnimatedTransitionTypePresent contentView:self.bottomView completion:nil];
     } else if (self.transitionType == 7) {
-        [self fwSetAlertTransition:FWAnimatedTransitionTypePresent completion:nil];
+        [self.fw setAlertTransition:FWAnimatedTransitionTypePresent completion:nil];
     } else {
-        [self fwSetFadeTransition:FWAnimatedTransitionTypePresent completion:nil];
+        [self.fw setFadeTransition:FWAnimatedTransitionTypePresent completion:nil];
     }
 }
 
@@ -96,21 +96,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fwNavigationBarHidden = YES;
+    self.fw.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor clearColor];
     FWWeakifySelf();
-    [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self fwCloseViewControllerAnimated:YES];
+        [self.fw closeViewControllerAnimated:YES];
     }];
     
     self.bottomView = [UIView new];
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.bottomView];
     if (self.transitionType == 0 || self.transitionType == 3) {
-        self.bottomView.fwLayoutChain.left().right().bottom().height(FWScreenHeight / 2);
+        self.bottomView.fw.layoutChain.left().right().bottom().height(FWScreenHeight / 2);
     } else {
-        self.bottomView.fwLayoutChain.center().width(300).height(200);
+        self.bottomView.fw.layoutChain.center().width(300).height(200);
     }
     
     UIButton *button = [UIButton new];
@@ -118,23 +118,23 @@
     NSString *buttonTitle = self.navigationController ? @"支持push" : @"不支持push";
     [button setTitle:buttonTitle forState:UIControlStateNormal];
     [self.bottomView addSubview:button];
-    [button fwAddTouchBlock:^(id  _Nonnull sender) {
+    [button.fw addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         TestAnimationChildController *animationController = [TestAnimationChildController new];
         animationController.transitionType = self.transitionType;
         [self.navigationController pushViewController:animationController animated:YES];
     }];
-    button.fwLayoutChain.center();
+    button.fw.layoutChain.center();
 }
 
 - (void)showInViewController:(UIViewController *)viewController
 {
     if (self.transitionType == 0) {
-        [self fwSetPresentTransition:nil];
+        [self.fw setPresentTransition:nil];
     } else if (self.transitionType == 1) {
-        [self fwSetAlertTransition:nil];
+        [self.fw setAlertTransition:nil];
     } else {
-        [self fwSetFadeTransition:nil];
+        [self.fw setFadeTransition:nil];
     }
     [viewController presentViewController:self animated:YES completion:nil];
 }
@@ -143,11 +143,11 @@
 {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self];
     if (self.transitionType == 3) {
-        [nav fwSetPresentTransition:nil];
+        [nav.fw setPresentTransition:nil];
     } else if (self.transitionType == 4) {
-        [nav fwSetAlertTransition:nil];
+        [nav.fw setAlertTransition:nil];
     } else {
-        [nav fwSetFadeTransition:nil];
+        [nav.fw setFadeTransition:nil];
     }
     [viewController presentViewController:nav animated:YES completion:nil];
 }
@@ -174,30 +174,30 @@ FWDefLazyProperty(UIView *, animationView, {
 {
     UIButton *button = [Theme largeButton];
     [button setTitle:@"转场动画" forState:UIControlStateNormal];
-    [button fwAddTouchTarget:self action:@selector(onPresent)];
+    [button.fw addTouchTarget:self action:@selector(onPresent)];
     [self.view addSubview:button];
-    [button fwPinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-    [button fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+    [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button2 = [Theme largeButton];
     [button2 setTitle:@"切换拖动" forState:UIControlStateNormal];
-    [button2 fwAddTouchTarget:self action:@selector(onDrag:)];
+    [button2.fw addTouchTarget:self action:@selector(onDrag:)];
     [self.view addSubview:button2];
-    [button2 fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
-    [button2 fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button2.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
+    [button2.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button3 = [Theme largeButton];
     [button3 setTitle:@"切换动画" forState:UIControlStateNormal];
-    [button3 fwAddTouchTarget:self action:@selector(onAnimation:)];
+    [button3.fw addTouchTarget:self action:@selector(onAnimation:)];
     [self.view addSubview:button3];
-    [button3 fwPinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
-    [button3 fwAlignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button3.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
+    [button3.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
 }
 
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         UIViewController *viewController = [NSClassFromString(@"Test.TestPropertyAnimatorViewController") new];
         [self.navigationController pushViewController:viewController animated:true];
@@ -209,7 +209,7 @@ FWDefLazyProperty(UIView *, animationView, {
 - (void)onPresent
 {
     FWWeakifySelf();
-    [self fwShowSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"VC present", @"VC alert", @"VC fade", @"nav present", @"nav alert", @"nav fade", @"view present", @"view alert", @"view fade", @"wrapped present", @"wrapped alert", @"wrapped fade"] actionBlock:^(NSInteger index) {
+    [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"VC present", @"VC alert", @"VC fade", @"nav present", @"nav alert", @"nav fade", @"view present", @"view alert", @"view fade", @"wrapped present", @"wrapped alert", @"wrapped fade"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index < 3) {
             TestAnimationChildController *animationController = [TestAnimationChildController new];
@@ -233,7 +233,7 @@ FWDefLazyProperty(UIView *, animationView, {
     NSString *title = nil;
     if (animationIndex_ == 1) {
         title = @"Push.FromTop";
-        [self.animationView fwAddTransitionWithType:kCATransitionPush
+        [self.animationView.fw addTransitionWithType:kCATransitionPush
                                             subtype:kCATransitionFromTop
                                      timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                            duration:1.0
@@ -242,7 +242,7 @@ FWDefLazyProperty(UIView *, animationView, {
     
     if (animationIndex_ == 2) {
         title = @"CurlUp";
-        [self.animationView fwAddAnimationWithCurve:UIViewAnimationCurveEaseInOut
+        [self.animationView.fw addAnimationWithCurve:UIViewAnimationCurveEaseInOut
                                          transition:UIViewAnimationTransitionCurlUp
                                            duration:1.0
                                          completion:NULL];
@@ -250,7 +250,7 @@ FWDefLazyProperty(UIView *, animationView, {
     
     if (animationIndex_ == 3) {
         title = @"transform.rotation.y";
-        [self.animationView fwAddAnimationWithKeyPath:@"transform.rotation.y"
+        [self.animationView.fw addAnimationWithKeyPath:@"transform.rotation.y"
                                             fromValue:@(0)
                                               toValue:@(M_PI)
                                              duration:1.0
@@ -259,41 +259,41 @@ FWDefLazyProperty(UIView *, animationView, {
     
     if (animationIndex_ == 4) {
         title = @"Shake";
-        [self.animationView fwShakeWithTimes:10 delta:0 duration:0.1 completion:NULL];
+        [self.animationView.fw shakeWithTimes:10 delta:0 duration:0.1 completion:NULL];
     }
     
     if (animationIndex_ == 5) {
         title = @"Alpha";
-        [self.animationView fwFadeWithAlpha:0.0 duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwFadeWithAlpha:1.0 duration:1.0 completion:NULL];
+        [self.animationView.fw fadeWithAlpha:0.0 duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw fadeWithAlpha:1.0 duration:1.0 completion:NULL];
         }];
     }
     
     if (animationIndex_ == 6) {
         title = @"Rotate";
-        [self.animationView fwRotateWithDegree:180 duration:1.0 completion:NULL];
+        [self.animationView.fw rotateWithDegree:180 duration:1.0 completion:NULL];
     }
     
     if (animationIndex_ == 7) {
         title = @"Scale";
-        [self.animationView fwScaleWithScaleX:0.5 scaleY:0.5 duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwScaleWithScaleX:2.0 scaleY:2.0 duration:1.0 completion:NULL];
+        [self.animationView.fw scaleWithScaleX:0.5 scaleY:0.5 duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw scaleWithScaleX:2.0 scaleY:2.0 duration:1.0 completion:NULL];
         }];
     }
     
     if (animationIndex_ == 8) {
         title = @"Move";
         CGPoint point = self.animationView.frame.origin;
-        [self.animationView fwMoveWithPoint:CGPointMake(10, 10) duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwMoveWithPoint:point duration:1.0 completion:NULL];
+        [self.animationView.fw moveWithPoint:CGPointMake(10, 10) duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw moveWithPoint:point duration:1.0 completion:NULL];
         }];
     }
     
     if (animationIndex_ == 9) {
         title = @"Frame";
         CGRect frame = self.animationView.frame;
-        [self.animationView fwMoveWithFrame:CGRectMake(10, 10, 50, 50) duration:1.0 completion:^(BOOL finished) {
-            [self.animationView fwMoveWithFrame:frame duration:1.0 completion:NULL];
+        [self.animationView.fw moveWithFrame:CGRectMake(10, 10, 50, 50) duration:1.0 completion:^(BOOL finished) {
+            [self.animationView.fw moveWithFrame:frame duration:1.0 completion:NULL];
         }];
     }
     
@@ -309,11 +309,11 @@ FWDefLazyProperty(UIView *, animationView, {
 
 - (void)onDrag:(UIButton *)sender
 {
-    if (!self.animationView.fwDragEnabled) {
-        self.animationView.fwDragEnabled = YES;
-        self.animationView.fwDragLimit = CGRectMake(0, 0, FWScreenWidth, FWScreenHeight - FWNavigationBarHeight - FWStatusBarHeight);
+    if (!self.animationView.fw.dragEnabled) {
+        self.animationView.fw.dragEnabled = YES;
+        self.animationView.fw.dragLimit = CGRectMake(0, 0, FWScreenWidth, FWScreenHeight - FWNavigationBarHeight - FWStatusBarHeight);
     } else {
-        self.animationView.fwDragEnabled = NO;
+        self.animationView.fw.dragEnabled = NO;
     }
 }
 

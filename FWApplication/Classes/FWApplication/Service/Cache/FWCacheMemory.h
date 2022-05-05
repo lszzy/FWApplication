@@ -6,12 +6,12 @@
 //  Copyright © 2018年 wuyong.site. All rights reserved.
 //
 
-#import "FWCacheAbstract.h"
+#import "FWCacheEngine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// 内存缓存
-@interface FWCacheMemory : FWCacheAbstract
+@interface FWCacheMemory : FWCacheEngine
 
 /** 单例模式 */
 @property (class, nonatomic, readonly) FWCacheMemory *sharedInstance;

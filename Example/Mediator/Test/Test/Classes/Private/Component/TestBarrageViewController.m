@@ -46,7 +46,7 @@
 }
 
 - (void)convertContentToImage {
-    UIImage *contentImage = [self.layer fwConvertContentToImageWithSize:_gradientLayer.frame.size];
+    UIImage *contentImage = [self.layer.fw convertContentToImageWithSize:_gradientLayer.frame.size];
     [self.layer setContents:(__bridge id)contentImage.CGImage];
 }
 
@@ -173,7 +173,7 @@
 }
 
 - (void)convertContentToImage {
-    UIImage *contentImage = [self.layer fwConvertContentToImageWithSize:CGSizeMake(CGRectGetMaxX(self.rightImageView.frame), CGRectGetMaxY(self.rightImageView.frame))];
+    UIImage *contentImage = [self.layer.fw convertContentToImageWithSize:CGSizeMake(CGRectGetMaxX(self.rightImageView.frame), CGRectGetMaxY(self.rightImageView.frame))];
     [self.layer setContents:(__bridge id)contentImage.CGImage];
 }
 
@@ -270,7 +270,7 @@
 }
 
 - (void)convertContentToImage {
-    UIImage *image = [self.layer fwConvertContentToImageWithSize:CGSizeMake(self.nobleDescriptor.backgroundImage.size.width, self.nobleDescriptor.backgroundImage.size.height)];
+    UIImage *image = [self.layer.fw convertContentToImageWithSize:CGSizeMake(self.nobleDescriptor.backgroundImage.size.width, self.nobleDescriptor.backgroundImage.size.height)];
     [self.layer setContents:(__bridge id)image.CGImage];
 }
 
@@ -507,7 +507,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view, typically from a nib.
-    self.view.fwHeight = FWScreenHeight - FWTopBarHeight;
+    self.view.fw.height = FWScreenHeight - FWTopBarHeight;
     self.barrageManager = [[FWBarrageManager alloc] init];
     [self.view addSubview:self.barrageManager.renderView];
     self.barrageManager.renderView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
@@ -601,7 +601,7 @@
     gradientBackgroundDescriptor.strokeWidth = -1;
     gradientBackgroundDescriptor.fixedSpeed = 50.0;//用fixedSpeed属性设定速度
     gradientBackgroundDescriptor.barrageCellClass = [FWBarrageGradientBackgroundColorCell class];
-    gradientBackgroundDescriptor.gradientColor = [UIColor fwRandomColor];
+    gradientBackgroundDescriptor.gradientColor = UIColor.fw.randomColor;
     
     [self.barrageManager renderBarrageDescriptor:gradientBackgroundDescriptor];
     

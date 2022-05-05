@@ -22,8 +22,8 @@
 - (void)renderView
 {
     if (self.canScroll) {
-        self.navigationController.fwModalTransition.gestureRecognizer.scrollView = self.scrollView;
-        self.navigationController.fwNavigationTransition.gestureRecognizer.scrollView = self.scrollView;
+        self.navigationController.fw.modalTransition.gestureRecognizer.scrollView = self.scrollView;
+        self.navigationController.fw.navigationTransition.gestureRecognizer.scrollView = self.scrollView;
     }
     
     self.scrollView.scrollEnabled = self.canScroll;
@@ -33,7 +33,7 @@
     cycleView.autoScrollTimeInterval = 4;
     cycleView.placeholderImage = [TestBundle imageNamed:@"public_icon"];
     [self.contentView addSubview:cycleView];
-    cycleView.fwLayoutChain.left().top().width(FWScreenWidth).height(200);
+    cycleView.fw.layoutChain.left().top().width(FWScreenWidth).height(200);
     
     NSMutableArray *imageUrls = [NSMutableArray array];
     [imageUrls addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -45,27 +45,27 @@
     cycleView.imageURLStringsGroup = [imageUrls copy];
     cycleView.titlesGroup = @[@"1", @"2", @"3", @"4"];
     
-    UIView *footerView = [UIView fwAutoLayoutView];
+    UIView *footerView = [[UIView alloc] init];
     footerView.backgroundColor = [Theme tableColor];
     [self.contentView addSubview:footerView];
-    footerView.fwLayoutChain.left().bottom().topToBottomOfView(cycleView).width(FWScreenWidth).height(1000);
+    footerView.fw.layoutChain.left().bottom().topToBottomOfView(cycleView).width(FWScreenWidth).height(1000);
     
     UILabel *frameLabel = [[UILabel alloc] init];
     _frameLabel = frameLabel;
     frameLabel.textColor = [Theme textColor];
     frameLabel.text = NSStringFromCGRect(self.view.frame);
     [footerView addSubview:frameLabel];
-    frameLabel.fwLayoutChain.centerX().topWithInset(50);
+    frameLabel.fw.layoutChain.centerX().topWithInset(50);
     
     // 添加视图
-    UIButton *button = [UIButton fwAutoLayoutView];
+    UIButton *button = [[UIButton alloc] init];
     button.backgroundColor = [Theme cellColor];
-    button.titleLabel.font = [UIFont fwFontOfSize:15];
+    button.titleLabel.font = [UIFont.fw fontOfSize:15];
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"点击背景关闭" forState:UIControlStateNormal];
     [footerView addSubview:button];
-    [button fwSetDimensionsToSize:CGSizeMake(200, 100)];
-    [button fwAlignCenterToSuperview];
+    [button.fw setDimensionsToSize:CGSizeMake(200, 100)];
+    [button.fw alignCenterToSuperview];
 }
 
 - (void)viewDidLoad
@@ -75,23 +75,22 @@
     self.navigationItem.title = @"全屏弹出框";
     
     // 视图延伸到导航栏
-    self.fwForcePopGesture = YES;
-    self.fwExtendedLayoutEdge = UIRectEdgeNone;
+    self.fw.extendedLayoutEdge = UIRectEdgeNone;
     
     // 自定义关闭按钮
     FWWeakifySelf();
-    [self fwSetLeftBarItem:FWIcon.closeImage block:^(id sender) {
+    [self.fw setLeftBarItem:FWIcon.closeImage block:^(id sender) {
         FWStrongifySelf();
-        [self fwCloseViewControllerAnimated:!self.noAnimate];
+        [self.fw closeViewControllerAnimated:!self.noAnimate];
     }];
     
     // 设置背景(present时透明，push时不透明)
     self.view.backgroundColor = self.navigationController ? [Theme tableColor] : [[Theme tableColor] colorWithAlphaComponent:0.9];
     
     // 点击背景关闭，默认子视图也会响应，解决方法：子视图设为UIButton或子视图添加空手势事件
-    [self.view fwAddTapGestureWithBlock:^(id sender) {
+    [self.view.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
-        [self fwCloseViewControllerAnimated:!self.noAnimate];
+        [self.fw closeViewControllerAnimated:!self.noAnimate];
     }];
 }
 
@@ -100,8 +99,8 @@
     [super viewWillAppear:animated];
     
     self.frameLabel.text = NSStringFromCGRect(self.view.frame);
-    if (!self.fwIsPresented) {
-        self.fwNavigationBarHidden = YES;
+    if (!self.fw.isPresented) {
+        self.fw.navigationBarHidden = YES;
     }
 }
 
@@ -141,7 +140,7 @@ FWDealloc();
             presentation.presentedFrame = self.contentView.frame;
             return presentation;
         };
-        self.fwModalTransition = transition;
+        self.fw.modalTransition = transition;
     }
     return self;
 }
@@ -151,35 +150,35 @@ FWDealloc();
     [super viewDidLoad];
     
     // 方式2：不指定presentedFrame，背景手势不生效，自己添加手势和圆角即可
-    UIView *contentView = [UIView fwAutoLayoutView];
+    UIView *contentView = [[UIView alloc] init];
     _contentView = contentView;
     contentView.backgroundColor = Theme.cellColor;
     [self.view addSubview:contentView];
-    contentView.fwLayoutChain.center();
+    contentView.fw.layoutChain.center();
     
-    UIView *childView = [UIView fwAutoLayoutView];
+    UIView *childView = [[UIView alloc] init];
     [contentView addSubview:childView];
-    childView.fwLayoutChain.edges().size(CGSizeMake(300, 250));
+    childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
-    [contentView fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [contentView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (self.useAnimator) {
             [self configAnimator];
         }
-        [self fwCloseViewControllerAnimated:YES];
+        [self.fw closeViewControllerAnimated:YES];
     }];
     
     // 方式3：手工指定动画参数
     // [self.view setNeedsLayout];
     // [self.view layoutIfNeeded];
-    // FWPresentationController *presentation = (FWPresentationController *)self.fwModalTransition.presentationController;
+    // FWPresentationController *presentation = (FWPresentationController *)self.fw.modalTransition.presentationController;
     // presentation.presentedSize = centerView.bounds.size;
 }
 
 - (void)configAnimator
 {
-    self.fwModalTransition = nil;
+    self.fw.modalTransition = nil;
     
     // 测试仿真动画
     static int index = 0;
@@ -225,21 +224,21 @@ FWDealloc();
 {
     [super viewDidLoad];
     
-    UIView *contentView = [UIView fwAutoLayoutView];
+    UIView *contentView = [[UIView alloc] init];
     _contentView = contentView;
     contentView.layer.masksToBounds = YES;
     contentView.layer.cornerRadius = 10;
     contentView.backgroundColor = Theme.cellColor;
     [self.view addSubview:contentView];
-    contentView.fwLayoutChain.center();
+    contentView.fw.layoutChain.center();
     
-    UIView *childView = [UIView fwAutoLayoutView];
+    UIView *childView = [[UIView alloc] init];
     [contentView addSubview:childView];
-    childView.fwLayoutChain.edges().size(CGSizeMake(300, 250));
+    childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
     self.view.backgroundColor = [[Theme backgroundColor] colorWithAlphaComponent:0.5];
-    [self.view fwAddTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self dismiss];
     }];
@@ -282,14 +281,14 @@ FWDealloc();
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.fwNavigationBarHidden = NO;
+    self.fw.navigationBarHidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     // 自动还原动画
-    self.navigationController.fwNavigationTransition = nil;
+    self.navigationController.fw.navigationTransition = nil;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -329,7 +328,7 @@ FWDealloc();
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *cellData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [cellData objectAtIndex:0];
     return cell;
@@ -389,7 +388,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fwModalTransition = transition;
+    vc.fw.modalTransition = transition;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -400,7 +399,7 @@ FWDealloc();
     transition.transitionBlock = ^(FWAnimatedTransition *transition){
         if (transition.transitionType == FWAnimatedTransitionTypePresent) {
             [transition start];
-            [[transition.transitionContext viewForKey:UITransitionContextToViewKey] fwAddTransitionWithType:kCATransitionMoveIn
+            [[transition.transitionContext viewForKey:UITransitionContextToViewKey].fw addTransitionWithType:kCATransitionMoveIn
                                                subtype:kCATransitionFromTop
                                         timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                               duration:[transition transitionDuration:transition.transitionContext]
@@ -411,7 +410,7 @@ FWDealloc();
             [transition start];
             // 这种转场动画需要先隐藏目标视图
             [transition.transitionContext viewForKey:UITransitionContextFromViewKey].hidden = YES;
-            [[transition.transitionContext viewForKey:UITransitionContextFromViewKey] fwAddTransitionWithType:kCATransitionReveal
+            [[transition.transitionContext viewForKey:UITransitionContextFromViewKey].fw addTransitionWithType:kCATransitionReveal
                                                  subtype:kCATransitionFromBottom
                                           timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                                 duration:[transition transitionDuration:transition.transitionContext]
@@ -422,7 +421,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fwModalTransition = transition;
+    vc.fw.modalTransition = transition;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -434,7 +433,7 @@ FWDealloc();
     transition.outDirection = UISwipeGestureRecognizerDirectionRight;
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fwModalTransition = transition;
+    vc.fw.modalTransition = transition;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -451,7 +450,7 @@ FWDealloc();
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[TestFullScreenViewController alloc] init]];
     nav.modalPresentationStyle = UIModalPresentationCustom;
-    nav.fwModalTransition = transition;
+    nav.fw.modalTransition = transition;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -483,7 +482,7 @@ FWDealloc();
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     vc.canScroll = YES;
-    nav.fwModalTransition = transition;
+    nav.fw.modalTransition = transition;
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -513,7 +512,7 @@ FWDealloc();
         return YES;
     };
     [transition interactWith:nav];
-    nav.fwModalTransition = transition;
+    nav.fw.modalTransition = transition;
     [self presentViewController:nav animated:NO completion:nil];
 }
 
@@ -550,7 +549,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -583,7 +582,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -595,7 +594,7 @@ FWDealloc();
         if (transition.transitionType == FWAnimatedTransitionTypePush) {
             [transition start];
             // 使用navigationController.view做动画，而非containerView做动画，下同
-            [self.navigationController.view fwAddTransitionWithType:kCATransitionMoveIn
+            [self.navigationController.view.fw addTransitionWithType:kCATransitionMoveIn
                                                             subtype:kCATransitionFromTop
                                                      timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                                            duration:[transition transitionDuration:transition.transitionContext]
@@ -606,7 +605,7 @@ FWDealloc();
             [transition start];
             // 这种转场动画需要先隐藏目标视图
             [transition.transitionContext viewForKey:UITransitionContextFromViewKey].hidden = YES;
-            [self.navigationController.view fwAddTransitionWithType:kCATransitionReveal
+            [self.navigationController.view.fw addTransitionWithType:kCATransitionReveal
                                                             subtype:kCATransitionFromBottom
                                                      timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                                            duration:[transition transitionDuration:transition.transitionContext]
@@ -617,7 +616,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -628,7 +627,7 @@ FWDealloc();
     transition.transitionBlock = ^(FWAnimatedTransition *transition){
         if (transition.transitionType == FWAnimatedTransitionTypePush) {
             [transition start];
-            [self.navigationController.view fwAddAnimationWithCurve:UIViewAnimationCurveEaseInOut
+            [self.navigationController.view.fw addAnimationWithCurve:UIViewAnimationCurveEaseInOut
                                                          transition:UIViewAnimationTransitionCurlUp
                                                            duration:[transition transitionDuration:transition.transitionContext]
                                                          completion:^(BOOL finished){
@@ -638,7 +637,7 @@ FWDealloc();
             [transition start];
             // 这种转场动画需要先隐藏目标视图
             [transition.transitionContext viewForKey:UITransitionContextFromViewKey].hidden = YES;
-            [self.navigationController.view fwAddAnimationWithCurve:UIViewAnimationCurveEaseInOut
+            [self.navigationController.view.fw addAnimationWithCurve:UIViewAnimationCurveEaseInOut
                                                          transition:UIViewAnimationTransitionCurlDown
                                                            duration:[transition transitionDuration:transition.transitionContext]
                                                          completion:^(BOOL finished){
@@ -648,7 +647,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -660,7 +659,7 @@ FWDealloc();
     transition.outDirection = UISwipeGestureRecognizerDirectionDown;
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -693,8 +692,8 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fwViewTransition = transition;
-    self.navigationController.fwNavigationTransition = [FWAnimatedTransition systemTransition];
+    vc.fw.viewTransition = transition;
+    self.navigationController.fw.navigationTransition = [FWAnimatedTransition systemTransition];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -708,7 +707,7 @@ FWDealloc();
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
     vc.canScroll = YES;
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -734,7 +733,7 @@ FWDealloc();
         return YES;
     };
     [transition interactWith:vc];
-    self.navigationController.fwNavigationTransition = transition;
+    self.navigationController.fw.navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:NO];
 }
 

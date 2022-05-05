@@ -1973,6 +1973,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         if (!self.customHeaderView) {
             if ((self.title.length || self.attributedTitle.length || self.message.length || self.attributedMessage.length || self.textFields.count || self.image)) {
                 [self.alertView addSubview:headerView];
+            } else {
+                [self.alertView addSubview:headerView];
             }
         }
         _headerView = headerView;

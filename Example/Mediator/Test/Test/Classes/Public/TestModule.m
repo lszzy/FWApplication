@@ -8,11 +8,11 @@
 #import "TestModule.h"
 #import "TestModuleController.h"
 
-@interface FWLoader (TestModule)
+@interface FWAutoloader (TestModule)
 
 @end
 
-@implementation FWLoader (TestModule)
+@implementation FWAutoloader (TestModule)
 
 - (void)loadTestModule
 {
@@ -44,7 +44,7 @@ FWDefSingleton(TestModule);
     static NSBundle *bundle = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        bundle = [[NSBundle fwBundleWithClass:[self class] name:@"Test"] fwLocalizedBundle];
+        bundle = [[NSBundle.fw bundleWithClass:[self class] name:@"Test"].fw localizedBundle];
     });
     return bundle;
 }

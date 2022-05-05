@@ -25,7 +25,7 @@
     self.floatLayoutView.layer.borderWidth = 0.5;
     self.floatLayoutView.layer.borderColor = [Theme textColor].CGColor;
     [self.view addSubview:self.floatLayoutView];
-    self.floatLayoutView.fwLayoutChain.leftWithInset(24).rightWithInset(24).topWithInset(36);
+    self.floatLayoutView.fw.layoutChain.leftWithInset(24).rightWithInset(24).topWithInset(36);
     
     NSArray<NSString *> *suggestions = @[@"东野圭吾\n多行文本", @"三体", @"爱", @"红楼梦", @"", @"理智与情感\n多行文本", @"读书热榜", @"免费榜"];
     for (NSInteger i = 0; i < suggestions.count; i++) {
@@ -35,13 +35,13 @@
             label.numberOfLines = 0;
             label.text = suggestions[i];
             label.font = FWFontRegular(14);
-            [label fwSetBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
-            label.fwContentInset = UIEdgeInsetsMake(6, 20, 6, 20);
+            [label.fw setBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
+            label.fw.contentInset = UIEdgeInsetsMake(6, 20, 6, 20);
             [self.floatLayoutView addSubview:label];
         } else {
             UIButton *button = [[UIButton alloc] init];
             [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
-            [button fwSetBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
+            [button.fw setBorderColor:[Theme textColor] width:0.5 cornerRadius:10];
             [button setTitle:suggestions[i] forState:UIControlStateNormal];
             button.titleLabel.font = FWFontRegular(14);
             button.titleLabel.numberOfLines = 0;

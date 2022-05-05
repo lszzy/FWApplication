@@ -7,7 +7,7 @@
  @updated    2018/9/22
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,22 +28,22 @@ static const FWToastStyle FWToastStyleFailure = 2;
 @optional
 
 /// 显示加载吐司，需手工隐藏
-- (void)fwShowLoadingWithAttributedText:(nullable NSAttributedString *)attributedText inView:(UIView *)view;
+- (void)showLoadingWithAttributedText:(nullable NSAttributedString *)attributedText inView:(UIView *)view;
 
 /// 隐藏加载吐司
-- (void)fwHideLoading:(UIView *)view;
+- (void)hideLoading:(UIView *)view;
 
 /// 显示进度条吐司，需手工隐藏
-- (void)fwShowProgressWithAttributedText:(nullable NSAttributedString *)attributedText progress:(CGFloat)progress inView:(UIView *)view;
+- (void)showProgressWithAttributedText:(nullable NSAttributedString *)attributedText progress:(CGFloat)progress inView:(UIView *)view;
 
 /// 隐藏进度条吐司
-- (void)fwHideProgress:(UIView *)view;
+- (void)hideProgress:(UIView *)view;
 
 /// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调
-- (void)fwShowMessageWithAttributedText:(nullable NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion inView:(UIView *)view;
+- (void)showMessageWithAttributedText:(nullable NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion inView:(UIView *)view;
 
 /// 隐藏消息吐司
-- (void)fwHideMessage:(UIView *)view;
+- (void)hideMessage:(UIView *)view;
 
 @end
 
@@ -54,50 +54,55 @@ static const FWToastStyle FWToastStyleFailure = 2;
 @required
 
 /// 设置吐司外间距，默认zero
-@property (nonatomic, assign) UIEdgeInsets fwToastInsets;
+@property (nonatomic, assign) UIEdgeInsets toastInsets;
 
 /// 显示加载吐司，需手工隐藏，默认文本
-- (void)fwShowLoading;
+- (void)showLoading;
 
 /// 显示加载吐司，需手工隐藏，支持String和AttributedString
-- (void)fwShowLoadingWithText:(nullable id)text;
+- (void)showLoadingWithText:(nullable id)text;
 
 /// 隐藏加载吐司
-- (void)fwHideLoading;
+- (void)hideLoading;
 
 /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
-- (void)fwShowProgressWithText:(nullable id)text progress:(CGFloat)progress;
+- (void)showProgressWithText:(nullable id)text progress:(CGFloat)progress;
 
 /// 隐藏进度条吐司
-- (void)fwHideProgress;
+- (void)hideProgress;
 
 /// 显示默认样式消息吐司，自动隐藏，支持String和AttributedString
-- (void)fwShowMessageWithText:(nullable id)text;
+- (void)showMessageWithText:(nullable id)text;
 
 /// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
-- (void)fwShowMessageWithText:(nullable id)text style:(FWToastStyle)style;
+- (void)showMessageWithText:(nullable id)text style:(FWToastStyle)style;
 
 /// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-- (void)fwShowMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion;
+- (void)showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion;
 
 /// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-- (void)fwShowMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion;
+- (void)showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion;
 
 /// 隐藏消息吐司
-- (void)fwHideMessage;
+- (void)hideMessage;
 
 @end
 
-/// UIView使用吐司插件，全局可使用UIWindow.fwMainWindow
-@interface UIView (FWToastPluginView) <FWToastPluginView>
+/// UIView使用吐司插件，全局可使用UIWindow.fw.mainWindow
+@interface FWViewWrapper (FWToastPluginView) <FWToastPluginView>
 
 /// 自定义吐司插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWToastPlugin> fwToastPlugin;
+@property (nonatomic, strong, nullable) id<FWToastPlugin> toastPlugin;
 
 @end
 
 /// UIViewController使用吐司插件，内部使用UIViewController.view
-@interface UIViewController (FWToastPluginView) <FWToastPluginView>
+@interface FWViewControllerWrapper (FWToastPluginView) <FWToastPluginView>
+
+@end
+
+/// UIWindow全局使用吐司插件，内部使用UIWindow.fw.mainWindow
+@interface FWWindowClassWrapper (FWToastPluginView) <FWToastPluginView>
 
 @end
 

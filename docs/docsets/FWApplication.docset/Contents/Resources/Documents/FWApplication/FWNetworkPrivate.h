@@ -24,12 +24,11 @@
 #import <Foundation/Foundation.h>
 #import "FWRequest.h"
 #import "FWBatchRequest.h"
-#import "FWBatchRequestAgent.h"
 #import "FWChainRequest.h"
-#import "FWChainRequestAgent.h"
+#import "FWRequestAgent.h"
 #import "FWNetworkAgent.h"
 #import "FWNetworkConfig.h"
-#import "FWRequestEventAccessory.h"
+#import "FWRequestAccessory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

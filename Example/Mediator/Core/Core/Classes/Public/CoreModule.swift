@@ -9,7 +9,7 @@ import FWApplication
 
 @objcMembers public class CoreBundle: FWModuleBundle {
     private static let sharedBundle: Bundle = {
-        return Bundle.fwBundle(with: CoreBundle.classForCoder(), name: "Core")?.fwLocalized() ?? .main
+        return Bundle.fw.bundle(with: CoreBundle.classForCoder(), name: "Core")?.fw.localizedBundle() ?? .main
     }()
     
     public override class func bundle() -> Bundle {
@@ -45,7 +45,7 @@ class CoreModule: NSObject, CoreService {
     }
 }
 
-@objc extension FWLoader {
+@objc extension FWAutoloader {
     func loadCoreModule() {
         FWMediator.registerService(CoreService.self, withModule: CoreModule.self)
     }

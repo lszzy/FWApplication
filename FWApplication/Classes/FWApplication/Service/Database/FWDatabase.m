@@ -134,7 +134,7 @@ static sqlite3 * _fw_database;
 
 + (NSString *)databaseCacheDirectory:(Class)model_class {
     if (model_class) {
-        NSString * custom_path = [self exceSelector:@selector(fwDatabasePath) modelClass:model_class];
+        NSString * custom_path = [self exceSelector:@selector(databasePath) modelClass:model_class];
         if (custom_path != nil && custom_path.length > 0) {
             return custom_path;
         }
@@ -227,14 +227,14 @@ static sqlite3 * _fw_database;
         NSDictionary * super_fields = [self parserSubModelObjectFieldsWithModelClass:super_class propertyName:main_property_name hasPrimary:hasPrimary complete:complete];
         if (need_dictionary_save) [fields setValuesForKeysWithDictionary:super_fields];
     }
-    SEL selector = @selector(fwTablePropertyBlacklist);
+    SEL selector = @selector(tablePropertyBlacklist);
     NSArray * ignore_propertys;
     if ([model_class respondsToSelector:selector]) {
         IMP sqlite_info_func = [model_class methodForSelector:selector];
         NSArray * (*func)(id, SEL) = (void *)sqlite_info_func;
         ignore_propertys = func(model_class, selector);
     }
-    SEL all_selector = @selector(fwTablePropertyWhitelist);
+    SEL all_selector = @selector(tablePropertyWhitelist);
     NSArray * all_propertys;
     if ([model_class respondsToSelector:all_selector]) {
         IMP sqlite_info_func = [model_class methodForSelector:all_selector];
@@ -502,7 +502,7 @@ static sqlite3 * _fw_database;
 }
 
 + (NSString *)getPrimaryKeyWithClass:(Class)model_class {
-    NSString * primary_key = [self exceSelector:@selector(fwTablePrimaryKey) modelClass:model_class];
+    NSString * primary_key = [self exceSelector:@selector(tablePrimaryKey) modelClass:model_class];
     if (!primary_key || primary_key.length == 0) {
         primary_key = @"pkid";
     }
@@ -560,7 +560,7 @@ static sqlite3 * _fw_database;
 
 + (void)decryptionSqlite:(Class)model_class {
 #ifdef SQLITE_HAS_CODEC
-    NSString * psw_key = [self exceSelector:@selector(fwDatabasePasswordKey) modelClass:model_class];
+    NSString * psw_key = [self exceSelector:@selector(databasePasswordKey) modelClass:model_class];
     if (psw_key && psw_key.length > 0) {
         NSString * old_psw = [self pswWithModel:model_class];
         BOOL is_update_psw = (old_psw && ![old_psw isEqualToString:psw_key]);
@@ -575,7 +575,7 @@ static sqlite3 * _fw_database;
 }
 
 + (NSString *)getTableName:(Class)model_class {
-    SEL selector = @selector(fwTableName);
+    SEL selector = @selector(tableName);
     if ([model_class respondsToSelector:selector]) {
         NSString * table_name = [self exceSelector:selector modelClass:model_class];
         if (table_name && table_name.length > 0) {
@@ -598,7 +598,7 @@ static sqlite3 * _fw_database;
 }
 
 + (NSString *)getSqlitePath:(Class)model_class {
-    SEL selector = @selector(fwDatabaseVendorPath);
+    SEL selector = @selector(databaseVendorPath);
     if ([model_class respondsToSelector:selector]) {
         NSString * sqlite_path = [self exceSelector:selector modelClass:model_class];
         if (sqlite_path && sqlite_path.length > 0) {
@@ -614,7 +614,7 @@ static sqlite3 * _fw_database;
     NSString * sqlite_path = [self getSqlitePath:model_class];
     if (sqlite_path && sqlite_path.length > 0) {
         BOOL is_directory = NO;
-        NSString * version = [self exceSelector:@selector(fwDatabaseVersion) modelClass:model_class];
+        NSString * version = [self exceSelector:@selector(databaseVersion) modelClass:model_class];
         if (!version || version.length == 0) { version = [self shareInstance].version; }
         NSString * model_sqlite_path = [NSString stringWithFormat:@"%@%@_v%@.sqlite",cache_directory,NSStringFromClass(model_class),version];
         NSFileManager * file_manager = [NSFileManager defaultManager];
@@ -628,7 +628,7 @@ static sqlite3 * _fw_database;
 
 + (BOOL)openTable:(Class)model_class {
     NSString * cache_directory = [self autoHandleOldSqlite:model_class];
-    NSString * version = [self exceSelector:@selector(fwDatabaseVersion) modelClass:model_class];
+    NSString * version = [self exceSelector:@selector(databaseVersion) modelClass:model_class];
     if (!version || version.length == 0) { version = [self shareInstance].version; }
     if ([self shareInstance].check_update) {
         NSString * local_model_name = [self localNameWithModel:model_class];

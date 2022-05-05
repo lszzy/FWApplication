@@ -14,11 +14,6 @@
 
 @implementation TestWorkflowViewController
 
-- (NSString *)fwWorkflowName
-{
-    return [NSString stringWithFormat:@"workflow.%ld", self.step];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,13 +22,14 @@
         self.step = 1;
     }
     
+    self.fw.workflowName = [NSString stringWithFormat:@"workflow.%ld", self.step];
     self.navigationItem.title = [NSString stringWithFormat:@"工作流-%ld", self.step];
     
     if (self.step < 3) {
-        [self fwSetRightBarItem:@"下一步" target:self action:@selector(onNext)];
+        [self.fw setRightBarItem:@"下一步" target:self action:@selector(onNext)];
     } else {
-        [self fwAddRightBarItem:@"退出" target:self action:@selector(onExit)];
-        [self fwAddRightBarItem:@"重来" target:self action:@selector(onOpen)];
+        [self.fw addRightBarItem:@"退出" target:self action:@selector(onExit)];
+        [self.fw addRightBarItem:@"重来" target:self action:@selector(onOpen)];
     }
 }
 
@@ -48,12 +44,12 @@
 
 - (void)onExit
 {
-    [self.navigationController fwPopWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController.fw popWorkflows:@[@"workflow"] animated:YES];
 }
 
 - (void)onOpen
 {
-    [self.navigationController fwPushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController.fw pushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
 }
 
 @end

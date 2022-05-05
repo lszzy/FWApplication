@@ -8,23 +8,23 @@
 
 #import "UIWindow+FWApplication.h"
 
-@implementation UIWindow (FWApplication)
+@implementation FWWindowWrapper (FWApplication)
 
-- (void)fwDismissViewControllers:(void (^)(void))completion
+- (void)dismissViewControllers:(void (^)(void))completion
 {
-    if (self.rootViewController.presentedViewController) {
-        [self.rootViewController dismissViewControllerAnimated:YES completion:completion];
+    if (self.base.rootViewController.presentedViewController) {
+        [self.base.rootViewController dismissViewControllerAnimated:YES completion:completion];
     } else {
         if (completion) completion();
     }
 }
 
-- (UIViewController *)fwSelectTabBarController:(Class)viewController
+- (UIViewController *)selectTabBarController:(Class)viewController
 {
-    if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
+    if (![self.base.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
     
     UINavigationController *targetNavigation = nil;
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
+    UITabBarController *tabbarController = (UITabBarController *)self.base.rootViewController;
     for (UINavigationController *navigationController in tabbarController.viewControllers) {
         if ([navigationController isKindOfClass:viewController] ||
             ([navigationController isKindOfClass:[UINavigationController class]] &&
@@ -35,26 +35,26 @@
     }
     if (!targetNavigation) return nil;
     
-    return [self fwSelectTabBarNavigation:targetNavigation];
+    return [self selectTabBarNavigation:targetNavigation];
 }
 
-- (UIViewController *)fwSelectTabBarIndex:(NSUInteger)index
+- (UIViewController *)selectTabBarIndex:(NSUInteger)index
 {
-    if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
+    if (![self.base.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
     
     UINavigationController *targetNavigation = nil;
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
+    UITabBarController *tabbarController = (UITabBarController *)self.base.rootViewController;
     if (tabbarController.viewControllers.count > index) {
         targetNavigation = tabbarController.viewControllers[index];
     }
     if (!targetNavigation) return nil;
     
-    return [self fwSelectTabBarNavigation:targetNavigation];
+    return [self selectTabBarNavigation:targetNavigation];
 }
 
-- (UIViewController *)fwSelectTabBarNavigation:(UINavigationController *)targetNavigation
+- (UIViewController *)selectTabBarNavigation:(UINavigationController *)targetNavigation
 {
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
+    UITabBarController *tabbarController = (UITabBarController *)self.base.rootViewController;
     UINavigationController *currentNavigation = tabbarController.selectedViewController;
     if (currentNavigation != targetNavigation) {
         if ([currentNavigation isKindOfClass:[UINavigationController class]] &&

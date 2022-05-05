@@ -9,55 +9,53 @@
 
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- UIApplication+FWApplication
- */
-@interface UIApplication (FWApplication)
+@interface FWApplicationClassWrapper (FWApplication)
 
 #pragma mark - App
 
 // 读取应用信息字典
-+ (nullable id)fwAppInfo:(NSString *)key;
+- (nullable id)appInfo:(NSString *)key;
 
 // 读取应用名称
-@property (class, nonatomic, copy, readonly) NSString *fwAppName;
+@property (nonatomic, copy, readonly) NSString *appName;
 
 // 读取应用显示名称，未配置时读取名称
-@property (class, nonatomic, copy, readonly) NSString *fwAppDisplayName;
+@property (nonatomic, copy, readonly) NSString *appDisplayName;
 
 // 读取应用主版本号，示例：1.0.0
-@property (class, nonatomic, copy, readonly) NSString *fwAppVersion;
+@property (nonatomic, copy, readonly) NSString *appVersion;
 
 // 读取应用构建版本号，示例：1.0.0.1
-@property (class, nonatomic, copy, readonly) NSString *fwAppBuildVersion;
+@property (nonatomic, copy, readonly) NSString *appBuildVersion;
 
 // 读取应用标识
-@property (class, nonatomic, copy, readonly) NSString *fwAppIdentifier;
+@property (nonatomic, copy, readonly) NSString *appIdentifier;
 
 #pragma mark - Debug
 
 // 是否是盗版(不是从AppStore安装)
-@property (class, nonatomic, assign, readonly) BOOL fwIsPirated;
+@property (nonatomic, assign, readonly) BOOL isPirated;
 
 // 是否是Testflight版本
-@property (class, nonatomic, assign, readonly) BOOL fwIsTestflight;
+@property (nonatomic, assign, readonly) BOOL isTestflight;
 
 #pragma mark - URL
 
 // 播放内置声音文件
-+ (SystemSoundID)fwPlayAlert:(NSString *)file;
+- (SystemSoundID)playAlert:(NSString *)file;
 
 // 停止播放内置声音文件
-+ (void)fwStopAlert:(SystemSoundID)soundId;
+- (void)stopAlert:(SystemSoundID)soundId;
 
 // 播放内置震动
-+ (void)fwPlayVibrate;
+- (void)playVibrate;
 
-// 中文语音朗读文字
-+ (void)fwReadText:(NSString *)text;
+// 语音朗读文字，可指定语言(如zh-CN)
+- (void)readText:(NSString *)text withLanguage:(nullable NSString *)languageCode;
 
 @end
 

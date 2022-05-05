@@ -8,9 +8,9 @@
 
 #import "TestWebViewController.h"
 
+// 如果需要隐藏导航栏，可以加载时显示导航栏，WebView延伸到导航栏下面，加载完成时隐藏导航栏即可
 @interface TestWebViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, assign) BOOL gobackDisabled;
 @property (nonatomic, assign) BOOL isExtendedBottom;
 
 @end
@@ -32,7 +32,7 @@
         return nil;
     } else {
         return @[
-            [UIBarButtonItem fwBarItemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
+            [UIBarButtonItem.fw itemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
             FWIcon.closeImage,
         ];
     }
@@ -40,16 +40,11 @@
 
 - (void)onWebBack
 {
-    if (self.webView.canGoBack && !self.gobackDisabled) {
+    if (self.webView.canGoBack) {
         [self.webView goBack];
     } else {
         [self onWebClose];
     }
-}
-
-- (BOOL)fwForcePopGesture
-{
-    return !self.webView.canGoBack || self.gobackDisabled;
 }
 
 - (void)viewDidLoad
@@ -58,7 +53,7 @@
     
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    self.isExtendedBottom = [@[@YES, @NO].fwRandomObject fwAsBool];
+    self.isExtendedBottom = [@[@YES, @NO].fw.randomObject fw].safeBool;
     if (self.isExtendedBottom) {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame
@@ -73,11 +68,11 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    if (self.isExtendedBottom || !self.fwIsLoaded) return;
+    if (self.isExtendedBottom || !self.fw.isLoaded) return;
     
     // 顶部延伸时，不需要减顶部栏高度
-    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fwTopBarHeight;
-    self.view.fwHeight = FWScreenHeight - topHeight - self.fwBottomBarHeight;
+    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw.topBarHeight;
+    self.view.fw.height = FWScreenHeight - topHeight - self.fw.bottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -97,29 +92,29 @@
 - (void)renderToolbar
 {
     FWWeakifySelf();
-    UIBarButtonItem *backItem = [UIBarButtonItem fwBarItemWithObject:FWIconImage(@"ion-ios-arrow-back", 24) block:^(id  _Nonnull sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem.fw itemWithObject:FWIconImage(@"ion-ios-arrow-back", 24) block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if ([self.webView canGoBack]) [self.webView goBack];
     }];
     backItem.enabled = NO;
-    [self.webView fwObserveProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
+    [self.webView.fw observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         backItem.enabled = webView.canGoBack;
         [self reloadToolbar:NO];
     }];
     
-    UIBarButtonItem *forwardItem = [UIBarButtonItem fwBarItemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
+    UIBarButtonItem *forwardItem = [UIBarButtonItem.fw itemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if ([self.webView canGoForward]) [self.webView goForward];
     }];
     forwardItem.enabled = NO;
-    [self.webView fwObserveProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
+    [self.webView.fw observeProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         forwardItem.enabled = webView.canGoForward;
         [self reloadToolbar:NO];
     }];
     
-    [self.webView fwObserveProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
+    [self.webView.fw observeProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         [self reloadToolbar:NO];
     }];
@@ -129,19 +124,19 @@
     spaceItem.width = 79;
     self.toolbarItems = @[flexibleItem, backItem, spaceItem, forwardItem, flexibleItem];
     
-    self.navigationController.toolbar.fwShadowImage = [UIImage fwImageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
-    self.navigationController.toolbar.fwBackgroundColor = Theme.barColor;
-    self.navigationController.toolbar.fwForegroundColor = Theme.textColor;
+    self.navigationController.toolbar.fw.shadowImage = [UIImage.fw imageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
+    self.navigationController.toolbar.fw.backgroundColor = Theme.barColor;
+    self.navigationController.toolbar.fw.foregroundColor = Theme.textColor;
 }
 
 - (void)reloadToolbar:(BOOL)animated
 {
     if (self.webView.canGoBack || self.webView.canGoForward) {
-        if (self.fwToolBarHidden) {
+        if (self.fw.toolBarHidden) {
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
     } else {
-        if (!self.fwToolBarHidden) {
+        if (!self.fw.toolBarHidden) {
             [self.navigationController setToolbarHidden:YES animated:animated];
         }
     }
@@ -149,7 +144,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!scrollView.isDragging || !scrollView.fwCanScrollVertical) return;
+    if (!scrollView.isDragging || !scrollView.fw.canScrollVertical) return;
     
     CGPoint transition = [scrollView.panGestureRecognizer translationInView:scrollView.panGestureRecognizer.view];
     if (transition.y > 10.0f) {
@@ -161,12 +156,12 @@
 
 - (void)shareRequestUrl
 {
-    [UIApplication fwOpenActivityItems:@[FWSafeURL(self.requestUrl)] excludedTypes:nil];
+    [UIApplication.fw openActivityItems:@[FWSafeURL(self.requestUrl)] excludedTypes:nil];
 }
 
 - (void)loadRequestUrl
 {
-    [self fwHideEmptyView];
+    [self.fw hideEmptyView];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.requestUrl]];
     urlRequest.timeoutInterval = 30;
@@ -176,20 +171,20 @@
 
 - (void)webViewFinishLoad
 {
-    if (self.fwIsLoaded) return;
-    self.fwIsLoaded = YES;
+    if (self.fw.isLoaded) return;
+    self.fw.isLoaded = YES;
     
-    [self fwSetRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
+    [self.fw setRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
 }
 
 - (void)webViewFailLoad:(NSError *)error
 {
-    if (self.fwIsLoaded) return;
+    if (self.fw.isLoaded) return;
     
-    [self fwSetRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
+    [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     
     FWWeakifySelf();
-    [self fwShowEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {
+    [self.fw showEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self loadRequestUrl];
     }];
@@ -203,8 +198,8 @@
         return;
     }
     
-    if ([UIApplication fwIsSystemURL:navigationAction.request.URL]) {
-        [UIApplication fwOpenURL:navigationAction.request.URL];
+    if ([UIApplication.fw isSystemURL:navigationAction.request.URL]) {
+        [UIApplication.fw openURL:navigationAction.request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -216,7 +211,7 @@
     }
     
     if ([navigationAction.request.URL.scheme isEqualToString:@"https"]) {
-        [UIApplication fwOpenUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
+        [UIApplication.fw openUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
             if (success) {
                 decisionHandler(WKNavigationActionPolicyCancel);
             } else {

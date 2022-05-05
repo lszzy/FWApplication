@@ -7,7 +7,7 @@
  @updated    2018/9/22
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -73,25 +73,29 @@ static const FWIndicatorViewStyle FWIndicatorViewStyleRefresh = 1;
 
 @end
 
-#pragma mark - UIView+FWViewPlugin
+#pragma mark - FWViewWrapper+FWViewPlugin
 
 /// UIView视图插件分类
-@interface UIView (FWViewPlugin)
+@interface FWViewWrapper (FWViewPlugin)
 
 /// 自定义视图插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWViewPlugin> fwViewPlugin;
+@property (nonatomic, strong, nullable) id<FWViewPlugin> viewPlugin;
 
 /// 统一进度视图工厂方法
-- (UIView<FWProgressViewPlugin> *)fwProgressViewWithStyle:(FWProgressViewStyle)style;
+- (UIView<FWProgressViewPlugin> *)progressViewWithStyle:(FWProgressViewStyle)style;
 
 /// 统一指示器视图工厂方法
-- (UIView<FWIndicatorViewPlugin> *)fwIndicatorViewWithStyle:(FWIndicatorViewStyle)style;
+- (UIView<FWIndicatorViewPlugin> *)indicatorViewWithStyle:(FWIndicatorViewStyle)style;
+
+@end
+
+@interface FWViewClassWrapper (FWViewPlugin)
 
 /// 统一进度视图工厂方法
-+ (UIView<FWProgressViewPlugin> *)fwProgressViewWithStyle:(FWProgressViewStyle)style;
+- (UIView<FWProgressViewPlugin> *)progressViewWithStyle:(FWProgressViewStyle)style;
 
 /// 统一指示器视图工厂方法
-+ (UIView<FWIndicatorViewPlugin> *)fwIndicatorViewWithStyle:(FWIndicatorViewStyle)style;
+- (UIView<FWIndicatorViewPlugin> *)indicatorViewWithStyle:(FWIndicatorViewStyle)style;
 
 @end
 

@@ -14,17 +14,17 @@ import Core
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = UserBundle.localizedString("loginButton")
-        fwSetLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
-            self?.fwClose(animated: true)
+        fw.setLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
+            self?.fw.closeViewController(animated: true)
         }
         
         let button = UIButton(type: .system)
         button.setTitle(UserBundle.localizedString("loginButton"), for: .normal)
-        button.setImage(UserBundle.imageNamed("user")?.fwCompressImage(withMaxWidth: 25), for: .normal)
-        button.fwAddTouch { [weak self] (sender) in
+        button.setImage(UserBundle.imageNamed("user")?.fw.compressImage(withMaxWidth: 25), for: .normal)
+        button.fw.addTouch { [weak self] (sender) in
             self?.dismiss(animated: true, completion: self?.completion)
         }
         view.addSubview(button)
-        button.fwLayoutChain.center()
+        button.fw.layoutChain.center()
     }
 }

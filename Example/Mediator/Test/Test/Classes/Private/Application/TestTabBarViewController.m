@@ -32,10 +32,9 @@
 {
     self.hidesBottomBarWhenPushed = YES;
     self.delegate = self;
-    self.tabBar.fwForegroundColor = [Theme textColor];
-    self.tabBar.fwBackgroundColor = [Theme barColor];
-    self.fwForcePopGesture = YES;
-    self.fwNavigationBarHidden = YES;
+    self.tabBar.fw.foregroundColor = [Theme textColor];
+    self.tabBar.fw.backgroundColor = [Theme barColor];
+    self.fw.navigationBarHidden = YES;
 }
 
 - (void)setupController
@@ -43,19 +42,19 @@
     UIViewController *firstController = [TestRouterViewController new];
     firstController.hidesBottomBarWhenPushed = NO;
     FWWeakifySelf();
-    firstController.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+    firstController.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.navigationController popViewControllerAnimated:YES];
     }];
     UIViewController *secondController = [TestModuleController new];
     secondController.hidesBottomBarWhenPushed = NO;
-    secondController.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+    secondController.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.navigationController popViewControllerAnimated:YES];
     }];
     UIViewController *thirdController = [[TestWebViewController alloc] initWithRequestUrl:@"http://kvm.wuyong.site/test.php"];
     thirdController.hidesBottomBarWhenPushed = NO;
-    thirdController.navigationItem.leftBarButtonItem = [UIBarButtonItem fwBarItemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+    thirdController.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.navigationController popViewControllerAnimated:YES];
     }];
@@ -73,14 +72,14 @@
     thirdController.tabBarItem.image = [TestBundle imageNamed:@"tabbar_settings"];
     thirdController.tabBarItem.title = FWLocalizedString(@"settingTitle");
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
-    [thirdController.tabBarItem fwShowBadgeView:badgeView badgeValue:nil];
+    [thirdController.tabBarItem.fw showBadgeView:badgeView badgeValue:nil];
 }
 
 #pragma mark - UITabBarControllerDelegate
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController
 {
-    UIImageView *imageView = viewController.tabBarItem.fwImageView;
+    UIImageView *imageView = viewController.tabBarItem.fw.imageView;
     CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     animation.values = @[@(1.0), @(1.4), @(0.9), @(1.15), @(0.95), @(1.02), @(1.0)];
     animation.duration = 0.3 * 2;
@@ -93,7 +92,7 @@
 + (void)refreshController
 {
     if (@available(iOS 13.0, *)) {
-        FWSceneDelegate *sceneDelegete = (FWSceneDelegate *)UIWindow.fwMainScene.delegate;
+        FWSceneDelegate *sceneDelegete = (FWSceneDelegate *)UIWindow.fw.mainScene.delegate;
         [sceneDelegete setupController];
     } else {
         FWAppDelegate *appDelegate = (FWAppDelegate *)UIApplication.sharedApplication.delegate;

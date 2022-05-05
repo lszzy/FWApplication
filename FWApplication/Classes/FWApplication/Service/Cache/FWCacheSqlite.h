@@ -6,12 +6,12 @@
 //  Copyright © 2018年 wuyong.site. All rights reserved.
 //
 
-#import "FWCacheAbstract.h"
+#import "FWCacheEngine.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Sqlite缓存
-@interface FWCacheSqlite : FWCacheAbstract
+@interface FWCacheSqlite : FWCacheEngine
 
 /** 单例模式 */
 @property (class, nonatomic, readonly) FWCacheSqlite *sharedInstance;

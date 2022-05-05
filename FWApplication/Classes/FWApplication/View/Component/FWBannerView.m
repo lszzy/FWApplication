@@ -655,7 +655,7 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
             pageControl.pageIndicatorTintColor = self.pageDotColor;
             pageControl.userInteractionEnabled = NO;
             pageControl.currentPage = indexOnPageControl;
-            pageControl.fwPreferredSize = self.pageControlDotSize;
+            pageControl.fw.preferredSize = self.pageControlDotSize;
             [self addSubview:pageControl];
             _pageControl = pageControl;
         }
@@ -818,9 +818,9 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
     
     if (!self.onlyDisplayText && [imagePath isKindOfClass:[NSString class]]) {
         if ([imagePath.lowercaseString hasPrefix:@"http"] || [imagePath.lowercaseString hasPrefix:@"data:"]) {
-            [cell.imageView fwSetImageWithURL:imagePath placeholderImage:self.placeholderImage];
+            [cell.imageView.fw setImageWithURL:imagePath placeholderImage:self.placeholderImage];
         } else {
-            UIImage *image = [UIImage fwImageNamed:imagePath];
+            UIImage *image = [UIImage.fw imageNamed:imagePath];
             cell.imageView.image = image ?: self.placeholderImage;
         }
     } else if (!self.onlyDisplayText && [imagePath isKindOfClass:[UIImage class]]) {
@@ -1027,7 +1027,7 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
 
 - (void)setupImageView
 {
-    Class imageClass = [UIImageView fwImageViewAnimatedClass];
+    Class imageClass = [UIImageView.fw imageViewAnimatedClass];
     UIImageView *imageView = [[imageClass alloc] init];
     _imageView = imageView;
     imageView.layer.masksToBounds = YES;

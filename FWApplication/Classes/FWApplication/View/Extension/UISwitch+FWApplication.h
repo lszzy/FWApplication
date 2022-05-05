@@ -7,19 +7,16 @@
  @updated    2019/5/17
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/**
- UISwitch+FWApplication
- */
-@interface UISwitch (FWApplication)
+@interface FWSwitchWrapper (FWApplication)
 
 /**
  切换开关状态
  */
-- (void)fwToggle:(BOOL)animated;
+- (void)toggle:(BOOL)animated;
 
 @end
 

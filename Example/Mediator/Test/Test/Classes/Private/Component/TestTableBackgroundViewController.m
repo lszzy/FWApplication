@@ -20,7 +20,7 @@
 {
     self = [super init];
     if (self) {
-        self.fwExtendedLayoutEdge = UIRectEdgeTop;
+        self.fw.extendedLayoutEdge = UIRectEdgeTop;
     }
     return self;
 }
@@ -28,7 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBar.fwBackgroundTransparent = YES;
+    self.navigationController.navigationBar.fw.backgroundTransparent = YES;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -45,12 +45,12 @@
 {
     UIView *bgView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWScreenHeight)];
     _bgView = bgView;
-    bgView.backgroundColor = [UIColor fwRandomColor];
+    bgView.backgroundColor = UIColor.fw.randomColor;
     [self.view insertSubview:bgView atIndex:0];
     self.view.clipsToBounds = YES;
     
     UIView *subView = [[UIView alloc] initWithFrame:CGRectMake(0, FWScreenHeight / 2, FWScreenWidth, FWScreenHeight / 2)];
-    subView.backgroundColor = [UIColor fwRandomColor];
+    subView.backgroundColor = UIColor.fw.randomColor;
     [bgView addSubview:subView];
 }
 
@@ -78,14 +78,14 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    _bgView.fwY = -scrollView.contentOffset.y;
+    _bgView.fw.y = -scrollView.contentOffset.y;
 }
 
 #pragma mark - TableView
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
     cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];

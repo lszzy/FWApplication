@@ -38,7 +38,7 @@
 {
     _selectedIndex = selectedIndex;
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:selectedIndex] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    [self fwShowMessageWithText:[NSString stringWithFormat:@"跳转到测试section: %@", @(selectedIndex)]];
+    [self.fw showMessageWithText:[NSString stringWithFormat:@"跳转到测试section: %@", @(selectedIndex)]];
 }
 
 - (UISearchBar *)searchBar
@@ -48,20 +48,20 @@
         _searchBar.placeholder = @"Search";
         _searchBar.delegate = self;
         _searchBar.showsCancelButton = YES;
-        [_searchBar.fwCancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
-        _searchBar.fwForceCancelButtonEnabled = YES;
-        _searchBar.fwBackgroundColor = [Theme barColor];
-        _searchBar.fwTextFieldBackgroundColor = [Theme tableColor];
-        _searchBar.fwContentInset = UIEdgeInsetsMake(6, 16, 6, 0);
-        _searchBar.fwCancelButtonInset = UIEdgeInsetsMake(0, 16, 0, 16);
-        _searchBar.fwSearchIconCenter = YES;
-        _searchBar.fwSearchIconOffset = 10;
-        _searchBar.fwSearchTextOffset = 4;
+        [_searchBar.fw.cancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
+        _searchBar.fw.forceCancelButtonEnabled = YES;
+        _searchBar.fw.backgroundColor = [Theme barColor];
+        _searchBar.fw.textFieldBackgroundColor = [Theme tableColor];
+        _searchBar.fw.contentInset = UIEdgeInsetsMake(6, 16, 6, 0);
+        _searchBar.fw.cancelButtonInset = UIEdgeInsetsMake(0, 16, 0, 16);
+        _searchBar.fw.searchIconCenter = YES;
+        _searchBar.fw.searchIconOffset = 10;
+        _searchBar.fw.searchTextOffset = 4;
         
-        UITextField *textField = [_searchBar fwTextField];
+        UITextField *textField = [_searchBar.fw textField];
         textField.font = [UIFont systemFontOfSize:12];
-        [textField fwSetCornerRadius:16];
-        textField.fwTouchResign = YES;
+        [textField.fw setCornerRadius:16];
+        textField.fw.touchResign = YES;
     }
     return _searchBar;
 }
@@ -69,10 +69,10 @@
 - (UIView *)titleView
 {
     UIView *titleView = [[TestModuleExpandedView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWNavigationBarHeight)];
-    [titleView fwSetDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
+    [titleView.fw setDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
     titleView.backgroundColor = [UIColor clearColor];
     [titleView addSubview:self.searchBar];
-    [self.searchBar fwPinEdgesToSuperview];
+    [self.searchBar.fw pinEdgesToSuperview];
     return titleView;
 }
 
@@ -91,7 +91,7 @@
 - (void)renderTableView
 {
     self.tableView.backgroundColor = [Theme tableColor];
-    self.tableView.fwKeyboardDismissOnDrag = YES;
+    self.tableView.fw.keyboardDismissOnDrag = YES;
 }
 
 - (void)renderData
@@ -101,7 +101,7 @@
               @[@"FWRouter", @"TestRouterViewController"],
               @[@"FWNavigation", @"TestWindowViewController"],
               @[@"FWWorkflow", @"TestWorkflowViewController"],
-              @[@"FWEncode", @"TestCrashViewController"],
+              @[@"FWException", @"TestCrashViewController"],
               @[@"FWLayoutChain", @"TestChainViewController"],
               @[@"FWTheme", @"TestThemeViewController"],
               @[@"FWTheme+Extension", @"TestThemeExtensionViewController"],
@@ -192,24 +192,24 @@
 {
     [super viewDidLoad];
     self.navigationItem.largeTitleDisplayMode = UINavigationItemLargeTitleDisplayModeNever;
-    self.fwBarTitle = [self titleView];
+    self.fw.barTitle = [self titleView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.searchBar.fwCancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
+    [self.searchBar.fw.cancelButton setTitle:FWAppBundle.cancelButton forState:UIControlStateNormal];
 }
 
 #pragma mark - UISearchBar
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
-    searchBar.fwSearchIconCenter = NO;
+    searchBar.fw.searchIconCenter = NO;
     return YES;
 }
 
 - (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
-    searchBar.fwSearchIconCenter = YES;
+    searchBar.fw.searchIconCenter = YES;
     return YES;
 }
 
@@ -220,7 +220,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    self.isSearch = searchText.fwTrimString.length > 0;
+    self.isSearch = searchText.fw.trimString.length > 0;
     if (!self.isSearch) {
         self.searchResult = [NSMutableArray array];
         [self.tableView reloadData];
@@ -228,7 +228,7 @@
     }
     
     NSMutableArray *searchResult = [NSMutableArray array];
-    NSString *searchString = searchText.fwTrimString.lowercaseString;
+    NSString *searchString = searchText.fw.trimString.lowercaseString;
     for (NSArray *sectionData in self.tableData) {
         NSMutableArray *sectionResult = [NSMutableArray array];
         for (NSArray *rowData in sectionData[1]) {
@@ -260,7 +260,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSArray *sectionData = [self.displayData objectAtIndex:indexPath.section];
     NSArray *sectionList = [sectionData objectAtIndex:1];

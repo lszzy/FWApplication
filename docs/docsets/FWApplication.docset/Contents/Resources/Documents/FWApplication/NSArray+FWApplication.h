@@ -7,7 +7,7 @@
  @updated    2018-09-17
  */
 
-#import <Foundation/Foundation.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  NSArray分类
  @note 如果需要数组weak引用元素，使用[NSValue valueWithNonretainedObject:object]即可
  */
-@interface NSArray<__covariant ObjectType> (FWApplication)
+@interface FWArrayWrapper<__covariant ObjectType> (FWApplication)
 
 /**
  从数组中按照权重随机取出对象，如@[@"a", @"b", @"c"]按照@[@0, @8, @02]大概率取出@"b"，不会取出@"a"
@@ -23,35 +23,35 @@ NS_ASSUME_NONNULL_BEGIN
  @param weights 权重数组，按整数计算
  @return 随机对象
  */
-- (nullable ObjectType)fwRandomObject:(NSArray *)weights;
+- (nullable ObjectType)randomObject:(NSArray *)weights;
 
 /**
  获取翻转后的新数组
  
  @return 翻转后的数组
  */
-@property (nonatomic, copy, readonly) NSArray<ObjectType> *fwReverseArray;
+@property (nonatomic, copy, readonly) NSArray<ObjectType> *reverseArray;
 
 /**
  获取打乱后的新数组
  
  @return 打乱后的数组
  */
-@property (nonatomic, copy, readonly) NSArray<ObjectType> *fwShuffleArray;
+@property (nonatomic, copy, readonly) NSArray<ObjectType> *shuffleArray;
 
 /**
  数组中是否含有NSNull值
  
  @return 是否含有NSNull
  */
-@property (nonatomic, assign, readonly) BOOL fwIncludeNull;
+@property (nonatomic, assign, readonly) BOOL includeNull;
 
 /**
  递归移除数组中NSNull值
  
  @return 不含NSNull的数组
  */
-@property (nonatomic, copy, readonly) NSArray<ObjectType> *fwRemoveNull;
+@property (nonatomic, copy, readonly) NSArray<ObjectType> *removeNull;
 
 /**
  移除数组中NSNull值
@@ -59,26 +59,26 @@ NS_ASSUME_NONNULL_BEGIN
  @praram recursive 是否递归
  @return 不含NSNull的数组
  */
-- (NSArray<ObjectType> *)fwRemoveNullRecursive:(BOOL)recursive;
+- (NSArray<ObjectType> *)removeNullRecursive:(BOOL)recursive;
 
 @end
 
-#pragma mark - NSMutableArray+FWApplication
+#pragma mark - FWMutableArrayWrapper+FWApplication
 
 /**
  NSMutableArray分类
  */
-@interface NSMutableArray<ObjectType> (FWApplication)
+@interface FWMutableArrayWrapper<ObjectType> (FWApplication)
 
 /**
  当前数组翻转
  */
-- (void)fwReverse;
+- (void)reverse;
 
 /**
  打乱当前数组
  */
-- (void)fwShuffle;
+- (void)shuffle;
 
 @end
 
@@ -89,7 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/ibireme/YYKit
  */
-@interface FWMutableArray : NSMutableArray
+@interface FWMutableArray<__covariant ObjectType> : NSMutableArray<ObjectType>
 
 @end
 

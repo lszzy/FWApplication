@@ -7,122 +7,96 @@
  @updated    2018/9/18
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- UIView+FWApplication
- @note 事件穿透实现方法：重写-hitTest:withEvent:方法，当为指定视图(如self)时返回nil排除即可
+ 事件穿透实现方法：重写-hitTest:withEvent:方法，当为指定视图(如self)时返回nil排除即可
  */
-@interface UIView (FWApplication)
+@interface FWViewWrapper (FWApplication)
 
 #pragma mark - Transform
 
 // 获取当前view的transform scale x
-@property (nonatomic, assign, readonly) CGFloat fwScaleX;
+@property (nonatomic, assign, readonly) CGFloat scaleX;
 
 // 获取当前view的transform scale y
-@property (nonatomic, assign, readonly) CGFloat fwScaleY;
+@property (nonatomic, assign, readonly) CGFloat scaleY;
 
 // 获取当前view的transform translation x
-@property (nonatomic, assign, readonly) CGFloat fwTranslationX;
+@property (nonatomic, assign, readonly) CGFloat translationX;
 
 // 获取当前view的transform translation y
-@property (nonatomic, assign, readonly) CGFloat fwTranslationY;
+@property (nonatomic, assign, readonly) CGFloat translationY;
 
 #pragma mark - Size
 
 // 设置自动计算适合高度的frame，需实现sizeThatFits:方法
-@property (nonatomic, assign) CGRect fwFitFrame;
+@property (nonatomic, assign) CGRect fitFrame;
 
 // 计算当前视图适合大小，需实现sizeThatFits:方法
-@property (nonatomic, assign, readonly) CGSize fwFitSize;
+@property (nonatomic, assign, readonly) CGSize fitSize;
 
 // 计算指定边界，当前视图适合大小，需实现sizeThatFits:方法
-- (CGSize)fwFitSizeWithDrawSize:(CGSize)drawSize;
+- (CGSize)fitSizeWithDrawSize:(CGSize)drawSize;
 
 #pragma mark - Subview
 
 // 移除所有子视图
-- (void)fwRemoveAllSubviews;
+- (void)removeAllSubviews;
 
 // 递归查找指定子类的第一个视图
-- (nullable __kindof UIView *)fwSubviewOfClass:(Class)clazz;
+- (nullable __kindof UIView *)subviewOfClass:(Class)clazz;
 
 // 递归查找指定条件的第一个视图
-- (nullable __kindof UIView *)fwSubviewOfBlock:(BOOL (^)(UIView *view))block;
+- (nullable __kindof UIView *)subviewOfBlock:(BOOL (^)(UIView *view))block;
 
 // 添加到父视图，nil时为从父视图移除
-- (void)fwMoveToSuperview:(nullable UIView *)view;
+- (void)moveToSuperview:(nullable UIView *)view;
 
 #pragma mark - Snapshot
 
 // 图片截图
-@property (nonatomic, readonly, nullable) UIImage *fwSnapshotImage;
+@property (nonatomic, readonly, nullable) UIImage *snapshotImage;
 
 // Pdf截图
-@property (nonatomic, readonly, nullable) NSData *fwSnapshotPdf;
+@property (nonatomic, readonly, nullable) NSData *snapshotPdf;
 
 #pragma mark - Drag
 
 // 是否启用拖动，默认NO
-@property (nonatomic, assign) BOOL fwDragEnabled;
+@property (nonatomic, assign) BOOL dragEnabled;
 
 // 拖动手势，延迟加载
-@property (nonatomic, readonly) UIPanGestureRecognizer *fwDragGesture;
+@property (nonatomic, readonly) UIPanGestureRecognizer *dragGesture;
 
 // 设置拖动限制区域，默认CGRectZero，无限制
-@property (nonatomic, assign) CGRect fwDragLimit;
+@property (nonatomic, assign) CGRect dragLimit;
 
 // 设置拖动动作有效区域，默认self.frame
-@property (nonatomic, assign) CGRect fwDragArea;
+@property (nonatomic, assign) CGRect dragArea;
 
 // 是否允许横向拖动(X)，默认YES
-@property (nonatomic, assign) BOOL fwDragHorizontal;
+@property (nonatomic, assign) BOOL dragHorizontal;
 
 // 是否允许纵向拖动(Y)，默认YES
-@property (nonatomic, assign) BOOL fwDragVertical;
+@property (nonatomic, assign) BOOL dragVertical;
 
 // 开始拖动回调
-@property (nullable, nonatomic, copy) void (^fwDragStartedBlock)(UIView *);
+@property (nullable, nonatomic, copy) void (^dragStartedBlock)(UIView *);
 
 // 拖动移动回调
-@property (nullable, nonatomic, copy) void (^fwDragMovedBlock)(UIView *);
+@property (nullable, nonatomic, copy) void (^dragMovedBlock)(UIView *);
 
 // 结束拖动回调
-@property (nullable, nonatomic, copy) void (^fwDragEndedBlock)(UIView *);
+@property (nullable, nonatomic, copy) void (^dragEndedBlock)(UIView *);
 
 @end
 
-#pragma mark - UIView+FWAnimation
+#pragma mark - FWViewWrapper+FWAnimation
 
-@interface UIView (FWAnimation)
-
-#pragma mark - Block
-
-/**
- 取消动画效果执行block
- 
- @param block 动画代码块
- */
-+ (void)fwAnimateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block;
-
-/**
- 取消动画效果执行block
- 
- @param block 动画代码块
- @param completion 完成事件
- */
-+ (void)fwAnimateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion;
-
-/**
- 执行block动画完成后执行指定回调
- 
- @param block 动画代码块
- @param completion 完成事件
- */
-+ (void)fwAnimateWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion;
+@interface FWViewWrapper (FWAnimation)
 
 #pragma mark - Animation
 
@@ -133,7 +107,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param block      动画代码块
  @param completion 完成事件
  */
-- (void)fwAddAnimationWithBlock:(void (^)(void))block
+- (void)addAnimationWithBlock:(void (^)(void))block
                      completion:(nullable void (^)(BOOL finished))completion;
 
 /**
@@ -143,7 +117,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param duration   持续时间
  @param completion 完成事件
  */
-- (void)fwAddAnimationWithBlock:(void (^)(void))block
+- (void)addAnimationWithBlock:(void (^)(void))block
                        duration:(NSTimeInterval)duration
                      completion:(nullable void (^)(BOOL finished))completion;
 
@@ -155,7 +129,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param duration   持续时间，默认0.2
  @param completion 完成事件
  */
-- (void)fwAddAnimationWithCurve:(UIViewAnimationCurve)curve
+- (void)addAnimationWithCurve:(UIViewAnimationCurve)curve
                      transition:(UIViewAnimationTransition)transition
                        duration:(NSTimeInterval)duration
                      completion:(nullable void (^)(BOOL finished))completion;
@@ -170,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion 完成事件
  @return CABasicAnimation
  */
-- (CABasicAnimation *)fwAddAnimationWithKeyPath:(NSString *)keyPath
+- (CABasicAnimation *)addAnimationWithKeyPath:(NSString *)keyPath
                                       fromValue:(id)fromValue
                                         toValue:(id)toValue
                                        duration:(CFTimeInterval)duration
@@ -184,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param duration   持续时间
  @param completion 完成事件
  */
-- (void)fwAddTransitionWithOption:(UIViewAnimationOptions)option
+- (void)addTransitionWithOption:(UIViewAnimationOptions)option
                             block:(void (^)(void))block
                          duration:(NSTimeInterval)duration
                        completion:(nullable void (^)(BOOL finished))completion;
@@ -198,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param animationsEnabled 是否启用动画
  @param completion 完成事件
  */
-- (void)fwAddTransitionWithOption:(UIViewAnimationOptions)option
+- (void)addTransitionWithOption:(UIViewAnimationOptions)option
                             block:(void (^)(void))block
                          duration:(NSTimeInterval)duration
                 animationsEnabled:(BOOL)animationsEnabled
@@ -212,7 +186,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param duration   持续时间
  @param completion 完成事件
  */
-- (void)fwAddTransitionToView:(UIView *)toView
+- (void)addTransitionToView:(UIView *)toView
                    withOption:(UIViewAnimationOptions)option
                      duration:(NSTimeInterval)duration
                    completion:(nullable void (^)(BOOL finished))completion;
@@ -228,7 +202,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param completion     完成事件
  @return CATransition
  */
-- (CATransition *)fwAddTransitionWithType:(NSString *)type
+- (CATransition *)addTransitionWithType:(NSString *)type
                                   subtype:(nullable NSString *)subtype
                            timingFunction:(nullable NSString *)timingFunction
                                  duration:(CFTimeInterval)duration
@@ -237,12 +211,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  移除单个框架视图动画
  */
-- (void)fwRemoveAnimation;
+- (void)removeAnimation;
 
 /**
  移除所有视图动画
  */
-- (void)fwRemoveAllAnimations;
+- (void)removeAllAnimations;
 
 #pragma mark - Custom
 
@@ -254,7 +228,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param completion 完成回调
  *  @return CABasicAnimation
  */
-- (CABasicAnimation *)fwStrokeWithLayer:(CAShapeLayer *)layer
+- (CABasicAnimation *)strokeWithLayer:(CAShapeLayer *)layer
                                duration:(NSTimeInterval)duration
                              completion:(nullable void (^)(BOOL finished))completion;
 
@@ -266,7 +240,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   单次时间，默认0.03
  *  @param completion 完成回调
  */
-- (void)fwShakeWithTimes:(int)times
+- (void)shakeWithTimes:(int)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
               completion:(nullable void (^)(BOOL finished))completion;
@@ -278,7 +252,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   持续时长
  *  @param completion 完成回调
  */
-- (void)fwFadeWithAlpha:(float)alpha
+- (void)fadeWithAlpha:(float)alpha
                duration:(NSTimeInterval)duration
              completion:(nullable void (^)(BOOL finished))completion;
 
@@ -289,7 +263,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   持续时长，建议0.5
  *  @param completion 完成回调
  */
-- (void)fwFadeWithBlock:(void (^)(void))block
+- (void)fadeWithBlock:(void (^)(void))block
                duration:(NSTimeInterval)duration
              completion:(nullable void (^)(BOOL finished))completion;
 
@@ -300,7 +274,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   持续时长
  *  @param completion 完成回调
  */
-- (void)fwRotateWithDegree:(CGFloat)degree
+- (void)rotateWithDegree:(CGFloat)degree
                   duration:(NSTimeInterval)duration
                 completion:(nullable void (^)(BOOL finished))completion;
 
@@ -312,7 +286,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   持续时长
  *  @param completion 完成回调
  */
-- (void)fwScaleWithScaleX:(float)scaleX
+- (void)scaleWithScaleX:(float)scaleX
                    scaleY:(float)scaleY
                  duration:(NSTimeInterval)duration
                completion:(nullable void (^)(BOOL finished))completion;
@@ -324,7 +298,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   持续时长
  *  @param completion 完成回调
  */
-- (void)fwMoveWithPoint:(CGPoint)point
+- (void)moveWithPoint:(CGPoint)point
                duration:(NSTimeInterval)duration
              completion:(nullable void (^)(BOOL finished))completion;
 
@@ -335,9 +309,38 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   持续时长
  *  @param completion 完成回调
  */
-- (void)fwMoveWithFrame:(CGRect)frame
+- (void)moveWithFrame:(CGRect)frame
                duration:(NSTimeInterval)duration
              completion:(nullable void (^)(BOOL finished))completion;
+
+@end
+
+@interface FWViewClassWrapper (FWAnimation)
+
+#pragma mark - Block
+
+/**
+ 取消动画效果执行block
+ 
+ @param block 动画代码块
+ */
+- (void)animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block;
+
+/**
+ 取消动画效果执行block
+ 
+ @param block 动画代码块
+ @param completion 完成事件
+ */
+- (void)animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion;
+
+/**
+ 执行block动画完成后执行指定回调
+ 
+ @param block 动画代码块
+ @param completion 完成事件
+ */
+- (void)animateWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion;
 
 @end
 
@@ -364,26 +367,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#pragma mark - CALayer+FWLayer
+#pragma mark - FWLayerWrapper+FWLayer
 
-/**
-CALayer+FWLayer
-*/
-@interface CALayer (FWLayer)
+@interface FWLayerWrapper (FWLayer)
 
 // 设置阴影颜色、偏移和半径
-- (void)fwSetShadowColor:(nullable UIColor *)color
+- (void)setShadowColor:(nullable UIColor *)color
                   offset:(CGSize)offset
                   radius:(CGFloat)radius;
 
 @end
 
-#pragma mark - CAGradientLayer+FWLayer
+#pragma mark - FWGradientLayerClassWrapper+FWLayer
 
-/**
- CAGradientLayer+FWLayer
- */
-@interface CAGradientLayer (FWLayer)
+@interface FWGradientLayerClassWrapper (FWLayer)
 
 /**
  *  创建渐变层，需手工addLayer
@@ -395,7 +392,7 @@ CALayer+FWLayer
  *  @param endPoint   渐变结束点
  *  @return 渐变Layer
  */
-+ (CAGradientLayer *)fwGradientLayer:(CGRect)frame
+- (CAGradientLayer *)gradientLayer:(CGRect)frame
                               colors:(NSArray *)colors
                            locations:(nullable NSArray<NSNumber *> *)locations
                           startPoint:(CGPoint)startPoint
@@ -403,12 +400,9 @@ CALayer+FWLayer
 
 @end
 
-#pragma mark - UIView+FWLayer
+#pragma mark - FWViewWrapper+FWLayer
 
-/**
- UIView+FWLayer
- */
-@interface UIView (FWLayer)
+@interface FWViewWrapper (FWLayer)
 
 #pragma mark - Effect
 
@@ -417,7 +411,7 @@ CALayer+FWLayer
  *
  *  @param style 毛玻璃效果样式
  */
-- (nullable UIVisualEffectView *)fwSetBlurEffect:(UIBlurEffectStyle)style;
+- (nullable UIVisualEffectView *)setBlurEffect:(UIBlurEffectStyle)style;
 
 #pragma mark - Bezier
 
@@ -429,7 +423,7 @@ CALayer+FWLayer
  @param strokeColor 绘制颜色
  @param fillColor 填充颜色
  */
-- (void)fwDrawBezierPath:(UIBezierPath *)bezierPath
+- (void)drawBezierPath:(UIBezierPath *)bezierPath
              strokeWidth:(CGFloat)strokeWidth
              strokeColor:(UIColor *)strokeColor
                fillColor:(nullable UIColor *)fillColor;
@@ -444,7 +438,7 @@ CALayer+FWLayer
  @param locations 渐变位置，传NULL时均分，如：CGFloat locations[] = {0.0, 1.0};
  @param direction 渐变方向，自动计算startPoint和endPoint，支持四个方向，默认向下Down
  */
-- (void)fwDrawLinearGradient:(CGRect)rect
+- (void)drawLinearGradient:(CGRect)rect
                       colors:(NSArray *)colors
                    locations:(nullable const CGFloat *)locations
                    direction:(UISwipeGestureRecognizerDirection)direction;
@@ -458,7 +452,7 @@ CALayer+FWLayer
  @param startPoint 渐变开始点，需要根据rect计算
  @param endPoint 渐变结束点，需要根据rect计算
  */
-- (void)fwDrawLinearGradient:(CGRect)rect
+- (void)drawLinearGradient:(CGRect)rect
                       colors:(NSArray *)colors
                    locations:(nullable const CGFloat *)locations
                   startPoint:(CGPoint)startPoint
@@ -474,7 +468,7 @@ CALayer+FWLayer
  *  @param endPoint   渐变结束点
  *  @return 渐变Layer
  */
-- (CAGradientLayer *)fwAddGradientLayer:(CGRect)frame
+- (CAGradientLayer *)addGradientLayer:(CGRect)frame
                                  colors:(NSArray *)colors
                               locations:(nullable NSArray<NSNumber *> *)locations
                              startPoint:(CGPoint)startPoint
@@ -483,14 +477,14 @@ CALayer+FWLayer
 #pragma mark - Circle
 
 // 添加进度圆形Layer，可设置绘制颜色和宽度，返回进度CAShapeLayer用于动画，degree为起始角度，如-90
-- (CAShapeLayer *)fwAddCircleLayer:(CGRect)rect
+- (CAShapeLayer *)addCircleLayer:(CGRect)rect
                             degree:(CGFloat)degree
                           progress:(CGFloat)progress
                        strokeColor:(UIColor *)strokeColor
                        strokeWidth:(CGFloat)strokeWidth;
 
 // 添加进度圆形Layer，可设置绘制底色和进度颜色，返回进度CAShapeLayer用于动画，degree为起始角度，如-90
-- (CAShapeLayer *)fwAddCircleLayer:(CGRect)rect
+- (CAShapeLayer *)addCircleLayer:(CGRect)rect
                             degree:(CGFloat)degree
                           progress:(CGFloat)progress
                      progressColor:(UIColor *)progressColor
@@ -498,7 +492,7 @@ CALayer+FWLayer
                        strokeWidth:(CGFloat)strokeWidth;
 
 // 添加渐变进度圆形Layer，返回渐变Layer容器，添加strokeEnd动画请使用layer.mask即可
-- (CALayer *)fwAddCircleLayer:(CGRect)rect
+- (CALayer *)addCircleLayer:(CGRect)rect
                        degree:(CGFloat)degree
                      progress:(CGFloat)progress
                 gradientBlock:(nullable void (^)(CALayer *layer))gradientBlock
@@ -516,7 +510,7 @@ CALayer+FWLayer
  @param lineColor 虚线的颜色
  @return 虚线Layer
  */
-- (CALayer *)fwAddDashLayer:(CGRect)rect
+- (CALayer *)addDashLayer:(CGRect)rect
                  lineLength:(CGFloat)lineLength
                 lineSpacing:(CGFloat)lineSpacing
                   lineColor:(UIColor *)lineColor;

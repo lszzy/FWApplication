@@ -35,10 +35,10 @@
     cycleView.autoScrollTimeInterval = 4;
     cycleView.placeholderImage = [TestBundle imageNamed:@"test.gif"];
     [self.view addSubview:cycleView];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeTop withInset:10];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-    [cycleView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-    [cycleView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:10];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+    [cycleView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+    [cycleView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     
     NSMutableArray *imageUrls = [NSMutableArray array];
     [imageUrls addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -65,12 +65,12 @@
     cycleView.pageControlDotSize = CGSizeMake(10, 1);
     cycleView.pageControlDotSpacing = 4;
     [self.view addSubview:cycleView];
-    [cycleView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-    [cycleView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [cycleView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+    [cycleView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     // 看起来不会连在一起
     cycleView.contentViewInset = UIEdgeInsetsMake(0, 0, 0, 10);
-    [cycleView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth + 10];
+    [cycleView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth + 10];
     
     NSMutableArray *imageUrls = [NSMutableArray array];
     [imageUrls addObject:@"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif"];
@@ -95,10 +95,10 @@
     cycleView.placeholderImage = [TestBundle imageNamed:@"public_icon"];
     cycleView.pageControlStyle = FWBannerViewPageControlStyleNone;
     [self.view addSubview:cycleView];
-    [cycleView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-    [cycleView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-    [cycleView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [cycleView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+    [cycleView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+    [cycleView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     
     NSMutableArray *imageUrls2 = [NSMutableArray array];
     [imageUrls2 addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -126,10 +126,10 @@
     cycleView.autoScroll = YES;
     cycleView.autoScrollTimeInterval = 4;
     [self.view addSubview:cycleView];
-    [cycleView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-    [cycleView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-    [cycleView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [cycleView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+    [cycleView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+    [cycleView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     
     NSMutableArray *imageUrls2 = [NSMutableArray array];
     [imageUrls2 addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -158,10 +158,10 @@
     cycleView.autoScroll = YES;
     cycleView.autoScrollTimeInterval = 4;
     [self.view addSubview:cycleView];
-    [cycleView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-    [cycleView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-    [cycleView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [cycleView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+    [cycleView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+    [cycleView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     
     NSMutableArray *imageUrls2 = [NSMutableArray array];
     [imageUrls2 addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -191,10 +191,10 @@
     cycleView.autoScroll = YES;
     cycleView.autoScrollTimeInterval = 4;
     [self.view addSubview:cycleView];
-    [cycleView fwPinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
-    [cycleView fwPinEdgeToSuperview:NSLayoutAttributeLeft];
-    [cycleView fwSetDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-    [cycleView fwSetDimension:NSLayoutAttributeHeight toSize:100];
+    [cycleView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.previousView withOffset:10];
+    [cycleView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
+    [cycleView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+    [cycleView.fw setDimension:NSLayoutAttributeHeight toSize:100];
     
     NSMutableArray *imageUrls2 = [NSMutableArray array];
     [imageUrls2 addObject:@"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif"];

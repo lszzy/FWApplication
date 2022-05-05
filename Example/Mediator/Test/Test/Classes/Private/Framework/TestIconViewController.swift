@@ -28,8 +28,8 @@ class TestIconCell: UICollectionViewCell {
         contentView.backgroundColor = Theme.cellColor
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
-        imageView.fwLayoutChain.centerX().top().size(CGSize(width: 60, height: 60))
-        nameLabel.fwLayoutChain.edges(.zero, excludingEdge: .top)
+        imageView.fw.layoutChain.centerX().top().size(CGSize(width: 60, height: 60))
+        nameLabel.fw.layoutChain.edges(.zero, excludingEdge: .top)
             .topToBottomOfView(imageView)
     }
     
@@ -46,23 +46,23 @@ class TestIconCell: UICollectionViewCell {
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.tintColor = Theme.textColor
-        searchBar.fwContentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
-        searchBar.fwBackgroundColor = Theme.barColor
-        searchBar.fwTextFieldBackgroundColor = Theme.tableColor
-        searchBar.fwSearchIconOffset = 16 - 6
-        searchBar.fwSearchTextOffset = 4
-        searchBar.fwSearchIconCenter = false
+        searchBar.fw.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
+        searchBar.fw.backgroundColor = Theme.barColor
+        searchBar.fw.textFieldBackgroundColor = Theme.tableColor
+        searchBar.fw.searchIconOffset = 16 - 6
+        searchBar.fw.searchTextOffset = 4
+        searchBar.fw.searchIconCenter = false
         
-        let textField = searchBar.fwTextField
+        let textField = searchBar.fw.textField
         textField?.font = UIFont.systemFont(ofSize: 12)
-        textField?.fwSetCornerRadius(16)
-        textField?.fwTouchResign = true
+        textField?.fw.setCornerRadius(16)
+        textField?.fw.touchResign = true
         return searchBar
     }()
     
     override func renderView() {
         collectionView.backgroundColor = Theme.backgroundColor
-        collectionView.fwKeyboardDismissOnDrag = true
+        collectionView.fw.keyboardDismissOnDrag = true
     }
     
     func renderCollectionViewLayout() -> UICollectionViewLayout {
@@ -73,17 +73,17 @@ class TestIconCell: UICollectionViewCell {
     
     func renderCollectionLayout() {
         view.addSubview(searchBar)
-        searchBar.fwLayoutChain
+        searchBar.fw.layoutChain
             .edges(excludingEdge: .bottom)
             .height(FWNavigationBarHeight)
-        collectionView.fwLayoutChain
+        collectionView.fw.layoutChain
             .edges(excludingEdge: .top)
             .topToBottomOfView(searchBar)
     }
     
     override func renderData() {
-        fwSetRightBarItem(NSStringFromClass(iconClass)) { [weak self] sender in
-            self?.fwShowSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["Octicons", "MaterialIcons", "FontAwesome", "FoundationIcons", "IonIcons"], actionBlock: { index in
+        fw.setRightBarItem(NSStringFromClass(iconClass)) { [weak self] sender in
+            self?.fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["Octicons", "MaterialIcons", "FontAwesome", "FoundationIcons", "IonIcons"], actionBlock: { index in
                 if index == 0 {
                     self?.iconClass = Octicons.self
                 } else if index == 1 {
@@ -100,7 +100,7 @@ class TestIconCell: UICollectionViewCell {
         }
         
         var array = Array(iconClass.iconMapper().keys)
-        let text = FWSafeString(searchBar.text?.fwTrimString)
+        let text = FWSafeString(searchBar.text?.fw.trimString)
         if text.count > 0 {
             array.removeAll { icon in
                 return !icon.lowercased().contains(text.lowercased())
@@ -115,18 +115,18 @@ class TestIconCell: UICollectionViewCell {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = TestIconCell.fwCell(with: collectionView, indexPath: indexPath)
-        let name = collectionData.fwObject(at: indexPath.item) as? String
-        cell.imageView.fwThemeImage = FWIconImage(name.fwSafeValue, 60)?.fwTheme
+        let cell = TestIconCell(collectionView: collectionView, indexPath: indexPath)
+        let name = collectionData.object(at: indexPath.item) as? String
+        cell.imageView.fw.themeImage = FWIconImage(name.safeValue, 60)?.fw.themeImage
         cell.nameLabel.text = name
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let name = collectionData.fwObject(at: indexPath.item) as? String
+        let name = collectionData.object(at: indexPath.item) as? String
         UIPasteboard.general.string = FWSafeString(name)
-        fwShowMessage(withText: name)
+        fw.showMessage(withText: name)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

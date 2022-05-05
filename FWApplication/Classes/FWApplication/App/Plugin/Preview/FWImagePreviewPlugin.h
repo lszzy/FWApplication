@@ -1,13 +1,12 @@
 /**
  @header     FWImagePreviewPlugin.h
  @indexgroup FWApplication
-      FWImagePreviewPlugin
  @author     wuyong
  @copyright  Copyright © 2018年 wuyong.site. All rights reserved.
  @updated    2018/9/22
  */
 
-#import <UIKit/UIKit.h>
+@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -26,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param placeholderImage 占位图或缩略图句柄，默认nil
 /// @param renderBlock 自定义渲染句柄，默认nil
 /// @param customBlock 自定义配置句柄，默认nil
-- (void)fwViewController:(UIViewController *)viewController
+- (void)viewController:(UIViewController *)viewController
         showImagePreview:(NSArray *)imageURLs
               imageInfos:(nullable NSArray *)imageInfos
             currentIndex:(NSInteger)currentIndex
@@ -48,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param imageInfos 自定义图片信息数组
 /// @param currentIndex 当前索引，默认0
 /// @param sourceView 来源视图，可选，支持UIView|NSValue.CGRect，默认nil
-- (void)fwShowImagePreviewWithImageURLs:(NSArray *)imageURLs
+- (void)showImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(nullable NSArray *)imageInfos
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(nullable id _Nullable (^)(NSInteger index))sourceView;
@@ -61,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param placeholderImage 占位图或缩略图句柄，默认nil
 /// @param renderBlock 自定义渲染句柄，默认nil
 /// @param customBlock 自定义句柄，默认nil
-- (void)fwShowImagePreviewWithImageURLs:(NSArray *)imageURLs
+- (void)showImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(nullable NSArray *)imageInfos
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(nullable id _Nullable (^)(NSInteger index))sourceView
@@ -71,16 +70,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-/// UIViewController使用图片预览插件，全局可使用UIWindow.fwMainWindow.fwTopPresentedController
-@interface UIViewController (FWImagePreviewPluginController) <FWImagePreviewPluginController>
+/// UIViewController使用图片预览插件，全局可使用UIWindow.fw.topPresentedController
+@interface FWViewControllerWrapper (FWImagePreviewPluginController) <FWImagePreviewPluginController>
 
 /// 自定义图片预览插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWImagePreviewPlugin> fwImagePreviewPlugin;
+@property (nonatomic, strong, nullable) id<FWImagePreviewPlugin> imagePreviewPlugin;
 
 @end
 
-/// UIView使用图片预览插件，内部使用UIView.fwViewController
-@interface UIView (FWImagePreviewPluginController) <FWImagePreviewPluginController>
+/// UIView使用图片预览插件，内部使用UIView.fw.viewController
+@interface FWViewWrapper (FWImagePreviewPluginController) <FWImagePreviewPluginController>
 
 @end
 

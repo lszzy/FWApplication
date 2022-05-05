@@ -58,7 +58,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell fwCellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -80,97 +80,97 @@
 
 - (void)onGoogleMaps1
 {
-    NSURL *url = [NSURL fwGoogleMapsURLWithAddr:self.gps options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw googleMapsURLWithAddr:self.gps options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onGoogleMaps2
 {
-    NSURL *url = [NSURL fwGoogleMapsURLWithAddr:self.address options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw googleMapsURLWithAddr:self.address options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onGoogleMaps3
 {
-    NSURL *url = [NSURL fwGoogleMapsURLWithSaddr:self.from daddr:self.to mode:nil options:@{@"dirflg": @"t,h"}];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw googleMapsURLWithSaddr:self.from daddr:self.to mode:nil options:@{@"dirflg": @"t,h"}];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onGoogleMaps4
 {
-    NSURL *url = [NSURL fwGoogleMapsURLWithSaddr:nil daddr:self.target mode:@"driving" options:@{@"dirflg": @"th"}];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw googleMapsURLWithSaddr:nil daddr:self.target mode:@"driving" options:@{@"dirflg": @"th"}];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onAppleMaps1
 {
-    NSURL *url = [NSURL fwAppleMapsURLWithAddr:self.gps options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw appleMapsURLWithAddr:self.gps options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onAppleMaps2
 {
-    NSURL *url = [NSURL fwAppleMapsURLWithAddr:self.address options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw appleMapsURLWithAddr:self.address options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onAppleMaps3
 {
-    NSURL *url = [NSURL fwAppleMapsURLWithSaddr:self.from daddr:self.to options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw appleMapsURLWithSaddr:self.from daddr:self.to options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onAppleMaps4
 {
-    NSURL *url = [NSURL fwAppleMapsURLWithSaddr:nil daddr:self.target options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw appleMapsURLWithSaddr:nil daddr:self.target options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onBaiduMaps1
 {
-    NSURL *url = [NSURL fwBaiduMapsURLWithAddr:self.gps options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw baiduMapsURLWithAddr:self.gps options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onBaiduMaps2
 {
-    NSURL *url = [NSURL fwBaiduMapsURLWithAddr:self.address options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw baiduMapsURLWithAddr:self.address options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onBaiduMaps3
 {
-    NSURL *url = [NSURL fwBaiduMapsURLWithSaddr:self.from daddr:self.to mode:nil options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw baiduMapsURLWithSaddr:self.from daddr:self.to mode:nil options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 
 - (void)onBaiduMaps4
 {
-    NSURL *url = [NSURL fwBaiduMapsURLWithSaddr:nil daddr:self.target mode:@"walking" options:nil];
-    if ([UIApplication fwCanOpenURL:url]) {
-        [UIApplication fwOpenURL:url];
+    NSURL *url = [NSURL.fw baiduMapsURLWithSaddr:nil daddr:self.target mode:@"walking" options:nil];
+    if ([UIApplication.fw canOpenURL:url]) {
+        [UIApplication.fw openURL:url];
     }
 }
 

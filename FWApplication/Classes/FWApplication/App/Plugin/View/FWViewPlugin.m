@@ -10,56 +10,59 @@
 #import "FWViewPlugin.h"
 #import "FWViewPluginImpl.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
-#pragma mark - UIView+FWViewPlugin
+#pragma mark - FWViewWrapper+FWViewPlugin
 
-@implementation UIView (FWViewPlugin)
+@implementation FWViewWrapper (FWViewPlugin)
 
-- (id<FWViewPlugin>)fwViewPlugin
+- (id<FWViewPlugin>)viewPlugin
 {
-    id<FWViewPlugin> viewPlugin = objc_getAssociatedObject(self, @selector(fwViewPlugin));
+    id<FWViewPlugin> viewPlugin = objc_getAssociatedObject(self.base, @selector(viewPlugin));
     if (!viewPlugin) viewPlugin = [FWPluginManager loadPlugin:@protocol(FWViewPlugin)];
     if (!viewPlugin) viewPlugin = FWViewPluginImpl.sharedInstance;
     return viewPlugin;
 }
 
-- (void)setFwViewPlugin:(id<FWViewPlugin>)fwViewPlugin
+- (void)setViewPlugin:(id<FWViewPlugin>)viewPlugin
 {
-    objc_setAssociatedObject(self, @selector(fwViewPlugin), fwViewPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(viewPlugin), viewPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIView<FWProgressViewPlugin> *)fwProgressViewWithStyle:(FWProgressViewStyle)style
+- (UIView<FWProgressViewPlugin> *)progressViewWithStyle:(FWProgressViewStyle)style
 {
-    id<FWViewPlugin> plugin = self.fwViewPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(fwProgressViewWithStyle:)]) {
+    id<FWViewPlugin> plugin = self.viewPlugin;
+    if (!plugin || ![plugin respondsToSelector:@selector(progressViewWithStyle:)]) {
         plugin = FWViewPluginImpl.sharedInstance;
     }
     return [plugin progressViewWithStyle:style];
 }
 
-- (UIView<FWIndicatorViewPlugin> *)fwIndicatorViewWithStyle:(FWIndicatorViewStyle)style
+- (UIView<FWIndicatorViewPlugin> *)indicatorViewWithStyle:(FWIndicatorViewStyle)style
 {
-    id<FWViewPlugin> plugin = self.fwViewPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(fwIndicatorViewWithStyle:)]) {
+    id<FWViewPlugin> plugin = self.viewPlugin;
+    if (!plugin || ![plugin respondsToSelector:@selector(indicatorViewWithStyle:)]) {
         plugin = FWViewPluginImpl.sharedInstance;
     }
     return [plugin indicatorViewWithStyle:style];
 }
 
-+ (UIView<FWProgressViewPlugin> *)fwProgressViewWithStyle:(FWProgressViewStyle)style
+@end
+
+@implementation FWViewClassWrapper (FWViewPlugin)
+
+- (UIView<FWProgressViewPlugin> *)progressViewWithStyle:(FWProgressViewStyle)style
 {
     id<FWViewPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWViewPlugin)];
-    if (!plugin || ![plugin respondsToSelector:@selector(fwProgressViewWithStyle:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(progressViewWithStyle:)]) {
         plugin = FWViewPluginImpl.sharedInstance;
     }
     return [plugin progressViewWithStyle:style];
 }
 
-+ (UIView<FWIndicatorViewPlugin> *)fwIndicatorViewWithStyle:(FWIndicatorViewStyle)style
+- (UIView<FWIndicatorViewPlugin> *)indicatorViewWithStyle:(FWIndicatorViewStyle)style
 {
     id<FWViewPlugin> plugin = [FWPluginManager loadPlugin:@protocol(FWViewPlugin)];
-    if (!plugin || ![plugin respondsToSelector:@selector(fwIndicatorViewWithStyle:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(indicatorViewWithStyle:)]) {
         plugin = FWViewPluginImpl.sharedInstance;
     }
     return [plugin indicatorViewWithStyle:style];

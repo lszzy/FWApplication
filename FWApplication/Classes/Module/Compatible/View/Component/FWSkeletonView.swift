@@ -79,14 +79,14 @@ import FWApplication
             fromValue = 0.6
             toValue = 1
         default:
-            let lightColor = UIColor.fwColor(withHex: 0xEEEEEE)
+            let lightColor = UIColor.fw.color(withHex: 0xEEEEEE)
             let lightBrightness: CGFloat = 0.92
-            let darkColor = UIColor.fwColor(withHex: 0x282828)
+            let darkColor = UIColor.fw.color(withHex: 0x282828)
             let darkBrightness: CGFloat = 0.5
             colors = [
-                UIColor.fwThemeLight(lightColor, dark: darkColor),
-                UIColor.fwThemeLight(lightColor.fwBrightnessColor(lightBrightness), dark: darkColor.fwBrightnessColor(darkBrightness)),
-                UIColor.fwThemeLight(lightColor, dark: darkColor)
+                UIColor.fw.themeLight(lightColor, dark: darkColor),
+                UIColor.fw.themeLight(lightColor.fw.brightnessColor(lightBrightness), dark: darkColor.fw.brightnessColor(darkBrightness)),
+                UIColor.fw.themeLight(lightColor, dark: darkColor)
             ]
         }
     }
@@ -158,7 +158,7 @@ import FWApplication
         default:
             let startAnimation = CABasicAnimation(keyPath: "startPoint")
             let endAnimation = CABasicAnimation(keyPath: "endPoint")
-            gradientLayer.fwThemeColors = colors
+            gradientLayer.fw.themeColors = colors
             switch direction {
             case .right:
                 startAnimation.fromValue = NSValue(cgPoint: CGPoint(x:-1, y:0.5))
@@ -212,9 +212,9 @@ import FWApplication
     public var animation: FWSkeletonAnimationProtocol?
     
     /// 骨架背景色，默认自动适配
-    public var backgroundColor: UIColor = UIColor.fwThemeLight(UIColor.white, dark: UIColor.black)
+    public var backgroundColor: UIColor = UIColor.fw.themeLight(UIColor.white, dark: UIColor.black)
     /// 骨架颜色，默认自动适配
-    public var skeletonColor: UIColor = UIColor.fwThemeLight(UIColor.fwColor(withHex: 0xEEEEEE), dark: UIColor.fwColor(withHex: 0x282828))
+    public var skeletonColor: UIColor = UIColor.fw.themeLight(UIColor.fw.color(withHex: 0xEEEEEE), dark: UIColor.fw.color(withHex: 0x282828))
     
     /// 多行标签行高，默认15
     public var lineHeight: CGFloat = 15
@@ -251,7 +251,7 @@ import FWApplication
     /// 骨架图片，默认空
     open var image: UIImage? {
         didSet {
-            layer.fwThemeContents = image
+            layer.fw.themeContents = image
             layer.contentsGravity = .resizeAspectFill
         }
     }
@@ -290,7 +290,7 @@ import FWApplication
     /// 开始动画
     open func startAnimating() {
         animationLayers.forEach { (gradientLayer) in
-            gradientLayer.fwThemeContext = self
+            gradientLayer.fw.themeContext = self
             animation?.skeletonAnimationStart(gradientLayer)
         }
     }
@@ -403,7 +403,7 @@ import FWApplication
     open func setScrollView(_ scrollView: UIScrollView, scrollBlock: ((CGFloat) -> ())? = nil) {
         var block = scrollBlock
         if block == nil && superview != nil {
-            let constraint = fwConstraint(toSuperview: .top)
+            let constraint = fw.constraint(toSuperview: .top)
             let constant = constraint?.constant ?? 0
             block = { (offsetY) in
                 constraint?.constant = constant - offsetY
@@ -413,7 +413,7 @@ import FWApplication
         if scrollView.contentOffset.y <= 0 && superview != nil {
             block?(scrollView.contentOffset.y)
         }
-        scrollView.fwObserveProperty("contentOffset") { [weak self] (_, _) in
+        scrollView.fw.observeProperty("contentOffset") { [weak self] (_, _) in
             if scrollView.contentOffset.y <= 0 && self?.superview != nil {
                 block?(scrollView.contentOffset.y)
             }
@@ -567,7 +567,7 @@ import FWApplication
 @objcMembers open class FWSkeletonTableView: FWSkeletonLayout, UITableViewDataSource, UITableViewDelegate {
     /// 表格视图，默认不可滚动
     open lazy var tableView: UITableView = {
-        let tableView = UITableView.fwTableView(style)
+        let tableView = UITableView.fw.tableView(style)
         tableView.frame = bounds
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
@@ -624,7 +624,7 @@ import FWApplication
         tableView.backgroundColor = FWSkeletonAppearance.appearance.backgroundColor
         
         addSubview(tableView)
-        tableView.fwPinEdgesToSuperview()
+        tableView.fw.pinEdgesToSuperview()
     }
     
     open override func layoutSubviews() {
@@ -652,7 +652,7 @@ import FWApplication
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let layoutCell = tableDelegate.tableView(tableView, cellForRowAt: indexPath)
-        let cell = UITableViewCell.fwCell(with: tableView, style: .default, reuseIdentifier: "FWSkeletonCell")
+        let cell = UITableViewCell.fw.cell(with: tableView, style: .default, reuseIdentifier: "FWSkeletonCell")
         cell.selectionStyle = .none
         if let skeletonLayout = cell.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
@@ -669,7 +669,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutCell)
         skeletonLayout.tag = 2052
         cell.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return cell
     }
@@ -680,7 +680,7 @@ import FWApplication
     
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let layoutHeader = tableDelegate.tableView(tableView, viewForHeaderInSection: section) else { return nil }
-        let header = UITableViewHeaderFooterView.fwHeaderFooterView(with: tableView, reuseIdentifier: "FWSkeletonHeader")
+        let header = UITableViewHeaderFooterView.fw.headerFooterView(with: tableView, reuseIdentifier: "FWSkeletonHeader")
         if let skeletonLayout = header.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
             removeAnimationView(skeletonLayout)
@@ -696,7 +696,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutHeader)
         skeletonLayout.tag = 2052
         header.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return header
     }
@@ -707,7 +707,7 @@ import FWApplication
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard let layoutFooter = tableDelegate.tableView(tableView, viewForFooterInSection: section) else { return nil }
-        let footer = UITableViewHeaderFooterView.fwHeaderFooterView(with: tableView, reuseIdentifier: "FWSkeletonFooter")
+        let footer = UITableViewHeaderFooterView.fw.headerFooterView(with: tableView, reuseIdentifier: "FWSkeletonFooter")
         if let skeletonLayout = footer.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
             removeAnimationView(skeletonLayout)
@@ -723,7 +723,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutFooter)
         skeletonLayout.tag = 2052
         footer.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return footer
     }
@@ -741,9 +741,9 @@ import FWApplication
     open lazy var collectionView: UICollectionView = {
         let collectionView: UICollectionView
         if let viewLayout = collectionViewLayout {
-            collectionView = UICollectionView.fwCollectionView(viewLayout)
+            collectionView = UICollectionView.fw.collectionView(viewLayout)
         } else {
-            collectionView = UICollectionView.fwCollectionView()
+            collectionView = UICollectionView.fw.collectionView()
         }
         collectionView.frame = bounds
         collectionView.isScrollEnabled = false
@@ -779,7 +779,7 @@ import FWApplication
         collectionView.backgroundColor = FWSkeletonAppearance.appearance.backgroundColor
         
         addSubview(collectionView)
-        collectionView.fwPinEdgesToSuperview()
+        collectionView.fw.pinEdgesToSuperview()
     }
     
     open override func layoutSubviews() {
@@ -812,7 +812,7 @@ import FWApplication
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let layoutCell = collectionDelegate.collectionView(collectionView, cellForItemAt: indexPath)
-        let cell = UICollectionViewCell.fwCell(with: collectionView, indexPath: indexPath, reuseIdentifier: "FWSkeletonCell")
+        let cell = UICollectionViewCell.fw.cell(with: collectionView, indexPath: indexPath, reuseIdentifier: "FWSkeletonCell")
         if let skeletonLayout = cell.contentView.viewWithTag(2052) as? FWSkeletonLayout {
             skeletonLayout.removeFromSuperview()
             removeAnimationView(skeletonLayout)
@@ -828,7 +828,7 @@ import FWApplication
         let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutCell)
         skeletonLayout.tag = 2052
         cell.contentView.addSubview(skeletonLayout)
-        skeletonLayout.fwPinEdgesToSuperview()
+        skeletonLayout.fw.pinEdgesToSuperview()
         addAnimationView(skeletonLayout)
         return cell
     }
@@ -844,7 +844,7 @@ import FWApplication
     open func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if kind == UICollectionView.elementKindSectionHeader {
             let layoutHeader = collectionDelegate.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-            let header = UICollectionReusableView.fwReusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonHeader")
+            let header = UICollectionReusableView.fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonHeader")
             if let skeletonLayout = header.viewWithTag(2052) as? FWSkeletonLayout {
                 skeletonLayout.removeFromSuperview()
                 removeAnimationView(skeletonLayout)
@@ -860,14 +860,14 @@ import FWApplication
             let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutHeader)
             skeletonLayout.tag = 2052
             header.addSubview(skeletonLayout)
-            skeletonLayout.fwPinEdgesToSuperview()
+            skeletonLayout.fw.pinEdgesToSuperview()
             addAnimationView(skeletonLayout)
             return header
         }
         
         if kind == UICollectionView.elementKindSectionFooter {
             let layoutFooter = collectionDelegate.collectionView(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
-            let footer = UICollectionReusableView.fwReusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonFooter")
+            let footer = UICollectionReusableView.fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath, reuseIdentifier: "FWSkeletonFooter")
             if let skeletonLayout = footer.viewWithTag(2052) as? FWSkeletonLayout {
                 skeletonLayout.removeFromSuperview()
                 removeAnimationView(skeletonLayout)
@@ -883,7 +883,7 @@ import FWApplication
             let skeletonLayout = FWSkeletonLayout.parseSkeletonLayout(layoutFooter)
             skeletonLayout.tag = 2052
             footer.addSubview(skeletonLayout)
-            skeletonLayout.fwPinEdgesToSuperview()
+            skeletonLayout.fw.pinEdgesToSuperview()
             addAnimationView(skeletonLayout)
             return footer
         }
@@ -903,22 +903,22 @@ import FWApplication
 // MARK: - UIKit+FWSkeletonLayout
 
 /// 视图显示骨架屏扩展
-@objc extension UIView {
-    private func fwShowSkeleton(delegate: FWSkeletonViewDelegate? = nil, block: ((FWSkeletonLayout) -> Void)? = nil) {
+@objc extension FWViewWrapper {
+    private func showSkeleton(delegate: FWSkeletonViewDelegate? = nil, block: ((FWSkeletonLayout) -> Void)? = nil) {
         // UITableView|UICollectionView调用addSubview不会显示，此处使用父视图
-        if self is UITableView || self is UICollectionView {
-            superview?.fwShowSkeleton(delegate: delegate, block: block)
+        if base is UITableView || base is UICollectionView {
+            base.superview?.fw.showSkeleton(delegate: delegate, block: block)
             return
         }
         
-        fwHideSkeleton()
-        setNeedsLayout()
-        layoutIfNeeded()
+        hideSkeleton()
+        base.setNeedsLayout()
+        base.layoutIfNeeded()
         
-        let layout = FWSkeletonLayout(layoutView: self)
+        let layout = FWSkeletonLayout(layoutView: base)
         layout.tag = 2051
-        addSubview(layout)
-        layout.fwPinEdgesToSuperview()
+        base.addSubview(layout)
+        layout.fw.pinEdgesToSuperview()
         
         delegate?.skeletonViewLayout(layout)
         block?(layout)
@@ -929,70 +929,70 @@ import FWApplication
     }
     
     /// 显示骨架屏，指定布局代理
-    open func fwShowSkeleton(delegate: FWSkeletonViewDelegate? = nil) {
-        fwShowSkeleton(delegate: delegate, block: nil)
+    open func showSkeleton(delegate: FWSkeletonViewDelegate? = nil) {
+        showSkeleton(delegate: delegate, block: nil)
     }
     
     /// 显示骨架屏，指定布局句柄
-    open func fwShowSkeleton(block: ((FWSkeletonLayout) -> Void)? = nil) {
-        fwShowSkeleton(delegate: nil, block: block)
+    open func showSkeleton(block: ((FWSkeletonLayout) -> Void)? = nil) {
+        showSkeleton(delegate: nil, block: block)
     }
     
     /// 显示骨架屏，默认布局代理为self
-    open func fwShowSkeleton() {
-        fwShowSkeleton(delegate: self as? FWSkeletonViewDelegate)
+    open func showSkeleton() {
+        showSkeleton(delegate: self.base as? FWSkeletonViewDelegate)
     }
     
     /// 隐藏骨架屏
-    open func fwHideSkeleton() {
+    open func hideSkeleton() {
         // UITableView|UICollectionView调用addSubview不会显示，此处使用父视图
-        if self is UITableView || self is UICollectionView {
-            superview?.fwHideSkeleton()
+        if base is UITableView || base is UICollectionView {
+            base.superview?.fw.hideSkeleton()
             return
         }
         
-        if let layout = subviews.first(where: { $0.tag == 2051 }) as? FWSkeletonLayout {
+        if let layout = base.subviews.first(where: { $0.tag == 2051 }) as? FWSkeletonLayout {
             layout.stopAnimating()
             layout.removeFromSuperview()
         }
     }
     
     /// 是否正在显示骨架屏
-    open var fwHasSkeleton: Bool {
+    open var hasSkeleton: Bool {
         // UITableView|UICollectionView调用addSubview不会显示，此处使用父视图
-        if self is UITableView || self is UICollectionView {
-            return superview?.fwHasSkeleton ?? false
+        if base is UITableView || base is UICollectionView {
+            return base.superview?.fw.hasSkeleton ?? false
         }
         
-        return subviews.firstIndex(where: { $0.tag == 2051 }) != nil
+        return base.subviews.firstIndex(where: { $0.tag == 2051 }) != nil
     }
 }
 
 /// 控制器显示骨架屏扩展
-@objc extension UIViewController {
+@objc extension FWViewControllerWrapper {
     /// 显示view骨架屏，指定布局代理
-    open func fwShowSkeleton(delegate: FWSkeletonViewDelegate? = nil) {
-        view.fwShowSkeleton(delegate: delegate)
+    open func showSkeleton(delegate: FWSkeletonViewDelegate? = nil) {
+        base.view.fw.showSkeleton(delegate: delegate)
     }
     
     /// 显示view骨架屏，指定布局句柄
-    open func fwShowSkeleton(block: ((FWSkeletonLayout) -> Void)? = nil) {
-        view.fwShowSkeleton(block: block)
+    open func showSkeleton(block: ((FWSkeletonLayout) -> Void)? = nil) {
+        base.view.fw.showSkeleton(block: block)
     }
     
     /// 显示view骨架屏，默认布局代理为self
-    open func fwShowSkeleton() {
-        fwShowSkeleton(delegate: self as? FWSkeletonViewDelegate)
+    open func showSkeleton() {
+        showSkeleton(delegate: self.base as? FWSkeletonViewDelegate)
     }
     
     /// 隐藏view骨架屏
-    open func fwHideSkeleton() {
-        view.fwHideSkeleton()
+    open func hideSkeleton() {
+        base.view.fw.hideSkeleton()
     }
     
     /// 是否正在显示view骨架屏
-    open var fwHasSkeleton: Bool {
-        return view.fwHasSkeleton
+    open var hasSkeleton: Bool {
+        return base.view.fw.hasSkeleton
     }
 }
 

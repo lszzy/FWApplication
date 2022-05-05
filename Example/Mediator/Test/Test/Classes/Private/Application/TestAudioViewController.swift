@@ -18,7 +18,7 @@ import FWApplication
     private lazy var audioImage: UIImageView = {
         let result = UIImageView()
         result.isUserInteractionEnabled = true
-        result.fwAddTapGesture { [weak self] sender in
+        result.fw.addTapGesture { [weak self] sender in
             self?.toggleAudio()
         }
         return result
@@ -36,9 +36,9 @@ import FWApplication
         super.viewDidLoad()
         view.addSubview(audioImage)
         view.addSubview(audioLabel)
-        audioImage.fwLayoutChain.centerX().size(CGSize(width: 100, height: 100))
+        audioImage.fw.layoutChain.centerX().size(CGSize(width: 100, height: 100))
             .centerYToView(view as Any, withOffset: -58)
-        audioLabel.fwLayoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: view, withOffset: 8)
+        audioLabel.fw.layoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: view, withOffset: 8)
         
         audioPlayer.delegate = self
         audioPlayer.dataSource = self
@@ -52,7 +52,7 @@ import FWApplication
     }
     
     override func renderModel() {
-        fwSetRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
+        fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
             guard let strongSelf = self else { return }
             strongSelf.cacheEnabled = !strongSelf.cacheEnabled
             strongSelf.audioPlayer.playItem(from: 0)
@@ -90,8 +90,8 @@ import FWApplication
         
         let indexStr = String(describing: (audioPlayer.getAudioIndex(currentItem)?.intValue ?? 0) + 1)
         let totalStr = String(describing: audioPlayerNumberOfItems())
-        let timeStr = NSDate.fwFormatDuration(TimeInterval(audioPlayer.playingItemCurrentTime), hasHour: false)
-        let durationStr = NSDate.fwFormatDuration(TimeInterval(audioPlayer.playingItemDurationTime), hasHour: false)
+        let timeStr = NSDate.fw.formatDuration(TimeInterval(audioPlayer.playingItemCurrentTime), hasHour: false)
+        let durationStr = NSDate.fw.formatDuration(TimeInterval(audioPlayer.playingItemDurationTime), hasHour: false)
         audioLabel.text = String(format: "%@/%@\n%@\n%@", indexStr, totalStr, timeStr, durationStr)
     }
     

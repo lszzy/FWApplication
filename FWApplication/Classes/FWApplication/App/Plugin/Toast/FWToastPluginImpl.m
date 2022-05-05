@@ -8,7 +8,6 @@
  */
 
 #import "FWToastPluginImpl.h"
-@import FWFramework;
 
 #pragma mark - FWToastPluginImpl
 
@@ -34,7 +33,7 @@
     return self;
 }
 
-- (void)fwShowLoadingWithAttributedText:(NSAttributedString *)attributedText inView:(UIView *)view
+- (void)showLoadingWithAttributedText:(NSAttributedString *)attributedText inView:(UIView *)view
 {
     NSAttributedString *loadingText = attributedText;
     if (!loadingText && self.defaultLoadingText) {
@@ -53,7 +52,7 @@
     toastView.tag = 2011;
     toastView.attributedTitle = loadingText;
     [view addSubview:toastView];
-    [toastView fwPinEdgesToSuperviewWithInsets:view.fwToastInsets];
+    [toastView.fw pinEdgesToSuperviewWithInsets:view.fw.toastInsets];
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -61,13 +60,13 @@
     [toastView showAnimated:self.fadeAnimated];
 }
 
-- (void)fwHideLoading:(UIView *)view
+- (void)hideLoading:(UIView *)view
 {
     FWToastView *toastView = [view viewWithTag:2011];
     if (toastView) [toastView hide];
 }
 
-- (void)fwShowProgressWithAttributedText:(NSAttributedString *)attributedText progress:(CGFloat)progress inView:(UIView *)view
+- (void)showProgressWithAttributedText:(NSAttributedString *)attributedText progress:(CGFloat)progress inView:(UIView *)view
 {
     NSAttributedString *progressText = attributedText;
     if (!progressText && self.defaultProgressText) {
@@ -88,7 +87,7 @@
     toastView.attributedTitle = progressText;
     toastView.progress = progress;
     [view addSubview:toastView];
-    [toastView fwPinEdgesToSuperviewWithInsets:view.fwToastInsets];
+    [toastView.fw pinEdgesToSuperviewWithInsets:view.fw.toastInsets];
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -96,13 +95,13 @@
     [toastView showAnimated:self.fadeAnimated];
 }
 
-- (void)fwHideProgress:(UIView *)view
+- (void)hideProgress:(UIView *)view
 {
     FWToastView *toastView = [view viewWithTag:2012];
     if (toastView) [toastView hide];
 }
 
-- (void)fwShowMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion inView:(UIView *)view
+- (void)showMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion inView:(UIView *)view
 {
     NSAttributedString *messageText = attributedText;
     if (!messageText && self.defaultMessageText) {
@@ -118,7 +117,7 @@
     toastView.userInteractionEnabled = completion ? YES : NO;
     toastView.attributedTitle = messageText;
     [view addSubview:toastView];
-    [toastView fwPinEdgesToSuperviewWithInsets:view.fwToastInsets];
+    [toastView.fw pinEdgesToSuperviewWithInsets:view.fw.toastInsets];
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -130,7 +129,7 @@
     }
 }
 
-- (void)fwHideMessage:(UIView *)view
+- (void)hideMessage:(UIView *)view
 {
     FWToastView *toastView = [view viewWithTag:2013];
     if (toastView) [toastView hide];

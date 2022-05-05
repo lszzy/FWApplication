@@ -283,15 +283,15 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
     if (self) {
         _nameLabel = [UILabel new];
         [self.contentView addSubview:_nameLabel];
-        _nameLabel.fwLayoutChain.leftWithInset(10).topWithInset(10).height(20);
+        _nameLabel.fw.layoutChain.leftWithInset(10).topWithInset(10).height(20);
         
         _systemView = [UIImageView new];
         [self.contentView addSubview:_systemView];
-        _systemView.fwLayoutChain.leftWithInset(10).topToBottomOfViewWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
+        _systemView.fw.layoutChain.leftWithInset(10).topToBottomOfViewWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
         
-        _animatedView = [[UIImageView fwImageViewAnimatedClass] new];
+        _animatedView = [[UIImageView.fw imageViewAnimatedClass] new];
         [self.contentView addSubview:_animatedView];
-        _animatedView.fwLayoutChain.leftToRightOfViewWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
+        _animatedView.fw.layoutChain.leftToRightOfViewWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
     }
     return self;
 }
@@ -332,7 +332,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self fwSetRightBarItem:@"Change" block:^(id  _Nonnull sender) {
+    [self.fw setRightBarItem:@"Change" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.isSDWebImage = !self.isSDWebImage;
         [FWPluginManager unloadPlugin:@protocol(FWImagePlugin)];
@@ -352,7 +352,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderData
 {
     self.isSDWebImage = [[FWPluginManager loadPlugin:@protocol(FWImagePlugin)] isKindOfClass:[FWSDWebImagePlugin class]];
-    self.fwBarTitle = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
+    self.fw.barTitle = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
     FWSDWebImagePlugin.sharedInstance.fadeAnimated = YES;
     FWImagePluginImpl.sharedInstance.fadeAnimated = YES;
     
@@ -407,29 +407,29 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TestImageCell *cell = [TestImageCell fwCellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
+    TestImageCell *cell = [TestImageCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
     NSString *fileName = [self.tableData objectAtIndex:indexPath.row];
-    cell.nameLabel.text = [[fileName lastPathComponent] stringByAppendingFormat:@"(%@)", [NSData fwMimeTypeFromExtension:[fileName pathExtension]]];
-    if (!fileName.fwIsFormatUrl) {
-        cell.fwTempObject = fileName;
+    cell.nameLabel.text = [[fileName lastPathComponent] stringByAppendingFormat:@"(%@)", [NSData.fw mimeTypeFromExtension:[fileName pathExtension]]];
+    if (!fileName.fw.isFormatUrl) {
+        cell.fw.tempObject = fileName;
         FWDispatchGlobal(^{
             UIImage *image = [TestBundle imageNamed:fileName];
-            UIImage *decodeImage = [UIImage fwImageWithData:[UIImage fwDataWithImage:image]];
+            UIImage *decodeImage = [UIImage.fw imageWithData:[UIImage.fw dataWithImage:image]];
             FWDispatchMain(^{
-                if ([cell.fwTempObject isEqualToString:fileName]) {
-                    [cell.systemView fwSetImageWithURL:nil placeholderImage:image];
-                    [cell.animatedView fwSetImageWithURL:nil placeholderImage:decodeImage];
+                if ([cell.fw.tempObject isEqualToString:fileName]) {
+                    [cell.systemView.fw setImageWithURL:nil placeholderImage:image];
+                    [cell.animatedView.fw setImageWithURL:nil placeholderImage:decodeImage];
                 }
             });
         });
     } else {
-        cell.fwTempObject = nil;
+        cell.fw.tempObject = nil;
         NSString *url = fileName;
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
-            url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fwCurrentTime)];
+            url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fw.currentTime)];
         }
-        [cell.systemView fwSetImageWithURL:url];
-        [cell.animatedView fwSetImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];
+        [cell.systemView.fw setImageWithURL:url];
+        [cell.animatedView.fw setImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];
     }
     return cell;
 }

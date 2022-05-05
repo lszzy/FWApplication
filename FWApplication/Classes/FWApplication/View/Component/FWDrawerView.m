@@ -9,7 +9,6 @@
 
 #import "FWDrawerView.h"
 #import <objc/runtime.h>
-@import FWFramework;
 
 #pragma mark - FWDrawerView
 
@@ -43,7 +42,7 @@
         _gestureRecognizer = gestureRecognizer;
         gestureRecognizer.delegate = self;
         [view addGestureRecognizer:gestureRecognizer];
-        view.fwDrawerView = self;
+        view.fw.drawerView = self;
     }
     return self;
 }
@@ -153,9 +152,9 @@
 {
     if (!scrollView.scrollEnabled) return NO;
     if (self.isVertical) {
-        if (![scrollView fwCanScrollVertical]) return NO;
+        if (![scrollView.fw canScrollVertical]) return NO;
     } else {
-        if (![scrollView fwCanScrollHorizontal]) return NO;
+        if (![scrollView.fw canScrollHorizontal]) return NO;
     }
     return YES;
 }
@@ -278,11 +277,11 @@
     if (scrollView != self.scrollView || !self.gestureRecognizer.enabled) return;
     if (![self canScroll:self.scrollView]) return;
     
-    if ([self.scrollView fwIsScrollToEdge:self.scrollEdge]) {
+    if ([self.scrollView.fw isScrollToEdge:self.scrollEdge]) {
         self.panDisabled = NO;
     }
     if (!self.panDisabled) {
-        [self.scrollView fwScrollToEdge:self.scrollEdge animated:NO];
+        [self.scrollView.fw scrollToEdge:self.scrollEdge animated:NO];
     }
 }
 
@@ -322,26 +321,26 @@
 
 @end
 
-#pragma mark - UIView+FWDrawerView
+#pragma mark - FWViewWrapper+FWDrawerView
 
-@implementation UIView (FWDrawerView)
+@implementation FWViewWrapper (FWDrawerView)
 
-- (FWDrawerView *)fwDrawerView
+- (FWDrawerView *)drawerView
 {
-    return objc_getAssociatedObject(self, @selector(fwDrawerView));
+    return objc_getAssociatedObject(self.base, @selector(drawerView));
 }
 
-- (void)setFwDrawerView:(FWDrawerView *)fwDrawerView
+- (void)setDrawerView:(FWDrawerView *)drawerView
 {
-    objc_setAssociatedObject(self, @selector(fwDrawerView), fwDrawerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(drawerView), drawerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (FWDrawerView *)fwDrawerView:(UISwipeGestureRecognizerDirection)direction
+- (FWDrawerView *)drawerView:(UISwipeGestureRecognizerDirection)direction
                      positions:(NSArray<NSNumber *> *)positions
                 kickbackHeight:(CGFloat)kickbackHeight
                       callback:(void (^)(CGFloat, BOOL))callback
 {
-    FWDrawerView *drawerView = [[FWDrawerView alloc] initWithView:self];
+    FWDrawerView *drawerView = [[FWDrawerView alloc] initWithView:self.base];
     if (direction > 0) drawerView.direction = direction;
     drawerView.positions = positions;
     drawerView.kickbackHeight = kickbackHeight;
@@ -351,37 +350,37 @@
 
 @end
 
-#pragma mark - UIScrollView+FWDrawerView
+#pragma mark - FWScrollViewWrapper+FWDrawerView
 
-@implementation UIScrollView (FWDrawerView)
+@implementation FWScrollViewWrapper (FWDrawerView)
 
-- (BOOL)fwDrawerSuperviewFixed
+- (BOOL)drawerSuperviewFixed
 {
-    return [objc_getAssociatedObject(self, @selector(fwDrawerSuperviewFixed)) boolValue];
+    return [objc_getAssociatedObject(self.base, @selector(drawerSuperviewFixed)) boolValue];
 }
 
-- (void)setFwDrawerSuperviewFixed:(BOOL)fixed
+- (void)setDrawerSuperviewFixed:(BOOL)fixed
 {
-    objc_setAssociatedObject(self, @selector(fwDrawerSuperviewFixed), @(fixed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(drawerSuperviewFixed), @(fixed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)fwDrawerSuperviewDidScroll:(CGFloat)position
+- (void)drawerSuperviewDidScroll:(CGFloat)position
 {
-    if (self.contentOffset.y >= position) {
-        self.fwDrawerSuperviewFixed = YES;
+    if (self.base.contentOffset.y >= position) {
+        self.drawerSuperviewFixed = YES;
     }
-    if (self.fwDrawerSuperviewFixed) {
-        self.contentOffset = CGPointMake(self.contentOffset.x, position);
+    if (self.drawerSuperviewFixed) {
+        self.base.contentOffset = CGPointMake(self.base.contentOffset.x, position);
     }
 }
 
-- (void)fwDrawerSubviewDidScroll:(UIScrollView *)superview
+- (void)drawerSubviewDidScroll:(UIScrollView *)superview
 {
-    if (self.contentOffset.y <= 0) {
-        superview.fwDrawerSuperviewFixed = NO;
+    if (self.base.contentOffset.y <= 0) {
+        superview.fw.drawerSuperviewFixed = NO;
     }
-    if (!superview.fwDrawerSuperviewFixed) {
-        self.contentOffset = CGPointMake(self.contentOffset.x, 0);
+    if (!superview.fw.drawerSuperviewFixed) {
+        self.base.contentOffset = CGPointMake(self.base.contentOffset.x, 0);
     }
 }
 

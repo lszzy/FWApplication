@@ -10,34 +10,34 @@ import FWApplication
 
 @objcMembers class TestLocationViewController: TestViewController {
     lazy var startButton: UIButton = {
-        let view = UIButton.fwButton(withTitle: "Start", font: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(withTitle: "Start", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 20, y: 50, width: 60, height: 50)
-        view.fwAddTouch { (sender) in
+        view.fw.addTouch { (sender) in
             FWLocationManager.sharedInstance.startUpdateLocation()
         }
         return view
     }()
     
     lazy var stopButton: UIButton = {
-        let view = UIButton.fwButton(withTitle: "Stop", font: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(withTitle: "Stop", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 100, y: 50, width: 60, height: 50)
-        view.fwAddTouch { (sender) in
+        view.fw.addTouch { (sender) in
             FWLocationManager.sharedInstance.stopUpdateLocation()
         }
         return view
     }()
     
     lazy var configButton: UIButton = {
-        let view = UIButton.fwButton(withTitle: "Once", font: UIFont.fwFont(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(withTitle: "Once", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 180, y: 50, width: 60, height: 50)
-        view.fwAddTouch { (sender) in
+        view.fw.addTouch { (sender) in
             FWLocationManager.sharedInstance.stopWhenCompleted = !FWLocationManager.sharedInstance.stopWhenCompleted
         }
         return view
     }()
     
     lazy var resultLabel: UILabel = {
-        let view = UILabel.fwLabel(with: UIFont.fwFont(ofSize: 15), textColor: Theme.textColor)
+        let view = UILabel.fw.label(with: UIFont.fw.font(ofSize: 15), textColor: Theme.textColor)
         view.numberOfLines = 0
         view.frame = CGRect(x: 20, y: 100, width: FWScreenWidth - 40, height: 450)
         return view
@@ -55,7 +55,7 @@ import FWApplication
             if manager.error != nil {
                 self?.resultLabel.text = manager.error?.localizedDescription
             } else {
-                self?.resultLabel.text = FWLocationStringWithCoordinate(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
+                self?.resultLabel.text = FWLocationManager.locationString(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
             }
         }
     }
