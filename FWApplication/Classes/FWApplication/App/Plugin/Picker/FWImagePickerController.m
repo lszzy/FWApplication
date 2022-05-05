@@ -152,6 +152,7 @@
     _toolBarTintColor = UIColor.whiteColor;
     _showsDefaultLoading = YES;
     
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelButtonClick:)];
 }
 
@@ -667,6 +668,7 @@
         _showsEditCollectionView = YES;
         _shouldUseOriginImage = YES;
         _editCheckedIndex = NSNotFound;
+        self.extendedLayoutIncludesOpaqueBars = YES;
         self.editCollectionViewHeight = 80;
         self.editCollectionCellSize = CGSizeMake(60, 60);
         self.maximumSelectImageCount = 9;
@@ -1841,6 +1843,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     FWToolbarTitleView *titleView = [[FWToolbarTitleView alloc] init];
     _titleView = titleView;
     titleView.delegate = self;
+    self.extendedLayoutIncludesOpaqueBars = YES;
     self.navigationItem.titleView = titleView;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:FWAppBundle.navCloseImage style:UIBarButtonItemStylePlain target:self action:@selector(handleCancelButtonClick:)];
 }
