@@ -30,17 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 获取当前view的transform translation y
 @property (nonatomic, assign, readonly) CGFloat translationY;
 
-#pragma mark - Size
-
-// 设置自动计算适合高度的frame，需实现sizeThatFits:方法
-@property (nonatomic, assign) CGRect fitFrame;
-
-// 计算当前视图适合大小，需实现sizeThatFits:方法
-@property (nonatomic, assign, readonly) CGSize fitSize;
-
-// 计算指定边界，当前视图适合大小，需实现sizeThatFits:方法
-- (CGSize)fitSizeWithDrawSize:(CGSize)drawSize;
-
 #pragma mark - Subview
 
 // 移除所有子视图

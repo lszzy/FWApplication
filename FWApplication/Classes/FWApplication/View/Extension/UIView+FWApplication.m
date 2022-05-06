@@ -114,36 +114,6 @@
     return self.base.transform.ty;
 }
 
-#pragma mark - Size
-
-- (CGRect)fitFrame
-{
-    return self.base.frame;
-}
-
-- (void)setFitFrame:(CGRect)fitFrame
-{
-    fitFrame.size = [self fitSizeWithDrawSize:CGSizeMake(fitFrame.size.width, CGFLOAT_MAX)];
-    self.base.frame = fitFrame;
-}
-
-- (CGSize)fitSize
-{
-    if (CGSizeEqualToSize(self.base.frame.size, CGSizeZero)) {
-        [self.base setNeedsLayout];
-        [self.base layoutIfNeeded];
-    }
-    
-    CGSize drawSize = CGSizeMake(self.base.frame.size.width, CGFLOAT_MAX);
-    return [self fitSizeWithDrawSize:drawSize];
-}
-
-- (CGSize)fitSizeWithDrawSize:(CGSize)drawSize
-{
-    CGSize size = [self.base sizeThatFits:drawSize];
-    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)), MIN(drawSize.height, ceilf(size.height)));
-}
-
 #pragma mark - Subview
 
 - (void)removeAllSubviews
