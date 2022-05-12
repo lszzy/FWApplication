@@ -158,6 +158,7 @@
 		2FF8D92F24C88A6F006A83B5 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				2F7A0B2225D122FB008E588D /* AppMediator.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -176,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				2F0AC3EE25B3486B0090CFF5 /* AppConfig.swift */,
-				2F7A0B2225D122FB008E588D /* AppMediator.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";

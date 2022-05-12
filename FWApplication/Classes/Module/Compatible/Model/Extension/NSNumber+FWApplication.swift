@@ -8,13 +8,15 @@
 
 import Foundation
 
-/// 确保值在固定范围之内
-///
-/// - Parameters:
-///   - min: 最小值
-///   - value: 当前值
-///   - max: 最大值
-/// - Returns: 范围之内的值
-public func FWClamp<T: Comparable>(_ min: T, _ value: T, _ max: T) -> T {
-    return value < min ? min : (value > max ? max : value)
+extension FWWrapper {
+    /// 确保值在固定范围之内
+    ///
+    /// - Parameters:
+    ///   - min: 最小值
+    ///   - value: 当前值
+    ///   - max: 最大值
+    /// - Returns: 范围之内的值
+    public static func clamp<T: Comparable>(_ min: T, _ value: T, _ max: T) -> T {
+        return value < min ? min : (value > max ? max : value)
+    }
 }
