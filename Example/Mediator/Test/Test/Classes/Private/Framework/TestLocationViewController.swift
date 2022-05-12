@@ -39,7 +39,7 @@ import FWApplication
     lazy var resultLabel: UILabel = {
         let view = UILabel.fw.label(with: UIFont.fw.font(ofSize: 15), textColor: Theme.textColor)
         view.numberOfLines = 0
-        view.frame = CGRect(x: 20, y: 100, width: FWScreenWidth - 40, height: 450)
+        view.frame = CGRect(x: 20, y: 100, width: FW.screenWidth - 40, height: 450)
         return view
     }()
     

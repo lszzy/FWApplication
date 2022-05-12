@@ -47,7 +47,7 @@ import UIKit
         button.titleLabel?.font = .fw.boldFont(ofSize: 17)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-        button.fw.setDimension(.width, toSize: FWScreenWidth - 30)
+        button.fw.setDimension(.width, toSize: FW.screenWidth - 30)
         button.fw.setDimension(.height, toSize: 50)
         return button
     }

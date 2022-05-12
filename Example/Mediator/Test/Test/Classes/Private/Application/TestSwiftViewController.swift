@@ -177,7 +177,7 @@ import FWApplication
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (FWScreenWidth - 40) / 4, height: indexPath.item % 3 == 0 ? 80 : 60)
+        return CGSize(width: (FW.screenWidth - 40) / 4, height: indexPath.item % 3 == 0 ? 80 : 60)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -214,7 +214,7 @@ import FWApplication
         view.backgroundColor = UIColor.fw.randomColor
         contentView.addSubview(view)
         view.fw.layoutMaker { (make) in
-            make.edges().height(1000).width(FWScreenWidth)
+            make.edges().height(1000).width(FW.screenWidth)
         }
     }
 }

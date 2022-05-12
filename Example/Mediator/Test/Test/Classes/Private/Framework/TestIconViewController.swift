@@ -17,7 +17,7 @@ class TestIconCell: UICollectionViewCell {
     lazy var nameLabel: UILabel = {
         let result = UILabel()
         result.textColor = Theme.textColor
-        result.font = FWFontSize(10)
+        result.font = FW.font(10)
         result.textAlignment = .center
         result.numberOfLines = 0
         return result
@@ -75,7 +75,7 @@ class TestIconCell: UICollectionViewCell {
         view.addSubview(searchBar)
         searchBar.fw.layoutChain
             .edges(excludingEdge: .bottom)
-            .height(FWNavigationBarHeight)
+            .height(FW.navigationBarHeight)
         collectionView.fw.layoutChain
             .edges(excludingEdge: .top)
             .topToBottomOfView(searchBar)
@@ -100,7 +100,7 @@ class TestIconCell: UICollectionViewCell {
         }
         
         var array = Array(iconClass.iconMapper().keys)
-        let text = FWSafeString(searchBar.text?.fw.trimString)
+        let text = FW.safeString(searchBar.text?.fw.trimString)
         if text.count > 0 {
             array.removeAll { icon in
                 return !icon.lowercased().contains(text.lowercased())
@@ -117,7 +117,7 @@ class TestIconCell: UICollectionViewCell {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = TestIconCell(collectionView: collectionView, indexPath: indexPath)
         let name = collectionData.object(at: indexPath.item) as? String
-        cell.imageView.fw.themeImage = FWIconImage(name.safeValue, 60)?.fw.themeImage
+        cell.imageView.fw.themeImage = FW.iconImage(name.safeValue, 60)?.fw.themeImage
         cell.nameLabel.text = name
         return cell
     }
@@ -125,7 +125,7 @@ class TestIconCell: UICollectionViewCell {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let name = collectionData.object(at: indexPath.item) as? String
-        UIPasteboard.general.string = FWSafeString(name)
+        UIPasteboard.general.string = FW.safeString(name)
         fw.showMessage(withText: name)
     }
     

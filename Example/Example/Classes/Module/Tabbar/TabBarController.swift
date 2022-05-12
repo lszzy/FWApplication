@@ -43,15 +43,15 @@ extension UITabBarController: UITabBarControllerDelegate {
         let homeController = HomeViewController()
         homeController.hidesBottomBarWhenPushed = false
         let homeNav = UINavigationController(rootViewController: homeController)
-        homeNav.tabBarItem.image = FWIconImage("fa-home", 26)
-        homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
+        homeNav.tabBarItem.image = FW.iconImage("fa-home", 26)
+        homeNav.tabBarItem.title = FW.localized("homeTitle")
         homeNav.tabBarItem.fw.show(FWBadgeView(badgeStyle: .small), badgeValue: "1")
         
         let testController = Mediator.testModule.testViewController()
         testController.hidesBottomBarWhenPushed = false
         let testNav = UINavigationController(rootViewController: testController)
         testNav.tabBarItem.image = FWIcon.iconImage("fa-file-text", size: 26)
-        testNav.tabBarItem.title = FWLocalizedString("testTitle")
+        testNav.tabBarItem.title = FW.localized("testTitle")
         
         let settingsControlelr = SettingsViewController()
         settingsControlelr.hidesBottomBarWhenPushed = false
@@ -66,14 +66,14 @@ extension UITabBarController: UITabBarControllerDelegate {
             let badgeView = FWBadgeView(badgeStyle: .dot)
             settingsNav.tabBarItem.fw.show(badgeView, badgeValue: nil)
         }
-        settingsNav.tabBarItem.image = FWIconNamed("fa-wrench", 26)?.image
-        settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
+        settingsNav.tabBarItem.image = FW.icon("fa-wrench", 26)?.image
+        settingsNav.tabBarItem.title = FW.localized("settingTitle")
         viewControllers = [homeNav, testNav, settingsNav]
         
         fw.observeNotification(NSNotification.Name.FWLanguageChanged) { (notification) in
-            homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
-            testNav.tabBarItem.title = FWLocalizedString("testTitle")
-            settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
+            homeNav.tabBarItem.title = FW.localized("homeTitle")
+            testNav.tabBarItem.title = FW.localized("testTitle")
+            settingsNav.tabBarItem.title = FW.localized("settingTitle")
         }
     }
     

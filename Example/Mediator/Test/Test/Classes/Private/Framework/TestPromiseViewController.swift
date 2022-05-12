@@ -188,9 +188,9 @@ extension TestPromiseViewController {
     
     @objc func onAwait() {
         Self.isLoading = true
-        fw_async {
-            var value = try fw_await(Self.successPromise())
-            value = try fw_await(Self.successPromise(value.safeInt))
+        FW.async {
+            var value = try FW.await(Self.successPromise())
+            value = try FW.await(Self.successPromise(value.safeInt))
             return value
         }.done { value in
             Self.isLoading = false
@@ -204,8 +204,8 @@ extension TestPromiseViewController {
         for i in 0 ..< 10000 {
             promises.append(i < 9999 ? Self.successPromise() : Self.randomPromise())
         }
-        fw_async {
-            return try fw_await(FWPromise.all(promises).then { values in
+        FW.async {
+            return try FW.await(FWPromise.all(promises).then { values in
                 return values.safeArray.count
             })
         }.done { result in
@@ -220,8 +220,8 @@ extension TestPromiseViewController {
         for i in 0 ..< 10000 {
             promises.append(i < 5000 ? Self.failurePromise() : Self.randomPromise(i))
         }
-        fw_async {
-            return try fw_await(FWPromise.any(promises))
+        FW.async {
+            return try FW.await(FWPromise.any(promises))
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -234,8 +234,8 @@ extension TestPromiseViewController {
         for i in 0 ..< 10000 {
             promises.append(Self.randomPromise(i))
         }
-        fw_async {
-            return try fw_await(FWPromise.race(promises.shuffled()))
+        FW.async {
+            return try FW.await(FWPromise.race(promises.shuffled()))
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -302,7 +302,7 @@ extension TestPromiseViewController {
     @objc func onReduce() {
         Self.isLoading = true
         Self.randomPromise().reduce([2, 3, 4, 5]) { value, item in
-            return "\(value.safeString),\(FWSafeString(item))"
+            return "\(value.safeString),\(FW.safeString(item))"
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")

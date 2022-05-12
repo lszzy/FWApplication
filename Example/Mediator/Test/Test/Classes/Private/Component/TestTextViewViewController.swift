@@ -10,7 +10,7 @@ import FWApplication
 
 @objcMembers class TestTextViewViewController: TestViewController {
     private lazy var textView: UITextView = {
-        let result = UITextView(frame: CGRect(x: 16, y: 16, width: FWScreenWidth - 32, height: 44))
+        let result = UITextView(frame: CGRect(x: 16, y: 16, width: FW.screenWidth - 32, height: 44))
         result.fw.placeholder = "我是TextView1"
         result.fw.setBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
         result.fw.autoHeightEnabled = true

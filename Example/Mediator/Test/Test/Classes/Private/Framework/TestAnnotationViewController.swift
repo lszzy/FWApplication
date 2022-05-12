@@ -32,7 +32,7 @@ class TestRouter {
     static var pluginUrl: String = "app://plugin/:id"
     
     static func pluginRouter(_ context: FWRouterContext) -> Any? {
-        let pluginId = FWSafeString(context.urlParameters["id"])
+        let pluginId = FW.safeString(context.urlParameters["id"])
         UIWindow.fw.showMessage(withText: "plugin - \(pluginId)")
         return nil
     }

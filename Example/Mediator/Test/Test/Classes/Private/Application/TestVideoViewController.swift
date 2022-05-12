@@ -34,7 +34,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     }()
     
     private lazy var playButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: FWIconImage("octicon-playback-play", 24))
+        let result = FWToolbarButton(image: FW.iconImage("octicon-playback-play", 24))
         result.tintColor = Theme.textColor
         result.fw.addTouch { [weak self] sender in
             guard let player = self?.videoPlayer else { return }
@@ -66,9 +66,9 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     
     func playerPlaybackStateDidChange(_ player: FWVideoPlayer) {
         if player.playbackState == .playing {
-            playButton.setImage(FWIconImage("octicon-playback-pause", 24), for: .normal)
+            playButton.setImage(FW.iconImage("octicon-playback-pause", 24), for: .normal)
         } else {
-            playButton.setImage(FWIconImage("octicon-playback-play", 24), for: .normal)
+            playButton.setImage(FW.iconImage("octicon-playback-play", 24), for: .normal)
         }
     }
 }

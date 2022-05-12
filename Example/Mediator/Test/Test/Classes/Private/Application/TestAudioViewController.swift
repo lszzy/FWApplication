@@ -63,9 +63,9 @@ import FWApplication
     
     override func renderData() {
         if audioPlayer.isPlaying {
-            audioImage.image = FWIconImage("octicon-playback-pause", 100)
+            audioImage.image = FW.iconImage("octicon-playback-pause", 100)
         } else {
-            audioImage.image = FWIconImage("octicon-playback-play", 100)
+            audioImage.image = FW.iconImage("octicon-playback-play", 100)
         }
     }
     

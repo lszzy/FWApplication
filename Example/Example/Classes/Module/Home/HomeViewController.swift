@@ -11,7 +11,7 @@ import Foundation
 class HomeViewController: UIViewController, FWViewController {
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
-        button.frame = CGRect(x: 0, y: 20, width: FWScreenWidth, height: 30)
+        button.frame = CGRect(x: 0, y: 20, width: FW.screenWidth, height: 30)
         button.addTarget(self, action: #selector(onLogin), for: .touchUpInside)
         return button
     }()
@@ -32,20 +32,20 @@ class HomeViewController: UIViewController, FWViewController {
     
     func renderData() {
         #if APP_PRODUCTION
-        let envTitle = FWLocalizedString("envProduction")
+        let envTitle = FW.localized("envProduction")
         #elseif APP_STAGING
-        let envTitle = FWLocalizedString("envStaging")
+        let envTitle = FW.localized("envStaging")
         #elseif APP_TESTING
-        let envTitle = FWLocalizedString("envTesting")
+        let envTitle = FW.localized("envTesting")
         #else
-        let envTitle = FWLocalizedString("envDevelopment")
+        let envTitle = FW.localized("envDevelopment")
         #endif
-        fw.barTitle = "\(FWLocalizedString("homeTitle")) - \(envTitle)"
+        fw.barTitle = "\(FW.localized("homeTitle")) - \(envTitle)"
         
         if Mediator.userModule.isLogin() {
-            loginButton.setTitle(FWLocalizedString("backTitle"), for: .normal)
+            loginButton.setTitle(FW.localized("backTitle"), for: .normal)
         } else {
-            loginButton.setTitle(FWLocalizedString("welcomeTitle"), for: .normal)
+            loginButton.setTitle(FW.localized("welcomeTitle"), for: .normal)
         }
     }
     

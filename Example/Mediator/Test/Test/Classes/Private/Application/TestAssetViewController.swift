@@ -165,11 +165,11 @@ import FWApplication
                         guard let controller = previewController else { return }
                         var titleLabel: UILabel? = controller.view.viewWithTag(100) as? UILabel
                         if titleLabel == nil {
-                            let label = UILabel.fw.label(with: FWFontSize(16), textColor: UIColor.white)
+                            let label = UILabel.fw.label(with: FW.font(16), textColor: UIColor.white)
                             label.tag = 100
                             titleLabel = label
                             controller.view.addSubview(label)
-                            label.fw.layoutChain.centerX().topToSafeArea((44.0 - FWFontSize(16).lineHeight) / 2)
+                            label.fw.layoutChain.centerX().topToSafeArea((44.0 - FW.font(16).lineHeight) / 2)
                         }
                         
                         guard let photo = self?.photos[index] else { return }
