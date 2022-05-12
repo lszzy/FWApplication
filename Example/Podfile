@@ -3,7 +3,7 @@ platform :ios, '11.0'
 use_frameworks!
 
 target "Example" do
-  project 'Example', 'Release-Testing' => :release, 'Release-Staging' => :release, 'Release-Production' => :release, 'Debug-Testing' => :debug, 'Debug-Staging' => :debug, 'Debug-Production' => :debug
+  project 'FWApplication', 'Release-Testing' => :release, 'Release-Staging' => :release, 'Release-Production' => :release, 'Debug-Testing' => :debug, 'Debug-Staging' => :debug, 'Debug-Production' => :debug
 
   pod 'FWApplication', :path => '../', :subspecs => ['FWApplication', 'Compatible', 'SDWebImage']
   pod 'FWFramework', :git => 'https://github.com/lszzy/FWFramework.git', :branch => 'develop', :subspecs => ['FWFramework', 'Compatible', 'Contacts', 'Microphone', 'Calendar', 'AppleMusic', 'Tracking']
