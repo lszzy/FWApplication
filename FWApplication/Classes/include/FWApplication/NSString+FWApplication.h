@@ -1,1 +1,1 @@
-../../FWApplication/Model/Extension/NSString+FWApplication.h
+../../FWApplication/Toolkit/Foundation/NSString+FWApplication.h

@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWAttributedLabel.h
+../../FWApplication/Toolkit/Component/FWAttributedLabel.h

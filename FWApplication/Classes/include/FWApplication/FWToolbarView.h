@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/View/FWToolbarView.h
+../../FWApplication/Plugin/View/FWToolbarView.h

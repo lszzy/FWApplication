@@ -15,50 +15,18 @@ Pod::Spec.new do |s|
 
   s.subspec 'FWApplication' do |ss|
     # ss.resource_bundles = { 'FWApplication' => ['FWApplication/Assets/**/*.*'] }
-    ss.dependency 'FWApplication/App'
-    ss.dependency 'FWApplication/Controller'
-    ss.dependency 'FWApplication/Model'
-    ss.dependency 'FWApplication/Service'
-    ss.dependency 'FWApplication/View'
-  end
-  
-  s.subspec 'App' do |ss|
-    ss.source_files = 'FWApplication/Classes/FWApplication/App/**/*.{h,m,swift}'
-    ss.dependency 'FWFramework', "~> 3.1.0"
-  end
-  
-  s.subspec 'Controller' do |ss|
-    ss.source_files = 'FWApplication/Classes/FWApplication/Controller/**/*.{h,m,swift}'
-    ss.dependency 'FWFramework', "~> 3.1.0"
-    ss.dependency 'FWApplication/App'
-  end
-  
-  s.subspec 'Model' do |ss|
-    ss.source_files = 'FWApplication/Classes/FWApplication/Model/**/*.{h,m,swift}'
-    ss.dependency 'FWFramework', "~> 3.1.0"
-    ss.dependency 'FWApplication/App'
-  end
-  
-  s.subspec 'Service' do |ss|
-    ss.source_files = 'FWApplication/Classes/FWApplication/Service/**/*.{h,m,swift}'
+    ss.source_files = 'FWApplication/Classes/FWApplication/**/*.{h,m}'
     ss.library = 'sqlite3'
     ss.dependency 'FWFramework', "~> 3.1.0"
-    ss.dependency 'FWApplication/App'
-  end
-  
-  s.subspec 'View' do |ss|
-    ss.source_files = 'FWApplication/Classes/FWApplication/View/**/*.{h,m,swift}'
-    ss.dependency 'FWFramework', "~> 3.1.0"
-    ss.dependency 'FWApplication/App'
   end
 
   s.subspec 'Compatible' do |ss|
-    ss.source_files = 'FWApplication/Classes/Module/Compatible/**/*.{h,m,swift}'
+    ss.source_files = 'FWApplication/Classes/Compatible/**/*.swift'
     ss.dependency 'FWApplication/FWApplication'
   end
 
   s.subspec 'SDWebImage' do |ss|
-    ss.source_files = 'FWApplication/Classes/Module/SDWebImage/**/*.{h,m,swift}'
+    ss.source_files = 'FWApplication/Classes/SDWebImage/**/*.{h,m,swift}'
     ss.dependency 'SDWebImage'
     ss.dependency 'FWApplication/FWApplication'
   end

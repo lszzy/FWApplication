@@ -1,1 +1,1 @@
-../../FWApplication/Controller/FWNavigationStyle.h
+../../FWApplication/Module/Controller/FWNavigationStyle.h

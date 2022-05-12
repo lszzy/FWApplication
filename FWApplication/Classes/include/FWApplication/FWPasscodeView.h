@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWPasscodeView.h
+../../FWApplication/Toolkit/Component/FWPasscodeView.h

@@ -1,1 +1,1 @@
-../../FWApplication/View/Extension/UIWindow+FWApplication.h
+../../FWApplication/Toolkit/UIKit/UIWindow+FWApplication.h

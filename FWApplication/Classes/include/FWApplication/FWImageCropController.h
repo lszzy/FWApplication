@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Picker/FWImageCropController.h
+../../FWApplication/Plugin/Picker/FWImageCropController.h

@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWPageControl.h
+../../FWApplication/Toolkit/Component/FWPageControl.h

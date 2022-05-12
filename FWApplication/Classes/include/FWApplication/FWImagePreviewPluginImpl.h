@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Preview/FWImagePreviewPluginImpl.h
+../../FWApplication/Plugin/Preview/FWImagePreviewPluginImpl.h

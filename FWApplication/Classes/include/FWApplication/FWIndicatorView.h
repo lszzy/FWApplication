@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/View/FWIndicatorView.h
+../../FWApplication/Plugin/View/FWIndicatorView.h

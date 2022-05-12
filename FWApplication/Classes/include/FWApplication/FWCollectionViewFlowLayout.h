@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWCollectionViewFlowLayout.h
+../../FWApplication/Toolkit/Component/FWCollectionViewFlowLayout.h

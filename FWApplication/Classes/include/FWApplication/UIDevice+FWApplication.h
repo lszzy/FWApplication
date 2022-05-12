@@ -1,1 +1,1 @@
-../../FWApplication/View/Extension/UIDevice+FWApplication.h
+../../FWApplication/Toolkit/UIKit/UIDevice+FWApplication.h

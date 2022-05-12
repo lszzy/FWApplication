@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Preview/FWImagePreviewController.h
+../../FWApplication/Plugin/Preview/FWImagePreviewController.h

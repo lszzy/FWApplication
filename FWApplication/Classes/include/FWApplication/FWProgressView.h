@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/View/FWProgressView.h
+../../FWApplication/Plugin/View/FWProgressView.h

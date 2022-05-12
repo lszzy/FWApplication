@@ -1,1 +1,1 @@
-../../FWApplication/Model/Extension/NSBundle+FWApplication.h
+../../FWApplication/Toolkit/Foundation/NSBundle+FWApplication.h
