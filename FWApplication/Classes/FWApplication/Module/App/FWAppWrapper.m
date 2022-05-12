@@ -8,6 +8,6 @@
 
 #import "FWAppWrapper.h"
 
-#pragma mark - FWWrapperExtended
+#pragma mark - FWWrapperCompatible
 
-FWDefWrapperApplication_(FWDefWrapperExtended, fw);
+FWDefWrapperApplication_(FWDefWrapper, fw);

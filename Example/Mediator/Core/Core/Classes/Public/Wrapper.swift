@@ -7,9 +7,9 @@
 
 import FWFramework
 
-public typealias APP = FWWrapper
+public typealias APP = FW
 
-extension FWWrapperExtended {
-    public static var app: FWWrapperExtension<Self>.Type { fw }
-    public var app: FWWrapperExtension<Self> { fw }
+extension WrapperCompatible {
+    public static var app: Wrapper<Self>.Type { fw }
+    public var app: Wrapper<Self> { fw }
 }

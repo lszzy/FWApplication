@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FWWrapper {
+extension FW {
     /// 搜索路径
     ///
     /// - Parameter directory: 搜索目录

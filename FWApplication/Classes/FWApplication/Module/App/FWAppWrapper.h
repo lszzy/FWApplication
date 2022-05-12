@@ -66,8 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
     macro(PHPhotoLibrary, fw, FWPhotoLibraryWrapper, FWPhotoLibraryClassWrapper); \
     macro(PHPickerViewController, fw, FWPickerViewControllerWrapper, FWPickerViewControllerClassWrapper);
 
-#pragma mark - FWWrapperExtended
+#pragma mark - FWWrapperCompatible
 
-FWWrapperApplication_(FWWrapperExtended, fw);
+FWWrapperApplication_(FWWrapperCompatible, fw);
 
 NS_ASSUME_NONNULL_END

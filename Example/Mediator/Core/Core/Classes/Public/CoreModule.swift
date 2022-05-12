@@ -45,7 +45,7 @@ class CoreModule: NSObject, CoreService {
     }
 }
 
-@objc extension FWAutoloader {
+@objc extension Autoloader {
     func loadCoreModule() {
         FWMediator.registerService(CoreService.self, withModule: CoreModule.self)
     }

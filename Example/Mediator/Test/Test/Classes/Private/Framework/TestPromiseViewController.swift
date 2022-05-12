@@ -54,28 +54,28 @@ extension TestPromiseViewController {
         ])
     }
     
-    private static func successPromise(_ value: Int = 0) -> FWPromise {
-        return FWPromise { resolve, reject in
-            FWPromise.delay(1).done { _ in
+    private static func successPromise(_ value: Int = 0) -> Promise {
+        return Promise { resolve, reject in
+            Promise.delay(1).done { _ in
                 resolve(value + 1)
             }
         }
     }
     
-    private static func failurePromise() -> FWPromise {
-        return FWPromise { completion in
-            FWPromise.delay(1).done { _ in
+    private static func failurePromise() -> Promise {
+        return Promise { completion in
+            Promise.delay(1).done { _ in
                 completion(NSError(domain: "Test", code: 0, userInfo: [NSLocalizedDescriptionKey: "Test failed"]))
             }
         }
     }
     
-    private static func randomPromise(_ value: Int = 0) -> FWPromise {
+    private static func randomPromise(_ value: Int = 0) -> Promise {
         return [0, 1].randomElement() == 1 ? successPromise(value) : failurePromise()
     }
     
-    private static func progressPromise() -> FWPromise {
-        return FWPromise { resolve, reject, progress in
+    private static func progressPromise() -> Promise {
+        return Promise { resolve, reject, progress in
             DispatchQueue.global().async {
                 var value: Double = 0
                 while (value < 1) {
@@ -85,7 +85,7 @@ extension TestPromiseViewController {
                         if (finish) {
                             progress(1)
                             if [0, 1, 2].randomElement() == 0 {
-                                reject(FWPromise.defaultError)
+                                reject(Promise.defaultError)
                             } else {
                                 resolve(UIImage())
                             }
@@ -158,7 +158,7 @@ extension TestPromiseViewController {
     @objc func onDone() {
         Self.isLoading = true
         var value = 0
-        FWPromise { completion in
+        Promise { completion in
             for i in 0 ..< 10000 {
                 Self.successPromise(i).done { _ in
                     value += 1
@@ -200,12 +200,12 @@ extension TestPromiseViewController {
     
     @objc func onAll() {
         Self.isLoading = true
-        var promises: [FWPromise] = []
+        var promises: [Promise] = []
         for i in 0 ..< 10000 {
             promises.append(i < 9999 ? Self.successPromise() : Self.randomPromise())
         }
         FW.async {
-            return try FW.await(FWPromise.all(promises).then { values in
+            return try FW.await(Promise.all(promises).then { values in
                 return values.safeArray.count
             })
         }.done { result in
@@ -216,12 +216,12 @@ extension TestPromiseViewController {
     
     @objc func onAny() {
         Self.isLoading = true
-        var promises: [FWPromise] = []
+        var promises: [Promise] = []
         for i in 0 ..< 10000 {
             promises.append(i < 5000 ? Self.failurePromise() : Self.randomPromise(i))
         }
         FW.async {
-            return try FW.await(FWPromise.any(promises))
+            return try FW.await(Promise.any(promises))
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -230,12 +230,12 @@ extension TestPromiseViewController {
     
     @objc func onRace() {
         Self.isLoading = true
-        var promises: [FWPromise] = []
+        var promises: [Promise] = []
         for i in 0 ..< 10000 {
             promises.append(Self.randomPromise(i))
         }
         FW.async {
-            return try FW.await(FWPromise.race(promises.shuffled()))
+            return try FW.await(Promise.race(promises.shuffled()))
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -334,7 +334,7 @@ extension TestPromiseViewController {
         Self.isLoading = true
         let startTime = NSDate.fw.currentTime
         var count = 0
-        FWPromise.retry(4, delay: 0) {
+        Promise.retry(4, delay: 0) {
             count += 1
             if count == 1 { return Self.failurePromise() }
             DispatchQueue.main.async {
@@ -353,7 +353,7 @@ extension TestPromiseViewController {
     }
     
     @objc func onProgress() {
-        var promise: FWPromise?
+        var promise: Promise?
         let index = [1, 2, 3].randomElement()!
         if index == 1 {
             promise = Self.progressPromise().then({ value in
@@ -372,7 +372,7 @@ extension TestPromiseViewController {
         promise?.validate({ value in
             return false
         }).recover({ error in
-            return FWPromise(value: "\(index)下载成功")
+            return Promise(value: "\(index)下载成功")
         }).reduce([1, 2], reducer: { value, item in
             return value
         }).delay(1).timeout(30).retry(1, delay: 0, block: {
@@ -390,16 +390,16 @@ extension TestPromiseViewController {
     
     @objc func onProgress2() {
         let promises = [Self.progressPromise(),
-                        FWPromise.delay(0.5).then({ _ in Self.progressPromise() }),
-                        FWPromise.delay(1.0).then({ _ in Self.progressPromise() })]
-        var promise: FWPromise?
+                        Promise.delay(0.5).then({ _ in Self.progressPromise() }),
+                        Promise.delay(1.0).then({ _ in Self.progressPromise() })]
+        var promise: Promise?
         let index = [1, 2, 3].randomElement()!
         if index == 1 {
-            promise = FWPromise.all(promises)
+            promise = Promise.all(promises)
         } else if index == 2 {
-            promise = FWPromise.any(promises)
+            promise = Promise.any(promises)
         } else {
-            promise = FWPromise.race(promises)
+            promise = Promise.race(promises)
         }
         UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.done({ value in

@@ -13,7 +13,7 @@ import FWDebug
 
 @objc protocol AppService: FWModuleProtocol {}
 
-@objc extension FWAutoloader {
+@objc extension Autoloader {
     func loadAppModule() {
         FWMediator.registerService(AppService.self, withModule: AppModule.self)
     }

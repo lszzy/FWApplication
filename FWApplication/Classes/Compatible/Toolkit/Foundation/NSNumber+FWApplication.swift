@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension FWWrapper {
+extension FW {
     /// 确保值在固定范围之内
     ///
     /// - Parameters:
