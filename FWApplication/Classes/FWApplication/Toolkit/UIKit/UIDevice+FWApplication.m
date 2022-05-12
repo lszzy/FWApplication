@@ -13,7 +13,7 @@
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <net/if.h>
-#if FWApplicationSPM
+#if FWMacroSPM
 @import FWFrameworkCompatible;
 #endif
 

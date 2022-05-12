@@ -31,64 +31,61 @@ let package = Package(
             ],
             path: "FWApplication/Classes",
             sources: [
-                "FWApplication/App",
-                "FWApplication/Controller",
-                "FWApplication/Model",
+                "FWApplication/Module",
+                "FWApplication/Plugin",
                 "FWApplication/Service",
-                "FWApplication/View"
+                "FWApplication/Toolkit"
             ],
             publicHeadersPath: "include",
             cSettings: [
-                .headerSearchPath("FWApplication/App"),
-                .headerSearchPath("FWApplication/App/App"),
-                .headerSearchPath("FWApplication/App/Plugin/Alert"),
-                .headerSearchPath("FWApplication/App/Plugin/Empty"),
-                .headerSearchPath("FWApplication/App/Plugin/Image"),
-                .headerSearchPath("FWApplication/App/Plugin/Picker"),
-                .headerSearchPath("FWApplication/App/Plugin/Preview"),
-                .headerSearchPath("FWApplication/App/Plugin/Refresh"),
-                .headerSearchPath("FWApplication/App/Plugin/Toast"),
-                .headerSearchPath("FWApplication/App/Plugin/View"),
-                .headerSearchPath("FWApplication/Controller"),
-                .headerSearchPath("FWApplication/Model"),
-                .headerSearchPath("FWApplication/Model/Extension"),
-                .headerSearchPath("FWApplication/Service"),
+                .headerSearchPath("FWApplication/Module/App"),
+                .headerSearchPath("FWApplication/Module/Controller"),
+                .headerSearchPath("FWApplication/Module/Model"),
+                .headerSearchPath("FWApplication/Module/View"),
+                .headerSearchPath("FWApplication/Plugin/Alert"),
+                .headerSearchPath("FWApplication/Plugin/Empty"),
+                .headerSearchPath("FWApplication/Plugin/Image"),
+                .headerSearchPath("FWApplication/Plugin/Picker"),
+                .headerSearchPath("FWApplication/Plugin/Preview"),
+                .headerSearchPath("FWApplication/Plugin/Refresh"),
+                .headerSearchPath("FWApplication/Plugin/Toast"),
+                .headerSearchPath("FWApplication/Plugin/View"),
                 .headerSearchPath("FWApplication/Service/Cache"),
                 .headerSearchPath("FWApplication/Service/Database"),
                 .headerSearchPath("FWApplication/Service/Media"),
                 .headerSearchPath("FWApplication/Service/Network"),
                 .headerSearchPath("FWApplication/Service/Request"),
                 .headerSearchPath("FWApplication/Service/Socket"),
-                .headerSearchPath("FWApplication/View"),
-                .headerSearchPath("FWApplication/View/Component"),
-                .headerSearchPath("FWApplication/View/Extension"),
+                .headerSearchPath("FWApplication/Toolkit/Foundation"),
+                .headerSearchPath("FWApplication/Toolkit/UIKit"),
+                .headerSearchPath("FWApplication/Toolkit/Component"),
                 .headerSearchPath("include"),
-                .define("FWApplicationSPM", to: "1")
+                .define("FWMacroSPM", to: "1")
             ],
             swiftSettings: [
                 .define("DEBUG", .when(platforms: [.iOS], configuration: .debug)),
-                .define("FWApplicationSPM")
+                .define("FWMacroSPM")
             ]),
         .target(
             name: "FWApplicationCompatible",
             dependencies: ["FWApplication"],
-            path: "FWApplication/Classes/Module/Compatible",
+            path: "FWApplication/Classes/Compatible",
             cSettings: [
-                .define("FWApplicationSPM", to: "1")
+                .define("FWMacroSPM", to: "1")
             ],
             swiftSettings: [
                 .define("DEBUG", .when(platforms: [.iOS], configuration: .debug)),
-                .define("FWApplicationSPM")
+                .define("FWMacroSPM")
             ]),
         .target(
             name: "FWApplicationSDWebImage",
             dependencies: ["FWApplication", "SDWebImage"],
-            path: "FWApplication/Classes/Module/SDWebImage",
+            path: "FWApplication/Classes/SDWebImage",
             cSettings: [
-                .define("FWApplicationSPM", to: "1")
+                .define("FWMacroSPM", to: "1")
             ],
             swiftSettings: [
-                .define("FWApplicationSPM")
+                .define("FWMacroSPM")
             ]),
     ]
 )

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-#if FWApplicationSPM
+#if FWMacroSPM
 import FWApplication
 #endif
 

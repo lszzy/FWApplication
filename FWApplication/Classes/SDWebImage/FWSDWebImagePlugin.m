@@ -10,7 +10,7 @@
 #import "FWSDWebImagePlugin.h"
 @import FWFramework;
 @import SDWebImage;
-#if FWApplicationSPM
+#if FWMacroSPM
 @import FWApplication;
 #else
 #import "FWImagePlugin.h"
