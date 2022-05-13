@@ -1,5 +1,5 @@
 //
-//  UICollectionView+FWDelegate.swift
+//  UICollectionView+Toolkit.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/10/21.
@@ -12,8 +12,10 @@ import FWFramework
 import FWApplication
 #endif
 
+// MARK: - CollectionViewDelegate
 /// 便捷集合视图代理
-@objcMembers open class FWCollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+@objc(FWCollectionViewDelegate)
+@objcMembers open class CollectionViewDelegate: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     /// 集合数据，可选方式，必须按[section][item]二维数组格式
     open var collectionData: [[Any]] = []
     
@@ -244,22 +246,20 @@ import FWApplication
     }
 }
 
-@objc public extension FWCollectionViewWrapper {
-    var delegate: FWCollectionViewDelegate {
-        if let result = base.fw.property(forName: "fwDelegate") as? FWCollectionViewDelegate {
+extension Wrapper where Base: UICollectionView {
+    public var delegate: CollectionViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? CollectionViewDelegate {
             return result
         } else {
-            let result = FWCollectionViewDelegate()
+            let result = CollectionViewDelegate()
             base.fw.setProperty(result, forName: "fwDelegate")
             base.dataSource = result
             base.delegate = result
             return result
         }
     }
-}
-
-@objc public extension FWCollectionViewClassWrapper {
-    func collectionView() -> UICollectionView {
+    
+    public static func collectionView() -> UICollectionView {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
@@ -267,10 +267,26 @@ import FWApplication
         return collectionView(flowLayout)
     }
     
-    func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
+    public static func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
+    }
+}
+
+@objc extension FWCollectionViewWrapper {
+    public var delegate: CollectionViewDelegate {
+        return base.fw.delegate
+    }
+}
+
+@objc extension FWCollectionViewClassWrapper {
+    public func collectionView() -> UICollectionView {
+        return UICollectionView.fw.collectionView()
+    }
+    
+    public func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
+        return UICollectionView.fw.collectionView(collectionViewLayout)
     }
 }

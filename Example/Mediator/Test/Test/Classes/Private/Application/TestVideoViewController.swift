@@ -8,9 +8,9 @@
 
 import FWApplication
 
-class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
-    static func videoPlayer() -> FWVideoPlayer {
-        let result = FWVideoPlayer()
+class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
+    static func videoPlayer() -> VideoPlayer {
+        let result = VideoPlayer()
         result.modalPresentationStyle = .fullScreen
         let playerView = TestPlayerView(frame: .zero)
         playerView.videoPlayer = result
@@ -18,7 +18,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         return result
     }
     
-    weak var videoPlayer: FWVideoPlayer? {
+    weak var videoPlayer: VideoPlayer? {
         didSet {
             videoPlayer?.playerDelegate = self
         }
@@ -64,7 +64,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func playerPlaybackStateDidChange(_ player: FWVideoPlayer) {
+    func playerPlaybackStateDidChange(_ player: VideoPlayer) {
         if player.playbackState == .playing {
             playButton.setImage(FW.iconImage("octicon-playback-pause", 24), for: .normal)
         } else {
@@ -73,8 +73,8 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     }
 }
 
-@objcMembers class TestVideoViewController: TestViewController, FWVideoPlayerDelegate, FWVideoPlayerPlaybackDelegate {
-    fileprivate var player = FWVideoPlayer()
+@objcMembers class TestVideoViewController: TestViewController, VideoPlayerDelegate, VideoPlayerPlaybackDelegate {
+    fileprivate var player = VideoPlayer()
     lazy var resourceLoader = FWPlayerCacheLoaderManager()
     
     @UserDefaultAnnotation("TestVideoCacheEnabled", defaultValue: false)
@@ -158,17 +158,17 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         }
     }
     
-    func playerReady(_ player: FWVideoPlayer) {
+    func playerReady(_ player: VideoPlayer) {
         print("\(#function) ready")
         
         fw.hideLoading()
     }
     
-    func playerPlaybackStateDidChange(_ player: FWVideoPlayer) {
+    func playerPlaybackStateDidChange(_ player: VideoPlayer) {
         print("\(#function) \(player.playbackState.rawValue)")
     }
     
-    func player(_ player: FWVideoPlayer, didFailWithError error: Error?) {
+    func player(_ player: VideoPlayer, didFailWithError error: Error?) {
         print("\(#function) error.description")
         
         fw.hideLoading()

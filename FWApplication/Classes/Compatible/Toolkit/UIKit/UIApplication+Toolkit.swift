@@ -1,5 +1,5 @@
 //
-//  UIApplication+FWApplication.swift
+//  UIApplication+Toolkit.swift
 //  FWApplication
 //
 //  Created by wuyong on 2022/4/29.
@@ -9,8 +9,10 @@ import UIKit
 import Vision
 import FWFramework
 
+// MARK: - OcrObject
 /// OCR扫描结果对象
-@objcMembers public class FWOcrObject: NSObject {
+@objc(FWOcrObject)
+@objcMembers public class OcrObject: NSObject {
     
     /// 识别文本
     public var text: String = ""
@@ -23,11 +25,12 @@ import FWFramework
     
 }
 
-@objc extension FWApplicationClassWrapper {
+// MARK: - Wrapper+OcrObject
+extension Wrapper where Base: UIApplication {
     
     /// 识别图片文字，可设置语言(zh-CN,en-US)等，完成时主线程回调结果
     @available(iOS 13.0, *)
-    public func recognizeText(in image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([FWOcrObject]) -> Void) {
+    public static func recognizeText(in image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([OcrObject]) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             UIApplication.fw.performOcr(image: image, configuration: configuration) { results in
                 DispatchQueue.main.async {
@@ -38,7 +41,7 @@ import FWFramework
     }
     
     @available(iOS 13.0, *)
-    private func performOcr(image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([FWOcrObject]) -> Void) {
+    private static func performOcr(image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([OcrObject]) -> Void) {
         let textRequest = VNRecognizeTextRequest() { request, error in
             let imageSize = CGSize(width: image.width, height: image.height)
             guard let results = request.results as? [VNRecognizedTextObservation], !results.isEmpty else {
@@ -46,7 +49,7 @@ import FWFramework
                 return
             }
             
-            let outputObjects: [FWOcrObject] = results.compactMap { result in
+            let outputObjects: [OcrObject] = results.compactMap { result in
                 guard let candidate = result.topCandidates(1).first,
                       let box = try? candidate.boundingBox(for: candidate.string.startIndex..<candidate.string.endIndex) else {
                     return nil
@@ -56,7 +59,7 @@ import FWFramework
                 let boxRect = UIApplication.fw.convertToImageRect(boundingBox: unwrappedBox, imageSize: imageSize)
                 let confidence: Float = candidate.confidence
                 
-                let ocrObject = FWOcrObject()
+                let ocrObject = OcrObject()
                 ocrObject.text = candidate.string
                 ocrObject.confidence = confidence
                 ocrObject.rect = boxRect
@@ -79,7 +82,7 @@ import FWFramework
     }
     
     @available(iOS 13.0, *)
-    private func convertToImageRect(boundingBox: VNRectangleObservation, imageSize: CGSize) -> CGRect {
+    private static func convertToImageRect(boundingBox: VNRectangleObservation, imageSize: CGSize) -> CGRect {
         let topLeft = VNImagePointForNormalizedPoint(boundingBox.topLeft,
                                                      Int(imageSize.width),
                                                      Int(imageSize.height))
@@ -89,6 +92,17 @@ import FWFramework
         return CGRect(x: topLeft.x, y: imageSize.height - topLeft.y,
                       width: abs(bottomRight.x - topLeft.x),
                       height: abs(topLeft.y - bottomRight.y))
+    }
+    
+}
+
+// MARK: - FWApplicationClassWrapper+OcrObject
+@objc extension FWApplicationClassWrapper {
+    
+    /// 识别图片文字，可设置语言(zh-CN,en-US)等，完成时主线程回调结果
+    @available(iOS 13.0, *)
+    public func recognizeText(in image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([OcrObject]) -> Void) {
+        UIApplication.fw.recognizeText(in: image, configuration: configuration, completion: completion)
     }
     
 }

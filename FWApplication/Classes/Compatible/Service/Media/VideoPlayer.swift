@@ -1,5 +1,5 @@
 //
-//  FWVideoPlayer.swift
+//  VideoPlayer.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/9/8.
@@ -11,55 +11,61 @@ import Foundation
 import AVFoundation
 import CoreGraphics
 
-// MARK: - FWVideoPlayerDelegate
-
+// MARK: - VideoPlayerDelegate
 /// Player delegate protocol
-@objc public protocol FWVideoPlayerDelegate {
-    @objc optional func playerReady(_ player: FWVideoPlayer)
-    @objc optional func playerPlaybackStateDidChange(_ player: FWVideoPlayer)
-    @objc optional func playerBufferingStateDidChange(_ player: FWVideoPlayer)
+@objc(FWVideoPlayerDelegate)
+public protocol VideoPlayerDelegate {
+    @objc optional func playerReady(_ player: VideoPlayer)
+    @objc optional func playerPlaybackStateDidChange(_ player: VideoPlayer)
+    @objc optional func playerBufferingStateDidChange(_ player: VideoPlayer)
     @objc optional func playerBufferTimeDidChange(_ bufferTime: Double)
-    @objc optional func player(_ player: FWVideoPlayer, didFailWithError error: Error?)
+    @objc optional func player(_ player: VideoPlayer, didFailWithError error: Error?)
 }
 
+// MARK: - VideoPlayerPlaybackDelegate
 /// Player playback protocol
-@objc public protocol FWVideoPlayerPlaybackDelegate {
-    @objc optional func playerCurrentTimeDidChange(_ player: FWVideoPlayer)
-    @objc optional func playerPlaybackWillStartFromBeginning(_ player: FWVideoPlayer)
-    @objc optional func playerPlaybackDidEnd(_ player: FWVideoPlayer)
-    @objc optional func playerPlaybackWillLoop(_ player: FWVideoPlayer)
-    @objc optional func playerPlaybackDidLoop(_ player: FWVideoPlayer)
+@objc(FWVideoPlayerPlaybackDelegate)
+public protocol VideoPlayerPlaybackDelegate {
+    @objc optional func playerCurrentTimeDidChange(_ player: VideoPlayer)
+    @objc optional func playerPlaybackWillStartFromBeginning(_ player: VideoPlayer)
+    @objc optional func playerPlaybackDidEnd(_ player: VideoPlayer)
+    @objc optional func playerPlaybackWillLoop(_ player: VideoPlayer)
+    @objc optional func playerPlaybackDidLoop(_ player: VideoPlayer)
 }
 
+// MARK: - VideoPlayerPlaybackState
 /// Asset playback states
-@objc public enum FWVideoPlayerPlaybackState: Int {
+@objc(FWVideoPlayerPlaybackState)
+public enum VideoPlayerPlaybackState: Int {
     case stopped = 0
     case playing
     case paused
     case failed
 }
 
+// MARK: - VideoPlayerBufferingState
 /// Asset buffering states
-@objc public enum FWVideoPlayerBufferingState: Int {
+@objc(FWVideoPlayerBufferingState)
+public enum VideoPlayerBufferingState: Int {
     case unknown = 0
     case ready
     case delayed
 }
 
-// MARK: - FWVideoPlayer
-
+// MARK: - VideoPlayer
 /// Video Player, simple way to play and stream media
 ///
 /// @see https://github.com/piemonte/Player
-@objcMembers open class FWVideoPlayer: UIViewController {
+@objc(FWVideoPlayer)
+@objcMembers open class VideoPlayer: UIViewController {
 
     // properties
     
     /// Player delegate.
-    open weak var playerDelegate: FWVideoPlayerDelegate?
+    open weak var playerDelegate: VideoPlayerDelegate?
 
     /// Playback delegate.
-    open weak var playbackDelegate: FWVideoPlayerPlaybackDelegate?
+    open weak var playbackDelegate: VideoPlayerPlaybackDelegate?
 
     // configuration
 
@@ -165,7 +171,7 @@ import CoreGraphics
     open var playbackFreezesAtEnd: Bool = false
 
     /// Current playback state of the Player.
-    open var playbackState: FWVideoPlayerPlaybackState = .stopped {
+    open var playbackState: VideoPlayerPlaybackState = .stopped {
         didSet {
             if playbackState != oldValue || !playbackEdgeTriggered {
                 self.executeClosureOnMainQueueIfNecessary {
@@ -176,7 +182,7 @@ import CoreGraphics
     }
 
     /// Current buffering state of the Player.
-    open var bufferingState: FWVideoPlayerBufferingState = .unknown {
+    open var bufferingState: VideoPlayerBufferingState = .unknown {
         didSet {
             if bufferingState != oldValue || !playbackEdgeTriggered {
                 self.executeClosureOnMainQueueIfNecessary {
@@ -246,7 +252,7 @@ import CoreGraphics
         return player
     }()
 
-    open lazy var playerView: FWVideoPlayerView = FWVideoPlayerView(frame: .zero)
+    open lazy var playerView: VideoPlayerView = VideoPlayerView(frame: .zero)
 
     /// Return the av player layer for consumption by things such as Picture in Picture
     open func playerLayer() -> AVPlayerLayer? {
@@ -311,7 +317,7 @@ import CoreGraphics
         self.removePlayerLayerObservers()
 
         self.playerView.player = nil
-        NSLog("FWVideoPlayer did dealloc")
+        NSLog("VideoPlayer did dealloc")
     }
 
     open override func loadView() {
@@ -554,7 +560,7 @@ import CoreGraphics
             if !asset.isPlayable {
                 self.playbackState = .failed
                 self.executeClosureOnMainQueueIfNecessary {
-                    self.playerDelegate?.player?(self, didFailWithError: NSError(domain: "FWVideoPlayer", code: 0, userInfo: nil))
+                    self.playerDelegate?.player?(self, didFailWithError: NSError(domain: "VideoPlayer", code: 0, userInfo: nil))
                 }
                 return
             }
@@ -678,7 +684,7 @@ import CoreGraphics
 
             switch object.status {
             case .failed:
-                self?.playbackState = FWVideoPlayerPlaybackState.failed
+                self?.playbackState = VideoPlayerPlaybackState.failed
             default:
                 break
             }
@@ -698,7 +704,7 @@ import CoreGraphics
 
             switch object.status {
             case .failed:
-                strongSelf.playbackState = FWVideoPlayerPlaybackState.failed
+                strongSelf.playbackState = VideoPlayerPlaybackState.failed
                 break
             default:
                 break
@@ -803,9 +809,9 @@ import CoreGraphics
 
 }
 
-// MARK: - FWVideoPlayerView
-
-@objcMembers open class FWVideoPlayerView: UIView {
+// MARK: - VideoPlayerView
+@objc(FWVideoPlayerView)
+@objcMembers open class VideoPlayerView: UIView {
 
     open override class var layerClass: AnyClass {
         get {

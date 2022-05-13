@@ -11,7 +11,7 @@ import FWApplication
 extension UITabBarController: UITabBarControllerDelegate {
     // MARK: - Static
     static func setupController() -> UIViewController {
-        let tabBarController = AppConfig.isRootCustom ? FWTabBarController() : UITabBarController()
+        let tabBarController = AppConfig.isRootCustom ? TabBarController() : UITabBarController()
         tabBarController.setupController()
         if !AppConfig.isRootNavigation { return tabBarController }
         
@@ -57,7 +57,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         settingsControlelr.hidesBottomBarWhenPushed = false
         let settingsNav = UINavigationController(rootViewController: settingsControlelr)
         if AppConfig.isRootCustom {
-            let tabBarItem = FWTabBarItem()
+            let tabBarItem = TabBarItem()
             tabBarItem.contentView.highlightTextColor = Theme.textColor
             tabBarItem.contentView.highlightIconColor = Theme.textColor
             settingsNav.tabBarItem = tabBarItem
@@ -100,7 +100,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         animation.calculationMode = .cubic
         
         var animationView = viewController.tabBarItem.fw.imageView
-        if let tabBarItem = viewController.tabBarItem as? FWTabBarItem {
+        if let tabBarItem = viewController.tabBarItem as? TabBarItem {
             animationView = tabBarItem.contentView.imageView
         }
         animationView?.layer.add(animation, forKey: nil)

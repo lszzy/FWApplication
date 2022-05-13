@@ -1,5 +1,5 @@
 //
-//  UITableView+FWDelegate.swift
+//  UITableView+Toolkit.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/10/21.
@@ -12,8 +12,10 @@ import FWFramework
 import FWApplication
 #endif
 
+// MARK: - TableViewDelegate
 /// 便捷表格视图代理
-@objcMembers open class FWTableViewDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
+@objc(FWTableViewDelegate)
+@objcMembers open class TableViewDelegate: NSObject, UITableViewDataSource, UITableViewDelegate {
     /// 表格数据，可选方式，必须按[section][row]二维数组格式
     open var tableData: [[Any]] = []
     
@@ -251,30 +253,44 @@ import FWApplication
     }
 }
 
-@objc public extension FWTableViewWrapper {
-    var delegate: FWTableViewDelegate {
-        if let result = base.fw.property(forName: "fwDelegate") as? FWTableViewDelegate {
+extension Wrapper where Base: UITableView {
+    public var delegate: TableViewDelegate {
+        if let result = base.fw.property(forName: "fwDelegate") as? TableViewDelegate {
             return result
         } else {
-            let result = FWTableViewDelegate()
+            let result = TableViewDelegate()
             base.fw.setProperty(result, forName: "fwDelegate")
             base.dataSource = result
             base.delegate = result
             return result
         }
     }
-}
-
-@objc public extension FWTableViewClassWrapper {
-    func tableView() -> UITableView {
+    
+    public static func tableView() -> UITableView {
         return tableView(.plain)
     }
     
-    func tableView(_ style: UITableView.Style) -> UITableView {
+    public static func tableView(_ style: UITableView.Style) -> UITableView {
         let tableView = UITableView(frame: .zero, style: style)
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.tableFooterView = UIView(frame: .zero)
         return tableView
+    }
+}
+
+@objc extension FWTableViewWrapper {
+    public var delegate: TableViewDelegate {
+        return base.fw.delegate
+    }
+}
+
+@objc extension FWTableViewClassWrapper {
+    public func tableView() -> UITableView {
+        return UITableView.fw.tableView()
+    }
+    
+    public func tableView(_ style: UITableView.Style) -> UITableView {
+        return UITableView.fw.tableView(style)
     }
 }

@@ -575,8 +575,8 @@ import FWApplication
     }()
     
     /// 表格视图代理，快速生成表格
-    open lazy var tableDelegate: FWTableViewDelegate = {
-        return FWTableViewDelegate()
+    open lazy var tableDelegate: TableViewDelegate = {
+        return TableViewDelegate()
     }()
     
     /// 表格头视图
@@ -751,8 +751,8 @@ import FWApplication
     }()
     
     /// 集合视图代理，快速生成集合
-    open lazy var collectionDelegate: FWCollectionViewDelegate = {
-        return FWCollectionViewDelegate()
+    open lazy var collectionDelegate: CollectionViewDelegate = {
+        return CollectionViewDelegate()
     }()
     
     private var collectionViewLayout: UICollectionViewLayout?

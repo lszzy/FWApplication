@@ -1,5 +1,5 @@
 //
-//  FWAppWrapper.swift
+//  AppWrapper.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/6/5.

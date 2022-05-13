@@ -1,5 +1,5 @@
 //
-//  FWTabBarController.swift
+//  TabBarController.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/10/22.
@@ -8,8 +8,10 @@
 
 import UIKit
 
+// MARK: - TabBarController
 /// https://github.com/eggswift/ESTabBarController
-@objcMembers open class FWTabBarController: UITabBarController, FWTabBarDelegate {
+@objc(FWTabBarController)
+@objcMembers open class TabBarController: UITabBarController, TabBarDelegate {
     
     /// 打印异常
     public static func printError(_ description: String) {
@@ -42,10 +44,10 @@ import UIKit
                 ignoreNextSelection = false
                 return
             }
-            guard let tabBar = self.tabBar as? FWTabBar, let items = tabBar.items, let index = viewControllers?.firstIndex(of: newValue) else {
+            guard let tabBar = self.tabBar as? TabBar, let items = tabBar.items, let index = viewControllers?.firstIndex(of: newValue) else {
                 return
             }
-            let value = (FWTabBarController.isShowingMore(self) && index > items.count - 1) ? items.count - 1 : index
+            let value = (TabBarController.isShowingMore(self) && index > items.count - 1) ? items.count - 1 : index
             tabBar.select(itemAtIndex: value, animated: false)
         }
     }
@@ -57,10 +59,10 @@ import UIKit
                 ignoreNextSelection = false
                 return
             }
-            guard let tabBar = self.tabBar as? FWTabBar, let items = tabBar.items else {
+            guard let tabBar = self.tabBar as? TabBar, let items = tabBar.items else {
                 return
             }
-            let value = (FWTabBarController.isShowingMore(self) && newValue > items.count - 1) ? items.count - 1 : newValue
+            let value = (TabBarController.isShowingMore(self) && newValue > items.count - 1) ? items.count - 1 : newValue
             tabBar.select(itemAtIndex: value, animated: false)
         }
     }
@@ -68,8 +70,8 @@ import UIKit
     /// Customize set tabBar use KVC.
     open override func viewDidLoad() {
         super.viewDidLoad()
-        let tabBar = { () -> FWTabBar in
-            let tabBar = FWTabBar()
+        let tabBar = { () -> TabBar in
+            let tabBar = TabBar()
             tabBar.delegate = self
             tabBar.customDelegate = self
             tabBar.tabBarController = self
@@ -83,7 +85,7 @@ import UIKit
         guard let idx = tabBar.items?.firstIndex(of: item) else {
             return;
         }
-        if idx == tabBar.items!.count - 1, FWTabBarController.isShowingMore(self) {
+        if idx == tabBar.items!.count - 1, TabBarController.isShowingMore(self) {
             ignoreNextSelection = true
             selectedViewController = moreNavigationController
             return;
@@ -96,13 +98,13 @@ import UIKit
     }
     
     open override func tabBar(_ tabBar: UITabBar, willBeginCustomizing items: [UITabBarItem]) {
-        if let tabBar = tabBar as? FWTabBar {
+        if let tabBar = tabBar as? TabBar {
             tabBar.updateLayout()
         }
     }
     
     open override func tabBar(_ tabBar: UITabBar, didEndCustomizing items: [UITabBarItem], changed: Bool) {
-        if let tabBar = tabBar as? FWTabBar {
+        if let tabBar = tabBar as? TabBar {
             tabBar.updateLayout()
         }
     }
@@ -130,14 +132,16 @@ import UIKit
     
 }
 
-/// 对原生的UITabBarItemPositioning进行扩展，通过UITabBarItemPositioning设置时，系统会自动添加insets，这使得添加背景样式的需求变得不可能实现。FWTabBarItemPositioning完全支持原有的item Position 类型，除此之外还支持完全fill模式。
+// MARK: - TabBarItemPositioning
+/// 对原生的UITabBarItemPositioning进行扩展，通过UITabBarItemPositioning设置时，系统会自动添加insets，这使得添加背景样式的需求变得不可能实现。TabBarItemPositioning完全支持原有的item Position 类型，除此之外还支持完全fill模式。
 ///
 /// - automatic: UITabBarItemPositioning.automatic
 /// - fill: UITabBarItemPositioning.fill
 /// - centered: UITabBarItemPositioning.centered
 /// - fillExcludeSeparator: 完全fill模式，布局不覆盖tabBar顶部分割线
 /// - fillIncludeSeparator: 完全fill模式，布局覆盖tabBar顶部分割线
-@objc public enum FWTabBarItemPositioning : Int {
+@objc(FWTabBarItemPositioning)
+public enum TabBarItemPositioning : Int {
     
     case automatic
     
@@ -150,10 +154,10 @@ import UIKit
     case fillIncludeSeparator
 }
 
-
-
+// MARK: - TabBarDelegate
 /// 对UITabBarDelegate进行扩展，以支持UITabBarControllerDelegate的相关方法桥接
-@objc internal protocol FWTabBarDelegate: NSObjectProtocol {
+@objc(FWTabBarDelegate)
+internal protocol TabBarDelegate: NSObjectProtocol {
 
     /// 当前item是否支持选中
     ///
@@ -180,17 +184,17 @@ import UIKit
     func tabBar(_ tabBar: UITabBar, didHijack item: UITabBarItem)
 }
 
-
-
+// MARK: - TabBar
 /// FWTabBar是高度自定义的UITabBar子类，通过添加UIControl的方式实现自定义tabBarItem的效果。目前支持tabBar的大部分属性的设置，例如delegate,items,selectedImge,itemPositioning,itemWidth,itemSpacing等，以后会更加细致的优化tabBar原有属性的设置效果。
-@objcMembers open class FWTabBar: UITabBar {
+@objc(FWTabBar)
+@objcMembers open class TabBar: UITabBar {
 
-    internal weak var customDelegate: FWTabBarDelegate?
+    internal weak var customDelegate: TabBarDelegate?
     
     /// tabBar中items布局偏移量
     public var itemEdgeInsets = UIEdgeInsets.zero
     /// 是否设置为自定义布局方式，默认为空。如果为空，则通过itemPositioning属性来设置。如果不为空则忽略itemPositioning,所以当tabBar的itemCustomPositioning属性不为空时，如果想改变布局规则，请设置此属性而非itemPositioning。
-    public var itemCustomPositioning: FWTabBarItemPositioning? {
+    public var itemCustomPositioning: TabBarItemPositioning? {
         didSet {
             if let itemCustomPositioning = itemCustomPositioning {
                 switch itemCustomPositioning {
@@ -208,11 +212,11 @@ import UIKit
         }
     }
     /// tabBar自定义item的容器view
-    internal var containers = [FWTabBarItemContainer]()
+    internal var containers = [TabBarItemContainer]()
     /// 缓存当前tabBarController用来判断是否存在"More"Tab
     internal weak var tabBarController: UITabBarController?
     /// 自定义'More'按钮样式，继承自FWTabBarItemContentView
-    open var moreContentView: FWTabBarItemContentView? = FWTabBarItemMoreContentView.init() {
+    open var moreContentView: TabBarItemContentView? = TabBarItemMoreContentView.init() {
         didSet { self.reload() }
     }
     
@@ -236,12 +240,12 @@ import UIKit
     }
     
     open override func beginCustomizingItems(_ items: [UITabBarItem]) {
-        FWTabBarController.printError("beginCustomizingItems(_:) is unsupported in FWTabBar.")
+        TabBarController.printError("beginCustomizingItems(_:) is unsupported in FWTabBar.")
         super.beginCustomizingItems(items)
     }
     
     open override func endCustomizing(animated: Bool) -> Bool {
-        FWTabBarController.printError("endCustomizing(_:) is unsupported in FWTabBar.")
+        TabBarController.printError("endCustomizing(_:) is unsupported in FWTabBar.")
         return super.endCustomizing(animated: animated)
     }
     
@@ -264,11 +268,12 @@ import UIKit
     
 }
 
-internal extension FWTabBar /* Layout */ {
+// MARK: - Layout
+internal extension TabBar {
     
     func updateLayout() {
         guard let tabBarItems = self.items else {
-            FWTabBarController.printError("empty items")
+            TabBarController.printError("empty items")
             return
         }
         
@@ -291,7 +296,7 @@ internal extension FWTabBar /* Layout */ {
             }
         } else {
             for (idx, item) in tabBarItems.enumerated() {
-                if let _ = item as? FWTabBarItem {
+                if let _ = item as? TabBarItem {
                     tabBarButtons[idx].isHidden = true
                 } else {
                     tabBarButtons[idx].isHidden = false
@@ -348,10 +353,11 @@ internal extension FWTabBar /* Layout */ {
     }
 }
 
-internal extension FWTabBar /* Actions */ {
+// MARK: - Action
+internal extension TabBar {
     
     func isMoreItem(_ index: Int) -> Bool {
-        return FWTabBarController.isShowingMore(tabBarController) && (index == (items?.count ?? 0) - 1)
+        return TabBarController.isShowingMore(tabBarController) && (index == (items?.count ?? 0) - 1)
     }
     
     func removeAll() {
@@ -364,15 +370,15 @@ internal extension FWTabBar /* Actions */ {
     func reload() {
         removeAll()
         guard let tabBarItems = self.items else {
-            FWTabBarController.printError("empty items")
+            TabBarController.printError("empty items")
             return
         }
         for (idx, item) in tabBarItems.enumerated() {
-            let container = FWTabBarItemContainer.init(self, tag: 1000 + idx)
+            let container = TabBarItemContainer.init(self, tag: 1000 + idx)
             self.addSubview(container)
             self.containers.append(container)
             
-            if let item = item as? FWTabBarItem {
+            if let item = item as? TabBarItem {
                 container.addSubview(item.contentView)
             }
             if self.isMoreItem(idx), let moreContentView = moreContentView {
@@ -385,7 +391,7 @@ internal extension FWTabBar /* Actions */ {
     }
     
     @objc func highlightAction(_ sender: AnyObject?) {
-        guard let container = sender as? FWTabBarItemContainer else {
+        guard let container = sender as? TabBarItemContainer else {
             return
         }
         let newIndex = max(0, container.tag - 1000)
@@ -393,11 +399,7 @@ internal extension FWTabBar /* Actions */ {
             return
         }
         
-        //if (customDelegate?.tabBar(self, shouldSelect: item) ?? true) == false {
-            //return
-        //}
-        
-        if let item = item as? FWTabBarItem {
+        if let item = item as? TabBarItem {
             item.contentView.highlight(animated: true, completion: nil)
         } else if self.isMoreItem(newIndex) {
             moreContentView?.highlight(animated: true, completion: nil)
@@ -405,7 +407,7 @@ internal extension FWTabBar /* Actions */ {
     }
     
     @objc func dehighlightAction(_ sender: AnyObject?) {
-        guard let container = sender as? FWTabBarItemContainer else {
+        guard let container = sender as? TabBarItemContainer else {
             return
         }
         let newIndex = max(0, container.tag - 1000)
@@ -413,11 +415,7 @@ internal extension FWTabBar /* Actions */ {
             return
         }
         
-        //if (customDelegate?.tabBar(self, shouldSelect: item) ?? true) == false {
-            //return
-        //}
-        
-        if let item = item as? FWTabBarItem {
+        if let item = item as? TabBarItem {
             item.contentView.dehighlight(animated: true, completion: nil)
         } else if self.isMoreItem(newIndex) {
             moreContentView?.dehighlight(animated: true, completion: nil)
@@ -425,7 +423,7 @@ internal extension FWTabBar /* Actions */ {
     }
     
     @objc func selectAction(_ sender: AnyObject?) {
-        guard let container = sender as? FWTabBarItemContainer else {
+        guard let container = sender as? TabBarItemContainer else {
             return
         }
         select(itemAtIndex: container.tag - 1000, animated: true)
@@ -445,7 +443,7 @@ internal extension FWTabBar /* Actions */ {
         if animated && ((customDelegate?.tabBar(self, shouldHijack: item) ?? false) == true) {
             customDelegate?.tabBar(self, didHijack: item)
             if animated {
-                if let item = item as? FWTabBarItem {
+                if let item = item as? TabBarItem {
                     item.contentView.select(animated: animated, completion: {
                         item.contentView.deselect(animated: false, completion: nil)
                     })
@@ -460,19 +458,19 @@ internal extension FWTabBar /* Actions */ {
         
         if currentIndex != newIndex {
             if currentIndex != -1 && currentIndex < items?.count ?? 0{
-                if let currentItem = items?[currentIndex] as? FWTabBarItem {
+                if let currentItem = items?[currentIndex] as? TabBarItem {
                     currentItem.contentView.deselect(animated: animated, completion: nil)
                 } else if self.isMoreItem(currentIndex) {
                     moreContentView?.deselect(animated: animated, completion: nil)
                 }
             }
-            if let item = item as? FWTabBarItem {
+            if let item = item as? TabBarItem {
                 item.contentView.select(animated: animated, completion: nil)
             } else if self.isMoreItem(newIndex) {
                 moreContentView?.select(animated: animated, completion: nil)
             }
         } else if currentIndex == newIndex {
-            if let item = item as? FWTabBarItem {
+            if let item = item as? TabBarItem {
                 item.contentView.reselect(animated: animated, completion: nil)
             } else if self.isMoreItem(newIndex) {
                 moreContentView?.reselect(animated: animated, completion: nil)
@@ -526,7 +524,7 @@ internal extension FWTabBar /* Actions */ {
                 container.accessibilityHint = item.accessibilityHint ?? container.accessibilityHint
             } else {
                 var accessibilityTitle = "tabbarItem"
-                if let item = item as? FWTabBarItem {
+                if let item = item as? TabBarItem {
                     accessibilityTitle = item.accessibilityLabel ?? item.title ?? ""
                 }
                 if self.isMoreItem(idx) {
@@ -539,6 +537,7 @@ internal extension FWTabBar /* Actions */ {
     }
 }
 
+// MARK: - TabBarItem
 /// FWTabBarItem inherits from UITabBarItem, the purpose is to provide UITabBarItem property settings for FWTabBarItemContentView.
 /// Support most commonly used attributes, such as image, selectedImage, title, tag etc.
 ///
@@ -552,8 +551,8 @@ internal extension FWTabBar /* Actions */ {
 /// MARK: UITabBarItem properties
 ///     1. func setBadgeTextAttributes(_ textAttributes: [String : Any]?, for state: UIControlState)
 ///     2. func badgeTextAttributes(for state: UIControlState) -> [String : Any]?
-///
-@objcMembers open class FWTabBarItem: UITabBarItem {
+@objc(FWTabBarItem)
+@objcMembers open class TabBarItem: UITabBarItem {
     
     // MARK: UIView properties
     
@@ -627,8 +626,8 @@ internal extension FWTabBar /* Actions */ {
     
     // MARK: FWTabBarItem properties
     
-    /// Customize content view, default is `FWTabBarItemContentView`
-    open var contentView: FWTabBarItemContentView = FWTabBarItemContentView()
+    /// Customize content view, default is `TabBarItemContentView`
+    open var contentView: TabBarItemContentView = TabBarItemContentView()
     {
         didSet {
             self.contentView.updateLayout()
@@ -637,7 +636,7 @@ internal extension FWTabBar /* Actions */ {
     }
     
     /// The unselected image is autogenerated from the image argument. The selected image is autogenerated from the selectedImage if provided and the image argument otherwise. To prevent system coloring, provide images with UIImageRenderingModeAlwaysOriginal (see UIImage.h)
-    public init(_ contentView: FWTabBarItemContentView = FWTabBarItemContentView(), title: String? = nil, image: Any? = nil, selectedImage: Any? = nil, tag: Int = 0) {
+    public init(_ contentView: TabBarItemContentView = TabBarItemContentView(), title: String? = nil, image: Any? = nil, selectedImage: Any? = nil, tag: Int = 0) {
         super.init()
         self.contentView = contentView
         self.contentView.title = title
@@ -664,15 +663,17 @@ internal extension FWTabBar /* Actions */ {
     
 }
 
-@objcMembers internal class FWTabBarItemContainer: UIControl {
+// MARK: - TabBarItemContainer
+@objc(FWTabBarItemContainer)
+@objcMembers internal class TabBarItemContainer: UIControl {
     
     internal init(_ target: AnyObject?, tag: Int) {
         super.init(frame: CGRect.zero)
         self.tag = tag
-        self.addTarget(target, action: #selector(FWTabBar.selectAction(_:)), for: .touchUpInside)
-        self.addTarget(target, action: #selector(FWTabBar.highlightAction(_:)), for: .touchDown)
-        self.addTarget(target, action: #selector(FWTabBar.highlightAction(_:)), for: .touchDragEnter)
-        self.addTarget(target, action: #selector(FWTabBar.dehighlightAction(_:)), for: .touchDragExit)
+        self.addTarget(target, action: #selector(TabBar.selectAction(_:)), for: .touchUpInside)
+        self.addTarget(target, action: #selector(TabBar.highlightAction(_:)), for: .touchDown)
+        self.addTarget(target, action: #selector(TabBar.highlightAction(_:)), for: .touchDragEnter)
+        self.addTarget(target, action: #selector(TabBar.dehighlightAction(_:)), for: .touchDragExit)
         self.backgroundColor = .clear
         self.isAccessibilityElement = true
     }
@@ -684,7 +685,7 @@ internal extension FWTabBar /* Actions */ {
     internal override func layoutSubviews() {
         super.layoutSubviews()
         for subview in self.subviews {
-            if let subview = subview as? FWTabBarItemContentView {
+            if let subview = subview as? TabBarItemContentView {
                 subview.frame = CGRect.init(x: subview.insets.left, y: subview.insets.top, width: bounds.size.width - subview.insets.left - subview.insets.right, height: bounds.size.height - subview.insets.top - subview.insets.bottom)
                 subview.updateLayout()
             }
@@ -705,15 +706,18 @@ internal extension FWTabBar /* Actions */ {
     
 }
 
-@objc public enum FWTabBarItemContentMode : Int {
+// MARK: - TabBarItemContentMode
+@objc(FWTabBarItemContentMode)
+public enum TabBarItemContentMode : Int {
     
     case alwaysOriginal // Always set the original image size
     
     case alwaysTemplate // Always set the image as a template image size
 }
 
-
-@objcMembers open class FWTabBarItemContentView: UIView {
+// MARK: - TabBarItemContentView
+@objc(FWTabBarItemContentView)
+@objcMembers open class TabBarItemContentView: UIView {
     
     // MARK: - PROPERTY SETTING
     
@@ -812,7 +816,7 @@ internal extension FWTabBar /* Actions */ {
     }
     
     /// Item content mode, default is `.alwaysTemplate`
-    open var itemContentMode: FWTabBarItemContentMode = .alwaysTemplate {
+    open var itemContentMode: TabBarItemContentMode = .alwaysTemplate {
         didSet {
             self.updateDisplay()
         }
@@ -868,13 +872,13 @@ internal extension FWTabBar /* Actions */ {
             if let _ = badgeColor {
                 self.badgeView.badgeColor = badgeColor
             } else {
-                self.badgeView.badgeColor = FWTabBarItemBadgeView.defaultBadgeColor
+                self.badgeView.badgeColor = TabBarItemBadgeView.defaultBadgeColor
             }
         }
     }
     
-    /// Badge view, default is `FWTabBarItemBadgeView()`.
-    open var badgeView: FWTabBarItemBadgeView = FWTabBarItemBadgeView() {
+    /// Badge view, default is `TabBarItemBadgeView()`.
+    open var badgeView: TabBarItemBadgeView = TabBarItemBadgeView() {
         willSet {
             if let _ = badgeView.superview {
                 badgeView.removeFromSuperview()
@@ -1116,7 +1120,9 @@ internal extension FWTabBar /* Actions */ {
     
 }
 
-@objcMembers open class FWTabBarItemMoreContentView: FWTabBarItemContentView {
+// MARK: - TabBarItemMoreContentView
+@objc(FWTabBarItemMoreContentView)
+@objcMembers open class TabBarItemMoreContentView: TabBarItemContentView {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -1161,12 +1167,14 @@ internal extension FWTabBar /* Actions */ {
     
 }
 
-/*
+// MARK: - TabBarItemBadgeView
+/**
  * FWTabBarItemBadgeView
  * 这个类定义了item中使用的badge视图样式，默认为FWTabBarItemBadgeView类对象。
  * 你可以设置FWTabBarItemContentView的badgeView属性为自定义的FWTabBarItemBadgeView子类，这样就可以轻松实现 自定义通知样式了。
  */
-@objcMembers open class FWTabBarItemBadgeView: UIView {
+@objc(FWTabBarItemBadgeView)
+@objcMembers open class TabBarItemBadgeView: UIView {
     
     /// 默认颜色
     public static var defaultBadgeColor = UIColor.red
