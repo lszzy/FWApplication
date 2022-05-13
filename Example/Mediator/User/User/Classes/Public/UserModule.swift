@@ -27,10 +27,10 @@ import Mediator
 @objcMembers public class UserModule: NSObject, UserModuleService {
     private static let sharedModule = UserModule()
     
-    @FWUserDefaultAnnotation("userId", defaultValue: "")
+    @UserDefaultAnnotation("userId", defaultValue: "")
     private var userId: String
     
-    @FWUserDefaultAnnotation("userName", defaultValue: "")
+    @UserDefaultAnnotation("userName", defaultValue: "")
     private var userName: String
     
     public static func sharedInstance() -> Self {

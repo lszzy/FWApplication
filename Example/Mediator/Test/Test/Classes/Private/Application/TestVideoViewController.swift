@@ -77,7 +77,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     fileprivate var player = FWVideoPlayer()
     lazy var resourceLoader = FWPlayerCacheLoaderManager()
     
-    @FWUserDefaultAnnotation("TestVideoCacheEnabled", defaultValue: false)
+    @UserDefaultAnnotation("TestVideoCacheEnabled", defaultValue: false)
     private var cacheEnabled: Bool
     
     // MARK: object lifecycle

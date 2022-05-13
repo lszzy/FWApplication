@@ -12,7 +12,7 @@ import FWApplication
     lazy var audioPlayer = FWAudioPlayer.sharedInstance
     lazy var resourceLoader = FWPlayerCacheLoaderManager()
     
-    @FWUserDefaultAnnotation("TestAudioCacheEnabled", defaultValue: false)
+    @UserDefaultAnnotation("TestAudioCacheEnabled", defaultValue: false)
     private var cacheEnabled: Bool
     
     private lazy var audioImage: UIImageView = {

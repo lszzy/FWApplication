@@ -9,9 +9,9 @@
 import FWApplication
 
 @objcMembers public class Mediator: NSObject {
-    @FWModuleAnnotation(TestModuleService.self)
+    @ModuleAnnotation(TestModuleService.self)
     public static var testModule: TestModuleService
     
-    @FWModuleAnnotation(UserModuleService.self)
+    @ModuleAnnotation(UserModuleService.self)
     public static var userModule: UserModuleService
 }

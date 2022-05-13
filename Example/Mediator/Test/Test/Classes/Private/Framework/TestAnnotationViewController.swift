@@ -21,14 +21,14 @@ import UIKit
 }
 
 class TestPluginManager {
-    @FWPluginAnnotation(TestPluginProtocol.self)
+    @PluginAnnotation(TestPluginProtocol.self)
     static var testPlugin: TestPluginProtocol
 }
 
 // MARK: - FWRouterAnnotation
 
 class TestRouter {
-    @FWRouterAnnotation(TestRouter.pluginRouter(_:))
+    @RouterAnnotation(TestRouter.pluginRouter(_:))
     static var pluginUrl: String = "app://plugin/:id"
     
     static func pluginRouter(_ context: FWRouterContext) -> Any? {

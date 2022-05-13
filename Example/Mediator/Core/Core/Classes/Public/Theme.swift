@@ -9,10 +9,10 @@ import FWApplication
 import UIKit
 
 @objcMembers public class Theme: NSObject {
-    @FWUserDefaultAnnotation("isLargeTitles", defaultValue: false)
+    @UserDefaultAnnotation("isLargeTitles", defaultValue: false)
     public static var isLargeTitles: Bool
     
-    @FWUserDefaultAnnotation("isBarTranslucent", defaultValue: false)
+    @UserDefaultAnnotation("isBarTranslucent", defaultValue: false)
     public static var isBarTranslucent: Bool
     
     public static var backgroundColor: UIColor {

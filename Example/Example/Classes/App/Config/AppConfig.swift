@@ -11,12 +11,12 @@
 @_exported import Mediator
 
 class AppConfig: NSObject {
-    @FWUserDefaultAnnotation("isRootNavigation", defaultValue: false)
+    @UserDefaultAnnotation("isRootNavigation", defaultValue: false)
     static var isRootNavigation: Bool
     
-    @FWUserDefaultAnnotation("isRootCustom", defaultValue: false)
+    @UserDefaultAnnotation("isRootCustom", defaultValue: false)
     static var isRootCustom: Bool
     
-    @FWUserDefaultAnnotation("isRootLogin", defaultValue: false)
+    @UserDefaultAnnotation("isRootLogin", defaultValue: false)
     static var isRootLogin: Bool
 }

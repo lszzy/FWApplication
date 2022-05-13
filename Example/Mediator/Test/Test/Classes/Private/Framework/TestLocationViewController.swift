@@ -61,7 +61,7 @@ import FWApplication
     }
     
     override func renderData() {
-        let json: FWJSON = FWJSON([
+        let json: JSON = JSON([
             "array": [12.34, 56.78],
             "users": [
                 [
@@ -89,39 +89,39 @@ import FWApplication
         print(arrayOfString)
 
         let _ = json["users"][0]["info"]["name"].stringValue
-        let _ = ["users", 1, "info", "name"] as [FWJSONSubscriptType]
+        let _ = ["users", 1, "info", "name"] as [JSONSubscriptType]
         let _ = json["users", 1, "info", "name"].string
 
-        let keys: [FWJSONSubscriptType] = ["users", 1, "info", "name"]
+        let keys: [JSONSubscriptType] = ["users", 1, "info", "name"]
         let _ = json[keys].string
 
         let _ = json["users"][1]["info"]["name"].string
         let _ = json["users", 1, "info", "name"].string
         
-        for (key, subJson):(String, FWJSON) in json {
+        for (key, subJson):(String, JSON) in json {
             print(key)
             print(subJson)
         }
 
-        for (index, subJson):(String, FWJSON) in json["array"] {
+        for (index, subJson):(String, JSON) in json["array"] {
             print("\(index): \(subJson)")
         }
         
-        let errorJson = FWJSON(["name", "age"])
+        let errorJson = JSON(["name", "age"])
         if let name = errorJson[999].string {
             print(name)
         } else {
             print(errorJson[999].error!)
         }
 
-        let errorJson2 = FWJSON(["name": "Jack", "age": 25])
+        let errorJson2 = JSON(["name": "Jack", "age": 25])
         if let name = errorJson2["address"].string {
             print(name)
         } else {
             print(errorJson2["address"].error!)
         }
 
-        let errorJson3 = FWJSON(12345)
+        let errorJson3 = JSON(12345)
         if let age = errorJson3[0].string {
             print(age)
         } else {
