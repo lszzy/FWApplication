@@ -43,6 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  2. 声明Model类同名协议，同时定义数组属性时也声明协议。示例：NSArray<Book> *books
  *  Swift数组类映射时，需返回AnyClass类型。示例：["books": Book.self]
  */
+NS_SWIFT_NAME(Model)
 @protocol FWModel <NSObject>
 
 @optional
@@ -76,43 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  ViewModel架构协议
  */
+NS_SWIFT_NAME(ViewModel)
 @protocol FWViewModel <NSObject>
-
-@end
-
-@interface NSObject (FWModel)
-
-/**
- 从json创建对象，线程安全。NSDate会按照UTC时间解析，下同
- 
- @param json json对象，支持NSDictionary、NSString、NSData
- @return 实例对象，失败为nil
- */
-+ (nullable instancetype)modelWithJson:(id)json;
-
-/**
- 从字典创建对象，线程安全
- 
- @param dictionary 字典数据
- @return 实例对象，失败为nil
- */
-+ (nullable instancetype)modelWithDictionary:(NSDictionary *)dictionary;
-
-/**
- 从json创建Model数组
- 
- @param json json对象，支持NSDictionary、NSString、NSData
- @return Model数组
- */
-+ (nullable NSArray *)modelArrayWithJson:(id)json;
-
-/**
- 从json创建Model字典
- 
- @param json json对象，支持NSDictionary、NSString、NSData
- @return Model字典
- */
-+ (nullable NSDictionary *)modelDictionaryWithJson:(id)json;
 
 @end
 
@@ -265,12 +231,13 @@ typedef NS_OPTIONS(NSUInteger, FWEncodingType) {
     FWEncodingTypePropertyCustomGetter = 1 << 21, ///< getter=
     FWEncodingTypePropertyCustomSetter = 1 << 22, ///< setter=
     FWEncodingTypePropertyDynamic      = 1 << 23, ///< @dynamic
-};
+} NS_SWIFT_NAME(EncodingType);
 
 /// 解析Type-Encoding字符串类型
-FWEncodingType FWEncodingGetType(const char *typeEncoding);
+FWEncodingType FWEncodingGetType(const char *typeEncoding) NS_SWIFT_NAME(EncodingGetType(_:));
 
 /// Ivar信息
+NS_SWIFT_NAME(ClassIvarInfo)
 @interface FWClassIvarInfo : NSObject
 
 @property (nonatomic, assign, readonly) Ivar ivar;              ///< ivar opaque struct
@@ -284,6 +251,7 @@ FWEncodingType FWEncodingGetType(const char *typeEncoding);
 @end
 
 /// Method 信息
+NS_SWIFT_NAME(ClassMethodInfo)
 @interface FWClassMethodInfo : NSObject
 
 @property (nonatomic, assign, readonly) Method method;                  ///< method opaque struct
@@ -299,6 +267,7 @@ FWEncodingType FWEncodingGetType(const char *typeEncoding);
 @end
 
 /// 属性信息
+NS_SWIFT_NAME(ClassPropertyInfo)
 @interface FWClassPropertyInfo : NSObject
 
 @property (nonatomic, assign, readonly) objc_property_t property; ///< property's opaque struct
@@ -316,6 +285,7 @@ FWEncodingType FWEncodingGetType(const char *typeEncoding);
 @end
 
 /// Class信息
+NS_SWIFT_NAME(ClassInfo)
 @interface FWClassInfo : NSObject
 
 @property (nonatomic, assign, readonly) Class cls; ///< class object

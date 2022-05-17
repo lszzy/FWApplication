@@ -52,7 +52,7 @@ import FWApplication
 }
 
 @objcMembers class SwiftTestViewController: UIViewController, FWViewController {
-    func renderState(_ state: FWViewControllerState, with object: Any?) {
+    func renderState(_ state: ViewControllerState, with object: Any?) {
         switch state {
         case .success:
             view.__fw.showEmpty(withText: object as? String)

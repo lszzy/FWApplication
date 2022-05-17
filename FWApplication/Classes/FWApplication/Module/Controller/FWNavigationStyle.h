@@ -14,11 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWNavigationBarAppearance
 
 /// 导航栏全局样式可扩展枚举
-typedef NSInteger FWNavigationBarStyle NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWNavigationBarStyle NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(NavigationBarStyle);
 /// 默认样式，应用可配置并扩展
 static const FWNavigationBarStyle FWNavigationBarStyleDefault = 0;
 
 /// 导航栏样式配置
+NS_SWIFT_NAME(NavigationBarAppearance)
 @interface FWNavigationBarAppearance : NSObject
 
 /// 是否半透明(磨砂)，需edgesForExtendedLayout为Top|All，默认NO

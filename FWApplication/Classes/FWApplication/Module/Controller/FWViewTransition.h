@@ -27,13 +27,14 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
     FWAnimatedTransitionTypePop,
     FWAnimatedTransitionTypePresent,
     FWAnimatedTransitionTypeDismiss,
-};
+} NS_SWIFT_NAME(AnimatedTransitionType);
 
 #pragma mark - FWAnimatedTransition
 
 @class FWPanGestureRecognizer;
 
 /// 转场动画类，默认透明度变化
+NS_SWIFT_NAME(AnimatedTransition)
 @interface FWAnimatedTransition : UIPercentDrivenInteractiveTransition <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
 
 #pragma mark - Public
@@ -97,6 +98,7 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
 #pragma mark - FWSwipeAnimatedTransition
 
 /// 滑动转场动画类，默认上下
+NS_SWIFT_NAME(SwipeAnimatedTransition)
 @interface FWSwipeAnimatedTransition : FWAnimatedTransition
 
 /// 创建滑动转场，指定进入(push|present)和消失(pop|dismiss)方向
@@ -113,6 +115,7 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
 #pragma mark - FWTransformAnimatedTransition
 
 /// 形变转场动画类，默认缩放
+NS_SWIFT_NAME(TransformAnimatedTransition)
 @interface FWTransformAnimatedTransition : FWAnimatedTransition
 
 /// 创建形变转场，指定进入(push|present)和消失(pop|dismiss)形变
@@ -129,6 +132,7 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
 #pragma mark - FWPresentationController
 
 /// 自定义展示控制器。默认显示暗色背景动画且弹出视图占满容器，可通过属性自定义
+NS_SWIFT_NAME(PresentationController)
 @interface FWPresentationController : UIPresentationController
 
 /// 是否显示暗色背景，默认YES
@@ -162,6 +166,7 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
  FWPanGestureRecognizer
  @note 自动处理与滚动视图pan手势在指定方向的冲突，默认设置delegate为自身。如果找到滚动视图则处理之，否则同父类
  */
+NS_SWIFT_NAME(PanGestureRecognizer)
 @interface FWPanGestureRecognizer : UIPanGestureRecognizer
 
 // 是否自动检测滚动视图，默认YES。如需手工指定，请禁用之

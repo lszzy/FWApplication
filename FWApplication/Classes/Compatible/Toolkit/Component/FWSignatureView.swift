@@ -26,10 +26,12 @@ import CoreGraphics
 /// - getCroppedSignature()
 /// ## See
 /// https://github.com/GJNilsen/YPDrawSignatureView
-@IBDesignable @objcMembers
-final public class FWSignatureView: UIView {
+@IBDesignable
+@objc(FWSignatureView)
+@objcMembers
+final public class SignatureView: UIView {
     
-    public weak var delegate: FWSignatureDelegate?
+    public weak var delegate: SignatureDelegate?
     
     // MARK: - Public properties
     @IBInspectable public var strokeWidth: CGFloat = 2.0 {
@@ -204,18 +206,18 @@ final public class FWSignatureView: UIView {
     
 }
 
-// MARK: - Protocol definition for FWSignatureDelegate
-/// ## FWSignatureDelegate Protocol
-/// FWSignatureDelegate:
-/// - optional didStart(_ view : FWSignatureView)
-/// - optional didFinish(_ view : FWSignatureView)
-@objc
-public protocol FWSignatureDelegate {
-    func didStart(_ view : FWSignatureView)
-    func didFinish(_ view : FWSignatureView)
+// MARK: - Protocol definition for SignatureDelegate
+/// ## SignatureDelegate Protocol
+/// SignatureDelegate:
+/// - optional didStart(_ view : SignatureView)
+/// - optional didFinish(_ view : SignatureView)
+@objc(FWSignatureDelegate)
+public protocol SignatureDelegate {
+    func didStart(_ view : SignatureView)
+    func didFinish(_ view : SignatureView)
 }
 
-extension FWSignatureDelegate {
-    func didStart(_ view : FWSignatureView) {}
-    func didFinish(_ view : FWSignatureView) {}
+extension SignatureDelegate {
+    func didStart(_ view : SignatureView) {}
+    func didFinish(_ view : SignatureView) {}
 }

@@ -1425,26 +1425,6 @@ static NSString *FWModelDescription(NSObject *model) {
     }
 }
 
-@implementation NSObject (FWModel)
-
-+ (instancetype)modelWithJson:(id)json {
-    return [[self fw] modelWithJson:json];
-}
-
-+ (instancetype)modelWithDictionary:(NSDictionary *)dictionary {
-    return [[self fw] modelWithDictionary:dictionary];
-}
-
-+ (NSArray *)modelArrayWithJson:(id)json {
-    return [[self fw] modelArrayWithJson:json];
-}
-
-+ (NSDictionary *)modelDictionaryWithJson:(id)json {
-    return [[self fw] modelDictionaryWithJson:json];
-}
-
-@end
-
 @implementation FWClassWrapper (FWModel)
 
 - (NSDictionary *)innerDictionaryWithJson:(id)json {

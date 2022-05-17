@@ -17,7 +17,7 @@ extension FWCollectionViewController where Self: UIViewController {
         if let result = fw.property(forName: "collectionView") as? UICollectionView {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("collectionView"), withObject: self) as! UICollectionView
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("collectionView"), withObject: self) as! UICollectionView
             fw.setProperty(result, forName: "collectionView")
             return result
         }
@@ -28,7 +28,7 @@ extension FWCollectionViewController where Self: UIViewController {
         if let result = fw.property(forName: "collectionData") as? NSMutableArray {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("collectionData"), withObject: self) as! NSMutableArray
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("collectionData"), withObject: self) as! NSMutableArray
             fw.setProperty(result, forName: "collectionData")
             return result
         }
@@ -41,7 +41,7 @@ extension FWScrollViewController where Self: UIViewController {
         if let result = fw.property(forName: "scrollView") as? UIScrollView {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("scrollView"), withObject: self) as! UIScrollView
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("scrollView"), withObject: self) as! UIScrollView
             fw.setProperty(result, forName: "scrollView")
             return result
         }
@@ -52,7 +52,7 @@ extension FWScrollViewController where Self: UIViewController {
         if let result = fw.property(forName: "contentView") as? UIView {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("contentView"), withObject: self) as! UIView
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("contentView"), withObject: self) as! UIView
             fw.setProperty(result, forName: "contentView")
             return result
         }
@@ -65,7 +65,7 @@ extension FWTableViewController where Self: UIViewController {
         if let result = fw.property(forName: "tableView") as? UITableView {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("tableView"), withObject: self) as! UITableView
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("tableView"), withObject: self) as! UITableView
             fw.setProperty(result, forName: "tableView")
             return result
         }
@@ -76,7 +76,7 @@ extension FWTableViewController where Self: UIViewController {
         if let result = fw.property(forName: "tableData") as? NSMutableArray {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("tableData"), withObject: self) as! NSMutableArray
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("tableData"), withObject: self) as! NSMutableArray
             fw.setProperty(result, forName: "tableData")
             return result
         }
@@ -85,11 +85,11 @@ extension FWTableViewController where Self: UIViewController {
 
 extension FWWebViewController where Self: UIViewController {
     /// 网页视图，默认显示滚动条，启用前进后退手势
-    @nonobjc public var webView: FWWebView {
-        if let result = fw.property(forName: "webView") as? FWWebView {
+    @nonobjc public var webView: WebView {
+        if let result = fw.property(forName: "webView") as? WebView {
             return result
         } else {
-            let result = FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webView"), withObject: self) as! FWWebView
+            let result = ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webView"), withObject: self) as! WebView
             fw.setProperty(result, forName: "webView")
             return result
         }
@@ -97,16 +97,16 @@ extension FWWebViewController where Self: UIViewController {
     
     /// 左侧按钮组，依次为返回|关闭，支持UIBarButtonItem|UIImage|NSString|NSNumber等。可覆写，默认nil
     @nonobjc public var webItems: NSArray? {
-        return FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webItems"), withObject: self) as? NSArray
+        return ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webItems"), withObject: self) as? NSArray
     }
     
     /// 网页请求，设置后会自动加载，支持NSString|NSURL|NSURLRequest。默认nil
     @nonobjc public var webRequest: Any? {
         get {
-            return FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webRequest"), withObject: self)
+            return ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webRequest"), withObject: self)
         }
         set {
-            FWViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("setWebRequest:"), withObject: self, parameter: newValue)
+            ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("setWebRequest:"), withObject: self, parameter: newValue)
         }
     }
 }

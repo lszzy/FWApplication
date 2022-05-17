@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWWebView
 
+NS_SWIFT_NAME(WebViewDelegate)
 @protocol FWWebViewDelegate <WKNavigationDelegate, WKUIDelegate>
 
 @optional
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  WKWebView封装，默认实现进度条、JS弹窗、Cookie管理、自定义User-Agent等
  */
+NS_SWIFT_NAME(WebView)
 @interface FWWebView : WKWebView
 
 /// 默认跨WKWebView共享Cookie，切换用户时可重置processPool清空Cookie
@@ -65,6 +67,7 @@ WKWebView管理Cookie
 
 @see https://github.com/karosLi/KKJSBridge
 */
+NS_SWIFT_NAME(WebViewCookieManager)
 @interface FWWebViewCookieManager : NSObject
 
 /// 同步首个请求的Cookie
@@ -92,16 +95,18 @@ WKWebView管理Cookie
 
 #pragma mark - FWWebViewBridge
 
-typedef void (^FWJsBridgeResponseCallback)(id responseData);
-typedef void (^FWJsBridgeHandler)(id data, FWJsBridgeResponseCallback responseCallback);
-typedef void (^FWJsBridgeErrorHandler)(NSString *handlerName, id data, FWJsBridgeResponseCallback responseCallback);
-typedef BOOL (^FWJsBridgeFilterHandler)(NSString *handlerName, id data, FWJsBridgeResponseCallback responseCallback);
-typedef NSDictionary FWJsBridgeMessage;
+typedef void (^FWJsBridgeResponseCallback)(id responseData) NS_SWIFT_NAME(JsBridgeResponseCallback);
+typedef void (^FWJsBridgeHandler)(id data, FWJsBridgeResponseCallback responseCallback) NS_SWIFT_NAME(JsBridgeHandler);
+typedef void (^FWJsBridgeErrorHandler)(NSString *handlerName, id data, FWJsBridgeResponseCallback responseCallback) NS_SWIFT_NAME(JsBridgeErrorHandler);
+typedef BOOL (^FWJsBridgeFilterHandler)(NSString *handlerName, id data, FWJsBridgeResponseCallback responseCallback) NS_SWIFT_NAME(JsBridgeFilterHandler);
+typedef NSDictionary FWJsBridgeMessage NS_SWIFT_NAME(JsBridgeMessage);
 
+NS_SWIFT_NAME(WebViewJsBridgeDelegate)
 @protocol FWWebViewJsBridgeDelegate <NSObject>
 - (NSString *)_evaluateJavascript:(NSString *)javascriptCommand;
 @end
 
+NS_SWIFT_NAME(WebViewJsBridgeBase)
 @interface FWWebViewJsBridgeBase : NSObject
 
 @property (weak, nonatomic, nullable) id<FWWebViewJsBridgeDelegate> delegate;
@@ -132,6 +137,7 @@ WKWebView实现Javascript桥接器
 
 @see https://github.com/marcuswestin/WebViewJavascriptBridge
 */
+NS_SWIFT_NAME(WebViewJsBridge)
 @interface FWWebViewJsBridge : NSObject<WKNavigationDelegate, FWWebViewJsBridgeDelegate>
 
 + (instancetype)bridgeForWebView:(WKWebView *)webView;
@@ -151,7 +157,7 @@ WKWebView实现Javascript桥接器
 
 @end
 
-NSString * FWWebViewJsBridge_js(void);
+NSString * FWWebViewJsBridge_js(void) NS_SWIFT_NAME(WebViewJsBridge_js());
 
 @interface FWWebViewWrapper (FWWebViewBridge)
 

@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// 视图控制器页面状态可扩展枚举
-typedef NSInteger FWViewControllerState NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWViewControllerState NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(ViewControllerState);
 static const FWViewControllerState FWViewControllerStateReady   = 0;
 static const FWViewControllerState FWViewControllerStateLoading = 1;
 static const FWViewControllerState FWViewControllerStateSuccess = 2;
@@ -51,6 +51,7 @@ static const FWViewControllerState FWViewControllerStateFailure = 3;
 /**
  视图控制器拦截器
  */
+NS_SWIFT_NAME(ViewControllerIntercepter)
 @interface FWViewControllerIntercepter : NSObject
 
 @property (nonatomic, assign, nullable) SEL initIntercepter;
@@ -70,6 +71,7 @@ static const FWViewControllerState FWViewControllerStateFailure = 3;
  视图控制器管理器
  @note 框架默认未注册FWViewController协议拦截器，如需全局配置控制器，使用全局自定义block即可
  */
+NS_SWIFT_NAME(ViewControllerManager)
 @interface FWViewControllerManager : NSObject
 
 /** 单例模式 */

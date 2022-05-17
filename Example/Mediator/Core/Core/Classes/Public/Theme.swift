@@ -53,20 +53,20 @@ import UIKit
     }
     
     public static func themeChanged() {
-        let defaultAppearance = FWNavigationBarAppearance()
+        let defaultAppearance = NavigationBarAppearance()
         defaultAppearance.foregroundColor = Theme.textColor
         defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(alpha: 0.5) : Theme.barColor
         defaultAppearance.isTranslucent = Theme.isBarTranslucent
-        let whiteAppearance = FWNavigationBarAppearance()
+        let whiteAppearance = NavigationBarAppearance()
         whiteAppearance.foregroundColor = .black
         whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fw.color(alpha: 0.5) : .white
         whiteAppearance.isTranslucent = Theme.isBarTranslucent
-        let transparentAppearance = FWNavigationBarAppearance()
+        let transparentAppearance = NavigationBarAppearance()
         transparentAppearance.foregroundColor = Theme.textColor
         transparentAppearance.backgroundTransparent = true
-        FWNavigationBarAppearance.setAppearance(defaultAppearance, forStyle: .default)
-        FWNavigationBarAppearance.setAppearance(whiteAppearance, forStyle: .white)
-        FWNavigationBarAppearance.setAppearance(transparentAppearance, forStyle: .transparent)
+        NavigationBarAppearance.setAppearance(defaultAppearance, forStyle: .default)
+        NavigationBarAppearance.setAppearance(whiteAppearance, forStyle: .white)
+        NavigationBarAppearance.setAppearance(transparentAppearance, forStyle: .transparent)
     }
 }
 
@@ -85,21 +85,21 @@ extension Theme {
         // 启用返回代理拦截
         UINavigationController.fw.enablePopProxy()
         // 控制器样式设置
-        FWViewControllerManager.sharedInstance.hookInit = { viewController in
+        ViewControllerManager.sharedInstance.hookInit = { viewController in
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
             viewController.__fw.navigationBarHidden = false
             viewController.__fw.navigationBarStyle = .default
         }
-        FWViewControllerManager.sharedInstance.hookLoadView = { viewController in
+        ViewControllerManager.sharedInstance.hookLoadView = { viewController in
             viewController.view.backgroundColor = Theme.tableColor
         }
-        FWViewControllerManager.sharedInstance.hookViewDidLoad = { viewController in
+        ViewControllerManager.sharedInstance.hookViewDidLoad = { viewController in
             viewController.__fw.backBarItem = Icon.backImage
             viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
-        FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in
+        ViewControllerManager.sharedInstance.hookTableViewController = { viewController in
             viewController.tableView.backgroundColor = Theme.tableColor
         }
     }

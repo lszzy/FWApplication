@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
  SceneDelegate基类
  */
 API_AVAILABLE(ios(13.0))
+NS_SWIFT_NAME(SceneDelegate)
 @interface FWSceneDelegate : UIResponder <UIWindowSceneDelegate>
 
 /// 场景主window

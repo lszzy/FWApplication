@@ -6,10 +6,10 @@
 //  Copyright © 2021 site.wuyong. All rights reserved.
 //
 
-import Foundation
+import FWApplication
 
 @UIApplicationMain
-class AppDelegate: FWAppDelegate {
+class AppDelegate: FWApplication.AppDelegate {
     // MARK: - UISceneSession
     @available(iOS 13.0, *)
     override func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

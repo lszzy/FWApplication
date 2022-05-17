@@ -8,10 +8,10 @@
 
 import FWApplication
 
-@objcMembers class TestSignatureViewController: TestViewController, FWSignatureDelegate {
+@objcMembers class TestSignatureViewController: TestViewController, SignatureDelegate {
     
-    private lazy var signatureView: FWSignatureView = {
-        let signatureView = FWSignatureView()
+    private lazy var signatureView: SignatureView = {
+        let signatureView = SignatureView()
         signatureView.backgroundColor = UIColor.white
         signatureView.delegate = self
         return signatureView
@@ -49,11 +49,11 @@ import FWApplication
         saveButton.fw.layoutChain.centerX().topToBottom(ofView: clearButton, offset: 20)
     }
     
-    func didStart(_ view: FWSignatureView) {
+    func didStart(_ view: SignatureView) {
         print("Started Drawing")
     }
     
-    func didFinish(_ view: FWSignatureView) {
+    func didFinish(_ view: SignatureView) {
         print("Finished Drawing")
     }
     
