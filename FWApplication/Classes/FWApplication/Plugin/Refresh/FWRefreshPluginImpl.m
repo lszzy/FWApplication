@@ -28,12 +28,12 @@
     return scrollView.fw.pullRefreshView.state == FWPullRefreshStateLoading;
 }
 
-- (BOOL)showRefreshing:(UIScrollView *)scrollView {
+- (BOOL)shouldRefreshing:(UIScrollView *)scrollView {
     return scrollView.fw.showPullRefresh;
 }
 
-- (void)setShowRefreshing:(BOOL)showRefreshing scrollView:(UIScrollView *)scrollView {
-    scrollView.fw.showPullRefresh = showRefreshing;
+- (void)setShouldRefreshing:(BOOL)shouldRefreshing scrollView:(UIScrollView *)scrollView {
+    scrollView.fw.showPullRefresh = shouldRefreshing;
 }
 
 - (void)setRefreshingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {
@@ -60,12 +60,12 @@
     return scrollView.fw.infiniteScrollView.state == FWInfiniteScrollStateLoading;
 }
 
-- (BOOL)showLoading:(UIScrollView *)scrollView {
+- (BOOL)shouldLoading:(UIScrollView *)scrollView {
     return scrollView.fw.showInfiniteScroll;
 }
 
-- (void)setShowLoading:(BOOL)showLoading scrollView:(UIScrollView *)scrollView {
-    scrollView.fw.showInfiniteScroll = showLoading;
+- (void)setShouldLoading:(BOOL)shouldLoading scrollView:(UIScrollView *)scrollView {
+    scrollView.fw.showInfiniteScroll = shouldLoading;
 }
 
 - (void)setLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {

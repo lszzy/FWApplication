@@ -378,9 +378,9 @@ static BOOL isExpanded = NO;
         [self.collectionView.fw clearSizeCache];
         [self.collectionView.fw reloadDataWithoutAnimation];
         
-        self.collectionView.fw.showRefreshing = self.collectionData.count < 20 ? YES : NO;
+        self.collectionView.fw.shouldRefreshing = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView.fw endRefreshing];
-        if (!self.collectionView.fw.showRefreshing) {
+        if (!self.collectionView.fw.shouldRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -397,7 +397,7 @@ static BOOL isExpanded = NO;
         }
         [self.collectionView.fw reloadDataWithoutAnimation];
         
-        self.collectionView.fw.showLoading = self.collectionData.count < 20 ? YES : NO;
+        self.collectionView.fw.shouldLoading = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView.fw endLoading];
     });
 }

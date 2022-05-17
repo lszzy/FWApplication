@@ -37,20 +37,20 @@
     return [refreshPlugin isRefreshing:self.base];
 }
 
-- (BOOL)showRefreshing {
+- (BOOL)shouldRefreshing {
     id<FWRefreshPlugin> refreshPlugin = self.refreshPlugin;
-    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(showRefreshing:)]) {
+    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(shouldRefreshing:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
-    return [refreshPlugin showRefreshing:self.base];
+    return [refreshPlugin shouldRefreshing:self.base];
 }
 
-- (void)setShowRefreshing:(BOOL)showRefreshing {
+- (void)setShouldRefreshing:(BOOL)shouldRefreshing {
     id<FWRefreshPlugin> refreshPlugin = self.refreshPlugin;
-    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(setShowRefreshing:scrollView:)]) {
+    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(setShouldRefreshing:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
-    [refreshPlugin setShowRefreshing:showRefreshing scrollView:self.base];
+    [refreshPlugin setShouldRefreshing:shouldRefreshing scrollView:self.base];
 }
 
 - (void)setRefreshingBlock:(void (^)(void))block {
@@ -95,20 +95,20 @@
     return [refreshPlugin isLoading:self.base];
 }
 
-- (BOOL)showLoading {
+- (BOOL)shouldLoading {
     id<FWRefreshPlugin> refreshPlugin = self.refreshPlugin;
-    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(showLoading:)]) {
+    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(shouldLoading:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
-    return [refreshPlugin showLoading:self.base];
+    return [refreshPlugin shouldLoading:self.base];
 }
 
-- (void)setShowLoading:(BOOL)showLoading {
+- (void)setShouldLoading:(BOOL)shouldLoading {
     id<FWRefreshPlugin> refreshPlugin = self.refreshPlugin;
-    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(setShowLoading:scrollView:)]) {
+    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(setShouldLoading:scrollView:)]) {
         refreshPlugin = FWRefreshPluginImpl.sharedInstance;
     }
-    [refreshPlugin setShowLoading:showLoading scrollView:self.base];
+    [refreshPlugin setShouldLoading:shouldLoading scrollView:self.base];
 }
 
 - (void)setLoadingBlock:(void (^)(void))block {

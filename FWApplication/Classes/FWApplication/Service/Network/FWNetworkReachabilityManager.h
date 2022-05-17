@@ -214,6 +214,6 @@ FOUNDATION_EXPORT NSString * const FWNetworkingReachabilityNotificationStatusIte
 /**
  Returns a localized string representation of an `FWNetworkReachabilityStatus` value.
  */
-FOUNDATION_EXPORT NSString * FWStringFromNetworkReachabilityStatus(FWNetworkReachabilityStatus status) NS_SWIFT_NAME(StringFromNetworkReachabilityStatus);
+FOUNDATION_EXPORT NSString * FWStringFromNetworkReachabilityStatus(FWNetworkReachabilityStatus status) NS_SWIFT_NAME(StringFromNetworkReachabilityStatus(_:));
 
 NS_ASSUME_NONNULL_END

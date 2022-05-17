@@ -24,10 +24,10 @@ NS_SWIFT_NAME(RefreshPlugin)
 - (BOOL)isRefreshing:(UIScrollView *)scrollView;
 
 /// 是否显示刷新组件
-- (BOOL)showRefreshing:(UIScrollView *)scrollView;
+- (BOOL)shouldRefreshing:(UIScrollView *)scrollView;
 
 /// 设置是否显示刷新组件
-- (void)setShowRefreshing:(BOOL)showRefreshing scrollView:(UIScrollView *)scrollView;
+- (void)setShouldRefreshing:(BOOL)shouldRefreshing scrollView:(UIScrollView *)scrollView;
 
 /// 配置下拉刷新句柄
 - (void)setRefreshingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
@@ -47,10 +47,10 @@ NS_SWIFT_NAME(RefreshPlugin)
 - (BOOL)isLoading:(UIScrollView *)scrollView;
 
 /// 是否显示追加组件
-- (BOOL)showLoading:(UIScrollView *)scrollView;
+- (BOOL)shouldLoading:(UIScrollView *)scrollView;
 
 /// 设置是否显示追加组件
-- (void)setShowLoading:(BOOL)showLoading scrollView:(UIScrollView *)scrollView;
+- (void)setShouldLoading:(BOOL)shouldLoading scrollView:(UIScrollView *)scrollView;
 
 /// 配置上拉追加句柄
 - (void)setLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
@@ -80,7 +80,7 @@ NS_SWIFT_NAME(RefreshPlugin)
 @property (nonatomic, readonly) BOOL isRefreshing;
 
 /// 是否显示刷新组件
-@property (nonatomic, assign) BOOL showRefreshing;
+@property (nonatomic, assign) BOOL shouldRefreshing;
 
 /// 配置下拉刷新句柄
 - (void)setRefreshingBlock:(void (^)(void))block;
@@ -100,7 +100,7 @@ NS_SWIFT_NAME(RefreshPlugin)
 @property (nonatomic, readonly) BOOL isLoading;
 
 /// 是否显示追加组件
-@property (nonatomic, assign) BOOL showLoading;
+@property (nonatomic, assign) BOOL shouldLoading;
 
 /// 配置上拉追加句柄
 - (void)setLoadingBlock:(void (^)(void))block;

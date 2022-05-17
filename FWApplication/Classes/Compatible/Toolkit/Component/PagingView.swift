@@ -1,5 +1,5 @@
 //
-//  FWPagingView.swift
+//  PagingView.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/7/27.

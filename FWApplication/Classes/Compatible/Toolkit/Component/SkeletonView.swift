@@ -1,5 +1,5 @@
 //
-//  FWSkeletonView.swift
+//  SkeletonView.swift
 //  FWApplication
 //
 //  Created by wuyong on 2020/7/29.
