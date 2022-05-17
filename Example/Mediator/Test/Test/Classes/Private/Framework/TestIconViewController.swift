@@ -38,7 +38,7 @@ class TestIconCell: UICollectionViewCell {
     }
 }
 
-@objcMembers class TestIconViewController: TestViewController, FWCollectionViewController, UISearchBarDelegate {
+@objcMembers class TestIconViewController: TestViewController, CollectionViewControllerProtocol, UISearchBarDelegate {
     private var iconClass: Icon.Type = Octicons.self
         
     private lazy var searchBar: UISearchBar = {

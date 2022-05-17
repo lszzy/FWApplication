@@ -8,7 +8,7 @@
 
 import FWApplication
 
-@objcMembers class TestAssetViewController: TestViewController, FWTableViewController {
+@objcMembers class TestAssetViewController: TestViewController, TableViewControllerProtocol {
     var albums: [FWAssetGroup] = []
     var photos: [FWAsset] = []
     var isAlbum: Bool = false

@@ -8,7 +8,7 @@
 
 import FWApplication
 
-@objcMembers class TestPhotoBrowserViewController: TestViewController, FWTableViewController {
+@objcMembers class TestPhotoBrowserViewController: TestViewController, TableViewControllerProtocol {
     private var results: [Any] = []
     private var allowsEditing: Bool = false
     private var isFullscreen: Bool = false

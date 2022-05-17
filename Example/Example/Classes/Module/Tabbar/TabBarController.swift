@@ -22,11 +22,11 @@ extension UITabBarController: UITabBarControllerDelegate {
     
     static func refreshController() {
         if #available(iOS 13.0, *) {
-            if let sceneDelegate = UIWindow.fw.mainScene?.delegate as? FWApplication.SceneDelegate {
+            if let sceneDelegate = UIWindow.fw.mainScene?.delegate as? SceneResponder {
                 sceneDelegate.setupController()
             }
         } else {
-            if let appDelegate = UIApplication.shared.delegate as? FWApplication.AppDelegate {
+            if let appDelegate = UIApplication.shared.delegate as? AppResponder {
                 appDelegate.setupController()
             }
         }

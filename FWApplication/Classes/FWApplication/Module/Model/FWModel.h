@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  2. 声明Model类同名协议，同时定义数组属性时也声明协议。示例：NSArray<Book> *books
  *  Swift数组类映射时，需返回AnyClass类型。示例：["books": Book.self]
  */
-NS_SWIFT_NAME(Model)
+NS_SWIFT_NAME(ModelProtocol)
 @protocol FWModel <NSObject>
 
 @optional
@@ -77,7 +77,7 @@ NS_SWIFT_NAME(Model)
 /**
  *  ViewModel架构协议
  */
-NS_SWIFT_NAME(ViewModel)
+NS_SWIFT_NAME(ViewModelProtocol)
 @protocol FWViewModel <NSObject>
 
 @end

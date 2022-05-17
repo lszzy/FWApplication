@@ -21,6 +21,7 @@ static const FWViewControllerState FWViewControllerStateFailure = 3;
 /**
  视图控制器挂钩协议，可覆写
  */
+NS_SWIFT_NAME(ViewControllerProtocol)
 @protocol FWViewController <NSObject>
 
 @optional

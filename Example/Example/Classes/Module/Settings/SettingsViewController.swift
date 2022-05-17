@@ -12,7 +12,7 @@ import FWDebug
 import FWFramework
 #endif
 
-class SettingsViewController: UIViewController, FWTableViewController {
+class SettingsViewController: UIViewController, TableViewControllerProtocol {
     private lazy var loginButton: UIButton = {
         let button = Theme.largeButton()
         button.fw.addTouch(target: self, action: #selector(onMediator))

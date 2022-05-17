@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  视图挂钩协议，可覆写
  */
+NS_SWIFT_NAME(ViewProtocol)
 @protocol FWView <NSObject>
 
 @optional
@@ -56,6 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 通用视图事件代理
+NS_SWIFT_NAME(ViewDelegate)
 @protocol FWViewDelegate <NSObject>
 
 @optional

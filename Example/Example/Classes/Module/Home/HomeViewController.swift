@@ -8,7 +8,7 @@
 
 import Foundation
 
-class HomeViewController: UIViewController, FWViewController {
+class HomeViewController: UIViewController, ViewControllerProtocol {
     private lazy var loginButton: UIButton = {
         let button = UIButton(type: .system)
         button.frame = CGRect(x: 0, y: 20, width: FW.screenWidth, height: 30)

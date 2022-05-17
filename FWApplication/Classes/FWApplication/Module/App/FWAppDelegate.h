@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  AppDelegate基类
  */
-NS_SWIFT_NAME(AppDelegate)
+NS_SWIFT_NAME(AppResponder)
 @interface FWAppDelegate : UIResponder <UIApplicationDelegate>
 
 /// 应用主window

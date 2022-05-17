@@ -9,7 +9,7 @@
 import FWApplication
 
 @available(iOS 13.0, *)
-class SceneDelegate: FWApplication.SceneDelegate {
+class SceneDelegate: SceneResponder {
     override func setupController() {
         // iOS13使用新的方式
         window?.backgroundColor = Theme.backgroundColor

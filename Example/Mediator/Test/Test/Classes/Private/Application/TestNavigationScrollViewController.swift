@@ -24,7 +24,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }
 }
 
-@objcMembers class TestNavigationScrollViewController: TestViewController, FWTableViewController {
+@objcMembers class TestNavigationScrollViewController: TestViewController, TableViewControllerProtocol {
     private lazy var navigationView: FWToolbarView = {
         let navigationView = FWToolbarView(type: .navBar)
         navigationView.backgroundColor = Theme.barColor

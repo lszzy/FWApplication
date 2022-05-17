@@ -11,7 +11,7 @@ import UIKit
 import FWApplication
 #endif
 
-extension FWCollectionViewController where Self: UIViewController {
+extension CollectionViewControllerProtocol where Self: UIViewController {
     /// 集合视图，默认不显示滚动条
     @nonobjc public var collectionView: UICollectionView {
         if let result = fw.property(forName: "collectionView") as? UICollectionView {
@@ -35,7 +35,7 @@ extension FWCollectionViewController where Self: UIViewController {
     }
 }
 
-extension FWScrollViewController where Self: UIViewController {
+extension ScrollViewControllerProtocol where Self: UIViewController {
     /// 滚动视图，默认不显示滚动条
     @nonobjc public var scrollView: UIScrollView {
         if let result = fw.property(forName: "scrollView") as? UIScrollView {
@@ -59,7 +59,7 @@ extension FWScrollViewController where Self: UIViewController {
     }
 }
 
-extension FWTableViewController where Self: UIViewController {
+extension TableViewControllerProtocol where Self: UIViewController {
     /// 表格视图，默认不显示滚动条，Footer为空视图。Plain有悬停，Group无悬停
     @nonobjc public var tableView: UITableView {
         if let result = fw.property(forName: "tableView") as? UITableView {
@@ -83,7 +83,7 @@ extension FWTableViewController where Self: UIViewController {
     }
 }
 
-extension FWWebViewController where Self: UIViewController {
+extension WebViewControllerProtocol where Self: UIViewController {
     /// 网页视图，默认显示滚动条，启用前进后退手势
     @nonobjc public var webView: WebView {
         if let result = fw.property(forName: "webView") as? WebView {

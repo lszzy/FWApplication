@@ -8,7 +8,7 @@
 import FWApplication
 import Core
 
-@objcMembers class UserLoginController: UIViewController, FWViewController {
+@objcMembers class UserLoginController: UIViewController, ViewControllerProtocol {
     var completion: (() -> Void)?
     
     override func viewDidLoad() {

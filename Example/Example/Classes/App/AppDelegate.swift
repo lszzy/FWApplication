@@ -9,7 +9,7 @@
 import FWApplication
 
 @UIApplicationMain
-class AppDelegate: FWApplication.AppDelegate {
+class AppDelegate: AppResponder {
     // MARK: - UISceneSession
     @available(iOS 13.0, *)
     override func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

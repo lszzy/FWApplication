@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  集合视图控制器协议，可覆写
  */
+NS_SWIFT_NAME(CollectionViewControllerProtocol)
 @protocol FWCollectionViewController <FWViewController, UICollectionViewDataSource, UICollectionViewDelegate>
 
 @optional

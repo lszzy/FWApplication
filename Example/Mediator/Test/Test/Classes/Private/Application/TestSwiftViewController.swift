@@ -8,7 +8,7 @@
 
 import FWApplication
 
-@objcMembers class TestSwiftViewController: TestViewController, FWTableViewController {
+@objcMembers class TestSwiftViewController: TestViewController, TableViewControllerProtocol {
     override func renderData() {
         tableData.addObjects(from: [
             "FWViewController",
@@ -51,7 +51,7 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestViewController: UIViewController, FWViewController {
+@objcMembers class SwiftTestViewController: UIViewController, ViewControllerProtocol {
     func renderState(_ state: ViewControllerState, with object: Any?) {
         switch state {
         case .success:
@@ -82,7 +82,7 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestCollectionViewController: UIViewController, FWCollectionViewController, FWCollectionViewDelegateFlowLayout {
+@objcMembers class SwiftTestCollectionViewController: UIViewController, CollectionViewControllerProtocol, FWCollectionViewDelegateFlowLayout {
     lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.layer.masksToBounds = true
@@ -208,7 +208,7 @@ import FWApplication
     }*/
 }
 
-@objcMembers class SwiftTestScrollViewController: UIViewController, FWScrollViewController {
+@objcMembers class SwiftTestScrollViewController: UIViewController, ScrollViewControllerProtocol {
     func renderScrollView() {
         let view = UIView()
         view.backgroundColor = UIColor.fw.randomColor
@@ -219,7 +219,7 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestTableViewController: UIViewController, FWTableViewController {
+@objcMembers class SwiftTestTableViewController: UIViewController, TableViewControllerProtocol {
     func renderTableView() {
         view.backgroundColor = Theme.backgroundColor
     }
@@ -239,7 +239,7 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestWebViewController: UIViewController, FWWebViewController {
+@objcMembers class SwiftTestWebViewController: UIViewController, WebViewControllerProtocol {
     var webItems: NSArray? = {
         return [
             Icon.backImage as Any,

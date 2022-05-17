@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers class TestPromiseViewController: TestViewController, FWTableViewController {
+@objcMembers class TestPromiseViewController: TestViewController, TableViewControllerProtocol {
     func renderTableStyle() -> UITableView.Style {
         .grouped
     }
