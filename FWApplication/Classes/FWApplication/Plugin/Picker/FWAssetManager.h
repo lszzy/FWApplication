@@ -20,14 +20,14 @@ typedef NS_ENUM(NSUInteger, FWAssetType) {
     FWAssetTypeImage,
     FWAssetTypeVideo,
     FWAssetTypeAudio
-};
+} NS_SWIFT_NAME(AssetType);
 
 typedef NS_ENUM(NSUInteger, FWAssetSubType) {
     FWAssetSubTypeUnknow,
     FWAssetSubTypeImage,
     FWAssetSubTypeLivePhoto,
     FWAssetSubTypeGIF
-};
+} NS_SWIFT_NAME(AssetSubType);
 
 /// Status when download asset from iCloud
 typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
     FWAssetDownloadStatusDownloading,
     FWAssetDownloadStatusCanceled,
     FWAssetDownloadStatusFailed
-};
+} NS_SWIFT_NAME(AssetDownloadStatus);
 
 @class PHAsset;
 
@@ -43,6 +43,7 @@ typedef NS_ENUM(NSUInteger, FWAssetDownloadStatus) {
  *  相册里某一个资源的包装对象，该资源可能是图片、视频等。
  *  @note FWAsset 重写了 isEqual: 方法，只要两个 FWAsset 的 identifier 相同，则认为是同一个对象，以方便在数组、字典等容器中对大量 FWAsset 进行遍历查找等操作。
  */
+NS_SWIFT_NAME(Asset)
 @interface FWAsset : NSObject
 
 @property(nonatomic, assign, readonly) FWAssetType assetType;
@@ -188,14 +189,15 @@ typedef NS_ENUM(NSUInteger, FWAlbumContentType) {
     FWAlbumContentTypeOnlyPhoto,                            // 只展示照片
     FWAlbumContentTypeOnlyVideo,                            // 只展示视频
     FWAlbumContentTypeOnlyAudio                             // 只展示音频
-};
+} NS_SWIFT_NAME(AlbumContentType);
 
 /// 相册展示内容按日期排序的方式
 typedef NS_ENUM(NSUInteger, FWAlbumSortType) {
     FWAlbumSortTypePositive,  // 日期最新的内容排在后面
     FWAlbumSortTypeReverse  // 日期最新的内容排在前面
-};
+} NS_SWIFT_NAME(AlbumSortType);
 
+NS_SWIFT_NAME(AssetGroup)
 @interface FWAssetGroup : NSObject
 
 - (instancetype)initWithPHCollection:(PHAssetCollection *)phAssetCollection;
@@ -249,18 +251,18 @@ typedef NS_ENUM(NSUInteger, FWAssetAuthorizationStatus) {
     FWAssetAuthorizationStatusNotDetermined,      // 还不确定有没有授权
     FWAssetAuthorizationStatusAuthorized,         // 已经授权
     FWAssetAuthorizationStatusNotAuthorized       // 手动禁止了授权
-};
+} NS_SWIFT_NAME(AssetAuthorizationStatus);
 
-typedef void (^FWWriteAssetCompletionBlock)(FWAsset * _Nullable asset, NSError * _Nullable error);
+typedef void (^FWWriteAssetCompletionBlock)(FWAsset * _Nullable asset, NSError * _Nullable error) NS_SWIFT_NAME(WriteAssetCompletionBlock);
 
 /// 保存图片到指定相册（传入 UIImage）
-extern void FWImageWriteToSavedPhotosAlbumWithAlbumAssetsGroup(UIImage *image, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock);
+extern void FWImageWriteToSavedPhotosAlbumWithAlbumAssetsGroup(UIImage *image, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_REFINED_FOR_SWIFT;
 
 /// 保存图片到指定相册（传入图片路径）
-extern void FWSaveImageAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *imagePath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock);
+extern void FWSaveImageAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *imagePath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_REFINED_FOR_SWIFT;
 
 /// 保存视频到指定相册
-extern void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock);
+extern void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_REFINED_FOR_SWIFT;
 
 /**
  *  构建 FWAssetManager 这个对象并提供单例的调用方式主要出于下面两点考虑：
@@ -271,6 +273,7 @@ extern void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *vi
  *
  * @see https://github.com/Tencent/QMUI_iOS
  */
+NS_SWIFT_NAME(AssetManager)
 @interface FWAssetManager : NSObject
 
 /// 获取 FWAssetManager 的单例

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWEmptyPluginImpl
 
 /// 默认空界面插件
+NS_SWIFT_NAME(EmptyPluginImpl)
 @interface FWEmptyPluginImpl : NSObject <FWEmptyPlugin>
 
 /// 单例模式

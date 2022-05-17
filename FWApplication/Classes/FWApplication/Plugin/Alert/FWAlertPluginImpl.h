@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  系统弹出框样式配置类，由于系统兼容性，建议优先使用FWAlertController
  @note 如果未自定义样式，显示效果和系统一致，不会产生任何影响；框架会先渲染actions动作再渲染cancel动作
 */
+NS_SWIFT_NAME(AlertAppearance)
 @interface FWAlertAppearance : NSObject
 
 // 单例模式，统一设置样式
@@ -60,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FWAlertActionWrapper (FWAlert)
 
 // 自定义样式，默认为样式单例
-@property (nonatomic, strong, readonly) FWAlertAppearance *alertAppearance;
+@property (nonatomic, strong) FWAlertAppearance *alertAppearance;
 
 // 指定标题颜色
 @property (nonatomic, strong, nullable) UIColor *titleColor;
@@ -86,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FWAlertControllerWrapper (FWAlert)
 
 // 自定义样式，默认为样式单例
-@property (nonatomic, strong, readonly) FWAlertAppearance *alertAppearance;
+@property (nonatomic, strong) FWAlertAppearance *alertAppearance;
 
 // 设置属性标题
 @property (nonatomic, copy, nullable) NSAttributedString *attributedTitle;
@@ -109,6 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWAlertPluginImpl
 
 /// 默认弹窗插件
+NS_SWIFT_NAME(AlertPluginImpl)
 @interface FWAlertPluginImpl : NSObject <FWAlertPlugin>
 
 /// 单例模式对象

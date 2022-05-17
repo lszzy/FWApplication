@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FWAlertControllerStyle) {
     FWAlertControllerStyleActionSheet = 0, // 从单侧弹出(顶/左/底/右)
     FWAlertControllerStyleAlert,           // 从中间弹出
-};
+} NS_SWIFT_NAME(AlertControllerStyle);
 
 typedef NS_ENUM(NSInteger, FWAlertAnimationType) {
     FWAlertAnimationTypeDefault = 0, // 默认动画，如果是FWAlertControllerStyleActionSheet样式,默认动画等效于FWAlertAnimationTypeFromBottom，如果是FWAlertControllerStyleAlert样式,默认动画等效于FWAlertAnimationTypeShrink
@@ -28,15 +28,16 @@ typedef NS_ENUM(NSInteger, FWAlertAnimationType) {
     FWAlertAnimationTypeFade,        // 渐变动画
 
     FWAlertAnimationTypeNone,        // 无动画
-};
+} NS_SWIFT_NAME(AlertAnimationType);
 
 typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
     FWAlertActionStyleDefault = 0,  // 默认样式
     FWAlertActionStyleCancel,       // 取消样式,字体加粗
     FWAlertActionStyleDestructive   // 红色字体样式
-};
+} NS_SWIFT_NAME(AlertActionStyle);
 
 /** FWAlertController样式，继承自FWAlertAppearance */
+NS_SWIFT_NAME(AlertControllerAppearance)
 @interface FWAlertControllerAppearance : FWAlertAppearance
 @property (class, nonatomic, readonly) FWAlertControllerAppearance *appearance;
 
@@ -61,7 +62,7 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 @end
 
 // ===================================================== FWAlertAction =====================================================
-
+NS_SWIFT_NAME(AlertAction)
 @interface FWAlertAction : NSObject <NSCopying>
 
 + (instancetype)actionWithTitle:(nullable NSString *)title style:(FWAlertActionStyle)style handler:(void (^ __nullable)(FWAlertAction *action))handler;
@@ -102,6 +103,7 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
  @see https://github.com/SPStore/SPAlertController
  */
+NS_SWIFT_NAME(AlertController)
 @interface FWAlertController : UIViewController
 
 + (instancetype)alertControllerWithTitle:(nullable NSString *)title message:(nullable NSString *)message preferredStyle:(FWAlertControllerStyle)preferredStyle;
@@ -241,6 +243,7 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 
 @end
 
+NS_SWIFT_NAME(AlertControllerDelegate)
 @protocol FWAlertControllerDelegate <NSObject>
 @optional;
 - (void)willPresentAlertController:(FWAlertController *)alertController; // 将要present
@@ -249,9 +252,11 @@ typedef NS_ENUM(NSInteger, FWAlertActionStyle) {
 - (void)didDismissAlertController:(FWAlertController *)alertController;  // 已经dismiss
 @end
 
+NS_SWIFT_NAME(AlertPresentationController)
 @interface FWAlertPresentationController : UIPresentationController
 @end
 
+NS_SWIFT_NAME(AlertAnimation)
 @interface FWAlertAnimation : NSObject <UIViewControllerAnimatedTransitioning>
 + (instancetype)animationIsPresenting:(BOOL)presenting;
 @end

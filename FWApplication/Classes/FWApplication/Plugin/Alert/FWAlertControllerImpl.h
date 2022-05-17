@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWAlertControllerPlugin
 
+NS_SWIFT_NAME(AlertControllerPlugin)
 @interface FWAlertControllerPlugin : NSObject <FWAlertPlugin>
 
 /** 单例模式 */

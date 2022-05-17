@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @see https://github.com/Tencent/QMUI_iOS
  */
+NS_SWIFT_NAME(EmptyView)
 @interface FWEmptyView : UIView
 
 /// 此控件通过设置 loadingView.hidden 来控制 loadinView 的显示和隐藏，因此请确保你的loadingView 没有类似于 hidesWhenStopped = YES 之类会使 view.hidden 失效的属性
@@ -107,6 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWScrollViewWrapper+FWScrollOverlayView
 
+NS_SWIFT_NAME(ScrollOverlayView)
 @interface FWScrollOverlayView : UIView
 
 @end

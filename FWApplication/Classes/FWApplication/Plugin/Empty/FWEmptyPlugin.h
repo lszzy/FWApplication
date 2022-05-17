@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWEmptyPlugin
 
 /// 空界面插件协议，应用可自定义空界面插件实现
+NS_SWIFT_NAME(EmptyPlugin)
 @protocol FWEmptyPlugin <NSObject>
 
 @optional
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWEmptyPluginView
 
 /// 空界面插件视图协议，使用空界面插件
+NS_REFINED_FOR_SWIFT
 @protocol FWEmptyPluginView <NSObject>
 @required
 
@@ -83,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWScrollViewWrapper+FWEmptyPlugin
 
 /// 空界面代理协议
+NS_SWIFT_NAME(EmptyViewDelegate)
 @protocol FWEmptyViewDelegate <NSObject>
 @optional
 

@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWAlertPlugin
 
 // 弹窗插件协议，应用可自定义弹窗实现
+NS_SWIFT_NAME(AlertPlugin)
 @protocol FWAlertPlugin <NSObject>
 
 @required
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWAlertPluginController
 
 /// 弹窗插件控制器协议，使用弹窗插件
+NS_REFINED_FOR_SWIFT
 @protocol FWAlertPluginController <NSObject>
 @required
 
