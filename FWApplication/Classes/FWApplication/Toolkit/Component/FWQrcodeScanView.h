@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/kingsic/SGQRCode
  */
+NS_SWIFT_NAME(QrcodeScanManager)
 @interface FWQrcodeScanManager : NSObject
 
 #pragma mark - Scan
@@ -122,18 +123,19 @@ typedef NS_ENUM(NSUInteger, FWQrcodeCornerLocation) {
     FWQrcodeCornerLocationInside,
     /// 在边框线外部
     FWQrcodeCornerLocationOutside
-};
+} NS_SWIFT_NAME(QrcodeCornerLocation);
 
 typedef NS_ENUM(NSUInteger, FWQrcodeScanAnimationStyle) {
     /// 单线扫描样式
     FWQrcodeScanAnimationStyleDefault,
     /// 网格扫描样式
     FWQrcodeScanAnimationStyleGrid
-};
+} NS_SWIFT_NAME(QrcodeScanAnimationStyle);
 
 /**
  FWQrcodeScanView
  */
+NS_SWIFT_NAME(QrcodeScanView)
 @interface FWQrcodeScanView : UIView
 
 /** 扫描样式，默认 ScanAnimationStyleDefault */

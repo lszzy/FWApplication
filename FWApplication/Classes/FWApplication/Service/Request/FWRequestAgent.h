@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  FWRequestAgent handles batch request management. It keeps track of all
 ///  the batch requests.
+NS_SWIFT_NAME(RequestAgent)
 @interface FWRequestAgent : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;

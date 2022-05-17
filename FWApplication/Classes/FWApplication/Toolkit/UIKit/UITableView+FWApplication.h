@@ -62,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  TableViewCell背景视图，处理section圆角、阴影等
  */
+NS_SWIFT_NAME(TableViewCellBackgroundView)
 @interface FWTableViewCellBackgroundView : UIView
 
 // 背景内容视图，此视图用于设置圆角，阴影等

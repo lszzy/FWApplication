@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FWBannerViewPageControlAlignment) {
     FWBannerViewPageControlAlignmentRight,
     FWBannerViewPageControlAlignmentCenter,
-};
+} NS_SWIFT_NAME(BannerViewPageControlAlignment);
 
 typedef NS_ENUM(NSInteger, FWBannerViewPageControlStyle) {
     // 系统样式
@@ -23,10 +23,11 @@ typedef NS_ENUM(NSInteger, FWBannerViewPageControlStyle) {
     FWBannerViewPageControlStyleCustom,
     // 不显示
     FWBannerViewPageControlStyleNone,
-};
+} NS_SWIFT_NAME(BannerViewPageControlStyle);
 
 @class FWBannerView;
 
+NS_SWIFT_NAME(BannerViewDelegate)
 @protocol FWBannerViewDelegate <NSObject>
 
 @optional
@@ -51,6 +52,7 @@ typedef NS_ENUM(NSInteger, FWBannerViewPageControlStyle) {
  
  @see https://github.com/gsdios/SDCycleScrollView
  */
+NS_SWIFT_NAME(BannerView)
 @interface FWBannerView : UIView
 
 /** 初始轮播图（推荐使用） */
@@ -189,6 +191,7 @@ typedef NS_ENUM(NSInteger, FWBannerViewPageControlStyle) {
 
 @end
 
+NS_SWIFT_NAME(BannerViewCell)
 @interface FWBannerViewCell : UICollectionViewCell
 
 @property (nonatomic, weak, nullable) UIImageView *imageView;

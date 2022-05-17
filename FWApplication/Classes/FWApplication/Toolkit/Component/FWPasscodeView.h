@@ -11,6 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_NAME(PasscodeFlowLayout)
 @interface FWPasscodeFlowLayout : UICollectionViewFlowLayout
 
 @property (assign, nonatomic) BOOL equalGap;
@@ -23,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PasscodeLineView)
 @interface FWPasscodeLineView : UIView
 
 @property (strong, nonatomic) UIView    *lineView;
@@ -52,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PasscodeSecrectImageView)
 @interface FWPasscodeSecrectImageView : UIView
 
 @property (strong, nonatomic) UIImage   *image;
@@ -63,8 +66,9 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FWPasscodeSecurityType) {
     FWPasscodeSecurityTypeSymbol,
     FWPasscodeSecurityTypeView,
-};
+} NS_SWIFT_NAME(PasscodeSecurityType);
 
+NS_SWIFT_NAME(PasscodeCellProperty)
 @interface FWPasscodeCellProperty : NSObject <NSCopying>
 
 #pragma mark - UI
@@ -212,6 +216,7 @@ typedef NS_ENUM(NSInteger, FWPasscodeSecurityType) {
 
 @end
 
+NS_SWIFT_NAME(PasscodeCell)
 @interface FWPasscodeCell : UICollectionViewCell
 
 /**
@@ -231,7 +236,7 @@ typedef NS_ENUM(NSInteger, FWPasscodeEditStatus) {
     FWPasscodeEditStatusIdle,
     FWPasscodeEditStatusBeginEdit,
     FWPasscodeEditStatusEndEdit,
-};
+} NS_SWIFT_NAME(PasscodeEditStatus);
 
 typedef NS_ENUM(NSInteger, FWPasscodeInputType) {
     /// 数字
@@ -240,13 +245,14 @@ typedef NS_ENUM(NSInteger, FWPasscodeInputType) {
     FWPasscodeInputTypeNormal,
     /// 自定义正则（此时需要设置customInputRegex）
     FWPasscodeInputTypeRegex,
-};
+} NS_SWIFT_NAME(PasscodeInputType);
 
 /**
  FWPasscodeView
  
  @see https://github.com/CRAnimation/CRBoxInputView
  */
+NS_SWIFT_NAME(PasscodeView)
 @interface FWPasscodeView : UIView
 
 /**

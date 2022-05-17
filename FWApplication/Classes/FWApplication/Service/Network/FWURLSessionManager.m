@@ -42,12 +42,12 @@ static dispatch_group_t fw_url_session_manager_completion_group() {
     return group;
 }
 
-NSString * const FWNetworkingTaskDidResumeNotification = @"site.wuyong.networking.task.resume";
-NSString * const FWNetworkingTaskDidCompleteNotification = @"site.wuyong.networking.task.complete";
-NSString * const FWNetworkingTaskDidSuspendNotification = @"site.wuyong.networking.task.suspend";
-NSString * const FWURLSessionDidInvalidateNotification = @"site.wuyong.networking.session.invalidate";
-NSString * const FWURLSessionDownloadTaskDidMoveFileSuccessfullyNotification = @"site.wuyong.networking.session.download.file-manager-succeed";
-NSString * const FWURLSessionDownloadTaskDidFailToMoveFileNotification = @"site.wuyong.networking.session.download.file-manager-error";
+NSNotificationName const FWNetworkingTaskDidResumeNotification = @"site.wuyong.networking.task.resume";
+NSNotificationName const FWNetworkingTaskDidCompleteNotification = @"site.wuyong.networking.task.complete";
+NSNotificationName const FWNetworkingTaskDidSuspendNotification = @"site.wuyong.networking.task.suspend";
+NSNotificationName const FWURLSessionDidInvalidateNotification = @"site.wuyong.networking.session.invalidate";
+NSNotificationName const FWURLSessionDownloadTaskDidMoveFileSuccessfullyNotification = @"site.wuyong.networking.session.download.file-manager-succeed";
+NSNotificationName const FWURLSessionDownloadTaskDidFailToMoveFileNotification = @"site.wuyong.networking.session.download.file-manager-error";
 
 NSString * const FWNetworkingTaskDidCompleteSerializedResponseKey = @"site.wuyong.networking.task.complete.serializedresponse";
 NSString * const FWNetworkingTaskDidCompleteResponseSerializerKey = @"site.wuyong.networking.task.complete.responseserializer";

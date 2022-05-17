@@ -21,9 +21,10 @@ typedef NS_ENUM(NSInteger, FWBadgeStyle) {
     FWBadgeStyleSmall,
     /// 大提醒灯，同系统桌面，(24+)*(24)，14号字体
     FWBadgeStyleBig,
-};
+} NS_SWIFT_NAME(BadgeStyle);
 
 /// 提醒灯视图，默认禁用userInteractionEnabled
+NS_SWIFT_NAME(BadgeView)
 @interface FWBadgeView : UIView
 
 /// 提醒灯样式，默认0自定义

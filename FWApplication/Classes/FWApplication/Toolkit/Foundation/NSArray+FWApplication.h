@@ -89,6 +89,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/ibireme/YYKit
  */
+NS_SWIFT_NAME(MutableArray)
 @interface FWMutableArray<__covariant ObjectType> : NSMutableArray<ObjectType>
 
 @end

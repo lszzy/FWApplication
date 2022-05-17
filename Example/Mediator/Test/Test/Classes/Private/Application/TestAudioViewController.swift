@@ -8,9 +8,9 @@
 
 import FWApplication
 
-@objcMembers class TestAudioViewController: TestViewController, FWAudioPlayerDelegate, FWAudioPlayerDataSource {
-    lazy var audioPlayer = FWAudioPlayer.sharedInstance
-    lazy var resourceLoader = FWPlayerCacheLoaderManager()
+@objcMembers class TestAudioViewController: TestViewController, AudioPlayerDelegate, AudioPlayerDataSource {
+    lazy var audioPlayer = AudioPlayer.sharedInstance
+    lazy var resourceLoader = PlayerCacheLoaderManager()
     
     @UserDefaultAnnotation("TestAudioCacheEnabled", defaultValue: false)
     private var cacheEnabled: Bool

@@ -75,7 +75,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
 
 @objcMembers class TestVideoViewController: TestViewController, VideoPlayerDelegate, VideoPlayerPlaybackDelegate {
     fileprivate var player = VideoPlayer()
-    lazy var resourceLoader = FWPlayerCacheLoaderManager()
+    lazy var resourceLoader = PlayerCacheLoaderManager()
     
     @UserDefaultAnnotation("TestVideoCacheEnabled", defaultValue: false)
     private var cacheEnabled: Bool

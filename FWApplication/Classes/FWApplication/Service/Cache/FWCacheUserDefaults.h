@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// NSUserDefaults缓存
+NS_SWIFT_NAME(CacheUserDefaults)
 @interface FWCacheUserDefaults : FWCacheEngine
 
 /** 单例模式 */

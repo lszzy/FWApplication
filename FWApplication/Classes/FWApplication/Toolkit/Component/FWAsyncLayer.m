@@ -41,7 +41,7 @@ static dispatch_queue_t FWAsyncLayerGetReleaseQueue() {
 
 
 @implementation FWAsyncLayer {
-    FWSentinel *_sentinel;
+    FWAsyncSentinel *_sentinel;
 }
 
 #pragma mark - Override
@@ -62,7 +62,7 @@ static dispatch_queue_t FWAsyncLayerGetReleaseQueue() {
         scale = [UIScreen mainScreen].scale;
     });
     self.contentsScale = scale;
-    _sentinel = [FWSentinel new];
+    _sentinel = [FWAsyncSentinel new];
     _displaysAsynchronously = YES;
     return self;
 }
@@ -95,7 +95,7 @@ static dispatch_queue_t FWAsyncLayerGetReleaseQueue() {
     
     if (async) {
         if (task.willDisplay) task.willDisplay(self);
-        FWSentinel *sentinel = _sentinel;
+        FWAsyncSentinel *sentinel = _sentinel;
         int value = sentinel.value;
         BOOL (^isCancelled)(void) = ^BOOL() {
             return value != sentinel.value;
@@ -200,7 +200,7 @@ static dispatch_queue_t FWAsyncLayerGetReleaseQueue() {
 
 @end
 
-@implementation FWSentinel {
+@implementation FWAsyncSentinel {
     atomic_int _value;
 }
 
@@ -214,7 +214,7 @@ static dispatch_queue_t FWAsyncLayerGetReleaseQueue() {
 
 @end
 
-@interface FWTransaction()
+@interface FWAsyncTransaction()
 @property (nonatomic, strong) id target;
 @property (nonatomic, assign) SEL selector;
 @end
@@ -225,7 +225,7 @@ static void FWRunLoopObserverCallBack(CFRunLoopObserverRef observer, CFRunLoopAc
     if (transactionSet.count == 0) return;
     NSSet *currentSet = transactionSet;
     transactionSet = [NSMutableSet new];
-    [currentSet enumerateObjectsUsingBlock:^(FWTransaction *transaction, BOOL *stop) {
+    [currentSet enumerateObjectsUsingBlock:^(FWAsyncTransaction *transaction, BOOL *stop) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [transaction.target performSelector:transaction.selector];
@@ -251,11 +251,11 @@ static void FWTransactionSetup() {
 }
 
 
-@implementation FWTransaction
+@implementation FWAsyncTransaction
 
-+ (FWTransaction *)transactionWithTarget:(id)target selector:(SEL)selector{
++ (FWAsyncTransaction *)transactionWithTarget:(id)target selector:(SEL)selector{
     if (!target || !selector) return nil;
-    FWTransaction *t = [FWTransaction new];
+    FWAsyncTransaction *t = [FWAsyncTransaction new];
     t.target = target;
     t.selector = selector;
     return t;
@@ -276,7 +276,7 @@ static void FWTransactionSetup() {
 - (BOOL)isEqual:(id)object {
     if (self == object) return YES;
     if (![object isMemberOfClass:self.class]) return NO;
-    FWTransaction *other = object;
+    FWAsyncTransaction *other = object;
     return other.selector == _selector && other.target == _target;
 }
 

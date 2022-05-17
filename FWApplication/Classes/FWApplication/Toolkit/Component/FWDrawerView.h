@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
 抽屉拖拽视图
 */
+NS_SWIFT_NAME(DrawerView)
 @interface FWDrawerView : NSObject
 
 // 创建抽屉拖拽视图，view会强引用之。view为滚动视图时，详见scrollView属性

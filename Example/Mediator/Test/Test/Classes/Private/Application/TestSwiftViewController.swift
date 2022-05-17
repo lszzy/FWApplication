@@ -82,15 +82,15 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestCollectionViewController: UIViewController, CollectionViewControllerProtocol, FWCollectionViewDelegateFlowLayout {
+@objcMembers class SwiftTestCollectionViewController: UIViewController, CollectionViewControllerProtocol, CollectionViewDelegateFlowLayout {
     lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.layer.masksToBounds = true
         return contentView
     }()
     
-    lazy var flowLayout: FWCollectionViewFlowLayout = {
-        let flowLayout = FWCollectionViewFlowLayout()
+    lazy var flowLayout: CollectionViewFlowLayout = {
+        let flowLayout = CollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.sectionInset = .zero
@@ -170,8 +170,8 @@ import FWApplication
         return view
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> FWCollectionViewSectionConfig? {
-        let sectionConfig = FWCollectionViewSectionConfig()
+    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> CollectionViewSectionConfig? {
+        let sectionConfig = CollectionViewSectionConfig()
         sectionConfig.backgroundColor = UIColor.fw.randomColor
         return sectionConfig
     }

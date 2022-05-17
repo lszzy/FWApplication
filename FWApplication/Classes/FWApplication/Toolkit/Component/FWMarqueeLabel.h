@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/Tencent/QMUI_iOS
  */
+NS_SWIFT_NAME(MarqueeLabel)
 @interface FWMarqueeLabel : UILabel
 
 /// 控制滚动的速度，1 表示一帧滚动 1pt，10 表示一帧滚动 10pt，默认为 .5，与系统一致。

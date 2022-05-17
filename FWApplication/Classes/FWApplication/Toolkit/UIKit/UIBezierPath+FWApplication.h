@@ -10,12 +10,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-// 将角度(0~360)转换为弧度，周长为2*M_PI*r
-FOUNDATION_EXPORT CGFloat FWRadianWithDegree(CGFloat degree);
-
-// 将弧度转换为角度(0~360)
-FOUNDATION_EXPORT CGFloat FWDegreeWithRadian(CGFloat radian);
-
 @interface FWBezierPathWrapper (FWApplication)
 
 // 绘制形状图片，自定义画笔宽度、画笔颜色、填充颜色，填充颜色为nil时不执行填充

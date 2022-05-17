@@ -13,8 +13,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^FWIndexChangeBlock)(NSUInteger index);
-typedef NSAttributedString *_Nonnull(^FWTitleFormatterBlock)(FWSegmentedControl *segmentedControl, NSString *title, NSUInteger index, BOOL selected);
+typedef void (^FWIndexChangeBlock)(NSUInteger index) NS_SWIFT_NAME(IndexChangeBlock);
+typedef NSAttributedString *_Nonnull(^FWTitleFormatterBlock)(FWSegmentedControl *segmentedControl, NSString *title, NSUInteger index, BOOL selected) NS_SWIFT_NAME(TitleFormatterBlock);
 
 typedef NS_ENUM(NSInteger, FWSegmentedControlSelectionStyle) {
     FWSegmentedControlSelectionStyleTextWidthStripe, // Indicator width will only be as big as the text width
@@ -22,18 +22,18 @@ typedef NS_ENUM(NSInteger, FWSegmentedControlSelectionStyle) {
     FWSegmentedControlSelectionStyleBox, // A rectangle that covers the whole segment
     FWSegmentedControlSelectionStyleArrow, // An arrow in the middle of the segment pointing up or down depending on `FWSegmentedControlSelectionIndicatorLocation`
     FWSegmentedControlSelectionStyleCircle // An circle in the middle of the segment pointing up or down depending on `FWSegmentedControlSelectionIndicatorLocation`
-};
+} NS_SWIFT_NAME(SegmentedControlSelectionStyle);
 
 typedef NS_ENUM(NSInteger, FWSegmentedControlSelectionIndicatorLocation) {
     FWSegmentedControlSelectionIndicatorLocationTop,
     FWSegmentedControlSelectionIndicatorLocationBottom,
     FWSegmentedControlSelectionIndicatorLocationNone // No selection indicator
-};
+} NS_SWIFT_NAME(SegmentedControlSelectionIndicatorLocation);
 
 typedef NS_ENUM(NSInteger, FWSegmentedControlSegmentWidthStyle) {
     FWSegmentedControlSegmentWidthStyleFixed, // Segment width is fixed
     FWSegmentedControlSegmentWidthStyleDynamic, // Segment width will only be as big as the text width (including inset)
-};
+} NS_SWIFT_NAME(SegmentedControlSegmentWidthStyle);
 
 typedef NS_OPTIONS(NSInteger, FWSegmentedControlBorderType) {
     FWSegmentedControlBorderTypeNone = 0,
@@ -41,16 +41,16 @@ typedef NS_OPTIONS(NSInteger, FWSegmentedControlBorderType) {
     FWSegmentedControlBorderTypeLeft = (1 << 1),
     FWSegmentedControlBorderTypeBottom = (1 << 2),
     FWSegmentedControlBorderTypeRight = (1 << 3)
-};
+} NS_SWIFT_NAME(SegmentedControlBorderType);
 
 /// Segment index for no selected segment
-FOUNDATION_EXPORT NSUInteger FWSegmentedControlNoSegment;
+FOUNDATION_EXPORT NSUInteger FWSegmentedControlNoSegment NS_SWIFT_NAME(SegmentedControlNoSegment);
 
 typedef NS_ENUM(NSInteger, FWSegmentedControlType) {
     FWSegmentedControlTypeText,
     FWSegmentedControlTypeImages,
     FWSegmentedControlTypeTextImages
-};
+} NS_SWIFT_NAME(SegmentedControlType);
 
 typedef NS_ENUM(NSInteger, FWSegmentedControlImagePosition) {
     FWSegmentedControlImagePositionBehindText,
@@ -58,13 +58,14 @@ typedef NS_ENUM(NSInteger, FWSegmentedControlImagePosition) {
     FWSegmentedControlImagePositionRightOfText,
     FWSegmentedControlImagePositionAboveText,
     FWSegmentedControlImagePositionBelowText
-};
+} NS_SWIFT_NAME(SegmentedControlImagePosition);
 
 /**
  FWSegmentedControl
  
  [HMSegmentedControl 1.5.6](https://github.com/HeshamMegid/HMSegmentedControl)
  */
+NS_SWIFT_NAME(SegmentedControl)
 @interface FWSegmentedControl : UIControl
 
 @property (nonatomic, strong, nullable) NSArray<NSString *> *sectionTitles;

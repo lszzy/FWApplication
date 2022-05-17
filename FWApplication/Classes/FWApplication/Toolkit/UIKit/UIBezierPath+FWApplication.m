@@ -8,14 +8,6 @@
 
 #import "UIBezierPath+FWApplication.h"
 
-CGFloat FWRadianWithDegree(CGFloat degree) {
-    return ((M_PI * degree) / 180.f);
-}
-
-CGFloat FWDegreeWithRadian(CGFloat radian) {
-    return ((180.f * radian) / M_PI);
-}
-
 @implementation FWBezierPathWrapper (FWApplication)
 
 - (UIImage *)shapeImage:(CGSize)size

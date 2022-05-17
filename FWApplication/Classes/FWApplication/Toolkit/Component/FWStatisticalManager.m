@@ -14,7 +14,7 @@
 
 #pragma mark - FWStatistical
 
-NSString *const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTriggeredNotification";
+NSNotificationName const FWStatisticalEventTriggeredNotification = @"FWStatisticalEventTriggeredNotification";
 
 @interface FWViewWrapper (FWStatisticalInternal)
 

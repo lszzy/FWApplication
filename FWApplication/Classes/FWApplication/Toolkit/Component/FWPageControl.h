@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class FWPageControl;
 
+NS_SWIFT_NAME(PageControlDelegate)
 @protocol FWPageControlDelegate <NSObject>
 
 @optional
@@ -28,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/TanguyAladenise/TAPageControl
  */
+NS_SWIFT_NAME(PageControl)
 @interface FWPageControl : UIControl
 
 /**
@@ -103,6 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWDotView
 
+NS_SWIFT_NAME(DotViewProtocol)
 @protocol FWDotViewProtocol <NSObject>
 
 @required
@@ -116,6 +119,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(DotView)
 @interface FWDotView : UIView <FWDotViewProtocol>
 
 @property (nonatomic, strong) UIColor *dotColor;
@@ -126,6 +130,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(BorderDotView)
 @interface FWBorderDotView : FWDotView
 
 @end

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  通用布局section配置类
  */
+NS_SWIFT_NAME(CollectionViewSectionConfig)
 @interface FWCollectionViewSectionConfig : NSObject
 
 /// 自定义section背景色，默认nil
@@ -27,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  通用布局section配置协议
  */
+NS_SWIFT_NAME(CollectionViewDelegateFlowLayout)
 @protocol FWCollectionViewDelegateFlowLayout <UICollectionViewDelegateFlowLayout>
 @optional
 
@@ -60,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
  * [1  4  7  10] => [4  5  6   7 ]
  * [2  5  8  11]    [8  9  10  11]
  */
+NS_SWIFT_NAME(CollectionViewFlowLayout)
 @interface FWCollectionViewFlowLayout : UICollectionViewFlowLayout
 
 /// 是否启用元素纵向渲染，默认关闭，开启时需设置渲染总数itemRenderCount
@@ -88,7 +91,7 @@ typedef NS_ENUM (NSUInteger, FWCollectionViewWaterfallLayoutItemRenderDirection)
   FWCollectionViewWaterfallLayoutItemRenderDirectionShortestFirst,
   FWCollectionViewWaterfallLayoutItemRenderDirectionLeftToRight,
   FWCollectionViewWaterfallLayoutItemRenderDirectionRightToLeft
-};
+} NS_SWIFT_NAME(CollectionViewWaterfallLayoutItemRenderDirection);
 
 @class FWCollectionViewWaterfallLayout;
 
@@ -100,6 +103,7 @@ typedef NS_ENUM (NSUInteger, FWCollectionViewWaterfallLayoutItemRenderDirection)
  *  The waterfall layout object expects the collection view’s delegate object to adopt this protocol.
  *  Therefore, implement this protocol on object assigned to your collection view’s delegate property.
  */
+NS_SWIFT_NAME(CollectionViewDelegateWaterfallLayout)
 @protocol FWCollectionViewDelegateWaterfallLayout <UICollectionViewDelegate>
 @required
 /**
@@ -287,6 +291,7 @@ typedef NS_ENUM (NSUInteger, FWCollectionViewWaterfallLayoutItemRenderDirection)
  *  @note FWCollectionViewWaterfallLayout doesn't support decoration view, and it supports vertical scrolling direction only.
  *  @see https://github.com/chiahsien/CHTCollectionViewWaterfallLayout
  */
+NS_SWIFT_NAME(CollectionViewWaterfallLayout)
 @interface FWCollectionViewWaterfallLayout : UICollectionViewLayout
 
 /**
@@ -396,23 +401,24 @@ typedef NS_ENUM(NSInteger, FWCollectionViewItemsHorizontalAlignment) {
     FWCollectionViewItemsHorizontalAlignmentLeft,       /**< 水平居左 */
     FWCollectionViewItemsHorizontalAlignmentCenter,     /**< 水平居中 */
     FWCollectionViewItemsHorizontalAlignmentRight       /**< 水平居右 */
-};
+} NS_SWIFT_NAME(CollectionViewItemsHorizontalAlignment);
 
 typedef NS_ENUM(NSInteger, FWCollectionViewItemsVerticalAlignment) {
     FWCollectionViewItemsVerticalAlignmentCenter, /**< 竖直方向居中 */
     FWCollectionViewItemsVerticalAlignmentTop,    /**< 竖直方向顶部对齐 */
     FWCollectionViewItemsVerticalAlignmentBottom  /**< 竖直方向底部对齐 */
-};
+} NS_SWIFT_NAME(CollectionViewItemsVerticalAlignment);
 
 typedef NS_ENUM(NSInteger, FWCollectionViewItemsDirection) {
     FWCollectionViewItemsDirectionLTR, /**< 排布方向从左到右 */
     FWCollectionViewItemsDirectionRTL  /**< 排布方向从右到左 */
-};
+} NS_SWIFT_NAME(CollectionViewItemsDirection);
 
 @class FWCollectionViewAlignLayout;
 
 /// 扩展 UICollectionViewDelegateFlowLayout/NSCollectionViewDelegateFlowLayout 协议，
 /// 添加设置水平、竖直方向的对齐方式以及 items 排布方向协议方法
+NS_SWIFT_NAME(CollectionViewDelegateAlignLayout)
 @protocol FWCollectionViewDelegateAlignLayout <FWCollectionViewDelegateFlowLayout>
 
 @optional
@@ -446,6 +452,7 @@ typedef NS_ENUM(NSInteger, FWCollectionViewItemsDirection) {
 /// 3. 设置显示条目排布方向：从左到右（默认）、从右到左。
 ///
 /// @see https://github.com/Coder-ZJQ/JQCollectionViewAlignLayout
+NS_SWIFT_NAME(CollectionViewAlignLayout)
 @interface FWCollectionViewAlignLayout : UICollectionViewFlowLayout
 
 /// 水平方向对齐方式，默认为流式(FWCollectionViewItemsHorizontalAlignmentFlow)

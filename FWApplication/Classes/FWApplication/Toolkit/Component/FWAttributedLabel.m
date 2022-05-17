@@ -525,10 +525,10 @@ static NSString* const FWEllipsesCharacter = @"\u2026";
     
     CTRunDelegateCallbacks callbacks;
     callbacks.version       = kCTRunDelegateVersion1;
-    callbacks.getAscent     = fwAttributedAscentCallback;
-    callbacks.getDescent    = fwAttributedDescentCallback;
-    callbacks.getWidth      = fwAttributedWidthCallback;
-    callbacks.dealloc       = fwAttributedDeallocCallback;
+    callbacks.getAscent     = fw_attributedAscentCallback;
+    callbacks.getDescent    = fw_attributedDescentCallback;
+    callbacks.getWidth      = fw_attributedWidthCallback;
+    callbacks.dealloc       = fw_attributedDeallocCallback;
     
     CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (void *)attachment);
     NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:(__bridge id)delegate,kCTRunDelegateAttributeName, nil];
@@ -1336,12 +1336,12 @@ static NSString* const FWEllipsesCharacter = @"\u2026";
 
 #pragma mark - FWAttributedLabelAttachment
 
-void fwAttributedDeallocCallback(void* ref)
+void fw_attributedDeallocCallback(void* ref)
 {
     
 }
 
-CGFloat fwAttributedAscentCallback(void *ref)
+CGFloat fw_attributedAscentCallback(void *ref)
 {
     FWAttributedLabelAttachment *image = (__bridge FWAttributedLabelAttachment *)ref;
     CGFloat ascent = 0;
@@ -1368,7 +1368,7 @@ CGFloat fwAttributedAscentCallback(void *ref)
     return ascent;
 }
 
-CGFloat fwAttributedDescentCallback(void *ref)
+CGFloat fw_attributedDescentCallback(void *ref)
 {
     FWAttributedLabelAttachment *image = (__bridge FWAttributedLabelAttachment *)ref;
     CGFloat descent = 0;
@@ -1400,7 +1400,7 @@ CGFloat fwAttributedDescentCallback(void *ref)
     return descent;
 }
 
-CGFloat fwAttributedWidthCallback(void* ref)
+CGFloat fw_attributedWidthCallback(void* ref)
 {
     FWAttributedLabelAttachment *image  = (__bridge FWAttributedLabelAttachment *)ref;
     return [image boxSize].width;

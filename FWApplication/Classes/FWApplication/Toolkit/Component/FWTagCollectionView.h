@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FWTagCollectionScrollDirection) {
     FWTagCollectionScrollDirectionVertical = 0, // Default
     FWTagCollectionScrollDirectionHorizontal = 1
-};
+} NS_SWIFT_NAME(TagCollectionScrollDirection);
 
 /**
  * Tags alignment
@@ -31,11 +31,12 @@ typedef NS_ENUM(NSInteger, FWTagCollectionAlignment) {
     FWTagCollectionAlignmentFillByExpandingSpace,               // Expand horizontal spacing and fill
     FWTagCollectionAlignmentFillByExpandingWidth,               // Expand width and fill
     FWTagCollectionAlignmentFillByExpandingWidthExceptLastLine  // Expand width and fill, except last line
-};
+} NS_SWIFT_NAME(TagCollectionAlignment);
 
 /**
  * Tags delegate
  */
+NS_SWIFT_NAME(TagCollectionViewDelegate)
 @protocol FWTagCollectionViewDelegate <NSObject>
 @required
 - (CGSize)tagCollectionView:(FWTagCollectionView *)tagCollectionView sizeForTagAtIndex:(NSUInteger)index;
@@ -51,6 +52,7 @@ typedef NS_ENUM(NSInteger, FWTagCollectionAlignment) {
 /**
  * Tags dataSource
  */
+NS_SWIFT_NAME(TagCollectionViewDataSource)
 @protocol FWTagCollectionViewDataSource <NSObject>
 @required
 - (NSUInteger)numberOfTagsInTagCollectionView:(FWTagCollectionView *)tagCollectionView;
@@ -63,6 +65,7 @@ typedef NS_ENUM(NSInteger, FWTagCollectionAlignment) {
  
  @see https://github.com/zekunyan/TTGTagCollectionView
  */
+NS_SWIFT_NAME(TagCollectionView)
 @interface FWTagCollectionView : UIView
 @property (nonatomic, weak, nullable) id <FWTagCollectionViewDataSource> dataSource;
 @property (nonatomic, weak, nullable) id <FWTagCollectionViewDelegate> delegate;
@@ -120,7 +123,7 @@ typedef NS_ENUM(NSInteger, FWTagCollectionAlignment) {
 @end
 
 /// FWTextTagConfig
-
+NS_SWIFT_NAME(TextTagConfig)
 @interface FWTextTagConfig : NSObject;
 // Text font
 @property (strong, nonatomic) UIFont *textFont;
@@ -184,6 +187,7 @@ typedef NS_ENUM(NSInteger, FWTagCollectionAlignment) {
 
 @class FWTextTagCollectionView;
 
+NS_SWIFT_NAME(TextTagCollectionViewDelegate)
 @protocol FWTextTagCollectionViewDelegate <NSObject>
 @optional
 
@@ -203,6 +207,7 @@ typedef NS_ENUM(NSInteger, FWTagCollectionAlignment) {
             updateContentSize:(CGSize)contentSize;
 @end
 
+NS_SWIFT_NAME(TextTagCollectionView)
 @interface FWTextTagCollectionView : UIView
 // Delegate
 @property (weak, nonatomic, nullable) id <FWTextTagCollectionViewDelegate> delegate;

@@ -28,7 +28,7 @@
 #import <ifaddrs.h>
 #import <netdb.h>
 
-NSString * const FWNetworkingReachabilityDidChangeNotification = @"site.wuyong.networking.reachability.change";
+NSNotificationName const FWNetworkingReachabilityDidChangeNotification = @"FWNetworkingReachabilityDidChangeNotification";
 NSString * const FWNetworkingReachabilityNotificationStatusItem = @"FWNetworkingReachabilityNotificationStatusItem";
 
 typedef void (^FWNetworkReachabilityStatusBlock)(FWNetworkReachabilityStatus status);

@@ -18,11 +18,12 @@ typedef NS_OPTIONS(NSUInteger, FWAttributedAlignment) {
     FWAttributedAlignmentTop,
     FWAttributedAlignmentCenter,
     FWAttributedAlignmentBottom
-};
+} NS_SWIFT_NAME(AttributedAlignment);
 
 @class FWAttributedLabel;
 @class FWAttributedLabelAttachment;
 
+NS_SWIFT_NAME(AttributedLabelDelegate)
 @protocol FWAttributedLabelDelegate <NSObject>
 - (void)attributedLabel:(FWAttributedLabel *)label clickedOnLink:(id)linkData;
 @end
@@ -34,6 +35,7 @@ typedef NS_OPTIONS(NSUInteger, FWAttributedAlignment) {
  
  @see https://github.com/xiangwangfeng/M80AttributedLabel
  */
+NS_SWIFT_NAME(AttributedLabel)
 @interface FWAttributedLabel : UIView
 
 @property (nonatomic,weak,nullable)         id<FWAttributedLabelDelegate> delegate;
@@ -96,6 +98,7 @@ typedef NS_OPTIONS(NSUInteger, FWAttributedAlignment) {
 
 #pragma mark - FWAttributedLabelURL
 
+NS_SWIFT_NAME(AttributedLabelURL)
 @interface FWAttributedLabelURL : NSObject
 
 @property (nonatomic,strong)          id      linkData;
@@ -110,12 +113,14 @@ typedef NS_OPTIONS(NSUInteger, FWAttributedAlignment) {
 
 #pragma mark - FWAttributedLabelURLDetector
 
-typedef void(^FWAttributedLinkDetectCompletion)(NSArray<FWAttributedLabelURL *> * _Nullable links);
+typedef void(^FWAttributedLinkDetectCompletion)(NSArray<FWAttributedLabelURL *> * _Nullable links) NS_SWIFT_NAME(AttributedLinkDetectCompletion);
 
+NS_SWIFT_NAME(AttributedLabelCustomURLDetector)
 @protocol FWAttributedLabelCustomURLDetector <NSObject>
 - (void)detectLinks:(nullable NSString *)plainText completion:(FWAttributedLinkDetectCompletion)completion;
 @end
 
+NS_SWIFT_NAME(AttributedLabelURLDetector)
 @interface FWAttributedLabelURLDetector : NSObject
 @property (nonatomic,strong) id<FWAttributedLabelCustomURLDetector> detector;
 
@@ -126,11 +131,12 @@ typedef void(^FWAttributedLinkDetectCompletion)(NSArray<FWAttributedLabelURL *> 
 
 #pragma mark - FWAttributedLabelAttachment
 
-void fwAttributedDeallocCallback(void* ref);
-CGFloat fwAttributedAscentCallback(void *ref);
-CGFloat fwAttributedDescentCallback(void *ref);
-CGFloat fwAttributedWidthCallback(void* ref);
+void fw_attributedDeallocCallback(void* ref) NS_REFINED_FOR_SWIFT;
+CGFloat fw_attributedAscentCallback(void *ref) NS_REFINED_FOR_SWIFT;
+CGFloat fw_attributedDescentCallback(void *ref) NS_REFINED_FOR_SWIFT;
+CGFloat fw_attributedWidthCallback(void* ref) NS_REFINED_FOR_SWIFT;
 
+NS_SWIFT_NAME(AttributedLabelAttachment)
 @interface FWAttributedLabelAttachment : NSObject
 
 @property (nonatomic,strong) id                    content;

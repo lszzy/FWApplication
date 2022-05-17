@@ -338,6 +338,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  渐变View，无需设置渐变Layer的frame等，支持自动布局
  */
+NS_SWIFT_NAME(GradientView)
 @interface FWGradientView : UIView
 
 @property (nonatomic, strong, readonly) CAGradientLayer *gradientLayer;

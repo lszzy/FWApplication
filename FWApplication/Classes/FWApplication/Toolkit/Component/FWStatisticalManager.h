@@ -17,16 +17,16 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWStatisticalObject;
 
 /// 统计事件触发通知，可统一处理。通知object为FWStatisticalObject统计对象，userInfo为附加信息
-extern NSString *const FWStatisticalEventTriggeredNotification;
+extern NSNotificationName const FWStatisticalEventTriggeredNotification NS_SWIFT_NAME(StatisticalEventTriggered);
 
 /// 统计通用block，参数object为FWStatisticalObject统计对象
-typedef void (^FWStatisticalBlock)(FWStatisticalObject *object);
+typedef void (^FWStatisticalBlock)(FWStatisticalObject *object) NS_SWIFT_NAME(StatisticalBlock);
 
 /// 统计点击回调block，参数cell为表格子cell，indexPath为表格子cell所在位置
-typedef void (^FWStatisticalClickCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath);
+typedef void (^FWStatisticalClickCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath) NS_SWIFT_NAME(StatisticalClickCallback);
 
 /// 统计曝光回调block，参数cell为表格子cell，indexPath为表格子cell所在位置，duration为曝光时长(0表示开始)
-typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath, NSTimeInterval duration);
+typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, NSIndexPath * _Nullable indexPath, NSTimeInterval duration) NS_SWIFT_NAME(StatisticalExposureCallback);
 
 /**
  事件统计管理器
@@ -35,6 +35,7 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
  目前暂未实现曝光时长统计，仅触发开始事件用于统计次数，可自行处理时长统计，注意应用退后台时不计曝光时间。
  默认运行模式时，视图快速滚动不计算曝光，可配置runLoopMode快速滚动时也计算曝光
  */
+NS_SWIFT_NAME(StatisticalManager)
 @interface FWStatisticalManager : NSObject
 
 /// 单例模式
@@ -63,6 +64,7 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /**
  事件统计对象
  */
+NS_SWIFT_NAME(StatisticalObject)
 @interface FWStatisticalObject : NSObject <NSCopying>
 
 /// 事件绑定名称，未绑定时为空
@@ -108,6 +110,7 @@ typedef void (^FWStatisticalExposureCallback)(__kindof UIView * _Nullable cell, 
 /**
  自定义统计实现代理
  */
+NS_SWIFT_NAME(StatisticalDelegate)
 @protocol FWStatisticalDelegate <NSObject>
 
 @optional

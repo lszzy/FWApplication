@@ -15,23 +15,23 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWBarrageDescriptor;
 @class FWBarrageCell;
 
-FOUNDATION_EXPORT NSString *const FWBarrageAnimation;
+FOUNDATION_EXPORT NSString *const FWBarrageAnimation NS_SWIFT_NAME(BarrageAnimation);
 
-typedef void(^FWBarrageTouchAction)(__weak FWBarrageDescriptor *descriptor);
-typedef void(^FWBarrageCellTouchedAction)(__weak FWBarrageDescriptor *descriptor, __weak FWBarrageCell *cell);
+typedef void(^FWBarrageTouchAction)(__weak FWBarrageDescriptor *descriptor) NS_SWIFT_NAME(BarrageTouchAction);
+typedef void(^FWBarrageCellTouchedAction)(__weak FWBarrageDescriptor *descriptor, __weak FWBarrageCell *cell) NS_SWIFT_NAME(BarrageCellTouchedAction);
 
 typedef NS_ENUM(NSInteger, FWBarragePositionPriority) {
     FWBarragePositionLow = 0,
     FWBarragePositionMiddle,
     FWBarragePositionHigh,
     FWBarragePositionVeryHigh
-};
+} NS_SWIFT_NAME(BarragePositionPriority);
 
 typedef NS_ENUM(NSInteger, FWBarrageRenderPositionStyle) {//新加的cell的y坐标的类型
     FWBarrageRenderPositionRandomTracks = 0, //将FWBarrageRenderView分成几条轨道, 随机选一条展示
     FWBarrageRenderPositionRandom, // y坐标随机
     FWBarrageRenderPositionIncrease, //y坐标递增, 循环
-};
+} NS_SWIFT_NAME(BarrageRenderPositionStyle);
 
 #pragma mark - FWBarrageRenderView
 
@@ -39,8 +39,9 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
     FWBarrageRenderStoped = 0,
     FWBarrageRenderStarted,
     FWBarrageRenderPaused
-};
+} NS_SWIFT_NAME(BarrageRenderStatus);
 
+NS_SWIFT_NAME(BarrageRenderView)
 @interface FWBarrageRenderView : UIView <CAAnimationDelegate> {
     NSMutableArray<FWBarrageCell *> *_animatingCells;
     NSMutableArray<FWBarrageCell *> *_idleCells;
@@ -80,6 +81,7 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
  
  @see https://github.com/w1531724247/OCBarrage
  */
+NS_SWIFT_NAME(BarrageManager)
 @interface FWBarrageManager : NSObject {
     FWBarrageRenderView *_renderView;
 }
@@ -98,6 +100,7 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 #pragma mark - FWBarrageDescriptor
 
+NS_SWIFT_NAME(BarrageDescriptor)
 @interface FWBarrageDescriptor : NSObject
 
 @property (nonatomic, assign, nullable) Class barrageCellClass;
@@ -118,6 +121,7 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 @protocol FWBarrageCellDelegate;
 
+NS_SWIFT_NAME(BarrageCell)
 @interface FWBarrageCell : UIView
 @property (nonatomic, assign, getter=isIdle) BOOL idle;//是否是空闲状态
 @property (nonatomic, assign) NSTimeInterval idleTime;//开始闲置的时间, 闲置超过5秒的, 自动回收内存
@@ -138,12 +142,14 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 @end
 
+NS_SWIFT_NAME(BarrageCellDelegate)
 @protocol FWBarrageCellDelegate <NSObject, CAAnimationDelegate>
 
 @end
 
 #pragma mark - FWBarrageTextDescriptor
 
+NS_SWIFT_NAME(BarrageTextDescriptor)
 @interface FWBarrageTextDescriptor : FWBarrageDescriptor {
     NSMutableDictionary *_textAttribute;
 }
@@ -170,6 +176,7 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 #pragma mark - FWBarrageTextCell
 
+NS_SWIFT_NAME(BarrageTextCell)
 @interface FWBarrageTextCell : FWBarrageCell
 
 @property (nonatomic, strong) UILabel *textLabel;
@@ -179,6 +186,7 @@ typedef NS_ENUM(NSInteger, FWBarrageRenderStatus) {
 
 #pragma mark - FWBarrageTrackInfo
 
+NS_SWIFT_NAME(BarrageTrackInfo)
 @interface FWBarrageTrackInfo : NSObject
 
 @property (nonatomic, assign) int trackIndex;

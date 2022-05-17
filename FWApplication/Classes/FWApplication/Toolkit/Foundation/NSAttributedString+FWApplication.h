@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  NSAttributedString属性封装器
  */
+NS_SWIFT_NAME(AttributedOption)
 @interface FWAttributedOption : NSObject <NSCopying>
 
 #pragma mark - Attribute

@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///  to receive network-related messages. All the delegate methods will be called
 ///  on the main queue. Note the delegate methods will be called when all the requests
 ///  of chain request finishes.
+NS_SWIFT_NAME(ChainRequestDelegate)
 @protocol FWChainRequestDelegate <NSObject>
 
 @optional
@@ -49,11 +50,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// The chain callback called when one request finished
-typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *baseRequest);
+typedef void (^FWChainCallback)(FWChainRequest *chainRequest, FWBaseRequest *baseRequest) NS_SWIFT_NAME(ChainCallback);
 
 ///  FWChainRequest can be used to chain several FWRequest so that one will only starts after another finishes.
 ///  Note that when used inside FWChainRequest, a single FWRequest will have its own callback and delegate
 ///  cleared, in favor of the chain request callback.
+NS_SWIFT_NAME(ChainRequest)
 @interface FWChainRequest : NSObject
 
 ///  All the requests are stored in this array.

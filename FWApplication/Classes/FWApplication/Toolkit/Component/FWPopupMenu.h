@@ -19,8 +19,9 @@ typedef NS_ENUM(NSInteger, FWPopupMenuArrowDirection) {
     FWPopupMenuArrowDirectionLeft,     //箭头朝左
     FWPopupMenuArrowDirectionRight,    //箭头朝右
     FWPopupMenuArrowDirectionNone      //没有箭头
-};
+} NS_SWIFT_NAME(PopupMenuArrowDirection);
 
+NS_SWIFT_NAME(PopupMenuPath)
 @interface FWPopupMenuPath : NSObject
 
 + (CAShapeLayer *)maskLayerWithRect:(CGRect)rect
@@ -45,6 +46,7 @@ typedef NS_ENUM(NSInteger, FWPopupMenuArrowDirection) {
 
 #pragma mark - FWPopupMenuDeviceOrientationManager
 
+NS_SWIFT_NAME(PopupMenuDeviceOrientationManager)
 @protocol FWPopupMenuDeviceOrientationManager <NSObject>
 
 /**
@@ -68,6 +70,7 @@ typedef NS_ENUM(NSInteger, FWPopupMenuArrowDirection) {
 
 @end
 
+NS_SWIFT_NAME(PopupMenuDeviceOrientationManager)
 @interface FWPopupMenuDeviceOrientationManager : NSObject <FWPopupMenuDeviceOrientationManager>
 
 @end
@@ -79,8 +82,9 @@ typedef NS_ENUM(NSInteger,FWPopupMenuAnimationStyle) {
     FWPopupMenuAnimationStyleFade,            //alpha 0~1
     FWPopupMenuAnimationStyleNone,            //没有动画
     FWPopupMenuAnimationStyleCustom           //自定义
-};
+} NS_SWIFT_NAME(PopupMenuAnimationStyle);
 
+NS_SWIFT_NAME(PopupMenuAnimationManager)
 @protocol FWPopupMenuAnimationManager <NSObject>
 
 /**
@@ -113,6 +117,7 @@ typedef NS_ENUM(NSInteger,FWPopupMenuAnimationStyle) {
 
 @end
 
+NS_SWIFT_NAME(PopupMenuAnimationManager)
 @interface FWPopupMenuAnimationManager : NSObject<FWPopupMenuAnimationManager>
 
 @end
@@ -122,7 +127,7 @@ typedef NS_ENUM(NSInteger,FWPopupMenuAnimationStyle) {
 typedef NS_ENUM(NSInteger , FWPopupMenuType) {
     FWPopupMenuTypeDefault = 0,
     FWPopupMenuTypeDark
-};
+} NS_SWIFT_NAME(PopupMenuType);
 
 /**
  箭头方向优先级
@@ -135,9 +140,10 @@ typedef NS_ENUM(NSInteger , FWPopupMenuPriorityDirection) {
     FWPopupMenuPriorityDirectionLeft,
     FWPopupMenuPriorityDirectionRight,
     FWPopupMenuPriorityDirectionNone      //不自动调整
-};
+} NS_SWIFT_NAME(PopupMenuPriorityDirection);
 
 @class FWPopupMenu;
+NS_SWIFT_NAME(PopupMenuDelegate)
 @protocol FWPopupMenuDelegate <NSObject>
 
 @optional
@@ -168,6 +174,7 @@ FWPopupMenu
 
 @see https://github.com/lyb5834/YBPopupMenu
 */
+NS_SWIFT_NAME(PopupMenu)
 @interface FWPopupMenu : UIView
 
 /**

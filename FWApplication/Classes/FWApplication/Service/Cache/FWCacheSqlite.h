@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// Sqlite缓存
+NS_SWIFT_NAME(CacheSqlite)
 @interface FWCacheSqlite : FWCacheEngine
 
 /** 单例模式 */

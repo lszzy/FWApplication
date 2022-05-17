@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/ibireme/YYAsyncLayer
  */
+NS_SWIFT_NAME(AsyncLayer)
 @interface FWAsyncLayer : CALayer
 /// Whether the render code is executed in background. Default is YES.
 @property BOOL displaysAsynchronously;
@@ -32,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
  The FWAsyncLayer's delegate protocol. The delegate of the FWAsyncLayer (typically a UIView)
  must implements the method in this protocol.
  */
+NS_SWIFT_NAME(AsyncLayerDelegate)
 @protocol FWAsyncLayerDelegate <NSObject>
 @required
 /// This method is called to return a new display task when the layer's contents need update.
@@ -42,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  A display task used by FWAsyncLayer to render the contents in background queue.
  */
+NS_SWIFT_NAME(AsyncLayerDisplayTask)
 @interface FWAsyncLayerDisplayTask : NSObject
 
 /**
@@ -80,7 +83,8 @@ NS_ASSUME_NONNULL_BEGIN
  FWSentinel is a thread safe incrementing counter.
  It may be used in some multi-threaded situation.
  */
-@interface FWSentinel : NSObject
+NS_SWIFT_NAME(AsyncSentinel)
+@interface FWAsyncSentinel : NSObject
 
 /// Returns the current value of the counter.
 @property (readonly) int32_t value;
@@ -94,7 +98,8 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  FWTransaction let you perform a selector once before current runloop sleep.
  */
-@interface FWTransaction : NSObject
+NS_SWIFT_NAME(AsyncTransaction)
+@interface FWAsyncTransaction : NSObject
 
 /**
  Creates and returns a transaction with a specified target and selector.
@@ -104,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return A new transaction, or nil if an error occurs.
  */
-+ (FWTransaction *)transactionWithTarget:(id)target selector:(SEL)selector;
++ (FWAsyncTransaction *)transactionWithTarget:(id)target selector:(SEL)selector;
 
 /**
  Commit the trancaction to main runloop.

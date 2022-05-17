@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, FWNetworkReachabilityStatus) {
     FWNetworkReachabilityStatusNotReachable     = 0,
     FWNetworkReachabilityStatusReachableViaWWAN = 1,
     FWNetworkReachabilityStatusReachableViaWiFi = 2,
-};
+} NS_SWIFT_NAME(NetworkReachabilityStatus);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @warning Instances of `FWNetworkReachabilityManager` must be started with `-startMonitoring` before reachability status can be determined.
  */
+NS_SWIFT_NAME(NetworkReachabilityManager)
 @interface FWNetworkReachabilityManager : NSObject
 
 /**
@@ -203,8 +204,8 @@ NS_ASSUME_NONNULL_BEGIN
 
  @warning In order for network reachability to be monitored, include the `SystemConfiguration` framework in the active target's "Link Binary With Library" build phase, and add `#import <SystemConfiguration/SystemConfiguration.h>` to the header prefix of the project (`Prefix.pch`).
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingReachabilityDidChangeNotification;
-FOUNDATION_EXPORT NSString * const FWNetworkingReachabilityNotificationStatusItem;
+FOUNDATION_EXPORT NSNotificationName const FWNetworkingReachabilityDidChangeNotification NS_SWIFT_NAME(NetworkingReachabilityDidChange);
+FOUNDATION_EXPORT NSString * const FWNetworkingReachabilityNotificationStatusItem NS_SWIFT_NAME(NetworkingReachabilityNotificationStatusItem);
 
 ///--------------------
 /// @name Functions
@@ -213,6 +214,6 @@ FOUNDATION_EXPORT NSString * const FWNetworkingReachabilityNotificationStatusIte
 /**
  Returns a localized string representation of an `FWNetworkReachabilityStatus` value.
  */
-FOUNDATION_EXPORT NSString * FWStringFromNetworkReachabilityStatus(FWNetworkReachabilityStatus status);
+FOUNDATION_EXPORT NSString * FWStringFromNetworkReachabilityStatus(FWNetworkReachabilityStatus status) NS_SWIFT_NAME(StringFromNetworkReachabilityStatus);
 
 NS_ASSUME_NONNULL_END

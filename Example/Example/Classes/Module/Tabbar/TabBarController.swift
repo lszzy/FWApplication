@@ -45,7 +45,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         let homeNav = UINavigationController(rootViewController: homeController)
         homeNav.tabBarItem.image = FW.iconImage("fa-home", 26)
         homeNav.tabBarItem.title = FW.localized("homeTitle")
-        homeNav.tabBarItem.__fw.show(FWBadgeView(badgeStyle: .small), badgeValue: "1")
+        homeNav.tabBarItem.__fw.show(BadgeView(badgeStyle: .small), badgeValue: "1")
         
         let testController = Mediator.testModule.testViewController()
         testController.hidesBottomBarWhenPushed = false
@@ -63,7 +63,7 @@ extension UITabBarController: UITabBarControllerDelegate {
             settingsNav.tabBarItem = tabBarItem
             settingsNav.tabBarItem.badgeValue = ""
         } else {
-            let badgeView = FWBadgeView(badgeStyle: .dot)
+            let badgeView = BadgeView(badgeStyle: .dot)
             settingsNav.tabBarItem.__fw.show(badgeView, badgeValue: nil)
         }
         settingsNav.tabBarItem.image = FW.icon("fa-wrench", 26)?.image
