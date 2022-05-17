@@ -256,13 +256,13 @@ typedef NS_ENUM(NSUInteger, FWAssetAuthorizationStatus) {
 typedef void (^FWWriteAssetCompletionBlock)(FWAsset * _Nullable asset, NSError * _Nullable error) NS_SWIFT_NAME(WriteAssetCompletionBlock);
 
 /// 保存图片到指定相册（传入 UIImage）
-extern void FWImageWriteToSavedPhotosAlbumWithAlbumAssetsGroup(UIImage *image, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_REFINED_FOR_SWIFT;
+extern void FWImageWriteToSavedPhotosAlbumWithAlbumAssetsGroup(UIImage *image, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_SWIFT_NAME(ImageWriteToSavedPhotosAlbum(_:assetGroup:completion:));
 
 /// 保存图片到指定相册（传入图片路径）
-extern void FWSaveImageAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *imagePath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_REFINED_FOR_SWIFT;
+extern void FWSaveImageAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *imagePath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_SWIFT_NAME(SaveImageAtPathToSavedPhotosAlbum(_:assetGroup:completion:));
 
 /// 保存视频到指定相册
-extern void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_REFINED_FOR_SWIFT;
+extern void FWSaveVideoAtPathToSavedPhotosAlbumWithAlbumAssetsGroup(NSString *videoPath, FWAssetGroup *albumAssetsGroup, FWWriteAssetCompletionBlock completionBlock) NS_SWIFT_NAME(SaveVideoAtPathToSavedPhotosAlbum(_:assetGroup:completion:));
 
 /**
  *  构建 FWAssetManager 这个对象并提供单例的调用方式主要出于下面两点考虑：
