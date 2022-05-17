@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
     FWPullRefreshStateTriggered,
     FWPullRefreshStateLoading,
     FWPullRefreshStateAll = 10
-};
+} NS_SWIFT_NAME(PullRefreshState);
 
 @protocol FWIndicatorViewPlugin;
 
@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
  下拉刷新视图，默认高度60
  @note 如果indicatorView为自定义指示器时会自动隐藏标题和箭头，仅显示指示器视图
 */
+NS_SWIFT_NAME(PullRefreshView)
 @interface FWPullRefreshView : UIView
 
 @property (class, nonatomic, assign) CGFloat height;
@@ -78,11 +79,12 @@ typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
     FWInfiniteScrollStateTriggered,
     FWInfiniteScrollStateLoading,
     FWInfiniteScrollStateAll = 10
-};
+} NS_SWIFT_NAME(InfiniteScrollState);
 
 /**
  上拉追加视图，默认高度60
  */
+NS_SWIFT_NAME(InfiniteScrollView)
 @interface FWInfiniteScrollView : UIView
 
 @property (class, nonatomic, assign) CGFloat height;

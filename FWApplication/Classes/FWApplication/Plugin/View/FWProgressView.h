@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWProgressView
 
 /// 框架默认进度条视图
+NS_SWIFT_NAME(ProgressView)
 @interface FWProgressView : UIView <FWProgressViewPlugin>
 
 /// 是否是环形，默认YES，NO为扇形

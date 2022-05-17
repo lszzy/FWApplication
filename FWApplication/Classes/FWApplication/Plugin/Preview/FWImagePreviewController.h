@@ -21,8 +21,9 @@ typedef NS_ENUM (NSUInteger, FWImagePreviewMediaType) {
     FWImagePreviewMediaTypeLivePhoto,
     FWImagePreviewMediaTypeVideo,
     FWImagePreviewMediaTypeOthers
-};
+} NS_SWIFT_NAME(ImagePreviewMediaType);
 
+NS_SWIFT_NAME(ImagePreviewViewDelegate)
 @protocol FWImagePreviewViewDelegate <FWZoomImageViewDelegate>
 
 @optional
@@ -68,6 +69,7 @@ typedef NS_ENUM (NSUInteger, FWImagePreviewMediaType) {
  *
  *  @see https://github.com/Tencent/QMUI_iOS
  */
+NS_SWIFT_NAME(ImagePreviewView)
 @interface FWImagePreviewView : UIView<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, FWZoomImageViewDelegate>
 
 @property(nonatomic, weak, nullable) id<FWImagePreviewViewDelegate> delegate;
@@ -113,9 +115,9 @@ typedef NS_ENUM(NSUInteger, FWImagePreviewTransitioningStyle) {
     
     /// present 时从某个指定的位置缩放到屏幕中央，dismiss 时缩放到指定位置，必须实现 sourceImageView 并返回一个非空的值
     FWImagePreviewTransitioningStyleZoom
-};
+} NS_SWIFT_NAME(ImagePreviewTransitioningStyle);
 
-extern const CGFloat FWImagePreviewCornerRadiusAutomaticDimension;
+extern const CGFloat FWImagePreviewCornerRadiusAutomaticDimension NS_SWIFT_NAME(ImagePreviewCornerRadiusAutomaticDimension);
 
 /**
  *  图片预览控件，主要功能由内部自带的 FWImagePreviewView 提供，由于以 viewController 的形式存在，所以适用于那种在单独界面里展示图片，或者需要从某张目标图片的位置以动画的形式放大进入预览界面的场景。
@@ -126,6 +128,7 @@ extern const CGFloat FWImagePreviewCornerRadiusAutomaticDimension;
  *  2. 添加 self.imagePreviewView 的 delegate
  *  3. 以 push 或 present 的方式打开界面。如果是 present，则支持 FWImagePreviewTransitioningStyle 里定义的动画。特别地，如果使用 zoom 方式，则需要通过 sourceImageView() 返回一个原界面上的 view 以作为 present 动画的起点和 dismiss 动画的终点。
  */
+NS_SWIFT_NAME(ImagePreviewController)
 @interface FWImagePreviewController : UIViewController<UIViewControllerTransitioningDelegate>
 
 /// 图片背后的黑色背景，默认为配置表里的 UIColorBlack
@@ -183,6 +186,7 @@ extern const CGFloat FWImagePreviewCornerRadiusAutomaticDimension;
 /**
  负责处理 FWImagePreviewController 被 present/dismiss 时的动画，如果需要自定义动画效果，可按需修改 animationEnteringBlock、animationBlock、animationCompletionBlock。
  */
+NS_SWIFT_NAME(ImagePreviewTransitionAnimator)
 @interface FWImagePreviewTransitionAnimator : NSObject<UIViewControllerAnimatedTransitioning>
 
 /// 当前图片预览控件的引用，在为 FWImagePreviewController.transitioningAnimator 赋值时会自动建立这个引用关系
@@ -240,13 +244,14 @@ typedef NS_ENUM(NSInteger, FWCollectionViewPagingLayoutStyle) {
     FWCollectionViewPagingLayoutStyleDefault,
     /// 缩放模式，两边的item会小一点，逐渐向中间放大
     FWCollectionViewPagingLayoutStyleScale,
-};
+} NS_SWIFT_NAME(CollectionViewPagingLayoutStyle);
 
 /**
  *  支持按页横向滚动的 UICollectionViewLayout，可切换不同类型的滚动动画。
  *
  *  @warning item 的大小和布局仅支持通过 UICollectionViewFlowLayout 的 property 系列属性修改，也即每个 item 都应相等。对于通过 delegate 方式返回各不相同的 itemSize、sectionInset 的场景是不支持的。
  */
+NS_SWIFT_NAME(CollectionViewPagingLayout)
 @interface FWCollectionViewPagingLayout : UICollectionViewFlowLayout
 
 - (instancetype)initWithStyle:(FWCollectionViewPagingLayoutStyle)style NS_DESIGNATED_INITIALIZER;

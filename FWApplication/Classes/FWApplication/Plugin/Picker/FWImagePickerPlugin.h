@@ -18,9 +18,10 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
     FWImagePickerFilterTypeImage      = 1 << 0,
     FWImagePickerFilterTypeLivePhoto  = 1 << 1,
     FWImagePickerFilterTypeVideo      = 1 << 2,
-};
+} NS_SWIFT_NAME(ImagePickerFilterType);
 
 /// 图片选取插件协议，应用可自定义图片选取插件实现
+NS_SWIFT_NAME(ImagePickerPlugin)
 @protocol FWImagePickerPlugin <NSObject>
 @optional
 
@@ -55,6 +56,7 @@ typedef NS_OPTIONS(NSUInteger, FWImagePickerFilterType) {
 #pragma mark - FWImagePickerPluginController
 
 /// 图片选取插件控制器协议，使用图片选取插件
+NS_REFINED_FOR_SWIFT
 @protocol FWImagePickerPluginController <NSObject>
 @required
 

@@ -106,13 +106,13 @@ extension Theme {
     
     private static func setupPlugin() {
         // 吐司等插件设置
-        FWToastPluginImpl.sharedInstance.defaultLoadingText = {
+        ToastPluginImpl.sharedInstance.defaultLoadingText = {
             return NSAttributedString(string: "加载中...")
         }
-        FWToastPluginImpl.sharedInstance.defaultProgressText = {
+        ToastPluginImpl.sharedInstance.defaultProgressText = {
             return NSAttributedString(string: "上传中...")
         }
-        FWToastPluginImpl.sharedInstance.defaultMessageText = { (style) in
+        ToastPluginImpl.sharedInstance.defaultMessageText = { (style) in
             switch style {
             case .success:
                 return NSAttributedString(string: "操作成功")
@@ -122,16 +122,16 @@ extension Theme {
                 return nil
             }
         }
-        FWEmptyPluginImpl.sharedInstance.customBlock = { (emptyView) in
+        EmptyPluginImpl.sharedInstance.customBlock = { (emptyView) in
             emptyView.loadingViewColor = Theme.textColor
         }
-        FWEmptyPluginImpl.sharedInstance.defaultText = {
+        EmptyPluginImpl.sharedInstance.defaultText = {
             return "暂无数据"
         }
-        FWEmptyPluginImpl.sharedInstance.defaultImage = {
+        EmptyPluginImpl.sharedInstance.defaultImage = {
             return UIImage.__fw.imageWithAppIcon()
         }
-        FWEmptyPluginImpl.sharedInstance.defaultAction = {
+        EmptyPluginImpl.sharedInstance.defaultAction = {
             return "重新加载"
         }
     }

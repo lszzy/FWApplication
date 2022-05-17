@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImagePickerControllerImpl
 
 /// 自定义图片选取插件
+NS_SWIFT_NAME(ImagePickerControllerImpl)
 @interface FWImagePickerControllerImpl : NSObject <FWImagePickerPlugin>
 
 /// 单例模式

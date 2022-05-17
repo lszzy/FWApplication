@@ -9,11 +9,11 @@
 import FWApplication
 
 class TestNavigationTabBarChildController: TestViewController {
-    private lazy var navigationView: FWToolbarView = {
-        let result = FWToolbarView(type: .navBar)
+    private lazy var navigationView: ToolbarView = {
+        let result = ToolbarView(type: .navBar)
         result.backgroundColor = Theme.barColor
         result.tintColor = Theme.textColor
-        result.menuView.leftButton = FWToolbarButton(object: Icon.backImage, block: { sender in
+        result.menuView.leftButton = ToolbarButton(object: Icon.backImage, block: { sender in
             Router.closeViewController(animated: true)
         })
         return result
@@ -52,8 +52,8 @@ class TestNavigationTabBarChildController: TestViewController {
         return result
     }()
     
-    private lazy var tabBarView: FWToolbarView = {
-        let result = FWToolbarView(type: .tabBar)
+    private lazy var tabBarView: ToolbarView = {
+        let result = ToolbarView(type: .tabBar)
         result.backgroundColor = Theme.barColor
         result.tintColor = Theme.textColor
         result.menuView.leftButton = homeButton
@@ -62,24 +62,24 @@ class TestNavigationTabBarChildController: TestViewController {
         return result
     }()
     
-    private lazy var homeButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_home"), title: "首页")
+    private lazy var homeButton: ToolbarButton = {
+        let result = ToolbarButton(image: TestBundle.imageNamed("tabbar_home"), title: "首页")
         result.titleLabel?.font = FW.font(10)
         result.fw.addTouch(target: self, action: #selector(onButtonClicked(_:)))
         result.tag = 1
         return result
     }()
     
-    private lazy var testButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_test"), title: "测试")
+    private lazy var testButton: ToolbarButton = {
+        let result = ToolbarButton(image: TestBundle.imageNamed("tabbar_test"), title: "测试")
         result.titleLabel?.font = FW.font(10)
         result.fw.addTouch(target: self, action: #selector(onButtonClicked(_:)))
         result.tag = 2
         return result
     }()
     
-    private lazy var settingsButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_settings"), title: "设置")
+    private lazy var settingsButton: ToolbarButton = {
+        let result = ToolbarButton(image: TestBundle.imageNamed("tabbar_settings"), title: "设置")
         result.titleLabel?.font = FW.font(10)
         result.fw.addTouch(target: self, action: #selector(onButtonClicked(_:)))
         result.tag = 3

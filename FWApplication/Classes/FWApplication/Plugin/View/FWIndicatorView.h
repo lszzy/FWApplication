@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWIndicatorView
 
 /// 自定义指示器视图动画协议
+NS_SWIFT_NAME(IndicatorViewAnimationProtocol)
 @protocol FWIndicatorViewAnimationProtocol <NSObject>
 @required
 
@@ -23,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 自定义指示器视图动画类型枚举，可扩展
-typedef NSInteger FWIndicatorViewAnimationType NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWIndicatorViewAnimationType NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(IndicatorViewAnimationType);
 /// 八线条渐变旋转，类似系统，默认
 static const FWIndicatorViewAnimationType FWIndicatorViewAnimationTypeLineSpin = 0;
 /// 五线条跳动，类似音符
@@ -44,6 +45,7 @@ static const FWIndicatorViewAnimationType FWIndicatorViewAnimationTypeTriplePuls
  *
  * @see https://github.com/gontovnik/DGActivityIndicatorView
  */
+NS_SWIFT_NAME(IndicatorView)
 @interface FWIndicatorView : UIView <FWIndicatorViewPlugin, FWProgressViewPlugin>
 
 /// 指定动画类型初始化

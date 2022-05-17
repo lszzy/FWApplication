@@ -17,7 +17,7 @@ typedef NS_ENUM(NSInteger, FWImageCropCroppingStyle) {
     FWImageCropCroppingStyleDefault,
     /// 圆形样式
     FWImageCropCroppingStyleCircular
-};
+} NS_SWIFT_NAME(ImageCropCroppingStyle);
 
 /// 常用裁剪比率枚举
 typedef NS_ENUM(NSInteger, FWImageCropAspectRatioPreset) {
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, FWImageCropAspectRatioPreset) {
     FWImageCropAspectRatioPreset7x5,
     FWImageCropAspectRatioPreset16x9,
     FWImageCropAspectRatioPresetCustom
-};
+} NS_SWIFT_NAME(ImageCropAspectRatioPreset);
 
 /// 工具栏位置枚举
 typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
@@ -38,13 +38,14 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
     FWImageCropToolbarPositionBottom,
     /// 顶部工具栏
     FWImageCropToolbarPositionTop
-};
+} NS_SWIFT_NAME(ImageCropToolbarPosition);
 
 @class FWImageCropController;
 @class FWImageCropView;
 @class FWImageCropToolbar;
 
 /// 裁剪控制器事件代理协议
+NS_SWIFT_NAME(ImageCropControllerDelegate)
 @protocol FWImageCropControllerDelegate <NSObject>
 @optional
 
@@ -101,6 +102,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
  @see https://github.com/TimOliver/TOCropViewController
  */
+NS_SWIFT_NAME(ImageCropController)
 @interface FWImageCropController : UIViewController
 
 /**
@@ -365,6 +367,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 @end
 
+NS_SWIFT_NAME(ImageCropOverlayView)
 @interface FWImageCropOverlayView : UIView
 
 /** Hides the interior grid lines, sans animation. */
@@ -385,6 +388,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
  Subclassing UIScrollView was necessary in order to directly capture
  touch events that weren't otherwise accessible via UIGestureRecognizer objects.
  */
+NS_SWIFT_NAME(ImageCropScrollView)
 @interface FWImageCropScrollView : UIScrollView
 
 @property (nullable, nonatomic, copy) void (^touchesBegan)(void);
@@ -393,6 +397,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 @end
 
+NS_SWIFT_NAME(ImageCropToolbar)
 @interface FWImageCropToolbar : UIView
 
 /* In horizontal mode, offsets all of the buttons vertically by height of status bar. */
@@ -456,6 +461,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 @class FWImageCropView;
 
+NS_SWIFT_NAME(ImageCropViewDelegate)
 @protocol FWImageCropViewDelegate<NSObject>
 
 - (void)cropViewDidBecomeResettable:(nonnull FWImageCropView *)cropView;
@@ -463,6 +469,7 @@ typedef NS_ENUM(NSInteger, FWImageCropToolbarPosition) {
 
 @end
 
+NS_SWIFT_NAME(ImageCropView)
 @interface FWImageCropView : UIView
 
 /**

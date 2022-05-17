@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
     FWToolbarViewTypeTabBar,
     /// 自定义类型，无顶部和底部，初始高度44，需手工兼容横屏
     FWToolbarViewTypeCustom,
-};
+} NS_SWIFT_NAME(ToolbarViewType);
 
 @class FWToolbarMenuView;
 
@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
  * 中间：menuView，高度为menuHeight，可设置menuHidden隐藏
  * 底部：bottomView，高度为bottomHeight，可设置bottomHidden隐藏
  */
+NS_SWIFT_NAME(ToolbarView)
 @interface FWToolbarView : UIView
 
 /// 指定类型初始化，会设置默认高度和视图
@@ -89,6 +90,7 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
  *
  * 水平分割时，按钮水平等分；非水平分割时，左右侧间距为8，同系统一致
  */
+NS_SWIFT_NAME(ToolbarMenuView)
 @interface FWToolbarMenuView : UIView
 
 /// 自定义左侧按钮，设置后才显示，非等分时左侧间距为8。建议使用FWToolbarButton
@@ -120,6 +122,7 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 #pragma mark - FWToolbarTitleView
 
 /// 自定义titleView协议
+NS_SWIFT_NAME(TitleViewProtocol)
 @protocol FWTitleViewProtocol <NSObject>
 
 @required
@@ -129,6 +132,7 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 @end
 
 /// 自定义titleView事件代理
+NS_SWIFT_NAME(ToolbarTitleViewDelegate)
 @protocol FWToolbarTitleViewDelegate <NSObject>
 
 @optional
@@ -155,7 +159,7 @@ typedef NS_ENUM(NSInteger, FWToolbarViewType) {
 typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
     FWToolbarTitleViewStyleHorizontal = 0,
     FWToolbarTitleViewStyleVertical,
-};
+} NS_SWIFT_NAME(ToolbarTitleViewStyle);
 
 @protocol FWIndicatorViewPlugin;
 
@@ -166,6 +170,7 @@ typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
  *
  *  @see https://github.com/Tencent/QMUI_iOS
  */
+NS_SWIFT_NAME(ToolbarTitleView)
 @interface FWToolbarTitleView : UIControl
 
 /// 事件代理
@@ -269,6 +274,7 @@ typedef NS_ENUM(NSInteger, FWToolbarTitleViewStyle) {
  * FWToolbarButton作为customView使用时，会自动调整按钮内间距，和系统表现一致；
  * FWToolbarButton自动适配横竖屏切换，竖屏时默认内间距{8, 8, 8, 8}，横屏时默认内间距{0,8,0,8}
  */
+NS_SWIFT_NAME(ToolbarButton)
 @interface FWToolbarButton : UIButton
 
 /// UIBarButtonItem默认都是跟随tintColor的，所以这里声明是否让图片也是用AlwaysTemplate模式，默认YES

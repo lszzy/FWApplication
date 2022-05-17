@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWToastPluginImpl
 
 /// 默认吐司插件
+NS_SWIFT_NAME(ToastPluginImpl)
 @interface FWToastPluginImpl : NSObject <FWToastPlugin>
 
 /// 单例模式

@@ -14,11 +14,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWProgressViewPlugin
 
 /// 进度条视图样式枚举，可扩展
-typedef NSInteger FWProgressViewStyle NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWProgressViewStyle NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(ProgressViewStyle);
 /// 默认进度条样式，用于框架Toast等
 static const FWProgressViewStyle FWProgressViewStyleDefault = 0;
 
 /// 自定义进度条视图插件
+NS_SWIFT_NAME(ProgressViewPlugin)
 @protocol FWProgressViewPlugin <NSObject>
 @required
 
@@ -36,13 +37,14 @@ static const FWProgressViewStyle FWProgressViewStyleDefault = 0;
 #pragma mark - FWIndicatorViewPlugin
 
 /// 指示器视图样式枚举，可扩展
-typedef NSInteger FWIndicatorViewStyle NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWIndicatorViewStyle NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(IndicatorViewStyle);
 /// 默认指示器样式，用于框架Empty|Toast等
 static const FWIndicatorViewStyle FWIndicatorViewStyleDefault = 0;
 /// 刷新指示器样式，用于框架Refresh等
 static const FWIndicatorViewStyle FWIndicatorViewStyleRefresh = 1;
 
 /// 自定义指示器视图协议
+NS_SWIFT_NAME(IndicatorViewPlugin)
 @protocol FWIndicatorViewPlugin <NSObject>
 @required
 
@@ -62,6 +64,7 @@ static const FWIndicatorViewStyle FWIndicatorViewStyleRefresh = 1;
 #pragma mark - FWViewPlugin
 
 /// 视图插件协议
+NS_SWIFT_NAME(ViewPlugin)
 @protocol FWViewPlugin <NSObject>
 @optional
 

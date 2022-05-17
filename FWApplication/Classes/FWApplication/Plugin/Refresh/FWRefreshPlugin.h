@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWRefreshPlugin
 
 /// 刷新插件协议，应用可自定义刷新插件实现
+NS_SWIFT_NAME(RefreshPlugin)
 @protocol FWRefreshPlugin <NSObject>
 
 @optional

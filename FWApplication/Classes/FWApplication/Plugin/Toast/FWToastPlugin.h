@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWToastPlugin
 
 /// 消息吐司样式枚举，可扩展
-typedef NSInteger FWToastStyle NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWToastStyle NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(ToastStyle);
 /// 默认消息样式
 static const FWToastStyle FWToastStyleDefault = 0;
 /// 成功消息样式
@@ -23,6 +23,7 @@ static const FWToastStyle FWToastStyleSuccess = 1;
 static const FWToastStyle FWToastStyleFailure = 2;
 
 /// 吐司插件协议，应用可自定义吐司插件实现
+NS_SWIFT_NAME(ToastPlugin)
 @protocol FWToastPlugin <NSObject>
 
 @optional
@@ -50,6 +51,7 @@ static const FWToastStyle FWToastStyleFailure = 2;
 #pragma mark - FWToastPluginView
 
 /// 吐司插件视图协议，使用吐司插件
+NS_REFINED_FOR_SWIFT
 @protocol FWToastPluginView <NSObject>
 @required
 

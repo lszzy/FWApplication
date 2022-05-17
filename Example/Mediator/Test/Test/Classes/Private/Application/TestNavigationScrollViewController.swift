@@ -8,7 +8,7 @@
 
 import FWApplication
 
-class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
+class TestNavigationTitleLabel: UILabel, TitleViewProtocol {
     override init(frame: CGRect) {
         super.init(frame: frame)
         font = UIFont.boldSystemFont(ofSize: 17)
@@ -25,13 +25,13 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
 }
 
 @objcMembers class TestNavigationScrollViewController: TestViewController, TableViewControllerProtocol {
-    private lazy var navigationView: FWToolbarView = {
-        let navigationView = FWToolbarView(type: .navBar)
+    private lazy var navigationView: ToolbarView = {
+        let navigationView = ToolbarView(type: .navBar)
         navigationView.backgroundColor = Theme.barColor
         navigationView.menuView.centerButton = TestNavigationTitleLabel()
         navigationView.menuView.title = "我是很长很长要多长有多长长得不得了的按钮"
         navigationView.menuView.tintColor = Theme.textColor
-        let leftButton = FWToolbarButton(image: Icon.backImage)
+        let leftButton = ToolbarButton(image: Icon.backImage)
         leftButton.fw.addTouch { sender in
             Router.closeViewController(animated: true)
         }
@@ -45,7 +45,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     
     override func renderView() {
         tableView.__fw.contentInsetAdjustmentNever()
-        tableView.__fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top
+        tableView.__fw.pullRefreshHeight = PullRefreshView.height + UIScreen.fw.safeAreaInsets.top
         tableView.__fw.setRefreshingTarget(self, action: #selector(onRefreshing))
         
         let toolbar = UIToolbar()

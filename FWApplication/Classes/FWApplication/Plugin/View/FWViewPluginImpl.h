@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWViewPluginImpl
 
 /// 默认视图插件
+NS_SWIFT_NAME(ViewPluginImpl)
 @interface FWViewPluginImpl : NSObject <FWViewPlugin>
 
 /// 单例模式

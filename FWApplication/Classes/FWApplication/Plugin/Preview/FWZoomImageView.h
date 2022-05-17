@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWZoomImageView;
 
 /// FWZoomImageView事件代理
+NS_SWIFT_NAME(ZoomImageViewDelegate)
 @protocol FWZoomImageViewDelegate <NSObject>
 
 @optional
@@ -50,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @see https://github.com/Tencent/QMUI_iOS
  */
+NS_SWIFT_NAME(ZoomImageView)
 @interface FWZoomImageView : UIView <UIScrollViewDelegate>
 
 @property(nonatomic, weak, nullable) id<FWZoomImageViewDelegate> delegate;
@@ -163,6 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWZoomImageVideoToolbar
 
+NS_SWIFT_NAME(ZoomImageVideoToolbar)
 @interface FWZoomImageVideoToolbar : UIView
 
 @property(nonatomic, strong, readonly) UIButton *playButton;

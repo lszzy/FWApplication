@@ -17,24 +17,24 @@ import FWApplication
         __fw.setRightBarItem(Icon.refreshImage) { [weak self] sender in
             let allowsEditing = self?.allowsEditing ?? false
             let isFullscreen = self?.isFullscreen ?? false
-            self?.__fw.showSheet(withTitle: nil, message: nil, cancel: nil, actions: ["浏览已选图片", allowsEditing ? "切换不可编辑" : "切换可编辑", FWImagePickerPluginImpl.sharedInstance.cropControllerEnabled ? "切换系统裁剪" : "切换自定义裁剪", isFullscreen ? "默认弹出样式" : "全屏弹出样式", FWImagePickerPluginImpl.sharedInstance.photoPickerDisabled ? "启用PHPicker" : "禁用PHPicker"], actionBlock: { index in
+            self?.__fw.showSheet(withTitle: nil, message: nil, cancel: nil, actions: ["浏览已选图片", allowsEditing ? "切换不可编辑" : "切换可编辑", ImagePickerPluginImpl.sharedInstance.cropControllerEnabled ? "切换系统裁剪" : "切换自定义裁剪", isFullscreen ? "默认弹出样式" : "全屏弹出样式", ImagePickerPluginImpl.sharedInstance.photoPickerDisabled ? "启用PHPicker" : "禁用PHPicker"], actionBlock: { index in
                 if index == 0 {
                     self?.showData(self?.results ?? [])
                 } else if index == 1 {
                     self?.allowsEditing = !allowsEditing
                 } else if index == 2 {
-                    FWImagePickerPluginImpl.sharedInstance.cropControllerEnabled = !FWImagePickerPluginImpl.sharedInstance.cropControllerEnabled;
+                    ImagePickerPluginImpl.sharedInstance.cropControllerEnabled = !ImagePickerPluginImpl.sharedInstance.cropControllerEnabled;
                 } else if index == 3 {
                     self?.isFullscreen = !isFullscreen
                     if self?.isFullscreen ?? false {
-                        FWImagePickerPluginImpl.sharedInstance.customBlock = { viewController in
+                        ImagePickerPluginImpl.sharedInstance.customBlock = { viewController in
                             viewController.modalPresentationStyle = .fullScreen
                         }
                     } else {
-                        FWImagePickerPluginImpl.sharedInstance.customBlock = nil
+                        ImagePickerPluginImpl.sharedInstance.customBlock = nil
                     }
                 } else {
-                    FWImagePickerPluginImpl.sharedInstance.photoPickerDisabled = !FWImagePickerPluginImpl.sharedInstance.photoPickerDisabled;
+                    ImagePickerPluginImpl.sharedInstance.photoPickerDisabled = !ImagePickerPluginImpl.sharedInstance.photoPickerDisabled;
                 }
             })
         }

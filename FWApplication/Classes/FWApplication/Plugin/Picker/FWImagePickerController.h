@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWImageAlbumController;
 
 /// 相册列表事件代理
+NS_SWIFT_NAME(ImageAlbumControllerDelegate)
 @protocol FWImageAlbumControllerDelegate <NSObject>
 
 @optional
@@ -51,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 相册列表默认Cell
+NS_SWIFT_NAME(ImageAlbumTableCell)
 @interface FWImageAlbumTableCell : UITableViewCell
 
 // 相册缩略图的大小
@@ -83,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  注意，iOS 访问相册需要得到授权，建议先询问用户授权([FWAssetsManager requestAuthorization:])，通过了再进行 FWImageAlbumController 的初始化工作。
  */
+NS_SWIFT_NAME(ImageAlbumController)
 @interface FWImageAlbumController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property(nullable, nonatomic, strong) UIColor *toolBarBackgroundColor;
@@ -139,6 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWImagePickerPreviewController;
 @class FWImagePickerPreviewCollectionCell;
 
+NS_SWIFT_NAME(ImagePickerPreviewControllerDelegate)
 @protocol FWImagePickerPreviewControllerDelegate <NSObject>
 
 @optional
@@ -172,7 +176,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+NS_SWIFT_NAME(ImagePickerPreviewController)
 @interface FWImagePickerPreviewController : FWImagePreviewController <UICollectionViewDataSource, UICollectionViewDelegate, FWImagePreviewViewDelegate>
 
 @property(nullable, nonatomic, weak) id<FWImagePickerPreviewControllerDelegate> delegate;
@@ -246,6 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(ImagePickerPreviewCollectionCell)
 @interface FWImagePickerPreviewCollectionCell : UICollectionViewCell
 
 /// 缩略图视图
@@ -293,6 +298,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWImagePickerController;
 @class FWToolbarTitleView;
 
+NS_SWIFT_NAME(ImagePickerControllerDelegate)
 @protocol FWImagePickerControllerDelegate <NSObject>
 
 @optional
@@ -381,7 +387,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
+NS_SWIFT_NAME(ImagePickerController)
 @interface FWImagePickerController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, FWImagePickerPreviewControllerDelegate>
 
 @property(nullable, nonatomic, weak) id<FWImagePickerControllerDelegate> imagePickerControllerDelegate;
@@ -474,6 +480,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  图片选择空间里的九宫格 cell，支持显示 checkbox、饼状进度条及重试按钮（iCloud 图片需要）
  */
+NS_SWIFT_NAME(ImagePickerCollectionCell)
 @interface FWImagePickerCollectionCell : UICollectionViewCell
 
 /// checkbox 未被选中时显示的图片

@@ -24,8 +24,8 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
         }
     }
     
-    private lazy var closeButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: Icon.closeImage)
+    private lazy var closeButton: ToolbarButton = {
+        let result = ToolbarButton(image: Icon.closeImage)
         result.tintColor = Theme.textColor
         result.fw.addTouch { sender in
             Router.closeViewController(animated: true)
@@ -33,8 +33,8 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
         return result
     }()
     
-    private lazy var playButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: FW.iconImage("octicon-playback-play", 24))
+    private lazy var playButton: ToolbarButton = {
+        let result = ToolbarButton(image: FW.iconImage("octicon-playback-play", 24))
         result.tintColor = Theme.textColor
         result.fw.addTouch { [weak self] sender in
             guard let player = self?.videoPlayer else { return }

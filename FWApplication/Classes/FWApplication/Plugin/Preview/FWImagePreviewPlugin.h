@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImagePreviewPlugin
 
 /// 图片预览插件协议，应用可自定义图片预览插件实现
+NS_SWIFT_NAME(ImagePreviewPlugin)
 @protocol FWImagePreviewPlugin <NSObject>
 @required
 
@@ -39,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImagePreviewPluginController
 
 /// 图片预览插件控制器协议，使用图片预览插件
+NS_REFINED_FOR_SWIFT
 @protocol FWImagePreviewPluginController <NSObject>
 @required
 

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImagePreviewPluginImpl
 
 /// 默认图片预览插件
+NS_SWIFT_NAME(ImagePreviewPluginImpl)
 @interface FWImagePreviewPluginImpl : NSObject <FWImagePreviewPlugin>
 
 /// 单例模式

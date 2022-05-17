@@ -156,6 +156,7 @@ API_AVAILABLE(ios(14.0))
 #pragma mark - FWImagePickerPluginImpl
 
 /// 默认图片选取插件
+NS_SWIFT_NAME(ImagePickerPluginImpl)
 @interface FWImagePickerPluginImpl : NSObject <FWImagePickerPlugin>
 
 /// 单例模式

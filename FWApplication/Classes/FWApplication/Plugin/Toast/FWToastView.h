@@ -25,12 +25,13 @@ typedef NS_ENUM(NSInteger, FWToastViewType) {
     FWToastViewTypeIndicator,
     /// 进度条吐司
     FWToastViewTypeProgress,
-};
+} NS_SWIFT_NAME(ToastViewType);
 
 @protocol FWProgressViewPlugin;
 @protocol FWIndicatorViewPlugin;
 
 /// 吐司视图，默认背景色透明
+NS_SWIFT_NAME(ToastView)
 @interface FWToastView : UIControl
 
 /// 当前吐司类型，只读

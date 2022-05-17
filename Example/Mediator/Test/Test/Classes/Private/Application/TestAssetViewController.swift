@@ -9,10 +9,10 @@
 import FWApplication
 
 @objcMembers class TestAssetViewController: TestViewController, TableViewControllerProtocol {
-    var albums: [FWAssetGroup] = []
-    var photos: [FWAsset] = []
+    var albums: [AssetGroup] = []
+    var photos: [Asset] = []
     var isAlbum: Bool = false
-    var album: FWAssetGroup = FWAssetGroup()
+    var album: AssetGroup = AssetGroup()
     
     override func renderModel() {
         if isAlbum {
@@ -25,7 +25,7 @@ import FWApplication
     private func loadAlbums() {
         __fw.showLoading()
         DispatchQueue.global().async {
-            FWAssetManager.sharedInstance.enumerateAllAlbums(with: .all) { [weak self] group in
+            AssetManager.sharedInstance.enumerateAllAlbums(with: .all) { [weak self] group in
                 if let album = group {
                     self?.albums.append(album)
                 } else {
@@ -119,7 +119,7 @@ import FWApplication
                 return nil
             } renderBlock: { [weak self] view, index in
                 guard let photo = self?.photos[index] else { return }
-                if let zoomImageView = view as? FWZoomImageView {
+                if let zoomImageView = view as? ZoomImageView {
                     if photo.assetSubType == .GIF {
                         zoomImageView.progress = 0.01
                         photo.requestImageData { data, info, _, _ in
@@ -159,7 +159,7 @@ import FWApplication
                     }
                 }
             } customBlock: { [weak self] preview in
-                if let previewController = preview as? FWImagePreviewController {
+                if let previewController = preview as? ImagePreviewController {
                     // 注意此处需要weak引用previewController，否则会产生循环引用
                     previewController.pageIndexChanged = { [weak previewController] (index) in
                         guard let controller = previewController else { return }
