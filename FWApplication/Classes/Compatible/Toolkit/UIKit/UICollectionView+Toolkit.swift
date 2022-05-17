@@ -38,7 +38,7 @@ import FWApplication
     /// 集合section头视图，支持UICollectionReusableView，默认nil，优先级低
     open var headerViewClass: Any?
     /// 集合section头视图配置句柄，参数为headerClass对象，默认为nil
-    open var headerConfiguration: FWReusableViewIndexPathBlock?
+    open var headerConfiguration: ReusableViewIndexPathBlock?
     /// 集合section头尺寸句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var sizeForHeader: ((Int) -> CGSize)?
     /// 集合section头尺寸，默认zero自动计算，优先级低
@@ -49,7 +49,7 @@ import FWApplication
     /// 集合section尾视图，支持UICollectionReusableView，默认nil，优先级低
     open var footerViewClass: Any?
     /// 集合section头视图配置句柄，参数为headerClass对象，默认为nil
-    open var footerConfiguration: FWReusableViewIndexPathBlock?
+    open var footerConfiguration: ReusableViewIndexPathBlock?
     /// 集合section尾尺寸句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var sizeForFooter: ((Int) -> CGSize)?
     /// 集合section尾尺寸，默认zero自动计算，优先级低
@@ -60,7 +60,7 @@ import FWApplication
     /// 集合cell类，支持UICollectionViewCell，默认nil，优先级低
     open var cellClass: Any?
     /// 集合cell配置句柄，参数为对应cellClass对象，默认设置fwViewModel为collectionData对应数据
-    open var cellConfiguration: FWCollectionCellIndexPathBlock?
+    open var cellConfiguration: CollectionCellIndexPathBlock?
     /// 集合cell尺寸句柄，不指定时默认使用FWDynamicLayout自动计算并按indexPath缓存
     open var sizeForItem: ((IndexPath) -> CGSize)?
     /// 集合cell尺寸，默认zero自动计算，优先级低
@@ -116,7 +116,7 @@ import FWApplication
             return UICollectionViewCell(frame: .zero)
         }
         
-        let cell = clazz.fw.cell(with: collectionView, indexPath: indexPath)
+        let cell = clazz.fw.cell(collectionView: collectionView, indexPath: indexPath)
         if let cellBlock = cellConfiguration {
             cellBlock(cell, indexPath)
             return cell
@@ -127,7 +127,7 @@ import FWApplication
            sectionData.count > indexPath.item {
             viewModel = sectionData[indexPath.item]
         }
-        cell.fw.viewModel = viewModel
+        cell.__fw.viewModel = viewModel
         return cell
     }
     
@@ -153,7 +153,7 @@ import FWApplication
             if inset != .zero && collectionView.frame.size.width > 0 {
                 width = collectionView.frame.size.width - inset.left - inset.right
             }
-            return collectionView.fw.size(withCellClass: clazz, width: width, cacheBy: indexPath) { (cell) in
+            return collectionView.fw.size(cellClass: clazz, width: width, cacheBy: indexPath) { (cell) in
                 cellBlock(cell, indexPath)
             }
         }
@@ -168,8 +168,8 @@ import FWApplication
         if inset != .zero && collectionView.frame.size.width > 0 {
             width = collectionView.frame.size.width - inset.left - inset.right
         }
-        return collectionView.fw.size(withCellClass: clazz, width: width, cacheBy: indexPath) { (cell) in
-            cell.fw.viewModel = viewModel
+        return collectionView.fw.size(cellClass: clazz, width: width, cacheBy: indexPath) { (cell) in
+            cell.__fw.viewModel = viewModel
         }
     }
     
@@ -183,8 +183,8 @@ import FWApplication
             if let view = viewClass as? UICollectionReusableView { return view }
             guard let clazz = viewClass as? UICollectionReusableView.Type else { return UICollectionReusableView() }
             
-            let view = clazz.fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath)
-            let viewBlock = headerConfiguration ?? { (header, indexPath) in header.fw.viewModel = nil }
+            let view = clazz.fw.reusableView(collectionView: collectionView, kind: kind, indexPath: indexPath)
+            let viewBlock = headerConfiguration ?? { (header, indexPath) in header.__fw.viewModel = nil }
             viewBlock(view, indexPath)
             return view
         }
@@ -194,8 +194,8 @@ import FWApplication
             if let view = viewClass as? UICollectionReusableView { return view }
             guard let clazz = viewClass as? UICollectionReusableView.Type else { return UICollectionReusableView() }
             
-            let view = clazz.fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath)
-            let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.fw.viewModel = nil }
+            let view = clazz.fw.reusableView(collectionView: collectionView, kind: kind, indexPath: indexPath)
+            let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.__fw.viewModel = nil }
             viewBlock(view, indexPath)
             return view
         }
@@ -216,8 +216,8 @@ import FWApplication
         if let view = viewClass as? UICollectionReusableView { return view.frame.size }
         guard let clazz = viewClass as? UICollectionReusableView.Type else { return .zero }
         
-        let viewBlock = headerConfiguration ?? { (header, indexPath) in header.fw.viewModel = nil }
-        return collectionView.fw.size(withReusableViewClass: clazz, kind: UICollectionView.elementKindSectionHeader, cacheBySection: section) { (reusableView) in
+        let viewBlock = headerConfiguration ?? { (header, indexPath) in header.__fw.viewModel = nil }
+        return collectionView.fw.size(reusableViewClass: clazz, kind: UICollectionView.elementKindSectionHeader, cacheBy: section) { (reusableView) in
             viewBlock(reusableView, indexPath)
         }
     }
@@ -235,8 +235,8 @@ import FWApplication
         if let view = viewClass as? UICollectionReusableView { return view.frame.size }
         guard let clazz = viewClass as? UICollectionReusableView.Type else { return .zero }
         
-        let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.fw.viewModel = nil }
-        return collectionView.fw.size(withReusableViewClass: clazz, kind: UICollectionView.elementKindSectionFooter, cacheBySection: section) { (reusableView) in
+        let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.__fw.viewModel = nil }
+        return collectionView.fw.size(reusableViewClass: clazz, kind: UICollectionView.elementKindSectionFooter, cacheBy: section) { (reusableView) in
             viewBlock(reusableView, indexPath)
         }
     }
@@ -275,13 +275,13 @@ extension Wrapper where Base: UICollectionView {
     }
 }
 
-@objc extension FWCollectionViewWrapper {
+@objc extension __FWCollectionViewWrapper {
     public var delegate: CollectionViewDelegate {
         return base.fw.delegate
     }
 }
 
-@objc extension FWCollectionViewClassWrapper {
+@objc extension __FWCollectionViewClassWrapper {
     public func collectionView() -> UICollectionView {
         return UICollectionView.fw.collectionView()
     }

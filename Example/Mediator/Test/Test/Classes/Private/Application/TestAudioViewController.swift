@@ -37,8 +37,8 @@ import FWApplication
         view.addSubview(audioImage)
         view.addSubview(audioLabel)
         audioImage.fw.layoutChain.centerX().size(CGSize(width: 100, height: 100))
-            .centerYToView(view as Any, withOffset: -58)
-        audioLabel.fw.layoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: view, withOffset: 8)
+            .centerY(toView: view as Any, offset: -58)
+        audioLabel.fw.layoutChain.centerX().attribute(.top, toAttribute: .centerY, ofView: view, offset: 8)
         
         audioPlayer.delegate = self
         audioPlayer.dataSource = self
@@ -52,7 +52,7 @@ import FWApplication
     }
     
     override func renderModel() {
-        fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
+        __fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
             guard let strongSelf = self else { return }
             strongSelf.cacheEnabled = !strongSelf.cacheEnabled
             strongSelf.audioPlayer.playItem(from: 0)
@@ -90,8 +90,8 @@ import FWApplication
         
         let indexStr = String(describing: (audioPlayer.getAudioIndex(currentItem)?.intValue ?? 0) + 1)
         let totalStr = String(describing: audioPlayerNumberOfItems())
-        let timeStr = NSDate.fw.formatDuration(TimeInterval(audioPlayer.playingItemCurrentTime), hasHour: false)
-        let durationStr = NSDate.fw.formatDuration(TimeInterval(audioPlayer.playingItemDurationTime), hasHour: false)
+        let timeStr = Date.fw.formatDuration(TimeInterval(audioPlayer.playingItemCurrentTime), hasHour: false)
+        let durationStr = Date.fw.formatDuration(TimeInterval(audioPlayer.playingItemDurationTime), hasHour: false)
         audioLabel.text = String(format: "%@/%@\n%@\n%@", indexStr, totalStr, timeStr, durationStr)
     }
     

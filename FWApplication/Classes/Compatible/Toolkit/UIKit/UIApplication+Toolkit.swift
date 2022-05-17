@@ -97,7 +97,7 @@ extension Wrapper where Base: UIApplication {
 }
 
 // MARK: - FWApplicationClassWrapper+OcrObject
-@objc extension FWApplicationClassWrapper {
+@objc extension __FWApplicationClassWrapper {
     
     /// 识别图片文字，可设置语言(zh-CN,en-US)等，完成时主线程回调结果
     @available(iOS 13.0, *)

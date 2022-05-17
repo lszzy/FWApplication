@@ -13,8 +13,8 @@ class TestNavigationTabBarChildController: TestViewController {
         let result = FWToolbarView(type: .navBar)
         result.backgroundColor = Theme.barColor
         result.tintColor = Theme.textColor
-        result.menuView.leftButton = FWToolbarButton(object: FWIcon.backImage, block: { sender in
-            FWRouter.closeViewController(animated: true)
+        result.menuView.leftButton = FWToolbarButton(object: Icon.backImage, block: { sender in
+            Router.closeViewController(animated: true)
         })
         return result
     }()
@@ -26,7 +26,7 @@ class TestNavigationTabBarChildController: TestViewController {
     }
     
     override func renderView() {
-        fw.navigationBarHidden = true
+        __fw.navigationBarHidden = true
         
         view.backgroundColor = UIColor.fw.randomColor
         view.addSubview(navigationView)
@@ -41,7 +41,7 @@ class TestNavigationTabBarChildController: TestViewController {
                 title = "\(title)-1"
             }
             viewController.title = title
-            FWRouter.push(viewController, animated: true)
+            Router.push(viewController, animated: true)
         }
     }
 }
@@ -65,7 +65,7 @@ class TestNavigationTabBarChildController: TestViewController {
     private lazy var homeButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_home"), title: "首页")
         result.titleLabel?.font = FW.font(10)
-        result.fw.addTouchTarget(self, action: #selector(onButtonClicked(_:)))
+        result.fw.addTouch(target: self, action: #selector(onButtonClicked(_:)))
         result.tag = 1
         return result
     }()
@@ -73,7 +73,7 @@ class TestNavigationTabBarChildController: TestViewController {
     private lazy var testButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_test"), title: "测试")
         result.titleLabel?.font = FW.font(10)
-        result.fw.addTouchTarget(self, action: #selector(onButtonClicked(_:)))
+        result.fw.addTouch(target: self, action: #selector(onButtonClicked(_:)))
         result.tag = 2
         return result
     }()
@@ -81,7 +81,7 @@ class TestNavigationTabBarChildController: TestViewController {
     private lazy var settingsButton: FWToolbarButton = {
         let result = FWToolbarButton(image: TestBundle.imageNamed("tabbar_settings"), title: "设置")
         result.titleLabel?.font = FW.font(10)
-        result.fw.addTouchTarget(self, action: #selector(onButtonClicked(_:)))
+        result.fw.addTouch(target: self, action: #selector(onButtonClicked(_:)))
         result.tag = 3
         return result
     }()
@@ -120,17 +120,17 @@ class TestNavigationTabBarChildController: TestViewController {
         view.addSubview(childView)
         view.addSubview(tabBarView)
         childView.fw.layoutChain.left().right().top()
-        tabBarView.fw.layoutChain.left().right().bottom().topToBottomOfView(childView)
+        tabBarView.fw.layoutChain.left().right().bottom().topToBottom(ofView: childView)
     }
     
     override func renderData() {
-        fw.navigationBarHidden = true
+        __fw.navigationBarHidden = true
         onButtonClicked(homeButton)
     }
     
     @objc func onButtonClicked(_ sender: UIButton) {
         if let child = childController {
-            fw.removeChildViewController(child)
+            __fw.removeChildViewController(child)
         }
         
         var child: UIViewController
@@ -153,6 +153,6 @@ class TestNavigationTabBarChildController: TestViewController {
             
             child = settingsController
         }
-        fw.addChildViewController(child, in: childView)
+        __fw.addChildViewController(child, in: childView)
     }
 }

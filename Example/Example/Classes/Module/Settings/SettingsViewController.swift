@@ -15,7 +15,7 @@ import FWFramework
 class SettingsViewController: UIViewController, FWTableViewController {
     private lazy var loginButton: UIButton = {
         let button = Theme.largeButton()
-        button.fw.addTouchTarget(self, action: #selector(onMediator))
+        button.fw.addTouch(target: self, action: #selector(onMediator))
         return button
     }()
     
@@ -38,10 +38,10 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     func renderData() {
-        fw.barTitle = FW.localized("settingTitle")
+        __fw.barTitle = FW.localized("settingTitle")
         
         #if DEBUG
-        fw.setRightBarItem(FW.localized("debugButton")) { (sender) in
+        __fw.setRightBarItem(FW.localized("debugButton")) { (sender) in
             if FWDebugManager.sharedInstance().isHidden {
                 FWDebugManager.sharedInstance().show()
             } else {
@@ -80,7 +80,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onLogout() {
-        fw.showConfirm(withTitle: FW.localized("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
+        __fw.showConfirm(withTitle: FW.localized("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
             Mediator.userModule.logout {
                 self?.renderData()
             }
@@ -88,7 +88,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onLanguage() {
-        fw.showSheet(withTitle: FW.localized("languageTitle"), message: nil, cancel: FW.localized("取消"), actions: [FW.localized("systemTitle"), "中文", "English", FW.localized("changeTitle")]) { [weak self] (index) in
+        __fw.showSheet(withTitle: FW.localized("languageTitle"), message: nil, cancel: FW.localized("取消"), actions: [FW.localized("systemTitle"), "中文", "English", FW.localized("changeTitle")]) { [weak self] (index) in
             if index < 3 {
                 let language: String? = index == 1 ? "zh-Hans" : (index == 2 ? "en" : nil)
                 Bundle.fw.localizedLanguage = language
@@ -109,19 +109,19 @@ class SettingsViewController: UIViewController, FWTableViewController {
         }
         actions.append(FW.localized("changeTitle"))
         
-        fw.showSheet(withTitle: FW.localized("themeTitle"), message: nil, cancel: FW.localized("取消"), actions: actions) { (index) in
-            var mode = FWThemeMode(index)
+        __fw.showSheet(withTitle: FW.localized("themeTitle"), message: nil, cancel: FW.localized("取消"), actions: actions) { (index) in
+            var mode = ThemeMode(index)
             if index > actions.count - 2 {
-                let currentMode = FWThemeManager.sharedInstance.mode
+                let currentMode = ThemeManager.sharedInstance.mode
                 mode = currentMode == .system ? .light : (currentMode == .light && actions.count > 3 ? .dark : .system)
             }
-            FWThemeManager.sharedInstance.mode = mode
+            ThemeManager.sharedInstance.mode = mode
             UITabBarController.refreshController()
         }
     }
     
     @objc func onRoot() {
-        fw.showSheet(withTitle: FW.localized("rootTitle"), message: nil, cancel: FW.localized("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
+        __fw.showSheet(withTitle: FW.localized("rootTitle"), message: nil, cancel: FW.localized("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootNavigation = false
@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, FWTableViewController {
     }
     
     @objc func onOption() {
-        fw.showSheet(withTitle: FW.localized("optionTitle"), message: nil, cancel: FW.localized("取消"), actions: [AppConfig.isRootLogin ? FW.localized("loginOptional") : FW.localized("loginRequired"), Theme.isLargeTitles ? FW.localized("normalTitles") : FW.localized("largeTitles"), Theme.isBarTranslucent ? FW.localized("defaultTitles") : FW.localized("translucentTitles")]) { (index) in
+        __fw.showSheet(withTitle: FW.localized("optionTitle"), message: nil, cancel: FW.localized("取消"), actions: [AppConfig.isRootLogin ? FW.localized("loginOptional") : FW.localized("loginRequired"), Theme.isLargeTitles ? FW.localized("normalTitles") : FW.localized("largeTitles"), Theme.isBarTranslucent ? FW.localized("defaultTitles") : FW.localized("translucentTitles")]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
@@ -166,7 +166,7 @@ extension SettingsViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView, style: .value1)
+        let cell = UITableViewCell.fw.cell(tableView: tableView, style: .value1)
         cell.accessoryType = .disclosureIndicator
         
         let rowData = tableData[indexPath.row] as! NSArray
@@ -183,8 +183,8 @@ extension SettingsViewController {
             }
             cell.detailTextLabel?.text = language
         } else if "onTheme" == action {
-            let mode = FWThemeManager.sharedInstance.mode
-            let theme = mode == .system ? FW.localized("systemTitle").appending(FWThemeManager.sharedInstance.style == .dark ? "(\(FW.localized("themeDark")))" : "(\(FW.localized("themeLight")))") : (mode == .dark ? FW.localized("themeDark") : FW.localized("themeLight"))
+            let mode = ThemeManager.sharedInstance.mode
+            let theme = mode == .system ? FW.localized("systemTitle").appending(ThemeManager.sharedInstance.style == .dark ? "(\(FW.localized("themeDark")))" : "(\(FW.localized("themeLight")))") : (mode == .dark ? FW.localized("themeDark") : FW.localized("themeLight"))
             cell.detailTextLabel?.text = theme
         } else if "onRoot" == action {
             var root: String?

@@ -33,7 +33,7 @@ import FWApplication
     /// 表格section头视图，支持UIView或UITableViewHeaderFooterView，默认nil，优先级低
     open var headerViewClass: Any?
     /// 表格section头视图配置句柄，参数为headerClass对象，默认为nil
-    open var headerConfiguration: FWHeaderFooterViewSectionBlock?
+    open var headerConfiguration: HeaderFooterViewSectionBlock?
     /// 表格section头高度句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var heightForHeader: ((Int) -> CGFloat)?
     /// 表格section头高度，默认0自动计算，优先级低
@@ -44,7 +44,7 @@ import FWApplication
     /// 表格section尾视图，支持UIView或UITableViewHeaderFooterView，默认nil，优先级低
     open var footerViewClass: Any?
     /// 表格section头视图配置句柄，参数为headerClass对象，默认为nil
-    open var footerConfiguration: FWHeaderFooterViewSectionBlock?
+    open var footerConfiguration: HeaderFooterViewSectionBlock?
     /// 表格section尾高度句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var heightForFooter: ((Int) -> CGFloat)?
     /// 表格section尾高度，默认0自动计算，优先级低
@@ -55,7 +55,7 @@ import FWApplication
     /// 表格cell类，支持cell或cellClass，默认nil，优先级低
     open var cellClass: Any?
     /// 表格cell配置句柄，参数为对应cellClass对象，默认设置fwViewModel为tableData对应数据
-    open var cellConfiguation: FWCellIndexPathBlock?
+    open var cellConfiguation: CellIndexPathBlock?
     /// 表格cell高度句柄，不指定时默认使用FWDynamicLayout自动计算并按indexPath缓存
     open var heightForRow: ((IndexPath) -> CGFloat)?
     /// 表格cell高度，默认0自动计算，优先级低
@@ -103,7 +103,7 @@ import FWApplication
             return UITableViewCell(style: .default, reuseIdentifier: nil)
         }
         
-        let cell = clazz.fw.cell(with: tableView)
+        let cell = clazz.fw.cell(tableView: tableView)
         if let cellBlock = cellConfiguation {
             cellBlock(cell, indexPath)
             return cell
@@ -114,7 +114,7 @@ import FWApplication
            sectionData.count > indexPath.row {
             viewModel = sectionData[indexPath.row]
         }
-        cell.fw.viewModel = viewModel
+        cell.__fw.viewModel = viewModel
         return cell
     }
     
@@ -135,7 +135,7 @@ import FWApplication
         }
         
         if let cellBlock = cellConfiguation {
-            return tableView.fw.height(withCellClass: clazz, cacheBy: indexPath) { (cell) in
+            return tableView.fw.height(cellClass: clazz, cacheBy: indexPath) { (cell) in
                 cellBlock(cell, indexPath)
             }
         }
@@ -145,8 +145,8 @@ import FWApplication
            sectionData.count > indexPath.row {
             viewModel = sectionData[indexPath.row]
         }
-        return tableView.fw.height(withCellClass: clazz, cacheBy: indexPath) { (cell) in
-            cell.fw.viewModel = viewModel
+        return tableView.fw.height(cellClass: clazz, cacheBy: indexPath) { (cell) in
+            cell.__fw.viewModel = viewModel
         }
     }
     
@@ -158,8 +158,8 @@ import FWApplication
             return view
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
-            let view = clazz.fw.headerFooterView(with: tableView)
-            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewModel = nil }
+            let view = clazz.fw.headerFooterView(tableView: tableView)
+            let viewBlock = headerConfiguration ?? { (header, section) in header.__fw.viewModel = nil }
             viewBlock(view, section)
             return view
         }
@@ -181,8 +181,8 @@ import FWApplication
             return view.frame.size.height
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
-            let viewBlock = headerConfiguration ?? { (header, section) in header.fw.viewModel = nil }
-            return tableView.fw.height(withHeaderFooterViewClass: clazz, type: .header, cacheBySection: section) { (headerView) in
+            let viewBlock = headerConfiguration ?? { (header, section) in header.__fw.viewModel = nil }
+            return tableView.fw.height(headerFooterViewClass: clazz, type: .header, cacheBy: section) { (headerView) in
                 viewBlock(headerView, section)
             }
         }
@@ -197,8 +197,8 @@ import FWApplication
             return view
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
-            let view = clazz.fw.headerFooterView(with: tableView)
-            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewModel = nil }
+            let view = clazz.fw.headerFooterView(tableView: tableView)
+            let viewBlock = footerConfiguration ?? { (footer, section) in footer.__fw.viewModel = nil }
             viewBlock(view, section)
             return view
         }
@@ -220,8 +220,8 @@ import FWApplication
             return view.frame.size.height
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
-            let viewBlock = footerConfiguration ?? { (footer, section) in footer.fw.viewModel = nil }
-            return tableView.fw.height(withHeaderFooterViewClass: clazz, type: .footer, cacheBySection: section) { (footerView) in
+            let viewBlock = footerConfiguration ?? { (footer, section) in footer.__fw.viewModel = nil }
+            return tableView.fw.height(headerFooterViewClass: clazz, type: .footer, cacheBy: section) { (footerView) in
                 viewBlock(footerView, section)
             }
         }
@@ -279,13 +279,13 @@ extension Wrapper where Base: UITableView {
     }
 }
 
-@objc extension FWTableViewWrapper {
+@objc extension __FWTableViewWrapper {
     public var delegate: TableViewDelegate {
         return base.fw.delegate
     }
 }
 
-@objc extension FWTableViewClassWrapper {
+@objc extension __FWTableViewClassWrapper {
     public func tableView() -> UITableView {
         return UITableView.fw.tableView()
     }

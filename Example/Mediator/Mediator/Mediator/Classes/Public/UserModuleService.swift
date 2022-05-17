@@ -14,7 +14,7 @@ import FWApplication
     public var userAvatar: UIImage?
 }
 
-@objc public protocol UserModuleService: FWModuleProtocol {
+@objc public protocol UserModuleService: ModuleProtocol {
     func isLogin() -> Bool
     
     func userInfo() -> UserInfo?

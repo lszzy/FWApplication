@@ -16,7 +16,7 @@ import UIKit
 
 @objc class TestPluginImpl: NSObject, TestPluginProtocol {
     func pluginMethod() {
-        UIWindow.fw.showMessage(withText: "TestPluginImpl")
+        UIWindow.__fw.showMessage(withText: "TestPluginImpl")
     }
 }
 
@@ -31,9 +31,9 @@ class TestRouter {
     @RouterAnnotation(TestRouter.pluginRouter(_:))
     static var pluginUrl: String = "app://plugin/:id"
     
-    static func pluginRouter(_ context: FWRouterContext) -> Any? {
+    static func pluginRouter(_ context: RouterContext) -> Any? {
         let pluginId = FW.safeString(context.urlParameters["id"])
-        UIWindow.fw.showMessage(withText: "plugin - \(pluginId)")
+        UIWindow.__fw.showMessage(withText: "plugin - \(pluginId)")
         return nil
     }
 }
@@ -67,7 +67,7 @@ class TestRouter {
         }
         
         routerButton.fw.addTouch { (sender) in
-            FWRouter.openURL(FWRouter.generateURL(TestRouter.pluginUrl, parameters: 1))
+            Router.openURL(Router.generateURL(TestRouter.pluginUrl, parameters: 1))
         }
     }
 }

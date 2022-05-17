@@ -24,7 +24,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView)
+        let cell = UITableViewCell.fw.cell(tableView: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -55,17 +55,17 @@ import FWApplication
     func renderState(_ state: FWViewControllerState, with object: Any?) {
         switch state {
         case .success:
-            view.fw.showEmpty(withText: object as? String)
+            view.__fw.showEmpty(withText: object as? String)
         case .failure:
-            view.fw.showEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
-                self?.view.fw.hideEmpty()
+            view.__fw.showEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
+                self?.view.__fw.hideEmpty()
                 
                 self?.renderState(.loading, with: nil)
             }
         case .loading:
-            view.fw.showLoading(withText: "开始加载")
+            view.__fw.showLoading(withText: "开始加载")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.view.fw.hideLoading()
+                self?.view.__fw.hideLoading()
                 
                 if [0, 1].randomElement() == 1 {
                     self?.renderState(.success, with: "加载成功")
@@ -123,7 +123,7 @@ import FWApplication
     }
     
     func renderModel() {
-        fw.setRightBarItem(UIBarButtonItem.SystemItem.refresh.rawValue) { [weak self] (sender) in
+        __fw.setRightBarItem(UIBarButtonItem.SystemItem.refresh.rawValue) { [weak self] (sender) in
             guard let self = self else { return }
             
             self.flowLayout.itemRenderVertical = !self.flowLayout.itemRenderVertical
@@ -150,7 +150,7 @@ import FWApplication
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         var label = cell.contentView.viewWithTag(100) as? UILabel
         if label == nil {
-            let textLabel = UILabel.fw.label(with: .systemFont(ofSize: 16), textColor: .white)
+            let textLabel = UILabel.fw.label(font: .systemFont(ofSize: 16), textColor: .white)
             label = textLabel
             textLabel.tag = 100
             cell.contentView.addSubview(textLabel)
@@ -190,7 +190,7 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < collectionData.count {
-            view.fw.showMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
+            view.__fw.showMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
         }
     }
     
@@ -242,8 +242,8 @@ import FWApplication
 @objcMembers class SwiftTestWebViewController: UIViewController, FWWebViewController {
     var webItems: NSArray? = {
         return [
-            FWIcon.backImage as Any,
-            FWIcon.closeImage as Any
+            Icon.backImage as Any,
+            Icon.closeImage as Any
         ]
     }()
     

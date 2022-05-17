@@ -11,11 +11,11 @@ import Foundation
 import FWDebug
 #endif
 
-@objc protocol AppService: FWModuleProtocol {}
+@objc protocol AppService: ModuleProtocol {}
 
 @objc extension Autoloader {
     func loadAppModule() {
-        FWMediator.registerService(AppService.self, withModule: AppModule.self)
+        Mediator.registerService(AppService.self, withModule: AppModule.self)
     }
 }
 
@@ -29,8 +29,8 @@ class AppModule: NSObject, AppService {
     func setup() {
         #if DEBUG
         FWDebugManager.sharedInstance().openUrl = { (url) in
-            if let scheme = NSURL.fw.url(with: url)?.scheme, scheme.count > 0 {
-                FWRouter.openURL(url)
+            if let scheme = URL.fw.url(string: url)?.scheme, scheme.count > 0 {
+                Router.openURL(url)
                 return true
             }
             return false
@@ -38,7 +38,7 @@ class AppModule: NSObject, AppService {
         #endif
         
         DispatchQueue.main.async {
-            FWThemeManager.sharedInstance.overrideWindow = true
+            ThemeManager.sharedInstance.overrideWindow = true
         }
     }
     
@@ -59,7 +59,7 @@ class AppModule: NSObject, AppService {
             if let response = notification as? UNNotificationResponse {
                 title = response.notification.request.content.title
             }
-            UIWindow.fw.showMessage(withText: "收到远程通知：\(title ?? "")\n\(userInfo ?? [:])")
+            UIWindow.__fw.showMessage(withText: "收到远程通知：\(title ?? "")\n\(userInfo ?? [:])")
         }
         NotificationManager.sharedInstance.localNotificationHandler = { (userInfo, notification) in
             NotificationManager.sharedInstance.clearNotificationBadges()
@@ -68,7 +68,7 @@ class AppModule: NSObject, AppService {
             if let response = notification as? UNNotificationResponse {
                 title = response.notification.request.content.title
             }
-            UIWindow.fw.showMessage(withText: "收到本地通知：\(title ?? "")\n\(userInfo ?? [:])")
+            UIWindow.__fw.showMessage(withText: "收到本地通知：\(title ?? "")\n\(userInfo ?? [:])")
         }
         return true
     }

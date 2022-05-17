@@ -22,14 +22,14 @@ class AppDelegate: FWAppDelegate {
     
     // MARK: - OpenURL
     override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        FWRouter.openURL(url.absoluteString)
+        Router.openURL(url.absoluteString)
         return true
     }
     
     override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
            let webpageURL = userActivity.webpageURL {
-            FWRouter.openURL(webpageURL.absoluteString)
+            Router.openURL(webpageURL.absoluteString)
             return true
         }
         return false

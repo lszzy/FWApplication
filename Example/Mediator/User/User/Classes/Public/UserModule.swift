@@ -10,11 +10,11 @@ import Mediator
 
 @objc extension Autoloader {
     func loadUserModule() {
-        FWMediator.registerService(UserModuleService.self, withModule: UserModule.self)
+        Mediator.registerService(UserModuleService.self, withModule: UserModule.self)
     }
 }
 
-@objcMembers public class UserBundle: FWModuleBundle {
+@objcMembers public class UserBundle: ModuleBundle {
     private static let sharedBundle: Bundle = {
         return Bundle.fw.bundle(with: UserBundle.classForCoder(), name: "UserModule")?.fw.localizedBundle() ?? .main
     }()
@@ -59,7 +59,7 @@ import Mediator
             completion?()
         }
         let navigationController = UINavigationController(rootViewController: viewController)
-        FWRouter.present(navigationController, animated: true, completion: nil)
+        Router.present(navigationController, animated: true, completion: nil)
     }
     
     public func logout(_ completion: (() -> Void)?) {

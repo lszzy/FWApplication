@@ -23,6 +23,9 @@ Pod::Spec.new do |s|
   s.subspec 'Compatible' do |ss|
     ss.source_files = 'FWApplication/Classes/Compatible/**/*.swift'
     ss.dependency 'FWApplication/FWApplication'
+    ss.pod_target_xcconfig = {
+      'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => '$(inherited)'
+    }
   end
 
   s.subspec 'SDWebImage' do |ss|

@@ -18,7 +18,7 @@ import UIKit
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView)
+        let cell = UITableViewCell.fw.cell(tableView: tableView)
         let rowData = tableData.object(at: indexPath.row) as! [String]
         cell.textLabel?.text = rowData[0]
         return cell
@@ -100,15 +100,15 @@ extension TestPromiseViewController {
     }
     
     private static func showMessage(_ text: String) {
-        UIWindow.fw.showMessage(withText: text)
+        UIWindow.__fw.showMessage(withText: text)
     }
     
     private static var isLoading: Bool = false {
         didSet {
             if isLoading {
-                UIWindow.fw.showLoading()
+                UIWindow.__fw.showLoading()
             } else {
-                UIWindow.fw.hideLoading()
+                UIWindow.__fw.hideLoading()
             }
         }
     }
@@ -246,7 +246,7 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.randomPromise().then({ value in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "delay")
+                UIWindow.__fw.showLoading(withText: "delay")
             }
             return value
         }).delay(1).done { result in
@@ -278,19 +278,19 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.failurePromise().recover { error in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "\(error)")
+                UIWindow.__fw.showLoading(withText: "\(error)")
             }
             return 1
         }.delay(1).then({ value in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "\(value.safeInt)")
+                UIWindow.__fw.showLoading(withText: "\(value.safeInt)")
             }
             return Self.successPromise(value.safeInt)
         }).validate { value in
             return false
         }.recover { error in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "\(error)")
+                UIWindow.__fw.showLoading(withText: "\(error)")
             }
             return Self.successPromise()
         }.done { result in
@@ -311,12 +311,12 @@ extension TestPromiseViewController {
     
     @objc func onRetry() {
         Self.isLoading = true
-        let startTime = NSDate.fw.currentTime
+        let startTime = Date.fw.currentTime
         var count = 0
         Self.failurePromise().recover({ $0 }).retry(4, delay: 0) {
             count += 1
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "retry: \(count)")
+                UIWindow.__fw.showLoading(withText: "retry: \(count)")
             }
             if count < 4 {
                 return Self.failurePromise()
@@ -325,20 +325,20 @@ extension TestPromiseViewController {
             }
         }.done { result in
             Self.isLoading = false
-            let endTime = NSDate.fw.currentTime
+            let endTime = Date.fw.currentTime
             Self.showMessage("result: \(result.safeString) => " + String(format: "%.1fs", endTime - startTime))
         }
     }
     
     @objc func onRetry2() {
         Self.isLoading = true
-        let startTime = NSDate.fw.currentTime
+        let startTime = Date.fw.currentTime
         var count = 0
         Promise.retry(4, delay: 0) {
             count += 1
             if count == 1 { return Self.failurePromise() }
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "retry: \(count - 1)")
+                UIWindow.__fw.showLoading(withText: "retry: \(count - 1)")
             }
             if count < 5 {
                 return Self.failurePromise()
@@ -347,7 +347,7 @@ extension TestPromiseViewController {
             }
         }.done { result in
             Self.isLoading = false
-            let endTime = NSDate.fw.currentTime
+            let endTime = Date.fw.currentTime
             Self.showMessage("result: \(result.safeString) => " + String(format: "%.1fs", endTime - startTime))
         }
     }
@@ -368,7 +368,7 @@ extension TestPromiseViewController {
                 return Self.progressPromise()
             })
         }
-        UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.validate({ value in
             return false
         }).recover({ error in
@@ -382,9 +382,9 @@ extension TestPromiseViewController {
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
         }, finally: {
-            UIWindow.fw.hideProgress()
+            UIWindow.__fw.hideProgress()
         })
     }
     
@@ -401,15 +401,15 @@ extension TestPromiseViewController {
         } else {
             promise = Promise.race(promises)
         }
-        UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.done({ value in
             Self.showMessage("\(value.safeString)")
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
         }, finally: {
-            UIWindow.fw.hideProgress()
+            UIWindow.__fw.hideProgress()
         })
     }
 }

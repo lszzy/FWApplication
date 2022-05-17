@@ -25,41 +25,41 @@ import UIKit
         UIColor.fw.themeLight(UIColor.black.withAlphaComponent(0.5), dark: UIColor.white.withAlphaComponent(0.5))
     }
     public static var barColor: UIColor {
-        UIColor.fw.themeLight(.fw.color(withHex: 0xFAFAFA), dark: .fw.color(withHex: 0x121212))
+        UIColor.fw.themeLight(.fw.color(hex: 0xFAFAFA), dark: .fw.color(hex: 0x121212))
     }
     public static var tableColor: UIColor {
-        UIColor.fw.themeLight(.fw.color(withHex: 0xF2F2F2), dark: .fw.color(withHex: 0x000000))
+        UIColor.fw.themeLight(.fw.color(hex: 0xF2F2F2), dark: .fw.color(hex: 0x000000))
     }
     public static var cellColor: UIColor {
-        UIColor.fw.themeLight(.fw.color(withHex: 0xFFFFFF), dark: .fw.color(withHex: 0x1C1C1C))
+        UIColor.fw.themeLight(.fw.color(hex: 0xFFFFFF), dark: .fw.color(hex: 0x1C1C1C))
     }
     public static var borderColor: UIColor {
-        UIColor.fw.themeLight(.fw.color(withHex: 0xDDDDDD), dark: .fw.color(withHex: 0x303030))
+        UIColor.fw.themeLight(.fw.color(hex: 0xDDDDDD), dark: .fw.color(hex: 0x303030))
     }
     public static var buttonColor: UIColor {
-        UIColor.fw.themeLight(.fw.color(withHex: 0x017AFF), dark: .fw.color(withHex: 0x0A84FF))
+        UIColor.fw.themeLight(.fw.color(hex: 0x017AFF), dark: .fw.color(hex: 0x0A84FF))
     }
     
     public static func largeButton() -> UIButton {
         let button = UIButton(type: .system)
         button.setTitleColor(.white, for: .normal)
-        button.setBackgroundImage(UIImage.fw.image(with: Theme.buttonColor), for: .normal)
+        button.setBackgroundImage(UIImage.fw.image(color: Theme.buttonColor), for: .normal)
         button.titleLabel?.font = .fw.boldFont(ofSize: 17)
         button.layer.cornerRadius = 8
         button.layer.masksToBounds = true
-        button.fw.setDimension(.width, toSize: FW.screenWidth - 30)
-        button.fw.setDimension(.height, toSize: 50)
+        button.fw.setDimension(.width, size: FW.screenWidth - 30)
+        button.fw.setDimension(.height, size: 50)
         return button
     }
     
     public static func themeChanged() {
         let defaultAppearance = FWNavigationBarAppearance()
         defaultAppearance.foregroundColor = Theme.textColor
-        defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(withAlpha: 0.5) : Theme.barColor
+        defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(alpha: 0.5) : Theme.barColor
         defaultAppearance.isTranslucent = Theme.isBarTranslucent
         let whiteAppearance = FWNavigationBarAppearance()
         whiteAppearance.foregroundColor = .black
-        whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fw.color(withAlpha: 0.5) : .white
+        whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fw.color(alpha: 0.5) : .white
         whiteAppearance.isTranslucent = Theme.isBarTranslucent
         let transparentAppearance = FWNavigationBarAppearance()
         transparentAppearance.foregroundColor = Theme.textColor
@@ -81,7 +81,7 @@ extension Theme {
         themeChanged()
         
         // iOS15兼容设置
-        UITableView.fw.resetTableStyle()
+        UITableView.__fw.resetTableStyle()
         // 启用返回代理拦截
         UINavigationController.fw.enablePopProxy()
         // 控制器样式设置
@@ -89,14 +89,14 @@ extension Theme {
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
-            viewController.fw.navigationBarHidden = false
-            viewController.fw.navigationBarStyle = .default
+            viewController.__fw.navigationBarHidden = false
+            viewController.__fw.navigationBarStyle = .default
         }
         FWViewControllerManager.sharedInstance.hookLoadView = { viewController in
             viewController.view.backgroundColor = Theme.tableColor
         }
         FWViewControllerManager.sharedInstance.hookViewDidLoad = { viewController in
-            viewController.fw.backBarItem = FWIcon.backImage
+            viewController.__fw.backBarItem = Icon.backImage
             viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
         FWViewControllerManager.sharedInstance.hookTableViewController = { viewController in
@@ -129,7 +129,7 @@ extension Theme {
             return "暂无数据"
         }
         FWEmptyPluginImpl.sharedInstance.defaultImage = {
-            return UIImage.fw.imageWithAppIcon()
+            return UIImage.__fw.imageWithAppIcon()
         }
         FWEmptyPluginImpl.sharedInstance.defaultAction = {
             return "重新加载"

@@ -40,7 +40,7 @@ class HomeViewController: UIViewController, FWViewController {
         #else
         let envTitle = FW.localized("envDevelopment")
         #endif
-        fw.barTitle = "\(FW.localized("homeTitle")) - \(envTitle)"
+        __fw.barTitle = "\(FW.localized("homeTitle")) - \(envTitle)"
         
         if Mediator.userModule.isLogin() {
             loginButton.setTitle(FW.localized("backTitle"), for: .normal)

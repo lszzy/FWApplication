@@ -10,34 +10,34 @@ import FWApplication
 
 @objcMembers class TestLocationViewController: TestViewController {
     lazy var startButton: UIButton = {
-        let view = UIButton.fw.button(withTitle: "Start", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(title: "Start", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 20, y: 50, width: 60, height: 50)
         view.fw.addTouch { (sender) in
-            FWLocationManager.sharedInstance.startUpdateLocation()
+            LocationManager.sharedInstance.startUpdateLocation()
         }
         return view
     }()
     
     lazy var stopButton: UIButton = {
-        let view = UIButton.fw.button(withTitle: "Stop", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(title: "Stop", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 100, y: 50, width: 60, height: 50)
         view.fw.addTouch { (sender) in
-            FWLocationManager.sharedInstance.stopUpdateLocation()
+            LocationManager.sharedInstance.stopUpdateLocation()
         }
         return view
     }()
     
     lazy var configButton: UIButton = {
-        let view = UIButton.fw.button(withTitle: "Once", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(title: "Once", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 180, y: 50, width: 60, height: 50)
         view.fw.addTouch { (sender) in
-            FWLocationManager.sharedInstance.stopWhenCompleted = !FWLocationManager.sharedInstance.stopWhenCompleted
+            LocationManager.sharedInstance.stopWhenCompleted = !LocationManager.sharedInstance.stopWhenCompleted
         }
         return view
     }()
     
     lazy var resultLabel: UILabel = {
-        let view = UILabel.fw.label(with: UIFont.fw.font(ofSize: 15), textColor: Theme.textColor)
+        let view = UILabel.fw.label(font: UIFont.fw.font(ofSize: 15), textColor: Theme.textColor)
         view.numberOfLines = 0
         view.frame = CGRect(x: 20, y: 100, width: FW.screenWidth - 40, height: 450)
         return view
@@ -51,11 +51,11 @@ import FWApplication
     }
     
     override func renderModel() {
-        FWLocationManager.sharedInstance.locationChanged = { [weak self] (manager) in
+        LocationManager.sharedInstance.locationChanged = { [weak self] (manager) in
             if manager.error != nil {
                 self?.resultLabel.text = manager.error?.localizedDescription
             } else {
-                self?.resultLabel.text = FWLocationManager.locationString(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
+                self?.resultLabel.text = LocationManager.locationString(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
             }
         }
     }

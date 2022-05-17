@@ -30,7 +30,7 @@ class TestIconCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         imageView.fw.layoutChain.centerX().top().size(CGSize(width: 60, height: 60))
         nameLabel.fw.layoutChain.edges(.zero, excludingEdge: .top)
-            .topToBottomOfView(imageView)
+            .topToBottom(ofView: imageView)
     }
     
     required init?(coder: NSCoder) {
@@ -39,21 +39,21 @@ class TestIconCell: UICollectionViewCell {
 }
 
 @objcMembers class TestIconViewController: TestViewController, FWCollectionViewController, UISearchBarDelegate {
-    private var iconClass: FWIcon.Type = Octicons.self
+    private var iconClass: Icon.Type = Octicons.self
         
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.tintColor = Theme.textColor
-        searchBar.fw.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
-        searchBar.fw.backgroundColor = Theme.barColor
-        searchBar.fw.textFieldBackgroundColor = Theme.tableColor
-        searchBar.fw.searchIconOffset = 16 - 6
-        searchBar.fw.searchTextOffset = 4
-        searchBar.fw.searchIconCenter = false
+        searchBar.__fw.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
+        searchBar.__fw.backgroundColor = Theme.barColor
+        searchBar.__fw.textFieldBackgroundColor = Theme.tableColor
+        searchBar.__fw.searchIconOffset = 16 - 6
+        searchBar.__fw.searchTextOffset = 4
+        searchBar.__fw.searchIconCenter = false
         
-        let textField = searchBar.fw.textField
+        let textField = searchBar.__fw.textField
         textField?.font = UIFont.systemFont(ofSize: 12)
         textField?.fw.setCornerRadius(16)
         textField?.fw.touchResign = true
@@ -62,7 +62,7 @@ class TestIconCell: UICollectionViewCell {
     
     override func renderView() {
         collectionView.backgroundColor = Theme.backgroundColor
-        collectionView.fw.keyboardDismissOnDrag = true
+        collectionView.__fw.keyboardDismissOnDrag = true
     }
     
     func renderCollectionViewLayout() -> UICollectionViewLayout {
@@ -78,12 +78,12 @@ class TestIconCell: UICollectionViewCell {
             .height(FW.navigationBarHeight)
         collectionView.fw.layoutChain
             .edges(excludingEdge: .top)
-            .topToBottomOfView(searchBar)
+            .topToBottom(ofView: searchBar)
     }
     
     override func renderData() {
-        fw.setRightBarItem(NSStringFromClass(iconClass)) { [weak self] sender in
-            self?.fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["Octicons", "MaterialIcons", "FontAwesome", "FoundationIcons", "IonIcons"], actionBlock: { index in
+        __fw.setRightBarItem(NSStringFromClass(iconClass)) { [weak self] sender in
+            self?.__fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["Octicons", "MaterialIcons", "FontAwesome", "FoundationIcons", "IonIcons"], actionBlock: { index in
                 if index == 0 {
                     self?.iconClass = Octicons.self
                 } else if index == 1 {
@@ -115,7 +115,7 @@ class TestIconCell: UICollectionViewCell {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = TestIconCell(collectionView: collectionView, indexPath: indexPath)
+        let cell = TestIconCell.fw.cell(collectionView: collectionView, indexPath: indexPath)
         let name = collectionData.object(at: indexPath.item) as? String
         cell.imageView.fw.themeImage = FW.iconImage(name.safeValue, 60)?.fw.themeImage
         cell.nameLabel.text = name
@@ -126,7 +126,7 @@ class TestIconCell: UICollectionViewCell {
         collectionView.deselectItem(at: indexPath, animated: true)
         let name = collectionData.object(at: indexPath.item) as? String
         UIPasteboard.general.string = FW.safeString(name)
-        fw.showMessage(withText: name)
+        __fw.showMessage(withText: name)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

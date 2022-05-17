@@ -25,10 +25,10 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     }
     
     private lazy var closeButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: FWIcon.closeImage)
+        let result = FWToolbarButton(image: Icon.closeImage)
         result.tintColor = Theme.textColor
         result.fw.addTouch { sender in
-            FWRouter.closeViewController(animated: true)
+            Router.closeViewController(animated: true)
         }
         return result
     }()
@@ -56,8 +56,8 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
         
         addSubview(closeButton)
         addSubview(playButton)
-        closeButton.fw.layoutChain.leftToSafeArea(8).topToSafeArea(8)
-        playButton.fw.layoutChain.rightToSafeArea(8).topToSafeArea(8)
+        closeButton.fw.layoutChain.left(toSafeArea: 8).top(toSafeArea: 8)
+        playButton.fw.layoutChain.right(toSafeArea: 8).top(toSafeArea: 8)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -99,7 +99,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
         
         self.addChild(self.player)
         self.view.addSubview(self.player.view)
-        self.player.view.fw.pinEdgesToSuperview()
+        self.player.view.fw.pinEdges()
         self.player.didMove(toParent: self)
         
         self.playVideo()
@@ -109,7 +109,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.player.view.addGestureRecognizer(tapGestureRecognizer)
         
-        fw.showLoading()
+        __fw.showLoading()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -122,7 +122,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     }
     
     override func renderModel() {
-        fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
+        __fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
             guard let strongSelf = self else { return }
             strongSelf.cacheEnabled = !strongSelf.cacheEnabled
             strongSelf.playVideo()
@@ -161,7 +161,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     func playerReady(_ player: VideoPlayer) {
         print("\(#function) ready")
         
-        fw.hideLoading()
+        __fw.hideLoading()
     }
     
     func playerPlaybackStateDidChange(_ player: VideoPlayer) {
@@ -171,6 +171,6 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     func player(_ player: VideoPlayer, didFailWithError error: Error?) {
         print("\(#function) error.description")
         
-        fw.hideLoading()
+        __fw.hideLoading()
     }
 }

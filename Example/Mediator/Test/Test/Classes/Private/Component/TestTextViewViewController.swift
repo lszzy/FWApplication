@@ -26,7 +26,7 @@ import FWApplication
         result.fw.placeholder = "我是TextView2\n我有两行"
         result.fw.setBorderColor(Theme.borderColor, width: 0.5, cornerRadius: 8)
         result.fw.minHeight = 44
-        result.fw.autoHeight(withMaxHeight: 100) { height in
+        result.fw.autoHeight(maxHeight: 100) { height in
             result.fw.layoutChain.height(height)
         }
         result.fw.touchResign = true
@@ -47,13 +47,13 @@ import FWApplication
         view.addSubview(textView)
         view.addSubview(textView2)
         view.addSubview(textView3)
-        textView2.fw.layoutChain.left(16).right(16).topToBottomOfView(textView, withOffset: 16)
-        textView3.fw.layoutChain.left(16).right(16).topToBottomOfView(textView2, withOffset: 16).height(44)
+        textView2.fw.layoutChain.left(16).right(16).topToBottom(ofView: textView, offset: 16)
+        textView3.fw.layoutChain.left(16).right(16).topToBottom(ofView: textView2, offset: 16).height(44)
     }
     
     override func renderModel() {
-        fw.setRightBarItem("切换") { [weak self] sender in
-            self?.fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["垂直居上", "垂直居中", "垂直居下"], actionBlock: { index in
+        __fw.setRightBarItem("切换") { [weak self] sender in
+            self?.__fw.showSheet(withTitle: nil, message: nil, cancel: "取消", actions: ["垂直居上", "垂直居中", "垂直居下"], actionBlock: { index in
                 var verticalAlignment: UIControl.ContentVerticalAlignment = .top
                 if index == 1 {
                     verticalAlignment = .center
