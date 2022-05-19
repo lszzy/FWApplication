@@ -108,7 +108,7 @@
     return multipier * components.day;
 }
 
-- (double)secondsFrom:(NSDate *)date
+- (NSTimeInterval)secondsFrom:(NSDate *)date
 {
     return [self.base timeIntervalSinceDate:date];
 }

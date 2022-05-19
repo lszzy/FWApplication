@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)daysFrom:(NSDate *)date;
 
 // 与指定日期相隔秒数。分钟数/60，小时数/3600
-- (double)secondsFrom:(NSDate *)date;
+- (NSTimeInterval)secondsFrom:(NSDate *)date;
 
 @end
 
