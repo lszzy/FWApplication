@@ -35,12 +35,12 @@ extension Wrapper where Base == Date {
 
     /// 转换为当前时区时间
     public var localTimeZoneDate: Date {
-        return (base as NSDate).__fw.dateWithLocalTimeZone
+        return (base as NSDate).__fw.localTimeZoneDate
     }
 
     /// 转换为UTC时区时间
     public var utcTimeZoneDate: Date {
-        return (base as NSDate).__fw.dateWithUTCTimeZone
+        return (base as NSDate).__fw.utcTimeZoneDate
     }
 
     /// 转换为指定时区时间

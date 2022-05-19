@@ -9,6 +9,7 @@
 import Foundation
 
 extension FW {
+    
     /// 确保值在固定范围之内
     ///
     /// - Parameters:
@@ -19,4 +20,44 @@ extension FW {
     public static func clamp<T: Comparable>(_ min: T, _ value: T, _ max: T) -> T {
         return value < min ? min : (value > max ? max : value)
     }
+    
+}
+
+extension Wrapper where Base: NSNumber {
+    
+    /// 转换为CGFloat
+    public var CGFloatValue: CGFloat {
+        return base.__fw.cgFloatValue
+    }
+
+    /// 四舍五入，去掉末尾0，最多digit位，小数分隔符为.，分组分隔符为空，示例：12345.6789 => 12345.68
+    public func roundString(_ digit: Int) -> String {
+        return base.__fw.roundString(digit)
+    }
+
+    /// 取上整，去掉末尾0，最多digit位，小数分隔符为.，分组分隔符为空，示例：12345.6789 => 12345.68
+    public func ceilString(_ digit: Int) -> String {
+        return base.__fw.ceilString(digit)
+    }
+
+    /// 取下整，去掉末尾0，最多digit位，小数分隔符为.，分组分隔符为空，示例：12345.6789 => 12345.67
+    public func floorString(_ digit: Int) -> String {
+        return base.__fw.floorString(digit)
+    }
+
+    /// 四舍五入，去掉末尾0，最多digit位，示例：12345.6789 => 12345.68
+    public func roundNumber(_ digit: UInt) -> NSNumber {
+        return base.__fw.roundNumber(digit)
+    }
+
+    /// 取上整，去掉末尾0，最多digit位，示例：12345.6789 => 12345.68
+    public func ceilNumber(_ digit: UInt) -> NSNumber {
+        return base.__fw.ceilNumber(digit)
+    }
+
+    /// 取下整，去掉末尾0，最多digit位，示例：12345.6789 => 12345.67
+    public func floorNumber(_ digit: UInt) -> NSNumber {
+        return base.__fw.floorNumber(digit)
+    }
+    
 }

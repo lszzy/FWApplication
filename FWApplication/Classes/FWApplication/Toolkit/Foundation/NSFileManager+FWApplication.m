@@ -17,7 +17,7 @@
 - (NSString *)pathSearch:(NSSearchPathDirectory)directory
 {
     NSArray *directories = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES);
-    return directories.count > 0 ? [directories objectAtIndex:0] : nil;
+    return directories.count > 0 ? [directories objectAtIndex:0] : @"";
 }
 
 - (NSString *)pathHome
@@ -57,7 +57,7 @@
 
 - (NSString *)pathResource
 {
-    return [[NSBundle mainBundle] resourcePath];
+    return [[NSBundle mainBundle] resourcePath] ?: @"";
 }
 
 - (NSString *)abbreviateTildePath:(NSString *)path

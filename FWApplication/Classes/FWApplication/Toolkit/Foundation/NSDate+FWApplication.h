@@ -36,10 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - TimeZone
 
 // 转换为当前时区时间
-@property (nonatomic, strong, readonly) NSDate *dateWithLocalTimeZone;
+@property (nonatomic, strong, readonly) NSDate *localTimeZoneDate;
 
 // 转换为UTC时区时间
-@property (nonatomic, strong, readonly) NSDate *dateWithUTCTimeZone;
+@property (nonatomic, strong, readonly) NSDate *utcTimeZoneDate;
 
 // 转换为指定时区时间
 - (NSDate *)dateWithTimeZone:(nullable NSTimeZone *)timeZone;

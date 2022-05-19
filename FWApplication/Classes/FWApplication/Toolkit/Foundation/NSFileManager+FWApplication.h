@@ -54,22 +54,22 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Path
 
 // 搜索路径，参数为NSSearchPathDirectory
-- (nullable NSString *)pathSearch:(NSSearchPathDirectory)directory;
+- (NSString *)pathSearch:(NSSearchPathDirectory)directory;
 
 // 沙盒路径
 @property (nonatomic, copy, readonly) NSString *pathHome;
 
 // 文档路径，iTunes会同步备份
-@property (nonatomic, copy, readonly, nullable) NSString *pathDocument;
+@property (nonatomic, copy, readonly) NSString *pathDocument;
 
 // 缓存路径，系统不会删除，iTunes会删除
-@property (nonatomic, copy, readonly, nullable) NSString *pathCaches;
+@property (nonatomic, copy, readonly) NSString *pathCaches;
 
 // Library路径
-@property (nonatomic, copy, readonly, nullable) NSString *pathLibrary;
+@property (nonatomic, copy, readonly) NSString *pathLibrary;
 
 // 配置路径，配置文件保存位置
-@property (nonatomic, copy, readonly, nullable) NSString *pathPreference;
+@property (nonatomic, copy, readonly) NSString *pathPreference;
 
 // 临时路径，App退出后可能会删除
 @property (nonatomic, copy, readonly) NSString *pathTmp;
@@ -78,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSString *pathBundle;
 
 // 资源路径，不可写
-@property (nonatomic, copy, readonly, nullable) NSString *pathResource;
+@property (nonatomic, copy, readonly) NSString *pathResource;
 
 // 绝对路径缩短为波浪线路径
 - (NSString *)abbreviateTildePath:(NSString *)path;

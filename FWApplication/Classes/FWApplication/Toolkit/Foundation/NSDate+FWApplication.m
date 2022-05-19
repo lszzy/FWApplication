@@ -46,12 +46,12 @@
 
 #pragma mark - TimeZone
 
-- (NSDate *)dateWithLocalTimeZone
+- (NSDate *)localTimeZoneDate
 {
     return [self dateWithTimeZone:[NSTimeZone localTimeZone]];
 }
 
-- (NSDate *)dateWithUTCTimeZone
+- (NSDate *)utcTimeZoneDate
 {
     return [self dateWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 }
