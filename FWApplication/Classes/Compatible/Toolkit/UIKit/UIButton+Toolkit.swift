@@ -31,3 +31,14 @@ extension Wrapper where Base: UIButton {
     }
     
 }
+
+extension Wrapper where Base: UISwitch {
+    
+    /**
+     切换开关状态
+     */
+    public func toggle(_ animated: Bool = true) {
+        base.__fw.toggle(animated)
+    }
+    
+}
