@@ -290,3 +290,61 @@ extension Wrapper where Base: UICollectionView {
         return UICollectionView.fw.collectionView(collectionViewLayout)
     }
 }
+
+extension Wrapper where Base: UICollectionView {
+    
+    /// reloadData完成回调
+    public func reloadData(completion: (() -> Void)?) {
+        base.__fw.reloadData(completion: completion)
+    }
+
+    /// reloadData清空尺寸缓存
+    public func reloadDataWithoutCache() {
+        base.__fw.reloadDataWithoutCache()
+    }
+
+    /// reloadData禁用动画
+    public func reloadDataWithoutAnimation() {
+        base.__fw.reloadDataWithoutAnimation()
+    }
+
+    /// reloadSections禁用动画
+    public func reloadSectionsWithoutAnimation(_ sections: IndexSet) {
+        base.__fw.reloadSectionsWithoutAnimation(sections)
+    }
+
+    /// reloadItems禁用动画
+    public func reloadItemsWithoutAnimation(_ indexPaths: [IndexPath]) {
+        base.__fw.reloadItemsWithoutAnimation(indexPaths)
+    }
+
+    /// 刷新高度等，不触发reload方式
+    public func performUpdates(_ updates: (() -> Void)?) {
+        base.__fw.performUpdates(updates)
+    }
+    
+}
+
+extension Wrapper where Base: UICollectionViewCell {
+    
+    /// 获取当前所属collectionView
+    public weak var collectionView: UICollectionView? {
+        return base.__fw.collectionView
+    }
+
+    /// 获取当前显示indexPath
+    public var indexPath: IndexPath? {
+        return base.__fw.indexPath
+    }
+    
+}
+
+/// iOS9+可通过UICollectionViewFlowLayout调用sectionHeadersPinToVisibleBounds实现Header悬停效果
+extension Wrapper where Base: UICollectionViewFlowLayout {
+    
+    /// 设置Header和Footer是否悬停，支持iOS9+
+    public func hover(header: Bool, footer: Bool) {
+        base.__fw.hover(withHeader: header, footer: footer)
+    }
+    
+}
