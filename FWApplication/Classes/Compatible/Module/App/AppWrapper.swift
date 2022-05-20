@@ -10,3 +10,5 @@ import UIKit
 #if FWMacroSPM
 import FWApplication
 #endif
+
+extension URLRequest: WrapperCompatible {}
