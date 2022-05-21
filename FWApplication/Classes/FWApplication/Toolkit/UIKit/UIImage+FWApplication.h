@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Album
 
 // 保存图片到相册，保存成功时error为nil
-- (void)saveImageWithBlock:(nullable void (^)(NSError * _Nullable error))block;
+- (void)saveImageWithCompletion:(nullable void (^)(NSError * _Nullable error))completion;
 
 @end
 
@@ -122,7 +122,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Album
 
 // 保存视频到相册，保存成功时error为nil。如果视频地址为NSURL，需使用NSURL.path
-- (void)saveVideo:(NSString *)videoPath withBlock:(nullable void (^)(NSError * _Nullable error))block;
+- (void)saveVideo:(NSString *)videoPath withCompletion:(nullable void (^)(NSError * _Nullable error))completion;
 
 @end
 

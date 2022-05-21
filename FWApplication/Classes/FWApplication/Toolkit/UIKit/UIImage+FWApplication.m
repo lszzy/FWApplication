@@ -21,8 +21,8 @@
 
 - (void)innerImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveImageWithBlock:));
-    objc_setAssociatedObject(self, @selector(saveImageWithBlock:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveImageWithCompletion:));
+    objc_setAssociatedObject(self, @selector(saveImageWithCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (block) {
         block(error);
     }
@@ -30,8 +30,8 @@
 
 + (void)innerVideo:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveVideo:withBlock:));
-    objc_setAssociatedObject(self, @selector(saveVideo:withBlock:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveVideo:withCompletion:));
+    objc_setAssociatedObject(self, @selector(saveVideo:withCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (block) {
         block(error);
     }
@@ -435,9 +435,9 @@
 
 #pragma mark - Album
 
-- (void)saveImageWithBlock:(void (^)(NSError *error))block
+- (void)saveImageWithCompletion:(void (^)(NSError * _Nullable))completion
 {
-    objc_setAssociatedObject(self.base, @selector(saveImageWithBlock:), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(saveImageWithCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     UIImageWriteToSavedPhotosAlbum(self.base, self.base, @selector(innerImage:didFinishSavingWithError:contextInfo:), NULL);
 }
 
@@ -627,9 +627,9 @@
 
 #pragma mark - Album
 
-- (void)saveVideo:(NSString *)videoPath withBlock:(void (^)(NSError *error))block
+- (void)saveVideo:(NSString *)videoPath withCompletion:(nullable void (^)(NSError * _Nullable))completion
 {
-    objc_setAssociatedObject(self.base, @selector(saveVideo:withBlock:), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self.base, @selector(saveVideo:withCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoPath)) {
         UISaveVideoAtPathToSavedPhotosAlbum(videoPath, self.base, @selector(innerVideo:didFinishSavingWithError:contextInfo:), NULL);
     }

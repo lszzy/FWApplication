@@ -294,3 +294,104 @@ extension Wrapper where Base: UITableView {
         return UITableView.fw.tableView(style)
     }
 }
+
+extension Wrapper where Base: UITableView {
+    
+    /// 清空Grouped样式默认多余边距，注意CGFLOAT_MIN才会生效，0不会生效
+    public func resetGroupedStyle() {
+        base.__fw.resetGroupedStyle()
+    }
+
+    /// 设置Plain样式sectionHeader和Footer跟随滚动(不悬停)，在scrollViewDidScroll:中调用即可(需先禁用内边距适应)
+    public func follow(header: CGFloat, footer: CGFloat) {
+        base.__fw.follow(withHeader: header, footer: footer)
+    }
+
+    /// reloadData完成回调
+    public func reloadData(completion: (() -> Void)?) {
+        base.__fw.reloadData(completion: completion)
+    }
+
+    /// reloadData清空尺寸缓存
+    public func reloadDataWithoutCache() {
+        base.__fw.reloadDataWithoutCache()
+    }
+
+    /// reloadData禁用动画
+    public func reloadDataWithoutAnimation() {
+        base.__fw.reloadDataWithoutAnimation()
+    }
+
+    /// reloadSections禁用动画
+    public func reloadSectionsWithoutAnimation(_ sections: IndexSet) {
+        base.__fw.reloadSectionsWithoutAnimation(sections)
+    }
+
+    /// reloadRows禁用动画
+    public func reloadRowsWithoutAnimation(_ indexPaths: [IndexPath]) {
+        base.__fw.reloadRowsWithoutAnimation(indexPaths)
+    }
+
+    /// 刷新高度等，不触发reload方式
+    public func performUpdates(_ updates: (() -> Void)?) {
+        base.__fw.performUpdates(updates)
+    }
+    
+    /// 全局清空TableView默认多余边距
+    public static func resetTableStyle() {
+        Base.__fw.resetTableStyle()
+    }
+    
+    // MARK: - Template
+    
+    /**
+     单独启用或禁用高度估算
+     @note 启用高度估算，需要子视图布局完整，无需实现heightForRow方法；禁用高度估算(iOS11默认启用，会先cellForRow再heightForRow)
+     
+     @param enabled 是否启用
+     */
+    public func setTemplateLayout(_ enabled: Bool) {
+        base.__fw.setTemplateLayout(enabled)
+    }
+
+    /// 缓存方式获取估算高度，estimatedHeightForRowAtIndexPath调用即可。解决reloadData闪烁跳动问题
+    public func templateHeight(at indexPath: IndexPath) -> CGFloat {
+        return base.__fw.templateHeight(at: indexPath)
+    }
+
+    /// 设置估算高度缓存，willDisplayCell调用即可，height为cell.frame.size.height。设置为0时清除缓存。解决reloadData闪烁跳动问题
+    public func setTemplateHeight(_ height: CGFloat, at indexPath: IndexPath) {
+        base.__fw.setTemplateHeight(height, at: indexPath)
+    }
+
+    /// 清空估算高度缓存，cell高度动态变化时调用
+    public func clearTemplateHeightCache() {
+        base.__fw.clearTemplateHeightCache()
+    }
+    
+}
+
+extension Wrapper where Base: UITableViewCell {
+    
+    /// 设置分割线内边距，iOS8+默认15.f，设为UIEdgeInsetsZero可去掉
+    public var separatorInset: UIEdgeInsets {
+        get { return base.__fw.separatorInset }
+        set { base.__fw.separatorInset = newValue }
+    }
+
+    /// 获取当前所属tableView
+    public weak var tableView: UITableView? {
+        return base.__fw.tableView
+    }
+
+    /// 获取当前显示indexPath
+    public var indexPath: IndexPath? {
+        return base.__fw.indexPath
+    }
+    
+    /// 延迟加载背景视图，处理section圆角、阴影等。会自动设置backgroundView
+    public var backgroundView: TableViewCellBackgroundView {
+        return base.__fw.backgroundView
+    }
+    
+}
