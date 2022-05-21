@@ -529,7 +529,7 @@
     return animation;
 }
 
-- (void)shakeWithTimes:(int)times
+- (void)shakeWithTimes:(NSInteger)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
               completion:(void (^)(BOOL finished))completion
@@ -542,11 +542,11 @@
                 completion:completion];
 }
 
-- (void)shakeWithTimes:(int)times
+- (void)shakeWithTimes:(NSInteger)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
                direction:(NSInteger)direction
-            currentTimes:(int)currentTimes
+            currentTimes:(NSInteger)currentTimes
               completion:(void (^)(BOOL finished))completion
 {
     // 是否是文本输入框

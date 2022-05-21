@@ -229,7 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param duration   单次时间，默认0.03
  *  @param completion 完成回调
  */
-- (void)shakeWithTimes:(int)times
+- (void)shakeWithTimes:(NSInteger)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
               completion:(nullable void (^)(BOOL finished))completion;
