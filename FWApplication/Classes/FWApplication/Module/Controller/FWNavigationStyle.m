@@ -202,7 +202,7 @@
         navigationBar.fw.shadowColor = nil;
     }
     if (appearance.foregroundColor) navigationBar.fw.foregroundColor = appearance.foregroundColor;
-    if (appearance.titleColor) navigationBar.fw.titleColor = appearance.titleColor;
+    if (appearance.titleAttributes) navigationBar.fw.titleAttributes = appearance.titleAttributes;
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
 }
 

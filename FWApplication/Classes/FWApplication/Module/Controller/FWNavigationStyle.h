@@ -26,8 +26,8 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 @property (nonatomic, assign) BOOL isTranslucent;
 /// 前景色，包含标题和按钮，默认nil
 @property (nullable, nonatomic, strong) UIColor *foregroundColor;
-/// 标题颜色，默认nil同前景色
-@property (nullable, nonatomic, strong) UIColor *titleColor;
+/// 标题属性，默认nil使用前景色
+@property (nullable, nonatomic, copy) NSDictionary<NSAttributedStringKey, id> *titleAttributes;
 /// 背景色，后设置生效，默认nil
 @property (nullable, nonatomic, strong) UIColor *backgroundColor;
 /// 背景图片，后设置生效，默认nil
