@@ -203,6 +203,7 @@
     }
     if (appearance.foregroundColor) navigationBar.fw.foregroundColor = appearance.foregroundColor;
     if (appearance.titleAttributes) navigationBar.fw.titleAttributes = appearance.titleAttributes;
+    if (appearance.buttonAttributes) navigationBar.fw.buttonAttributes = appearance.buttonAttributes;
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
 }
 
