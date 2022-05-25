@@ -9,8 +9,6 @@ import UIKit
 
 extension Wrapper where Base: UIViewController {
     
-    // MARK: - Bar
-
     /// 状态栏样式，默认UIStatusBarStyleDefault，设置后才会生效
     public var statusBarStyle: UIStatusBarStyle {
         get { return base.__fw.statusBarStyle }
@@ -67,72 +65,6 @@ extension Wrapper where Base: UIViewController {
     public var extendedLayoutEdge: UIRectEdge {
         get { return base.__fw.extendedLayoutEdge }
         set { base.__fw.extendedLayoutEdge = newValue }
-    }
-
-    // MARK: - Item
-
-    /// 快捷设置导航栏标题文字或视图
-    public var barTitle: Any? {
-        get { return base.__fw.barTitle }
-        set { base.__fw.barTitle = newValue }
-    }
-    
-    /// 设置导航栏返回按钮，支持UIBarButtonItem|NSString|UIImage等，nil时显示系统箭头，下个页面生效
-    public var backBarItem: Any? {
-        get { return base.__fw.backBarItem }
-        set { base.__fw.backBarItem = newValue }
-    }
-    
-    /// 设置导航栏左侧按钮，支持UIBarButtonItem|UIImage等，默认事件为关闭当前页面，下个页面生效
-    public var leftBarItem: Any? {
-        get { return base.__fw.leftBarItem }
-        set { base.__fw.leftBarItem = newValue }
-    }
-    
-    /// 设置导航栏右侧按钮，支持UIBarButtonItem|UIImage等，默认事件为关闭当前页面，下个页面生效
-    public var rightBarItem: Any? {
-        get { return base.__fw.rightBarItem }
-        set { base.__fw.rightBarItem = newValue }
-    }
-    
-    /// 快捷设置导航栏左侧按钮。注意自定义left按钮之后，系统返回手势失效
-    public func setLeftBarItem(_ object: Any?, target: Any, action: Selector) {
-        base.__fw.setLeftBarItem(object, target: target, action: action)
-    }
-    
-    /// 快捷设置导航栏左侧按钮，block事件。注意自定义left按钮之后，系统返回手势失效
-    public func setLeftBarItem(_ object: Any?, block: @escaping (Any) -> Void) {
-        base.__fw.setLeftBarItem(object, block: block)
-    }
-    
-    /// 快捷设置导航栏右侧按钮
-    public func setRightBarItem(_ object: Any?, target: Any, action: Selector) {
-        base.__fw.setRightBarItem(object, target: target, action: action)
-    }
-    
-    /// 快捷设置导航栏右侧按钮，block事件
-    public func setRightBarItem(_ object: Any?, block: @escaping (Any) -> Void) {
-        base.__fw.setRightBarItem(object, block: block)
-    }
-
-    /// 快捷添加导航栏左侧按钮。注意自定义left按钮之后，系统返回手势失效
-    public func addLeftBarItem(_ object: Any?, target: Any, action: Selector) {
-        base.__fw.addLeftBarItem(object, target: target, action: action)
-    }
-
-    /// 快捷添加导航栏左侧按钮，block事件。注意自定义left按钮之后，系统返回手势失效
-    public func addLeftBarItem(_ object: Any?, block: @escaping (Any) -> Void) {
-        base.__fw.addLeftBarItem(object, block: block)
-    }
-
-    /// 快捷添加导航栏右侧按钮
-    public func addRightBarItem(_ object: Any?, target: Any, action: Selector) {
-        base.__fw.addRightBarItem(object, target: target, action: action)
-    }
-
-    /// 快捷添加导航栏右侧按钮，block事件
-    public func addRightBarItem(_ object: Any?, block: @escaping (Any) -> Void) {
-        base.__fw.addRightBarItem(object, block: block)
     }
     
 }

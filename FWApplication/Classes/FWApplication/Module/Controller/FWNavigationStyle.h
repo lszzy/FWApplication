@@ -59,8 +59,6 @@ NS_SWIFT_NAME(NavigationBarAppearance)
  */
 @interface FWViewControllerWrapper (FWStyle)
 
-#pragma mark - Bar
-
 /// 状态栏样式，默认UIStatusBarStyleDefault，设置后才会生效
 @property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
 
@@ -90,44 +88,6 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 
 /// 设置视图布局Bar延伸类型，None为不延伸(Bar不覆盖视图)，Top|Bottom为顶部|底部延伸，All为全部延伸
 @property (nonatomic, assign) UIRectEdge extendedLayoutEdge;
-
-#pragma mark - Item
-
-/// 快捷设置导航栏标题文字或视图
-@property (nonatomic, strong, nullable) id barTitle;
-
-/// 设置导航栏返回按钮，支持UIBarButtonItem|NSString|UIImage等，nil时显示系统箭头，下个页面生效
-@property (nonatomic, strong, nullable) id backBarItem;
-
-/// 设置导航栏左侧按钮，支持UIBarButtonItem|UIImage等，默认事件为关闭当前页面，下个页面生效
-@property (nonatomic, strong, nullable) id leftBarItem;
-
-/// 设置导航栏右侧按钮，支持UIBarButtonItem|UIImage等，默认事件为关闭当前页面，下个页面生效
-@property (nonatomic, strong, nullable) id rightBarItem;
-
-/// 快捷设置导航栏左侧按钮。注意自定义left按钮之后，系统返回手势失效
-- (void)setLeftBarItem:(nullable id)object target:(id)target action:(SEL)action;
-
-/// 快捷设置导航栏左侧按钮，block事件。注意自定义left按钮之后，系统返回手势失效
-- (void)setLeftBarItem:(nullable id)object block:(void (^)(id sender))block;
-
-/// 快捷设置导航栏右侧按钮
-- (void)setRightBarItem:(nullable id)object target:(id)target action:(SEL)action;
-
-/// 快捷设置导航栏右侧按钮，block事件
-- (void)setRightBarItem:(nullable id)object block:(void (^)(id sender))block;
-
-/// 快捷添加导航栏左侧按钮。注意自定义left按钮之后，系统返回手势失效
-- (void)addLeftBarItem:(nullable id)object target:(id)target action:(SEL)action;
-
-/// 快捷添加导航栏左侧按钮，block事件。注意自定义left按钮之后，系统返回手势失效
-- (void)addLeftBarItem:(nullable id)object block:(void (^)(id sender))block;
-
-/// 快捷添加导航栏右侧按钮
-- (void)addRightBarItem:(nullable id)object target:(id)target action:(SEL)action;
-
-/// 快捷添加导航栏右侧按钮，block事件
-- (void)addRightBarItem:(nullable id)object block:(void (^)(id sender))block;
 
 @end
 

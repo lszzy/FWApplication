@@ -44,8 +44,6 @@
 
 @implementation FWViewControllerWrapper (FWStyle)
 
-#pragma mark - Bar
-
 + (void)load
 {
     static dispatch_once_t onceToken;
@@ -241,128 +239,6 @@
 {
     self.base.edgesForExtendedLayout = edge;
     self.base.extendedLayoutIncludesOpaqueBars = YES;
-}
-
-#pragma mark - Item
-
-- (id)barTitle
-{
-    // 系统导航栏
-    return self.base.navigationItem.titleView ?: self.base.navigationItem.title;
-}
-
-- (void)setBarTitle:(id)title
-{
-    if ([title isKindOfClass:[UIView class]]) {
-        self.base.navigationItem.titleView = title;
-    } else {
-        self.base.navigationItem.title = title;
-    }
-}
-
-- (id)backBarItem
-{
-    return self.base.navigationItem.backBarButtonItem;
-}
-
-- (void)setBackBarItem:(id)object
-{
-    if ([object isKindOfClass:[UIImage class]]) {
-        self.base.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-        self.base.navigationController.navigationBar.fw.backImage = (UIImage *)object;
-    } else {
-        UIBarButtonItem *backItem = [object isKindOfClass:[UIBarButtonItem class]] ? (UIBarButtonItem *)object : [UIBarButtonItem.fw itemWithObject:object ?: [UIImage new] target:nil action:nil];
-        self.base.navigationItem.backBarButtonItem = backItem;
-        self.base.navigationController.navigationBar.fw.backImage = nil;
-    }
-}
-
-- (id)leftBarItem
-{
-    return self.base.navigationItem.leftBarButtonItem;
-}
-
-- (void)setLeftBarItem:(id)object
-{
-    if (!object || [object isKindOfClass:[UIBarButtonItem class]]) {
-        self.base.navigationItem.leftBarButtonItem = object;
-    } else {
-        __weak UIViewController *weakController = self.base;
-        self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
-            if (![weakController shouldPopController]) return;
-            [weakController.fw closeViewControllerAnimated:YES];
-        }];
-    }
-}
-
-- (id)rightBarItem
-{
-    return self.base.navigationItem.rightBarButtonItem;
-}
-
-- (void)setRightBarItem:(id)object
-{
-    if (!object || [object isKindOfClass:[UIBarButtonItem class]]) {
-        self.base.navigationItem.rightBarButtonItem = object;
-    } else {
-        __weak UIViewController *weakController = self.base;
-        self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:^(id  _Nonnull sender) {
-            if (![weakController shouldPopController]) return;
-            [weakController.fw closeViewControllerAnimated:YES];
-        }];
-    }
-}
-
-- (void)setLeftBarItem:(id)object target:(id)target action:(SEL)action
-{
-    self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
-}
-
-- (void)setLeftBarItem:(id)object block:(void (^)(id sender))block
-{
-    self.base.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
-}
-
-- (void)setRightBarItem:(id)object target:(id)target action:(SEL)action
-{
-    self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
-}
-
-- (void)setRightBarItem:(id)object block:(void (^)(id sender))block
-{
-    self.base.navigationItem.rightBarButtonItem = [UIBarButtonItem.fw itemWithObject:object block:block];
-}
-
-- (void)addLeftBarItem:(id)object target:(id)target action:(SEL)action
-{
-    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
-    NSMutableArray *items = self.base.navigationItem.leftBarButtonItems ? [self.base.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
-    [items addObject:barItem];
-    self.base.navigationItem.leftBarButtonItems = [items copy];
-}
-
-- (void)addLeftBarItem:(id)object block:(void (^)(id sender))block
-{
-    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object block:block];
-    NSMutableArray *items = self.base.navigationItem.leftBarButtonItems ? [self.base.navigationItem.leftBarButtonItems mutableCopy] : [NSMutableArray new];
-    [items addObject:barItem];
-    self.base.navigationItem.leftBarButtonItems = [items copy];
-}
-
-- (void)addRightBarItem:(id)object target:(id)target action:(SEL)action
-{
-    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object target:target action:action];
-    NSMutableArray *items = self.base.navigationItem.rightBarButtonItems ? [self.base.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
-    [items addObject:barItem];
-    self.base.navigationItem.rightBarButtonItems = [items copy];
-}
-
-- (void)addRightBarItem:(id)object block:(void (^)(id sender))block
-{
-    UIBarButtonItem *barItem = [UIBarButtonItem.fw itemWithObject:object block:block];
-    NSMutableArray *items = self.base.navigationItem.rightBarButtonItems ? [self.base.navigationItem.rightBarButtonItems mutableCopy] : [NSMutableArray new];
-    [items addObject:barItem];
-    self.base.navigationItem.rightBarButtonItems = [items copy];
 }
 
 @end

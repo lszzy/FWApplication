@@ -352,7 +352,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderData
 {
     self.isSDWebImage = [[FWPluginManager loadPlugin:@protocol(FWImagePlugin)] isKindOfClass:[FWSDWebImagePlugin class]];
-    self.fw.barTitle = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
+    self.fw.title = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
     FWSDWebImagePlugin.sharedInstance.fadeAnimated = YES;
     FWImagePluginImpl.sharedInstance.fadeAnimated = YES;
     

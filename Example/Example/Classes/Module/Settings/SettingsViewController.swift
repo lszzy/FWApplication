@@ -38,10 +38,10 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     func renderData() {
-        __fw.barTitle = FW.localized("settingTitle")
+        fw.title = FW.localized("settingTitle")
         
         #if DEBUG
-        __fw.setRightBarItem(FW.localized("debugButton")) { (sender) in
+        fw.setRightBarItem(FW.localized("debugButton")) { (sender) in
             if FWDebugManager.sharedInstance().isHidden {
                 FWDebugManager.sharedInstance().show()
             } else {
@@ -80,7 +80,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onLogout() {
-        __fw.showConfirm(withTitle: FW.localized("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
+        fw.showConfirm(title: FW.localized("logoutConfirm"), message: nil, cancel: nil, confirm: nil) { [weak self] in
             Mediator.userModule.logout {
                 self?.renderData()
             }
@@ -88,7 +88,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onLanguage() {
-        __fw.showSheet(withTitle: FW.localized("languageTitle"), message: nil, cancel: FW.localized("取消"), actions: [FW.localized("systemTitle"), "中文", "English", FW.localized("changeTitle")]) { [weak self] (index) in
+        fw.showSheet(title: FW.localized("languageTitle"), message: nil, cancel: FW.localized("取消"), actions: [FW.localized("systemTitle"), "中文", "English", FW.localized("changeTitle")]) { [weak self] (index) in
             if index < 3 {
                 let language: String? = index == 1 ? "zh-Hans" : (index == 2 ? "en" : nil)
                 Bundle.fw.localizedLanguage = language
@@ -109,7 +109,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
         }
         actions.append(FW.localized("changeTitle"))
         
-        __fw.showSheet(withTitle: FW.localized("themeTitle"), message: nil, cancel: FW.localized("取消"), actions: actions) { (index) in
+        fw.showSheet(title: FW.localized("themeTitle"), message: nil, cancel: FW.localized("取消"), actions: actions) { (index) in
             var mode = ThemeMode(index)
             if index > actions.count - 2 {
                 let currentMode = ThemeManager.sharedInstance.mode
@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onRoot() {
-        __fw.showSheet(withTitle: FW.localized("rootTitle"), message: nil, cancel: FW.localized("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
+        fw.showSheet(title: FW.localized("rootTitle"), message: nil, cancel: FW.localized("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootNavigation = false
@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onOption() {
-        __fw.showSheet(withTitle: FW.localized("optionTitle"), message: nil, cancel: FW.localized("取消"), actions: [AppConfig.isRootLogin ? FW.localized("loginOptional") : FW.localized("loginRequired"), Theme.isLargeTitles ? FW.localized("normalTitles") : FW.localized("largeTitles"), Theme.isBarTranslucent ? FW.localized("defaultTitles") : FW.localized("translucentTitles")]) { (index) in
+        fw.showSheet(title: FW.localized("optionTitle"), message: nil, cancel: FW.localized("取消"), actions: [AppConfig.isRootLogin ? FW.localized("loginOptional") : FW.localized("loginRequired"), Theme.isLargeTitles ? FW.localized("normalTitles") : FW.localized("largeTitles"), Theme.isBarTranslucent ? FW.localized("defaultTitles") : FW.localized("translucentTitles")]) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
