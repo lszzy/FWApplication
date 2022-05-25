@@ -81,7 +81,7 @@ extension Theme {
         themeChanged()
         
         // iOS15兼容设置
-        UITableView.__fw.resetTableStyle()
+        UITableView.fw.resetTableStyle()
         // 启用返回代理拦截
         UINavigationController.fw.enablePopProxy()
         // 控制器样式设置
@@ -89,14 +89,19 @@ extension Theme {
             viewController.edgesForExtendedLayout = Theme.isBarTranslucent ? .all : .bottom
             viewController.extendedLayoutIncludesOpaqueBars = true
             viewController.hidesBottomBarWhenPushed = true
-            viewController.__fw.navigationBarHidden = false
-            viewController.__fw.navigationBarStyle = .default
+            viewController.fw.navigationBarHidden = false
+            viewController.fw.navigationBarStyle = .default
         }
         ViewControllerManager.sharedInstance.hookLoadView = { viewController in
             viewController.view.backgroundColor = Theme.tableColor
         }
         ViewControllerManager.sharedInstance.hookViewDidLoad = { viewController in
-            viewController.__fw.backBarItem = Icon.backImage
+            // 长按返回按钮会弹出返回菜单
+            // viewController.fw.backBarItem = Icon.backImage
+            // 无返回按钮，不会弹出返回菜单
+            if (viewController.navigationController?.children.count ?? 0) > 1 {
+                viewController.fw.leftBarItem = Icon.backImage
+            }
             viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
         ViewControllerManager.sharedInstance.hookTableViewController = { viewController in
@@ -129,7 +134,7 @@ extension Theme {
             return "暂无数据"
         }
         EmptyPluginImpl.sharedInstance.defaultImage = {
-            return UIImage.__fw.imageWithAppIcon()
+            return UIImage.fw.appIconImage()
         }
         EmptyPluginImpl.sharedInstance.defaultAction = {
             return "重新加载"

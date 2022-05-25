@@ -28,7 +28,7 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 @property (nullable, nonatomic, strong) UIColor *foregroundColor;
 /// 标题属性，默认nil使用前景色
 @property (nullable, nonatomic, copy) NSDictionary<NSAttributedStringKey, id> *titleAttributes;
-/// 按钮属性，默认nil系统默认
+/// 按钮属性，默认nil。仅iOS15+生效，iOS14及以下请使用UIBarButtonItem
 @property (nullable, nonatomic, copy) NSDictionary<NSAttributedStringKey, id> *buttonAttributes;
 /// 背景色，后设置生效，默认nil
 @property (nullable, nonatomic, strong) UIColor *backgroundColor;
