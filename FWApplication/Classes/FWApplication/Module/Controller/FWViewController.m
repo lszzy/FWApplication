@@ -264,6 +264,26 @@
     }
 }
 
+- (void)hookViewDidLayoutSubviews:(UIViewController *)viewController
+{
+    // 1. 默认viewDidLayoutSubviews
+    if (self.hookViewDidLayoutSubviews) {
+        self.hookViewDidLayoutSubviews(viewController);
+    }
+    
+    // 2. 拦截器viewDidLayoutSubviews
+    NSArray *protocolNames = [self protocolsWithClass:viewController.class];
+    for (NSString *protocolName in protocolNames) {
+        FWViewControllerIntercepter *intercepter = [self.intercepters objectForKey:protocolName];
+        if (intercepter.viewDidLayoutSubviewsIntercepter && [self respondsToSelector:intercepter.viewDidLayoutSubviewsIntercepter]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [self performSelector:intercepter.viewDidLayoutSubviewsIntercepter withObject:viewController];
+#pragma clang diagnostic pop
+        }
+    }
+}
+
 @end
 
 #pragma mark - UIViewController+FWViewController
@@ -298,6 +318,12 @@
             FWSwizzleOriginal();
             if ([selfObject conformsToProtocol:@protocol(FWViewController)]) {
                 [[FWViewControllerManager sharedInstance] hookViewDidLoad:selfObject];
+            }
+        }));
+        FWSwizzleClass(UIViewController, @selector(viewDidLayoutSubviews), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
+            FWSwizzleOriginal();
+            if ([selfObject conformsToProtocol:@protocol(FWViewController)]) {
+                [[FWViewControllerManager sharedInstance] hookViewDidLayoutSubviews:selfObject];
             }
         }));
         

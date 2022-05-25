@@ -9,6 +9,13 @@
 import FWApplication
 
 @objcMembers class TestSwiftViewController: TestViewController, TableViewControllerProtocol {
+    override func renderNavbar() {
+        fw.setRightBarItem("Popup") { _ in
+            let viewController = SwiftTestPopupViewController()
+            Router.present(viewController, animated: true)
+        }
+    }
+    
     override func renderData() {
         tableData.addObjects(from: [
             "FWViewController",
@@ -249,5 +256,48 @@ import FWApplication
     
     func renderWebView() {
         webRequest = "http://kvm.wuyong.site/test.php"
+    }
+}
+
+@objcMembers class SwiftTestPopupViewController: UIViewController, ViewControllerProtocol {
+    // MARK: - Accessor
+    lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.fw.addTapGesture { [weak self] _ in
+            self?.fw.close()
+        }
+        return view
+    }()
+    
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    // MARK: - Lifecycle
+    func renderInit() {
+        modalPresentationStyle = .custom
+        fw.navigationBarHidden = true
+        fw.setPresentTransition(nil)
+    }
+    
+    func renderView() {
+        view.backgroundColor = .clear
+        view.addSubview(backgroundView)
+        view.addSubview(contentView)
+        backgroundView.fw.layoutChain
+            .edges(excludingEdge: .bottom)
+        contentView.fw.layoutChain
+            .edges(excludingEdge: .top)
+            .topToBottom(ofView: backgroundView)
+        
+        contentView.fw.layoutChain.height(FW.screenHeight / 2.0)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        contentView.fw.setCornerLayer([.topLeft, .topRight], radius: 8)
     }
 }

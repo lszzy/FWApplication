@@ -58,6 +58,7 @@ NS_SWIFT_NAME(ViewControllerIntercepter)
 @property (nonatomic, assign, nullable) SEL initIntercepter;
 @property (nonatomic, assign, nullable) SEL loadViewIntercepter;
 @property (nonatomic, assign, nullable) SEL viewDidLoadIntercepter;
+@property (nonatomic, assign, nullable) SEL viewDidLayoutSubviewsIntercepter;
 
 @property (nonatomic, copy, nullable) NSDictionary *forwardSelectors;
 
@@ -84,6 +85,8 @@ NS_SWIFT_NAME(ViewControllerManager)
 @property (nonatomic, copy, nullable) void (^hookLoadView)(UIViewController *viewController);
 /// 默认全局控制器viewDidLoad钩子句柄，viewDidLoad优先自动调用
 @property (nonatomic, copy, nullable) void (^hookViewDidLoad)(UIViewController *viewController);
+/// 默认全局控制器viewDidLayoutSubviews钩子句柄，viewDidLayoutSubviews优先自动调用
+@property (nonatomic, copy, nullable) void (^hookViewDidLayoutSubviews)(UIViewController *viewController);
 
 /// 默认全局scrollViewController钩子句柄，loadView自动调用，先于renderScrollView
 @property (nonatomic, copy, nullable) void (^hookScrollViewController)(UIViewController<FWScrollViewController> *viewController);
