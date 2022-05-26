@@ -9,6 +9,10 @@ import UIKit
 import Vision
 import FWFramework
 import AudioToolbox
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 // MARK: - OcrObject
 /// OCR扫描结果对象

@@ -6,6 +6,10 @@
 //
 
 import UIKit
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 /// 防重复点击可以手工控制enabled或userInteractionEnabled或loading，如request开始时禁用，结束时启用等
 extension Wrapper where Base: UIControl {

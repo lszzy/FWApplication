@@ -7,6 +7,10 @@
 
 import UIKit
 import UserNotifications
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 extension Wrapper where Base: UNUserNotificationCenter {
     

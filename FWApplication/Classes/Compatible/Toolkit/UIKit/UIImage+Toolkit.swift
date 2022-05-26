@@ -6,6 +6,10 @@
 //
 
 import UIKit
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 /// 注意CGContextDrawImage如果图片尺寸太大会导致内存不足闪退(如高斯模糊效果)，建议先压缩再调用
 extension Wrapper where Base: UIImage {

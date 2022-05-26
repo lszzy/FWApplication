@@ -19,7 +19,7 @@ let package = Package(
             targets: ["FWApplication", "FWApplicationSDWebImage"])
     ],
     dependencies: [
-        .package(url: "https://github.com/lszzy/FWFramework.git", from: "3.0.0"),
+        .package(url: "https://github.com/lszzy/FWFramework.git", from: "3.1.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.9.0"),
     ],
     targets: [

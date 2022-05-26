@@ -9,6 +9,7 @@
 import UIKit
 import FWFramework
 #if FWMacroSPM
+import FWFrameworkCompatible
 import FWApplication
 #endif
 

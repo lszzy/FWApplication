@@ -6,6 +6,10 @@
 //
 
 import UIKit
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 /**
  一、modalPresentationStyle需要在present之前(init之后)设置才会生效，UINavigationController也可设置。

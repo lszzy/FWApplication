@@ -7,6 +7,10 @@
 //
 
 import Foundation
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 extension FW {
     

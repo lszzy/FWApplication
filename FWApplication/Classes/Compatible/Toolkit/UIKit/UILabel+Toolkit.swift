@@ -6,6 +6,10 @@
 //
 
 import UIKit
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 /// 注意UILabel的lineBreakMode默认值为TruncatingTail，如设置numberOfLines为0时，需显示修改lineBreakMode值；
 /// 自动布局时，可设置preferredMaxLayoutWidth，从而通过intrinsicContentSize获取多行Label的高度

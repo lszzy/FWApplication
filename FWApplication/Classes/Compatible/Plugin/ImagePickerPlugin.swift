@@ -8,6 +8,10 @@
 import UIKit
 import Photos
 import PhotosUI
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 extension Wrapper where Base: PHPhotoLibrary {
     
