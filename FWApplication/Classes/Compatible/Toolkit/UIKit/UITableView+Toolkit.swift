@@ -266,12 +266,12 @@ extension Wrapper where Base: UITableView {
         }
     }
     
-    public static func tableView() -> UITableView {
+    public static func tableView() -> Base {
         return tableView(.plain)
     }
     
-    public static func tableView(_ style: UITableView.Style) -> UITableView {
-        let tableView = UITableView(frame: .zero, style: style)
+    public static func tableView(_ style: UITableView.Style) -> Base {
+        let tableView = Base(frame: .zero, style: style)
         tableView.showsVerticalScrollIndicator = false
         tableView.showsHorizontalScrollIndicator = false
         tableView.tableFooterView = UIView(frame: .zero)

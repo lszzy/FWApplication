@@ -259,7 +259,7 @@ extension Wrapper where Base: UICollectionView {
         }
     }
     
-    public static func collectionView() -> UICollectionView {
+    public static func collectionView() -> Base {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
@@ -267,8 +267,8 @@ extension Wrapper where Base: UICollectionView {
         return collectionView(flowLayout)
     }
     
-    public static func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
+    public static func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> Base {
+        let collectionView = Base(frame: .zero, collectionViewLayout: collectionViewLayout)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
