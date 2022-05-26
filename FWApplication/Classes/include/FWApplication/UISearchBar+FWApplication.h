@@ -1,1 +1,1 @@
-../../FWApplication/View/Extension/UISearchBar+FWApplication.h
+../../FWApplication/Toolkit/UIKit/UISearchBar+FWApplication.h

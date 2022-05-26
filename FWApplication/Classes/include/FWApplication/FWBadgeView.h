@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWBadgeView.h
+../../FWApplication/Toolkit/Component/FWBadgeView.h

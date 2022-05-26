@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// 文件缓存
+NS_SWIFT_NAME(CacheFile)
 @interface FWCacheFile : FWCacheEngine
 
 /** 单例模式 */

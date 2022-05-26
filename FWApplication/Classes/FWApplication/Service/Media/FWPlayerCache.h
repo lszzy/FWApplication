@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol FWPlayerCacheLoaderManagerDelegate;
 
 // @see https://github.com/vitoziv/VIMediaCache
+NS_SWIFT_NAME(PlayerCacheLoaderManager)
 @interface FWPlayerCacheLoaderManager : NSObject <AVAssetResourceLoaderDelegate>
 
 @property (nonatomic, weak, nullable) id<FWPlayerCacheLoaderManagerDelegate> delegate;
@@ -39,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PlayerCacheLoaderManagerDelegate)
 @protocol FWPlayerCacheLoaderManagerDelegate <NSObject>
 
 - (void)resourceLoaderManagerLoadURL:(NSURL *)url didFailWithError:(NSError *)error;
@@ -49,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol FWPlayerCacheLoaderDelegate;
 
+NS_SWIFT_NAME(PlayerCacheLoader)
 @interface FWPlayerCacheLoader : NSObject
 
 @property (nonatomic, strong, readonly) NSURL *url;
@@ -63,6 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PlayerCacheLoaderDelegate)
 @protocol FWPlayerCacheLoaderDelegate <NSObject>
 
 - (void)resourceLoader:(FWPlayerCacheLoader *)resourceLoader didFailWithError:(NSError *)error;
@@ -75,6 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWPlayerCacheContentInfo;
 @class FWPlayerCacheWorker;
 
+NS_SWIFT_NAME(PlayerCacheDownloaderStatus)
 @interface FWPlayerCacheDownloaderStatus : NSObject
 
 + (instancetype)shared;
@@ -90,6 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PlayerCacheDownloader)
 @interface FWPlayerCacheDownloader : NSObject
 
 - (instancetype)initWithURL:(NSURL *)url cacheWorker:(FWPlayerCacheWorker *)cacheWorker;
@@ -107,6 +113,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PlayerCacheDownloaderDelegate)
 @protocol FWPlayerCacheDownloaderDelegate <NSObject>
 
 @optional
@@ -121,6 +128,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWPlayerCacheDownloader, AVAssetResourceLoadingRequest;
 @protocol FWPlayerCacheRequestWorkerDelegate;
 
+NS_SWIFT_NAME(PlayerCacheRequestWorker)
 @interface FWPlayerCacheRequestWorker : NSObject
 
 - (instancetype)initWithMediaDownloader:(FWPlayerCacheDownloader *)mediaDownloader resourceLoadingRequest:(AVAssetResourceLoadingRequest *)request;
@@ -135,6 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(PlayerCacheRequestWorkerDelegate)
 @protocol FWPlayerCacheRequestWorkerDelegate <NSObject>
 
 - (void)resourceLoadingRequestWorker:(FWPlayerCacheRequestWorker *)requestWorker didCompleteWithError:(NSError *)error;
@@ -143,6 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWPlayerCacheContentInfo
 
+NS_SWIFT_NAME(PlayerCacheContentInfo)
 @interface FWPlayerCacheContentInfo : NSObject <NSCoding>
 
 @property (nonatomic, copy) NSString *contentType;
@@ -157,8 +167,9 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, FWPlayerCacheAtionType) {
     FWPlayerCacheAtionTypeLocal = 0,
     FWPlayerCacheAtionTypeRemote
-};
+} NS_SWIFT_NAME(PlayerCacheAtionType);
 
+NS_SWIFT_NAME(PlayerCacheAction)
 @interface FWPlayerCacheAction : NSObject
 
 - (instancetype)initWithActionType:(FWPlayerCacheAtionType)actionType range:(NSRange)range;
@@ -170,6 +181,7 @@ typedef NS_ENUM(NSUInteger, FWPlayerCacheAtionType) {
 
 #pragma mark - FWPlayerCacheConfiguration
 
+NS_SWIFT_NAME(PlayerCacheConfiguration)
 @interface FWPlayerCacheConfiguration : NSObject <NSCopying>
 
 + (NSString *)configurationFilePathForFilePath:(NSString *)filePath;
@@ -205,12 +217,13 @@ typedef NS_ENUM(NSUInteger, FWPlayerCacheAtionType) {
 
 #pragma mark - FWPlayerCacheManager
 
-extern NSString *FWPlayerCacheManagerDidUpdateCacheNotification;
-extern NSString *FWPlayerCacheManagerDidFinishCacheNotification;
+extern NSNotificationName FWPlayerCacheManagerDidUpdateCacheNotification NS_SWIFT_NAME(PlayerCacheManagerDidUpdate);
+extern NSNotificationName FWPlayerCacheManagerDidFinishCacheNotification NS_SWIFT_NAME(PlayerCacheManagerDidFinish);
 
-extern NSString *FWPlayerCacheConfigurationKey;
-extern NSString *FWPlayerCacheFinishedErrorKey;
+extern NSString *FWPlayerCacheConfigurationKey NS_SWIFT_NAME(PlayerCacheConfigurationKey);
+extern NSString *FWPlayerCacheFinishedErrorKey NS_SWIFT_NAME(PlayerCacheFinishedErrorKey);
 
+NS_SWIFT_NAME(PlayerCacheManager)
 @interface FWPlayerCacheManager : NSObject
 
 + (void)setCacheDirectory:(NSString *)cacheDirectory;
@@ -255,6 +268,7 @@ extern NSString *FWPlayerCacheFinishedErrorKey;
 
 #pragma mark - FWPlayerCacheSessionManager
 
+NS_SWIFT_NAME(PlayerCacheSessionManager)
 @interface FWPlayerCacheSessionManager : NSObject
 
 @property (nonatomic, strong, readonly) NSOperationQueue *downloadQueue;
@@ -265,6 +279,7 @@ extern NSString *FWPlayerCacheFinishedErrorKey;
 
 #pragma mark - FWPlayerCacheWorker
 
+NS_SWIFT_NAME(PlayerCacheWorker)
 @interface FWPlayerCacheWorker : NSObject
 
 - (instancetype)initWithURL:(NSURL *)url;

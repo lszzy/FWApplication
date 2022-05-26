@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * @see https://github.com/AFNetworking/AFOAuth2Manager
  */
+NS_SWIFT_NAME(OAuth2Manager)
 @interface FWOAuth2Manager : FWHTTPSessionManager
 
 ///------------------------------------------
@@ -186,12 +187,12 @@ NS_ASSUME_NONNULL_BEGIN
  `kFWOAuthPasswordCredentialsGrantType`: "password"
  `kFWOAuthRefreshGrantType`: "refresh_token"
  */
-extern NSString * const FWOAuth2ErrorDomain;
+extern NSString * const FWOAuth2ErrorDomain NS_SWIFT_NAME(OAuth2ErrorDomain);
 
-extern NSString * const kFWOAuthCodeGrantType;
-extern NSString * const kFWOAuthClientCredentialsGrantType;
-extern NSString * const kFWOAuthPasswordCredentialsGrantType;
-extern NSString * const kFWOAuthRefreshGrantType;
+extern NSString * const kFWOAuthCodeGrantType NS_SWIFT_NAME(kOAuthCodeGrantType);
+extern NSString * const kFWOAuthClientCredentialsGrantType NS_SWIFT_NAME(kOAuthClientCredentialsGrantType);
+extern NSString * const kFWOAuthPasswordCredentialsGrantType NS_SWIFT_NAME(kOAuthPasswordCredentialsGrantType);
+extern NSString * const kFWOAuthRefreshGrantType NS_SWIFT_NAME(kOAuthRefreshGrantType);
 
 #pragma mark - FWOAuthCredential
 
@@ -200,6 +201,7 @@ extern NSString * const kFWOAuthRefreshGrantType;
 
  OAuth credentials can be stored in the user's keychain, and retrieved on subsequent launches.
  */
+NS_SWIFT_NAME(OAuthCredential)
 @interface FWOAuthCredential : NSObject <NSCoding>
 
 ///--------------------------------------

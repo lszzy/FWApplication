@@ -93,7 +93,7 @@ static sqlite3 * _fw_database;
 
 @end
 
-@interface FWDatabase ()
+@interface FWDatabaseManager ()
 
 @property (nonatomic, strong) dispatch_semaphore_t dsema;
 @property (nonatomic, assign) BOOL check_update;
@@ -101,9 +101,9 @@ static sqlite3 * _fw_database;
 
 @end
 
-@implementation FWDatabase
+@implementation FWDatabaseManager
 
-- (FWDatabase *)init {
+- (FWDatabaseManager *)init {
     self = [super init];
     if (self) {
         _dsema = dispatch_semaphore_create(1);
@@ -113,11 +113,11 @@ static sqlite3 * _fw_database;
     return self;
 }
 
-+ (FWDatabase *)shareInstance {
-    static FWDatabase * instance = nil;
++ (FWDatabaseManager *)shareInstance {
+    static FWDatabaseManager * instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [FWDatabase new];
+        instance = [FWDatabaseManager new];
     });
     return instance;
 }

@@ -83,7 +83,7 @@ import UIKit.UIGestureRecognizerSubclass
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fw.navigationBarHidden = true
+        __fw.navigationBarHidden = true
         
         layout()
         popupView.addGestureRecognizer(panRecognizer)

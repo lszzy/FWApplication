@@ -11,7 +11,7 @@ import FWApplication
 extension UITabBarController: UITabBarControllerDelegate {
     // MARK: - Static
     static func setupController() -> UIViewController {
-        let tabBarController = AppConfig.isRootCustom ? FWTabBarController() : UITabBarController()
+        let tabBarController = AppConfig.isRootCustom ? TabBarController() : UITabBarController()
         tabBarController.setupController()
         if !AppConfig.isRootNavigation { return tabBarController }
         
@@ -22,11 +22,11 @@ extension UITabBarController: UITabBarControllerDelegate {
     
     static func refreshController() {
         if #available(iOS 13.0, *) {
-            if let sceneDelegate = UIWindow.fw.mainScene?.delegate as? FWSceneDelegate {
+            if let sceneDelegate = UIWindow.fw.mainScene?.delegate as? SceneResponder {
                 sceneDelegate.setupController()
             }
         } else {
-            if let appDelegate = UIApplication.shared.delegate as? FWAppDelegate {
+            if let appDelegate = UIApplication.shared.delegate as? AppResponder {
                 appDelegate.setupController()
             }
         }
@@ -38,42 +38,42 @@ extension UITabBarController: UITabBarControllerDelegate {
         tabBar.fw.isTranslucent = Theme.isBarTranslucent
         tabBar.fw.shadowColor = nil
         tabBar.fw.foregroundColor = Theme.textColor
-        tabBar.fw.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(withAlpha: 0.5) : Theme.barColor
+        tabBar.fw.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(alpha: 0.5) : Theme.barColor
         
         let homeController = HomeViewController()
         homeController.hidesBottomBarWhenPushed = false
         let homeNav = UINavigationController(rootViewController: homeController)
-        homeNav.tabBarItem.image = FWIconImage("fa-home", 26)
-        homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
-        homeNav.tabBarItem.fw.show(FWBadgeView(badgeStyle: .small), badgeValue: "1")
+        homeNav.tabBarItem.image = FW.iconImage("fa-home", 26)
+        homeNav.tabBarItem.title = FW.localized("homeTitle")
+        homeNav.tabBarItem.fw.showBadgeView(BadgeView(badgeStyle: .small), badgeValue: "1")
         
         let testController = Mediator.testModule.testViewController()
         testController.hidesBottomBarWhenPushed = false
         let testNav = UINavigationController(rootViewController: testController)
-        testNav.tabBarItem.image = FWIcon.iconImage("fa-file-text", size: 26)
-        testNav.tabBarItem.title = FWLocalizedString("testTitle")
+        testNav.tabBarItem.image = Icon.iconImage("fa-file-text", size: 26)
+        testNav.tabBarItem.title = FW.localized("testTitle")
         
         let settingsControlelr = SettingsViewController()
         settingsControlelr.hidesBottomBarWhenPushed = false
         let settingsNav = UINavigationController(rootViewController: settingsControlelr)
         if AppConfig.isRootCustom {
-            let tabBarItem = FWTabBarItem()
+            let tabBarItem = TabBarItem()
             tabBarItem.contentView.highlightTextColor = Theme.textColor
             tabBarItem.contentView.highlightIconColor = Theme.textColor
             settingsNav.tabBarItem = tabBarItem
             settingsNav.tabBarItem.badgeValue = ""
         } else {
-            let badgeView = FWBadgeView(badgeStyle: .dot)
-            settingsNav.tabBarItem.fw.show(badgeView, badgeValue: nil)
+            let badgeView = BadgeView(badgeStyle: .dot)
+            settingsNav.tabBarItem.fw.showBadgeView(badgeView, badgeValue: nil)
         }
-        settingsNav.tabBarItem.image = FWIconNamed("fa-wrench", 26)?.image
-        settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
+        settingsNav.tabBarItem.image = FW.icon("fa-wrench", 26)?.image
+        settingsNav.tabBarItem.title = FW.localized("settingTitle")
         viewControllers = [homeNav, testNav, settingsNav]
         
-        fw.observeNotification(NSNotification.Name.FWLanguageChanged) { (notification) in
-            homeNav.tabBarItem.title = FWLocalizedString("homeTitle")
-            testNav.tabBarItem.title = FWLocalizedString("testTitle")
-            settingsNav.tabBarItem.title = FWLocalizedString("settingTitle")
+        fw.observeNotification(NSNotification.Name.LanguageChanged) { (notification) in
+            homeNav.tabBarItem.title = FW.localized("homeTitle")
+            testNav.tabBarItem.title = FW.localized("testTitle")
+            settingsNav.tabBarItem.title = FW.localized("settingTitle")
         }
     }
     
@@ -100,7 +100,7 @@ extension UITabBarController: UITabBarControllerDelegate {
         animation.calculationMode = .cubic
         
         var animationView = viewController.tabBarItem.fw.imageView
-        if let tabBarItem = viewController.tabBarItem as? FWTabBarItem {
+        if let tabBarItem = viewController.tabBarItem as? TabBarItem {
             animationView = tabBarItem.contentView.imageView
         }
         animationView?.layer.add(animation, forKey: nil)

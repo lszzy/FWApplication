@@ -8,6 +8,6 @@
 
 import FWApplication
 
-@objc public protocol TestModuleService: FWModuleProtocol {
+@objc public protocol TestModuleService: ModuleProtocol {
     func testViewController() -> UIViewController
 }

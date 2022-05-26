@@ -7,7 +7,7 @@
 
 import FWApplication
 
-@objcMembers public class CoreBundle: FWModuleBundle {
+@objcMembers public class CoreBundle: ModuleBundle {
     private static let sharedBundle: Bundle = {
         return Bundle.fw.bundle(with: CoreBundle.classForCoder(), name: "Core")?.fw.localizedBundle() ?? .main
     }()
@@ -17,7 +17,7 @@ import FWApplication
     }
 }
 
-@objc protocol CoreService: FWModuleProtocol {}
+@objc protocol CoreService: ModuleProtocol {}
 
 class CoreModule: NSObject, CoreService {
     private static let sharedModule = CoreModule()
@@ -27,7 +27,7 @@ class CoreModule: NSObject, CoreService {
     }
     
     static func priority() -> UInt {
-        return FWModulePriorityDefault + 1
+        return ModulePriority.default.rawValue + 1
     }
     
     static func setupSynchronously() -> Bool {
@@ -37,16 +37,16 @@ class CoreModule: NSObject, CoreService {
     func setup() {
         Theme.setupTheme()
         
-        FWIcon.registerClass(Octicons.self)
-        FWIcon.registerClass(FontAwesome.self)
-        FWIcon.registerClass(FoundationIcons.self)
-        FWIcon.registerClass(IonIcons.self)
-        FWIcon.registerClass(MaterialIcons.self)
+        Icon.registerClass(Octicons.self)
+        Icon.registerClass(FontAwesome.self)
+        Icon.registerClass(FoundationIcons.self)
+        Icon.registerClass(IonIcons.self)
+        Icon.registerClass(MaterialIcons.self)
     }
 }
 
-@objc extension FWAutoloader {
+@objc extension Autoloader {
     func loadCoreModule() {
-        FWMediator.registerService(CoreService.self, withModule: CoreModule.self)
+        Mediator.registerService(CoreService.self, withModule: CoreModule.self)
     }
 }

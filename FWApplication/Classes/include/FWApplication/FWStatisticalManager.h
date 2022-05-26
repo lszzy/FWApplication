@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWStatisticalManager.h
+../../FWApplication/Toolkit/Component/FWStatisticalManager.h

@@ -11,6 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_NAME(RequestAccessory)
 @interface FWRequestAccessory : NSObject <FWRequestAccessory>
 
 @property (nonatomic, copy, nullable) void (^willStartBlock)(id);

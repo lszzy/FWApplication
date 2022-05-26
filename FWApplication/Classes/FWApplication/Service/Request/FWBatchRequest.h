@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///  to receive network-related messages. All the delegate methods will be called
 ///  on the main queue. Note the delegate methods will be called when all the requests
 ///  of batch request finishes.
+NS_SWIFT_NAME(BatchRequestDelegate)
 @protocol FWBatchRequestDelegate <NSObject>
 
 @optional
@@ -50,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  FWBatchRequest can be used to batch several FWRequest. Note that when used inside FWBatchRequest, a single
 ///  FWRequest will have its own callback and delegate cleared, in favor of the batch request callback.
+NS_SWIFT_NAME(BatchRequest)
 @interface FWBatchRequest : NSObject
 
 ///  All the requests are stored in this array.

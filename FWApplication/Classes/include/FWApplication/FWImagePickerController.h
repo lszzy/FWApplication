@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Picker/FWImagePickerController.h
+../../FWApplication/Plugin/Picker/FWImagePickerController.h

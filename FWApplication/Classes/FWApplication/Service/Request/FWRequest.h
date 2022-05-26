@@ -25,9 +25,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSString *const FWRequestCacheErrorDomain;
+FOUNDATION_EXPORT NSString *const FWRequestCacheErrorDomain NS_SWIFT_NAME(RequestCacheErrorDomain);
 
-NS_ENUM(NSInteger) {
+typedef NS_ENUM(NSInteger, FWRequestCacheErrorCode) {
     FWRequestCacheErrorExpired = -1,
     FWRequestCacheErrorVersionMismatch = -2,
     FWRequestCacheErrorSensitiveDataMismatch = -3,
@@ -35,13 +35,14 @@ NS_ENUM(NSInteger) {
     FWRequestCacheErrorInvalidCacheTime = -5,
     FWRequestCacheErrorInvalidMetadata = -6,
     FWRequestCacheErrorInvalidCacheData = -7,
-};
+} NS_SWIFT_NAME(RequestCacheErrorCode);
 
 ///  FWRequest is the base class you should inherit to create your own request class.
 ///  Based on FWBaseRequest, FWRequest adds local caching feature. Note download
 ///  request will not be cached whatsoever, because download request may involve complicated
 ///  cache control policy controlled by `Cache-Control`, `Last-Modified`, etc.
 ///  https://github.com/yuantiku/YTKNetwork
+NS_SWIFT_NAME(Request)
 @interface FWRequest : FWBaseRequest
 
 ///  Whether to use cache as response or not.

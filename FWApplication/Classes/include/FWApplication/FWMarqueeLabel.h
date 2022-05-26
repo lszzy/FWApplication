@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWMarqueeLabel.h
+../../FWApplication/Toolkit/Component/FWMarqueeLabel.h

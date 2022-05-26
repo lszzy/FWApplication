@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWSegmentedControl.h
+../../FWApplication/Toolkit/Component/FWSegmentedControl.h

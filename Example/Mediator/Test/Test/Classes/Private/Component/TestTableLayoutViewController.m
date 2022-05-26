@@ -303,9 +303,9 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fw.showRefreshing = self.tableData.count < 20 ? YES : NO;
+        self.tableView.fw.shouldRefreshing = self.tableData.count < 20 ? YES : NO;
         [self.tableView.fw endRefreshing];
-        if (!self.tableView.fw.showRefreshing) {
+        if (!self.tableView.fw.shouldRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -322,7 +322,7 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fw.showLoading = self.tableData.count < 20 ? YES : NO;
+        self.tableView.fw.shouldLoading = self.tableData.count < 20 ? YES : NO;
         [self.tableView.fw endLoading];
     });
 }

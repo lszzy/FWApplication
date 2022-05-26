@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class FWSecurityPolicy;
 
 ///  FWUrlFilterProtocol can be used to append common parameters to requests before sending them.
+NS_SWIFT_NAME(UrlFilterProtocol)
 @protocol FWUrlFilterProtocol <NSObject>
 
 @optional
@@ -58,6 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 ///  FWCacheDirPathFilterProtocol can be used to append common path components when caching response results
+NS_SWIFT_NAME(CacheDirPathFilterProtocol)
 @protocol FWCacheDirPathFilterProtocol <NSObject>
 
 @optional
@@ -73,6 +75,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  FWNetworkConfig stored global network-related configurations, which will be used in `FWNetworkAgent`
 ///  to form and filter requests, as well as caching response.
+NS_SWIFT_NAME(NetworkConfig)
 @interface FWNetworkConfig : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;

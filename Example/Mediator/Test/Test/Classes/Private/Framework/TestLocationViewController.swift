@@ -10,36 +10,36 @@ import FWApplication
 
 @objcMembers class TestLocationViewController: TestViewController {
     lazy var startButton: UIButton = {
-        let view = UIButton.fw.button(withTitle: "Start", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(title: "Start", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 20, y: 50, width: 60, height: 50)
         view.fw.addTouch { (sender) in
-            FWLocationManager.sharedInstance.startUpdateLocation()
+            LocationManager.sharedInstance.startUpdateLocation()
         }
         return view
     }()
     
     lazy var stopButton: UIButton = {
-        let view = UIButton.fw.button(withTitle: "Stop", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(title: "Stop", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 100, y: 50, width: 60, height: 50)
         view.fw.addTouch { (sender) in
-            FWLocationManager.sharedInstance.stopUpdateLocation()
+            LocationManager.sharedInstance.stopUpdateLocation()
         }
         return view
     }()
     
     lazy var configButton: UIButton = {
-        let view = UIButton.fw.button(withTitle: "Once", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
+        let view = UIButton.fw.button(title: "Once", font: UIFont.fw.font(ofSize: 15), titleColor: Theme.textColor)
         view.frame = CGRect(x: 180, y: 50, width: 60, height: 50)
         view.fw.addTouch { (sender) in
-            FWLocationManager.sharedInstance.stopWhenCompleted = !FWLocationManager.sharedInstance.stopWhenCompleted
+            LocationManager.sharedInstance.stopWhenCompleted = !LocationManager.sharedInstance.stopWhenCompleted
         }
         return view
     }()
     
     lazy var resultLabel: UILabel = {
-        let view = UILabel.fw.label(with: UIFont.fw.font(ofSize: 15), textColor: Theme.textColor)
+        let view = UILabel.fw.label(font: UIFont.fw.font(ofSize: 15), textColor: Theme.textColor)
         view.numberOfLines = 0
-        view.frame = CGRect(x: 20, y: 100, width: FWScreenWidth - 40, height: 450)
+        view.frame = CGRect(x: 20, y: 100, width: FW.screenWidth - 40, height: 450)
         return view
     }()
     
@@ -51,17 +51,17 @@ import FWApplication
     }
     
     override func renderModel() {
-        FWLocationManager.sharedInstance.locationChanged = { [weak self] (manager) in
+        LocationManager.sharedInstance.locationChanged = { [weak self] (manager) in
             if manager.error != nil {
                 self?.resultLabel.text = manager.error?.localizedDescription
             } else {
-                self?.resultLabel.text = FWLocationManager.locationString(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
+                self?.resultLabel.text = LocationManager.locationString(manager.location?.coordinate ?? CLLocationCoordinate2DMake(0, 0));
             }
         }
     }
     
     override func renderData() {
-        let json: FWJSON = FWJSON([
+        let json: JSON = JSON([
             "array": [12.34, 56.78],
             "users": [
                 [
@@ -89,39 +89,39 @@ import FWApplication
         print(arrayOfString)
 
         let _ = json["users"][0]["info"]["name"].stringValue
-        let _ = ["users", 1, "info", "name"] as [FWJSONSubscriptType]
+        let _ = ["users", 1, "info", "name"] as [JSONSubscriptType]
         let _ = json["users", 1, "info", "name"].string
 
-        let keys: [FWJSONSubscriptType] = ["users", 1, "info", "name"]
+        let keys: [JSONSubscriptType] = ["users", 1, "info", "name"]
         let _ = json[keys].string
 
         let _ = json["users"][1]["info"]["name"].string
         let _ = json["users", 1, "info", "name"].string
         
-        for (key, subJson):(String, FWJSON) in json {
+        for (key, subJson):(String, JSON) in json {
             print(key)
             print(subJson)
         }
 
-        for (index, subJson):(String, FWJSON) in json["array"] {
+        for (index, subJson):(String, JSON) in json["array"] {
             print("\(index): \(subJson)")
         }
         
-        let errorJson = FWJSON(["name", "age"])
+        let errorJson = JSON(["name", "age"])
         if let name = errorJson[999].string {
             print(name)
         } else {
             print(errorJson[999].error!)
         }
 
-        let errorJson2 = FWJSON(["name": "Jack", "age": 25])
+        let errorJson2 = JSON(["name": "Jack", "age": 25])
         if let name = errorJson2["address"].string {
             print(name)
         } else {
             print(errorJson2["address"].error!)
         }
 
-        let errorJson3 = FWJSON(12345)
+        let errorJson3 = JSON(12345)
         if let age = errorJson3[0].string {
             print(age)
         } else {

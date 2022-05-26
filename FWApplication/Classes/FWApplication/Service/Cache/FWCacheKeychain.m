@@ -8,7 +8,7 @@
 
 #import "FWCacheKeychain.h"
 @import FWFramework;
-#if FWApplicationSPM
+#if FWMacroSPM
 @import FWFrameworkCompatible;
 #endif
 

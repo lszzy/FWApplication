@@ -32,13 +32,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT void FWRequestLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,2);
+FOUNDATION_EXPORT void FWRequestLog(NSString *format, ...) NS_FORMAT_FUNCTION(1,2) NS_REFINED_FOR_SWIFT;
 
 @class FWHTTPSessionManager;
 @class FWHTTPResponseSerializer;
 @class FWJSONResponseSerializer;
 @class FWXMLParserResponseSerializer;
 
+NS_SWIFT_NAME(NetworkUtils)
 @interface FWNetworkUtils : NSObject
 
 + (BOOL)validateJSON:(id)json withValidator:(id)jsonValidator;

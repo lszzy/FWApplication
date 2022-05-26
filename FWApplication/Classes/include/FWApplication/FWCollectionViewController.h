@@ -1,1 +1,1 @@
-../../FWApplication/Controller/FWCollectionViewController.h
+../../FWApplication/Module/Controller/FWCollectionViewController.h

@@ -1,1 +1,1 @@
-../../FWApplication/View/Extension/UIImage+FWApplication.h
+../../FWApplication/Toolkit/UIKit/UIImage+FWApplication.h

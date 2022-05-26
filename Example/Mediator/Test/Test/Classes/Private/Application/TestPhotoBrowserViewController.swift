@@ -8,33 +8,33 @@
 
 import FWApplication
 
-@objcMembers class TestPhotoBrowserViewController: TestViewController, FWTableViewController {
+@objcMembers class TestPhotoBrowserViewController: TestViewController, TableViewControllerProtocol {
     private var results: [Any] = []
     private var allowsEditing: Bool = false
     private var isFullscreen: Bool = false
     
     override func renderModel() {
-        fw.setRightBarItem(FWIcon.refreshImage) { [weak self] sender in
+        __fw.setRightBarItem(Icon.refreshImage) { [weak self] sender in
             let allowsEditing = self?.allowsEditing ?? false
             let isFullscreen = self?.isFullscreen ?? false
-            self?.fw.showSheet(withTitle: nil, message: nil, cancel: nil, actions: ["浏览已选图片", allowsEditing ? "切换不可编辑" : "切换可编辑", FWImagePickerPluginImpl.sharedInstance.cropControllerEnabled ? "切换系统裁剪" : "切换自定义裁剪", isFullscreen ? "默认弹出样式" : "全屏弹出样式", FWImagePickerPluginImpl.sharedInstance.photoPickerDisabled ? "启用PHPicker" : "禁用PHPicker"], actionBlock: { index in
+            self?.__fw.showSheet(withTitle: nil, message: nil, cancel: nil, actions: ["浏览已选图片", allowsEditing ? "切换不可编辑" : "切换可编辑", ImagePickerPluginImpl.sharedInstance.cropControllerEnabled ? "切换系统裁剪" : "切换自定义裁剪", isFullscreen ? "默认弹出样式" : "全屏弹出样式", ImagePickerPluginImpl.sharedInstance.photoPickerDisabled ? "启用PHPicker" : "禁用PHPicker"], actionBlock: { index in
                 if index == 0 {
                     self?.showData(self?.results ?? [])
                 } else if index == 1 {
                     self?.allowsEditing = !allowsEditing
                 } else if index == 2 {
-                    FWImagePickerPluginImpl.sharedInstance.cropControllerEnabled = !FWImagePickerPluginImpl.sharedInstance.cropControllerEnabled;
+                    ImagePickerPluginImpl.sharedInstance.cropControllerEnabled = !ImagePickerPluginImpl.sharedInstance.cropControllerEnabled;
                 } else if index == 3 {
                     self?.isFullscreen = !isFullscreen
                     if self?.isFullscreen ?? false {
-                        FWImagePickerPluginImpl.sharedInstance.customBlock = { viewController in
+                        ImagePickerPluginImpl.sharedInstance.customBlock = { viewController in
                             viewController.modalPresentationStyle = .fullScreen
                         }
                     } else {
-                        FWImagePickerPluginImpl.sharedInstance.customBlock = nil
+                        ImagePickerPluginImpl.sharedInstance.customBlock = nil
                     }
                 } else {
-                    FWImagePickerPluginImpl.sharedInstance.photoPickerDisabled = !FWImagePickerPluginImpl.sharedInstance.photoPickerDisabled;
+                    ImagePickerPluginImpl.sharedInstance.photoPickerDisabled = !ImagePickerPluginImpl.sharedInstance.photoPickerDisabled;
                 }
             })
         }
@@ -56,11 +56,11 @@ import FWApplication
     private func showData(_ results: [Any]) {
         self.results = results
         if results.count < 1 {
-            fw.showMessage(withText: "请选择照片")
+            __fw.showMessage(withText: "请选择照片")
             return
         }
         
-        fw.showImagePreview(withImageURLs: results, imageInfos: nil, currentIndex: 0, sourceView: nil)
+        __fw.showImagePreview(withImageURLs: results, imageInfos: nil, currentIndex: 0, sourceView: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,7 +68,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView)
+        let cell = UITableViewCell.fw.cell(tableView: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -79,42 +79,42 @@ import FWApplication
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
-            fw.showImagePicker(with: .image, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            __fw.showImagePicker(with: .image, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 1:
-            fw.showImagePicker(with: .livePhoto, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            __fw.showImagePicker(with: .livePhoto, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 2:
-            fw.showImagePicker(with: .video, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            __fw.showImagePicker(with: .video, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 3:
-            fw.showImagePicker(with: [], selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            __fw.showImagePicker(with: [], selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 4:
-            fw.showImageCamera(with: .image, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            __fw.showImageCamera(with: .image, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break
         case 5:
-            fw.showImageCamera(with: .livePhoto, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            __fw.showImageCamera(with: .livePhoto, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break
         case 6:
-            fw.showImageCamera(with: .video, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            __fw.showImageCamera(with: .video, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break
         case 7:
-            fw.showImageCamera(with: [], allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            __fw.showImageCamera(with: [], allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break

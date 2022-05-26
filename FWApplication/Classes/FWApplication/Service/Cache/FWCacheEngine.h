@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  缓存调用协议
  */
+NS_SWIFT_NAME(CacheProtocol)
 @protocol FWCacheProtocol <NSObject>
 @required
 
@@ -38,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWCacheEngineProtocol
 
 /// 缓存引擎内部协议
+NS_SWIFT_NAME(CacheEngineProtocol)
 @protocol FWCacheEngineProtocol <NSObject>
 @required
 
@@ -60,6 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  缓存引擎基类，自动管理缓存有效期，线程安全
  */
+NS_SWIFT_NAME(CacheEngine)
 @interface FWCacheEngine : NSObject <FWCacheProtocol>
 
 @end

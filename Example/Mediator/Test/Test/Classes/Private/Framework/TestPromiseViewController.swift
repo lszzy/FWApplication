@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objcMembers class TestPromiseViewController: TestViewController, FWTableViewController {
+@objcMembers class TestPromiseViewController: TestViewController, TableViewControllerProtocol {
     func renderTableStyle() -> UITableView.Style {
         .grouped
     }
@@ -18,7 +18,7 @@ import UIKit
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView)
+        let cell = UITableViewCell.fw.cell(tableView: tableView)
         let rowData = tableData.object(at: indexPath.row) as! [String]
         cell.textLabel?.text = rowData[0]
         return cell
@@ -54,28 +54,28 @@ extension TestPromiseViewController {
         ])
     }
     
-    private static func successPromise(_ value: Int = 0) -> FWPromise {
-        return FWPromise { resolve, reject in
-            FWPromise.delay(1).done { _ in
+    private static func successPromise(_ value: Int = 0) -> Promise {
+        return Promise { resolve, reject in
+            Promise.delay(1).done { _ in
                 resolve(value + 1)
             }
         }
     }
     
-    private static func failurePromise() -> FWPromise {
-        return FWPromise { completion in
-            FWPromise.delay(1).done { _ in
+    private static func failurePromise() -> Promise {
+        return Promise { completion in
+            Promise.delay(1).done { _ in
                 completion(NSError(domain: "Test", code: 0, userInfo: [NSLocalizedDescriptionKey: "Test failed"]))
             }
         }
     }
     
-    private static func randomPromise(_ value: Int = 0) -> FWPromise {
+    private static func randomPromise(_ value: Int = 0) -> Promise {
         return [0, 1].randomElement() == 1 ? successPromise(value) : failurePromise()
     }
     
-    private static func progressPromise() -> FWPromise {
-        return FWPromise { resolve, reject, progress in
+    private static func progressPromise() -> Promise {
+        return Promise { resolve, reject, progress in
             DispatchQueue.global().async {
                 var value: Double = 0
                 while (value < 1) {
@@ -85,7 +85,7 @@ extension TestPromiseViewController {
                         if (finish) {
                             progress(1)
                             if [0, 1, 2].randomElement() == 0 {
-                                reject(FWPromise.defaultError)
+                                reject(Promise.defaultError)
                             } else {
                                 resolve(UIImage())
                             }
@@ -100,15 +100,15 @@ extension TestPromiseViewController {
     }
     
     private static func showMessage(_ text: String) {
-        UIWindow.fw.showMessage(withText: text)
+        UIWindow.__fw.showMessage(withText: text)
     }
     
     private static var isLoading: Bool = false {
         didSet {
             if isLoading {
-                UIWindow.fw.showLoading()
+                UIWindow.__fw.showLoading()
             } else {
-                UIWindow.fw.hideLoading()
+                UIWindow.__fw.hideLoading()
             }
         }
     }
@@ -158,7 +158,7 @@ extension TestPromiseViewController {
     @objc func onDone() {
         Self.isLoading = true
         var value = 0
-        FWPromise { completion in
+        Promise { completion in
             for i in 0 ..< 10000 {
                 Self.successPromise(i).done { _ in
                     value += 1
@@ -188,9 +188,9 @@ extension TestPromiseViewController {
     
     @objc func onAwait() {
         Self.isLoading = true
-        fw_async {
-            var value = try fw_await(Self.successPromise())
-            value = try fw_await(Self.successPromise(value.safeInt))
+        FW.async {
+            var value = try FW.await(Self.successPromise())
+            value = try FW.await(Self.successPromise(value.safeInt))
             return value
         }.done { value in
             Self.isLoading = false
@@ -200,12 +200,12 @@ extension TestPromiseViewController {
     
     @objc func onAll() {
         Self.isLoading = true
-        var promises: [FWPromise] = []
+        var promises: [Promise] = []
         for i in 0 ..< 10000 {
             promises.append(i < 9999 ? Self.successPromise() : Self.randomPromise())
         }
-        fw_async {
-            return try fw_await(FWPromise.all(promises).then { values in
+        FW.async {
+            return try FW.await(Promise.all(promises).then { values in
                 return values.safeArray.count
             })
         }.done { result in
@@ -216,12 +216,12 @@ extension TestPromiseViewController {
     
     @objc func onAny() {
         Self.isLoading = true
-        var promises: [FWPromise] = []
+        var promises: [Promise] = []
         for i in 0 ..< 10000 {
             promises.append(i < 5000 ? Self.failurePromise() : Self.randomPromise(i))
         }
-        fw_async {
-            return try fw_await(FWPromise.any(promises))
+        FW.async {
+            return try FW.await(Promise.any(promises))
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -230,12 +230,12 @@ extension TestPromiseViewController {
     
     @objc func onRace() {
         Self.isLoading = true
-        var promises: [FWPromise] = []
+        var promises: [Promise] = []
         for i in 0 ..< 10000 {
             promises.append(Self.randomPromise(i))
         }
-        fw_async {
-            return try fw_await(FWPromise.race(promises.shuffled()))
+        FW.async {
+            return try FW.await(Promise.race(promises.shuffled()))
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -246,7 +246,7 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.randomPromise().then({ value in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "delay")
+                UIWindow.__fw.showLoading(withText: "delay")
             }
             return value
         }).delay(1).done { result in
@@ -278,19 +278,19 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.failurePromise().recover { error in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "\(error)")
+                UIWindow.__fw.showLoading(withText: "\(error)")
             }
             return 1
         }.delay(1).then({ value in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "\(value.safeInt)")
+                UIWindow.__fw.showLoading(withText: "\(value.safeInt)")
             }
             return Self.successPromise(value.safeInt)
         }).validate { value in
             return false
         }.recover { error in
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "\(error)")
+                UIWindow.__fw.showLoading(withText: "\(error)")
             }
             return Self.successPromise()
         }.done { result in
@@ -302,7 +302,7 @@ extension TestPromiseViewController {
     @objc func onReduce() {
         Self.isLoading = true
         Self.randomPromise().reduce([2, 3, 4, 5]) { value, item in
-            return "\(value.safeString),\(FWSafeString(item))"
+            return "\(value.safeString),\(FW.safeString(item))"
         }.done { result in
             Self.isLoading = false
             Self.showMessage("result: \(result.safeString)")
@@ -311,12 +311,12 @@ extension TestPromiseViewController {
     
     @objc func onRetry() {
         Self.isLoading = true
-        let startTime = NSDate.fw.currentTime
+        let startTime = Date.fw.currentTime
         var count = 0
         Self.failurePromise().recover({ $0 }).retry(4, delay: 0) {
             count += 1
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "retry: \(count)")
+                UIWindow.__fw.showLoading(withText: "retry: \(count)")
             }
             if count < 4 {
                 return Self.failurePromise()
@@ -325,20 +325,20 @@ extension TestPromiseViewController {
             }
         }.done { result in
             Self.isLoading = false
-            let endTime = NSDate.fw.currentTime
+            let endTime = Date.fw.currentTime
             Self.showMessage("result: \(result.safeString) => " + String(format: "%.1fs", endTime - startTime))
         }
     }
     
     @objc func onRetry2() {
         Self.isLoading = true
-        let startTime = NSDate.fw.currentTime
+        let startTime = Date.fw.currentTime
         var count = 0
-        FWPromise.retry(4, delay: 0) {
+        Promise.retry(4, delay: 0) {
             count += 1
             if count == 1 { return Self.failurePromise() }
             DispatchQueue.main.async {
-                UIWindow.fw.showLoading(withText: "retry: \(count - 1)")
+                UIWindow.__fw.showLoading(withText: "retry: \(count - 1)")
             }
             if count < 5 {
                 return Self.failurePromise()
@@ -347,13 +347,13 @@ extension TestPromiseViewController {
             }
         }.done { result in
             Self.isLoading = false
-            let endTime = NSDate.fw.currentTime
+            let endTime = Date.fw.currentTime
             Self.showMessage("result: \(result.safeString) => " + String(format: "%.1fs", endTime - startTime))
         }
     }
     
     @objc func onProgress() {
-        var promise: FWPromise?
+        var promise: Promise?
         let index = [1, 2, 3].randomElement()!
         if index == 1 {
             promise = Self.progressPromise().then({ value in
@@ -368,11 +368,11 @@ extension TestPromiseViewController {
                 return Self.progressPromise()
             })
         }
-        UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.validate({ value in
             return false
         }).recover({ error in
-            return FWPromise(value: "\(index)下载成功")
+            return Promise(value: "\(index)下载成功")
         }).reduce([1, 2], reducer: { value, item in
             return value
         }).delay(1).timeout(30).retry(1, delay: 0, block: {
@@ -382,34 +382,34 @@ extension TestPromiseViewController {
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
         }, finally: {
-            UIWindow.fw.hideProgress()
+            UIWindow.__fw.hideProgress()
         })
     }
     
     @objc func onProgress2() {
         let promises = [Self.progressPromise(),
-                        FWPromise.delay(0.5).then({ _ in Self.progressPromise() }),
-                        FWPromise.delay(1.0).then({ _ in Self.progressPromise() })]
-        var promise: FWPromise?
+                        Promise.delay(0.5).then({ _ in Self.progressPromise() }),
+                        Promise.delay(1.0).then({ _ in Self.progressPromise() })]
+        var promise: Promise?
         let index = [1, 2, 3].randomElement()!
         if index == 1 {
-            promise = FWPromise.all(promises)
+            promise = Promise.all(promises)
         } else if index == 2 {
-            promise = FWPromise.any(promises)
+            promise = Promise.any(promises)
         } else {
-            promise = FWPromise.race(promises)
+            promise = Promise.race(promises)
         }
-        UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
         promise?.done({ value in
             Self.showMessage("\(value.safeString)")
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
         }, finally: {
-            UIWindow.fw.hideProgress()
+            UIWindow.__fw.hideProgress()
         })
     }
 }

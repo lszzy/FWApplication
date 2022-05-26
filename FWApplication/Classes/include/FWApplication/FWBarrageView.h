@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWBarrageView.h
+../../FWApplication/Toolkit/Component/FWBarrageView.h

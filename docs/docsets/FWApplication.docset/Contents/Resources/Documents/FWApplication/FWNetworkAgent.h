@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 ///  FWNetworkAgent is the underlying class that handles actual request generation,
 ///  serialization and response handling.
+NS_SWIFT_NAME(NetworkAgent)
 @interface FWNetworkAgent : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;

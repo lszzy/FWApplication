@@ -57,9 +57,9 @@
         FWStrongifySelf();
         NSLog(@"version status: %@", @([FWVersionManager sharedInstance].status));
         
-        if ([FWVersionManager sharedInstance].status == FWVersionStatusAudit) {
+        if ([FWVersionManager sharedInstance].status == FWVersionStatusAuditing) {
             [self.fw showAlertWithTitle:nil message:@"当前版本正在审核中" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
-        } else if ([FWVersionManager sharedInstance].status == FWVersionStatusUpdate) {
+        } else if ([FWVersionManager sharedInstance].status == FWVersionStatusUpdating) {
             BOOL isForce = NO;
             if (isForce) {
                 // 强制更新

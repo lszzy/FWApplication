@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Empty/FWEmptyPluginImpl.h
+../../FWApplication/Plugin/Empty/FWEmptyPluginImpl.h

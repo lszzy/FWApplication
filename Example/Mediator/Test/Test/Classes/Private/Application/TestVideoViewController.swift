@@ -8,9 +8,9 @@
 
 import FWApplication
 
-class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
-    static func videoPlayer() -> FWVideoPlayer {
-        let result = FWVideoPlayer()
+class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
+    static func videoPlayer() -> VideoPlayer {
+        let result = VideoPlayer()
         result.modalPresentationStyle = .fullScreen
         let playerView = TestPlayerView(frame: .zero)
         playerView.videoPlayer = result
@@ -18,23 +18,23 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         return result
     }
     
-    weak var videoPlayer: FWVideoPlayer? {
+    weak var videoPlayer: VideoPlayer? {
         didSet {
             videoPlayer?.playerDelegate = self
         }
     }
     
-    private lazy var closeButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: FWIcon.closeImage)
+    private lazy var closeButton: ToolbarButton = {
+        let result = ToolbarButton(image: Icon.closeImage)
         result.tintColor = Theme.textColor
         result.fw.addTouch { sender in
-            FWRouter.closeViewController(animated: true)
+            Router.closeViewController(animated: true)
         }
         return result
     }()
     
-    private lazy var playButton: FWToolbarButton = {
-        let result = FWToolbarButton(image: FWIconImage("octicon-playback-play", 24))
+    private lazy var playButton: ToolbarButton = {
+        let result = ToolbarButton(image: FW.iconImage("octicon-playback-play", 24))
         result.tintColor = Theme.textColor
         result.fw.addTouch { [weak self] sender in
             guard let player = self?.videoPlayer else { return }
@@ -56,28 +56,28 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         
         addSubview(closeButton)
         addSubview(playButton)
-        closeButton.fw.layoutChain.leftToSafeArea(8).topToSafeArea(8)
-        playButton.fw.layoutChain.rightToSafeArea(8).topToSafeArea(8)
+        closeButton.fw.layoutChain.left(toSafeArea: 8).top(toSafeArea: 8)
+        playButton.fw.layoutChain.right(toSafeArea: 8).top(toSafeArea: 8)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func playerPlaybackStateDidChange(_ player: FWVideoPlayer) {
+    func playerPlaybackStateDidChange(_ player: VideoPlayer) {
         if player.playbackState == .playing {
-            playButton.setImage(FWIconImage("octicon-playback-pause", 24), for: .normal)
+            playButton.setImage(FW.iconImage("octicon-playback-pause", 24), for: .normal)
         } else {
-            playButton.setImage(FWIconImage("octicon-playback-play", 24), for: .normal)
+            playButton.setImage(FW.iconImage("octicon-playback-play", 24), for: .normal)
         }
     }
 }
 
-@objcMembers class TestVideoViewController: TestViewController, FWVideoPlayerDelegate, FWVideoPlayerPlaybackDelegate {
-    fileprivate var player = FWVideoPlayer()
-    lazy var resourceLoader = FWPlayerCacheLoaderManager()
+@objcMembers class TestVideoViewController: TestViewController, VideoPlayerDelegate, VideoPlayerPlaybackDelegate {
+    fileprivate var player = VideoPlayer()
+    lazy var resourceLoader = PlayerCacheLoaderManager()
     
-    @FWUserDefaultAnnotation("TestVideoCacheEnabled", defaultValue: false)
+    @UserDefaultAnnotation("TestVideoCacheEnabled", defaultValue: false)
     private var cacheEnabled: Bool
     
     // MARK: object lifecycle
@@ -99,7 +99,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         
         self.addChild(self.player)
         self.view.addSubview(self.player.view)
-        self.player.view.fw.pinEdgesToSuperview()
+        self.player.view.fw.pinEdges()
         self.player.didMove(toParent: self)
         
         self.playVideo()
@@ -109,7 +109,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.player.view.addGestureRecognizer(tapGestureRecognizer)
         
-        fw.showLoading()
+        __fw.showLoading()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -122,7 +122,7 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
     }
     
     override func renderModel() {
-        fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
+        __fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
             guard let strongSelf = self else { return }
             strongSelf.cacheEnabled = !strongSelf.cacheEnabled
             strongSelf.playVideo()
@@ -158,19 +158,19 @@ class TestPlayerView: FWVideoPlayerView, FWVideoPlayerDelegate {
         }
     }
     
-    func playerReady(_ player: FWVideoPlayer) {
+    func playerReady(_ player: VideoPlayer) {
         print("\(#function) ready")
         
-        fw.hideLoading()
+        __fw.hideLoading()
     }
     
-    func playerPlaybackStateDidChange(_ player: FWVideoPlayer) {
+    func playerPlaybackStateDidChange(_ player: VideoPlayer) {
         print("\(#function) \(player.playbackState.rawValue)")
     }
     
-    func player(_ player: FWVideoPlayer, didFailWithError error: Error?) {
+    func player(_ player: VideoPlayer, didFailWithError error: Error?) {
         print("\(#function) error.description")
         
-        fw.hideLoading()
+        __fw.hideLoading()
     }
 }

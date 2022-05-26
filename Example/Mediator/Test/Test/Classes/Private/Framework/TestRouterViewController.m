@@ -193,7 +193,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.barTitle = self.context.URL;
+    self.fw.title = self.context.URL;
     
     UILabel *label = [[UILabel alloc] init];
     label.numberOfLines = 0;

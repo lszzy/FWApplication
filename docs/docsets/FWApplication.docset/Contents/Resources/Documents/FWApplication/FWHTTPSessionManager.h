@@ -67,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @see https://github.com/AFNetworking/AFNetworking
  */
+NS_SWIFT_NAME(HTTPSessionManager)
 @interface FWHTTPSessionManager : FWURLSessionManager <NSSecureCoding, NSCopying>
 
 /**

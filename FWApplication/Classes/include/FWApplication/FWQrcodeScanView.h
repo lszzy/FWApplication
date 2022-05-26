@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWQrcodeScanView.h
+../../FWApplication/Toolkit/Component/FWQrcodeScanView.h

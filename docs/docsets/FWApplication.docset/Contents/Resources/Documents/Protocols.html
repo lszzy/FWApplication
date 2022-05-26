@@ -17,7 +17,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 3.0.0 Docs</a> (59% documented)</p>
+        <p><a href="index.html">FWApplication 3.1.0 Docs</a> (62% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -99,9 +99,6 @@
                 <a href="Categories/NSObject%28FWClassWrapper%29.html">NSObject(FWClassWrapper)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Categories/NSObject%28FWModel%29.html">NSObject(FWModel)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Categories/NSObject%28FWObjectWrapper%29.html">NSObject(FWObjectWrapper)</a>
               </li>
               <li class="nav-group-task">
@@ -156,13 +153,13 @@
                 <a href="Categories/UIButton%28FWWrapper%29.html">UIButton(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Categories/UICollectionReusableView%28FWDynamicLayout%29.html">UICollectionReusableView(FWDynamicLayout)</a>
+                <a href="Categories/UICollectionReusableView%28FWWrapper%29.html">UICollectionReusableView(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Categories/UICollectionView%28FWWrapper%29.html">UICollectionView(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Categories/UICollectionViewCell%28FWDynamicLayout%29.html">UICollectionViewCell(FWDynamicLayout)</a>
+                <a href="Categories/UICollectionViewCell%28FWWrapper%29.html">UICollectionViewCell(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Categories/UICollectionViewFlowLayout%28FWWrapper%29.html">UICollectionViewFlowLayout(FWWrapper)</a>
@@ -178,9 +175,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Categories/UIFont%28FWWrapper%29.html">UIFont(FWWrapper)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Categories/UIGestureRecognizer%28FWBlock%29.html">UIGestureRecognizer(FWBlock)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Categories/UIGestureRecognizer%28FWWrapper%29.html">UIGestureRecognizer(FWWrapper)</a>
@@ -243,10 +237,10 @@
                 <a href="Categories/UITableView%28FWWrapper%29.html">UITableView(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Categories/UITableViewCell%28FWDynamicLayout%29.html">UITableViewCell(FWDynamicLayout)</a>
+                <a href="Categories/UITableViewCell%28FWWrapper%29.html">UITableViewCell(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
-                <a href="Categories/UITableViewHeaderFooterView%28FWDynamicLayout%29.html">UITableViewHeaderFooterView(FWDynamicLayout)</a>
+                <a href="Categories/UITableViewHeaderFooterView%28FWWrapper%29.html">UITableViewHeaderFooterView(FWWrapper)</a>
               </li>
               <li class="nav-group-task">
                 <a href="Categories/UITextField%28FWWrapper%29.html">UITextField(FWWrapper)</a>
@@ -280,6 +274,9 @@
           <li class="nav-group-name">
             <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/CollectionViewDelegate.html">CollectionViewDelegate</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Classes/FWABConditionalTest.html">FWABConditionalTest</a>
               </li>
@@ -380,7 +377,13 @@
                 <a href="Classes/FWAsyncLayerDisplayTask.html">FWAsyncLayerDisplayTask</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/FWAsyncSentinel.html">FWAsyncSentinel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/FWAsyncSocket.html">FWAsyncSocket</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FWAsyncTransaction.html">FWAsyncTransaction</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWAsyncUdpSocket.html">FWAsyncUdpSocket</a>
@@ -551,9 +554,6 @@
                 <a href="Classes.html#/c:objc(cs)FWCollectionViewClassWrapper">FWCollectionViewClassWrapper</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWCollectionViewDelegate.html">FWCollectionViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/FWCollectionViewFlowLayout.html">FWCollectionViewFlowLayout</a>
               </li>
               <li class="nav-group-task">
@@ -596,7 +596,7 @@
                 <a href="Classes/FWDataWrapper.html">FWDataWrapper</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWDatabase.html">FWDatabase</a>
+                <a href="Classes/FWDatabaseManager.html">FWDatabaseManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWDateClassWrapper.html">FWDateClassWrapper</a>
@@ -638,7 +638,7 @@
                 <a href="Classes/FWEmptyView.html">FWEmptyView</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWException.html">FWException</a>
+                <a href="Classes/FWExceptionManager.html">FWExceptionManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWFileManagerClassWrapper.html">FWFileManagerClassWrapper</a>
@@ -815,10 +815,10 @@
                 <a href="Classes/FWLocationManager.html">FWLocationManager</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWLogPluginImpl.html">FWLogPluginImpl</a>
+                <a href="Classes/FWLogger.html">FWLogger</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWLogger.html">FWLogger</a>
+                <a href="Classes/FWLoggerPluginImpl.html">FWLoggerPluginImpl</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWMarqueeLabel.html">FWMarqueeLabel</a>
@@ -908,9 +908,6 @@
                 <a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWOcrObject.html">FWOcrObject</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/FWPageControl.html">FWPageControl</a>
               </li>
               <li class="nav-group-task">
@@ -918,24 +915,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWPageControlWrapper.html">FWPageControlWrapper</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPagingListContainerView.html">FWPagingListContainerView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPagingListRefreshView.html">FWPagingListRefreshView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPagingMainTableView.html">FWPagingMainTableView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPagingSmoothCollectionView.html">FWPagingSmoothCollectionView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPagingSmoothView.html">FWPagingSmoothView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWPagingView.html">FWPagingView</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWPanGestureRecognizer.html">FWPanGestureRecognizer</a>
@@ -1106,37 +1085,10 @@
                 <a href="Classes/FWSegmentedControl.html">FWSegmentedControl</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWSentinel.html">FWSentinel</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes.html#/c:objc(cs)FWSetClassWrapper">FWSetClassWrapper</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWSetWrapper.html">FWSetWrapper</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSignatureView.html">FWSignatureView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonAnimation.html">FWSkeletonAnimation</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonAppearance.html">FWSkeletonAppearance</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonCollectionView.html">FWSkeletonCollectionView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonLabel.html">FWSkeletonLabel</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonLayout.html">FWSkeletonLayout</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonTableView.html">FWSkeletonTableView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWSkeletonView.html">FWSkeletonView</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/c:objc(cs)FWSliderClassWrapper">FWSliderClassWrapper</a>
@@ -1178,13 +1130,7 @@
                 <a href="Classes/FWSwitchWrapper.html">FWSwitchWrapper</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWTabBar.html">FWTabBar</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes.html#/c:objc(cs)FWTabBarClassWrapper">FWTabBarClassWrapper</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWTabBarController.html">FWTabBarController</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/c:objc(cs)FWTabBarControllerClassWrapper">FWTabBarControllerClassWrapper</a>
@@ -1193,19 +1139,7 @@
                 <a href="Classes/FWTabBarControllerWrapper.html">FWTabBarControllerWrapper</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWTabBarItem.html">FWTabBarItem</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWTabBarItemBadgeView.html">FWTabBarItemBadgeView</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes.html#/c:objc(cs)FWTabBarItemClassWrapper">FWTabBarItemClassWrapper</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWTabBarItemContentView.html">FWTabBarItemContentView</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWTabBarItemMoreContentView.html">FWTabBarItemMoreContentView</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWTabBarItemWrapper.html">FWTabBarItemWrapper</a>
@@ -1224,9 +1158,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWTableViewClassWrapper.html">FWTableViewClassWrapper</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWTableViewDelegate.html">FWTableViewDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWTableViewHeaderFooterViewClassWrapper.html">FWTableViewHeaderFooterViewClassWrapper</a>
@@ -1301,9 +1232,6 @@
                 <a href="Classes/FWToolbarWrapper.html">FWToolbarWrapper</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/FWTransaction.html">FWTransaction</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/FWTransformAnimatedTransition.html">FWTransformAnimatedTransition</a>
               </li>
               <li class="nav-group-task">
@@ -1335,12 +1263,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWVersionManager.html">FWVersionManager</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWVideoPlayer.html">FWVideoPlayer</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Classes/FWVideoPlayerView.html">FWVideoPlayerView</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a>
@@ -1401,6 +1323,78 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWZoomImageView.html">FWZoomImageView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/OcrObject.html">OcrObject</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PagingListContainerView.html">PagingListContainerView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PagingListRefreshView.html">PagingListRefreshView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PagingMainTableView.html">PagingMainTableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PagingSmoothCollectionView.html">PagingSmoothCollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PagingSmoothView.html">PagingSmoothView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/PagingView.html">PagingView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SignatureView.html">SignatureView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonAnimation.html">SkeletonAnimation</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonAppearance.html">SkeletonAppearance</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonCollectionView.html">SkeletonCollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonLabel.html">SkeletonLabel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonLayout.html">SkeletonLayout</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonTableView.html">SkeletonTableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/SkeletonView.html">SkeletonView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TabBar.html">TabBar</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TabBarController.html">TabBarController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TabBarItem.html">TabBarItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TabBarItemBadgeView.html">TabBarItemBadgeView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TabBarItemContentView.html">TabBarItemContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TabBarItemMoreContentView.html">TabBarItemMoreContentView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/TableViewDelegate.html">TableViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/VideoPlayer.html">VideoPlayer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/VideoPlayerView.html">VideoPlayerView</a>
               </li>
             </ul>
           </li>
@@ -1571,6 +1565,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Constants.html#/c:FWMediator.h@FWModulePriorityDefault">FWModulePriorityDefault</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Constants.html#/c:FWMediator.h@FWModulePriorityHigh">FWModulePriorityHigh</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Constants.html#/c:FWMediator.h@FWModulePriorityLow">FWModulePriorityLow</a>
               </li>
               <li class="nav-group-task">
                 <a href="Constants.html#/c:FWNavigationStyle.h@FWNavigationBarStyleDefault">FWNavigationBarStyleDefault</a>
@@ -1884,9 +1884,6 @@
                 <a href="Enums/FWNetworkReachabilityStatus.html">FWNetworkReachabilityStatus</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/FWPagingListContainerType.html">FWPagingListContainerType</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/FWPasscodeEditStatus.html">FWPasscodeEditStatus</a>
               </li>
               <li class="nav-group-task">
@@ -1920,6 +1917,9 @@
                 <a href="Enums/FWQrcodeScanAnimationStyle.html">FWQrcodeScanAnimationStyle</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/FWRequestCacheErrorCode.html">FWRequestCacheErrorCode</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/FWRequestMethod.html">FWRequestMethod</a>
               </li>
               <li class="nav-group-task">
@@ -1927,6 +1927,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Enums/FWRequestSerializerType.html">FWRequestSerializerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/FWRequestValidationErrorCode.html">FWRequestValidationErrorCode</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/FWResponseSerializerType.html">FWResponseSerializerType</a>
@@ -1953,18 +1956,6 @@
                 <a href="Enums/FWSegmentedControlType.html">FWSegmentedControlType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/FWSkeletonAnimationDirection.html">FWSkeletonAnimationDirection</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/FWSkeletonAnimationType.html">FWSkeletonAnimationType</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/FWTabBarItemContentMode.html">FWTabBarItemContentMode</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/FWTabBarItemPositioning.html">FWTabBarItemPositioning</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/FWTagCollectionAlignment.html">FWTagCollectionAlignment</a>
               </li>
               <li class="nav-group-task">
@@ -1983,16 +1974,31 @@
                 <a href="Enums/FWVersionStatus.html">FWVersionStatus</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/FWVideoPlayerBufferingState.html">FWVideoPlayerBufferingState</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Enums/FWVideoPlayerPlaybackState.html">FWVideoPlayerPlaybackState</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Enums/FWViewControllerVisibleState.html">FWViewControllerVisibleState</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/FWWebImageOptions.html">FWWebImageOptions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/PagingListContainerType.html">PagingListContainerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SkeletonAnimationDirection.html">SkeletonAnimationDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/SkeletonAnimationType.html">SkeletonAnimationType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TabBarItemContentMode.html">TabBarItemContentMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TabBarItemPositioning.html">TabBarItemPositioning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/VideoPlayerBufferingState.html">VideoPlayerBufferingState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/VideoPlayerPlaybackState.html">VideoPlayerPlaybackState</a>
               </li>
             </ul>
           </li>
@@ -2132,7 +2138,7 @@
                 <a href="Protocols/FWIndicatorViewPlugin.html">FWIndicatorViewPlugin</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/FWLogPlugin.html">FWLogPlugin</a>
+                <a href="Protocols/FWLoggerPlugin.html">FWLoggerPlugin</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWModel.html">FWModel</a>
@@ -2148,27 +2154,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWPageControlDelegate.html">FWPageControlDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingListContainerViewDataSource.html">FWPagingListContainerViewDataSource</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingMainTableViewGestureDelegate.html">FWPagingMainTableViewGestureDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingSmoothViewDataSource.html">FWPagingSmoothViewDataSource</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingSmoothViewDelegate.html">FWPagingSmoothViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingSmoothViewListViewDelegate.html">FWPagingSmoothViewListViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingViewDelegate.html">FWPagingViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWPagingViewListViewDelegate.html">FWPagingViewListViewDelegate</a>
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWPlayerCacheDownloaderDelegate.html">FWPlayerCacheDownloaderDelegate</a>
@@ -2210,18 +2195,6 @@
                 <a href="Protocols/FWScrollViewController.html">FWScrollViewController</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/FWSignatureDelegate.html">FWSignatureDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWSkeletonAnimationProtocol.html">FWSkeletonAnimationProtocol</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWSkeletonViewDataSource.html">FWSkeletonViewDataSource</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWSkeletonViewDelegate.html">FWSkeletonViewDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/FWStatisticalDelegate.html">FWStatisticalDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -2261,12 +2234,6 @@
                 <a href="Protocols/FWUrlFilterProtocol.html">FWUrlFilterProtocol</a>
               </li>
               <li class="nav-group-task">
-                <a href="Protocols/FWVideoPlayerDelegate.html">FWVideoPlayerDelegate</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/FWVideoPlayerPlaybackDelegate.html">FWVideoPlayerPlaybackDelegate</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Protocols/FWView.html">FWView</a>
               </li>
               <li class="nav-group-task">
@@ -2292,6 +2259,45 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/FWZoomImageViewDelegate.html">FWZoomImageViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingListContainerViewDataSource.html">PagingListContainerViewDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingMainTableViewGestureDelegate.html">PagingMainTableViewGestureDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingSmoothViewDataSource.html">PagingSmoothViewDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingSmoothViewDelegate.html">PagingSmoothViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingSmoothViewListViewDelegate.html">PagingSmoothViewListViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingViewDelegate.html">PagingViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/PagingViewListViewDelegate.html">PagingViewListViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SignatureDelegate.html">SignatureDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SkeletonAnimationProtocol.html">SkeletonAnimationProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SkeletonViewDataSource.html">SkeletonViewDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/SkeletonViewDelegate.html">SkeletonViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/VideoPlayerDelegate.html">VideoPlayerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/VideoPlayerPlaybackDelegate.html">VideoPlayerPlaybackDelegate</a>
               </li>
             </ul>
           </li>
@@ -2387,6 +2393,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Type%20Definitions.html#/c:FWWebView.h@T@FWJsBridgeResponseCallback">FWJsBridgeResponseCallback</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Type%20Definitions.html#/c:FWMediator.h@T@FWModulePriority">FWModulePriority</a>
               </li>
               <li class="nav-group-task">
                 <a href="Type%20Definitions.html#/c:FWNavigationStyle.h@T@FWNavigationBarStyle">FWNavigationBarStyle</a>
@@ -2493,19 +2502,19 @@
                 <a href="Functions.html#/c:@F@FWAutoload">FWAutoload</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:13FWApplication7FWClampyxx_xxtSLRzlF">FWClamp(_:_:_:)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@FWDegreeWithRadian">FWDegreeWithRadian</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@FWEncodingGetType">FWEncodingGetType</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:FWAdaptive.h@F@FWFlatScale">FWFlatScale</a>
+                <a href="Functions.html#/c:@F@FWFixedHeight">FWFixedHeight</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:FWAdaptive.h@F@FWFlatValue">FWFlatValue</a>
+                <a href="Functions.html#/c:@F@FWFixedValue">FWFixedValue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/c:@F@FWFlatScale">FWFlatScale</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Functions.html#/c:@F@FWFlatValue">FWFlatValue</a>
               </li>
               <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@FWFontBold">FWFontBold</a>
@@ -2541,16 +2550,10 @@
                 <a href="Functions.html#/c:@F@FWJSONObjectByRemovingKeysWithNullValues">FWJSONObjectByRemovingKeysWithNullValues</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/s:13FWApplication12FWPathSearchySSSo21NSSearchPathDirectoryVF">FWPathSearch(_:)</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@FWPercentEscapedStringFromString">FWPercentEscapedStringFromString</a>
               </li>
               <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@FWQueryStringFromParameters">FWQueryStringFromParameters</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@FWRadianWithDegree">FWRadianWithDegree</a>
               </li>
               <li class="nav-group-task">
                 <a href="Functions.html#/c:@F@FWRelativeHeight">FWRelativeHeight</a>
@@ -2595,45 +2598,16 @@
                 <a href="Functions.html#/c:@F@FWWebViewJsBridge_js">FWWebViewJsBridge_js</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@fwAttributedAscentCallback">fwAttributedAscentCallback</a>
+                <a href="Functions.html#/c:@F@fw_attributedAscentCallback">fw_attributedAscentCallback</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@fwAttributedDeallocCallback">fwAttributedDeallocCallback</a>
+                <a href="Functions.html#/c:@F@fw_attributedDeallocCallback">fw_attributedDeallocCallback</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@fwAttributedDescentCallback">fwAttributedDescentCallback</a>
+                <a href="Functions.html#/c:@F@fw_attributedDescentCallback">fw_attributedDescentCallback</a>
               </li>
               <li class="nav-group-task">
-                <a href="Functions.html#/c:@F@fwAttributedWidthCallback">fwAttributedWidthCallback</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-group-name">
-            <a href="Global%20Variables.html">Global Variables</a>
-            <ul class="nav-group-tasks">
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication12FWPathBundleSSvp">FWPathBundle</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication12FWPathCachesSSvp">FWPathCaches</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication14FWPathDocumentSSvp">FWPathDocument</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication10FWPathHomeSSvp">FWPathHome</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication13FWPathLibrarySSvp">FWPathLibrary</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication16FWPathPreferenceSSvp">FWPathPreference</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication14FWPathResourceSSvp">FWPathResource</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Global%20Variables.html#/s:13FWApplication9FWPathTmpSSvp">FWPathTmp</a>
+                <a href="Functions.html#/c:@F@fw_attributedWidthCallback">fw_attributedWidthCallback</a>
               </li>
             </ul>
           </li>
@@ -2641,16 +2615,25 @@
             <a href="Extensions.html">Extensions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Extensions/FWCollectionViewController.html">FWCollectionViewController</a>
+                <a href="Extensions/CollectionViewControllerProtocol.html">CollectionViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/FWScrollViewController.html">FWScrollViewController</a>
+                <a href="Extensions/FW.html">FW</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/FWTableViewController.html">FWTableViewController</a>
+                <a href="Extensions/ScrollViewControllerProtocol.html">ScrollViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
-                <a href="Extensions/FWWebViewController.html">FWWebViewController</a>
+                <a href="Extensions/TableViewControllerProtocol.html">TableViewControllerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions.html#/s:10Foundation10URLRequestV">URLRequest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/WebViewControllerProtocol.html">WebViewControllerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/Wrapper.html">Wrapper</a>
               </li>
             </ul>
           </li>
@@ -2726,11 +2709,11 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWLogPlugin"></a>
-                <a name="//apple_ref/swift/Section/FWLogPlugin" class="dashAnchor"></a>
+                <a name="/FWLoggerPlugin"></a>
+                <a name="//apple_ref/swift/Section/FWLoggerPlugin" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWLogPlugin"></a>
-                  <h3 class="section-name"><span>FWLogPlugin</span>
+                  <a class="section-name-link" href="#/FWLoggerPlugin"></a>
+                  <h3 class="section-name"><span>FWLoggerPlugin</span>
 </h3>
                 </div>
               </div>
@@ -2738,9 +2721,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(pl)FWLogPlugin"></a>
-                    <a name="//apple_ref/swift/Protocol/FWLogPlugin" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)FWLogPlugin">FWLogPlugin</a>
+                    <a name="/c:objc(pl)FWLoggerPlugin"></a>
+                    <a name="//apple_ref/swift/Protocol/FWLoggerPlugin" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)FWLoggerPlugin">FWLoggerPlugin</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2750,13 +2733,13 @@
                       <div class="abstract">
                         <p>日志插件协议</p>
 
-                        <a href="Protocols/FWLogPlugin.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/FWLoggerPlugin.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">FWLogPlugin</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">FWLoggerPlugin</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -2767,11 +2750,11 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWMediator"></a>
-                <a name="//apple_ref/swift/Section/FWMediator" class="dashAnchor"></a>
+                <a name="/FWModuleProtocol"></a>
+                <a name="//apple_ref/swift/Section/FWModuleProtocol" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWMediator"></a>
-                  <h3 class="section-name"><span>FWMediator</span>
+                  <a class="section-name-link" href="#/FWModuleProtocol"></a>
+                  <h3 class="section-name"><span>FWModuleProtocol</span>
 </h3>
                 </div>
               </div>
@@ -2804,6 +2787,19 @@
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/FWPluginProtocol"></a>
+                <a name="//apple_ref/swift/Section/FWPluginProtocol" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/FWPluginProtocol"></a>
+                  <h3 class="section-name"><span>FWPluginProtocol</span>
+</h3>
+                </div>
+              </div>
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -6095,11 +6091,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWVideoPlayerDelegate"></a>
-                <a name="//apple_ref/swift/Section/FWVideoPlayerDelegate" class="dashAnchor"></a>
+                <a name="/VideoPlayerDelegate"></a>
+                <a name="//apple_ref/swift/Section/VideoPlayerDelegate" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWVideoPlayerDelegate"></a>
-                  <h3 class="section-name"><span>FWVideoPlayerDelegate</span>
+                  <a class="section-name-link" href="#/VideoPlayerDelegate"></a>
+                  <h3 class="section-name"><span>VideoPlayerDelegate</span>
 </h3>
                 </div>
               </div>
@@ -6108,8 +6104,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWVideoPlayerDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWVideoPlayerDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWVideoPlayerDelegate">FWVideoPlayerDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/VideoPlayerDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWVideoPlayerDelegate">VideoPlayerDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6119,43 +6115,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Player delegate protocol</p>
 
-                        <a href="Protocols/FWVideoPlayerDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/VideoPlayerDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWVideoPlayerDelegate</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@M@FWApplication@objc(pl)FWVideoPlayerPlaybackDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWVideoPlayerPlaybackDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWVideoPlayerPlaybackDelegate">FWVideoPlayerPlaybackDelegate</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Player playback protocol</p>
-
-                        <a href="Protocols/FWVideoPlayerPlaybackDelegate.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWVideoPlayerPlaybackDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWVideoPlayerDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">VideoPlayerDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6166,11 +6133,53 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWPagingListContainerView"></a>
-                <a name="//apple_ref/swift/Section/FWPagingListContainerView" class="dashAnchor"></a>
+                <a name="/VideoPlayerPlaybackDelegate"></a>
+                <a name="//apple_ref/swift/Section/VideoPlayerPlaybackDelegate" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPagingListContainerView"></a>
-                  <h3 class="section-name"><span>FWPagingListContainerView</span>
+                  <a class="section-name-link" href="#/VideoPlayerPlaybackDelegate"></a>
+                  <h3 class="section-name"><span>VideoPlayerPlaybackDelegate</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@FWApplication@objc(pl)FWVideoPlayerPlaybackDelegate"></a>
+                    <a name="//apple_ref/swift/Protocol/VideoPlayerPlaybackDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWVideoPlayerPlaybackDelegate">VideoPlayerPlaybackDelegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Player playback protocol</p>
+
+                        <a href="Protocols/VideoPlayerPlaybackDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWVideoPlayerPlaybackDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">VideoPlayerPlaybackDelegate</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/PagingListContainerView"></a>
+                <a name="//apple_ref/swift/Section/PagingListContainerView" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/PagingListContainerView"></a>
+                  <h3 class="section-name"><span>PagingListContainerView</span>
 </h3>
                 </div>
               </div>
@@ -6179,8 +6188,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingViewListViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingViewListViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingViewListViewDelegate">FWPagingViewListViewDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/PagingViewListViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingViewListViewDelegate">PagingViewListViewDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6190,14 +6199,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingViewListViewDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingViewListViewDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingViewListViewDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingViewListViewDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingViewListViewDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6208,8 +6217,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingListContainerViewDataSource"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingListContainerViewDataSource" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingListContainerViewDataSource">FWPagingListContainerViewDataSource</a>
+                    <a name="//apple_ref/swift/Protocol/PagingListContainerViewDataSource" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingListContainerViewDataSource">PagingListContainerViewDataSource</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6219,14 +6228,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingListContainerViewDataSource.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingListContainerViewDataSource.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingListContainerViewDataSource</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingListContainerViewDataSource</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingListContainerViewDataSource</span></code></pre>
 
                         </div>
                       </div>
@@ -6237,11 +6246,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWPagingMainTableView"></a>
-                <a name="//apple_ref/swift/Section/FWPagingMainTableView" class="dashAnchor"></a>
+                <a name="/PagingMainTableView"></a>
+                <a name="//apple_ref/swift/Section/PagingMainTableView" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPagingMainTableView"></a>
-                  <h3 class="section-name"><span>FWPagingMainTableView</span>
+                  <a class="section-name-link" href="#/PagingMainTableView"></a>
+                  <h3 class="section-name"><span>PagingMainTableView</span>
 </h3>
                 </div>
               </div>
@@ -6250,8 +6259,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingMainTableViewGestureDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingMainTableViewGestureDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingMainTableViewGestureDelegate">FWPagingMainTableViewGestureDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/PagingMainTableViewGestureDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingMainTableViewGestureDelegate">PagingMainTableViewGestureDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6261,14 +6270,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingMainTableViewGestureDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingMainTableViewGestureDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingMainTableViewGestureDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingMainTableViewGestureDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingMainTableViewGestureDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6279,11 +6288,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWPagingView"></a>
-                <a name="//apple_ref/swift/Section/FWPagingView" class="dashAnchor"></a>
+                <a name="/PagingView"></a>
+                <a name="//apple_ref/swift/Section/PagingView" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPagingView"></a>
-                  <h3 class="section-name"><span>FWPagingView</span>
+                  <a class="section-name-link" href="#/PagingView"></a>
+                  <h3 class="section-name"><span>PagingView</span>
 </h3>
                 </div>
               </div>
@@ -6292,8 +6301,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingViewDelegate">FWPagingViewDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/PagingViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingViewDelegate">PagingViewDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6303,14 +6312,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingViewDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingViewDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingViewDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingViewDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingViewDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6321,11 +6330,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWPagingSmoothView"></a>
-                <a name="//apple_ref/swift/Section/FWPagingSmoothView" class="dashAnchor"></a>
+                <a name="/PagingSmoothView"></a>
+                <a name="//apple_ref/swift/Section/PagingSmoothView" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWPagingSmoothView"></a>
-                  <h3 class="section-name"><span>FWPagingSmoothView</span>
+                  <a class="section-name-link" href="#/PagingSmoothView"></a>
+                  <h3 class="section-name"><span>PagingSmoothView</span>
 </h3>
                 </div>
               </div>
@@ -6334,8 +6343,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingSmoothViewListViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingSmoothViewListViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingSmoothViewListViewDelegate">FWPagingSmoothViewListViewDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/PagingSmoothViewListViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingSmoothViewListViewDelegate">PagingSmoothViewListViewDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6345,14 +6354,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingSmoothViewListViewDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingSmoothViewListViewDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingSmoothViewListViewDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingSmoothViewListViewDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingSmoothViewListViewDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6363,8 +6372,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingSmoothViewDataSource"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingSmoothViewDataSource" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingSmoothViewDataSource">FWPagingSmoothViewDataSource</a>
+                    <a name="//apple_ref/swift/Protocol/PagingSmoothViewDataSource" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingSmoothViewDataSource">PagingSmoothViewDataSource</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6374,14 +6383,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingSmoothViewDataSource.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingSmoothViewDataSource.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingSmoothViewDataSource</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingSmoothViewDataSource</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingSmoothViewDataSource</span></code></pre>
 
                         </div>
                       </div>
@@ -6392,8 +6401,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWPagingSmoothViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWPagingSmoothViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingSmoothViewDelegate">FWPagingSmoothViewDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/PagingSmoothViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWPagingSmoothViewDelegate">PagingSmoothViewDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6403,14 +6412,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Protocols/FWPagingSmoothViewDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/PagingSmoothViewDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWPagingSmoothViewDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWPagingSmoothViewDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PagingSmoothViewDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6421,11 +6430,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Protocol%20definition%20for%20FWSignatureDelegate"></a>
-                <a name="//apple_ref/swift/Section/Protocol definition for FWSignatureDelegate" class="dashAnchor"></a>
+                <a name="/Protocol%20definition%20for%20SignatureDelegate"></a>
+                <a name="//apple_ref/swift/Section/Protocol definition for SignatureDelegate" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Protocol%20definition%20for%20FWSignatureDelegate"></a>
-                  <h3 class="section-name"><span>Protocol definition for FWSignatureDelegate</span>
+                  <a class="section-name-link" href="#/Protocol%20definition%20for%20SignatureDelegate"></a>
+                  <h3 class="section-name"><span>Protocol definition for SignatureDelegate</span>
 </h3>
                 </div>
               </div>
@@ -6434,8 +6443,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWSignatureDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWSignatureDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSignatureDelegate">FWSignatureDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/SignatureDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSignatureDelegate">SignatureDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6443,23 +6452,23 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <h2 id='fwsignaturedelegate-protocol' class='heading'>FWSignatureDelegate Protocol</h2>
+                        <h2 id='signaturedelegate-protocol' class='heading'>SignatureDelegate Protocol</h2>
 
-<p>FWSignatureDelegate:</p>
+<p>SignatureDelegate:</p>
 
 <ul>
-<li>optional didStart(_ view : FWSignatureView)</li>
-<li>optional didFinish(_ view : FWSignatureView)</li>
+<li>optional didStart(_ view : SignatureView)</li>
+<li>optional didFinish(_ view : SignatureView)</li>
 </ul>
 
-                        <a href="Protocols/FWSignatureDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/SignatureDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWSignatureDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWSignatureDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SignatureDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6470,11 +6479,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWSkeletonAnimation"></a>
-                <a name="//apple_ref/swift/Section/FWSkeletonAnimation" class="dashAnchor"></a>
+                <a name="/SkeletonAnimation"></a>
+                <a name="//apple_ref/swift/Section/SkeletonAnimation" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWSkeletonAnimation"></a>
-                  <h3 class="section-name"><span>FWSkeletonAnimation</span>
+                  <a class="section-name-link" href="#/SkeletonAnimation"></a>
+                  <h3 class="section-name"><span>SkeletonAnimation</span>
 </h3>
                 </div>
               </div>
@@ -6483,8 +6492,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWSkeletonAnimationProtocol"></a>
-                    <a name="//apple_ref/swift/Protocol/FWSkeletonAnimationProtocol" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSkeletonAnimationProtocol">FWSkeletonAnimationProtocol</a>
+                    <a name="//apple_ref/swift/Protocol/SkeletonAnimationProtocol" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSkeletonAnimationProtocol">SkeletonAnimationProtocol</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6494,14 +6503,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>骨架屏动画协议</p>
 
-                        <a href="Protocols/FWSkeletonAnimationProtocol.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/SkeletonAnimationProtocol.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWSkeletonAnimationProtocol</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWSkeletonAnimationProtocol</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SkeletonAnimationProtocol</span></code></pre>
 
                         </div>
                       </div>
@@ -6512,11 +6521,11 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/FWSkeletonView"></a>
-                <a name="//apple_ref/swift/Section/FWSkeletonView" class="dashAnchor"></a>
+                <a name="/SkeletonView"></a>
+                <a name="//apple_ref/swift/Section/SkeletonView" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/FWSkeletonView"></a>
-                  <h3 class="section-name"><span>FWSkeletonView</span>
+                  <a class="section-name-link" href="#/SkeletonView"></a>
+                  <h3 class="section-name"><span>SkeletonView</span>
 </h3>
                 </div>
               </div>
@@ -6525,8 +6534,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWSkeletonViewDataSource"></a>
-                    <a name="//apple_ref/swift/Protocol/FWSkeletonViewDataSource" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSkeletonViewDataSource">FWSkeletonViewDataSource</a>
+                    <a name="//apple_ref/swift/Protocol/SkeletonViewDataSource" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSkeletonViewDataSource">SkeletonViewDataSource</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6536,14 +6545,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>骨架屏视图数据源协议</p>
 
-                        <a href="Protocols/FWSkeletonViewDataSource.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/SkeletonViewDataSource.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWSkeletonViewDataSource</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWSkeletonViewDataSource</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SkeletonViewDataSource</span></code></pre>
 
                         </div>
                       </div>
@@ -6554,8 +6563,8 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                   <div>
                     <code>
                     <a name="/c:@M@FWApplication@objc(pl)FWSkeletonViewDelegate"></a>
-                    <a name="//apple_ref/swift/Protocol/FWSkeletonViewDelegate" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSkeletonViewDelegate">FWSkeletonViewDelegate</a>
+                    <a name="//apple_ref/swift/Protocol/SkeletonViewDelegate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(pl)FWSkeletonViewDelegate">SkeletonViewDelegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -6565,14 +6574,14 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
                       <div class="abstract">
                         <p>骨架屏视图代理协议</p>
 
-                        <a href="Protocols/FWSkeletonViewDelegate.html" class="slightly-smaller">See more</a>
+                        <a href="Protocols/SkeletonViewDelegate.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@objc</span>
-<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">FWSkeletonViewDelegate</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span><span class="p">(</span><span class="kt">FWSkeletonViewDelegate</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SkeletonViewDelegate</span></code></pre>
 
                         </div>
                       </div>
@@ -6584,7 +6593,7 @@ Swift数组类映射时，需返回AnyClass类型。示例：[&ldquo;books&rdquo
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-05)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-26)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

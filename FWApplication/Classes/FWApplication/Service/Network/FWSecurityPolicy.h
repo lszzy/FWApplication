@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, FWSSLPinningMode) {
     FWSSLPinningModeNone,
     FWSSLPinningModePublicKey,
     FWSSLPinningModeCertificate,
-};
+} NS_SWIFT_NAME(SSLPinningMode);
 
 /**
  `FWSecurityPolicy` evaluates server trust against pinned X.509 certificates and public keys over secure connections.
@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, FWSSLPinningMode) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_NAME(SecurityPolicy)
 @interface FWSecurityPolicy : NSObject <NSSecureCoding, NSCopying>
 
 /**

@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Refresh/FWRefreshPlugin.h
+../../FWApplication/Plugin/Refresh/FWRefreshPlugin.h

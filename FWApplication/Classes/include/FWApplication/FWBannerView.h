@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWBannerView.h
+../../FWApplication/Toolkit/Component/FWBannerView.h

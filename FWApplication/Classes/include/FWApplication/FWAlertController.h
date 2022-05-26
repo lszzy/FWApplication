@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Alert/FWAlertController.h
+../../FWApplication/Plugin/Alert/FWAlertController.h

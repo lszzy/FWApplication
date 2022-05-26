@@ -27,13 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Recursively removes `NSNull` values from a JSON object.
 */
-FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions readingOptions);
+FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions readingOptions) NS_SWIFT_NAME(JSONObjectByRemovingKeysWithNullValues(_:readingOptions:));
 
 /**
  The `FWURLResponseSerialization` protocol is adopted by an object that decodes data into a more useful object representation, according to details in the server response. Response serializers may additionally perform validation on the incoming response and data.
 
  For example, a JSON response serializer may check for an acceptable status code (`2XX` range) and content type (`application/json`), decoding a valid JSON response into an object.
  */
+NS_SWIFT_NAME(URLResponseSerialization)
 @protocol FWURLResponseSerialization <NSObject, NSSecureCoding, NSCopying>
 
 /**
@@ -58,6 +59,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
 
  Any request or response serializer dealing with HTTP is encouraged to subclass `FWHTTPResponseSerializer` in order to ensure consistent default behavior.
  */
+NS_SWIFT_NAME(HTTPResponseSerializer)
 @interface FWHTTPResponseSerializer : NSObject <FWURLResponseSerialization>
 
 - (instancetype)init;
@@ -124,6 +126,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
 
  In RFC 7159 - Section 8.1, it states that JSON text is required to be encoded in UTF-8, UTF-16, or UTF-32, and the default encoding is UTF-8. NSJSONSerialization provides support for all the encodings listed in the specification, and recommends UTF-8 for efficiency. Using an unsupported encoding will result in serialization error. See the `NSJSONSerialization` documentation for more details.
  */
+NS_SWIFT_NAME(JSONResponseSerializer)
 @interface FWJSONResponseSerializer : FWHTTPResponseSerializer
 
 - (instancetype)init;
@@ -157,6 +160,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
  - `application/xml`
  - `text/xml`
  */
+NS_SWIFT_NAME(XMLParserResponseSerializer)
 @interface FWXMLParserResponseSerializer : FWHTTPResponseSerializer
 
 @end
@@ -173,6 +177,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
  - `application/xml`
  - `text/xml`
  */
+NS_SWIFT_NAME(XMLDocumentResponseSerializer)
 @interface FWXMLDocumentResponseSerializer : FWHTTPResponseSerializer
 
 - (instancetype)init;
@@ -202,6 +207,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
 
  - `application/x-plist`
  */
+NS_SWIFT_NAME(PropertyListResponseSerializer)
 @interface FWPropertyListResponseSerializer : FWHTTPResponseSerializer
 
 - (instancetype)init;
@@ -251,6 +257,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
  - `image/webp`
  - `image/svg+xml`
  */
+NS_SWIFT_NAME(ImageResponseSerializer)
 @interface FWImageResponseSerializer : FWHTTPResponseSerializer
 
 /**
@@ -270,6 +277,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
 /**
  `FWCompoundSerializer` is a subclass of `FWHTTPResponseSerializer` that delegates the response serialization to the first `FWHTTPResponseSerializer` object that returns an object for `responseObjectForResponse:data:error:`, falling back on the default behavior of `FWHTTPResponseSerializer`. This is useful for supporting multiple potential types and structures of server responses with a single serializer.
  */
+NS_SWIFT_NAME(CompoundResponseSerializer)
 @interface FWCompoundResponseSerializer : FWHTTPResponseSerializer
 
 /**
@@ -302,7 +310,7 @@ FOUNDATION_EXPORT id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJ
  `FWURLResponseSerializationErrorDomain`
  FWURLResponseSerializer errors. Error codes for `FWURLResponseSerializationErrorDomain` correspond to codes in `NSURLErrorDomain`.
  */
-FOUNDATION_EXPORT NSString * const FWURLResponseSerializationErrorDomain;
+FOUNDATION_EXPORT NSString * const FWURLResponseSerializationErrorDomain NS_SWIFT_NAME(URLResponseSerializationErrorDomain);
 
 /**
  ## User info dictionary keys
@@ -320,8 +328,8 @@ FOUNDATION_EXPORT NSString * const FWURLResponseSerializationErrorDomain;
  `FWNetworkingOperationFailingURLResponseDataErrorKey`
  The corresponding value is an `NSData` containing the original data of the operation associated with an error. This key is only present in the `FWURLResponseSerializationErrorDomain`.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLResponseErrorKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLResponseErrorKey NS_SWIFT_NAME(NetworkingOperationFailingURLResponseErrorKey);
 
-FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLResponseDataErrorKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLResponseDataErrorKey NS_SWIFT_NAME(NetworkingOperationFailingURLResponseDataErrorKey);
 
 NS_ASSUME_NONNULL_END

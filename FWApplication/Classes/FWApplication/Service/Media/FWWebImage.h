@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWAutoPurgingImageCache
 
 /// 图片缓存协议
+NS_SWIFT_NAME(ImageCache)
 @protocol FWImageCache <NSObject>
 
 - (void)addImage:(UIImage *)image withIdentifier:(NSString *)identifier;
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 图片请求缓存协议
+NS_SWIFT_NAME(ImageRequestCache)
 @protocol FWImageRequestCache <FWImageCache>
 
 - (BOOL)shouldCacheImage:(UIImage *)image forRequest:(NSURLRequest *)request withAdditionalIdentifier:(nullable NSString *)identifier;
@@ -42,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 /// 内存自动清理图片缓存
+NS_SWIFT_NAME(AutoPurgingImageCache)
 @interface FWAutoPurgingImageCache : NSObject <FWImageRequestCache>
 
 @property (nonatomic, assign) UInt64 memoryCapacity;
@@ -61,9 +64,10 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
     FWImageDownloadPrioritizationFIFO,
     FWImageDownloadPrioritizationLIFO
-};
+} NS_SWIFT_NAME(ImageDownloadPrioritization);
 
 /// 图片下载凭据
+NS_SWIFT_NAME(ImageDownloadReceipt)
 @interface FWImageDownloadReceipt : NSObject
 
 @property (nonatomic, strong) NSURLSessionDataTask *task;
@@ -75,6 +79,7 @@ typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
 @class FWHTTPSessionManager;
 
 /// 图片下载器，默认解码scale为1，同SDWebImage
+NS_SWIFT_NAME(ImageDownloader)
 @interface FWImageDownloader : NSObject
 
 @property (nonatomic, strong, nullable) id <FWImageRequestCache> imageCache;
@@ -134,6 +139,7 @@ typedef NS_ENUM(NSInteger, FWImageDownloadPrioritization) {
 #pragma mark - FWImagePluginImpl
 
 /// 默认图片插件
+NS_SWIFT_NAME(ImagePluginImpl)
 @interface FWImagePluginImpl : NSObject <FWImagePlugin>
 
 /// 单例模式

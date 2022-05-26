@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// 内存缓存
+NS_SWIFT_NAME(CacheMemory)
 @interface FWCacheMemory : FWCacheEngine
 
 /** 单例模式 */

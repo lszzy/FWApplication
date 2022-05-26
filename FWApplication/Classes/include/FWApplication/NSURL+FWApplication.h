@@ -1,1 +1,1 @@
-../../FWApplication/Model/Extension/NSURL+FWApplication.h
+../../FWApplication/Toolkit/Foundation/NSURL+FWApplication.h

@@ -8,7 +8,7 @@
 
 import FWApplication
 
-class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
+class TestNavigationTitleLabel: UILabel, TitleViewProtocol {
     override init(frame: CGRect) {
         super.init(frame: frame)
         font = UIFont.boldSystemFont(ofSize: 17)
@@ -24,40 +24,40 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }
 }
 
-@objcMembers class TestNavigationScrollViewController: TestViewController, FWTableViewController {
-    private lazy var navigationView: FWToolbarView = {
-        let navigationView = FWToolbarView(type: .navBar)
+@objcMembers class TestNavigationScrollViewController: TestViewController, TableViewControllerProtocol {
+    private lazy var navigationView: ToolbarView = {
+        let navigationView = ToolbarView(type: .navBar)
         navigationView.backgroundColor = Theme.barColor
         navigationView.menuView.centerButton = TestNavigationTitleLabel()
         navigationView.menuView.title = "我是很长很长要多长有多长长得不得了的按钮"
         navigationView.menuView.tintColor = Theme.textColor
-        let leftButton = FWToolbarButton(image: FWIcon.backImage)
+        let leftButton = ToolbarButton(image: Icon.backImage)
         leftButton.fw.addTouch { sender in
-            FWRouter.closeViewController(animated: true)
+            Router.closeViewController(animated: true)
         }
         navigationView.menuView.leftButton = leftButton
         return navigationView
     }()
     
     override func renderInit() {
-        fw.navigationBarHidden = true
+        __fw.navigationBarHidden = true
     }
     
     override func renderView() {
-        tableView.fw.contentInsetAdjustmentNever()
-        tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top
-        tableView.fw.setRefreshingTarget(self, action: #selector(onRefreshing))
+        tableView.__fw.contentInsetAdjustmentNever()
+        tableView.__fw.pullRefreshHeight = PullRefreshView.height + UIScreen.fw.safeAreaInsets.top
+        tableView.__fw.setRefreshingTarget(self, action: #selector(onRefreshing))
         
         let toolbar = UIToolbar()
         toolbar.fw.barPosition = .bottom
         toolbar.fw.foregroundColor = Theme.textColor
         toolbar.fw.backgroundColor = Theme.barColor
         view.addSubview(toolbar)
-        toolbar.fw.layoutChain.edgesToSafeArea(excludingEdge: .top)
+        toolbar.fw.layoutChain.edges(toSafeArea: .zero, excludingEdge: .top)
         
-        let leftItem = UIBarButtonItem.fw.item(with: "取消", block: nil)
-        let flexibleItem = UIBarButtonItem.fw.item(with: NSNumber(value: UIBarButtonItem.SystemItem.flexibleSpace.rawValue), block: nil)
-        let rightItem = UIBarButtonItem.fw.item(with: "确定", block: nil)
+        let leftItem = UIBarButtonItem.fw.item(object: "取消", block: nil)
+        let flexibleItem = UIBarButtonItem.fw.item(object: NSNumber(value: UIBarButtonItem.SystemItem.flexibleSpace.rawValue), block: nil)
+        let rightItem = UIBarButtonItem.fw.item(object: "确定", block: nil)
         toolbar.items = [leftItem, flexibleItem, rightItem]
         toolbar.sizeToFit()
     }
@@ -87,7 +87,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView)
+        let cell = UITableViewCell.fw.cell(tableView: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -119,7 +119,7 @@ class TestNavigationTitleLabel: UILabel, FWTitleViewProtocol {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             NSLog("刷新完成")
             self?.tableView.reloadData()
-            self?.tableView.fw.endRefreshing()
+            self?.tableView.__fw.endRefreshing()
         }
     }
 }

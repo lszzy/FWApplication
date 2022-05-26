@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Toast/FWToastPlugin.h
+../../FWApplication/Plugin/Toast/FWToastPlugin.h

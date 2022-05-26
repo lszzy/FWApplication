@@ -1,1 +1,1 @@
-../../FWApplication/App/Plugin/Preview/FWZoomImageView.h
+../../FWApplication/Plugin/Preview/FWZoomImageView.h

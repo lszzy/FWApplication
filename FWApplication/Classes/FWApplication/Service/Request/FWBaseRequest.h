@@ -25,12 +25,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSString *const FWRequestValidationErrorDomain;
+FOUNDATION_EXPORT NSString *const FWRequestValidationErrorDomain NS_SWIFT_NAME(RequestValidationErrorDomain);
 
-NS_ENUM(NSInteger) {
+typedef NS_ENUM(NSInteger, FWRequestValidationErrorCode) {
     FWRequestValidationErrorInvalidStatusCode = -8,
     FWRequestValidationErrorInvalidJSONFormat = -9,
-};
+} NS_SWIFT_NAME(RequestValidationErrorCode);
 
 ///  HTTP Request method.
 typedef NS_ENUM(NSInteger, FWRequestMethod) {
@@ -40,13 +40,13 @@ typedef NS_ENUM(NSInteger, FWRequestMethod) {
     FWRequestMethodPUT,
     FWRequestMethodDELETE,
     FWRequestMethodPATCH,
-};
+} NS_SWIFT_NAME(RequestMethod);
 
 ///  Request serializer type.
 typedef NS_ENUM(NSInteger, FWRequestSerializerType) {
     FWRequestSerializerTypeHTTP = 0,
     FWRequestSerializerTypeJSON,
-};
+} NS_SWIFT_NAME(RequestSerializerType);
 
 ///  Response serializer type, which determines response serialization process and
 ///  the type of `responseObject`.
@@ -57,27 +57,28 @@ typedef NS_ENUM(NSInteger, FWResponseSerializerType) {
     FWResponseSerializerTypeJSON,
     /// NSXMLParser type
     FWResponseSerializerTypeXMLParser,
-};
+} NS_SWIFT_NAME(ResponseSerializerType);
 
 ///  Request priority
 typedef NS_ENUM(NSInteger, FWRequestPriority) {
     FWRequestPriorityLow = -4L,
     FWRequestPriorityDefault = 0,
     FWRequestPriorityHigh = 4,
-};
+} NS_SWIFT_NAME(RequestPriority);
 
 @protocol FWMultipartFormData;
 
-typedef void (^FWConstructingBlock)(id<FWMultipartFormData> formData);
-typedef void (^FWURLSessionTaskProgressBlock)(NSProgress *);
+typedef void (^FWConstructingBlock)(id<FWMultipartFormData> formData) NS_SWIFT_NAME(ConstructingBlock);
+typedef void (^FWURLSessionTaskProgressBlock)(NSProgress *) NS_SWIFT_NAME(URLSessionTaskProgressBlock);
 
 @class FWBaseRequest;
 
-typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
+typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request) NS_SWIFT_NAME(RequestCompletionBlock);
 
 ///  The FWRequestDelegate protocol defines several optional methods you can use
 ///  to receive network-related messages. All the delegate methods will be called
 ///  on the main queue.
+NS_SWIFT_NAME(RequestDelegate)
 @protocol FWRequestDelegate <NSObject>
 
 @optional
@@ -97,6 +98,7 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 ///  used to track the status of a request. Objects that conforms this protocol
 ///  ("accessories") can perform additional configurations accordingly. All the
 ///  accessory methods will be called on the main queue.
+NS_SWIFT_NAME(RequestAccessory)
 @protocol FWRequestAccessory <NSObject>
 
 @optional
@@ -122,6 +124,7 @@ typedef void(^FWRequestCompletionBlock)(__kindof FWBaseRequest *request);
 
 ///  FWBaseRequest is the abstract class of network request. It provides many options
 ///  for constructing request. It's the base class of `FWRequest`.
+NS_SWIFT_NAME(BaseRequest)
 @interface FWBaseRequest : NSObject
 
 #pragma mark - Request and Response Information

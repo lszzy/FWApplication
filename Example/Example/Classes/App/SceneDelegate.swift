@@ -6,10 +6,10 @@
 //  Copyright © 2021 site.wuyong. All rights reserved.
 //
 
-import Foundation
+import FWApplication
 
 @available(iOS 13.0, *)
-class SceneDelegate: FWSceneDelegate {
+class SceneDelegate: SceneResponder {
     override func setupController() {
         // iOS13使用新的方式
         window?.backgroundColor = Theme.backgroundColor

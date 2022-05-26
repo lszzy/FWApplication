@@ -85,6 +85,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+NS_SWIFT_NAME(URLSessionManager)
 @interface FWURLSessionManager : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, NSURLSessionDownloadDelegate, NSSecureCoding, NSCopying>
 
 /**
@@ -459,61 +460,61 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Posted when a task resumes.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidResumeNotification;
+FOUNDATION_EXPORT NSNotificationName const FWNetworkingTaskDidResumeNotification NS_SWIFT_NAME(NetworkingTaskDidResumeNotification);
 
 /**
  Posted when a task finishes executing. Includes a userInfo dictionary with additional information about the task.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteNotification;
+FOUNDATION_EXPORT NSNotificationName const FWNetworkingTaskDidCompleteNotification NS_SWIFT_NAME(NetworkingTaskDidCompleteNotification);
 
 /**
  Posted when a task suspends its execution.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidSuspendNotification;
+FOUNDATION_EXPORT NSNotificationName const FWNetworkingTaskDidSuspendNotification NS_SWIFT_NAME(NetworkingTaskDidSuspendNotification);
 
 /**
  Posted when a session is invalidated.
  */
-FOUNDATION_EXPORT NSString * const FWURLSessionDidInvalidateNotification;
+FOUNDATION_EXPORT NSNotificationName const FWURLSessionDidInvalidateNotification NS_SWIFT_NAME(URLSessionDidInvalidateNotification);
 
 /**
  Posted when a session download task finished moving the temporary download file to a specified destination successfully.
  */
-FOUNDATION_EXPORT NSString * const FWURLSessionDownloadTaskDidMoveFileSuccessfullyNotification;
+FOUNDATION_EXPORT NSNotificationName const FWURLSessionDownloadTaskDidMoveFileSuccessfullyNotification NS_SWIFT_NAME(URLSessionDownloadTaskDidMoveFileSuccessfullyNotification);
 
 /**
  Posted when a session download task encountered an error when moving the temporary download file to a specified destination.
  */
-FOUNDATION_EXPORT NSString * const FWURLSessionDownloadTaskDidFailToMoveFileNotification;
+FOUNDATION_EXPORT NSNotificationName const FWURLSessionDownloadTaskDidFailToMoveFileNotification NS_SWIFT_NAME(URLSessionDownloadTaskDidFailToMoveFileNotification);
 
 /**
  The raw response data of the task. Included in the userInfo dictionary of the `FWNetworkingTaskDidCompleteNotification` if response data exists for the task.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteResponseDataKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteResponseDataKey NS_SWIFT_NAME(NetworkingTaskDidCompleteResponseDataKey);
 
 /**
  The serialized response object of the task. Included in the userInfo dictionary of the `FWNetworkingTaskDidCompleteNotification` if the response was serialized.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteSerializedResponseKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteSerializedResponseKey NS_SWIFT_NAME(NetworkingTaskDidCompleteSerializedResponseKey);
 
 /**
  The response serializer used to serialize the response. Included in the userInfo dictionary of the `FWNetworkingTaskDidCompleteNotification` if the task has an associated response serializer.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteResponseSerializerKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteResponseSerializerKey NS_SWIFT_NAME(NetworkingTaskDidCompleteResponseSerializerKey);
 
 /**
  The file path associated with the download task. Included in the userInfo dictionary of the `FWNetworkingTaskDidCompleteNotification` if an the response data has been stored directly to disk.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteAssetPathKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteAssetPathKey NS_SWIFT_NAME(NetworkingTaskDidCompleteAssetPathKey);
 
 /**
  Any error associated with the task, or the serialization of the response. Included in the userInfo dictionary of the `FWNetworkingTaskDidCompleteNotification` if an error exists.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteErrorKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteErrorKey NS_SWIFT_NAME(NetworkingTaskDidCompleteErrorKey);
 
 /**
  The session task metrics taken from the download task. Included in the userInfo dictionary of the `FWNetworkingTaskDidCompleteSessionTaskMetrics`
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteSessionTaskMetrics;
+FOUNDATION_EXPORT NSString * const FWNetworkingTaskDidCompleteSessionTaskMetrics NS_SWIFT_NAME(NetworkingTaskDidCompleteSessionTaskMetrics);
 
 NS_ASSUME_NONNULL_END

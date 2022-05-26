@@ -23,28 +23,28 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString *const FWAsyncSocketException;
-extern NSString *const FWAsyncSocketErrorDomain;
+extern NSString *const FWAsyncSocketException NS_SWIFT_NAME(AsyncSocketException);
+extern NSString *const FWAsyncSocketErrorDomain NS_SWIFT_NAME(AsyncSocketErrorDomain);
 
-extern NSString *const FWAsyncSocketQueueName;
-extern NSString *const FWAsyncSocketThreadName;
+extern NSString *const FWAsyncSocketQueueName NS_SWIFT_NAME(AsyncSocketQueueName);
+extern NSString *const FWAsyncSocketThreadName NS_SWIFT_NAME(AsyncSocketThreadName);
 
-extern NSString *const FWAsyncSocketManuallyEvaluateTrust;
+extern NSString *const FWAsyncSocketManuallyEvaluateTrust NS_SWIFT_NAME(AsyncSocketManuallyEvaluateTrust);
 #if TARGET_OS_IPHONE
-extern NSString *const FWAsyncSocketUseCFStreamForTLS;
+extern NSString *const FWAsyncSocketUseCFStreamForTLS NS_SWIFT_NAME(AsyncSocketUseCFStreamForTLS);
 #endif
 #define FWAsyncSocketSSLPeerName     (NSString *)kCFStreamSSLPeerName
 #define FWAsyncSocketSSLCertificates (NSString *)kCFStreamSSLCertificates
 #define FWAsyncSocketSSLIsServer     (NSString *)kCFStreamSSLIsServer
-extern NSString *const FWAsyncSocketSSLPeerID;
-extern NSString *const FWAsyncSocketSSLProtocolVersionMin;
-extern NSString *const FWAsyncSocketSSLProtocolVersionMax;
-extern NSString *const FWAsyncSocketSSLSessionOptionFalseStart;
-extern NSString *const FWAsyncSocketSSLSessionOptionSendOneByteRecord;
-extern NSString *const FWAsyncSocketSSLCipherSuites;
-extern NSString *const FWAsyncSocketSSLALPN;
+extern NSString *const FWAsyncSocketSSLPeerID NS_SWIFT_NAME(AsyncSocketSSLPeerID);
+extern NSString *const FWAsyncSocketSSLProtocolVersionMin NS_SWIFT_NAME(AsyncSocketSSLProtocolVersionMin);
+extern NSString *const FWAsyncSocketSSLProtocolVersionMax NS_SWIFT_NAME(AsyncSocketSSLProtocolVersionMax);
+extern NSString *const FWAsyncSocketSSLSessionOptionFalseStart NS_SWIFT_NAME(AsyncSocketSSLSessionOptionFalseStart);
+extern NSString *const FWAsyncSocketSSLSessionOptionSendOneByteRecord NS_SWIFT_NAME(AsyncSocketSSLSessionOptionSendOneByteRecord);
+extern NSString *const FWAsyncSocketSSLCipherSuites NS_SWIFT_NAME(AsyncSocketSSLCipherSuites);
+extern NSString *const FWAsyncSocketSSLALPN NS_SWIFT_NAME(AsyncSocketSSLALPN);
 #if !TARGET_OS_IPHONE
-extern NSString *const FWAsyncSocketSSLDiffieHellmanParameters;
+extern NSString *const FWAsyncSocketSSLDiffieHellmanParameters NS_SWIFT_NAME(AsyncSocketSSLDiffieHellmanParameters);
 #endif
 
 #define FWAsyncSocketLoggingContext 65535
@@ -60,13 +60,13 @@ typedef NS_ERROR_ENUM(FWAsyncSocketErrorDomain, FWAsyncSocketError) {
 	FWAsyncSocketReadMaxedOutError,     // Reached set maxLength without completing
 	FWAsyncSocketClosedError,           // The remote peer closed the connection
 	FWAsyncSocketOtherError,            // Description provided in userInfo
-};
+} NS_SWIFT_NAME(AsyncSocketError);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+NS_SWIFT_NAME(AsyncSocket)
 @interface FWAsyncSocket : NSObject
 
 /**
@@ -1061,6 +1061,7 @@ typedef NS_ERROR_ENUM(FWAsyncSocketErrorDomain, FWAsyncSocketError) {
 #pragma mark -
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+NS_SWIFT_NAME(AsyncSocketDelegate)
 @protocol FWAsyncSocketDelegate <NSObject>
 @optional
 

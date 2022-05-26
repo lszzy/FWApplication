@@ -8,19 +8,19 @@
 import FWApplication
 import Core
 
-@objcMembers class UserLoginController: UIViewController, FWViewController {
+@objcMembers class UserLoginController: UIViewController, ViewControllerProtocol {
     var completion: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = UserBundle.localizedString("loginButton")
-        fw.setLeftBarItem(FWIcon.closeImage) { [weak self] (sender) in
-            self?.fw.closeViewController(animated: true)
+        __fw.setLeftBarItem(Icon.closeImage) { [weak self] (sender) in
+            self?.fw.close(animated: true)
         }
         
         let button = UIButton(type: .system)
         button.setTitle(UserBundle.localizedString("loginButton"), for: .normal)
-        button.setImage(UserBundle.imageNamed("user")?.fw.compressImage(withMaxWidth: 25), for: .normal)
+        button.setImage(UserBundle.imageNamed("user")?.fw.compressImage(maxWidth: 25), for: .normal)
         button.fw.addTouch { [weak self] (sender) in
             self?.dismiss(animated: true, completion: self?.completion)
         }

@@ -13,6 +13,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// FWAudioPlayerDelegate, all delegate method is optional
+NS_SWIFT_NAME(AudioPlayerDelegate)
 @protocol FWAudioPlayerDelegate <NSObject>
 
 @optional
@@ -30,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+NS_SWIFT_NAME(AudioPlayerDataSource)
 @protocol FWAudioPlayerDataSource <NSObject>
 
 @optional
@@ -50,24 +52,25 @@ typedef NS_ENUM(NSInteger, FWAudioPlayerStatus) {
     FWAudioPlayerStatusForcePause,
     FWAudioPlayerStatusBuffering,
     FWAudioPlayerStatusUnknown,
-};
+} NS_SWIFT_NAME(AudioPlayerStatus);
 
 typedef NS_ENUM(NSInteger, FWAudioPlayerRepeatMode) {
     FWAudioPlayerRepeatModeOn = 0,
     FWAudioPlayerRepeatModeOnce,
     FWAudioPlayerRepeatModeOff,
-};
+} NS_SWIFT_NAME(AudioPlayerRepeatMode);
 
 typedef NS_ENUM(NSInteger, FWAudioPlayerShuffleMode) {
     FWAudioPlayerShuffleModeOn = 0,
     FWAudioPlayerShuffleModeOff,
-};
+} NS_SWIFT_NAME(AudioPlayerShuffleMode);
 
 /**
  * FWAudioPlayer
  *
  * @see https://github.com/StreetVoice/HysteriaPlayer
  */
+NS_SWIFT_NAME(AudioPlayer)
 @interface FWAudioPlayer : NSObject
 
 @property (class, nonatomic, readonly) FWAudioPlayer *sharedInstance;

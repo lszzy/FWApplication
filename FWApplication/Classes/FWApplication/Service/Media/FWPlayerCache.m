@@ -1115,8 +1115,8 @@ static NSString *kURLKey = @"kURLKey";
 
 #pragma mark - FWPlayerCacheManager
 
-NSString *FWPlayerCacheManagerDidUpdateCacheNotification = @"FWPlayerCacheManagerDidUpdateCacheNotification";
-NSString *FWPlayerCacheManagerDidFinishCacheNotification = @"FWPlayerCacheManagerDidFinishCacheNotification";
+NSNotificationName FWPlayerCacheManagerDidUpdateCacheNotification = @"FWPlayerCacheManagerDidUpdateCacheNotification";
+NSNotificationName FWPlayerCacheManagerDidFinishCacheNotification = @"FWPlayerCacheManagerDidFinishCacheNotification";
 
 NSString *FWPlayerCacheConfigurationKey = @"FWPlayerCacheConfigurationKey";
 NSString *FWPlayerCacheFinishedErrorKey = @"FWPlayerCacheFinishedErrorKey";

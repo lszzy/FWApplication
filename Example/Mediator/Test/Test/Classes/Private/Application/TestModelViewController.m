@@ -146,7 +146,7 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
                                            }
                                        ],
                                };
-    TestModelObj *obj = [TestModelObj modelWithJson:jsonDict];
+    TestModelObj *obj = [TestModelObj.fw modelWithJson:jsonDict];
     self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj.fw modelToJsonObject]];
     
     // 测试\udf36|\udd75等字符会导致json解码失败问题

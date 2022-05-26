@@ -14,11 +14,11 @@
 #import <Availability.h>
 
 NS_ASSUME_NONNULL_BEGIN
-extern NSString *const FWAsyncUdpSocketException;
-extern NSString *const FWAsyncUdpSocketErrorDomain;
+extern NSString *const FWAsyncUdpSocketException NS_SWIFT_NAME(AsyncUdpSocketException);
+extern NSString *const FWAsyncUdpSocketErrorDomain NS_SWIFT_NAME(AsyncUdpSocketErrorDomain);
 
-extern NSString *const FWAsyncUdpSocketQueueName;
-extern NSString *const FWAsyncUdpSocketThreadName;
+extern NSString *const FWAsyncUdpSocketQueueName NS_SWIFT_NAME(AsyncUdpSocketQueueName);
+extern NSString *const FWAsyncUdpSocketThreadName NS_SWIFT_NAME(AsyncUdpSocketThreadName);
 
 typedef NS_ERROR_ENUM(FWAsyncUdpSocketErrorDomain, FWAsyncUdpSocketError) {
 	FWAsyncUdpSocketNoError = 0,          // Never used
@@ -27,7 +27,7 @@ typedef NS_ERROR_ENUM(FWAsyncUdpSocketErrorDomain, FWAsyncUdpSocketError) {
 	FWAsyncUdpSocketSendTimeoutError,     // A send operation timed out
 	FWAsyncUdpSocketClosedError,          // The socket was closed
 	FWAsyncUdpSocketOtherError,           // Description provided in userInfo
-};
+} NS_SWIFT_NAME(AsyncUdpSocketError);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark -
@@ -35,6 +35,7 @@ typedef NS_ERROR_ENUM(FWAsyncUdpSocketErrorDomain, FWAsyncUdpSocketError) {
 
 @class FWAsyncUdpSocket;
 
+NS_SWIFT_NAME(AsyncUdpSocketDelegate)
 @protocol FWAsyncUdpSocketDelegate <NSObject>
 @optional
 
@@ -130,7 +131,7 @@ typedef NS_ERROR_ENUM(FWAsyncUdpSocketErrorDomain, FWAsyncUdpSocketError) {
  * [udpSocket setReceiveFilter:filter withQueue:myParsingQueue];
  * 
 **/
-typedef BOOL (^FWAsyncUdpSocketReceiveFilterBlock)(NSData *data, NSData *address, id __nullable * __nonnull context);
+typedef BOOL (^FWAsyncUdpSocketReceiveFilterBlock)(NSData *data, NSData *address, id __nullable * __nonnull context) NS_SWIFT_NAME(AsyncUdpSocketReceiveFilterBlock);
 
 /**
  * You may optionally set a send filter for the socket.
@@ -158,9 +159,9 @@ typedef BOOL (^FWAsyncUdpSocketReceiveFilterBlock)(NSData *data, NSData *address
  * Regardless of the return value, the delegate will be informed that the packet was successfully sent.
  *
 **/
-typedef BOOL (^FWAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, long tag);
+typedef BOOL (^FWAsyncUdpSocketSendFilterBlock)(NSData *data, NSData *address, long tag) NS_SWIFT_NAME(AsyncUdpSocketSendFilterBlock);
 
-
+NS_SWIFT_NAME(AsyncUdpSocket)
 @interface FWAsyncUdpSocket : NSObject
 
 /**

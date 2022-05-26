@@ -8,7 +8,14 @@
 
 import FWApplication
 
-@objcMembers class TestSwiftViewController: TestViewController, FWTableViewController {
+@objcMembers class TestSwiftViewController: TestViewController, TableViewControllerProtocol {
+    override func renderNavbar() {
+        fw.setRightBarItem("Popup") { _ in
+            let viewController = SwiftTestPopupViewController()
+            Router.present(viewController, animated: true)
+        }
+    }
+    
     override func renderData() {
         tableData.addObjects(from: [
             "FWViewController",
@@ -24,7 +31,7 @@ import FWApplication
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell.fw.cell(with: tableView)
+        let cell = UITableViewCell.fw.cell(tableView: tableView)
         let value = tableData.object(at: indexPath.row) as? String
         cell.textLabel?.text = value
         cell.accessoryType = .disclosureIndicator
@@ -51,21 +58,21 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestViewController: UIViewController, FWViewController {
-    func renderState(_ state: FWViewControllerState, with object: Any?) {
+@objcMembers class SwiftTestViewController: UIViewController, ViewControllerProtocol {
+    func renderState(_ state: ViewControllerState, with object: Any?) {
         switch state {
         case .success:
-            view.fw.showEmpty(withText: object as? String)
+            view.__fw.showEmpty(withText: object as? String)
         case .failure:
-            view.fw.showEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
-                self?.view.fw.hideEmpty()
+            view.__fw.showEmpty(withText: (object as? NSError)?.localizedDescription, detail: nil, image: nil, action: "重新加载") { [weak self] (sender) in
+                self?.view.__fw.hideEmpty()
                 
                 self?.renderState(.loading, with: nil)
             }
         case .loading:
-            view.fw.showLoading(withText: "开始加载")
+            view.__fw.showLoading(withText: "开始加载")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.view.fw.hideLoading()
+                self?.view.__fw.hideLoading()
                 
                 if [0, 1].randomElement() == 1 {
                     self?.renderState(.success, with: "加载成功")
@@ -82,15 +89,15 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestCollectionViewController: UIViewController, FWCollectionViewController, FWCollectionViewDelegateFlowLayout {
+@objcMembers class SwiftTestCollectionViewController: UIViewController, CollectionViewControllerProtocol, CollectionViewDelegateFlowLayout {
     lazy var contentView: UIView = {
         let contentView = UIView()
         contentView.layer.masksToBounds = true
         return contentView
     }()
     
-    lazy var flowLayout: FWCollectionViewFlowLayout = {
-        let flowLayout = FWCollectionViewFlowLayout()
+    lazy var flowLayout: CollectionViewFlowLayout = {
+        let flowLayout = CollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.sectionInset = .zero
@@ -123,7 +130,7 @@ import FWApplication
     }
     
     func renderModel() {
-        fw.setRightBarItem(UIBarButtonItem.SystemItem.refresh.rawValue) { [weak self] (sender) in
+        __fw.setRightBarItem(UIBarButtonItem.SystemItem.refresh.rawValue) { [weak self] (sender) in
             guard let self = self else { return }
             
             self.flowLayout.itemRenderVertical = !self.flowLayout.itemRenderVertical
@@ -150,7 +157,7 @@ import FWApplication
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         var label = cell.contentView.viewWithTag(100) as? UILabel
         if label == nil {
-            let textLabel = UILabel.fw.label(with: .systemFont(ofSize: 16), textColor: .white)
+            let textLabel = UILabel.fw.label(font: .systemFont(ofSize: 16), textColor: .white)
             label = textLabel
             textLabel.tag = 100
             cell.contentView.addSubview(textLabel)
@@ -170,14 +177,14 @@ import FWApplication
         return view
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> FWCollectionViewSectionConfig? {
-        let sectionConfig = FWCollectionViewSectionConfig()
+    func collectionView(_ collectionView: UICollectionView, layout: UICollectionViewLayout, configForSectionAt section: Int) -> CollectionViewSectionConfig? {
+        let sectionConfig = CollectionViewSectionConfig()
         sectionConfig.backgroundColor = UIColor.fw.randomColor
         return sectionConfig
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (FWScreenWidth - 40) / 4, height: indexPath.item % 3 == 0 ? 80 : 60)
+        return CGSize(width: (FW.screenWidth - 40) / 4, height: indexPath.item % 3 == 0 ? 80 : 60)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
@@ -190,7 +197,7 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < collectionData.count {
-            view.fw.showMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
+            view.__fw.showMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
         }
     }
     
@@ -208,18 +215,18 @@ import FWApplication
     }*/
 }
 
-@objcMembers class SwiftTestScrollViewController: UIViewController, FWScrollViewController {
+@objcMembers class SwiftTestScrollViewController: UIViewController, ScrollViewControllerProtocol {
     func renderScrollView() {
         let view = UIView()
         view.backgroundColor = UIColor.fw.randomColor
         contentView.addSubview(view)
         view.fw.layoutMaker { (make) in
-            make.edges().height(1000).width(FWScreenWidth)
+            make.edges().height(1000).width(FW.screenWidth)
         }
     }
 }
 
-@objcMembers class SwiftTestTableViewController: UIViewController, FWTableViewController {
+@objcMembers class SwiftTestTableViewController: UIViewController, TableViewControllerProtocol {
     func renderTableView() {
         view.backgroundColor = Theme.backgroundColor
     }
@@ -239,15 +246,58 @@ import FWApplication
     }
 }
 
-@objcMembers class SwiftTestWebViewController: UIViewController, FWWebViewController {
+@objcMembers class SwiftTestWebViewController: UIViewController, WebViewControllerProtocol {
     var webItems: NSArray? = {
         return [
-            FWIcon.backImage as Any,
-            FWIcon.closeImage as Any
+            Icon.backImage as Any,
+            Icon.closeImage as Any
         ]
     }()
     
     func renderWebView() {
         webRequest = "http://kvm.wuyong.site/test.php"
+    }
+}
+
+@objcMembers class SwiftTestPopupViewController: UIViewController, ViewControllerProtocol {
+    // MARK: - Accessor
+    lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.fw.addTapGesture { [weak self] _ in
+            self?.fw.close()
+        }
+        return view
+    }()
+    
+    lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    // MARK: - Lifecycle
+    func renderInit() {
+        modalPresentationStyle = .custom
+        fw.navigationBarHidden = true
+        fw.setPresentTransition(nil)
+    }
+    
+    func renderView() {
+        view.backgroundColor = .clear
+        view.addSubview(backgroundView)
+        view.addSubview(contentView)
+        backgroundView.fw.layoutChain
+            .edges(excludingEdge: .bottom)
+        contentView.fw.layoutChain
+            .edges(excludingEdge: .top)
+            .topToBottom(ofView: backgroundView)
+        
+        contentView.fw.layoutChain.height(FW.screenHeight / 2.0)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        contentView.fw.setCornerLayer([.topLeft, .topRight], radius: 8)
     }
 }

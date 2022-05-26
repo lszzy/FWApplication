@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// Keychain缓存
+NS_SWIFT_NAME(CacheKeychain)
 @interface FWCacheKeychain : FWCacheEngine
 
 /** 单例模式 */

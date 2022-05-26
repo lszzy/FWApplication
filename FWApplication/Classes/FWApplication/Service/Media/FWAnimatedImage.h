@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - FWImageWrapper+FWAnimated
 
 /// 图片格式可扩展枚举
-typedef NSInteger FWImageFormat NS_TYPED_EXTENSIBLE_ENUM;
+typedef NSInteger FWImageFormat NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(ImageFormat);
 static const FWImageFormat FWImageFormatUndefined = -1;
 static const FWImageFormat FWImageFormatJPEG      = 0;
 static const FWImageFormat FWImageFormatPNG       = 1;
@@ -82,6 +82,7 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 /**
  动图单帧对象
  */
+NS_SWIFT_NAME(ImageFrame)
 @interface FWImageFrame : NSObject
 
 /// 单帧图片
@@ -104,6 +105,7 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 #pragma mark - FWImageCoder
 
 /// 图片解码器，支持动图
+NS_SWIFT_NAME(ImageCoder)
 @interface FWImageCoder : NSObject
 
 /// 单例模式

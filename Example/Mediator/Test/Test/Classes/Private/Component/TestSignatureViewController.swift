@@ -8,10 +8,10 @@
 
 import FWApplication
 
-@objcMembers class TestSignatureViewController: TestViewController, FWSignatureDelegate {
+@objcMembers class TestSignatureViewController: TestViewController, SignatureDelegate {
     
-    private lazy var signatureView: FWSignatureView = {
-        let signatureView = FWSignatureView()
+    private lazy var signatureView: SignatureView = {
+        let signatureView = SignatureView()
         signatureView.backgroundColor = UIColor.white
         signatureView.delegate = self
         return signatureView
@@ -31,7 +31,7 @@ import FWApplication
         button.setTitle("Save", for: .normal)
         button.fw.addTouch { [weak self] (sender) in
             if let image = self?.signatureView.getSignature(scale: 10) {
-                image.fw.saveImage()
+                image.__fw.saveImage()
                 self?.signatureView.clear()
             }
         }
@@ -40,20 +40,20 @@ import FWApplication
     
     override func renderView() {
         view.addSubview(signatureView)
-        signatureView.fw.layoutChain.left().right().centerYToView(view as Any, withOffset: -100).height(300)
+        signatureView.fw.layoutChain.left().right().centerY(toView: view as Any, offset: -100).height(300)
         
         view.addSubview(clearButton)
-        clearButton.fw.layoutChain.centerX().topToBottomOfView(signatureView, withOffset: 20)
+        clearButton.fw.layoutChain.centerX().topToBottom(ofView: signatureView, offset: 20)
         
         view.addSubview(saveButton)
-        saveButton.fw.layoutChain.centerX().topToBottomOfView(clearButton, withOffset: 20)
+        saveButton.fw.layoutChain.centerX().topToBottom(ofView: clearButton, offset: 20)
     }
     
-    func didStart(_ view: FWSignatureView) {
+    func didStart(_ view: SignatureView) {
         print("Started Drawing")
     }
     
-    func didFinish(_ view: FWSignatureView) {
+    func didFinish(_ view: SignatureView) {
         print("Finished Drawing")
     }
     

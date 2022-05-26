@@ -1,1 +1,1 @@
-../../FWApplication/View/Component/FWTagCollectionView.h
+../../FWApplication/Toolkit/Component/FWTagCollectionView.h

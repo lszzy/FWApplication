@@ -39,7 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The percent-escaped string.
  */
-FOUNDATION_EXPORT NSString * FWPercentEscapedStringFromString(NSString *string);
+FOUNDATION_EXPORT NSString * FWPercentEscapedStringFromString(NSString *string) NS_SWIFT_NAME(PercentEscapedStringFromString(_:));
 
 /**
  A helper method to generate encoded url query parameters for appending to the end of a URL.
@@ -48,13 +48,14 @@ FOUNDATION_EXPORT NSString * FWPercentEscapedStringFromString(NSString *string);
 
  @return A url encoded query string
  */
-FOUNDATION_EXPORT NSString * FWQueryStringFromParameters(NSDictionary *parameters);
+FOUNDATION_EXPORT NSString * FWQueryStringFromParameters(NSDictionary *parameters) NS_SWIFT_NAME(QueryStringFromParameters(_:));
 
 /**
  The `FWURLRequestSerialization` protocol is adopted by an object that encodes parameters for a specified HTTP requests. Request serializers may encode parameters as query strings, HTTP bodies, setting the appropriate HTTP header fields as necessary.
 
  For example, a JSON request serializer may set the HTTP body of the request to a JSON representation, and set the `Content-Type` HTTP header field value to `application/json`.
  */
+NS_SWIFT_NAME(URLRequestSerialization)
 @protocol FWURLRequestSerialization <NSObject, NSSecureCoding, NSCopying>
 
 /**
@@ -79,7 +80,7 @@ FOUNDATION_EXPORT NSString * FWQueryStringFromParameters(NSDictionary *parameter
  */
 typedef NS_ENUM(NSUInteger, FWHTTPRequestQueryStringSerializationStyle) {
     FWHTTPRequestQueryStringDefaultStyle = 0,
-};
+} NS_SWIFT_NAME(HTTPRequestQueryStringSerializationStyle);
 
 @protocol FWMultipartFormData;
 
@@ -88,6 +89,7 @@ typedef NS_ENUM(NSUInteger, FWHTTPRequestQueryStringSerializationStyle) {
 
  Any request or response serializer dealing with HTTP is encouraged to subclass `FWHTTPRequestSerializer` in order to ensure consistent default behavior.
  */
+NS_SWIFT_NAME(HTTPRequestSerializer)
 @interface FWHTTPRequestSerializer : NSObject <FWURLRequestSerialization>
 
 /**
@@ -275,6 +277,7 @@ forHTTPHeaderField:(NSString *)field;
 /**
  The `FWMultipartFormData` protocol defines the methods supported by the parameter in the block argument of `FWHTTPRequestSerializer -multipartFormRequestWithMethod:URLString:parameters:constructingBodyWithBlock:`.
  */
+NS_SWIFT_NAME(MultipartFormData)
 @protocol FWMultipartFormData
 
 /**
@@ -375,6 +378,7 @@ forHTTPHeaderField:(NSString *)field;
 /**
  `FWJSONRequestSerializer` is a subclass of `FWHTTPRequestSerializer` that encodes parameters as JSON using `NSJSONSerialization`, setting the `Content-Type` of the encoded request to `application/json`.
  */
+NS_SWIFT_NAME(JSONRequestSerializer)
 @interface FWJSONRequestSerializer : FWHTTPRequestSerializer
 
 /**
@@ -396,6 +400,7 @@ forHTTPHeaderField:(NSString *)field;
 /**
  `FWPropertyListRequestSerializer` is a subclass of `FWHTTPRequestSerializer` that encodes parameters as JSON using `NSPropertyListSerializer`, setting the `Content-Type` of the encoded request to `application/x-plist`.
  */
+NS_SWIFT_NAME(PropertyListRequestSerializer)
 @interface FWPropertyListRequestSerializer : FWHTTPRequestSerializer
 
 /**
@@ -439,7 +444,7 @@ forHTTPHeaderField:(NSString *)field;
  `FWURLRequestSerializationErrorDomain`
  FWURLRequestSerializer errors. Error codes for `FWURLRequestSerializationErrorDomain` correspond to codes in `NSURLErrorDomain`.
  */
-FOUNDATION_EXPORT NSString * const FWURLRequestSerializationErrorDomain;
+FOUNDATION_EXPORT NSString * const FWURLRequestSerializationErrorDomain NS_SWIFT_NAME(URLRequestSerializationErrorDomain);
 
 /**
  ## User info dictionary keys
@@ -453,7 +458,7 @@ FOUNDATION_EXPORT NSString * const FWURLRequestSerializationErrorDomain;
  `FWNetworkingOperationFailingURLRequestErrorKey`
  The corresponding value is an `NSURLRequest` containing the request of the operation associated with an error. This key is only present in the `FWURLRequestSerializationErrorDomain`.
  */
-FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLRequestErrorKey;
+FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLRequestErrorKey NS_SWIFT_NAME(NetworkingOperationFailingURLRequestErrorKey);
 
 /**
  ## Throttling Bandwidth for HTTP Request Input Streams
@@ -468,7 +473,7 @@ FOUNDATION_EXPORT NSString * const FWNetworkingOperationFailingURLRequestErrorKe
  `kFWUploadStream3GSuggestedDelay`
  Duration of delay each time a packet is read. Equal to 0.2 seconds.
  */
-FOUNDATION_EXPORT NSUInteger const kFWUploadStream3GSuggestedPacketSize;
-FOUNDATION_EXPORT NSTimeInterval const kFWUploadStream3GSuggestedDelay;
+FOUNDATION_EXPORT NSUInteger const kFWUploadStream3GSuggestedPacketSize NS_SWIFT_NAME(kUploadStream3GSuggestedPacketSize);
+FOUNDATION_EXPORT NSTimeInterval const kFWUploadStream3GSuggestedDelay NS_SWIFT_NAME(kUploadStream3GSuggestedDelay);
 
 NS_ASSUME_NONNULL_END
