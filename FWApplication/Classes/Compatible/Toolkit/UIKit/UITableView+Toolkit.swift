@@ -103,7 +103,8 @@ import FWApplication
             return UITableViewCell(style: .default, reuseIdentifier: nil)
         }
         
-        let cell = clazz.fw.cell(tableView: tableView)
+        // 注意：此处必须使用.__fw.创建，否则返回的对象类型不对
+        let cell = clazz.__fw.cell(with: tableView)
         if let cellBlock = cellConfiguation {
             cellBlock(cell, indexPath)
             return cell
@@ -158,7 +159,8 @@ import FWApplication
             return view
         }
         if let clazz = header as? UITableViewHeaderFooterView.Type {
-            let view = clazz.fw.headerFooterView(tableView: tableView)
+            // 注意：此处必须使用.__fw.创建，否则返回的对象类型不对
+            let view = clazz.__fw.headerFooterView(with: tableView)
             let viewBlock = headerConfiguration ?? { (header, section) in header.__fw.viewModel = nil }
             viewBlock(view, section)
             return view
@@ -197,7 +199,8 @@ import FWApplication
             return view
         }
         if let clazz = footer as? UITableViewHeaderFooterView.Type {
-            let view = clazz.fw.headerFooterView(tableView: tableView)
+            // 注意：此处必须使用.__fw.创建，否则返回的对象类型不对
+            let view = clazz.__fw.headerFooterView(with: tableView)
             let viewBlock = footerConfiguration ?? { (footer, section) in footer.__fw.viewModel = nil }
             viewBlock(view, section)
             return view
