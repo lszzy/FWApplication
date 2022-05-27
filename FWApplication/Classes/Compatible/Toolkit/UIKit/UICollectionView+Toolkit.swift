@@ -42,8 +42,8 @@ import FWApplication
     open var headerConfiguration: ReusableViewIndexPathBlock?
     /// 集合section头尺寸句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var sizeForHeader: ((Int) -> CGSize)?
-    /// 集合section头尺寸，默认zero自动计算，优先级低
-    open var headerSize: CGSize = .zero
+    /// 集合section头尺寸，默认nil自动根据viewModel计算，可设置为automaticSize，优先级低
+    open var headerSize: CGSize?
     
     /// 集合section尾视图句柄，支持UICollectionReusableView，默认nil
     open var viewForFooter: ((IndexPath) -> Any?)?
@@ -53,8 +53,8 @@ import FWApplication
     open var footerConfiguration: ReusableViewIndexPathBlock?
     /// 集合section尾尺寸句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var sizeForFooter: ((Int) -> CGSize)?
-    /// 集合section尾尺寸，默认zero自动计算，优先级低
-    open var footerSize: CGSize = .zero
+    /// 集合section尾尺寸，默认nil自动根据viewModel计算，可设置为automaticSize，优先级低
+    open var footerSize: CGSize?
     
     /// 集合cell类句柄，支持UICollectionViewCell，默认nil
     open var cellForItem: ((IndexPath) -> Any?)?
@@ -64,8 +64,8 @@ import FWApplication
     open var cellConfiguration: CollectionCellIndexPathBlock?
     /// 集合cell尺寸句柄，不指定时默认使用FWDynamicLayout自动计算并按indexPath缓存
     open var sizeForItem: ((IndexPath) -> CGSize)?
-    /// 集合cell尺寸，默认zero自动计算，优先级低
-    open var itemSize: CGSize = .zero
+    /// 集合cell尺寸，默认nil自动根据viewModel计算，可设置为automaticSize，优先级低
+    open var itemSize: CGSize?
     
     /// 集合选中事件，默认nil
     open var didSelectItem: ((IndexPath) -> Void)?
@@ -137,7 +137,7 @@ import FWApplication
         if let sizeBlock = sizeForItem {
             return sizeBlock(indexPath)
         }
-        if itemSize != .zero {
+        if let itemSize = itemSize {
             return itemSize
         }
         
@@ -211,7 +211,7 @@ import FWApplication
         if let sizeBlock = sizeForHeader {
             return sizeBlock(section)
         }
-        if headerSize != .zero {
+        if let headerSize = headerSize {
             return headerSize
         }
         
@@ -230,7 +230,7 @@ import FWApplication
         if let sizeBlock = sizeForFooter {
             return sizeBlock(section)
         }
-        if footerSize != .zero {
+        if let footerSize = footerSize {
             return footerSize
         }
         
