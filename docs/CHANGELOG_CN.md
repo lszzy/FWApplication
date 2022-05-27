@@ -1,5 +1,12 @@
 # 更新日志
 
+## [3.2.0] - 2022-05-27
+
+### Changed
+* 重构templateHeight为通用缓存
+* 优化TableViewDelegate代理类
+* 兼容FWFramework 3.2.0版本
+
 ## [3.1.0] - 2022-05-26
 
 ### Added

@@ -17,7 +17,7 @@
     <a title="TableViewDelegate Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.1.0 Docs</a> (62% documented)</p>
+        <p><a href="../index.html">FWApplication 3.2.0 Docs</a> (62% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -2904,9 +2904,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@FWApplication@objc(cs)FWTableViewDelegate(py)headerHeight"></a>
+                    <a name="/s:13FWApplication17TableViewDelegateC12headerHeight12CoreGraphics7CGFloatVSgvp"></a>
                     <a name="//apple_ref/swift/Property/headerHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(cs)FWTableViewDelegate(py)headerHeight">headerHeight</a>
+                    <a class="token" href="#/s:13FWApplication17TableViewDelegateC12headerHeight12CoreGraphics7CGFloatVSgvp">headerHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2914,14 +2914,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>表格section头高度，默认0自动计算，优先级低</p>
+                        <p>表格section头高度，默认nil自动根据viewModel计算，可设置为automaticDimension，优先级低</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">headerHeight</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">headerHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3039,9 +3039,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@FWApplication@objc(cs)FWTableViewDelegate(py)footerHeight"></a>
+                    <a name="/s:13FWApplication17TableViewDelegateC12footerHeight12CoreGraphics7CGFloatVSgvp"></a>
                     <a name="//apple_ref/swift/Property/footerHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(cs)FWTableViewDelegate(py)footerHeight">footerHeight</a>
+                    <a class="token" href="#/s:13FWApplication17TableViewDelegateC12footerHeight12CoreGraphics7CGFloatVSgvp">footerHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3049,14 +3049,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>表格section尾高度，默认0自动计算，优先级低</p>
+                        <p>表格section尾高度，默认nil自动根据viewModel计算，可设置为automaticDimension，优先级低</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">footerHeight</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">footerHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3174,9 +3174,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@FWApplication@objc(cs)FWTableViewDelegate(py)rowHeight"></a>
+                    <a name="/s:13FWApplication17TableViewDelegateC9rowHeight12CoreGraphics7CGFloatVSgvp"></a>
                     <a name="//apple_ref/swift/Property/rowHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(cs)FWTableViewDelegate(py)rowHeight">rowHeight</a>
+                    <a class="token" href="#/s:13FWApplication17TableViewDelegateC9rowHeight12CoreGraphics7CGFloatVSgvp">rowHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3184,14 +3184,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>表格cell高度，默认0自动计算，优先级低</p>
+                        <p>表格cell高度，默认nil自动根据viewModel计算，可设置为automaticDimension，优先级低</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">rowHeight</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">rowHeight</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3675,7 +3675,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

@@ -2733,14 +2733,14 @@
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 759,
-      "symbol": "FWLayoutChain.edgesHorizontal",
+      "symbol": "FWLayoutChain.horizontal",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 760,
-      "symbol": "FWLayoutChain.edgesVertical",
+      "symbol": "FWLayoutChain.vertical",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
@@ -2831,28 +2831,28 @@
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 773,
-      "symbol": "FWLayoutChain.topToBottomOfView",
+      "symbol": "FWLayoutChain.topToViewBottom",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 774,
-      "symbol": "FWLayoutChain.bottomToTopOfView",
+      "symbol": "FWLayoutChain.bottomToViewTop",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 775,
-      "symbol": "FWLayoutChain.leftToRightOfView",
+      "symbol": "FWLayoutChain.leftToViewRight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 776,
-      "symbol": "FWLayoutChain.rightToLeftOfView",
+      "symbol": "FWLayoutChain.rightToViewLeft",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
@@ -2887,28 +2887,28 @@
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 781,
-      "symbol": "FWLayoutChain.topToBottomOfViewWithOffset",
+      "symbol": "FWLayoutChain.topToViewBottomWithOffset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 782,
-      "symbol": "FWLayoutChain.bottomToTopOfViewWithOffset",
+      "symbol": "FWLayoutChain.bottomToViewTopWithOffset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 783,
-      "symbol": "FWLayoutChain.leftToRightOfViewWithOffset",
+      "symbol": "FWLayoutChain.leftToViewRightWithOffset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 784,
-      "symbol": "FWLayoutChain.rightToLeftOfViewWithOffset",
+      "symbol": "FWLayoutChain.rightToViewLeftWithOffset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
@@ -2978,14 +2978,14 @@
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 797,
-      "symbol": "FWLayoutChain.edgesToSafeAreaHorizontal",
+      "symbol": "FWLayoutChain.horizontalToSafeArea",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWAutoLayout.h",
       "line": 798,
-      "symbol": "FWLayoutChain.edgesToSafeAreaVertical",
+      "symbol": "FWLayoutChain.verticalToSafeArea",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
@@ -3404,56 +3404,56 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 162,
+      "line": 189,
       "symbol": "FWCollectionCellConfigurationBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 163,
+      "line": 190,
       "symbol": "FWCollectionCellIndexPathBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 165,
+      "line": 192,
       "symbol": "FWCollectionViewCellWrapper(FWDynamicLayout)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 178,
+      "line": 205,
       "symbol": "FWCollectionViewCellClassWrapper(FWDynamicLayout)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 207,
+      "line": 234,
       "symbol": "FWReusableViewConfigurationBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 208,
+      "line": 235,
       "symbol": "FWReusableViewIndexPathBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 210,
+      "line": 237,
       "symbol": "FWCollectionReusableViewWrapper(FWDynamicLayout)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDynamicLayout.h",
-      "line": 223,
+      "line": 250,
       "symbol": "FWCollectionReusableViewClassWrapper(FWDynamicLayout)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -18181,65 +18181,44 @@
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 42,
+      "line": 45,
       "symbol": "FWTableViewClassWrapper(FWApplication)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 49,
+      "line": 52,
       "symbol": "FWTableViewCellWrapper(FWApplication)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 69,
+      "line": 72,
       "symbol": "FWTableViewCellBackgroundView.contentView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 72,
+      "line": 75,
       "symbol": "FWTableViewCellBackgroundView.contentInset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 75,
+      "line": 78,
       "symbol": "FWTableViewCellBackgroundView.-setSectionContentInset:tableView:atIndexPath:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 85,
+      "line": 88,
       "symbol": "FWTableViewCellWrapper.backgroundView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 105,
-      "symbol": "FWTableViewWrapper.-templateHeightAtIndexPath:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 108,
-      "symbol": "FWTableViewWrapper.-setTemplateHeight:atIndexPath:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 111,
-      "symbol": "FWTableViewWrapper.-clearTemplateHeightCache",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {

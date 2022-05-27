@@ -17,7 +17,7 @@
     <a title="CollectionViewDelegate Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.1.0 Docs</a> (62% documented)</p>
+        <p><a href="../index.html">FWApplication 3.2.0 Docs</a> (62% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -2958,9 +2958,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@FWApplication@objc(cs)FWCollectionViewDelegate(py)headerSize"></a>
+                    <a name="/s:13FWApplication22CollectionViewDelegateC10headerSizeSo6CGSizeVSgvp"></a>
                     <a name="//apple_ref/swift/Property/headerSize" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(cs)FWCollectionViewDelegate(py)headerSize">headerSize</a>
+                    <a class="token" href="#/s:13FWApplication22CollectionViewDelegateC10headerSizeSo6CGSizeVSgvp">headerSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2968,14 +2968,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>集合section头尺寸，默认zero自动计算，优先级低</p>
+                        <p>集合section头尺寸，默认nil自动根据viewModel计算，可设置为automaticSize，优先级低</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">headerSize</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">headerSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3093,9 +3093,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@FWApplication@objc(cs)FWCollectionViewDelegate(py)footerSize"></a>
+                    <a name="/s:13FWApplication22CollectionViewDelegateC10footerSizeSo6CGSizeVSgvp"></a>
                     <a name="//apple_ref/swift/Property/footerSize" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(cs)FWCollectionViewDelegate(py)footerSize">footerSize</a>
+                    <a class="token" href="#/s:13FWApplication22CollectionViewDelegateC10footerSizeSo6CGSizeVSgvp">footerSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3103,14 +3103,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>集合section尾尺寸，默认zero自动计算，优先级低</p>
+                        <p>集合section尾尺寸，默认nil自动根据viewModel计算，可设置为automaticSize，优先级低</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">footerSize</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">footerSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3228,9 +3228,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@FWApplication@objc(cs)FWCollectionViewDelegate(py)itemSize"></a>
+                    <a name="/s:13FWApplication22CollectionViewDelegateC8itemSizeSo6CGSizeVSgvp"></a>
                     <a name="//apple_ref/swift/Property/itemSize" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@FWApplication@objc(cs)FWCollectionViewDelegate(py)itemSize">itemSize</a>
+                    <a class="token" href="#/s:13FWApplication22CollectionViewDelegateC8itemSizeSo6CGSizeVSgvp">itemSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3238,14 +3238,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>集合cell尺寸，默认zero自动计算，优先级低</p>
+                        <p>集合cell尺寸，默认nil自动根据viewModel计算，可设置为automaticSize，优先级低</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">itemSize</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">itemSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -3540,7 +3540,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
