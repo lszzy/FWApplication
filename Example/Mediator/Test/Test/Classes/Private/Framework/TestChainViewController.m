@@ -34,14 +34,14 @@
     [label.fw setCornerRadius:5];
     [self.view addSubview:label];
     [label.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
-        make.widthToView(view).centerYToView(view).leftToRightOfViewWithOffset(view, 20);
+        make.widthToView(view).centerYToView(view).leftToViewRightWithOffset(view, 20);
     }];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"btn" forState:UIControlStateNormal];
     [self.view addSubview:button];
-    button.fw.layoutChain.widthToView(view).heightToView(view).leftToRightOfViewWithOffset(label, 20).topToViewWithOffset(view, 0);
+    button.fw.layoutChain.widthToView(view).heightToView(view).leftToViewRightWithOffset(label, 20).topToViewWithOffset(view, 0);
     
     UIImageView *image = [UIImageView new];
     image.image = [UIImage.fw imageWithAppIcon];
@@ -62,7 +62,7 @@
     attr.textColor = Theme.textColor;
     attr.textAlignment = kCTTextAlignmentLeft;
     [self.view addSubview:attr];
-    attr.fw.layoutChain.leftWithInset(20).rightWithInset(20).topToBottomOfViewWithOffset(view, 20);
+    attr.fw.layoutChain.leftWithInset(20).rightWithInset(20).topToViewBottomWithOffset(view, 20);
     
     [self.attributedLabel setText:@"我是非常长的文本，要多长有多长，我会自动截断，再附加视图，不信你看嘛，我是显示不下了的文本，我是更多文本，我是更多更多的文本，我又要换行了"];
     UILabel *collapseLabel = [UILabel.fw labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
@@ -96,7 +96,7 @@
     emptyLabel.backgroundColor = Theme.backgroundColor;
     [self.view addSubview:emptyLabel];
     [emptyLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
-        make.topToBottomOfViewWithOffset(attr, 20);
+        make.topToViewBottomWithOffset(attr, 20);
         make.leftWithInset(20);
     }];
     
@@ -107,7 +107,7 @@
     emptyLabel2.fw.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
     [self.view addSubview:emptyLabel2];
     [emptyLabel2.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
-        make.leftToRightOfViewWithOffset(emptyLabel, 20);
+        make.leftToViewRightWithOffset(emptyLabel, 20);
         make.centerYToView(emptyLabel);
     }];
     
@@ -131,7 +131,7 @@
     [self.view addSubview:numberLabel];
     [numberLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftWithInset(20).rightWithInset(20)
-            .topToBottomOfViewWithOffset(attr, 50);
+            .topToViewBottomWithOffset(attr, 50);
     }];
 }
 

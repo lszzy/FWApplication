@@ -80,7 +80,7 @@
     self.toolbarView.fw.layoutChain.left().right().bottom();
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
-    self.tableView.fw.layoutChain.left().right().topToBottomOfView(self.navigationView).bottomToTopOfView(self.toolbarView);
+    self.tableView.fw.layoutChain.left().right().topToViewBottom(self.navigationView).bottomToViewTop(self.toolbarView);
 }
 
 - (void)renderData

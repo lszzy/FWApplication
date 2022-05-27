@@ -46,21 +46,21 @@
     self.networkLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.networkLabel];
     [self.networkLabel.fw alignCenterToSuperviewWithOffset:CGPointMake(0, -100)];
-    [self.networkLabel.fw pinEdgesToSuperviewHorizontal];
+    [self.networkLabel.fw pinHorizontalToSuperview];
     
     self.label = [[UILabel alloc] init];
     self.label.numberOfLines = 0;
     self.label.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.label];
     [self.label.fw alignCenterToSuperviewWithOffset:CGPointMake(0, -50)];
-    [self.label.fw pinEdgesToSuperviewHorizontal];
+    [self.label.fw pinHorizontalToSuperview];
     
     self.label2 = [[UILabel alloc] init];
     self.label2.numberOfLines = 0;
     self.label2.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:self.label2];
     [self.label2.fw alignCenterToSuperviewWithOffset:CGPointMake(0, 50)];
-    [self.label2.fw pinEdgesToSuperviewHorizontal];
+    [self.label2.fw pinHorizontalToSuperview];
 }
 
 - (void)viewDidLoad

@@ -24,7 +24,7 @@
     textLabel.numberOfLines = 0;
     [self.view addSubview:textLabel];
     [textLabel.fw alignCenterToSuperview];
-    [textLabel.fw pinEdgesToSuperviewHorizontal];
+    [textLabel.fw pinHorizontalToSuperview];
 }
 
 - (void)viewDidAppear:(BOOL)animated

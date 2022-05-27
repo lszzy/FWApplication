@@ -39,7 +39,7 @@
     label2.font = [UIFont systemFontOfSize:16];
     label2.numberOfLines = 0;
     [self.view addSubview:label2];
-    label2.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(label, 10);
+    label2.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(label, 10);
     
     FWAttributedLabel *attrLabel = [FWAttributedLabel new];
     _attrLabel = attrLabel;
@@ -47,7 +47,7 @@
     attrLabel.font = [UIFont systemFontOfSize:16];
     attrLabel.textColor = Theme.textColor;
     [self.view addSubview:attrLabel];
-    attrLabel.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(label2, 10);
+    attrLabel.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(label2, 10);
     
     FWAttributedLabel *attrLabel2 = [FWAttributedLabel new];
     _attrLabel2 = attrLabel2;
@@ -58,7 +58,7 @@
     attrLabel2.lineBreakMode = kCTLineBreakByCharWrapping;
     attrLabel2.lineSpacing = 8 - attrLabel.font.fw.spaceHeight;
     [self.view addSubview:attrLabel2];
-    attrLabel2.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(attrLabel, 10);
+    attrLabel2.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel, 10);
     
     UITextView *textView = [UITextView new];
     _textView = textView;
@@ -66,7 +66,7 @@
     textView.backgroundColor = [Theme cellColor];
     textView.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:textView];
-    textView.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(attrLabel2, 10).height(120);
+    textView.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel2, 10).height(120);
     
     UITextView *textView2 = [UITextView new];
     _textView2 = textView2;
@@ -75,7 +75,7 @@
     textView2.textColor = Theme.textColor;
     textView2.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:textView2];
-    textView2.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(textView, 10).height(120);
+    textView2.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(textView, 10).height(120);
     
     UILabel *resultLabel = [UILabel new];
     _resultLabel = resultLabel;
@@ -83,7 +83,7 @@
     resultLabel.numberOfLines = 0;
     resultLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:resultLabel];
-    resultLabel.fw.layoutChain.leftToView(label).rightToView(label).topToBottomOfViewWithOffset(textView2, 10);
+    resultLabel.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(textView2, 10);
 }
 
 - (NSString *)testText

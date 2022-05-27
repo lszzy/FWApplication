@@ -66,7 +66,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     _testView = testView;
     testView.backgroundColor = UIColor.fw.randomColor;
     [headerView addSubview:testView];
-    testView.fw.layoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(bannerView, 50);
+    testView.fw.layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(bannerView, 50);
     
     UILabel *testLabel = [UILabel new];
     testLabel.text = @"Banner";
@@ -79,14 +79,14 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     [testButton setTitle:@"Button" forState:UIControlStateNormal];
     [testButton.fw setBackgroundColor:[UIColor.fw randomColor] forState:UIControlStateNormal];
     [headerView addSubview:testButton];
-    testButton.fw.layoutChain.width(100).height(30).centerX().topToBottomOfViewWithOffset(testView, 50);
+    testButton.fw.layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(testView, 50);
     
     UISwitch *testSwitch = [UISwitch new];
     _testSwitch = testSwitch;
     testSwitch.thumbTintColor = [UIColor.fw randomColor];
     testSwitch.onTintColor = testSwitch.thumbTintColor;
     [headerView addSubview:testSwitch];
-    testSwitch.fw.layoutChain.centerX().topToBottomOfViewWithOffset(testButton, 50);
+    testSwitch.fw.layoutChain.centerX().topToViewBottomWithOffset(testButton, 50);
     
     FWSegmentedControl *segmentedControl = [FWSegmentedControl new];
     self.segmentedControl = segmentedControl;
@@ -100,14 +100,14 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont.fw fontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
     self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont.fw boldFontOfSize:18], NSForegroundColorAttributeName: Theme.textColor};
     [headerView addSubview:self.segmentedControl];
-    segmentedControl.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(testSwitch, 50).height(50);
+    segmentedControl.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToViewBottomWithOffset(testSwitch, 50).height(50);
     
     FWTextTagCollectionView *tagCollectionView = [FWTextTagCollectionView new];
     _tagCollectionView = tagCollectionView;
     tagCollectionView.verticalSpacing = 10;
     tagCollectionView.horizontalSpacing = 10;
     [headerView addSubview:tagCollectionView];
-    tagCollectionView.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToBottomOfViewWithOffset(segmentedControl, 50).height(100).bottomWithInset(50);
+    tagCollectionView.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToViewBottomWithOffset(segmentedControl, 50).height(100).bottomWithInset(50);
     
     self.tableView.tableHeaderView = headerView;
     [headerView.fw autoLayoutSubviews];

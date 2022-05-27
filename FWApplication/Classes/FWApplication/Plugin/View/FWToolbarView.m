@@ -55,7 +55,7 @@
     [self addSubview:self.backgroundView];
     [self addSubview:self.menuView];
     [self.backgroundView.fw pinEdgesToSuperview];
-    [self.menuView.fw pinEdgesToSuperviewHorizontal];
+    [self.menuView.fw pinHorizontalToSuperview];
     [self.menuView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.topHeight];
     [self.menuView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.bottomHeight];
     [self.menuView.fw setDimension:NSLayoutAttributeHeight toSize:self.menuHeight];
@@ -133,7 +133,7 @@
         _topView = [[UIView alloc] init];
         _topView.clipsToBounds = YES;
         [self addSubview:_topView];
-        [_topView.fw pinEdgesToSuperviewHorizontal];
+        [_topView.fw pinHorizontalToSuperview];
         [_topView.fw pinEdgeToSuperview:NSLayoutAttributeTop];
         [_topView.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:self.menuView];
     }
@@ -145,7 +145,7 @@
         _bottomView = [[UIView alloc] init];
         _bottomView.clipsToBounds = YES;
         [self addSubview:_bottomView];
-        [_bottomView.fw pinEdgesToSuperviewHorizontal];
+        [_bottomView.fw pinHorizontalToSuperview];
         [_bottomView.fw pinEdgeToSuperview:NSLayoutAttributeBottom];
         [_bottomView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.menuView];
     }

@@ -287,11 +287,11 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         
         _systemView = [UIImageView new];
         [self.contentView addSubview:_systemView];
-        _systemView.fw.layoutChain.leftWithInset(10).topToBottomOfViewWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
+        _systemView.fw.layoutChain.leftWithInset(10).topToViewBottomWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
         
         _animatedView = [[UIImageView.fw imageViewAnimatedClass] new];
         [self.contentView addSubview:_animatedView];
-        _animatedView.fw.layoutChain.leftToRightOfViewWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
+        _animatedView.fw.layoutChain.leftToViewRightWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
     }
     return self;
 }

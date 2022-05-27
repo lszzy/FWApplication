@@ -57,7 +57,7 @@
     _customCellView = customLabel;
     customLabel.backgroundColor = [Theme cellColor];
     [self.view addSubview:customLabel];
-    customLabel.fw.layoutChain.centerX().topToBottomOfViewWithOffset(textField, 50).size(CGSizeMake(200, 50));
+    customLabel.fw.layoutChain.centerX().topToViewBottomWithOffset(textField, 50).size(CGSizeMake(200, 50));
     
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];

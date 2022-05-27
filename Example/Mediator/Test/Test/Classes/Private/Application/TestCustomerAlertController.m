@@ -2138,7 +2138,7 @@ static NSTimeInterval kDelay = 0.0618; // 按钮接着上一个按钮的延时�
     boxInputView.endEditWhenEditingFinished = NO;
     [boxInputView prepareViewWithBeginEdit:YES];
     [headerView addSubview:boxInputView];
-    boxInputView.fw.layoutChain.topToBottomOfViewWithOffset(titleLabel, 40).centerX().size(CGSizeMake(260, 50));
+    boxInputView.fw.layoutChain.topToViewBottomWithOffset(titleLabel, 40).centerX().size(CGSizeMake(260, 50));
     
     FWAlertController *alertController = [FWAlertController alertControllerWithCustomHeaderView:headerView preferredStyle:FWAlertControllerStyleAlert animationType:FWAlertAnimationTypeDefault];
     alertController.customTextField = YES;
