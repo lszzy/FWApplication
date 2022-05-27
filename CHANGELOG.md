@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.2.0] - 2022-05-27
+
+### Changed
+* Refactor templateHeight to generic cache
+* Optimize the TableViewDelegate proxy class
+* Compatible with FWFramework 3.2.0 version
+
 ## [3.1.0] - 2022-05-26
 
 ### Added

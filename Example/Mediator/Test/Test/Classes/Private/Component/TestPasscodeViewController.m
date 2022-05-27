@@ -45,19 +45,19 @@ typedef NS_ENUM(NSInteger, CRBoxInputModelType) {
     _boxContainerView = [UIView new];
     [self.view addSubview:_boxContainerView];
     _boxContainerView.fw.layoutChain.leftWithInset(35).rightWithInset(35)
-        .height(52).topToBottomOfViewWithOffset(_valueLabel, 30);
+        .height(52).topToViewBottomWithOffset(_valueLabel, 30);
     
     _clearButton = [Theme largeButton];
     [_clearButton setTitle:@"Clear" forState:UIControlStateNormal];
     [_clearButton addTarget:self action:@selector(clearBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_clearButton];
-    _clearButton.fw.layoutChain.centerX().topToBottomOfViewWithOffset(_boxContainerView, 30);
+    _clearButton.fw.layoutChain.centerX().topToViewBottomWithOffset(_boxContainerView, 30);
     
     _securityButton = [Theme largeButton];
     [_securityButton setTitle:@"Security" forState:UIControlStateNormal];
     [_securityButton addTarget:self action:@selector(securityBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_securityButton];
-    _securityButton.fw.layoutChain.centerX().topToBottomOfViewWithOffset(_clearButton, 30);
+    _securityButton.fw.layoutChain.centerX().topToViewBottomWithOffset(_clearButton, 30);
 }
 
 - (void)renderModel

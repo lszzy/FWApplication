@@ -33,7 +33,7 @@
         UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是文本"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
-        iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToRightOfViewWithOffset(iconView, 20);
+        iconLabel.fw.layoutChain.centerY().rightWithInset(20).leftToViewRightWithOffset(iconView, 20);
     }
     return self;
 }
@@ -71,7 +71,7 @@
         UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是头视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
-        iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
+        iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToViewRightWithOffset(iconView, 20);
     }
     return self;
 }
@@ -109,7 +109,7 @@
         UILabel *iconLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:@"我是尾视图"];
         _iconLabel = iconLabel;
         [self.contentView addSubview:iconLabel];
-        iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToRightOfViewWithOffset(iconView, 20);
+        iconLabel.fw.layoutChain.rightWithInset(20).centerYToView(iconView).leftToViewRightWithOffset(iconView, 20);
     }
     return self;
 }
@@ -164,7 +164,7 @@
         [imageView.fw setCornerRadius:5];
         [self addSubview:imageView];
         imageView.fw.layoutChain.centerXToView(testView)
-            .topToBottomOfViewWithOffset(testView, 20).size(CGSizeMake(50, 50));
+            .topToViewBottomWithOffset(testView, 20).size(CGSizeMake(50, 50));
         
         UIView *childView2 = [UIView new];
         childView2.backgroundColor = [UIColor yellowColor];
@@ -217,7 +217,7 @@
         textView1.text = @"我是TextView1";
         [self addSubview:textView1];
         textView1.fw.layoutChain.leftWithInset(20)
-            .topToBottomOfViewWithOffset(label1, 20)
+            .topToViewBottomWithOffset(label1, 20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50));
         
         UITextView *textView2 = [UITextView new];
@@ -228,7 +228,7 @@
         textView2.text = @"我是TextView2222\n我是TextView2\n我是TextView";
         [self addSubview:textView2];
         textView2.fw.layoutChain.rightWithInset(20)
-            .topToBottomOfViewWithOffset(label2, 20)
+            .topToViewBottomWithOffset(label2, 20)
             .size(CGSizeMake(FWScreenWidth / 2 - 40, 50))
             .bottomWithInset(20);
     }

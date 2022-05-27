@@ -120,7 +120,7 @@ class TestNavigationTabBarChildController: TestViewController {
         view.addSubview(childView)
         view.addSubview(tabBarView)
         childView.fw.layoutChain.left().right().top()
-        tabBarView.fw.layoutChain.left().right().bottom().topToBottom(ofView: childView)
+        tabBarView.fw.layoutChain.left().right().bottom().top(toViewBottom: childView)
     }
     
     override func renderData() {

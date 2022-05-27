@@ -291,7 +291,7 @@ import FWApplication
             .edges(excludingEdge: .bottom)
         contentView.fw.layoutChain
             .edges(excludingEdge: .top)
-            .topToBottom(ofView: backgroundView)
+            .top(toViewBottom: backgroundView)
         
         contentView.fw.layoutChain.height(FW.screenHeight / 2.0)
     }

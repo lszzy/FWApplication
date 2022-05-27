@@ -43,10 +43,10 @@ import FWApplication
         signatureView.fw.layoutChain.left().right().centerY(toView: view as Any, offset: -100).height(300)
         
         view.addSubview(clearButton)
-        clearButton.fw.layoutChain.centerX().topToBottom(ofView: signatureView, offset: 20)
+        clearButton.fw.layoutChain.centerX().top(toViewBottom: signatureView, offset: 20)
         
         view.addSubview(saveButton)
-        saveButton.fw.layoutChain.centerX().topToBottom(ofView: clearButton, offset: 20)
+        saveButton.fw.layoutChain.centerX().top(toViewBottom: clearButton, offset: 20)
     }
     
     func didStart(_ view: SignatureView) {

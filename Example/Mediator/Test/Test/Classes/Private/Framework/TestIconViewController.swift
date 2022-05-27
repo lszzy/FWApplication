@@ -30,7 +30,7 @@ class TestIconCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         imageView.fw.layoutChain.centerX().top().size(CGSize(width: 60, height: 60))
         nameLabel.fw.layoutChain.edges(.zero, excludingEdge: .top)
-            .topToBottom(ofView: imageView)
+            .top(toViewBottom: imageView)
     }
     
     required init?(coder: NSCoder) {
@@ -78,7 +78,7 @@ class TestIconCell: UICollectionViewCell {
             .height(FW.navigationBarHeight)
         collectionView.fw.layoutChain
             .edges(excludingEdge: .top)
-            .topToBottom(ofView: searchBar)
+            .top(toViewBottom: searchBar)
     }
     
     override func renderData() {

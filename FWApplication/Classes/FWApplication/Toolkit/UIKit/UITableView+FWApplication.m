@@ -11,6 +11,24 @@
 
 @implementation FWTableViewWrapper (FWApplication)
 
+- (BOOL)estimatedLayout
+{
+    return self.base.estimatedRowHeight == UITableViewAutomaticDimension;
+}
+
+- (void)setEstimatedLayout:(BOOL)enabled
+{
+    if (enabled) {
+        self.base.estimatedRowHeight = UITableViewAutomaticDimension;
+        self.base.estimatedSectionHeaderHeight = UITableViewAutomaticDimension;
+        self.base.estimatedSectionFooterHeight = UITableViewAutomaticDimension;
+    } else {
+        self.base.estimatedRowHeight = 0.f;
+        self.base.estimatedSectionHeaderHeight = 0.f;
+        self.base.estimatedSectionFooterHeight = 0.f;
+    }
+}
+
 - (void)resetGroupedStyle
 {
     self.base.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
@@ -50,7 +68,6 @@
 - (void)reloadDataWithoutCache
 {
     [self clearHeightCache];
-    [self clearTemplateHeightCache];
     [self.base reloadData];
 }
 
@@ -189,62 +206,6 @@
         self.base.backgroundView = backgroundView;
     }
     return backgroundView;
-}
-
-@end
-
-#pragma mark - FWTableViewWrapper+FWTemplateLayout
-
-@implementation FWTableViewWrapper (FWTemplateLayout)
-
-- (void)setTemplateLayout:(BOOL)enabled
-{
-    if (enabled) {
-        self.base.rowHeight = UITableViewAutomaticDimension;
-        self.base.sectionHeaderHeight = UITableViewAutomaticDimension;
-        self.base.sectionFooterHeight = UITableViewAutomaticDimension;
-        self.base.estimatedRowHeight = UITableViewAutomaticDimension;
-        self.base.estimatedSectionHeaderHeight = UITableViewAutomaticDimension;
-        self.base.estimatedSectionFooterHeight = UITableViewAutomaticDimension;
-    } else {
-        self.base.estimatedRowHeight = 0.f;
-        self.base.estimatedSectionHeaderHeight = 0.f;
-        self.base.estimatedSectionFooterHeight = 0.f;
-    }
-}
-
-- (CGFloat)templateHeightAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSNumber *height = [self.innerTemplateHeightCache objectForKey:indexPath];
-    if (height) {
-        return height.floatValue;
-    } else {
-        return UITableViewAutomaticDimension;
-    }
-}
-
-- (void)setTemplateHeight:(CGFloat)height atIndexPath:(NSIndexPath *)indexPath
-{
-    if (height > 0) {
-        [self.innerTemplateHeightCache setObject:@(height) forKey:indexPath];
-    } else {
-        [self.innerTemplateHeightCache removeObjectForKey:indexPath];
-    }
-}
-
-- (void)clearTemplateHeightCache
-{
-    [self.innerTemplateHeightCache removeAllObjects];
-}
-
-- (NSMutableDictionary *)innerTemplateHeightCache
-{
-    NSMutableDictionary *cache = objc_getAssociatedObject(self.base, _cmd);
-    if (!cache) {
-        cache = [NSMutableDictionary new];
-        objc_setAssociatedObject(self.base, _cmd, cache, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return cache;
 }
 
 @end

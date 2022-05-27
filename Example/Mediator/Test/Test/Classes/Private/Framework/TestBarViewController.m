@@ -119,8 +119,8 @@ FWPropertyAssign(BOOL, hideToast);
     }
     
     self.tableView.backgroundColor = [Theme tableColor];
-    self.tableView.fw.layoutChain.edgesHorizontal().top()
-        .bottomToTopOfViewWithOffset(self.frameLabel, -10);
+    self.tableView.fw.layoutChain.horizontal().top()
+        .bottomToViewTopWithOffset(self.frameLabel, -10);
 }
 
 - (void)renderData

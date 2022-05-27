@@ -47,8 +47,8 @@ import FWApplication
         view.addSubview(textView)
         view.addSubview(textView2)
         view.addSubview(textView3)
-        textView2.fw.layoutChain.left(16).right(16).topToBottom(ofView: textView, offset: 16)
-        textView3.fw.layoutChain.left(16).right(16).topToBottom(ofView: textView2, offset: 16).height(44)
+        textView2.fw.layoutChain.left(16).right(16).top(toViewBottom: textView, offset: 16)
+        textView3.fw.layoutChain.left(16).right(16).top(toViewBottom: textView2, offset: 16).height(44)
     }
     
     override func renderModel() {

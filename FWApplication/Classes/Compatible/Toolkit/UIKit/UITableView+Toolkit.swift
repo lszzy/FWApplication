@@ -37,8 +37,8 @@ import FWApplication
     open var headerConfiguration: HeaderFooterViewSectionBlock?
     /// 表格section头高度句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var heightForHeader: ((Int) -> CGFloat)?
-    /// 表格section头高度，默认0自动计算，优先级低
-    open var headerHeight: CGFloat = 0
+    /// 表格section头高度，默认nil自动根据viewModel计算，可设置为automaticDimension，优先级低
+    open var headerHeight: CGFloat?
     
     /// 表格section尾视图句柄，支持UIView或UITableViewHeaderFooterView，默认nil
     open var viewForFooter: ((Int) -> Any?)?
@@ -48,8 +48,8 @@ import FWApplication
     open var footerConfiguration: HeaderFooterViewSectionBlock?
     /// 表格section尾高度句柄，不指定时默认使用FWDynamicLayout自动计算并按section缓存
     open var heightForFooter: ((Int) -> CGFloat)?
-    /// 表格section尾高度，默认0自动计算，优先级低
-    open var footerHeight: CGFloat = 0
+    /// 表格section尾高度，默认nil自动根据viewModel计算，可设置为automaticDimension，优先级低
+    open var footerHeight: CGFloat?
     
     /// 表格cell类句柄，style为default，支持cell或cellClass，默认nil
     open var cellForRow: ((IndexPath) -> Any?)?
@@ -59,8 +59,8 @@ import FWApplication
     open var cellConfiguation: CellIndexPathBlock?
     /// 表格cell高度句柄，不指定时默认使用FWDynamicLayout自动计算并按indexPath缓存
     open var heightForRow: ((IndexPath) -> CGFloat)?
-    /// 表格cell高度，默认0自动计算，优先级低
-    open var rowHeight: CGFloat = 0
+    /// 表格cell高度，默认nil自动根据viewModel计算，可设置为automaticDimension，优先级低
+    open var rowHeight: CGFloat?
     
     /// 表格选中事件，默认nil
     open var didSelectRow: ((IndexPath) -> Void)?
@@ -124,7 +124,7 @@ import FWApplication
         if let heightBlock = heightForRow {
             return heightBlock(indexPath)
         }
-        if rowHeight > 0 {
+        if let rowHeight = rowHeight {
             return rowHeight
         }
         
@@ -173,7 +173,7 @@ import FWApplication
         if let heightBlock = heightForHeader {
             return heightBlock(section)
         }
-        if headerHeight > 0 {
+        if let headerHeight = headerHeight {
             return headerHeight
         }
         
@@ -213,7 +213,7 @@ import FWApplication
         if let heightBlock = heightForFooter {
             return heightBlock(section)
         }
-        if footerHeight > 0 {
+        if let footerHeight = footerHeight {
             return footerHeight
         }
         
@@ -301,6 +301,12 @@ extension Wrapper where Base: UITableView {
 
 extension Wrapper where Base: UITableView {
     
+    /// 是否启动高度估算布局，启用后需要子视图布局完整，无需实现heightForRow方法(iOS11默认启用，会先cellForRow再heightForRow)
+    public var estimatedLayout: Bool {
+        get { return base.__fw.estimatedLayout }
+        set { base.__fw.estimatedLayout = newValue }
+    }
+    
     /// 清空Grouped样式默认多余边距，注意CGFLOAT_MIN才会生效，0不会生效
     public func resetGroupedStyle() {
         base.__fw.resetGroupedStyle()
@@ -344,33 +350,6 @@ extension Wrapper where Base: UITableView {
     /// 全局清空TableView默认多余边距
     public static func resetTableStyle() {
         Base.__fw.resetTableStyle()
-    }
-    
-    // MARK: - Template
-    
-    /**
-     单独启用或禁用高度估算
-     @note 启用高度估算，需要子视图布局完整，无需实现heightForRow方法；禁用高度估算(iOS11默认启用，会先cellForRow再heightForRow)
-     
-     @param enabled 是否启用
-     */
-    public func setTemplateLayout(_ enabled: Bool) {
-        base.__fw.setTemplateLayout(enabled)
-    }
-
-    /// 缓存方式获取估算高度，estimatedHeightForRowAtIndexPath调用即可。解决reloadData闪烁跳动问题
-    public func templateHeight(at indexPath: IndexPath) -> CGFloat {
-        return base.__fw.templateHeight(at: indexPath)
-    }
-
-    /// 设置估算高度缓存，willDisplayCell调用即可，height为cell.frame.size.height。设置为0时清除缓存。解决reloadData闪烁跳动问题
-    public func setTemplateHeight(_ height: CGFloat, at indexPath: IndexPath) {
-        base.__fw.setTemplateHeight(height, at: indexPath)
-    }
-
-    /// 清空估算高度缓存，cell高度动态变化时调用
-    public func clearTemplateHeightCache() {
-        base.__fw.clearTemplateHeightCache()
     }
     
 }

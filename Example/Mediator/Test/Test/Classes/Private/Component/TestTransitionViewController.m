@@ -48,7 +48,7 @@
     UIView *footerView = [[UIView alloc] init];
     footerView.backgroundColor = [Theme tableColor];
     [self.contentView addSubview:footerView];
-    footerView.fw.layoutChain.left().bottom().topToBottomOfView(cycleView).width(FWScreenWidth).height(1000);
+    footerView.fw.layoutChain.left().bottom().topToViewBottom(cycleView).width(FWScreenWidth).height(1000);
     
     UILabel *frameLabel = [[UILabel alloc] init];
     _frameLabel = frameLabel;
