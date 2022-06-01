@@ -759,11 +759,8 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
 {
     return [self dataTaskWithRequest:requestBuilder() uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         
-        void (^completionBlock)(void) = ^{
-            [self setRequestTotalCount:retryCount - remainCount + 1 forResponse:response];
-            [self setRequestTotalTime:[NSDate date].timeIntervalSince1970 - startTime forResponse:response];
-            if (completionHandler) completionHandler(response, responseObject, error);
-        };
+        [self setRequestTotalCount:retryCount - remainCount + 1 forResponse:response];
+        [self setRequestTotalTime:[NSDate date].timeIntervalSince1970 - startTime forResponse:response];
         
         if (remainCount > 0 && (timeoutInterval <= 0 || ([[NSDate date] timeIntervalSince1970] - startTime) < timeoutInterval)) {
             shouldRetry(response, responseObject, error, ^(BOOL decisionRetry){
@@ -775,11 +772,11 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                         [dataTask resume];
                     });
                 } else {
-                    completionBlock();
+                    if (completionHandler) completionHandler(response, responseObject, error);
                 }
             });
         } else {
-            completionBlock();
+            if (completionHandler) completionHandler(response, responseObject, error);
         }
     }];
 }
@@ -861,30 +858,36 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
 }
 
 - (void)setUserInfo:(NSDictionary *)userInfo forTask:(NSURLSessionTask *)task {
+    if (!task) return;
     objc_setAssociatedObject(task, @selector(userInfoForTask:), userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (NSDictionary *)userInfoForTask:(NSURLSessionTask *)task {
+    if (!task) return nil;
     return objc_getAssociatedObject(task, @selector(userInfoForTask:));
 }
 
 - (void)setRequestTotalCount:(NSInteger)totalCount forResponse:(NSURLResponse *)response
 {
+    if (!response) return;
     objc_setAssociatedObject(response, @selector(requestTotalCountForResponse:), @(totalCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSInteger)requestTotalCountForResponse:(NSURLResponse *)response
 {
+    if (!response) return 0;
     return [objc_getAssociatedObject(response, @selector(requestTotalCountForResponse:)) integerValue];
 }
 
 - (void)setRequestTotalTime:(NSTimeInterval)totalTime forResponse:(NSURLResponse *)response
 {
+    if (!response) return;
     objc_setAssociatedObject(response, @selector(requestTotalTimeForResponse:), @(totalTime), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (NSTimeInterval)requestTotalTimeForResponse:(NSURLResponse *)response
 {
+    if (!response) return 0;
     return [objc_getAssociatedObject(response, @selector(requestTotalTimeForResponse:)) doubleValue];
 }
 

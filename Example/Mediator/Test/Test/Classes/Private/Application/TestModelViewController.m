@@ -17,9 +17,18 @@
 
 @implementation TestModelRequest
 
+- (NSInteger)requestRetryCount
+{
+    return 1;
+}
+
 - (NSString *)requestUrl
 {
-    return @"http://kvm.wuyong.site/test.json";
+    if (self.requestTotalCount < 1) {
+        return @"http://kvm.wuyong.site/test_404.json";
+    } else {
+        return @"http://kvm.wuyong.site/test.json";
+    }
 }
 
 - (FWResponseSerializerType)responseSerializerType

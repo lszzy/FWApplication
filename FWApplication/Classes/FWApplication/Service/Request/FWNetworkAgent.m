@@ -159,6 +159,10 @@
 
     requestSerializer.timeoutInterval = [request requestTimeoutInterval];
     requestSerializer.allowsCellularAccess = [request allowsCellularAccess];
+    NSURLRequestCachePolicy cachePolicy = [request requestCachePolicy];
+    if (cachePolicy >= 0) {
+        requestSerializer.cachePolicy = cachePolicy;
+    }
 
     // If api needs server username and password
     NSArray<NSString *> *authorizationHeaderFieldArray = [request requestAuthorizationHeaderFieldArray];
@@ -488,7 +492,9 @@
         return urlRequest;
     } retryCount:[request requestRetryCount] retryInternal:[request requestRetryInternval] timeoutInterval:[request requestRetryTimeout] shouldRetry:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error, void (^ _Nonnull decisionHandler)(BOOL)) {
         
-        [request requestShouldRetry:decisionHandler response:response responseObject:responseObject error:_error];
+        request.requestTotalCount = [[self manager] requestTotalCountForResponse:response];
+        request.requestTotalTime = [[self manager] requestTotalTimeForResponse:response];
+        [request shouldRetryRequest:decisionHandler response:response responseObject:responseObject error:_error];
     } uploadProgress:[request uploadProgressBlock] downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error) {
         
         [self handleRequestResult:dataTask response:response responseObject:responseObject error:_error];

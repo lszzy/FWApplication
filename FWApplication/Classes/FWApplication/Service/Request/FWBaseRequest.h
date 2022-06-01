@@ -327,6 +327,9 @@ NS_SWIFT_NAME(BaseRequest)
 ///              `timeoutIntervalForResource` of `NSURLSessionConfiguration`.
 - (NSTimeInterval)requestTimeoutInterval;
 
+///  Custom request cache policy. Default is -1, uses FWHTTPRequestSerializer.cachePolicy.
+- (NSURLRequestCachePolicy)requestCachePolicy;
+
 ///  Additional request argument.
 - (nullable id)requestArgument;
 
@@ -374,7 +377,7 @@ NS_SWIFT_NAME(BaseRequest)
 - (NSTimeInterval)requestRetryTimeout;
 
 ///  Should retry for response. Default to check statusCode and error.
-- (void)requestShouldRetry:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error;
+- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error;
 
 @end
 

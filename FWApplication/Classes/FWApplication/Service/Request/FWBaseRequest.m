@@ -205,6 +205,10 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return 60;
 }
 
+- (NSURLRequestCachePolicy)requestCachePolicy {
+    return -1;
+}
+
 - (id)requestArgument {
     return nil;
 }
@@ -266,7 +270,7 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return 0;
 }
 
-- (void)requestShouldRetry:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error {
+- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error {
     NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
     decisionHandler(error != nil || !(statusCode >= 200 && statusCode <= 299));
 }
