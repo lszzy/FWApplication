@@ -493,7 +493,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 同一个identifier仅执行一次block，全局范围
 - (void)performOnce:(NSString *)identifier withBlock:(void (^)(void))block;
 
-/// 重试方式执行异步block，直至成功或者次数为0或者超时，完成后回调completion。block必须调用completionHandler，参数示例：重试4次|超时8秒|延迟2秒
+/// 重试方式执行异步block，直至成功或者次数为0或者超时，完成后回调completion。block必须调用completionHandler，参数示例：重试4次|超时8秒(0不限制)|延迟2秒
 - (void)performBlock:(void (^)(void (^completionHandler)(BOOL success, id _Nullable obj)))block completion:(void (^)(BOOL success, id _Nullable obj))completion retryCount:(NSUInteger)retryCount timeoutInterval:(NSTimeInterval)timeoutInterval delayInterval:(NSTimeInterval)delayInterval;
 
 /// 执行轮询block任务，返回任务Id可取消

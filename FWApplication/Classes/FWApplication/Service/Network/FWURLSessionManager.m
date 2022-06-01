@@ -729,6 +729,54 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
     return dataTask;
 }
 
+- (NSURLSessionDataTask *)dataTaskWithRequestBuilder:(NSURLRequest * (^)(void))requestBuilder
+                                          retryCount:(NSInteger)retryCount
+                                       retryInternal:(NSTimeInterval)retryInterval
+                                     timeoutInterval:(NSTimeInterval)timeoutInterval
+                                         shouldRetry:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, void (^ _Nonnull)(BOOL)))shouldRetry
+                                      uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
+                                    downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress
+                                   completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, NSInteger, NSTimeInterval))completionHandler
+{
+    NSTimeInterval startTime = [NSDate date].timeIntervalSince1970;
+    return [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:retryCount retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry ? shouldRetry : ^void(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error, void (^decisionHandler)(BOOL)){
+        
+        decisionHandler(error != nil);
+    } uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
+}
+
+- (NSURLSessionDataTask *)dataTaskWithRequestBuilder:(NSURLRequest * (^)(void))requestBuilder
+                                          retryCount:(NSInteger)retryCount
+                                         remainCount:(NSInteger)remainCount
+                                       retryInternal:(NSTimeInterval)retryInterval
+                                     timeoutInterval:(NSTimeInterval)timeoutInterval
+                                           startTime:(NSTimeInterval)startTime
+                                         shouldRetry:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, void (^ _Nonnull)(BOOL)))shouldRetry
+                                      uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
+                                    downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress
+                                   completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, NSInteger, NSTimeInterval))completionHandler
+{
+    return [self dataTaskWithRequest:requestBuilder() uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        if (remainCount > 0 && (timeoutInterval <= 0 || ([[NSDate date] timeIntervalSince1970] - startTime) < timeoutInterval)) {
+            shouldRetry(response, responseObject, error, ^(BOOL decisionRetry){
+                
+                if (decisionRetry) {
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MAX(retryInterval, 0) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        
+                        NSURLSessionDataTask *dataTask = [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:remainCount - 1 retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
+                        [dataTask resume];
+                    });
+                } else {
+                    if (completionHandler) completionHandler(response, responseObject, error, retryCount - remainCount + 1, [NSDate date].timeIntervalSince1970 - startTime);
+                }
+            });
+        } else {
+            if (completionHandler) completionHandler(response, responseObject, error, retryCount - remainCount + 1, [NSDate date].timeIntervalSince1970 - startTime);
+        }
+    }];
+}
+
 #pragma mark -
 
 - (NSURLSessionUploadTask *)uploadTaskWithRequest:(NSURLRequest *)request

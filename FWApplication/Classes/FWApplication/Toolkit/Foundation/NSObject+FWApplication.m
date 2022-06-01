@@ -168,7 +168,7 @@ static dispatch_semaphore_t fwStaticSemaphore;
 - (void)performBlock:(void (^)(void (^completionHandler)(BOOL success, id _Nullable obj)))block completion:(void (^)(BOOL success, id _Nullable obj))completion retryCount:(NSUInteger)retryCount timeoutInterval:(NSTimeInterval)timeoutInterval delayInterval:(NSTimeInterval)delayInterval startTime:(NSTimeInterval)startTime
 {
     block(^(BOOL success, id _Nullable obj) {
-        if (!success && retryCount > 0 && ([[NSDate date] timeIntervalSince1970] - startTime) < timeoutInterval) {
+        if (!success && retryCount > 0 && (timeoutInterval <= 0 || ([[NSDate date] timeIntervalSince1970] - startTime) < timeoutInterval)) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInterval * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [NSObject.fw performBlock:block completion:completion retryCount:retryCount - 1 timeoutInterval:timeoutInterval delayInterval:delayInterval startTime:startTime];
             });
