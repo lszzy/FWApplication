@@ -185,6 +185,15 @@ NS_SWIFT_NAME(BaseRequest)
 ///  Executing state of request task.
 @property (nonatomic, readonly, getter=isExecuting) BOOL executing;
 
+///  Total request count for request.
+@property (nonatomic, readonly) NSInteger requestTotalCount;
+
+///  Total request time for request.
+@property (nonatomic, readonly) NSTimeInterval requestTotalTime;
+
+///  The request method string for request.
+@property (nonatomic, copy, readonly) NSString *requestMethodString;
+
 
 #pragma mark - Request Configuration
 ///=============================================================================
@@ -245,7 +254,6 @@ NS_SWIFT_NAME(BaseRequest)
 
 ///  Convenience method to add request accessory. See also `requestAccessories`.
 - (void)addAccessory:(id<FWRequestAccessory>)accessory;
-
 
 #pragma mark - Request Action
 ///=============================================================================
@@ -355,6 +363,18 @@ NS_SWIFT_NAME(BaseRequest)
 
 ///  This validator will be used to test if `responseStatusCode` is valid.
 - (BOOL)statusCodeValidator;
+
+///  Retry count for request. Default is 0.
+- (NSInteger)requestRetryCount;
+
+///  Retry interval for request. Default is 0.
+- (NSTimeInterval)requestRetryInternval;
+
+///  Retry timeout for request. Default is 0.
+- (NSTimeInterval)requestRetryTimeout;
+
+///  Should retry for response. Default decision for yes if error is not null, otherwise decision for no.
+- (void)requestShouldRetry:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error;
 
 @end
 

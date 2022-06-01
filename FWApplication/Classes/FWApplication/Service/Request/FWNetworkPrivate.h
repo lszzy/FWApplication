@@ -72,6 +72,8 @@ NS_SWIFT_NAME(NetworkUtils)
 @property (nonatomic, strong, readwrite, nullable) id responseObject;
 @property (nonatomic, strong, readwrite, nullable) NSString *responseString;
 @property (nonatomic, strong, readwrite, nullable) NSError *error;
+@property (nonatomic, readwrite) NSInteger requestTotalCount;
+@property (nonatomic, readwrite) NSTimeInterval requestTotalTime;
 
 @end
 

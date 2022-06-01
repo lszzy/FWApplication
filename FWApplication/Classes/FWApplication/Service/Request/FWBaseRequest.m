@@ -36,6 +36,8 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
 @property (nonatomic, strong, readwrite) id responseObject;
 @property (nonatomic, strong, readwrite) NSString *responseString;
 @property (nonatomic, strong, readwrite) NSError *error;
+@property (nonatomic, readwrite) NSInteger requestTotalCount;
+@property (nonatomic, readwrite) NSTimeInterval requestTotalTime;
 
 @end
 
@@ -96,6 +98,24 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
         return NO;
     }
     return self.requestTask.state == NSURLSessionTaskStateRunning;
+}
+
+- (NSString *)requestMethodString {
+    switch ([self requestMethod]) {
+        case FWRequestMethodPOST:
+            return @"POST";
+        case FWRequestMethodHEAD:
+            return @"HEAD";
+        case FWRequestMethodPUT:
+            return @"PUT";
+        case FWRequestMethodDELETE:
+            return @"DELETE";
+        case FWRequestMethodPATCH:
+            return @"PATCH";
+        case FWRequestMethodGET:
+        default:
+            return @"GET";
+    }
 }
 
 #pragma mark - Request Configuration
@@ -232,6 +252,22 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
 - (BOOL)statusCodeValidator {
     NSInteger statusCode = [self responseStatusCode];
     return (statusCode >= 200 && statusCode <= 299);
+}
+
+- (NSInteger)requestRetryCount {
+    return 0;
+}
+
+- (NSTimeInterval)requestRetryInternval {
+    return 0;
+}
+
+- (NSTimeInterval)requestRetryTimeout {
+    return 0;
+}
+
+- (void)requestShouldRetry:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error {
+    decisionHandler(error != nil);
 }
 
 #pragma mark - NSObject

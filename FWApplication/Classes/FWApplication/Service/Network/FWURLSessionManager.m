@@ -736,7 +736,7 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                                          shouldRetry:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, void (^ _Nonnull)(BOOL)))shouldRetry
                                       uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
                                     downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress
-                                   completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, NSInteger, NSTimeInterval))completionHandler
+                                   completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler
 {
     NSTimeInterval startTime = [NSDate date].timeIntervalSince1970;
     return [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:retryCount retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry ? shouldRetry : ^void(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error, void (^decisionHandler)(BOOL)){
@@ -754,9 +754,15 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                                          shouldRetry:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, void (^ _Nonnull)(BOOL)))shouldRetry
                                       uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
                                     downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress
-                                   completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, NSInteger, NSTimeInterval))completionHandler
+                                   completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler
 {
     return [self dataTaskWithRequest:requestBuilder() uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        
+        void (^completionBlock)(void) = ^{
+            [self setRequestTotalCount:retryCount - remainCount + 1 forResponse:response];
+            [self setRequestTotalTime:[NSDate date].timeIntervalSince1970 - startTime forResponse:response];
+            if (completionHandler) completionHandler(response, responseObject, error);
+        };
         
         if (remainCount > 0 && (timeoutInterval <= 0 || ([[NSDate date] timeIntervalSince1970] - startTime) < timeoutInterval)) {
             shouldRetry(response, responseObject, error, ^(BOOL decisionRetry){
@@ -768,11 +774,11 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                         [dataTask resume];
                     });
                 } else {
-                    if (completionHandler) completionHandler(response, responseObject, error, retryCount - remainCount + 1, [NSDate date].timeIntervalSince1970 - startTime);
+                    completionBlock();
                 }
             });
         } else {
-            if (completionHandler) completionHandler(response, responseObject, error, retryCount - remainCount + 1, [NSDate date].timeIntervalSince1970 - startTime);
+            completionBlock();
         }
     }];
 }
@@ -859,6 +865,26 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
 
 - (NSDictionary *)userInfoForTask:(NSURLSessionTask *)task {
     return objc_getAssociatedObject(task, @selector(userInfoForTask:));
+}
+
+- (void)setRequestTotalCount:(NSInteger)totalCount forResponse:(NSURLResponse *)response
+{
+    objc_setAssociatedObject(response, @selector(requestTotalCountForResponse:), @(totalCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSInteger)requestTotalCountForResponse:(NSURLResponse *)response
+{
+    return [objc_getAssociatedObject(response, @selector(requestTotalCountForResponse:)) integerValue];
+}
+
+- (void)setRequestTotalTime:(NSTimeInterval)totalTime forResponse:(NSURLResponse *)response
+{
+    objc_setAssociatedObject(response, @selector(requestTotalTimeForResponse:), @(totalTime), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSTimeInterval)requestTotalTimeForResponse:(NSURLResponse *)response
+{
+    return [objc_getAssociatedObject(response, @selector(requestTotalTimeForResponse:)) doubleValue];
 }
 
 #pragma mark -
