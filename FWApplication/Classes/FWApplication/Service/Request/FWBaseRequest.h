@@ -331,7 +331,7 @@ NS_SWIFT_NAME(BaseRequest)
 - (nullable id)requestArgument;
 
 ///  Override this method to filter requests with certain arguments when caching.
-- (id)cacheFileNameFilterForRequestArgument:(id)argument;
+- (id)cacheFileNameFilter:(id)argument;
 
 ///  HTTP request method.
 - (FWRequestMethod)requestMethod;
@@ -373,7 +373,7 @@ NS_SWIFT_NAME(BaseRequest)
 ///  Retry timeout for request. Default is 0.
 - (NSTimeInterval)requestRetryTimeout;
 
-///  Should retry for response. Default decision for yes if error is not null, otherwise decision for no.
+///  Should retry for response. Default to check statusCode and error.
 - (void)requestShouldRetry:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error;
 
 @end

@@ -206,7 +206,7 @@ NS_SWIFT_NAME(URLSessionManager)
  @param retryCount The retry limit, eg 4.
  @param retryInterval The retry interval, eg 2.
  @param timeoutInterval The retry timeout, 0 means no timeout.
- @param shouldRetry Whether the retry should start, must call decisionHandler, default decision for yes if error is not null, otherwise decision for no.
+ @param shouldRetry Whether the retry should start, must call decisionHandler, default to check statusCode and error.
  @param uploadProgress A block object to be executed when the upload progress is updated. Note this block is called on the session queue, not the main queue.
  @param downloadProgress A block object to be executed when the download progress is updated. Note this block is called on the session queue, not the main queue.
  @param completionHandler A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.

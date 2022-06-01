@@ -741,7 +741,8 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
     NSTimeInterval startTime = [NSDate date].timeIntervalSince1970;
     return [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:retryCount retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry ? shouldRetry : ^void(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error, void (^decisionHandler)(BOOL)){
         
-        decisionHandler(error != nil);
+        NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
+        decisionHandler(error != nil || !(statusCode >= 200 && statusCode <= 299));
     } uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
 }
 

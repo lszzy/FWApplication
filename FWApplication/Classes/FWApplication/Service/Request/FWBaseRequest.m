@@ -209,7 +209,7 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return nil;
 }
 
-- (id)cacheFileNameFilterForRequestArgument:(id)argument {
+- (id)cacheFileNameFilter:(id)argument {
     return argument;
 }
 
@@ -267,7 +267,8 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
 }
 
 - (void)requestShouldRetry:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error {
-    decisionHandler(error != nil);
+    NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
+    decisionHandler(error != nil || !(statusCode >= 200 && statusCode <= 299));
 }
 
 #pragma mark - NSObject

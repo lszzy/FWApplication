@@ -404,9 +404,9 @@ static dispatch_queue_t fwrequest_cache_writing_queue() {
     // Filter cache base path
     NSArray<id<FWCacheDirPathFilterProtocol>> *filters = [[FWNetworkConfig sharedConfig] cacheDirPathFilters];
     if (filters.count > 0) {
-        for (id<FWCacheDirPathFilterProtocol> f in filters) {
-            if ([f respondsToSelector:@selector(filterCacheDirPath:withRequest:)]) {
-                path = [f filterCacheDirPath:path withRequest:self];
+        for (id<FWCacheDirPathFilterProtocol> filter in filters) {
+            if ([filter respondsToSelector:@selector(filterCacheDirPath:withRequest:)]) {
+                path = [filter filterCacheDirPath:path withRequest:self];
             }
         }
     }
@@ -418,7 +418,7 @@ static dispatch_queue_t fwrequest_cache_writing_queue() {
 - (NSString *)cacheFileName {
     NSString *requestUrl = [self requestUrl];
     NSString *baseUrl = [FWNetworkConfig sharedConfig].baseUrl;
-    id argument = [self cacheFileNameFilterForRequestArgument:[self requestArgument]];
+    id argument = [self cacheFileNameFilter:[self requestArgument]];
     NSString *requestInfo = [NSString stringWithFormat:@"Method:%ld Host:%@ Url:%@ Argument:%@",
                              (long)[self requestMethod], baseUrl, requestUrl, argument];
     NSString *cacheFileName = [FWNetworkUtils md5StringFromString:requestInfo];

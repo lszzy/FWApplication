@@ -323,7 +323,7 @@ NS_SWIFT_NAME(BaseRequest)
 - (nullable id)requestArgument;
 
 ///  Override this method to filter requests with certain arguments when caching.
-- (id)cacheFileNameFilterForRequestArgument:(id)argument;
+- (id)cacheFileNameFilter:(id)argument;
 
 ///  HTTP request method.
 - (FWRequestMethod)requestMethod;
