@@ -10,7 +10,7 @@ import Foundation
 /// The protocol which can be used to send Mocked data back. Use the `Mocker` to register `Mock` data
 ///
 /// - see: [Mocker](https://github.com/WeTransfer/Mocker)
-open class MockingURLProtocol: URLProtocol {
+open class NetworkMockerURLProtocol: URLProtocol {
 
     enum Error: Swift.Error, LocalizedError, CustomDebugStringConvertible {
         case missingMockedData(url: String)
@@ -35,8 +35,8 @@ open class MockingURLProtocol: URLProtocol {
     /// Returns Mocked data based on the mocks register in the `Mocker`. Will end up in an error when no Mock data is found for the request.
     override public func startLoading() {
         guard
-            let mock = Mocker.mock(for: request),
-            let response = HTTPURLResponse(url: mock.request.url!, statusCode: mock.statusCode, httpVersion: Mocker.httpVersion.rawValue, headerFields: mock.headers),
+            let mock = NetworkMocker.mock(for: request),
+            let response = HTTPURLResponse(url: mock.request.url!, statusCode: mock.statusCode, httpVersion: NetworkMocker.httpVersion.rawValue, headerFields: mock.headers),
             let data = mock.data(for: request)
         else {
             print("\n\n 🚨 No mocked data found for url \(String(describing: request.url?.absoluteString)) method \(String(describing: request.httpMethod)). Did you forget to use `register()`? 🚨 \n\n")
@@ -61,7 +61,7 @@ open class MockingURLProtocol: URLProtocol {
         DispatchQueue.global(qos: DispatchQoS.QoSClass.userInitiated).asyncAfter(deadline: .now() + delay, execute: responseWorkItem!)
     }
 
-    private func finishRequest(for mock: Mock, data: Data, response: HTTPURLResponse) {
+    private func finishRequest(for mock: NetworkMock, data: Data, response: HTTPURLResponse) {
         if let redirectLocation = data.redirectLocation {
             self.client?.urlProtocol(self, wasRedirectedTo: URLRequest(url: redirectLocation), redirectResponse: response)
         } else if let requestError = mock.requestError {
@@ -87,7 +87,7 @@ open class MockingURLProtocol: URLProtocol {
 
     /// Overrides needed to define a valid inheritance of URLProtocol.
     override public class func canInit(with request: URLRequest) -> Bool {
-        return Mocker.shouldHandle(request)
+        return NetworkMocker.shouldHandle(request)
     }
 }
 
@@ -135,7 +135,7 @@ private extension URLRequest {
 }
 
 /// Can be used for registering Mocked data, returned by the `MockingURLProtocol`.
-public struct Mocker {
+public struct NetworkMocker {
     private struct IgnoredRule: Equatable {
         let urlToIgnore: URL
         let ignoreQuery: Bool
@@ -161,31 +161,31 @@ public struct Mocker {
 
     /// The way Mocker handles unregistered urls
     public enum Mode {
-        /// The default mode: only URLs registered with the `ignore(_ url: URL)` method are ignored for mocking.
+        /// Only URLs registered with the `ignore(_ url: URL)` method are ignored for mocking.
         ///
         /// - Registered mocked URL: Mocked.
         /// - Registered ignored URL: Ignored by Mocker, default process is applied as if the Mocker doesn't exist.
         /// - Any other URL: Raises an error.
         case optout
 
-        /// Only registered mocked URLs are mocked, all others pass through.
+        /// The default mode: only registered mocked URLs are mocked, all others pass through.
         ///
         /// - Registered mocked URL: Mocked.
         /// - Any other URL: Ignored by Mocker, default process is applied as if the Mocker doesn't exist.
         case optin
     }
 
-    /// The mode defines how unknown URLs are handled. Defaults to `optout` which means requests without a mock will fail.
-    public static var mode: Mode = .optout
+    /// The mode defines how unknown URLs are handled. Defaults to `optin` which means requests without a mock are ignored.
+    public static var mode: Mode = .optin
 
     /// The shared instance of the Mocker, can be used to register and return mocks.
-    internal static var shared = Mocker()
+    internal static var shared = NetworkMocker()
 
     /// The HTTP Version to use in the mocked response.
     public static var httpVersion: HTTPVersion = HTTPVersion.http1_1
 
     /// The registrated mocks.
-    private(set) var mocks: [Mock] = []
+    private(set) var mocks: [NetworkMock] = []
 
     /// URLs to ignore for mocking.
     public var ignoredURLs: [URL] {
@@ -199,13 +199,13 @@ public struct Mocker {
 
     private init() {
         // Whenever someone is requesting the Mocker, we want the URL protocol to be activated.
-        _ = URLProtocol.registerClass(MockingURLProtocol.self)
+        _ = URLProtocol.registerClass(NetworkMockerURLProtocol.self)
     }
 
     /// Register new Mocked data. If a mock for the same URL and HTTPMethod exists, it will be overwritten.
     ///
     /// - Parameter mock: The Mock to be registered for future requests.
-    public static func register(_ mock: Mock) {
+    public static func register(_ mock: NetworkMock) {
         shared.queue.async(flags: .barrier) {
             /// Delete the Mock if it was already registered.
             shared.mocks.removeAll(where: { $0 == mock })
@@ -252,7 +252,7 @@ public struct Mocker {
     ///
     /// - Parameter request: The request to search for a mock.
     /// - Returns: A mock if found, `nil` if there's no mocked data registered for the given request.
-    static func mock(for request: URLRequest) -> Mock? {
+    static func mock(for request: URLRequest) -> NetworkMock? {
         shared.queue.sync {
             /// First check for specific URLs
             if let specificMock = shared.mocks.first(where: { $0 == request && $0.fileExtensions == nil }) {
@@ -265,7 +265,7 @@ public struct Mocker {
 }
 
 /// A Mock which can be used for mocking data requests with the `Mocker` by calling `Mocker.register(...)`.
-public struct Mock: Equatable {
+public struct NetworkMock: Equatable {
 
     /// HTTP method definitions.
     ///
@@ -422,7 +422,7 @@ public struct Mock: Equatable {
 
     /// Registers the mock with the shared `Mocker`.
     public func register() {
-        Mocker.register(self)
+        NetworkMocker.register(self)
     }
 
     /// Returns `Data` based on the HTTP Method of the passed request.
@@ -430,13 +430,13 @@ public struct Mock: Equatable {
     /// - Parameter request: The request to match data for.
     /// - Returns: The `Data` which matches the request. Will be `nil` if no data is registered for the request `HTTPMethod`.
     func data(for request: URLRequest) -> Data? {
-        guard let requestHTTPMethod = Mock.HTTPMethod(rawValue: request.httpMethod ?? "") else { return nil }
+        guard let requestHTTPMethod = NetworkMock.HTTPMethod(rawValue: request.httpMethod ?? "") else { return nil }
         return data[requestHTTPMethod]
     }
 
     /// Used to compare the Mock data with the given `URLRequest`.
-    static func == (mock: Mock, request: URLRequest) -> Bool {
-        guard let requestHTTPMethod = Mock.HTTPMethod(rawValue: request.httpMethod ?? "") else { return false }
+    static func == (mock: NetworkMock, request: URLRequest) -> Bool {
+        guard let requestHTTPMethod = NetworkMock.HTTPMethod(rawValue: request.httpMethod ?? "") else { return false }
 
         if let fileExtensions = mock.fileExtensions {
             // If the mock contains a file extension, this should always be used to match for.
@@ -449,7 +449,7 @@ public struct Mock: Equatable {
         return mock.request.url!.absoluteString == request.url?.absoluteString && mock.data.keys.contains(requestHTTPMethod)
     }
 
-    public static func == (lhs: Mock, rhs: Mock) -> Bool {
+    public static func == (lhs: NetworkMock, rhs: NetworkMock) -> Bool {
         let lhsHTTPMethods: [String] = lhs.data.keys.compactMap { $0.rawValue }
         let rhsHTTPMethods: [String] = rhs.data.keys.compactMap { $0.rawValue }
 
