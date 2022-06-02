@@ -271,18 +271,18 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return 0;
 }
 
-- (void)shouldRetryValidator:(NSHTTPURLResponse *)response
-              responseObject:(id)responseObject
-                       error:(NSError *)error
-             decisionHandler:(void (^)(BOOL))decisionHandler {
-    decisionHandler(NO);
+- (BOOL)requestRetryValidator:(NSHTTPURLResponse *)response
+               responseObject:(id)responseObject
+                        error:(NSError *)error {
+    NSInteger statusCode = response.statusCode;
+    return error != nil || statusCode < 200 || statusCode > 299;
 }
 
-- (void)shouldRetryProcessor:(NSHTTPURLResponse *)response
-              responseObject:(id)responseObject
-                       error:(NSError *)error
-             decisionHandler:(void (^)(BOOL))decisionHandler {
-    decisionHandler(error != nil || response.statusCode < 200 || response.statusCode > 299);
+- (void)requestRetryProcessor:(NSHTTPURLResponse *)response
+               responseObject:(id)responseObject
+                        error:(NSError *)error
+            completionHandler:(void (^)(BOOL))completionHandler {
+    completionHandler(YES);
 }
 
 #pragma mark - NSObject

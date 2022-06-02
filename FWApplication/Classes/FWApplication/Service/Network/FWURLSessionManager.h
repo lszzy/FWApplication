@@ -218,7 +218,7 @@ NS_SWIFT_NAME(URLSessionManager)
                                           retryCount:(NSInteger)retryCount
                                        retryInterval:(NSTimeInterval)retryInterval
                                      timeoutInterval:(NSTimeInterval)timeoutInterval
-                                         shouldRetry:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error, void (^decisionHandler)(BOOL retry, NSTimeInterval delay)))shouldRetry
+                                         shouldRetry:(nullable void (^)(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error, void (^decisionHandler)(BOOL retry)))shouldRetry
                                          taskHandler:(nullable void (^)(NSURLSessionDataTask *))taskHandler
                                       uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
                                     downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress

@@ -379,17 +379,16 @@ NS_SWIFT_NAME(BaseRequest)
 ///  Retry timeout for request. Default is 0.
 - (NSTimeInterval)requestRetryTimeout;
 
-///  The validator will be used to test if request should retry immediately, enabled when requestRetryCount > 0. Default to NO means no retry, high priority.
-- (void)shouldRetryValidator:(NSHTTPURLResponse *)response
-              responseObject:(nullable id)responseObject
-                       error:(nullable NSError *)error
-             decisionHandler:(void (^)(BOOL retry))decisionHandler;
+///  The validator will be used to test if request should retry, enabled when requestRetryCount > 0. Default to check statusCode and error.
+- (BOOL)requestRetryValidator:(NSHTTPURLResponse *)response
+               responseObject:(nullable id)responseObject
+                        error:(nullable NSError *)error;
 
-///  Should retry for request after requestRetryInternval, enabled when requestRetryCount > 0. Default to check statusCode and error, low priority.
-- (void)shouldRetryProcessor:(NSHTTPURLResponse *)response
-              responseObject:(nullable id)responseObject
-                       error:(nullable NSError *)error
-             decisionHandler:(void (^)(BOOL retry))decisionHandler;
+///  The processor will be called if requestRetryValidator return YES, completionHandler must be called with a bool value, which means retry request if success or stop request if failed. Default to YES.
+- (void)requestRetryProcessor:(NSHTTPURLResponse *)response
+               responseObject:(nullable id)responseObject
+                        error:(nullable NSError *)error
+            completionHandler:(void (^)(BOOL success))completionHandler;
 
 @end
 
