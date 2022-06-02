@@ -163,12 +163,12 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
 
 #pragma mark - Subclass Override
 
-- (BOOL)responseMockProcessor {
-    return NO;
-}
-
 - (BOOL)responseMockValidator {
     return [self responseStatusCode] == 404;
+}
+
+- (BOOL)responseMockProcessor {
+    return NO;
 }
 
 - (void)filterUrlRequest:(NSMutableURLRequest *)urlRequest {
@@ -271,10 +271,17 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return 0;
 }
 
-- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler
-                  response:(NSHTTPURLResponse *)response
-            responseObject:(nullable id)responseObject
-                     error:(nullable NSError *)error {
+- (void)shouldRetryValidator:(NSHTTPURLResponse *)response
+              responseObject:(id)responseObject
+                       error:(NSError *)error
+             decisionHandler:(void (^)(BOOL))decisionHandler {
+    decisionHandler(NO);
+}
+
+- (void)shouldRetryProcessor:(NSHTTPURLResponse *)response
+              responseObject:(id)responseObject
+                       error:(NSError *)error
+             decisionHandler:(void (^)(BOOL))decisionHandler {
     decisionHandler(error != nil || response.statusCode < 200 || response.statusCode > 299);
 }
 

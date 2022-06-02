@@ -279,11 +279,11 @@ NS_SWIFT_NAME(BaseRequest)
 /// @name Subclass Override
 ///=============================================================================
 
-///  Called on background thread after request failed but before callback in debug mode.
-- (BOOL)responseMockProcessor;
-
 ///  This validator will be used to test whether to mock response in debug mode. Default is YES if 404.
 - (BOOL)responseMockValidator;
+
+///  Called on background thread after request failed but before callback in debug mode.
+- (BOOL)responseMockProcessor;
 
 ///  Preprocess URLRequest before actually sending them.
 - (void)filterUrlRequest:(NSMutableURLRequest *)urlRequest;
@@ -379,11 +379,17 @@ NS_SWIFT_NAME(BaseRequest)
 ///  Retry timeout for request. Default is 0.
 - (NSTimeInterval)requestRetryTimeout;
 
-///  Should retry for response. Default to check statusCode and error.
-- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler
-                  response:(NSHTTPURLResponse *)response
-            responseObject:(nullable id)responseObject
-                     error:(nullable NSError *)error;
+///  The validator will be used to test if request should retry immediately, enabled when requestRetryCount > 0. Default to NO means no retry, high priority.
+- (void)shouldRetryValidator:(NSHTTPURLResponse *)response
+              responseObject:(nullable id)responseObject
+                       error:(nullable NSError *)error
+             decisionHandler:(void (^)(BOOL retry))decisionHandler;
+
+///  Should retry for request after requestRetryInternval, enabled when requestRetryCount > 0. Default to check statusCode and error, low priority.
+- (void)shouldRetryProcessor:(NSHTTPURLResponse *)response
+              responseObject:(nullable id)responseObject
+                       error:(nullable NSError *)error
+             decisionHandler:(void (^)(BOOL retry))decisionHandler;
 
 @end
 

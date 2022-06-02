@@ -490,11 +490,22 @@
         }
         
         return urlRequest;
-    } retryCount:[request requestRetryCount] retryInternal:[request requestRetryInternval] timeoutInterval:[request requestRetryTimeout] shouldRetry:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error, void (^ _Nonnull decisionHandler)(BOOL)) {
+    } retryCount:[request requestRetryCount] retryInterval:[request requestRetryInternval] timeoutInterval:[request requestRetryTimeout] shouldRetry:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error, void (^ _Nonnull decisionHandler)(BOOL retry, NSTimeInterval delay)) {
         
         request.requestTotalCount = [[self manager] requestTotalCountForResponse:response];
         request.requestTotalTime = [[self manager] requestTotalTimeForResponse:response];
-        [request shouldRetryRequest:decisionHandler response:(NSHTTPURLResponse *)response responseObject:responseObject error:_error];
+        
+        [request shouldRetryValidator:(NSHTTPURLResponse *)response responseObject:responseObject error:_error decisionHandler:^(BOOL retry) {
+            
+            if (retry) {
+                decisionHandler(retry, 0);
+                return;
+            }
+            
+            [request shouldRetryProcessor:(NSHTTPURLResponse *)response responseObject:responseObject error:_error decisionHandler:^(BOOL retry) {
+                decisionHandler(retry, -1);
+            }];
+        }];
     } taskHandler:^(NSURLSessionDataTask *retryTask) {
         
         request.requestTask = retryTask;
