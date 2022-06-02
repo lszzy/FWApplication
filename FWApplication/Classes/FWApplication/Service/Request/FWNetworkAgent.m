@@ -112,9 +112,9 @@
     }
     // Filter URL if needed
     NSArray *filters = [_config urlFilters];
-    for (id<FWUrlFilterProtocol> f in filters) {
-        if ([f respondsToSelector:@selector(filterUrl:withRequest:)]) {
-            detailUrl = [f filterUrl:detailUrl withRequest:request];
+    for (id<FWUrlFilterProtocol> filter in filters) {
+        if ([filter respondsToSelector:@selector(filterUrl:withRequest:)]) {
+            detailUrl = [filter filterUrl:detailUrl withRequest:request];
         }
     }
 
@@ -159,6 +159,10 @@
 
     requestSerializer.timeoutInterval = [request requestTimeoutInterval];
     requestSerializer.allowsCellularAccess = [request allowsCellularAccess];
+    NSURLRequestCachePolicy cachePolicy = [request requestCachePolicy];
+    if (cachePolicy >= 0) {
+        requestSerializer.cachePolicy = cachePolicy;
+    }
 
     // If api needs server username and password
     NSArray<NSString *> *authorizationHeaderFieldArray = [request requestAuthorizationHeaderFieldArray];
@@ -179,49 +183,19 @@
 }
 
 - (NSURLSessionTask *)sessionTaskForRequest:(FWBaseRequest *)request error:(NSError * _Nullable __autoreleasing *)error {
-    FWRequestMethod method = [request requestMethod];
-    NSString *url = [self buildRequestUrl:request];
-    id param = request.requestArgument;
-    FWConstructingBlock constructingBlock = [request constructingBodyBlock];
-    FWURLSessionTaskProgressBlock uploadProgressBlock = [request uploadProgressBlock];
-    FWHTTPRequestSerializer *requestSerializer = [self requestSerializerForRequest:request];
-
-    switch (method) {
-        case FWRequestMethodGET:
-            if (request.resumableDownloadPath) {
-                return [self downloadTaskWithDownloadPath:request.resumableDownloadPath request:request requestSerializer:requestSerializer URLString:url parameters:param progress:request.resumableDownloadProgressBlock error:error];
-            } else {
-                return [self dataTaskWithHTTPMethod:@"GET" request:request requestSerializer:requestSerializer URLString:url parameters:param error:error];
-            }
-        case FWRequestMethodPOST:
-            return [self dataTaskWithHTTPMethod:@"POST" request:request requestSerializer:requestSerializer URLString:url parameters:param uploadProgress:uploadProgressBlock constructingBodyWithBlock:constructingBlock error:error];
-        case FWRequestMethodHEAD:
-            return [self dataTaskWithHTTPMethod:@"HEAD" request:request requestSerializer:requestSerializer URLString:url parameters:param error:error];
-        case FWRequestMethodPUT:
-            return [self dataTaskWithHTTPMethod:@"PUT" request:request requestSerializer:requestSerializer URLString:url parameters:param uploadProgress:uploadProgressBlock constructingBodyWithBlock:constructingBlock error:error];
-        case FWRequestMethodDELETE:
-            return [self dataTaskWithHTTPMethod:@"DELETE" request:request requestSerializer:requestSerializer URLString:url parameters:param error:error];
-        case FWRequestMethodPATCH:
-            return [self dataTaskWithHTTPMethod:@"PATCH" request:request requestSerializer:requestSerializer URLString:url parameters:param error:error];
+    if ([request requestMethod] == FWRequestMethodGET && request.resumableDownloadPath) {
+        return [self downloadTaskWithRequest:request progress:request.resumableDownloadProgressBlock error:error];
     }
+    
+    return [self dataTaskWithRequest:request error:error];
 }
 
 - (void)addRequest:(FWBaseRequest *)request {
     NSParameterAssert(request != nil);
 
     NSError * __autoreleasing requestSerializationError = nil;
-
-    NSURLRequest *customUrlRequest= [request buildCustomUrlRequest];
-    if (customUrlRequest) {
-        __block NSURLSessionDataTask *dataTask = nil;
-        dataTask = [_manager dataTaskWithRequest:customUrlRequest uploadProgress:nil downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-            [self handleRequestResult:dataTask responseObject:responseObject error:error];
-        }];
-        request.requestTask = dataTask;
-    } else {
-        request.requestTask = [self sessionTaskForRequest:request error:&requestSerializationError];
-    }
-
+    request.requestTask = [self sessionTaskForRequest:request error:&requestSerializationError];
+    request.requestIdentifier = request.requestTask.taskIdentifier;
     if (requestSerializationError) {
         [self requestDidFailWithRequest:request error:requestSerializationError];
         return;
@@ -309,9 +283,9 @@
     return YES;
 }
 
-- (void)handleRequestResult:(NSURLSessionTask *)task responseObject:(id)responseObject error:(NSError *)error {
+- (void)handleRequestResult:(NSUInteger)requestIdentifier response:(NSURLResponse *)response responseObject:(id)responseObject error:(NSError *)error {
     Lock();
-    FWBaseRequest *request = _requestsRecord[@(task.taskIdentifier)];
+    FWBaseRequest *request = _requestsRecord[@(requestIdentifier)];
     Unlock();
 
     // When the request is cancelled and removed from records, the underlying
@@ -331,6 +305,8 @@
     NSError *requestError = nil;
     BOOL succeed = NO;
 
+    request.requestTotalCount = [_manager requestTotalCountForResponse:response];
+    request.requestTotalTime = [_manager requestTotalTimeForResponse:response];
     request.responseObject = responseObject;
     if ([request.responseObject isKindOfClass:[NSData class]]) {
         request.responseData = responseObject;
@@ -341,11 +317,11 @@
                 // Default serializer. Do nothing.
                 break;
             case FWResponseSerializerTypeJSON:
-                request.responseObject = [self.jsonResponseSerializer responseObjectForResponse:task.response data:request.responseData error:&serializationError];
+                request.responseObject = [self.jsonResponseSerializer responseObjectForResponse:response data:request.responseData error:&serializationError];
                 request.responseJSONObject = request.responseObject;
                 break;
             case FWResponseSerializerTypeXMLParser:
-                request.responseObject = [self.xmlParserResponseSerialzier responseObjectForResponse:task.response data:request.responseData error:&serializationError];
+                request.responseObject = [self.xmlParserResponseSerialzier responseObjectForResponse:response data:request.responseData error:&serializationError];
                 break;
         }
     }
@@ -383,9 +359,9 @@
         NSArray *filters = [_config urlFilters];
         if (filters.count > 0) {
             NSError * __autoreleasing responseError = nil;
-            for (id<FWUrlFilterProtocol> f in filters) {
-                if ([f respondsToSelector:@selector(filterResponse:withError:)]) {
-                    succeed = [f filterResponse:request withError:&responseError];
+            for (id<FWUrlFilterProtocol> filter in filters) {
+                if ([filter respondsToSelector:@selector(filterResponse:withError:)]) {
+                    succeed = [filter filterResponse:request withError:&responseError];
                     requestError = responseError;
                     // Do not execute next filter when failed
                     if (!succeed) {
@@ -472,87 +448,93 @@
 
 - (void)addRequestToRecord:(FWBaseRequest *)request {
     Lock();
-    _requestsRecord[@(request.requestTask.taskIdentifier)] = request;
+    _requestsRecord[@(request.requestIdentifier)] = request;
     Unlock();
 }
 
 - (void)removeRequestFromRecord:(FWBaseRequest *)request {
     Lock();
-    [_requestsRecord removeObjectForKey:@(request.requestTask.taskIdentifier)];
+    [_requestsRecord removeObjectForKey:@(request.requestIdentifier)];
     FWRequestLog(@"Request queue size = %zd", [_requestsRecord count]);
     Unlock();
 }
 
 #pragma mark -
 
-- (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
-                                         request:(FWBaseRequest *)request
-                               requestSerializer:(FWHTTPRequestSerializer *)requestSerializer
-                                       URLString:(NSString *)URLString
-                                      parameters:(id)parameters
-                                           error:(NSError * _Nullable __autoreleasing *)error {
-    return [self dataTaskWithHTTPMethod:method request:request requestSerializer:requestSerializer URLString:URLString parameters:parameters uploadProgress:nil constructingBodyWithBlock:nil error:error];
-}
+- (NSURLSessionDataTask *)dataTaskWithRequest:(FWBaseRequest *)request
+                                        error:(NSError * _Nullable __autoreleasing *)error {
+    NSURLSessionDataTask *dataTask = [_manager dataTaskWithRequestBuilder:^NSURLRequest *{
+        
+        NSURLRequest *customUrlRequest = [request buildCustomUrlRequest];
+        if (customUrlRequest) return customUrlRequest;
+        
+        FWHTTPRequestSerializer *requestSerializer = [self requestSerializerForRequest:request];
+        NSString *urlString = [self buildRequestUrl:request];
 
-- (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
-                                         request:(FWBaseRequest *)request
-                               requestSerializer:(FWHTTPRequestSerializer *)requestSerializer
-                                       URLString:(NSString *)URLString
-                                      parameters:(id)parameters
-                                  uploadProgress:(FWURLSessionTaskProgressBlock)uploadProgress
-                       constructingBodyWithBlock:(nullable void (^)(id <FWMultipartFormData> formData))block
-                                           error:(NSError * _Nullable __autoreleasing *)error {
-    NSMutableURLRequest *urlRequest = nil;
-
-    if (block) {
-        urlRequest = [requestSerializer multipartFormRequestWithMethod:method URLString:URLString parameters:parameters constructingBodyWithBlock:block error:error];
-    } else {
-        urlRequest = [requestSerializer requestWithMethod:method URLString:URLString parameters:parameters error:error];
-    }
-    
-    // Filter URLRequest with request
-    [request filterUrlRequest:urlRequest];
-    
-    // Filter URLRequest with filters if needed
-    NSArray *filters = [_config urlFilters];
-    for (id<FWUrlFilterProtocol> f in filters) {
-        if ([f respondsToSelector:@selector(filterUrlRequest:withRequest:)]) {
-            [f filterUrlRequest:urlRequest withRequest:request];
+        NSMutableURLRequest *urlRequest = nil;
+        if (request.constructingBodyBlock) {
+            urlRequest = [requestSerializer multipartFormRequestWithMethod:request.requestMethodString URLString:urlString parameters:request.requestArgument constructingBodyWithBlock:request.constructingBodyBlock error:error];
+        } else {
+            urlRequest = [requestSerializer requestWithMethod:request.requestMethodString URLString:urlString parameters:request.requestArgument error:error];
         }
-    }
-
-    __block NSURLSessionDataTask *dataTask = nil;
-    dataTask = [_manager dataTaskWithRequest:urlRequest
-                              uploadProgress:uploadProgress
-                            downloadProgress:nil
-                           completionHandler:^(NSURLResponse * __unused response, id responseObject, NSError *_error) {
-                               [self handleRequestResult:dataTask responseObject:responseObject error:_error];
-                           }];
+        
+        // Filter URLRequest with request
+        [request filterUrlRequest:urlRequest];
+        
+        // Filter URLRequest with filters if needed
+        NSArray *filters = [[self config] urlFilters];
+        for (id<FWUrlFilterProtocol> filter in filters) {
+            if ([filter respondsToSelector:@selector(filterUrlRequest:withRequest:)]) {
+                [filter filterUrlRequest:urlRequest withRequest:request];
+            }
+        }
+        
+        return urlRequest;
+    } retryCount:[request requestRetryCount] retryInterval:[request requestRetryInternval] timeoutInterval:[request requestRetryTimeout] shouldRetry:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error, void (^ _Nonnull decisionHandler)(BOOL retry)) {
+        
+        request.requestTotalCount = [[self manager] requestTotalCountForResponse:response];
+        request.requestTotalTime = [[self manager] requestTotalTimeForResponse:response];
+        
+        BOOL shouldRetry = [request requestRetryValidator:(NSHTTPURLResponse *)response responseObject:responseObject error:_error];
+        if (!shouldRetry) {
+            decisionHandler(NO);
+            return;
+        }
+        
+        [request requestRetryProcessor:(NSHTTPURLResponse *)response responseObject:responseObject error:_error completionHandler:^(BOOL success) {
+            
+            decisionHandler(success);
+        }];
+    } taskHandler:^(NSURLSessionDataTask *retryTask) {
+        
+        request.requestTask = retryTask;
+    } uploadProgress:[request uploadProgressBlock] downloadProgress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable _error) {
+        
+        [self handleRequestResult:request.requestIdentifier response:response responseObject:responseObject error:_error];
+    }];
 
     return dataTask;
 }
 
-- (NSURLSessionDownloadTask *)downloadTaskWithDownloadPath:(NSString *)downloadPath
-                                                   request:(FWBaseRequest *)request
-                                         requestSerializer:(FWHTTPRequestSerializer *)requestSerializer
-                                                 URLString:(NSString *)URLString
-                                                parameters:(id)parameters
-                                                  progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
-                                                     error:(NSError * _Nullable __autoreleasing *)error {
+- (NSURLSessionDownloadTask *)downloadTaskWithRequest:(FWBaseRequest *)request
+                                             progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock
+                                                error:(NSError * _Nullable __autoreleasing *)error {
     // add parameters to URL;
-    NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:@"GET" URLString:URLString parameters:parameters error:error];
+    FWHTTPRequestSerializer *requestSerializer = [self requestSerializerForRequest:request];
+    NSMutableURLRequest *urlRequest = [requestSerializer requestWithMethod:request.requestMethodString URLString:[self buildRequestUrl:request] parameters:request.requestArgument error:error];
     
     // Filter URLRequest with request
     [request filterUrlRequest:urlRequest];
     
     // Filter URLRequest with filters if needed
     NSArray *filters = [_config urlFilters];
-    for (id<FWUrlFilterProtocol> f in filters) {
-        if ([f respondsToSelector:@selector(filterUrlRequest:withRequest:)]) {
-            [f filterUrlRequest:urlRequest withRequest:request];
+    for (id<FWUrlFilterProtocol> filter in filters) {
+        if ([filter respondsToSelector:@selector(filterUrlRequest:withRequest:)]) {
+            [filter filterUrlRequest:urlRequest withRequest:request];
         }
     }
 
+    NSString *downloadPath = request.resumableDownloadPath;
     NSString *downloadTargetPath;
     BOOL isDirectory;
     if (![[NSFileManager defaultManager] fileExistsAtPath:downloadPath isDirectory:&isDirectory]) {
@@ -591,7 +573,7 @@
                 downloadTask = [_manager downloadTaskWithResumeData:data progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                     return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
                 } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                    [self handleRequestResult:downloadTask responseObject:filePath error:error];
+                    [self handleRequestResult:request.requestIdentifier response:response responseObject:filePath error:error];
                 }];
                 resumeSucceeded = YES;
             } @catch (NSException *exception) {
@@ -604,7 +586,7 @@
         downloadTask = [_manager downloadTaskWithRequest:urlRequest progress:downloadProgressBlock destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
             return [NSURL fileURLWithPath:downloadTargetPath isDirectory:NO];
         } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-            [self handleRequestResult:downloadTask responseObject:filePath error:error];
+            [self handleRequestResult:request.requestIdentifier response:response responseObject:filePath error:error];
         }];
     }
     return downloadTask;
@@ -639,6 +621,10 @@
 }
 
 #pragma mark - Testing
+
+- (FWNetworkConfig *)config {
+    return _config;
+}
 
 - (FWHTTPSessionManager *)manager {
     return _manager;

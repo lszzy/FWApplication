@@ -17,7 +17,7 @@
     <a title="FWBaseRequest Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.2.0 Docs</a> (62% documented)</p>
+        <p><a href="../index.html">FWApplication 3.2.1 Docs</a> (62% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1323,6 +1323,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/FWZoomImageView.html">FWZoomImageView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/NetworkMockerURLProtocol.html">NetworkMockerURLProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/OcrObject.html">OcrObject</a>
@@ -2637,6 +2640,29 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMock.html">NetworkMock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMock/HTTPMethod.html">– HTTPMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMock/DataType.html">– DataType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMocker.html">NetworkMocker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMocker/HTTPVersion.html">– HTTPVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMocker/Mode.html">– Mode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -2693,6 +2719,33 @@ for constructing request. It&rsquo;s the base class of <code><a href="../Classes
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSURLSessionTask</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">requestTask</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(py)requestIdentifier"></a>
+                    <a name="//apple_ref/swift/Property/requestIdentifier" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(py)requestIdentifier">requestIdentifier</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The request identifier, always equals the first requestTask.taskIdentifier.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSUInteger</span> <span class="n">requestIdentifier</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -3080,6 +3133,87 @@ this value will be nil.</p>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">getter</span><span class="o">=</span><span class="n">isExecuting</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">executing</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(py)requestTotalCount"></a>
+                    <a name="//apple_ref/swift/Property/requestTotalCount" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(py)requestTotalCount">requestTotalCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Total request count for request.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSInteger</span> <span class="n">requestTotalCount</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(py)requestTotalTime"></a>
+                    <a name="//apple_ref/swift/Property/requestTotalTime" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(py)requestTotalTime">requestTotalTime</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Total request time for request.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSTimeInterval</span> <span class="n">requestTotalTime</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(py)requestMethodString"></a>
+                    <a name="//apple_ref/swift/Property/requestMethodString" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(py)requestMethodString">requestMethodString</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The request method string for request.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">requestMethodString</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -3607,33 +3741,6 @@ this array will be automatically created. Default is nil.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWBaseRequest(im)responseMockProcessor"></a>
-                    <a name="//apple_ref/swift/Method/-responseMockProcessor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)responseMockProcessor">-responseMockProcessor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Called on background thread after request failed but before callback in debug mode.</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">responseMockProcessor</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/c:objc(cs)FWBaseRequest(im)responseMockValidator"></a>
                     <a name="//apple_ref/swift/Method/-responseMockValidator" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)FWBaseRequest(im)responseMockValidator">-responseMockValidator</a>
@@ -3652,6 +3759,33 @@ this array will be automatically created. Default is nil.</p>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">responseMockValidator</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)responseMockProcessor"></a>
+                    <a name="//apple_ref/swift/Method/-responseMockProcessor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)responseMockProcessor">-responseMockProcessor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called on background thread after request failed but before callback in debug mode.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="n">responseMockProcessor</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -3952,6 +4086,33 @@ See also <code>requestUrl</code></p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)requestCachePolicy"></a>
+                    <a name="//apple_ref/swift/Method/-requestCachePolicy" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestCachePolicy">-requestCachePolicy</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Custom request cache policy. Default is -1, uses FWHTTPRequestSerializer.cachePolicy.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSURLRequestCachePolicy</span><span class="p">)</span><span class="n">requestCachePolicy</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:objc(cs)FWBaseRequest(im)requestArgument"></a>
                     <a name="//apple_ref/swift/Method/-requestArgument" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestArgument">-requestArgument</a>
@@ -3979,9 +4140,9 @@ See also <code>requestUrl</code></p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWBaseRequest(im)cacheFileNameFilterForRequestArgument:"></a>
-                    <a name="//apple_ref/swift/Method/-cacheFileNameFilterForRequestArgument:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)cacheFileNameFilterForRequestArgument:">-cacheFileNameFilterForRequestArgument:<wbr></a>
+                    <a name="/c:objc(cs)FWBaseRequest(im)cacheFileNameFilter:"></a>
+                    <a name="//apple_ref/swift/Method/-cacheFileNameFilter:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)cacheFileNameFilter:">-cacheFileNameFilter:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -3996,7 +4157,7 @@ See also <code>requestUrl</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">id</span><span class="p">)</span><span class="nf">cacheFileNameFilterForRequestArgument</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">id</span><span class="p">)</span><span class="nv">argument</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">id</span><span class="p">)</span><span class="nf">cacheFileNameFilter</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">id</span><span class="p">)</span><span class="nv">argument</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -4275,6 +4436,146 @@ See also <code>requestUrl</code></p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)requestRetryCount"></a>
+                    <a name="//apple_ref/swift/Method/-requestRetryCount" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestRetryCount">-requestRetryCount</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retry count for request. Default is 0.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="n">requestRetryCount</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)requestRetryInternval"></a>
+                    <a name="//apple_ref/swift/Method/-requestRetryInternval" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestRetryInternval">-requestRetryInternval</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retry interval for request. Default is 0.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="n">requestRetryInternval</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)requestRetryTimeout"></a>
+                    <a name="//apple_ref/swift/Method/-requestRetryTimeout" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestRetryTimeout">-requestRetryTimeout</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Retry timeout for request. Default is 0.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="n">requestRetryTimeout</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)requestRetryValidator:responseObject:error:"></a>
+                    <a name="//apple_ref/swift/Method/-requestRetryValidator:responseObject:error:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestRetryValidator:responseObject:error:">-requestRetryValidator:<wbr>responseObject:<wbr>error:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The validator will be used to test if request should retry, enabled when requestRetryCount &gt; 0. Default to check statusCode and error.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">requestRetryValidator</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSHTTPURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span>
+               <span class="nf">responseObject</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">responseObject</span>
+                        <span class="nf">error</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBaseRequest(im)requestRetryProcessor:responseObject:error:completionHandler:"></a>
+                    <a name="//apple_ref/swift/Method/-requestRetryProcessor:responseObject:error:completionHandler:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBaseRequest(im)requestRetryProcessor:responseObject:error:completionHandler:">-requestRetryProcessor:<wbr>responseObject:<wbr>error:<wbr>completionHandler:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The processor will be called if requestRetryValidator return YES, completionHandler must be called with a bool value, which means retry request if success or stop request if failed. Default to YES.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">requestRetryProcessor</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSHTTPURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span>
+               <span class="nf">responseObject</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">responseObject</span>
+                        <span class="nf">error</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSError</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span>
+            <span class="nf">completionHandler</span><span class="p">:(</span><span class="n">nonnull</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">BOOL</span><span class="p">))</span><span class="nv">completionHandler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -4418,7 +4719,7 @@ See also <code>requestUrl</code></p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-27)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
