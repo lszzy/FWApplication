@@ -6,6 +6,9 @@
 //
 
 import Foundation
+#if FWMacroSPM
+import FWApplication
+#endif
 
 #if DEBUG
 
