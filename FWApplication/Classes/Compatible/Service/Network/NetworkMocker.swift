@@ -7,6 +7,8 @@
 
 import Foundation
 
+#if DEBUG
+
 /// The protocol which can be used to send Mocked data back. Use the `Mocker` to register `Mock` data
 ///
 /// - see: [Mocker](https://github.com/WeTransfer/Mocker)
@@ -200,6 +202,18 @@ public struct NetworkMocker {
     private init() {
         // Whenever someone is requesting the Mocker, we want the URL protocol to be activated.
         _ = URLProtocol.registerClass(NetworkMockerURLProtocol.self)
+    }
+    
+    /// Enable request  mock for NetworkAgent.
+    public static func mockRequest() {
+        var configuration = NetworkConfig.shared().sessionConfiguration
+        if configuration == nil {
+            configuration = URLSessionConfiguration.default
+            NetworkConfig.shared().sessionConfiguration = configuration
+        }
+        
+        let protocolClasses = configuration?.protocolClasses ?? []
+        configuration?.protocolClasses = [NetworkMockerURLProtocol.self] + protocolClasses
     }
 
     /// Register new Mocked data. If a mock for the same URL and HTTPMethod exists, it will be overwritten.
@@ -469,3 +483,5 @@ extension URL {
         return scheme + "://" + host + path
     }
 }
+
+#endif
