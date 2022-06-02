@@ -734,6 +734,7 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                                        retryInternal:(NSTimeInterval)retryInterval
                                      timeoutInterval:(NSTimeInterval)timeoutInterval
                                          shouldRetry:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, void (^ _Nonnull)(BOOL)))shouldRetry
+                                         taskHandler:(nullable void (^)(NSURLSessionDataTask *))taskHandler
                                       uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
                                     downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress
                                    completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler
@@ -742,8 +743,8 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
     return [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:retryCount retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry ? shouldRetry : ^void(NSURLResponse *response, id _Nullable responseObject, NSError * _Nullable error, void (^decisionHandler)(BOOL)){
         
         NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
-        decisionHandler(error != nil || !(statusCode >= 200 && statusCode <= 299));
-    } uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
+        decisionHandler(error != nil || statusCode < 200 || statusCode > 299);
+    } taskHandler:taskHandler uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
 }
 
 - (NSURLSessionDataTask *)dataTaskWithRequestBuilder:(NSURLRequest * (^)(void))requestBuilder
@@ -753,6 +754,7 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                                      timeoutInterval:(NSTimeInterval)timeoutInterval
                                            startTime:(NSTimeInterval)startTime
                                          shouldRetry:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable, void (^ _Nonnull)(BOOL)))shouldRetry
+                                         taskHandler:(nullable void (^)(NSURLSessionDataTask *))taskHandler
                                       uploadProgress:(nullable void (^)(NSProgress *uploadProgress))uploadProgress
                                     downloadProgress:(nullable void (^)(NSProgress *downloadProgress))downloadProgress
                                    completionHandler:(nullable void (^)(NSURLResponse * _Nonnull, id _Nullable, NSError * _Nullable))completionHandler
@@ -768,7 +770,9 @@ static NSString * const FWNSURLSessionTaskDidSuspendNotification = @"site.wuyong
                 if (decisionRetry) {
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MAX(retryInterval, 0) * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                         
-                        NSURLSessionDataTask *dataTask = [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:remainCount - 1 retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
+                        NSURLSessionDataTask *dataTask = [self dataTaskWithRequestBuilder:requestBuilder retryCount:retryCount remainCount:remainCount - 1 retryInternal:retryInterval timeoutInterval:timeoutInterval startTime:startTime shouldRetry:shouldRetry taskHandler:taskHandler uploadProgress:uploadProgress downloadProgress:downloadProgress completionHandler:completionHandler];
+                        
+                        if (taskHandler) taskHandler(dataTask);
                         [dataTask resume];
                     });
                 } else {

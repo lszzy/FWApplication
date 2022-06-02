@@ -31,6 +31,7 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
 @interface FWBaseRequest ()
 
 @property (nonatomic, strong, readwrite) NSURLSessionTask *requestTask;
+@property (nonatomic, assign, readwrite) NSUInteger requestIdentifier;
 @property (nonatomic, strong, readwrite) NSData *responseData;
 @property (nonatomic, strong, readwrite) id responseJSONObject;
 @property (nonatomic, strong, readwrite) id responseObject;
@@ -270,9 +271,11 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     return 0;
 }
 
-- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error {
-    NSInteger statusCode = ((NSHTTPURLResponse *)response).statusCode;
-    decisionHandler(error != nil || !(statusCode >= 200 && statusCode <= 299));
+- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler
+                  response:(NSHTTPURLResponse *)response
+            responseObject:(nullable id)responseObject
+                     error:(nullable NSError *)error {
+    decisionHandler(error != nil || response.statusCode < 200 || response.statusCode > 299);
 }
 
 #pragma mark - NSObject

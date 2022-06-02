@@ -137,6 +137,9 @@ NS_SWIFT_NAME(BaseRequest)
 ///  @warning This value is actually nil and should not be accessed before the request starts.
 @property (nonatomic, strong, readonly) NSURLSessionTask *requestTask;
 
+///  The request identifier, always equals the first requestTask.taskIdentifier.
+@property (nonatomic, assign, readonly) NSUInteger requestIdentifier;
+
 ///  Shortcut for `requestTask.currentRequest`.
 @property (nonatomic, strong, readonly) NSURLRequest *currentRequest;
 
@@ -377,7 +380,10 @@ NS_SWIFT_NAME(BaseRequest)
 - (NSTimeInterval)requestRetryTimeout;
 
 ///  Should retry for response. Default to check statusCode and error.
-- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler response:(NSURLResponse *)response responseObject:(nullable id)responseObject error:(nullable NSError *)error;
+- (void)shouldRetryRequest:(void (^)(BOOL))decisionHandler
+                  response:(NSHTTPURLResponse *)response
+            responseObject:(nullable id)responseObject
+                     error:(nullable NSError *)error;
 
 @end
 
