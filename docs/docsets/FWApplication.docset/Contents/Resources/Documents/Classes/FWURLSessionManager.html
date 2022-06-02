@@ -17,7 +17,7 @@
     <a title="FWURLSessionManager Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.2.0 Docs</a> (62% documented)</p>
+        <p><a href="../index.html">FWApplication 3.2.1 Docs</a> (62% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1323,6 +1323,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/FWZoomImageView.html">FWZoomImageView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/NetworkMockerURLProtocol.html">NetworkMockerURLProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/OcrObject.html">OcrObject</a>
@@ -2637,6 +2640,29 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMock.html">NetworkMock</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMock/HTTPMethod.html">– HTTPMethod</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMock/DataType.html">– DataType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMocker.html">NetworkMocker</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMocker/HTTPVersion.html">– HTTPVersion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/NetworkMocker/Mode.html">– Mode</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -3272,6 +3298,175 @@
                               <td>
                                 <code>
                                 <em>downloadProgressBlock</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block object to be executed when the download progress is updated. Note this block is called on the session queue, not the main queue.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completionHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block object to be executed when the task finishes. This block has no return value and takes three arguments: the server response, the response object created by that serializer, and the error that occurred, if any.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLSessionManager(im)dataTaskWithRequestBuilder:retryCount:retryInterval:timeoutInterval:shouldRetry:taskHandler:uploadProgress:downloadProgress:completionHandler:"></a>
+                    <a name="//apple_ref/swift/Method/-dataTaskWithRequestBuilder:retryCount:retryInterval:timeoutInterval:shouldRetry:taskHandler:uploadProgress:downloadProgress:completionHandler:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLSessionManager(im)dataTaskWithRequestBuilder:retryCount:retryInterval:timeoutInterval:shouldRetry:taskHandler:uploadProgress:downloadProgress:completionHandler:">-dataTaskWithRequestBuilder:<wbr>retryCount:<wbr>retryInterval:<wbr>timeoutInterval:<wbr>shouldRetry:<wbr>taskHandler:<wbr>uploadProgress:<wbr>downloadProgress:<wbr>completionHandler:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates an <code>NSURLSessionDataTask</code> with a retry request.</p>
+<div class="aside aside-see">
+    <p class="aside-title">See</p>
+    <p>-dataTaskWithRequest:uploadProgress:downloadProgress:completionHandler:</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSURLSessionDataTask</span> <span class="o">*</span><span class="p">)</span>
+    <span class="nf">dataTaskWithRequestBuilder</span><span class="p">:</span>
+        <span class="p">(</span><span class="n">nonnull</span> <span class="n">NSURLRequest</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">requestBuilder</span>
+                    <span class="nf">retryCount</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">retryCount</span>
+                 <span class="nf">retryInterval</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">retryInterval</span>
+               <span class="nf">timeoutInterval</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">timeoutInterval</span>
+                   <span class="nf">shouldRetry</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span>
+                                   <span class="n">NSURLResponse</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">,</span>
+                                   <span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">,</span>
+                                   <span class="n">NSError</span> <span class="o">*</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">,</span>
+                                   <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">BOOL</span><span class="p">)))</span><span class="n">shouldRetry</span>
+                   <span class="n">taskHandler</span><span class="o">:</span>
+                       <span class="p">(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span>
+                           <span class="n">NSURLSessionDataTask</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span><span class="n">taskHandler</span>
+                <span class="n">uploadProgress</span><span class="o">:</span><span class="p">(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span>
+                                   <span class="n">NSProgress</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span><span class="n">uploadProgress</span>
+              <span class="n">downloadProgress</span><span class="o">:</span>
+                  <span class="p">(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSProgress</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span>
+                      <span class="n">downloadProgress</span>
+             <span class="n">completionHandler</span><span class="o">:</span>
+                 <span class="p">(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span>
+                     <span class="n">NSURLResponse</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">,</span> <span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">,</span>
+                     <span class="n">NSError</span> <span class="o">*</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">))</span><span class="n">completionHandler</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>requestBuilder</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The request builder.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>retryCount</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The retry limit, eg 4.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>retryInterval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The retry interval, eg 2.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>timeoutInterval</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The retry timeout, 0 means no timeout.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>shouldRetry</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Whether the retry should start, must call decisionHandler, default to check statusCode and error.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>taskHandler</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block object to be executed when the retry task is created.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>uploadProgress</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A block object to be executed when the upload progress is updated. Note this block is called on the session queue, not the main queue.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>downloadProgress</em>
                                 </code>
                               </td>
                               <td>
@@ -3941,6 +4136,116 @@
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nf">userInfoForTask</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURLSessionTask</span> <span class="o">*</span><span class="p">)</span><span class="nv">task</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLSessionManager(im)setRequestTotalCount:forResponse:"></a>
+                    <a name="//apple_ref/swift/Method/-setRequestTotalCount:forResponse:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLSessionManager(im)setRequestTotalCount:forResponse:">-setRequestTotalCount:<wbr>forResponse:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets total request count to be used for the specified response.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setRequestTotalCount</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">totalCount</span>
+                 <span class="nf">forResponse</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLSessionManager(im)requestTotalCountForResponse:"></a>
+                    <a name="//apple_ref/swift/Method/-requestTotalCountForResponse:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLSessionManager(im)requestTotalCountForResponse:">-requestTotalCountForResponse:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the total request count of the specified response.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nf">requestTotalCountForResponse</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLSessionManager(im)setRequestTotalTime:forResponse:"></a>
+                    <a name="//apple_ref/swift/Method/-setRequestTotalTime:forResponse:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLSessionManager(im)setRequestTotalTime:forResponse:">-setRequestTotalTime:<wbr>forResponse:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets total request time to be used for the specified response.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setRequestTotalTime</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">totalTime</span>
+                <span class="nf">forResponse</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLSessionManager(im)requestTotalTimeForResponse:"></a>
+                    <a name="//apple_ref/swift/Method/-requestTotalTimeForResponse:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLSessionManager(im)requestTotalTimeForResponse:">-requestTotalTimeForResponse:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the retry total request time of the specified response.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nf">requestTotalTimeForResponse</span><span class="p">:(</span><span class="n">nonnull</span> <span class="n">NSURLResponse</span> <span class="o">*</span><span class="p">)</span><span class="nv">response</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -4823,7 +5128,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-05-27)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

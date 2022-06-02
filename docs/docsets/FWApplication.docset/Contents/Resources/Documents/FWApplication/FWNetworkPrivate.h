@@ -67,11 +67,14 @@ NS_SWIFT_NAME(NetworkUtils)
 @interface FWBaseRequest (Setter)
 
 @property (nonatomic, strong, readwrite) NSURLSessionTask *requestTask;
+@property (nonatomic, assign, readwrite) NSUInteger requestIdentifier;
 @property (nonatomic, strong, readwrite, nullable) NSData *responseData;
 @property (nonatomic, strong, readwrite, nullable) id responseJSONObject;
 @property (nonatomic, strong, readwrite, nullable) id responseObject;
 @property (nonatomic, strong, readwrite, nullable) NSString *responseString;
 @property (nonatomic, strong, readwrite, nullable) NSError *error;
+@property (nonatomic, readwrite) NSInteger requestTotalCount;
+@property (nonatomic, readwrite) NSTimeInterval requestTotalTime;
 
 @end
 

@@ -137,6 +137,9 @@ NS_SWIFT_NAME(BaseRequest)
 ///  @warning This value is actually nil and should not be accessed before the request starts.
 @property (nonatomic, strong, readonly) NSURLSessionTask *requestTask;
 
+///  The request identifier, always equals the first requestTask.taskIdentifier.
+@property (nonatomic, assign, readonly) NSUInteger requestIdentifier;
+
 ///  Shortcut for `requestTask.currentRequest`.
 @property (nonatomic, strong, readonly) NSURLRequest *currentRequest;
 
@@ -184,6 +187,15 @@ NS_SWIFT_NAME(BaseRequest)
 
 ///  Executing state of request task.
 @property (nonatomic, readonly, getter=isExecuting) BOOL executing;
+
+///  Total request count for request.
+@property (nonatomic, readonly) NSInteger requestTotalCount;
+
+///  Total request time for request.
+@property (nonatomic, readonly) NSTimeInterval requestTotalTime;
+
+///  The request method string for request.
+@property (nonatomic, copy, readonly) NSString *requestMethodString;
 
 
 #pragma mark - Request Configuration
@@ -246,7 +258,6 @@ NS_SWIFT_NAME(BaseRequest)
 ///  Convenience method to add request accessory. See also `requestAccessories`.
 - (void)addAccessory:(id<FWRequestAccessory>)accessory;
 
-
 #pragma mark - Request Action
 ///=============================================================================
 /// @name Request Action
@@ -268,11 +279,11 @@ NS_SWIFT_NAME(BaseRequest)
 /// @name Subclass Override
 ///=============================================================================
 
-///  Called on background thread after request failed but before callback in debug mode.
-- (BOOL)responseMockProcessor;
-
 ///  This validator will be used to test whether to mock response in debug mode. Default is YES if 404.
 - (BOOL)responseMockValidator;
+
+///  Called on background thread after request failed but before callback in debug mode.
+- (BOOL)responseMockProcessor;
 
 ///  Preprocess URLRequest before actually sending them.
 - (void)filterUrlRequest:(NSMutableURLRequest *)urlRequest;
@@ -319,6 +330,9 @@ NS_SWIFT_NAME(BaseRequest)
 ///              `timeoutIntervalForResource` of `NSURLSessionConfiguration`.
 - (NSTimeInterval)requestTimeoutInterval;
 
+///  Custom request cache policy. Default is -1, uses FWHTTPRequestSerializer.cachePolicy.
+- (NSURLRequestCachePolicy)requestCachePolicy;
+
 ///  Additional request argument.
 - (nullable id)requestArgument;
 
@@ -355,6 +369,26 @@ NS_SWIFT_NAME(BaseRequest)
 
 ///  This validator will be used to test if `responseStatusCode` is valid.
 - (BOOL)statusCodeValidator;
+
+///  Retry count for request. Default is 0.
+- (NSInteger)requestRetryCount;
+
+///  Retry interval for request. Default is 0.
+- (NSTimeInterval)requestRetryInternval;
+
+///  Retry timeout for request. Default is 0.
+- (NSTimeInterval)requestRetryTimeout;
+
+///  The validator will be used to test if request should retry, enabled when requestRetryCount > 0. Default to check statusCode and error.
+- (BOOL)requestRetryValidator:(NSHTTPURLResponse *)response
+               responseObject:(nullable id)responseObject
+                        error:(nullable NSError *)error;
+
+///  The processor will be called if requestRetryValidator return YES, completionHandler must be called with a bool value, which means retry request if success or stop request if failed. Default to YES.
+- (void)requestRetryProcessor:(NSHTTPURLResponse *)response
+               responseObject:(nullable id)responseObject
+                        error:(nullable NSError *)error
+            completionHandler:(void (^)(BOOL success))completionHandler;
 
 @end
 

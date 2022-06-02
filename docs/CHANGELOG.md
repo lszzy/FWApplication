@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.1] - 2022-06-02
+
+### Added
+* Added Swift Network Mock component
+* Added retry function when network request fails
+
 ## [3.2.0] - 2022-05-27
 
 ### Changed

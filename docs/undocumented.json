@@ -631,6 +631,146 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 161,
+      "symbol": "NetworkMocker.HTTPVersion",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 162,
+      "symbol": "NetworkMocker.HTTPVersion.http1_0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 163,
+      "symbol": "NetworkMocker.HTTPVersion.http1_1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 164,
+      "symbol": "NetworkMocker.HTTPVersion.http2_0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 291,
+      "symbol": "NetworkMock.HTTPMethod.options",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 292,
+      "symbol": "NetworkMock.HTTPMethod.get",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 293,
+      "symbol": "NetworkMock.HTTPMethod.head",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 294,
+      "symbol": "NetworkMock.HTTPMethod.post",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 295,
+      "symbol": "NetworkMock.HTTPMethod.put",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 296,
+      "symbol": "NetworkMock.HTTPMethod.patch",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 297,
+      "symbol": "NetworkMock.HTTPMethod.delete",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 298,
+      "symbol": "NetworkMock.HTTPMethod.trace",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 299,
+      "symbol": "NetworkMock.HTTPMethod.connect",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 304,
+      "symbol": "NetworkMock.DataType.json",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 305,
+      "symbol": "NetworkMock.DataType.html",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 306,
+      "symbol": "NetworkMock.DataType.imagePNG",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 307,
+      "symbol": "NetworkMock.DataType.pdf",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 308,
+      "symbol": "NetworkMock.DataType.mp4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 309,
+      "symbol": "NetworkMock.DataType.zip",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Network/NetworkMocker.swift",
+      "line": 329,
+      "symbol": "NetworkMock.OnRequest",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/Component/AttributedLabel.swift",
       "line": 16,
       "symbol": "Wrapper.textColor",
@@ -12561,174 +12701,195 @@
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
       "line": 70,
-      "symbol": "FWBaseRequest(Setter).responseData",
+      "symbol": "FWBaseRequest(Setter).requestIdentifier",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
       "line": 71,
-      "symbol": "FWBaseRequest(Setter).responseJSONObject",
+      "symbol": "FWBaseRequest(Setter).responseData",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
       "line": 72,
-      "symbol": "FWBaseRequest(Setter).responseObject",
+      "symbol": "FWBaseRequest(Setter).responseJSONObject",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
       "line": 73,
-      "symbol": "FWBaseRequest(Setter).responseString",
+      "symbol": "FWBaseRequest(Setter).responseObject",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
       "line": 74,
+      "symbol": "FWBaseRequest(Setter).responseString",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWNetworkPrivate.h",
+      "line": 75,
       "symbol": "FWBaseRequest(Setter).error",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 78,
+      "line": 76,
+      "symbol": "FWBaseRequest(Setter).requestTotalCount",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWNetworkPrivate.h",
+      "line": 77,
+      "symbol": "FWBaseRequest(Setter).requestTotalTime",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWNetworkPrivate.h",
+      "line": 81,
       "symbol": "FWBaseRequest(RequestAccessory)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 80,
+      "line": 83,
       "symbol": "FWBaseRequest.-toggleAccessoriesWillStartCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 81,
+      "line": 84,
       "symbol": "FWBaseRequest.-toggleAccessoriesWillStopCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 82,
+      "line": 85,
       "symbol": "FWBaseRequest.-toggleAccessoriesDidStopCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 86,
+      "line": 89,
       "symbol": "FWBatchRequest(RequestAccessory)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 88,
+      "line": 91,
       "symbol": "FWBatchRequest.-toggleAccessoriesWillStartCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 89,
+      "line": 92,
       "symbol": "FWBatchRequest.-toggleAccessoriesWillStopCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 90,
+      "line": 93,
       "symbol": "FWBatchRequest.-toggleAccessoriesDidStopCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 94,
+      "line": 97,
       "symbol": "FWChainRequest(RequestAccessory)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 96,
+      "line": 99,
       "symbol": "FWChainRequest.-toggleAccessoriesWillStartCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 97,
+      "line": 100,
       "symbol": "FWChainRequest.-toggleAccessoriesWillStopCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 98,
+      "line": 101,
       "symbol": "FWChainRequest.-toggleAccessoriesDidStopCallBack",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 102,
+      "line": 105,
       "symbol": "FWNetworkAgent(Private)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 104,
+      "line": 107,
       "symbol": "FWNetworkAgent.-manager",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 105,
+      "line": 108,
       "symbol": "FWNetworkAgent.-resetURLSessionManager",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 106,
+      "line": 109,
       "symbol": "FWNetworkAgent.-resetURLSessionManagerWithConfiguration:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 108,
+      "line": 111,
       "symbol": "FWNetworkAgent.-incompleteDownloadTempCacheFolder",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 110,
+      "line": 113,
       "symbol": "FWNetworkAgent.-httpResponseSerializer",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 111,
+      "line": 114,
       "symbol": "FWNetworkAgent.-jsonResponseSerializer",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWNetworkPrivate.h",
-      "line": 112,
+      "line": 115,
       "symbol": "FWNetworkAgent.-xmlParserResponseSerialzier",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
