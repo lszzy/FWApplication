@@ -104,7 +104,7 @@ static dispatch_queue_t fwrequest_cache_writing_queue() {
 @implementation FWRequest
 
 - (void)start {
-    if (self.ignoreCache) {
+    if (!self.useCacheResponse) {
         [self startWithoutCache];
         return;
     }
