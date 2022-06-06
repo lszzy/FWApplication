@@ -107,6 +107,7 @@
     if (!messageText && self.defaultMessageText) {
         messageText = self.defaultMessageText(style);
     }
+    if (messageText.length < 1) return;
     
     FWToastView *toastView = [view viewWithTag:2013];
     BOOL fadeAnimated = self.fadeAnimated && !toastView;
