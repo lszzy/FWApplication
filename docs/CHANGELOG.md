@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.2.2] - 2022-06-08
+
+### Changed
+* Modify network component attribute names and parameter default values
+* The toast pop-up window is not displayed when the optimization message is empty
+
 ## [3.2.1] - 2022-06-02
 
 ### Added

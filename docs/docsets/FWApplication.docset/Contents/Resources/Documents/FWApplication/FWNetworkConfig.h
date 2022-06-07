@@ -94,7 +94,7 @@ NS_SWIFT_NAME(NetworkConfig)
 @property (nonatomic, strong, readonly) NSArray<id<FWCacheDirPathFilterProtocol>> *cacheDirPathFilters;
 ///  Security policy will be used by AFNetworking. See also `FWSecurityPolicy`.
 @property (nonatomic, strong) FWSecurityPolicy *securityPolicy;
-///  Whether to remove NSNull values from response JSON. Defaults to NO.
+///  Whether to remove NSNull values from response JSON. Defaults to YES.
 @property (nonatomic, assign) BOOL removeNullValues;
 ///  Whether to log debug info. Default is NO;
 @property (nonatomic) BOOL debugLogEnabled;

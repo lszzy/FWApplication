@@ -46,7 +46,7 @@
         _urlFilters = [NSMutableArray array];
         _cacheDirPathFilters = [NSMutableArray array];
         _securityPolicy = [FWSecurityPolicy defaultPolicy];
-        _removeNullValues = NO;
+        _removeNullValues = YES;
         _debugLogEnabled = NO;
         _debugMockEnabled = NO;
     }

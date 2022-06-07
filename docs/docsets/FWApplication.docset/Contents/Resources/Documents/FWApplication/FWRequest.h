@@ -45,14 +45,13 @@ typedef NS_ENUM(NSInteger, FWRequestCacheErrorCode) {
 NS_SWIFT_NAME(Request)
 @interface FWRequest : FWBaseRequest
 
-///  Whether to use cache as response or not.
-///  Default is NO, which means caching will take effect with specific arguments.
+///  Whether to use cache as response or not. Default is NO.
+///  If YES, which means caching will take effect with specific arguments.
 ///  Note that `cacheTimeInSeconds` default is -1. As a result cache data is not actually
 ///  used as response unless you return a positive value in `cacheTimeInSeconds`.
 ///
-///  Also note that this option does not affect storing the response, which means response will always be saved
-///  even `ignoreCache` is YES.
-@property (nonatomic) BOOL ignoreCache;
+///  Also note that this option does not affect storing the response, which means response will always be saved even `useCacheResponse` is NO.
+@property (nonatomic) BOOL useCacheResponse;
 
 ///  Whether data is from local cache.
 - (BOOL)isDataFromCache;
