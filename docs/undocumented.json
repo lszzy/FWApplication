@@ -3943,105 +3943,105 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 405,
+      "line": 407,
       "symbol": "FWBenchmark.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 416,
+      "line": 419,
       "symbol": "FWKeychainManager.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 450,
+      "line": 453,
       "symbol": "FWNotificationManager.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 478,
+      "line": 481,
       "symbol": "FWNotificationManager.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 486,
+      "line": 489,
       "symbol": "FWPromise.completionQueue",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 490,
+      "line": 493,
       "symbol": "FWPromise.defaultError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 494,
+      "line": 497,
       "symbol": "FWPromise.validationError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 498,
+      "line": 501,
       "symbol": "FWPromise.timeoutError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 511,
+      "line": 514,
       "symbol": "FWPromise.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 512,
+      "line": 515,
       "symbol": "FWPromise.+new",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 517,
+      "line": 520,
       "symbol": "CM(FWFramework)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 556,
+      "line": 559,
       "symbol": "FWVersionManager.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 574,
+      "line": 577,
       "symbol": "FWVersionManager.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-umbrella.h",
-      "line": 48,
+      "line": 49,
       "symbol": "FWFrameworkVersionNumber",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-umbrella.h",
-      "line": 49,
+      "line": 50,
       "symbol": "FWFrameworkVersionString",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
@@ -4461,14 +4461,14 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 259,
+      "line": 262,
       "symbol": "FWTextViewWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 283,
+      "line": 289,
       "symbol": "FWViewControllerWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -6876,14 +6876,14 @@
     },
     {
       "file": "docs/FWApplication//FWApplication-umbrella.h",
-      "line": 143,
+      "line": 144,
       "symbol": "FWApplicationVersionNumber",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication//FWApplication-umbrella.h",
-      "line": 144,
+      "line": 145,
       "symbol": "FWApplicationVersionString",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"

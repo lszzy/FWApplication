@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 3.2.2 Docs</a> (62% documented)</p>
+        <p><a href="index.html">FWApplication 3.3.0 Docs</a> (62% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -344,6 +344,9 @@
                 <a href="Classes/FWAppBundle.html">FWAppBundle</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes.html#/c:objc(cs)FWAppConfigDefaultTemplate">FWAppConfigDefaultTemplate</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/FWAppDelegate.html">FWAppDelegate</a>
               </li>
               <li class="nav-group-task">
@@ -582,6 +585,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/FWCompoundResponseSerializer.html">FWCompoundResponseSerializer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FWConfiguration.html">FWConfiguration</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a>
@@ -2081,6 +2087,9 @@
                 <a href="Protocols/FWCollectionViewDelegateWaterfallLayout.html">FWCollectionViewDelegateWaterfallLayout</a>
               </li>
               <li class="nav-group-task">
+                <a href="Protocols/FWConfigurationTemplateProtocol.html">FWConfigurationTemplateProtocol</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Protocols/FWDatabaseModel.html">FWDatabaseModel</a>
               </li>
               <li class="nav-group-task">
@@ -3315,6 +3324,37 @@ __weak NSObject *weakBase = self.base;
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
 <span class="k">@interface</span> <span class="nc">FWBarButtonItemClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWBarItemClassWrapper">FWBarItemClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWConfiguration"></a>
+                    <a name="//apple_ref/swift/Class/FWConfiguration" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWConfiguration">FWConfiguration</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>配置基类，使用时继承即可</p>
+
+<p>默认自动查找类名格式优先级：[配置类]+Template &gt; [配置类]+DefaultTemplate</p>
+
+                        <a href="Classes/FWConfiguration.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWConfiguration</span> <span class="p">:</span> <span class="nc">NSObject</span></code></pre>
 
                         </div>
                       </div>
@@ -5326,9 +5366,9 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWTabBarClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTabBarClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTabBarClassWrapper">FWTabBarClassWrapper</a>
+                    <a name="/c:objc(cs)FWSearchBarClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWSearchBarClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWSearchBarClassWrapper">FWSearchBarClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -5344,234 +5384,7 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTabBarClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTabBarControllerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTabBarControllerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTabBarControllerClassWrapper">FWTabBarControllerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTabBarControllerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerClassWrapper.html">FWViewControllerClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWViewControllerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWViewControllerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWViewControllerClassWrapper">FWViewControllerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWViewControllerClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWViewControllerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWMutableSetClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWMutableSetClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWMutableSetClassWrapper">FWMutableSetClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWMutableSetClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWSetClassWrapper">FWSetClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWSearchBarWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWSearchBarWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWSearchBarWrapper">FWSearchBarWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWSearchBarWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWSearchBarWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWLayerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWLayerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWLayerClassWrapper">FWLayerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWLayerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWSwitchClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWSwitchClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWSwitchClassWrapper">FWSwitchClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWSwitchClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWFileManagerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWFileManagerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWFileManagerClassWrapper">FWFileManagerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWFileManagerClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWFileManagerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPageControlClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPageControlClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPageControlClassWrapper">FWPageControlClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPageControlClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWSearchBarClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5610,9 +5423,9 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWBarItemWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWBarItemWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWBarItemWrapper">FWBarItemWrapper</a>
+                    <a name="/c:objc(cs)FWFileManagerWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWFileManagerWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWFileManagerWrapper">FWFileManagerWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -5622,126 +5435,14 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWBarItemWrapper.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/FWFileManagerWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWBarItemWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWBarItemClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWBarItemClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWBarItemClassWrapper">FWBarItemClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWBarItemClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWCollectionViewClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWCollectionViewClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWCollectionViewClassWrapper">FWCollectionViewClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWCollectionViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWScrollViewClassWrapper.html">FWScrollViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTextViewClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTextViewClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTextViewClassWrapper">FWTextViewClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTextViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWScrollViewClassWrapper.html">FWScrollViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWAnimationClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWAnimationClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWAnimationClassWrapper">FWAnimationClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWAnimationClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWFileManagerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5780,9 +5481,9 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWApplicationWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWApplicationWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWApplicationWrapper">FWApplicationWrapper</a>
+                    <a name="/c:objc(cs)FWGradientLayerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWGradientLayerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWGradientLayerClassWrapper">FWGradientLayerClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -5792,43 +5493,14 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWApplicationWrapper.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/FWGradientLayerClassWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWApplicationWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWNumberWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWNumberWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWNumberWrapper">FWNumberWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWNumberWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWNumberWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWGradientLayerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWLayerClassWrapper">FWLayerClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5867,9 +5539,9 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWDictionaryClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWDictionaryClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWDictionaryClassWrapper">FWDictionaryClassWrapper</a>
+                    <a name="/c:objc(cs)FWBarItemClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWBarItemClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBarItemClassWrapper">FWBarItemClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -5885,7 +5557,832 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWDictionaryClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWBarItemClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLRequestWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWURLRequestWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLRequestWrapper">FWURLRequestWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWURLRequestWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWURLRequestWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWCollectionViewClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWCollectionViewClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWCollectionViewClassWrapper">FWCollectionViewClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWCollectionViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWScrollViewClassWrapper.html">FWScrollViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWSliderClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWSliderClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWSliderClassWrapper">FWSliderClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWSliderClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTextViewClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTextViewClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTextViewClassWrapper">FWTextViewClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTextViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWScrollViewClassWrapper.html">FWScrollViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTabBarControllerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTabBarControllerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTabBarControllerClassWrapper">FWTabBarControllerClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTabBarControllerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerClassWrapper.html">FWViewControllerClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTabBarControllerWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTabBarControllerWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTabBarControllerWrapper">FWTabBarControllerWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWTabBarControllerWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTabBarControllerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerWrapper.html">FWViewControllerWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWLayerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWLayerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWLayerClassWrapper">FWLayerClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWLayerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWNumberWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWNumberWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWNumberWrapper">FWNumberWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWNumberWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWNumberWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWViewControllerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWViewControllerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWViewControllerClassWrapper">FWViewControllerClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWViewControllerClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWViewControllerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWDeviceWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWDeviceWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWDeviceWrapper">FWDeviceWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWDeviceWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWDeviceWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBezierPathClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWBezierPathClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBezierPathClassWrapper">FWBezierPathClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWBezierPathClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWBezierPathClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWMutableArrayClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWMutableArrayClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWMutableArrayClassWrapper">FWMutableArrayClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWMutableArrayClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWArrayClassWrapper">FWArrayClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTextFieldClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTextFieldClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTextFieldClassWrapper">FWTextFieldClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTextFieldClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTabBarClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTabBarClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTabBarClassWrapper">FWTabBarClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTabBarClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBezierPathWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWBezierPathWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBezierPathWrapper">FWBezierPathWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWBezierPathWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWBezierPathWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTableViewClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTableViewClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTableViewClassWrapper">FWTableViewClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWTableViewClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTableViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWScrollViewClassWrapper.html">FWScrollViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWApplicationWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWApplicationWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWApplicationWrapper">FWApplicationWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWApplicationWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWApplicationWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWFileManagerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWFileManagerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWFileManagerClassWrapper">FWFileManagerClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWFileManagerClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWFileManagerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWToolbarClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWToolbarClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWToolbarClassWrapper">FWToolbarClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWToolbarClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWMutableSetClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWMutableSetClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWMutableSetClassWrapper">FWMutableSetClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWMutableSetClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWSetClassWrapper">FWSetClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWArrayClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWArrayClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWArrayClassWrapper">FWArrayClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWArrayClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWBarItemWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWBarItemWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWBarItemWrapper">FWBarItemWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWBarItemWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWBarItemWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWSwitchClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWSwitchClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWSwitchClassWrapper">FWSwitchClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWSwitchClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWAnimationClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWAnimationClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWAnimationClassWrapper">FWAnimationClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWAnimationClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWMutableDictionaryClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWMutableDictionaryClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWMutableDictionaryClassWrapper">FWMutableDictionaryClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWMutableDictionaryClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWPageControlClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPageControlClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPageControlClassWrapper">FWPageControlClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWPageControlClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWControlClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWControlClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWControlClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWScreenWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWScreenWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWScreenWrapper">FWScreenWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWScreenWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWScreenWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWSearchBarWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWSearchBarWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWSearchBarWrapper">FWSearchBarWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWSearchBarWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWSearchBarWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5923,9 +6420,9 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWSliderClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWSliderClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWSliderClassWrapper">FWSliderClassWrapper</a>
+                    <a name="/c:objc(cs)FWDictionaryClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWDictionaryClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWDictionaryClassWrapper">FWDictionaryClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -5941,7 +6438,64 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWSliderClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWDictionaryClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWFontWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWFontWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWFontWrapper">FWFontWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWFontWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWFontWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWURLRequestClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWURLRequestClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWURLRequestClassWrapper">FWURLRequestClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWURLRequestClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -5999,520 +6553,6 @@ Material: <a href="https://google.github.io/material-design-icons/#icons-for-ios
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
 <span class="k">@interface</span> <span class="nc">FWNumberClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWScreenWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWScreenWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWScreenWrapper">FWScreenWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWScreenWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWScreenWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWFontWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWFontWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWFontWrapper">FWFontWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWFontWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWFontWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWGradientLayerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWGradientLayerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWGradientLayerClassWrapper">FWGradientLayerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWGradientLayerClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWGradientLayerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWLayerClassWrapper">FWLayerClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWFileManagerWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWFileManagerWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWFileManagerWrapper">FWFileManagerWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWFileManagerWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWFileManagerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTextFieldClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTextFieldClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTextFieldClassWrapper">FWTextFieldClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTextFieldClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWArrayClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWArrayClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWArrayClassWrapper">FWArrayClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWArrayClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWDeviceWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWDeviceWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWDeviceWrapper">FWDeviceWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWDeviceWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWDeviceWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWBezierPathWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWBezierPathWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWBezierPathWrapper">FWBezierPathWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWBezierPathWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWBezierPathWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWBezierPathClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWBezierPathClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWBezierPathClassWrapper">FWBezierPathClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWBezierPathClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWBezierPathClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTabBarControllerWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTabBarControllerWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTabBarControllerWrapper">FWTabBarControllerWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWTabBarControllerWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTabBarControllerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerWrapper.html">FWViewControllerWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWToolbarClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWToolbarClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWToolbarClassWrapper">FWToolbarClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWToolbarClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWMutableDictionaryClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWMutableDictionaryClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWMutableDictionaryClassWrapper">FWMutableDictionaryClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWMutableDictionaryClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWMutableArrayClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWMutableArrayClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWMutableArrayClassWrapper">FWMutableArrayClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWMutableArrayClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWArrayClassWrapper">FWArrayClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWSearchBarClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWSearchBarClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWSearchBarClassWrapper">FWSearchBarClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWSearchBarClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTableViewClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTableViewClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTableViewClassWrapper">FWTableViewClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWTableViewClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTableViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWScrollViewClassWrapper.html">FWScrollViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWControlClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWControlClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWControlClassWrapper">FWControlClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWControlClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWURLRequestWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWURLRequestWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWURLRequestWrapper">FWURLRequestWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWURLRequestWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWURLRequestWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWURLRequestClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWURLRequestClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWURLRequestClassWrapper">FWURLRequestClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWURLRequestClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -7942,9 +7982,9 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWImagePickerControllerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWImagePickerControllerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWImagePickerControllerClassWrapper">FWImagePickerControllerClassWrapper</a>
+                    <a name="/c:objc(cs)FWMutableAttributedStringClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWMutableAttributedStringClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWMutableAttributedStringClassWrapper">FWMutableAttributedStringClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -7954,15 +7994,14 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWImagePickerControllerClassWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWImagePickerControllerClassWrapper</span>
-    <span class="p">:</span> <span class="nc"><a href="Classes/FWNavigationControllerClassWrapper.html">FWNavigationControllerClassWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWMutableAttributedStringClassWrapper</span>
+    <span class="p">:</span> <span class="nc"><a href="Classes/FWAttributedStringClassWrapper.html">FWAttributedStringClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -7972,9 +8011,9 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWActivityIndicatorViewClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWActivityIndicatorViewClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWActivityIndicatorViewClassWrapper">FWActivityIndicatorViewClassWrapper</a>
+                    <a name="/c:objc(cs)FWProgressViewWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWProgressViewWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWProgressViewWrapper">FWProgressViewWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -7984,14 +8023,42 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWActivityIndicatorViewClassWrapper.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/FWProgressViewWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWActivityIndicatorViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWProgressViewWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWCollectionViewFlowLayoutClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWCollectionViewFlowLayoutClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWCollectionViewFlowLayoutClassWrapper">FWCollectionViewFlowLayoutClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWCollectionViewFlowLayoutClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -8029,9 +8096,9 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWPickerViewControllerWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPickerViewControllerWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPickerViewControllerWrapper">FWPickerViewControllerWrapper</a>
+                    <a name="/c:objc(cs)FWImagePickerControllerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWImagePickerControllerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWImagePickerControllerClassWrapper">FWImagePickerControllerClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -8041,187 +8108,15 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWPickerViewControllerWrapper.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/FWImagePickerControllerClassWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPickerViewControllerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerWrapper.html">FWViewControllerWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPickerViewControllerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPickerViewControllerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPickerViewControllerClassWrapper">FWPickerViewControllerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWPickerViewControllerClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPickerViewControllerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerClassWrapper.html">FWViewControllerClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTabBarItemClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTabBarItemClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTabBarItemClassWrapper">FWTabBarItemClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTabBarItemClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWBarItemClassWrapper">FWBarItemClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPhotoLibraryClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPhotoLibraryClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPhotoLibraryClassWrapper">FWPhotoLibraryClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWPhotoLibraryClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPhotoLibraryClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWWebViewWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWWebViewWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWWebViewWrapper">FWWebViewWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWWebViewWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWWebViewWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPhotoLibraryWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPhotoLibraryWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPhotoLibraryWrapper">FWPhotoLibraryWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWPhotoLibraryWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPhotoLibraryWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPanGestureRecognizerWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPanGestureRecognizerWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPanGestureRecognizerWrapper">FWPanGestureRecognizerWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWPanGestureRecognizerWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPanGestureRecognizerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWGestureRecognizerWrapper.html">FWGestureRecognizerWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWImagePickerControllerClassWrapper</span>
+    <span class="p">:</span> <span class="nc"><a href="Classes/FWNavigationControllerClassWrapper.html">FWNavigationControllerClassWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -8260,9 +8155,9 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWUserNotificationCenterWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWUserNotificationCenterWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWUserNotificationCenterWrapper">FWUserNotificationCenterWrapper</a>
+                    <a name="/c:objc(cs)FWPhotoLibraryWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPhotoLibraryWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPhotoLibraryWrapper">FWPhotoLibraryWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -8272,244 +8167,14 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWUserNotificationCenterWrapper.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/FWPhotoLibraryWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWUserNotificationCenterWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWActivityIndicatorViewWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWActivityIndicatorViewWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWActivityIndicatorViewWrapper">FWActivityIndicatorViewWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWActivityIndicatorViewWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWActivityIndicatorViewWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWMutableAttributedStringClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWMutableAttributedStringClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWMutableAttributedStringClassWrapper">FWMutableAttributedStringClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWMutableAttributedStringClassWrapper</span>
-    <span class="p">:</span> <span class="nc"><a href="Classes/FWAttributedStringClassWrapper.html">FWAttributedStringClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWWebViewClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWWebViewClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWWebViewClassWrapper">FWWebViewClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWWebViewClassWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWWebViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWMutableAttributedStringWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWMutableAttributedStringWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWMutableAttributedStringWrapper">FWMutableAttributedStringWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWMutableAttributedStringWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWMutableAttributedStringWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWAttributedStringWrapper.html">FWAttributedStringWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWPanGestureRecognizerClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWPanGestureRecognizerClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWPanGestureRecognizerClassWrapper">FWPanGestureRecognizerClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWPanGestureRecognizerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWGestureRecognizerClassWrapper.html">FWGestureRecognizerClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWCollectionViewFlowLayoutWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWCollectionViewFlowLayoutWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWCollectionViewFlowLayoutWrapper">FWCollectionViewFlowLayoutWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWCollectionViewFlowLayoutWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWCollectionViewFlowLayoutWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWCollectionViewFlowLayoutClassWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWCollectionViewFlowLayoutClassWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWCollectionViewFlowLayoutClassWrapper">FWCollectionViewFlowLayoutClassWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWCollectionViewFlowLayoutClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)FWTabBarItemWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWTabBarItemWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWTabBarItemWrapper">FWTabBarItemWrapper</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="Classes/FWTabBarItemWrapper.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWTabBarItemWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWBarItemWrapper.html">FWBarItemWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWPhotoLibraryWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -8548,9 +8213,9 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(cs)FWProgressViewWrapper"></a>
-                    <a name="//apple_ref/swift/Class/FWProgressViewWrapper" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)FWProgressViewWrapper">FWProgressViewWrapper</a>
+                    <a name="/c:objc(cs)FWWebViewClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWWebViewClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWWebViewClassWrapper">FWWebViewClassWrapper</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -8560,14 +8225,389 @@ Mediator: 和业务相关，侧重于架构、业务功能、模块化，比如�
                       <div class="abstract">
                         <p>Undocumented</p>
 
-                        <a href="Classes/FWProgressViewWrapper.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/FWWebViewClassWrapper.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
-<span class="k">@interface</span> <span class="nc">FWProgressViewWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
+<span class="k">@interface</span> <span class="nc">FWWebViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWActivityIndicatorViewClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWActivityIndicatorViewClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWActivityIndicatorViewClassWrapper">FWActivityIndicatorViewClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWActivityIndicatorViewClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWActivityIndicatorViewClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewClassWrapper.html">FWViewClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWUserNotificationCenterWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWUserNotificationCenterWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWUserNotificationCenterWrapper">FWUserNotificationCenterWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWUserNotificationCenterWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWUserNotificationCenterWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWPanGestureRecognizerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPanGestureRecognizerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPanGestureRecognizerClassWrapper">FWPanGestureRecognizerClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWPanGestureRecognizerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWGestureRecognizerClassWrapper.html">FWGestureRecognizerClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTabBarItemWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTabBarItemWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTabBarItemWrapper">FWTabBarItemWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWTabBarItemWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTabBarItemWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWBarItemWrapper.html">FWBarItemWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWPickerViewControllerWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPickerViewControllerWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPickerViewControllerWrapper">FWPickerViewControllerWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWPickerViewControllerWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWPickerViewControllerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerWrapper.html">FWViewControllerWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWWebViewWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWWebViewWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWWebViewWrapper">FWWebViewWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWWebViewWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWWebViewWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWMutableAttributedStringWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWMutableAttributedStringWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWMutableAttributedStringWrapper">FWMutableAttributedStringWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWMutableAttributedStringWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWMutableAttributedStringWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWAttributedStringWrapper.html">FWAttributedStringWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWPanGestureRecognizerWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPanGestureRecognizerWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPanGestureRecognizerWrapper">FWPanGestureRecognizerWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWPanGestureRecognizerWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWPanGestureRecognizerWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWGestureRecognizerWrapper.html">FWGestureRecognizerWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWPhotoLibraryClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPhotoLibraryClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPhotoLibraryClassWrapper">FWPhotoLibraryClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWPhotoLibraryClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWPhotoLibraryClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWClassWrapper.html">FWClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWCollectionViewFlowLayoutWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWCollectionViewFlowLayoutWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWCollectionViewFlowLayoutWrapper">FWCollectionViewFlowLayoutWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWCollectionViewFlowLayoutWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWCollectionViewFlowLayoutWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWObjectWrapper.html">FWObjectWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWTabBarItemClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWTabBarItemClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWTabBarItemClassWrapper">FWTabBarItemClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWTabBarItemClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes.html#/c:objc(cs)FWBarItemClassWrapper">FWBarItemClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWPickerViewControllerClassWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWPickerViewControllerClassWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWPickerViewControllerClassWrapper">FWPickerViewControllerClassWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWPickerViewControllerClassWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWPickerViewControllerClassWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewControllerClassWrapper.html">FWViewControllerClassWrapper</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWActivityIndicatorViewWrapper"></a>
+                    <a name="//apple_ref/swift/Class/FWActivityIndicatorViewWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWActivityIndicatorViewWrapper">FWActivityIndicatorViewWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="Classes/FWActivityIndicatorViewWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWActivityIndicatorViewWrapper</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWViewWrapper.html">FWViewWrapper</a></span></code></pre>
 
                         </div>
                       </div>
@@ -8729,6 +8769,35 @@ FWApplication所需本地化翻译如下：完成|关闭|确定|取消|原有，
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code>
 <span class="k">@interface</span> <span class="nc">FWAppBundle</span> <span class="p">:</span> <span class="nc"><a href="Classes/FWModuleBundle.html">FWModuleBundle</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)FWAppConfigDefaultTemplate"></a>
+                    <a name="//apple_ref/swift/Class/FWAppConfigDefaultTemplate" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)FWAppConfigDefaultTemplate">FWAppConfigDefaultTemplate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>框架内置应用配置默认模板类</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code>
+<span class="k">@interface</span> <span class="nc">FWAppConfigDefaultTemplate</span>
+    <span class="p">:</span> <span class="nc">NSObject</span> <span class="o">&lt;</span><span class="n"><a href="Protocols/FWConfigurationTemplateProtocol.html">FWConfigurationTemplateProtocol</a></span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -17064,7 +17133,7 @@ MARK: UITabBarItem properties
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-08)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-11)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
