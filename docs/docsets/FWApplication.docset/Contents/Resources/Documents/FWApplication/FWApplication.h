@@ -7,6 +7,7 @@
 //
 
 #import "FWAppBundle.h"
+#import "FWAppConfig.h"
 #import "FWAppDelegate.h"
 #import "FWSceneDelegate.h"
 #import "FWAlertControllerImpl.h"

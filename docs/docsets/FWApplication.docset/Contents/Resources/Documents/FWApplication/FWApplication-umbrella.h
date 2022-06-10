@@ -11,6 +11,7 @@
 #endif
 
 #import "FWAppBundle.h"
+#import "FWAppConfig.h"
 #import "FWAppDelegate.h"
 #import "FWApplication.h"
 #import "FWAppWrapper.h"
