@@ -7,10 +7,6 @@
 
 #import "FWAppConfig.h"
 
-@implementation FWAppConfig
-
-@end
-
 @implementation FWAppConfigDefaultTemplate
 
 - (void)applyConfiguration {

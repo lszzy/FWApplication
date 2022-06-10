@@ -9,12 +9,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// 框架内置应用配置类
-@interface FWAppConfig : FWConfiguration
-
-@end
-
-/// 框架内置应用默认模板类
+/// 框架内置应用配置默认模板类
+NS_SWIFT_NAME(AppConfigDefaultTemplate)
 @interface FWAppConfigDefaultTemplate : NSObject <FWConfigurationTemplateProtocol>
 
 @end

@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.3.0] - 2022-06-11
+
+### Added
+* New application framework configuration default template class
+* Compatible with FWFramework 3.3.0 version
+
 ## [3.2.2] - 2022-06-08
 
 ### Changed
