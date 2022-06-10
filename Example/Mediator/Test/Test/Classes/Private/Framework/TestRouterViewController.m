@@ -40,7 +40,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         return nil;
     }];
     
-    FWRouter.preFilter = ^BOOL(FWRouterContext * _Nonnull context) {
+    [FWRouter setRouteFilter:^BOOL(FWRouterContext * _Nonnull context) {
         NSURL *url = [NSURL.fw urlWithString:context.URL];
         if ([UIApplication.fw isSystemURL:url]) {
             [UIApplication.fw openURL:url];
@@ -53,20 +53,20 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
             return NO;
         }
         return YES;
-    };
-    FWRouter.postFilter = ^(FWRouterContext * _Nonnull context, id  _Nonnull object) {
+    }];
+    [FWRouter setRouteHandler:^id _Nullable(FWRouterContext * _Nonnull context, id  _Nonnull object) {
         if (context.isOpening) {
             if ([object isKindOfClass:[UIViewController class]]) {
                 [FWRouter openViewController:object animated:YES];
             } else {
-                FWRouter.errorHandler(context);
+                [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             }
         }
         return object;
-    };
-    FWRouter.errorHandler = ^(FWRouterContext * _Nonnull context) {
+    }];
+    [FWRouter setErrorHandler:^(FWRouterContext * _Nonnull context) {
         [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
-    };
+    }];
 }
 
 + (void)registerRouters
@@ -122,7 +122,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         if (context.isOpening) {
             return @"OBJECT UNMATCH";
         } else {
-            FWRouter.errorHandler(context);
+            [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             return nil;
         }
     }];
