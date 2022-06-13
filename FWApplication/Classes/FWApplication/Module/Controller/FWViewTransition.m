@@ -17,13 +17,13 @@
 
 @property (nonatomic, weak) id<UIViewControllerContextTransitioning> transitionContext;
 
-@property (nonatomic, strong) FWPanGestureRecognizer *gestureRecognizer;
-
 @property (nonatomic, copy) void(^interactBegan)(void);
 
 @end
 
 @implementation FWAnimatedTransition
+
+@synthesize gestureRecognizer = _gestureRecognizer;
 
 #pragma mark - Lifecycle
 
@@ -57,10 +57,10 @@
 
 #pragma mark - Private
 
-- (void)setInteractEnabled:(BOOL)interactEnabled
+- (void)setInteractEnabled:(BOOL)enabled
 {
-    _interactEnabled = interactEnabled;
-    self.gestureRecognizer.enabled = interactEnabled;
+    _interactEnabled = enabled;
+    _gestureRecognizer.enabled = enabled;
 }
 
 - (void)interactWith:(UIViewController *)viewController
@@ -73,15 +73,27 @@
     [viewController.view addGestureRecognizer:self.gestureRecognizer];
 }
 
-- (FWPanGestureRecognizer *)gestureRecognizer
+- (__kindof UIPanGestureRecognizer *)gestureRecognizer
 {
     if (!_gestureRecognizer) {
-        _gestureRecognizer = [[FWPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerAction:)];
+        if (self.interactScreenEdge) {
+            UIScreenEdgePanGestureRecognizer *gestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerAction:)];
+            gestureRecognizer.edges = UIRectEdgeLeft;
+            _gestureRecognizer = gestureRecognizer;
+        } else {
+            _gestureRecognizer = [[FWPanGestureRecognizer alloc] initWithTarget:self action:@selector(gestureRecognizerAction:)];
+        }
     }
     return _gestureRecognizer;
 }
 
-- (void)gestureRecognizerAction:(FWPanGestureRecognizer *)gestureRecognizer
+- (void)setGestureRecognizer:(__kindof UIPanGestureRecognizer *)gestureRecognizer
+{
+    _gestureRecognizer = gestureRecognizer;
+    [gestureRecognizer addTarget:self action:@selector(gestureRecognizerAction:)];
+}
+
+- (void)gestureRecognizerAction:(UIPanGestureRecognizer *)gestureRecognizer
 {
     switch (gestureRecognizer.state) {
         case UIGestureRecognizerStateBegan: {
@@ -96,7 +108,14 @@
         case UIGestureRecognizerStateChanged: {
             BOOL interactChanged = self.interactBlock ? self.interactBlock(gestureRecognizer) : YES;
             if (interactChanged) {
-                CGFloat percent = [gestureRecognizer swipePercent];
+                CGFloat percent;
+                if ([gestureRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
+                    percent = [(FWPanGestureRecognizer *)gestureRecognizer swipePercent];
+                } else {
+                    CGPoint transition = [gestureRecognizer translationInView:gestureRecognizer.view];
+                    percent = MAX(0, MIN(1, transition.x / gestureRecognizer.view.bounds.size.width));
+                }
+                
                 [self updateInteractiveTransition:percent];
             }
             break;
@@ -112,10 +131,10 @@
                     finished = NO;
                 } else if (self.percentComplete >= 0.5) {
                     finished = YES;
-                } else {
+                } else if ([gestureRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
                     CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
                     CGPoint transition = [gestureRecognizer translationInView:gestureRecognizer.view];
-                    switch (gestureRecognizer.direction) {
+                    switch (((FWPanGestureRecognizer *)gestureRecognizer).direction) {
                         case UISwipeGestureRecognizerDirectionUp:
                             if (velocity.y <= -100 && fabs(transition.x) < fabs(transition.y)) finished = YES;
                             break;
@@ -131,6 +150,10 @@
                         default:
                             break;
                     }
+                } else {
+                    CGPoint velocity = [gestureRecognizer velocityInView:gestureRecognizer.view];
+                    CGPoint transition = [gestureRecognizer translationInView:gestureRecognizer.view];
+                    if (velocity.x >= 100 && fabs(transition.x) > fabs(transition.y)) finished = YES;
                 }
                 
                 if (finished) {
@@ -151,11 +174,11 @@
     return self.presentationBlock != nil;
 }
 
-- (void)setPresentationEnabled:(BOOL)presentationEnabled
+- (void)setPresentationEnabled:(BOOL)enabled
 {
-    if (presentationEnabled == self.presentationEnabled) return;
+    if (enabled == self.presentationEnabled) return;
     
-    if (presentationEnabled) {
+    if (enabled) {
         self.presentationBlock = ^UIPresentationController *(UIViewController *presented, UIViewController *presenting) {
             return [[FWPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
         };
@@ -386,7 +409,9 @@
 - (void)setOutDirection:(UISwipeGestureRecognizerDirection)outDirection
 {
     _outDirection = outDirection;
-    self.gestureRecognizer.direction = outDirection;
+    if ([self.gestureRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
+        ((FWPanGestureRecognizer *)self.gestureRecognizer).direction = outDirection;
+    }
 }
 
 - (void)animate

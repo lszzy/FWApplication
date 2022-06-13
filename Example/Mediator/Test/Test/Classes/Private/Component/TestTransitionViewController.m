@@ -22,8 +22,14 @@
 - (void)renderView
 {
     if (self.canScroll) {
-        self.navigationController.fw.modalTransition.gestureRecognizer.scrollView = self.scrollView;
-        self.navigationController.fw.navigationTransition.gestureRecognizer.scrollView = self.scrollView;
+        FWPanGestureRecognizer *modalRecognizer = self.navigationController.fw.modalTransition.gestureRecognizer;
+        if ([modalRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
+            modalRecognizer.scrollView = self.scrollView;
+        }
+        FWPanGestureRecognizer *navRecognizer = self.navigationController.fw.navigationTransition.gestureRecognizer;
+        if ([navRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
+            navRecognizer.scrollView = self.scrollView;
+        }
     }
     
     self.scrollView.scrollEnabled = self.canScroll;
@@ -441,8 +447,12 @@ FWDealloc();
 {
     FWSwipeAnimatedTransition *transition = [[FWSwipeAnimatedTransition alloc] init];
     transition.interactEnabled = YES;
-    transition.gestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
-    transition.gestureRecognizer.maximumDistance = 44;
+    transition.interactScreenEdge = YES;
+    FWPanGestureRecognizer *gestureRecognizer = transition.gestureRecognizer;
+    if ([gestureRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
+        gestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+        gestureRecognizer.maximumDistance = 44;
+    }
     transition.presentationBlock = ^UIPresentationController * _Nonnull(UIViewController * _Nonnull presented, UIViewController * _Nonnull presenting) {
         FWPresentationController *presentation = [[FWPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
         presentation.verticalInset = 200;
