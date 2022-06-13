@@ -441,6 +441,8 @@ FWDealloc();
 {
     FWSwipeAnimatedTransition *transition = [[FWSwipeAnimatedTransition alloc] init];
     transition.interactEnabled = YES;
+    transition.gestureRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
+    transition.gestureRecognizer.maximumDistance = 44;
     transition.presentationBlock = ^UIPresentationController * _Nonnull(UIViewController * _Nonnull presented, UIViewController * _Nonnull presenting) {
         FWPresentationController *presentation = [[FWPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
         presentation.verticalInset = 200;

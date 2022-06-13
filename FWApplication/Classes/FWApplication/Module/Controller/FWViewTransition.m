@@ -776,6 +776,25 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (self.shouldBegin) return self.shouldBegin(self);
+    if (self.maximumDistance <= 0) return YES;
+    
+    CGPoint location = [gestureRecognizer locationInView:gestureRecognizer.view];
+    switch (self.direction) {
+        case UISwipeGestureRecognizerDirectionLeft:
+            return gestureRecognizer.view.bounds.size.width - location.x <= self.maximumDistance;
+        case UISwipeGestureRecognizerDirectionRight:
+            return location.x <= self.maximumDistance;
+        case UISwipeGestureRecognizerDirectionUp:
+            return gestureRecognizer.view.bounds.size.height - location.y <= self.maximumDistance;
+        case UISwipeGestureRecognizerDirectionDown:
+        default:
+            return location.y <= self.maximumDistance;
+    }
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
     if ([otherGestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]] &&

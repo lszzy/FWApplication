@@ -181,8 +181,14 @@ NS_SWIFT_NAME(PanGestureRecognizer)
 // 获取当前手势在指定交互方向的滑动进度
 @property (nonatomic, assign) CGFloat swipePercent;
 
+// 指定当前手势在指定交互方向的最大识别距离，默认0，无限制
+@property (nonatomic, assign) CGFloat maximumDistance;
+
 // 自定义Failed判断句柄。默认判定失败时直接修改状态为Failed，可设置此block修改判定条件
 @property (nullable, nonatomic, copy) BOOL (^shouldFailed)(FWPanGestureRecognizer *gestureRecognizer);
+
+// 自定义shouldBegin判断句柄
+@property (nullable, nonatomic, copy) BOOL (^shouldBegin)(FWPanGestureRecognizer *gestureRecognizer);
 
 // 自定义shouldBeRequiredToFail判断句柄
 @property (nullable, nonatomic, copy) BOOL (^shouldBeRequiredToFail)(UIGestureRecognizer *otherGestureRecognizer);
