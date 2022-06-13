@@ -69,6 +69,9 @@ NS_SWIFT_NAME(AnimatedTransition)
 /// 自定义交互句柄，可根据手势state处理不同状态的交互，返回YES执行默认交互，返回NO不执行。默认为空，执行默认交互
 @property (nullable, nonatomic, copy) BOOL(^interactBlock)(__kindof UIPanGestureRecognizer *gestureRecognizer);
 
+/// 自定义dismiss关闭动画完成回调，默认nil
+@property (nullable, nonatomic, copy) void(^dismissCompletion)(void);
+
 /// 手工绑定交互控制器，添加pan手势，需要vc.view存在时调用才生效。默认自动绑定，如果自定义interactBlock，必须手工绑定
 - (void)interactWith:(UIViewController *)viewController;
 
@@ -144,6 +147,8 @@ NS_SWIFT_NAME(PresentationController)
 @property (nonatomic, assign) BOOL dimmingAnimated;
 /// 暗色背景颜色，默认黑色，透明度0.5
 @property (nonatomic, strong, nullable) UIColor *dimmingColor;
+/// 设置点击暗色背景关闭完成回调，默认nil
+@property (nonatomic, copy, nullable) void (^dismissCompletion)(void);
 
 /// 设置弹出视图的圆角位置，默认左上和右上。如果弹出视图占满容器，不生效需弹出视图自定义
 @property (nonatomic, assign) UIRectCorner rectCorner;

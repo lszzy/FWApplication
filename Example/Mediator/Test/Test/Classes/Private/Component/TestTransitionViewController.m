@@ -459,6 +459,11 @@ FWDealloc();
         presentation.cornerRadius = 10;
         return presentation;
     };
+    FWWeakifySelf();
+    transition.dismissCompletion = ^{
+        FWStrongifySelf();
+        [self.fw showMessageWithText:@"dismiss完成"];
+    };
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[TestFullScreenViewController alloc] init]];
     nav.modalPresentationStyle = UIModalPresentationCustom;

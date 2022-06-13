@@ -378,7 +378,14 @@
 
 - (void)complete
 {
-    [self.transitionContext completeTransition:![self.transitionContext transitionWasCancelled]];
+    FWAnimatedTransitionType transitionType = [self transitionType];
+    BOOL didComplete = ![self.transitionContext transitionWasCancelled];
+    [self.transitionContext completeTransition:didComplete];
+    
+    if (didComplete && self.dismissCompletion &&
+        transitionType == FWAnimatedTransitionTypeDismiss) {
+        self.dismissCompletion();
+    }
 }
 
 @end
@@ -461,11 +468,10 @@
             fromView.frame = [self animateFrameWithFrame:fromFrame offset:offset initial:NO show:transitionIn];
         }
     } completion:^(BOOL finished) {
-        BOOL cancelled = [self.transitionContext transitionWasCancelled];
-        if (cancelled) {
+        if ([self.transitionContext transitionWasCancelled]) {
             [toView removeFromSuperview];
         }
-        [self.transitionContext completeTransition:!cancelled];
+        [self complete];
     }];
 }
 
@@ -589,7 +595,7 @@
 
 - (void)onTapAction:(id)sender
 {
-    [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:self.dismissCompletion];
 }
 
 #pragma mark - Protected
