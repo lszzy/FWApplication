@@ -308,7 +308,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.fw.backgroundTransparent = YES;
+    self.navigationController.navigationBar.fw_backgroundTransparent = YES;
 }
 
 - (void)onRefreshing
@@ -417,14 +417,14 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     // 导航栏透明度
     CGFloat progress = scrollView.contentOffset.y / (HeaderViewHeight - NavigationViewHeight);
     if (progress >= 1) {
-        self.navigationController.navigationBar.fw.backgroundColor = [Theme barColor];
-        self.navigationController.navigationBar.fw.foregroundColor = [Theme textColor];
+        self.navigationController.navigationBar.fw_backgroundColor = [Theme barColor];
+        self.navigationController.navigationBar.fw_foregroundColor = [Theme textColor];
     } else if (progress >= 0 && progress < 1) {
-        self.navigationController.navigationBar.fw.backgroundColor = [[Theme barColor] colorWithAlphaComponent:progress];
+        self.navigationController.navigationBar.fw_backgroundColor = [[Theme barColor] colorWithAlphaComponent:progress];
         if (progress <= 0.5) {
-            self.navigationController.navigationBar.fw.foregroundColor = [[Theme textColor] colorWithAlphaComponent:1 - progress];
+            self.navigationController.navigationBar.fw_foregroundColor = [[Theme textColor] colorWithAlphaComponent:1 - progress];
         } else {
-            self.navigationController.navigationBar.fw.foregroundColor = [[Theme textColor] colorWithAlphaComponent:progress];
+            self.navigationController.navigationBar.fw_foregroundColor = [[Theme textColor] colorWithAlphaComponent:progress];
         }
     }
 }

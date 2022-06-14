@@ -37,7 +37,7 @@
         if (!self.fw.tempObject) {
             self.fw.tempObject = UIColor.fw.randomColor;
         }
-        self.navigationController.navigationBar.fw.backgroundColor = self.fw.tempObject;
+        self.navigationController.navigationBar.fw_backgroundColor = self.fw.tempObject;
     }
 }
 

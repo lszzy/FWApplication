@@ -239,7 +239,7 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onTitleColor
 {
-    self.navigationController.navigationBar.fw.titleAttributes = self.navigationController.navigationBar.fw.titleAttributes ? nil : @{NSForegroundColorAttributeName: Theme.buttonColor};
+    self.navigationController.navigationBar.fw_titleAttributes = self.navigationController.navigationBar.fw_titleAttributes ? nil : @{NSForegroundColorAttributeName: Theme.buttonColor};
 }
 
 - (void)onLargeTitle

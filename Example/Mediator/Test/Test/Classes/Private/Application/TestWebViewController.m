@@ -124,9 +124,9 @@
     spaceItem.width = 79;
     self.toolbarItems = @[flexibleItem, backItem, spaceItem, forwardItem, flexibleItem];
     
-    self.navigationController.toolbar.fw.shadowImage = [UIImage.fw imageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
-    self.navigationController.toolbar.fw.backgroundColor = Theme.barColor;
-    self.navigationController.toolbar.fw.foregroundColor = Theme.textColor;
+    self.navigationController.toolbar.fw_shadowImage = [UIImage.fw imageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
+    self.navigationController.toolbar.fw_backgroundColor = Theme.barColor;
+    self.navigationController.toolbar.fw_foregroundColor = Theme.textColor;
 }
 
 - (void)reloadToolbar:(BOOL)animated

@@ -182,26 +182,26 @@
     FWNavigationBarAppearance *appearance = [self currentNavigationBarAppearance];
     if (!appearance) return;
     UINavigationBar *navigationBar = self.base.navigationController.navigationBar;
-    if (appearance.isTranslucent != navigationBar.fw.isTranslucent) {
-        navigationBar.fw.isTranslucent = appearance.isTranslucent;
+    if (appearance.isTranslucent != navigationBar.fw_isTranslucent) {
+        navigationBar.fw_isTranslucent = appearance.isTranslucent;
     }
     if (appearance.backgroundTransparent) {
-        navigationBar.fw.backgroundTransparent = appearance.backgroundTransparent;
+        navigationBar.fw_backgroundTransparent = appearance.backgroundTransparent;
     } else if (appearance.backgroundImage) {
-        navigationBar.fw.backgroundImage = appearance.backgroundImage;
+        navigationBar.fw_backgroundImage = appearance.backgroundImage;
     } else if (appearance.backgroundColor) {
-        navigationBar.fw.backgroundColor = appearance.backgroundColor;
+        navigationBar.fw_backgroundColor = appearance.backgroundColor;
     }
     if (appearance.shadowImage) {
-        navigationBar.fw.shadowImage = appearance.shadowImage;
+        navigationBar.fw_shadowImage = appearance.shadowImage;
     } else if (appearance.shadowColor) {
-        navigationBar.fw.shadowColor = appearance.shadowColor;
+        navigationBar.fw_shadowColor = appearance.shadowColor;
     } else {
-        navigationBar.fw.shadowColor = nil;
+        navigationBar.fw_shadowColor = nil;
     }
-    if (appearance.foregroundColor) navigationBar.fw.foregroundColor = appearance.foregroundColor;
-    if (appearance.titleAttributes) navigationBar.fw.titleAttributes = appearance.titleAttributes;
-    if (appearance.buttonAttributes) navigationBar.fw.buttonAttributes = appearance.buttonAttributes;
+    if (appearance.foregroundColor) navigationBar.fw_foregroundColor = appearance.foregroundColor;
+    if (appearance.titleAttributes) navigationBar.fw_titleAttributes = appearance.titleAttributes;
+    if (appearance.buttonAttributes) navigationBar.fw_buttonAttributes = appearance.buttonAttributes;
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
 }
 

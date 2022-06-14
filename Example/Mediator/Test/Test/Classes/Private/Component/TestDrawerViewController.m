@@ -114,9 +114,9 @@
         CGFloat distance = position - fromPosition;
         if (distance < targetDistance) {
             CGFloat progress = MIN(1 - distance / targetDistance, 1);
-            self.navigationController.navigationBar.fw.backgroundColor = [[UIColor brownColor] colorWithAlphaComponent:progress];
+            self.navigationController.navigationBar.fw_backgroundColor = [[UIColor brownColor] colorWithAlphaComponent:progress];
         } else {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
         }
     }];
 }
@@ -162,9 +162,9 @@
         FWStrongifySelf();
         [self.view bringSubviewToFront:scrollView];
         if (position == 0) {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor brownColor];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor brownColor];
         } else {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
         }
     }];
 }
@@ -210,9 +210,9 @@
         FWStrongifySelf();
         [self.view bringSubviewToFront:scrollView];
         if (position == 0) {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor brownColor];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor brownColor];
         } else {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
         }
     }];
 }
@@ -258,9 +258,9 @@
         FWStrongifySelf();
         [self.view bringSubviewToFront:scrollView];
         if (position == 0) {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor brownColor];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor brownColor];
         } else {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor.fw colorWithHex:0xFFDA00];
         }
     }];
 }
