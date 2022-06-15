@@ -48,6 +48,7 @@
                                                                          darkColor:[UIColor whiteColor]];
         _textViewBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor colorWithRed:247.0 / 255.0 green:247.0 / 255.0 blue:247.0 / 255.0 alpha:1.0]
                                                                        darkColor:[UIColor colorWithRed:54.0 / 255.0 green:54.0 / 255.0 blue:54.0 / 255.0 alpha:1.0]];
+        _textViewCornerRadius = 6.0;
         _alertRedColor = [UIColor systemRedColor];
         _grayColor = [UIColor grayColor];
     }
@@ -1119,6 +1120,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     textField.layer.borderWidth = self.alertAppearance.lineWidth;
     // 这里设置的颜色是静态的，动态设置CGColor,还需要监听深浅模式的切换
     textField.layer.borderColor = [FWAlertControllerAppearance colorPairsWithStaticLightColor:[self.alertAppearance lineColor] darkColor:[self.alertAppearance darkLineColor]].CGColor;
+    textField.layer.cornerRadius = self.alertAppearance.textViewCornerRadius;
+    textField.layer.masksToBounds = YES;
     // 在左边设置一张view，充当光标左边的间距，否则光标紧贴textField不美观
     textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
     textField.leftView.userInteractionEnabled = NO;

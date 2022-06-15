@@ -12,6 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// SDWebImage图片插件，启用SDWebImage子模块后生效
+NS_SWIFT_NAME(SDWebImagePlugin)
 @interface FWSDWebImagePlugin : NSObject
 
 /// 单例模式

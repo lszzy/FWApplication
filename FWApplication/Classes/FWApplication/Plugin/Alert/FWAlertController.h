@@ -57,6 +57,7 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 @property (nonatomic, strong) UIColor *lightWhite_DarkBlackColor;
 @property (nonatomic, strong) UIColor *lightBlack_DarkWhiteColor;
 @property (nonatomic, strong) UIColor *textViewBackgroundColor;
+@property (nonatomic, assign) CGFloat textViewCornerRadius;
 @property (nonatomic, strong) UIColor *alertRedColor;
 @property (nonatomic, strong) UIColor *grayColor;
 @end
