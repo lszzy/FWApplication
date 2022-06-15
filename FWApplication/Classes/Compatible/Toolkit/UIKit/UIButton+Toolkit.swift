@@ -30,8 +30,9 @@ extension Wrapper where Base: UIButton {
     }
 
     /// 设置按钮倒计时，从window移除时自动取消。等待时按钮disabled，非等待时enabled。时间支持格式化，示例：重新获取(%lds)
-    public func countDown(_ timeout: Int, title: String, waitTitle: String) {
-        base.__fw.countDown(timeout, title: title, waitTitle: waitTitle)
+    @discardableResult
+    public func startCountDown(_ seconds: Int, title: String, waitTitle: String) -> DispatchSource {
+        return base.__fw.startCountDown(seconds, title: title, waitTitle: waitTitle)
     }
     
 }
