@@ -94,9 +94,9 @@
     if (self.isTop) {
         CGFloat distance = [scrollView.fw hoverView:self.hoverView fromSuperview:self.redView toSuperview:self.view toPosition:FWTopBarHeight];
         if (distance <= 0) {
-            self.navigationController.navigationBar.fw.backgroundColor = [UIColor whiteColor];
+            self.navigationController.navigationBar.fw_backgroundColor = [UIColor whiteColor];
         } else if (distance <= FWTopBarHeight) {
-            self.navigationController.navigationBar.fw.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1 - distance / FWTopBarHeight];
+            self.navigationController.navigationBar.fw_backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1 - distance / FWTopBarHeight];
         }
     } else {
         [scrollView.fw hoverView:self.hoverView fromSuperview:self.redView toSuperview:self.view toPosition:0];

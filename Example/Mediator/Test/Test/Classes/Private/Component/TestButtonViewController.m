@@ -70,7 +70,7 @@ FWPropertyAssign(NSInteger, count);
     [timerButton2 setTitle:@"发送" forState:UIControlStateNormal];
     __block NSTimer *timer1, *timer2;
     [timerButton2 .fw addTouchBlock:^(UIButton *sender) {
-        [timerButton.fw countDown:60 title:@"=>" waitTitle:@"%lds"];
+        [timerButton.fw startCountDown:60 title:@"=>" waitTitle:@"%lds"];
         [timer1 invalidate];
         timer1 = [NSTimer.fw commonTimerWithCountDown:60 block:^(NSInteger countDown) {
             NSString *title = countDown > 0 ? [NSString stringWithFormat:@"%lds", countDown] : @"=>";
@@ -79,10 +79,11 @@ FWPropertyAssign(NSInteger, count);
         [timer2 invalidate];
         NSTimeInterval startTime = NSDate.fw.currentTime;
         timer2 = [NSTimer.fw commonTimerWithTimeInterval:1 block:^(NSTimer * _Nonnull timer) {
-            NSInteger countDown = 60 - (NSInteger)(NSDate.fw.currentTime - startTime);
+            NSInteger countDown = 60 - (NSInteger)round(NSDate.fw.currentTime - startTime);
             if (countDown < 1) [timer2 invalidate];
             NSString *title = countDown > 0 ? [NSString stringWithFormat:@"%lds", countDown] : @"发送";
             [timerButton2 setTitle:title forState:UIControlStateNormal];
+            timerButton2.enabled = countDown < 1;
         } repeats:YES];
         [timer2 fire];
     }];

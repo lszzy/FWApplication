@@ -31,8 +31,6 @@ typedef NS_ENUM(NSInteger, FWAnimatedTransitionType) {
 
 #pragma mark - FWAnimatedTransition
 
-@class FWPanGestureRecognizer;
-
 /// 转场动画类，默认透明度变化
 NS_SWIFT_NAME(AnimatedTransition)
 @interface FWAnimatedTransition : UIPercentDrivenInteractiveTransition <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate, UINavigationControllerDelegate>
@@ -59,14 +57,20 @@ NS_SWIFT_NAME(AnimatedTransition)
 /// 是否启用交互pan手势进行pop|dismiss，默认NO。可使用父类属性设置交互动画
 @property (nonatomic, assign) BOOL interactEnabled;
 
-/// 交互pan手势对象，延迟加载，可设置交互方向，滚动视图等
-@property (nonatomic, strong, readonly) FWPanGestureRecognizer *gestureRecognizer;
+/// 是否启用screenEdge交互手势，默认NO，gestureRecognizer加载前设置生效
+@property (nonatomic, assign) BOOL interactScreenEdge;
+
+/// 指定交互pan手势对象，默认FWPanGestureRecognizer，可设置交互方向，滚动视图等
+@property (nonatomic, strong) __kindof UIPanGestureRecognizer *gestureRecognizer;
 
 /// 是否正在交互中，手势开始才会标记为YES，手势结束标记为NO
 @property (nonatomic, assign, readonly) BOOL isInteractive;
 
 /// 自定义交互句柄，可根据手势state处理不同状态的交互，返回YES执行默认交互，返回NO不执行。默认为空，执行默认交互
-@property (nullable, nonatomic, copy) BOOL(^interactBlock)(FWPanGestureRecognizer *gestureRecognizer);
+@property (nullable, nonatomic, copy) BOOL(^interactBlock)(__kindof UIPanGestureRecognizer *gestureRecognizer);
+
+/// 自定义dismiss关闭动画完成回调，默认nil
+@property (nullable, nonatomic, copy) void(^dismissCompletion)(void);
 
 /// 手工绑定交互控制器，添加pan手势，需要vc.view存在时调用才生效。默认自动绑定，如果自定义interactBlock，必须手工绑定
 - (void)interactWith:(UIViewController *)viewController;
@@ -143,6 +147,8 @@ NS_SWIFT_NAME(PresentationController)
 @property (nonatomic, assign) BOOL dimmingAnimated;
 /// 暗色背景颜色，默认黑色，透明度0.5
 @property (nonatomic, strong, nullable) UIColor *dimmingColor;
+/// 设置点击暗色背景关闭完成回调，默认nil
+@property (nonatomic, copy, nullable) void (^dismissCompletion)(void);
 
 /// 设置弹出视图的圆角位置，默认左上和右上。如果弹出视图占满容器，不生效需弹出视图自定义
 @property (nonatomic, assign) UIRectCorner rectCorner;
@@ -181,8 +187,14 @@ NS_SWIFT_NAME(PanGestureRecognizer)
 // 获取当前手势在指定交互方向的滑动进度
 @property (nonatomic, assign) CGFloat swipePercent;
 
+// 指定当前手势在指定交互方向的最大识别距离，默认0，无限制
+@property (nonatomic, assign) CGFloat maximumDistance;
+
 // 自定义Failed判断句柄。默认判定失败时直接修改状态为Failed，可设置此block修改判定条件
 @property (nullable, nonatomic, copy) BOOL (^shouldFailed)(FWPanGestureRecognizer *gestureRecognizer);
+
+// 自定义shouldBegin判断句柄
+@property (nullable, nonatomic, copy) BOOL (^shouldBegin)(FWPanGestureRecognizer *gestureRecognizer);
 
 // 自定义shouldBeRequiredToFail判断句柄
 @property (nullable, nonatomic, copy) BOOL (^shouldBeRequiredToFail)(UIGestureRecognizer *otherGestureRecognizer);

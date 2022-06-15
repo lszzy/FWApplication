@@ -17,7 +17,7 @@ extension Wrapper where Base: UIColor {
 
     /// 以指定模式添加混合颜色
     public func addColor(_ color: UIColor, blendMode: CGBlendMode) -> UIColor {
-        return base.__fw.addColor(color, blendMode: blendMode)
+        return base.__fw.add(color, blendMode: blendMode)
     }
 
     /// 当前颜色的反色。http://stackoverflow.com/questions/5893261/how-to-get-inverse-color-from-uicolor

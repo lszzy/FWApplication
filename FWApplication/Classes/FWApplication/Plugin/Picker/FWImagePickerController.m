@@ -179,12 +179,12 @@
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
     _toolBarBackgroundColor = toolBarBackgroundColor;
-    self.navigationController.navigationBar.fw.backgroundColor = toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw_backgroundColor = toolBarBackgroundColor;
 }
 
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
-    self.navigationController.navigationBar.fw.foregroundColor = toolBarTintColor;
+    self.navigationController.navigationBar.fw_foregroundColor = toolBarTintColor;
 }
 
 - (void)setAssetsGroup:(FWAssetGroup *)assetsGroup {
@@ -208,7 +208,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-    self.navigationController.navigationBar.fw.backImage = FWAppBundle.navBackImage;
+    self.navigationController.navigationBar.fw_backImage = FWAppBundle.navBackImage;
     if (!self.title) self.title = FWAppBundle.pickerAlbumTitle;
     [self.view addSubview:self.backgroundView];
     [self.view addSubview:self.tableView];
@@ -237,10 +237,10 @@
     if (self.navigationController.navigationBarHidden != NO) {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
     }
-    self.navigationController.navigationBar.fw.isTranslucent = NO;
-    self.navigationController.navigationBar.fw.shadowColor = nil;
-    self.navigationController.navigationBar.fw.backgroundColor = self.toolBarBackgroundColor;
-    self.navigationController.navigationBar.fw.foregroundColor = self.toolBarTintColor;
+    self.navigationController.navigationBar.fw_isTranslucent = NO;
+    self.navigationController.navigationBar.fw_shadowColor = nil;
+    self.navigationController.navigationBar.fw_backgroundColor = self.toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw_foregroundColor = self.toolBarTintColor;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -1850,12 +1850,12 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
 
 - (void)setToolBarBackgroundColor:(UIColor *)toolBarBackgroundColor {
     _toolBarBackgroundColor = toolBarBackgroundColor;
-    self.navigationController.navigationBar.fw.backgroundColor = toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw_backgroundColor = toolBarBackgroundColor;
 }
 
 - (void)setToolBarTintColor:(UIColor *)toolBarTintColor {
     _toolBarTintColor = toolBarTintColor;
-    self.navigationController.navigationBar.fw.foregroundColor = toolBarTintColor;
+    self.navigationController.navigationBar.fw_foregroundColor = toolBarTintColor;
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -1881,10 +1881,10 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.navigationController.navigationBarHidden != NO) {
         [self.navigationController setNavigationBarHidden:NO animated:animated];
     }
-    self.navigationController.navigationBar.fw.isTranslucent = NO;
-    self.navigationController.navigationBar.fw.shadowColor = nil;
-    self.navigationController.navigationBar.fw.backgroundColor = self.toolBarBackgroundColor;
-    self.navigationController.navigationBar.fw.foregroundColor = self.toolBarTintColor;
+    self.navigationController.navigationBar.fw_isTranslucent = NO;
+    self.navigationController.navigationBar.fw_shadowColor = nil;
+    self.navigationController.navigationBar.fw_backgroundColor = self.toolBarBackgroundColor;
+    self.navigationController.navigationBar.fw_foregroundColor = self.toolBarTintColor;
     
     // 由于被选中的图片 selectedImageAssetArray 可以由外部改变，因此检查一下图片被选中的情况，并刷新 collectionView
     if (self.allowsMultipleSelection) {
