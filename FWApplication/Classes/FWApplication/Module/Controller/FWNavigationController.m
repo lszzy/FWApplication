@@ -55,14 +55,12 @@
     self.base.titleTextAttributes = navigationBar.titleTextAttributes;
     self.base.largeTitleTextAttributes = navigationBar.largeTitleTextAttributes;
     
-    if (@available(iOS 13.0, *)) {
+    if (@available(iOS 15.0, *)) {
         self.base.standardAppearance = navigationBar.standardAppearance;
         self.base.compactAppearance = navigationBar.compactAppearance;
         self.base.scrollEdgeAppearance = navigationBar.scrollEdgeAppearance;
         #if __IPHONE_15_0
-        if (@available(iOS 15.0, *)) {
-            self.base.compactScrollEdgeAppearance = navigationBar.compactScrollEdgeAppearance;
-        }
+        self.base.compactScrollEdgeAppearance = navigationBar.compactScrollEdgeAppearance;
         #endif
     }
 }
