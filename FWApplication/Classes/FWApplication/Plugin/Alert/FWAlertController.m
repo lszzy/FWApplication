@@ -31,6 +31,7 @@
         _actionHeight = 55.0;
         _actionFont = [UIFont systemFontOfSize:18];
         _actionBoldFont = [UIFont boldSystemFontOfSize:18];
+        _textFieldHeight = 30.0;
         
         _normalColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]
                                                            darkColor:[UIColor colorWithRed:44.0 / 255.0 green:44.0 / 255.0 blue:44.0 / 255.0 alpha:1.0]];
@@ -42,13 +43,13 @@
                                                          darkColor:_darkLineColor];
         _line2Color = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor grayColor] colorWithAlphaComponent:0.15]
                                                           darkColor:[UIColor colorWithRed:29.0 / 255.0 green:29.0 / 255.0 blue:29.0 / 255.0 alpha:1.0]];
-        _lightWhite_DarkBlackColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor whiteColor]
+        _containerBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor whiteColor]
                                                                          darkColor:[UIColor blackColor]];
-        _lightBlack_DarkWhiteColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor blackColor]
+        _titleDynamicColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor blackColor]
                                                                          darkColor:[UIColor whiteColor]];
-        _textViewBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor colorWithRed:247.0 / 255.0 green:247.0 / 255.0 blue:247.0 / 255.0 alpha:1.0]
+        _textFieldBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor colorWithRed:247.0 / 255.0 green:247.0 / 255.0 blue:247.0 / 255.0 alpha:1.0]
                                                                        darkColor:[UIColor colorWithRed:54.0 / 255.0 green:54.0 / 255.0 blue:54.0 / 255.0 alpha:1.0]];
-        _textViewCornerRadius = 6.0;
+        _textFieldCornerRadius = 6.0;
         _alertRedColor = [UIColor systemRedColor];
         _grayColor = [UIColor grayColor];
     }
@@ -144,10 +145,10 @@
         self.titleColor = [self.alertAppearance alertRedColor];
         self.titleFont = [self.alertAppearance actionFont];
     } else if (style == FWAlertActionStyleCancel) {
-        self.titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        self.titleColor = [self.alertAppearance titleDynamicColor];
         self.titleFont = [self.alertAppearance actionBoldFont];
     } else {
-        self.titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        self.titleColor = [self.alertAppearance titleDynamicColor];
         self.titleFont = [self.alertAppearance actionFont];
     }
     return self;
@@ -162,7 +163,7 @@
 
 - (void)initialize {
     _enabled = YES; // 默认能点击
-    _titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+    _titleColor = [self.alertAppearance titleDynamicColor];
     _titleFont = [self.alertAppearance actionFont];
     _titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
 }
@@ -278,7 +279,7 @@
     // 将textView添加到self.textFieldView中的布局队列中，UIStackView会根据设置的属性自动布局
     [self.textFieldView addArrangedSubview:textField];
     // 由于self.textFieldView是没有高度的，它的高度由子控件撑起，所以子控件必须要有高度
-    [[NSLayoutConstraint constraintWithItem:textField attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:30.0f] setActive:YES];
+    [[NSLayoutConstraint constraintWithItem:textField attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.alertAppearance.textFieldHeight] setActive:YES];
     [self setNeedsUpdateConstraints];
 }
 
@@ -420,7 +421,7 @@
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.font = [UIFont boldSystemFontOfSize:18];
         titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.textColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        titleLabel.textColor = [self.alertAppearance titleDynamicColor];
         titleLabel.numberOfLines = 0;
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:titleLabel];
@@ -510,7 +511,7 @@
     self.actionButton.tintColor = action.tintColor;
     if (action.attributedTitle) {
         // 这里之所以要设置按钮颜色为黑色，是因为如果外界在addAction:之后设置按钮的富文本，那么富文本的颜色在没有采用NSForegroundColorAttributeName的情况下会自动读取按钮上普通文本的颜色，在addAction:之前设置会保持默认色(黑色)，为了在addAction:前后设置富文本保持统一，这里先将按钮置为黑色，富文本就会是黑色
-        [self.actionButton setTitleColor:[self.alertAppearance lightBlack_DarkWhiteColor] forState:UIControlStateNormal];
+        [self.actionButton setTitleColor:[self.alertAppearance titleDynamicColor] forState:UIControlStateNormal];
         
         if ([action.attributedTitle.string containsString:@"\n"] || [action.attributedTitle.string containsString:@"\r"]) {
             self.actionButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -1115,12 +1116,12 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     NSAssert(self.preferredStyle == FWAlertControllerStyleAlert,@"FWAlertController does not allow 'addTextFieldWithConfigurationHandler:' to be called in the style of FWAlertControllerStyleActionSheet");
     UITextField *textField = [[UITextField alloc] init];
     textField.translatesAutoresizingMaskIntoConstraints = NO;
-    textField.backgroundColor = [self.alertAppearance textViewBackgroundColor];
+    textField.backgroundColor = [self.alertAppearance textFieldBackgroundColor];
     // 系统的UITextBorderStyleLine样式线条过于黑，所以自己设置
     textField.layer.borderWidth = self.alertAppearance.lineWidth;
     // 这里设置的颜色是静态的，动态设置CGColor,还需要监听深浅模式的切换
     textField.layer.borderColor = [FWAlertControllerAppearance colorPairsWithStaticLightColor:[self.alertAppearance lineColor] darkColor:[self.alertAppearance darkLineColor]].CGColor;
-    textField.layer.cornerRadius = self.alertAppearance.textViewCornerRadius;
+    textField.layer.cornerRadius = self.alertAppearance.textFieldCornerRadius;
     textField.layer.masksToBounds = YES;
     // 在左边设置一张view，充当光标左边的间距，否则光标紧贴textField不美观
     textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
@@ -1130,6 +1131,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     // 去掉textField键盘上部的联想条
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
     [textField addTarget:self action:@selector(textFieldDidEndOnExit:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    if (self.alertAppearance.textFieldCustomBlock) {
+        self.alertAppearance.textFieldCustomBlock(textField);
+    }
     NSMutableArray *array = self.textFields.mutableCopy;
     [array addObject:textField];
     self.textFields = array;
@@ -1227,7 +1231,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     self.transitioningDelegate = self;
     
     _titleFont = [UIFont boldSystemFontOfSize:18];
-    _titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+    _titleColor = [self.alertAppearance titleDynamicColor];
     _messageFont = [UIFont systemFontOfSize:16];
     _messageColor = [self.alertAppearance grayColor];
     _textAlignment = NSTextAlignmentCenter;
@@ -1898,7 +1902,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         if (_customAlertView) {
             self.containerView.backgroundColor = [UIColor clearColor];
         } else {
-            self.containerView.backgroundColor = [self.alertAppearance lightWhite_DarkBlackColor];
+            self.containerView.backgroundColor = [self.alertAppearance containerBackgroundColor];
         }
     }
 }

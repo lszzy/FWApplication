@@ -47,6 +47,7 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 @property (nonatomic, assign) CGFloat actionHeight;
 @property (nonatomic, strong) UIFont *actionFont;
 @property (nonatomic, strong) UIFont *actionBoldFont;
+@property (nonatomic, assign) CGFloat textFieldHeight;
 
 @property (nonatomic, strong) UIColor *normalColor;
 @property (nonatomic, strong) UIColor *selectedColor;
@@ -54,10 +55,11 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 @property (nonatomic, strong) UIColor *line2Color;
 @property (nonatomic, strong) UIColor *lightLineColor;
 @property (nonatomic, strong) UIColor *darkLineColor;
-@property (nonatomic, strong) UIColor *lightWhite_DarkBlackColor;
-@property (nonatomic, strong) UIColor *lightBlack_DarkWhiteColor;
-@property (nonatomic, strong) UIColor *textViewBackgroundColor;
-@property (nonatomic, assign) CGFloat textViewCornerRadius;
+@property (nonatomic, strong) UIColor *containerBackgroundColor;
+@property (nonatomic, strong) UIColor *titleDynamicColor;
+@property (nonatomic, strong) UIColor *textFieldBackgroundColor;
+@property (nonatomic, assign) CGFloat textFieldCornerRadius;
+@property (nonatomic, copy, nullable) void (^textFieldCustomBlock)(UITextField *textField);
 @property (nonatomic, strong) UIColor *alertRedColor;
 @property (nonatomic, strong) UIColor *grayColor;
 @end
