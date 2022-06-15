@@ -163,12 +163,12 @@
 {
     /*
     // FWViewController全局拦截器init方法示例：
-    // 视图默认不被顶部导航栏遮挡，如果UIToolbar顶部出现空白，需设为Bottom|All
-    viewController.edgesForExtendedLayout = UIRectEdgeBottom;
-    // 开启不透明bar(translucent为NO)情况下延伸包括bar，占满全屏
+    // 开启不透明bar(translucent为NO)情况下视图延伸到屏幕顶部
     viewController.extendedLayoutIncludesOpaqueBars = YES;
     // 默认push时隐藏TabBar，TabBar初始化控制器时设置为NO
     viewController.hidesBottomBarWhenPushed = YES;
+    // 视图默认all延伸到全部工具栏，可指定top|bottom不被工具栏遮挡
+    viewController.edgesForExtendedLayout = UIRectEdgeAll;
     */
     
     // 1. 默认init
