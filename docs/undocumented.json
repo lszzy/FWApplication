@@ -4245,14 +4245,14 @@
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWQuartzCore.h",
       "line": 63,
-      "symbol": "FWLayerWrapper(FWQuartzCore)",
+      "symbol": "CALayer(FWQuartzCore)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWQuartzCore.h",
       "line": 81,
-      "symbol": "FWGradientLayerWrapper(FWQuartzCore)",
+      "symbol": "CAGradientLayer(FWQuartzCore)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
@@ -4272,50 +4272,22 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 83,
-      "symbol": "FWColorWrapper(FWTheme)",
+      "line": 82,
+      "symbol": "UIColor(FWTheme)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 96,
-      "symbol": "FWColorClassWrapper(FWTheme)",
+      "line": 164,
+      "symbol": "UIImageAsset(FWTheme)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 146,
-      "symbol": "FWImageClassWrapper(FWTheme)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 175,
-      "symbol": "FWImageAssetWrapper(FWTheme)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 188,
-      "symbol": "FWImageAssetClassWrapper(FWTheme)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 211,
+      "line": 196,
       "symbol": "NSObject(FWTheme)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWTheme.h",
-      "line": 215,
-      "symbol": "FWObjectWrapper(FWTheme)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
@@ -4398,77 +4370,77 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 92,
+      "line": 95,
       "symbol": "FWLabelWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 120,
+      "line": 123,
       "symbol": "FWLabelClassWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 132,
+      "line": 135,
       "symbol": "FWButtonWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 157,
+      "line": 160,
       "symbol": "FWButtonClassWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 169,
+      "line": 172,
       "symbol": "FWScrollViewWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 205,
+      "line": 208,
       "symbol": "FWPageControlWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 214,
+      "line": 217,
       "symbol": "FWSliderWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 226,
+      "line": 229,
       "symbol": "FWSwitchWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 235,
+      "line": 238,
       "symbol": "FWTextFieldWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 262,
+      "line": 265,
       "symbol": "FWTextViewWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 289,
+      "line": 292,
       "symbol": "FWViewControllerWrapper(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -16221,49 +16193,63 @@
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 173,
+      "line": 179,
       "symbol": "FWPanGestureRecognizer.autoDetected",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 176,
+      "line": 182,
       "symbol": "FWPanGestureRecognizer.scrollView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 179,
+      "line": 185,
       "symbol": "FWPanGestureRecognizer.direction",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 182,
+      "line": 188,
       "symbol": "FWPanGestureRecognizer.swipePercent",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 185,
+      "line": 191,
+      "symbol": "FWPanGestureRecognizer.maximumDistance",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWViewTransition.h",
+      "line": 194,
       "symbol": "FWPanGestureRecognizer.shouldFailed",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 188,
+      "line": 197,
+      "symbol": "FWPanGestureRecognizer.shouldBegin",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWViewTransition.h",
+      "line": 200,
       "symbol": "FWPanGestureRecognizer.shouldBeRequiredToFail",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 191,
+      "line": 203,
       "symbol": "FWPanGestureRecognizer.shouldRequireFailure",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"

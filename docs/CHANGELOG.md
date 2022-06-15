@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.3.1] - 2022-06-15
+
+### Changed
+* VC animation adds edge gesture close function
+* Optimize the calculation problem in the background of the countDown method
+* Fix the abnormal problem of navigation bar transition animation
+* Compatible with FWFramework 3.3.1 version
+
 ## [3.3.0] - 2022-06-11
 
 ### Added
