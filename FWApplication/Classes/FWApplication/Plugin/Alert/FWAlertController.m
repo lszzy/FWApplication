@@ -43,7 +43,7 @@
         _darkLineColor = [UIColor colorWithRed:60.0 / 255.0 green:60.0 / 255.0 blue:60.0 / 255.0 alpha:1.0];
         _lineColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:_lightLineColor
                                                          darkColor:_darkLineColor];
-        _line2Color = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor grayColor] colorWithAlphaComponent:0.15]
+        _cancelLineColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor grayColor] colorWithAlphaComponent:0.15]
                                                           darkColor:[UIColor colorWithRed:29.0 / 255.0 green:29.0 / 255.0 blue:29.0 / 255.0 alpha:1.0]];
         _containerBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor whiteColor]
                                                                          darkColor:[UIColor blackColor]];
@@ -243,7 +243,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.backgroundColor = MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth ? [self.alertAppearance line2Color] : [self.alertAppearance lineColor];
+    self.backgroundColor = MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth ? [self.alertAppearance cancelLineColor] : [self.alertAppearance lineColor];
 }
 
 @end
