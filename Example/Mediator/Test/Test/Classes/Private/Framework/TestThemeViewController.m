@@ -140,7 +140,7 @@
     dispatch_once(&onceToken, ^{
         UIImage.fw_themeImageColor = Theme.textColor;
     });
-    imageView.fw_themeImage = [TestBundle imageNamed:@"close.svg"].fw_themeImage;
+    imageView.fw_themeImage = [TestBundle imageNamed:@"tabbar_settings"].fw_themeImage;
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(90, 300, 50, 50)];
@@ -149,7 +149,7 @@
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(160, 300, 50, 50)];
-    imageView.fw_themeImage = [[TestBundle imageNamed:@"close.svg"] fw_themeImageWithColor:[UIColor redColor]];
+    imageView.fw_themeImage = [[TestBundle imageNamed:@"tabbar_settings"] fw_themeImageWithColor:[UIColor redColor]];
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 370, 50, 50)];
@@ -173,8 +173,18 @@
     }];
     [self.view addSubview:imageView3];
     
+    UILabel *colorLabel = [UILabel new];
+    colorLabel.frame = CGRectMake(0, 440, FWScreenWidth, 25);
+    colorLabel.textAlignment = NSTextAlignmentCenter;
+    colorLabel.font = FWFontSize(16).fw.boldFont;
+    colorLabel.textColor = Theme.textColor;
+    UIColor *lightColor = [Theme.textColor fw_colorForStyle:FWThemeStyleLight];
+    UIColor *darkColor = [Theme.textColor fw_colorForStyle:FWThemeStyleDark];
+    colorLabel.text = [NSString stringWithFormat:@"Light: %@ Dark: %@", lightColor.fw.hexString, darkColor.fw.hexString];
+    [self.view addSubview:colorLabel];
+    
     UILabel *themeLabel = [UILabel new];
-    themeLabel.frame = CGRectMake(0, 440, FWScreenWidth, 50);
+    themeLabel.frame = CGRectMake(0, 475, FWScreenWidth, 25);
     themeLabel.textAlignment = NSTextAlignmentCenter;
     themeLabel.attributedText = [NSAttributedString.fw attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw.boldFont textColor:[UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
     [self.view addSubview:themeLabel];
@@ -207,10 +217,7 @@
     [self.fw setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
-        NSMutableArray *actions = [NSMutableArray arrayWithArray:@[@"系统", @"浅色"]];
-        if (@available(iOS 13.0, *)) {
-            [actions addObject:@"深色"];
-        }
+        NSMutableArray *actions = [NSMutableArray arrayWithArray:@[@"系统", @"浅色", @"深色"]];
         [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:actions actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             

@@ -97,10 +97,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
 - (void)renderModel
 {
     FWThemeMode mode = FWThemeManager.sharedInstance.mode;
-    NSMutableArray *themes = [NSMutableArray arrayWithArray:@[@"系统", @"浅色"]];
-    if (@available(iOS 13, *)) {
-        [themes addObject:@"深色"];
-    }
+    NSMutableArray *themes = [NSMutableArray arrayWithArray:@[@"系统", @"浅色", @"深色"]];
     NSString *title = mode < themes.count ? [themes objectAtIndex:mode] : @"红色";
     [themes addObject:@"红色"];
     FWWeakifySelf();
