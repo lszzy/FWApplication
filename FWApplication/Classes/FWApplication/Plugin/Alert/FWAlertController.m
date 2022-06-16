@@ -1905,7 +1905,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     // 调用该setter方法则认为是强制布局，该setter方法只有外界能调，这样才能判断外界有没有调用actionAxis的setter方法，从而是否按照外界的指定布局方式进行布局
     _isForceLayout = YES;
 
-    [self updateActionAxis];
+    if (self.isViewLoaded) {
+        [self updateActionAxis];
+    }
 }
 
 - (void)setOffsetForAlert:(CGPoint)offsetForAlert {
