@@ -67,7 +67,6 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 
 @property (nonatomic, assign) BOOL sheetContainerTransparent;
 @property (nonatomic, assign) UIEdgeInsets sheetContainerInsets;
-@property (nonatomic, assign) CGFloat sheetHeaderSpacing;
 
 @end
 

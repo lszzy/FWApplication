@@ -32,8 +32,8 @@
         _actionFont = [UIFont systemFontOfSize:18];
         _actionBoldFont = [UIFont boldSystemFontOfSize:18];
         _textFieldHeight = 30.0;
-        _imageTitleSpacing = 17.0;
-        _titleMessageSpacing = 7.5;
+        _imageTitleSpacing = 16.0;
+        _titleMessageSpacing = 8.0;
         _sheetContainerInsets = UIEdgeInsetsZero;
         
         _normalColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]
@@ -880,6 +880,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         scrollView.bounces = NO;
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            scrollView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+            scrollView.layer.cornerRadius = self.cornerRadius;
+            scrollView.layer.masksToBounds = YES;
+        }
         if ((self.cancelAction && self.actions.count > 1) || (!self.cancelAction && self.actions.count > 0)) {
             [self addSubview:scrollView];
         }
@@ -1400,6 +1405,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (void)layoutHeaderView {
     UIView *headerView = self.customHeaderView ? self.customHeaderView : self.headerView;
     if (!headerView.superview) return;
+    if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+        headerView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+        headerView.layer.cornerRadius = self.cornerRadius;
+        headerView.layer.masksToBounds = YES;
+    }
     UIView *alertView = self.alertView;
     NSMutableArray *headerViewConstraints = [NSMutableArray array];
     if (self.headerViewConstraints) {
@@ -1449,8 +1459,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (self.customHeaderSpacing > 0) {
         headerSpacing = self.customHeaderSpacing;
     } else if (_preferredStyle == FWAlertControllerStyleActionSheet &&
-               self.alertAppearance.sheetHeaderSpacing > 0) {
-        headerSpacing = self.alertAppearance.sheetHeaderSpacing;
+               self.alertAppearance.sheetContainerTransparent) {
+        headerSpacing = self.alertAppearance.cancelLineWidth;
     }
     [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:headerSpacing]];
 
@@ -1464,6 +1474,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     UIView *componentView = self.componentView;
     UIView *headerActionLine = self.headerActionLine;
     UIView *componentActionLine = self.componentActionLine;
+    if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+        componentView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+        componentView.layer.cornerRadius = self.cornerRadius;
+        componentView.layer.masksToBounds = YES;
+    }
     NSMutableArray *componentViewConstraints = [NSMutableArray array];
     if (self.componentViewConstraints) {
         [NSLayoutConstraint deactivateConstraints:self.componentViewConstraints];
@@ -1858,7 +1873,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         self.containerView.layer.cornerRadius = _cornerRadius;
         self.containerView.layer.masksToBounds = YES;
     } else {
-        if (!self.alertAppearance.sheetContainerTransparent && _cornerRadius > 0.0) {
+        if (_cornerRadius > 0.0) {
             UIRectCorner corner = UIRectCornerTopLeft | UIRectCornerTopRight;
             switch (_animationType) {
                 case FWAlertAnimationTypeFromBottom:
@@ -1955,7 +1970,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
             containerView.layer.cornerRadius = _cornerRadius;
             containerView.layer.masksToBounds = YES;
         } else {
-            if (!self.alertAppearance.sheetContainerTransparent && _cornerRadius > 0.0) {
+            if (_cornerRadius > 0.0) {
                 CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
                 containerView.layer.mask = maskLayer;
             }
