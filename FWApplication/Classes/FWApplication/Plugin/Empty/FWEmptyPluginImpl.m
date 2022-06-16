@@ -32,7 +32,7 @@
     return self;
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id))block inView:(UIView *)view
+- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id))block inView:(UIView *)view
 {
     NSString *emptyText = text;
     if (!loading && !emptyText && self.defaultText) {
@@ -46,10 +46,11 @@
     if (!loading && !emptyImage && self.defaultImage) {
         emptyImage = self.defaultImage();
     }
-    NSString *emptyAction = action;
+    NSString *emptyAction = actions.count > 0 ? actions.firstObject : nil;
     if (!loading && !emptyAction && block && self.defaultAction) {
         emptyAction = self.defaultAction();
     }
+    NSString *emptyMoreAction = actions.count > 1 ? [actions objectAtIndex:1] : nil;
     
     FWEmptyView *emptyView = [view viewWithTag:2021];
     BOOL fadeAnimated = self.fadeAnimated && !emptyView;
@@ -64,7 +65,9 @@
     [emptyView setTextLabelText:emptyText];
     [emptyView setDetailTextLabelText:emptyDetail];
     [emptyView setActionButtonTitle:emptyAction];
-    if (block) [emptyView.actionButton.fw addTouchBlock:block];
+    [emptyView setMoreActionButtonTitle:emptyMoreAction];
+    if (block) [emptyView.actionButton.fw addTouchBlock:^(id sender) { if (block) block(0, sender); }];
+    if (block && emptyMoreAction) [emptyView.moreActionButton.fw addTouchBlock:^(id sender) { if (block) block(1, sender); }];
 
     if (self.customBlock) {
         self.customBlock(emptyView);

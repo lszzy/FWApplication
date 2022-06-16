@@ -76,10 +76,14 @@
         [self.fw showEmptyViewLoading];
     } else if (row == 5) {
         FWWeakifySelf();
-        [self.fw showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage.fw imageWithAppIcon] loading:YES action:@"重试" block:^(id  _Nonnull sender) {
+        [self.fw showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage.fw imageWithAppIcon] loading:YES actions:@[@"取消", @"重试"] block:^(NSInteger index, id  _Nonnull sender) {
             FWStrongifySelf();
-            [self.fw hideEmptyView];
-            [self.tableView reloadData];
+            if (index == 0) {
+                [self.fw showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage.fw imageWithAppIcon] loading:YES actions:nil block:nil];
+            } else {
+                [self.fw hideEmptyView];
+                [self.tableView reloadData];
+            }
         }];
     }
     [self.tableView reloadData];

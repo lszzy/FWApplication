@@ -59,6 +59,11 @@ extension Wrapper where Base: UIView {
     public func showEmptyView(text: String?, detail: String?, image: UIImage?, loading: Bool, action: String?, block: ((Any) -> Void)?) {
         base.__fw.showEmpty(withText: text, detail: detail, image: image, loading: loading, action: action, block: block)
     }
+    
+    /// 显示空界面，指定文本、详细文本、图片、是否显示加载视图和最多两个动作按钮
+    public func showEmptyView(text: String?, detail: String?, image: UIImage?, loading: Bool, actions: [String]?, block: ((Int, Any) -> Void)?) {
+        base.__fw.showEmpty(withText: text, detail: detail, image: image, loading: loading, actions: actions, block: block)
+    }
 
     /// 隐藏空界面
     public func hideEmptyView() {
@@ -108,6 +113,11 @@ extension Wrapper where Base: UIViewController {
     /// 显示空界面，指定文本、详细文本、图片、是否显示加载视图和动作按钮
     public func showEmptyView(text: String?, detail: String?, image: UIImage?, loading: Bool, action: String?, block: ((Any) -> Void)?) {
         base.__fw.showEmpty(withText: text, detail: detail, image: image, loading: loading, action: action, block: block)
+    }
+    
+    /// 显示空界面，指定文本、详细文本、图片、是否显示加载视图和最多两个动作按钮
+    public func showEmptyView(text: String?, detail: String?, image: UIImage?, loading: Bool, actions: [String]?, block: ((Int, Any) -> Void)?) {
+        base.__fw.showEmpty(withText: text, detail: detail, image: image, loading: loading, actions: actions, block: block)
     }
 
     /// 隐藏空界面
