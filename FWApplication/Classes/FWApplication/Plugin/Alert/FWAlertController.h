@@ -64,6 +64,11 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 @property (nonatomic, copy, nullable) void (^textFieldCustomBlock)(UITextField *textField);
 @property (nonatomic, strong) UIColor *alertRedColor;
 @property (nonatomic, strong) UIColor *grayColor;
+
+@property (nonatomic, assign) BOOL sheetContainerTransparent;
+@property (nonatomic, assign) UIEdgeInsets sheetContainerInsets;
+@property (nonatomic, assign) CGFloat sheetHeaderSpacing;
+
 @end
 
 // ===================================================== FWAlertAction =====================================================

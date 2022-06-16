@@ -351,7 +351,7 @@
     [self.fw showSheetWithTitle:title
                        message:message
                         cancel:@"取消"
-                       actions:@[@"操作1", @"操作2", @"操作3", @"操作4"]
+                       actions:@[@"操作1", @"操作2", @"操作3", @"操作4", @"操作5", @"操作6", @"操作7", @"操作8", @"操作9", @"操作10"]
                    actionBlock:^(NSInteger index) {
                        NSLog(@"点击的操作index: %@", @(index));
                    }];

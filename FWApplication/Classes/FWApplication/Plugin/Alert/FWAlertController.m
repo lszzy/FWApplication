@@ -34,6 +34,7 @@
         _textFieldHeight = 30.0;
         _imageTitleSpacing = 17.0;
         _titleMessageSpacing = 7.5;
+        _sheetContainerInsets = UIEdgeInsetsZero;
         
         _normalColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]
                                                            darkColor:[UIColor colorWithRed:44.0 / 255.0 green:44.0 / 255.0 blue:44.0 / 255.0 alpha:1.0]];
@@ -231,6 +232,7 @@
 
 @interface FWInterfaceActionItemSeparatorView : UIView
 @property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
+@property (nonatomic, strong) UIColor *customBackgroundColor;
 @end
 @implementation FWInterfaceActionItemSeparatorView
 - (instancetype)initWithAppearance:(FWAlertControllerAppearance *)appearance {
@@ -243,7 +245,13 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.backgroundColor = MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth ? [self.alertAppearance cancelLineColor] : [self.alertAppearance lineColor];
+    if (self.customBackgroundColor) {
+        self.backgroundColor = self.customBackgroundColor;
+    } else if (MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth) {
+        self.backgroundColor = [self.alertAppearance cancelLineColor];
+    } else {
+        self.backgroundColor = [self.alertAppearance lineColor];
+    }
 }
 
 @end
@@ -638,6 +646,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 #pragma mark ---------------------------- FWInterfaceActionSequenceView begin --------------------------------
 
 @interface FWInterfaceActionSequenceView : UIView
+@property (nonatomic, assign) FWAlertControllerStyle preferredStyle;
+@property (nonatomic, assign) CGFloat cornerRadius;
 @property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
@@ -869,6 +879,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        scrollView.bounces = NO;
         if ((self.cancelAction && self.actions.count > 1) || (!self.cancelAction && self.actions.count > 0)) {
             [self addSubview:scrollView];
         }
@@ -904,6 +915,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!_cancelView) {
         UIView *cancelView = [[UIView alloc] init];
         cancelView.translatesAutoresizingMaskIntoConstraints = NO;
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            cancelView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+            cancelView.layer.cornerRadius = self.cornerRadius;
+            cancelView.layer.masksToBounds = YES;
+        }
         if (self.cancelAction) {
             [self addSubview:cancelView];
         }
@@ -916,6 +932,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!_cancelActionLine) {
         FWInterfaceActionItemSeparatorView *cancelActionLine = [[FWInterfaceActionItemSeparatorView alloc] initWithAppearance:self.alertAppearance];
         cancelActionLine.translatesAutoresizingMaskIntoConstraints = NO;
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            cancelActionLine.customBackgroundColor = [UIColor clearColor];
+        }
         if (self.cancelView.superview && self.scrollView.superview) {
             [self addSubview:cancelActionLine];
         }
@@ -1426,7 +1445,14 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!self.componentView.superview) {
         [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:actionSequenceView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     }
-    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.customHeaderSpacing > 0 ? self.customHeaderSpacing : self.alertAppearance.lineWidth]];
+    CGFloat headerSpacing = self.alertAppearance.lineWidth;
+    if (self.customHeaderSpacing > 0) {
+        headerSpacing = self.customHeaderSpacing;
+    } else if (_preferredStyle == FWAlertControllerStyleActionSheet &&
+               self.alertAppearance.sheetHeaderSpacing > 0) {
+        headerSpacing = self.alertAppearance.sheetHeaderSpacing;
+    }
+    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:headerSpacing]];
 
     [NSLayoutConstraint activateConstraints:headerActionLineConstraints];
     self.headerActionLineConstraints = headerActionLineConstraints;
@@ -1832,7 +1858,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         self.containerView.layer.cornerRadius = _cornerRadius;
         self.containerView.layer.masksToBounds = YES;
     } else {
-        if (_cornerRadius > 0.0) {
+        if (!self.alertAppearance.sheetContainerTransparent && _cornerRadius > 0.0) {
             UIRectCorner corner = UIRectCornerTopLeft | UIRectCornerTopRight;
             switch (_animationType) {
                 case FWAlertAnimationTypeFromBottom:
@@ -1903,6 +1929,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         self.dimmingKnockoutBackdropView = nil;
         if (_customAlertView) {
             self.containerView.backgroundColor = [UIColor clearColor];
+        } else if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            self.containerView.backgroundColor = [UIColor clearColor];
         } else {
             self.containerView.backgroundColor = [self.alertAppearance containerBackgroundColor];
         }
@@ -1923,18 +1951,22 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (UIView *)containerView {
     if (!_containerView) {
         UIView *containerView = [[UIView alloc] init];
-        containerView.frame = self.alertControllerView.bounds;
-        containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         if (_preferredStyle == FWAlertControllerStyleAlert) {
             containerView.layer.cornerRadius = _cornerRadius;
             containerView.layer.masksToBounds = YES;
         } else {
-            if (_cornerRadius > 0.0) {
+            if (!self.alertAppearance.sheetContainerTransparent && _cornerRadius > 0.0) {
                 CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
                 containerView.layer.mask = maskLayer;
             }
         }
         [self.alertControllerView addSubview:containerView];
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            [containerView.fw pinEdgesToSuperviewWithInsets:self.alertAppearance.sheetContainerInsets];
+        } else {
+            containerView.frame = self.alertControllerView.bounds;
+            containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        }
         
         _containerView = containerView;
     }
@@ -1980,11 +2012,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
             [weakSelf setupPreferredMaxLayoutWidthForLabel:weakSelf.headerView.messageLabel];
         };
         if (!self.customHeaderView) {
-            if ((self.title.length || self.attributedTitle.length || self.message.length || self.attributedMessage.length || self.textFields.count || self.image)) {
-                [self.alertView addSubview:headerView];
-            } else {
-                [self.alertView addSubview:headerView];
-            }
+            [self.alertView addSubview:headerView];
         }
         _headerView = headerView;
     }
@@ -2009,6 +2037,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!_actionSequenceView) {
         FWInterfaceActionSequenceView *actionSequenceView = [[FWInterfaceActionSequenceView alloc] init];
         actionSequenceView.alertAppearance = self.alertAppearance;
+        actionSequenceView.preferredStyle = _preferredStyle;
+        actionSequenceView.cornerRadius = self.cornerRadius;
         actionSequenceView.translatesAutoresizingMaskIntoConstraints = NO;
         __weak typeof(self) weakSelf = self;
         actionSequenceView.buttonClickedInActionViewBlock = ^(NSInteger index) {
