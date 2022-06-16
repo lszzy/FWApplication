@@ -70,9 +70,11 @@
              customBlock:(void (^)(id))customBlock
 {
     // 初始化Alert
+    FWAlertControllerAppearance *customAppearance = style == UIAlertControllerStyleActionSheet ? self.customSheetAppearance : self.customAlertAppearance;
     FWAlertController *alertController = [self alertControllerWithTitle:title
                                                                 message:message
-                                                         preferredStyle:(FWAlertControllerStyle)style];
+                                                         preferredStyle:(FWAlertControllerStyle)style
+                                                             appearance:customAppearance];
     
     // 添加输入框
     for (NSInteger promptIndex = 0; promptIndex < promptCount; promptIndex++) {
@@ -83,7 +85,7 @@
     
     // 添加动作按钮
     for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
-        FWAlertAction *alertAction = [self actionWithObject:actions[actionIndex] style:FWAlertActionStyleDefault handler:^(FWAlertAction *action) {
+        FWAlertAction *alertAction = [self actionWithObject:actions[actionIndex] style:FWAlertActionStyleDefault appearance:customAppearance handler:^(FWAlertAction *action) {
             if (actionBlock) {
                 NSMutableArray *values = [NSMutableArray new];
                 for (NSInteger fieldIndex = 0; fieldIndex < promptCount; fieldIndex++) {
@@ -98,7 +100,7 @@
     
     // 添加取消按钮
     if (cancel != nil) {
-        FWAlertAction *cancelAction = [self actionWithObject:cancel style:FWAlertActionStyleCancel handler:^(FWAlertAction *action) {
+        FWAlertAction *cancelAction = [self actionWithObject:cancel style:FWAlertActionStyleCancel appearance:customAppearance handler:^(FWAlertAction *action) {
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
@@ -130,12 +132,14 @@
              customBlock:(void (^)(id _Nonnull))customBlock
 {
     // 初始化Alert
+    FWAlertControllerAppearance *customAppearance = style == UIAlertControllerStyleActionSheet ? self.customSheetAppearance : self.customAlertAppearance;
     FWAlertController *alertController = [self alertControllerWithHeaderView:headerView
-                                                              preferredStyle:(FWAlertControllerStyle)style];
+                                                              preferredStyle:(FWAlertControllerStyle)style
+                                                                  appearance:customAppearance];
     
     // 添加动作按钮
     for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
-        FWAlertAction *alertAction = [self actionWithObject:actions[actionIndex] style:FWAlertActionStyleDefault handler:^(FWAlertAction *action) {
+        FWAlertAction *alertAction = [self actionWithObject:actions[actionIndex] style:FWAlertActionStyleDefault appearance:customAppearance handler:^(FWAlertAction *action) {
             if (actionBlock) actionBlock(actionIndex);
         }];
         [alertController addAction:alertAction];
@@ -143,7 +147,7 @@
     
     // 添加取消按钮
     if (cancel != nil) {
-        FWAlertAction *cancelAction = [self actionWithObject:cancel style:FWAlertActionStyleCancel handler:^(FWAlertAction *action) {
+        FWAlertAction *cancelAction = [self actionWithObject:cancel style:FWAlertActionStyleCancel appearance:customAppearance handler:^(FWAlertAction *action) {
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
@@ -165,7 +169,7 @@
     [viewController presentViewController:alertController animated:YES completion:nil];
 }
 
-- (FWAlertController *)alertControllerWithTitle:(id)title message:(id)message preferredStyle:(FWAlertControllerStyle)preferredStyle
+- (FWAlertController *)alertControllerWithTitle:(id)title message:(id)message preferredStyle:(FWAlertControllerStyle)preferredStyle appearance:(FWAlertControllerAppearance *)appearance
 {
     NSAttributedString *attributedTitle = [title isKindOfClass:[NSAttributedString class]] ? title : nil;
     NSAttributedString *attributedMessage = [message isKindOfClass:[NSAttributedString class]] ? message : nil;
@@ -173,7 +177,7 @@
                                                                              message:(attributedMessage ? nil : message)
                                                                       preferredStyle:preferredStyle
                                                                        animationType:FWAlertAnimationTypeDefault
-                                                                          appearance:self.customAppearance];
+                                                                          appearance:appearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
     if (attributedTitle) {
@@ -212,12 +216,12 @@
     return alertController;
 }
 
-- (FWAlertController *)alertControllerWithHeaderView:(UIView *)headerView preferredStyle:(FWAlertControllerStyle)preferredStyle
+- (FWAlertController *)alertControllerWithHeaderView:(UIView *)headerView preferredStyle:(FWAlertControllerStyle)preferredStyle appearance:(FWAlertControllerAppearance *)appearance
 {
     FWAlertController *alertController = [FWAlertController alertControllerWithCustomHeaderView:headerView
                                                                                  preferredStyle:preferredStyle
                                                                                   animationType:FWAlertAnimationTypeDefault
-                                                                                     appearance:self.customAppearance];
+                                                                                     appearance:appearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
     [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
@@ -230,13 +234,13 @@
     return alertController;
 }
 
-- (FWAlertAction *)actionWithObject:(id)object style:(FWAlertActionStyle)style handler:(void (^)(FWAlertAction *))handler
+- (FWAlertAction *)actionWithObject:(id)object style:(FWAlertActionStyle)style appearance:(FWAlertControllerAppearance *)appearance handler:(void (^)(FWAlertAction *))handler
 {
     NSAttributedString *attributedTitle = [object isKindOfClass:[NSAttributedString class]] ? object : nil;
     FWAlertAction *alertAction = [FWAlertAction actionWithTitle:(attributedTitle ? nil : object)
                                                           style:style
-                                                     appearance:self.customAppearance
-                                                         handler:handler];
+                                                     appearance:appearance
+                                                        handler:handler];
     
     if (attributedTitle) {
         alertAction.attributedTitle = attributedTitle;

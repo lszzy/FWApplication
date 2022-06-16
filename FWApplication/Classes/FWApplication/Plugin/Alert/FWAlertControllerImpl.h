@@ -18,8 +18,11 @@ NS_SWIFT_NAME(AlertControllerPlugin)
 /** 单例模式 */
 @property (class, nonatomic, readonly) FWAlertControllerPlugin *sharedInstance;
 
-/// 弹窗自定义样式，nil时使用单例
-@property (nonatomic, strong, nullable) FWAlertControllerAppearance *customAppearance;
+/// 自定义Alert弹窗样式，nil时使用单例
+@property (nonatomic, strong, nullable) FWAlertControllerAppearance *customAlertAppearance;
+
+/// 自定义ActionSheet弹窗样式，nil时使用单例
+@property (nonatomic, strong, nullable) FWAlertControllerAppearance *customSheetAppearance;
 
 /// 弹窗自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(FWAlertController *alertController);

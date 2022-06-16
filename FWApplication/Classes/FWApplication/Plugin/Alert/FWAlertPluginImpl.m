@@ -281,10 +281,11 @@
              customBlock:(void (^)(id))customBlock
 {
     // 初始化Alert
+    FWAlertAppearance *customAppearance = style == UIAlertControllerStyleActionSheet ? self.customSheetAppearance : self.customAlertAppearance;
     UIAlertController *alertController = [UIAlertController.fw alertControllerWithTitle:title
                                                                                message:message
                                                                         preferredStyle:style
-                                                                            appearance:self.customAppearance];
+                                                                            appearance:customAppearance];
     
     // 添加输入框
     for (NSInteger promptIndex = 0; promptIndex < promptCount; promptIndex++) {
@@ -295,7 +296,7 @@
     
     // 添加动作按钮
     for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
-        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:self.customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
             if (actionBlock) {
                 NSMutableArray *values = [NSMutableArray new];
                 for (NSInteger fieldIndex = 0; fieldIndex < promptCount; fieldIndex++) {
@@ -310,7 +311,7 @@
     
     // 添加取消按钮
     if (cancel != nil) {
-        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:self.customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
