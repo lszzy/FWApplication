@@ -727,6 +727,13 @@
     self.isFailed = nil;
 }
 
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    if (self.instantBegan && self.state == UIGestureRecognizerStateBegan) return;
+    [super touchesBegan:touches withEvent:event];
+    if (self.instantBegan) self.state = UIGestureRecognizerStateBegan;
+}
+
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesMoved:touches withEvent:event];
