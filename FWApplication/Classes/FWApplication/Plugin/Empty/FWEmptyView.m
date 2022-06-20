@@ -35,16 +35,19 @@
     appearance.textLabelInsets = UIEdgeInsetsMake(0, 0, 10, 0);
     appearance.detailTextLabelInsets = UIEdgeInsetsMake(0, 0, 14, 0);
     appearance.actionButtonInsets = UIEdgeInsetsZero;
+    appearance.moreActionButtonInsets = UIEdgeInsetsMake(0, 24, 0, 0);
     appearance.verticalOffset = -30;
     
     appearance.textLabelFont = [UIFont systemFontOfSize:15];
     appearance.detailTextLabelFont = [UIFont systemFontOfSize:14];
     appearance.actionButtonFont = [UIFont systemFontOfSize:15];
+    appearance.moreActionButtonFont = [UIFont systemFontOfSize:15];
     
     appearance.loadingViewColor = [UIColor grayColor];
     appearance.textLabelTextColor = [UIColor colorWithRed:93/255.0 green:100/255.0 blue:110/255.0 alpha:1];
     appearance.detailTextLabelTextColor = [UIColor colorWithRed:133/255.0 green:140/255.0 blue:150/255.0 alpha:1];
     appearance.actionButtonTitleColor = [UIColor colorWithRed:49/255.0 green:189/255.0 blue:243/255.0 alpha:1];
+    appearance.moreActionButtonTitleColor = [UIColor colorWithRed:49/255.0 green:189/255.0 blue:243/255.0 alpha:1];
 }
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -92,9 +95,15 @@
     [self.contentView addSubview:self.detailTextLabel];
     
     UIButton *actionButton = [[UIButton alloc] init];
-    actionButton.fw.touchInsets = UIEdgeInsetsMake(20, 20, 20, 20);
+    actionButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
     _actionButton = actionButton;
     [self.contentView addSubview:self.actionButton];
+    
+    UIButton *moreActionButton = [[UIButton alloc] init];
+    moreActionButton.hidden = YES;
+    moreActionButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    _moreActionButton = moreActionButton;
+    [self.contentView addSubview:self.moreActionButton];
 }
 
 - (void)layoutSubviews {
@@ -153,10 +162,19 @@
     
     if (!self.actionButton.hidden) {
         [self.actionButton sizeToFit];
-        CGRect frame = self.actionButton.frame;
-        frame.origin = CGPointMake(((CGRectGetWidth(self.contentView.bounds) - CGRectGetWidth(self.actionButton.frame)) / 2.0) + self.actionButtonInsets.left - self.actionButtonInsets.right, originY + self.actionButtonInsets.top);
-        self.actionButton.frame = frame;
-        originY = CGRectGetMaxY(self.actionButton.frame) + self.actionButtonInsets.bottom;
+        CGRect actionFrame = self.actionButton.frame;
+        actionFrame.origin = CGPointMake(((CGRectGetWidth(self.contentView.bounds) - CGRectGetWidth(self.actionButton.frame)) / 2.0) + self.actionButtonInsets.left - self.actionButtonInsets.right, originY + self.actionButtonInsets.top);
+        self.actionButton.frame = actionFrame;
+        
+        if (!self.moreActionButton.hidden) {
+            [self.moreActionButton sizeToFit];
+            actionFrame.origin.x = ((CGRectGetWidth(self.contentView.bounds) - CGRectGetWidth(self.actionButton.frame) - CGRectGetWidth(self.moreActionButton.frame) - self.actionButtonInsets.right - self.moreActionButtonInsets.left) / 2.0) + self.actionButtonInsets.left;
+            self.actionButton.frame = actionFrame;
+            
+            CGRect frame = self.moreActionButton.frame;
+            frame.origin = CGPointMake(CGRectGetMaxX(self.actionButton.frame) + self.actionButtonInsets.right + self.moreActionButtonInsets.left - self.moreActionButtonInsets.right, originY + self.moreActionButtonInsets.top);
+            self.moreActionButton.frame = frame;
+        }
     }
 }
 
@@ -247,6 +265,12 @@
     [self setNeedsLayout];
 }
 
+- (void)setMoreActionButtonTitle:(NSString *)title {
+    [self.moreActionButton setTitle:title forState:UIControlStateNormal];
+    self.moreActionButton.hidden = !title;
+    [self setNeedsLayout];
+}
+
 - (UIEdgeInsets)contentViewInsets {
     return self.scrollView.contentInset;
 }
@@ -273,6 +297,11 @@
 
 - (void)setActionButtonInsets:(UIEdgeInsets)actionButtonInsets {
     _actionButtonInsets = actionButtonInsets;
+    [self setNeedsLayout];
+}
+
+- (void)setMoreActionButtonInsets:(UIEdgeInsets)moreActionButtonInsets {
+    _moreActionButtonInsets = moreActionButtonInsets;
     [self setNeedsLayout];
 }
 
@@ -303,6 +332,12 @@
     [self setNeedsLayout];
 }
 
+- (void)setMoreActionButtonFont:(UIFont *)moreActionButtonFont {
+    _moreActionButtonFont = moreActionButtonFont;
+    self.moreActionButton.titleLabel.font = moreActionButtonFont;
+    [self setNeedsLayout];
+}
+
 - (void)setLoadingViewColor:(UIColor *)loadingViewColor {
     _loadingViewColor = loadingViewColor;
     self.loadingView.color = loadingViewColor;
@@ -323,6 +358,13 @@
     [self.actionButton setTitleColor:actionButtonTitleColor forState:UIControlStateNormal];
     [self.actionButton setTitleColor:[actionButtonTitleColor colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
     [self.actionButton setTitleColor:[actionButtonTitleColor colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
+}
+
+- (void)setMoreActionButtonTitleColor:(UIColor *)moreActionButtonTitleColor {
+    _moreActionButtonTitleColor = moreActionButtonTitleColor;
+    [self.moreActionButton setTitleColor:moreActionButtonTitleColor forState:UIControlStateNormal];
+    [self.moreActionButton setTitleColor:[moreActionButtonTitleColor colorWithAlphaComponent:0.5f] forState:UIControlStateHighlighted];
+    [self.moreActionButton setTitleColor:[moreActionButtonTitleColor colorWithAlphaComponent:0.5f] forState:UIControlStateDisabled];
 }
 
 @end

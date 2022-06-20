@@ -7051,259 +7051,308 @@
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
+      "line": 50,
+      "symbol": "FWAlertControllerAppearance.textFieldHeight",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
       "line": 51,
-      "symbol": "FWAlertControllerAppearance.normalColor",
+      "symbol": "FWAlertControllerAppearance.imageTitleSpacing",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 52,
-      "symbol": "FWAlertControllerAppearance.selectedColor",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWAlertController.h",
-      "line": 53,
-      "symbol": "FWAlertControllerAppearance.lineColor",
+      "symbol": "FWAlertControllerAppearance.titleMessageSpacing",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 54,
-      "symbol": "FWAlertControllerAppearance.line2Color",
+      "symbol": "FWAlertControllerAppearance.normalColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 55,
-      "symbol": "FWAlertControllerAppearance.lightLineColor",
+      "symbol": "FWAlertControllerAppearance.selectedColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 56,
-      "symbol": "FWAlertControllerAppearance.darkLineColor",
+      "symbol": "FWAlertControllerAppearance.lineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 57,
-      "symbol": "FWAlertControllerAppearance.lightWhite_DarkBlackColor",
+      "symbol": "FWAlertControllerAppearance.cancelLineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 58,
-      "symbol": "FWAlertControllerAppearance.lightBlack_DarkWhiteColor",
+      "symbol": "FWAlertControllerAppearance.lightLineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 59,
-      "symbol": "FWAlertControllerAppearance.textViewBackgroundColor",
+      "symbol": "FWAlertControllerAppearance.darkLineColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 60,
-      "symbol": "FWAlertControllerAppearance.alertRedColor",
+      "symbol": "FWAlertControllerAppearance.containerBackgroundColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 61,
-      "symbol": "FWAlertControllerAppearance.grayColor",
+      "symbol": "FWAlertControllerAppearance.titleDynamicColor",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 62,
+      "symbol": "FWAlertControllerAppearance.textFieldBackgroundColor",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 63,
+      "symbol": "FWAlertControllerAppearance.textFieldCornerRadius",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 64,
+      "symbol": "FWAlertControllerAppearance.textFieldCustomBlock",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 65,
+      "symbol": "FWAlertControllerAppearance.alertRedColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
       "line": 66,
+      "symbol": "FWAlertControllerAppearance.grayColor",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 68,
+      "symbol": "FWAlertControllerAppearance.sheetContainerTransparent",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 69,
+      "symbol": "FWAlertControllerAppearance.sheetContainerInsets",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertController.h",
+      "line": 75,
       "symbol": "FWAlertAction",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 68,
+      "line": 77,
       "symbol": "FWAlertAction.+actionWithTitle:style:handler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 69,
+      "line": 78,
       "symbol": "FWAlertAction.+actionWithTitle:style:appearance:handler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 109,
+      "line": 118,
       "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 110,
+      "line": 119,
       "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:animationType:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 111,
+      "line": 120,
       "symbol": "FWAlertController.+alertControllerWithTitle:message:preferredStyle:animationType:appearance:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 113,
+      "line": 122,
       "symbol": "FWAlertController.-addAction:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 114,
+      "line": 123,
       "symbol": "FWAlertController.actions",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 116,
+      "line": 125,
       "symbol": "FWAlertController.preferredAction",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 121,
+      "line": 130,
       "symbol": "FWAlertController.-addTextFieldWithConfigurationHandler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 122,
+      "line": 131,
       "symbol": "FWAlertController.textFields",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 156,
+      "line": 165,
       "symbol": "FWAlertController.actionAxis",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 161,
+      "line": 170,
       "symbol": "FWAlertController.minDistanceToEdges",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 180,
+      "line": 189,
       "symbol": "FWAlertController.delegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 182,
+      "line": 191,
       "symbol": "FWAlertController.preferredStyle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 183,
+      "line": 192,
       "symbol": "FWAlertController.animationType",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 189,
+      "line": 198,
       "symbol": "FWAlertController.-customSpacingAfterAction:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 195,
+      "line": 204,
       "symbol": "FWAlertController.-insertComponentView:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 247,
+      "line": 256,
       "symbol": "FWAlertControllerDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 249,
+      "line": 258,
       "symbol": "FWAlertControllerDelegate.-willPresentAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 250,
+      "line": 259,
       "symbol": "FWAlertControllerDelegate.-didPresentAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 251,
+      "line": 260,
       "symbol": "FWAlertControllerDelegate.-willDismissAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 252,
+      "line": 261,
       "symbol": "FWAlertControllerDelegate.-didDismissAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 256,
+      "line": 265,
       "symbol": "FWAlertPresentationController",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 260,
+      "line": 269,
       "symbol": "FWAlertAnimation",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 261,
+      "line": 270,
       "symbol": "FWAlertAnimation.+animationIsPresenting:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
@@ -7325,7 +7374,14 @@
     {
       "file": "docs/FWApplication/FWAlertPlugin.h",
       "line": 22,
-      "symbol": "FWAlertPlugin.-viewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:",
+      "symbol": "FWAlertPlugin.-viewController:showAlertWithTitle:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWAlertPlugin.h",
+      "line": 34,
+      "symbol": "FWAlertPlugin.-viewController:showSheetWithTitle:message:cancel:actions:currentIndex:actionBlock:cancelBlock:customBlock:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
@@ -11433,14 +11489,14 @@
     },
     {
       "file": "docs/FWApplication/FWEmptyView.h",
-      "line": 112,
+      "line": 126,
       "symbol": "FWScrollOverlayView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWEmptyView.h",
-      "line": 116,
+      "line": 130,
       "symbol": "FWScrollViewWrapper(FWScrollOverlayView)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -16189,69 +16245,6 @@
       "line": 29,
       "symbol": "FWAnimatedTransitionType.FWAnimatedTransitionTypeDismiss",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 179,
-      "symbol": "FWPanGestureRecognizer.autoDetected",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 182,
-      "symbol": "FWPanGestureRecognizer.scrollView",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 185,
-      "symbol": "FWPanGestureRecognizer.direction",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 188,
-      "symbol": "FWPanGestureRecognizer.swipePercent",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 191,
-      "symbol": "FWPanGestureRecognizer.maximumDistance",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 194,
-      "symbol": "FWPanGestureRecognizer.shouldFailed",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 197,
-      "symbol": "FWPanGestureRecognizer.shouldBegin",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 200,
-      "symbol": "FWPanGestureRecognizer.shouldBeRequiredToFail",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWViewTransition.h",
-      "line": 203,
-      "symbol": "FWPanGestureRecognizer.shouldRequireFailure",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {

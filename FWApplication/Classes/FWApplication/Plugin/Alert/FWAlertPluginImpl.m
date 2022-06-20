@@ -269,8 +269,7 @@
 }
 
 - (void)viewController:(UIViewController *)viewController
-               showAlert:(UIAlertControllerStyle)style
-                   title:(id)title
+      showAlertWithTitle:(id)title
                  message:(id)message
                   cancel:(id)cancel
                  actions:(NSArray *)actions
@@ -281,10 +280,11 @@
              customBlock:(void (^)(id))customBlock
 {
     // 初始化Alert
+    FWAlertAppearance *customAppearance = self.customAlertAppearance;
     UIAlertController *alertController = [UIAlertController.fw alertControllerWithTitle:title
                                                                                message:message
-                                                                        preferredStyle:style
-                                                                            appearance:self.customAppearance];
+                                                                        preferredStyle:UIAlertControllerStyleAlert
+                                                                            appearance:customAppearance];
     
     // 添加输入框
     for (NSInteger promptIndex = 0; promptIndex < promptCount; promptIndex++) {
@@ -295,7 +295,7 @@
     
     // 添加动作按钮
     for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
-        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:self.customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
             if (actionBlock) {
                 NSMutableArray *values = [NSMutableArray new];
                 for (NSInteger fieldIndex = 0; fieldIndex < promptCount; fieldIndex++) {
@@ -310,7 +310,7 @@
     
     // 添加取消按钮
     if (cancel != nil) {
-        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:self.customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
@@ -318,6 +318,59 @@
     
     // 添加首选按钮
     if (alertController.fw.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
+        UIAlertAction *preferredAction = alertController.fw.alertAppearance.preferredActionBlock(alertController);
+        if (preferredAction) {
+            alertController.preferredAction = preferredAction;
+        }
+    }
+    
+    // 自定义Alert
+    if (self.customBlock) self.customBlock(alertController);
+    if (customBlock) customBlock(alertController);
+    
+    // 显示Alert
+    [viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)viewController:(UIViewController *)viewController
+      showSheetWithTitle:(id)title
+                 message:(id)message
+                  cancel:(id)cancel
+                 actions:(NSArray *)actions
+            currentIndex:(NSInteger)currentIndex
+             actionBlock:(void (^)(NSInteger))actionBlock
+             cancelBlock:(void (^)(void))cancelBlock
+             customBlock:(void (^)(id))customBlock
+{
+    // 初始化Alert
+    FWAlertAppearance *customAppearance = self.customSheetAppearance;
+    UIAlertController *alertController = [UIAlertController.fw alertControllerWithTitle:title
+                                                                               message:message
+                                                                        preferredStyle:UIAlertControllerStyleActionSheet
+                                                                            appearance:customAppearance];
+    
+    // 添加动作按钮
+    for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
+        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
+            if (actionBlock) {
+                actionBlock(actionIndex);
+            }
+        }];
+        [alertController addAction:alertAction];
+    }
+    
+    // 添加取消按钮
+    if (cancel != nil) {
+        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
+            if (cancelBlock) cancelBlock();
+        }];
+        [alertController addAction:cancelAction];
+    }
+    
+    // 添加首选按钮
+    if (currentIndex >= 0 && alertController.actions.count > currentIndex) {
+        alertController.preferredAction = alertController.actions[currentIndex];
+    } else if (alertController.fw.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
         UIAlertAction *preferredAction = alertController.fw.alertAppearance.preferredActionBlock(alertController);
         if (preferredAction) {
             alertController.preferredAction = preferredAction;

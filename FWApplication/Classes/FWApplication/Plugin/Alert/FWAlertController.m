@@ -31,6 +31,10 @@
         _actionHeight = 55.0;
         _actionFont = [UIFont systemFontOfSize:18];
         _actionBoldFont = [UIFont boldSystemFontOfSize:18];
+        _textFieldHeight = 30.0;
+        _imageTitleSpacing = 16.0;
+        _titleMessageSpacing = 8.0;
+        _sheetContainerInsets = UIEdgeInsetsZero;
         
         _normalColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]
                                                            darkColor:[UIColor colorWithRed:44.0 / 255.0 green:44.0 / 255.0 blue:44.0 / 255.0 alpha:1.0]];
@@ -40,14 +44,15 @@
         _darkLineColor = [UIColor colorWithRed:60.0 / 255.0 green:60.0 / 255.0 blue:60.0 / 255.0 alpha:1.0];
         _lineColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:_lightLineColor
                                                          darkColor:_darkLineColor];
-        _line2Color = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor grayColor] colorWithAlphaComponent:0.15]
+        _cancelLineColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor grayColor] colorWithAlphaComponent:0.15]
                                                           darkColor:[UIColor colorWithRed:29.0 / 255.0 green:29.0 / 255.0 blue:29.0 / 255.0 alpha:1.0]];
-        _lightWhite_DarkBlackColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor whiteColor]
+        _containerBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor whiteColor]
                                                                          darkColor:[UIColor blackColor]];
-        _lightBlack_DarkWhiteColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor blackColor]
+        _titleDynamicColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor blackColor]
                                                                          darkColor:[UIColor whiteColor]];
-        _textViewBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor colorWithRed:247.0 / 255.0 green:247.0 / 255.0 blue:247.0 / 255.0 alpha:1.0]
+        _textFieldBackgroundColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[UIColor colorWithRed:247.0 / 255.0 green:247.0 / 255.0 blue:247.0 / 255.0 alpha:1.0]
                                                                        darkColor:[UIColor colorWithRed:54.0 / 255.0 green:54.0 / 255.0 blue:54.0 / 255.0 alpha:1.0]];
+        _textFieldCornerRadius = 6.0;
         _alertRedColor = [UIColor systemRedColor];
         _grayColor = [UIColor grayColor];
     }
@@ -143,10 +148,10 @@
         self.titleColor = [self.alertAppearance alertRedColor];
         self.titleFont = [self.alertAppearance actionFont];
     } else if (style == FWAlertActionStyleCancel) {
-        self.titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        self.titleColor = [self.alertAppearance titleDynamicColor];
         self.titleFont = [self.alertAppearance actionBoldFont];
     } else {
-        self.titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        self.titleColor = [self.alertAppearance titleDynamicColor];
         self.titleFont = [self.alertAppearance actionFont];
     }
     return self;
@@ -161,7 +166,7 @@
 
 - (void)initialize {
     _enabled = YES; // 默认能点击
-    _titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+    _titleColor = [self.alertAppearance titleDynamicColor];
     _titleFont = [self.alertAppearance actionFont];
     _titleEdgeInsets = UIEdgeInsetsMake(0, 15, 0, 15);
 }
@@ -227,6 +232,7 @@
 
 @interface FWInterfaceActionItemSeparatorView : UIView
 @property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
+@property (nonatomic, strong) UIColor *customBackgroundColor;
 @end
 @implementation FWInterfaceActionItemSeparatorView
 - (instancetype)initWithAppearance:(FWAlertControllerAppearance *)appearance {
@@ -239,7 +245,13 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.backgroundColor = MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth ? [self.alertAppearance line2Color] : [self.alertAppearance lineColor];
+    if (self.customBackgroundColor) {
+        self.backgroundColor = self.customBackgroundColor;
+    } else if (MIN(self.frame.size.width, self.frame.size.height) > self.alertAppearance.lineWidth) {
+        self.backgroundColor = [self.alertAppearance cancelLineColor];
+    } else {
+        self.backgroundColor = [self.alertAppearance lineColor];
+    }
 }
 
 @end
@@ -277,7 +289,7 @@
     // 将textView添加到self.textFieldView中的布局队列中，UIStackView会根据设置的属性自动布局
     [self.textFieldView addArrangedSubview:textField];
     // 由于self.textFieldView是没有高度的，它的高度由子控件撑起，所以子控件必须要有高度
-    [[NSLayoutConstraint constraintWithItem:textField attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:30.0f] setActive:YES];
+    [[NSLayoutConstraint constraintWithItem:textField attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.alertAppearance.textFieldHeight] setActive:YES];
     [self setNeedsUpdateConstraints];
 }
 
@@ -344,11 +356,11 @@
         [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0]];
         [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeTop multiplier:1.f constant:topMargin]];
         if (_titleLabel.text.length || _titleLabel.attributedText.length) {
-            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-17]];
+            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_titleLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-self.alertAppearance.imageTitleSpacing]];
         } else if (_messageLabel.text.length || _messageLabel.attributedText.length) {
-            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_messageLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-17]];
+            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_messageLabel attribute:NSLayoutAttributeTop multiplier:1.f constant:-self.alertAppearance.imageTitleSpacing]];
         } else if (_textFields.count) {
-            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textFieldView attribute:NSLayoutAttributeTop multiplier:1.f constant:-17]];
+            [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textFieldView attribute:NSLayoutAttributeTop multiplier:1.f constant:-self.alertAppearance.imageTitleSpacing]];
         } else {
             [imageViewConstraints addObject:[NSLayoutConstraint constraintWithItem:imageView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeBottom multiplier:1.f constant:-bottomMargin]];
         }
@@ -383,7 +395,7 @@
         }
         // 子控件之间的垂直间距
         if (idx > 0) {
-            [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:labels[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:7.5]];
+            [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:labels[idx - 1] attribute:NSLayoutAttributeBottom multiplier:1.f constant:self.alertAppearance.titleMessageSpacing]];
         }
     }];
     [NSLayoutConstraint activateConstraints:titleLabelConstraints];
@@ -419,7 +431,7 @@
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.font = [UIFont boldSystemFontOfSize:18];
         titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.textColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+        titleLabel.textColor = [self.alertAppearance titleDynamicColor];
         titleLabel.numberOfLines = 0;
         titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:titleLabel];
@@ -509,7 +521,7 @@
     self.actionButton.tintColor = action.tintColor;
     if (action.attributedTitle) {
         // 这里之所以要设置按钮颜色为黑色，是因为如果外界在addAction:之后设置按钮的富文本，那么富文本的颜色在没有采用NSForegroundColorAttributeName的情况下会自动读取按钮上普通文本的颜色，在addAction:之前设置会保持默认色(黑色)，为了在addAction:前后设置富文本保持统一，这里先将按钮置为黑色，富文本就会是黑色
-        [self.actionButton setTitleColor:[self.alertAppearance lightBlack_DarkWhiteColor] forState:UIControlStateNormal];
+        [self.actionButton setTitleColor:[self.alertAppearance titleDynamicColor] forState:UIControlStateNormal];
         
         if ([action.attributedTitle.string containsString:@"\n"] || [action.attributedTitle.string containsString:@"\r"]) {
             self.actionButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -634,6 +646,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 #pragma mark ---------------------------- FWInterfaceActionSequenceView begin --------------------------------
 
 @interface FWInterfaceActionSequenceView : UIView
+@property (nonatomic, assign) FWAlertControllerStyle preferredStyle;
+@property (nonatomic, assign) CGFloat cornerRadius;
 @property (nonatomic, strong) FWAlertControllerAppearance *alertAppearance;
 @property (nonatomic, weak) UIScrollView *scrollView;
 @property (nonatomic, weak) UIView *contentView;
@@ -865,6 +879,12 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.translatesAutoresizingMaskIntoConstraints = NO;
         scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        scrollView.bounces = NO;
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            scrollView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+            scrollView.layer.cornerRadius = self.cornerRadius;
+            scrollView.layer.masksToBounds = YES;
+        }
         if ((self.cancelAction && self.actions.count > 1) || (!self.cancelAction && self.actions.count > 0)) {
             [self addSubview:scrollView];
         }
@@ -900,6 +920,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!_cancelView) {
         UIView *cancelView = [[UIView alloc] init];
         cancelView.translatesAutoresizingMaskIntoConstraints = NO;
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            cancelView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+            cancelView.layer.cornerRadius = self.cornerRadius;
+            cancelView.layer.masksToBounds = YES;
+        }
         if (self.cancelAction) {
             [self addSubview:cancelView];
         }
@@ -912,6 +937,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!_cancelActionLine) {
         FWInterfaceActionItemSeparatorView *cancelActionLine = [[FWInterfaceActionItemSeparatorView alloc] initWithAppearance:self.alertAppearance];
         cancelActionLine.translatesAutoresizingMaskIntoConstraints = NO;
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            cancelActionLine.customBackgroundColor = [UIColor clearColor];
+        }
         if (self.cancelView.superview && self.scrollView.superview) {
             [self addSubview:cancelActionLine];
         }
@@ -1114,11 +1142,13 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     NSAssert(self.preferredStyle == FWAlertControllerStyleAlert,@"FWAlertController does not allow 'addTextFieldWithConfigurationHandler:' to be called in the style of FWAlertControllerStyleActionSheet");
     UITextField *textField = [[UITextField alloc] init];
     textField.translatesAutoresizingMaskIntoConstraints = NO;
-    textField.backgroundColor = [self.alertAppearance textViewBackgroundColor];
+    textField.backgroundColor = [self.alertAppearance textFieldBackgroundColor];
     // 系统的UITextBorderStyleLine样式线条过于黑，所以自己设置
     textField.layer.borderWidth = self.alertAppearance.lineWidth;
     // 这里设置的颜色是静态的，动态设置CGColor,还需要监听深浅模式的切换
     textField.layer.borderColor = [FWAlertControllerAppearance colorPairsWithStaticLightColor:[self.alertAppearance lineColor] darkColor:[self.alertAppearance darkLineColor]].CGColor;
+    textField.layer.cornerRadius = self.alertAppearance.textFieldCornerRadius;
+    textField.layer.masksToBounds = YES;
     // 在左边设置一张view，充当光标左边的间距，否则光标紧贴textField不美观
     textField.leftView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 0)];
     textField.leftView.userInteractionEnabled = NO;
@@ -1127,6 +1157,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     // 去掉textField键盘上部的联想条
     textField.autocorrectionType = UITextAutocorrectionTypeNo;
     [textField addTarget:self action:@selector(textFieldDidEndOnExit:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    if (self.alertAppearance.textFieldCustomBlock) {
+        self.alertAppearance.textFieldCustomBlock(textField);
+    }
     NSMutableArray *array = self.textFields.mutableCopy;
     [array addObject:textField];
     self.textFields = array;
@@ -1224,7 +1257,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     self.transitioningDelegate = self;
     
     _titleFont = [UIFont boldSystemFontOfSize:18];
-    _titleColor = [self.alertAppearance lightBlack_DarkWhiteColor];
+    _titleColor = [self.alertAppearance titleDynamicColor];
     _messageFont = [UIFont systemFontOfSize:16];
     _messageColor = [self.alertAppearance grayColor];
     _textAlignment = NSTextAlignmentCenter;
@@ -1372,6 +1405,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (void)layoutHeaderView {
     UIView *headerView = self.customHeaderView ? self.customHeaderView : self.headerView;
     if (!headerView.superview) return;
+    if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+        headerView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+        headerView.layer.cornerRadius = self.cornerRadius;
+        headerView.layer.masksToBounds = YES;
+    }
     UIView *alertView = self.alertView;
     NSMutableArray *headerViewConstraints = [NSMutableArray array];
     if (self.headerViewConstraints) {
@@ -1417,7 +1455,14 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!self.componentView.superview) {
         [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:actionSequenceView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
     }
-    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.customHeaderSpacing > 0 ? self.customHeaderSpacing : self.alertAppearance.lineWidth]];
+    CGFloat headerSpacing = self.alertAppearance.lineWidth;
+    if (self.customHeaderSpacing > 0) {
+        headerSpacing = self.customHeaderSpacing;
+    } else if (_preferredStyle == FWAlertControllerStyleActionSheet &&
+               self.alertAppearance.sheetContainerTransparent) {
+        headerSpacing = self.alertAppearance.cancelLineWidth;
+    }
+    [headerActionLineConstraints addObject:[NSLayoutConstraint constraintWithItem:headerActionLine attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:headerSpacing]];
 
     [NSLayoutConstraint activateConstraints:headerActionLineConstraints];
     self.headerActionLineConstraints = headerActionLineConstraints;
@@ -1429,6 +1474,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     UIView *componentView = self.componentView;
     UIView *headerActionLine = self.headerActionLine;
     UIView *componentActionLine = self.componentActionLine;
+    if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+        componentView.backgroundColor = self.alertAppearance.containerBackgroundColor;
+        componentView.layer.cornerRadius = self.cornerRadius;
+        componentView.layer.masksToBounds = YES;
+    }
     NSMutableArray *componentViewConstraints = [NSMutableArray array];
     if (self.componentViewConstraints) {
         [NSLayoutConstraint deactivateConstraints:self.componentViewConstraints];
@@ -1855,7 +1905,9 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     // 调用该setter方法则认为是强制布局，该setter方法只有外界能调，这样才能判断外界有没有调用actionAxis的setter方法，从而是否按照外界的指定布局方式进行布局
     _isForceLayout = YES;
 
-    [self updateActionAxis];
+    if (self.isViewLoaded) {
+        [self updateActionAxis];
+    }
 }
 
 - (void)setOffsetForAlert:(CGPoint)offsetForAlert {
@@ -1894,8 +1946,10 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         self.dimmingKnockoutBackdropView = nil;
         if (_customAlertView) {
             self.containerView.backgroundColor = [UIColor clearColor];
+        } else if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            self.containerView.backgroundColor = [UIColor clearColor];
         } else {
-            self.containerView.backgroundColor = [self.alertAppearance lightWhite_DarkBlackColor];
+            self.containerView.backgroundColor = [self.alertAppearance containerBackgroundColor];
         }
     }
 }
@@ -1914,8 +1968,6 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (UIView *)containerView {
     if (!_containerView) {
         UIView *containerView = [[UIView alloc] init];
-        containerView.frame = self.alertControllerView.bounds;
-        containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         if (_preferredStyle == FWAlertControllerStyleAlert) {
             containerView.layer.cornerRadius = _cornerRadius;
             containerView.layer.masksToBounds = YES;
@@ -1926,6 +1978,12 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
             }
         }
         [self.alertControllerView addSubview:containerView];
+        if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
+            [containerView.fw pinEdgesToSuperviewWithInsets:self.alertAppearance.sheetContainerInsets];
+        } else {
+            containerView.frame = self.alertControllerView.bounds;
+            containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        }
         
         _containerView = containerView;
     }
@@ -1971,11 +2029,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
             [weakSelf setupPreferredMaxLayoutWidthForLabel:weakSelf.headerView.messageLabel];
         };
         if (!self.customHeaderView) {
-            if ((self.title.length || self.attributedTitle.length || self.message.length || self.attributedMessage.length || self.textFields.count || self.image)) {
-                [self.alertView addSubview:headerView];
-            } else {
-                [self.alertView addSubview:headerView];
-            }
+            [self.alertView addSubview:headerView];
         }
         _headerView = headerView;
     }
@@ -2000,6 +2054,8 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     if (!_actionSequenceView) {
         FWInterfaceActionSequenceView *actionSequenceView = [[FWInterfaceActionSequenceView alloc] init];
         actionSequenceView.alertAppearance = self.alertAppearance;
+        actionSequenceView.preferredStyle = _preferredStyle;
+        actionSequenceView.cornerRadius = self.cornerRadius;
         actionSequenceView.translatesAutoresizingMaskIntoConstraints = NO;
         __weak typeof(self) weakSelf = self;
         actionSequenceView.buttonClickedInActionViewBlock = ^(NSInteger index) {

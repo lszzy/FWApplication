@@ -17,7 +17,7 @@
     <a title="FWAlertPlugin Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.3.1 Docs</a> (62% documented)</p>
+        <p><a href="../index.html">FWApplication 3.3.2 Docs</a> (63% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -2713,18 +2713,28 @@
                   
                   <pre class="highlight objective_c"><code><span class="k">@protocol</span> <span class="nc">FWAlertPlugin</span> <span class="o">&lt;</span><span class="n">NSObject</span><span class="o">&gt;</span>
 
-<span class="err">@required</span>
+<span class="k">@optional</span>
 
 <span class="c1">// 显示弹出框插件方法，默认使用系统UIAlertController</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span>
-               <span class="nf">showAlert</span><span class="p">:(</span><span class="n">UIAlertControllerStyle</span><span class="p">)</span><span class="nv">style</span>
-                   <span class="nf">title</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">title</span>
+      <span class="nf">showAlertWithTitle</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">title</span>
                  <span class="nf">message</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">message</span>
                   <span class="nf">cancel</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">cancel</span>
                  <span class="nf">actions</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">actions</span>
              <span class="nf">promptCount</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">promptCount</span>
              <span class="nf">promptBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">UITextField</span> <span class="o">*</span><span class="n">textField</span><span class="p">,</span> <span class="n">NSInteger</span> <span class="n">index</span><span class="p">))</span><span class="nv">promptBlock</span>
              <span class="nf">actionBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">values</span><span class="p">,</span> <span class="n">NSInteger</span> <span class="n">index</span><span class="p">))</span><span class="nv">actionBlock</span>
+             <span class="nf">cancelBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">cancelBlock</span>
+             <span class="nf">customBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">id</span> <span class="n">alertController</span><span class="p">))</span><span class="nv">customBlock</span><span class="p">;</span>
+
+<span class="c1">// 显示操作表插件方法，默认使用系统UIAlertController</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span>
+      <span class="nf">showSheetWithTitle</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">title</span>
+                 <span class="nf">message</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">message</span>
+                  <span class="nf">cancel</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">cancel</span>
+                 <span class="nf">actions</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">actions</span>
+            <span class="nf">currentIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">currentIndex</span>
+             <span class="nf">actionBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSInteger</span> <span class="n">index</span><span class="p">))</span><span class="nv">actionBlock</span>
              <span class="nf">cancelBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">cancelBlock</span>
              <span class="nf">customBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">id</span> <span class="n">alertController</span><span class="p">))</span><span class="nv">customBlock</span><span class="p">;</span>
 
@@ -2741,9 +2751,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:objc(pl)FWAlertPlugin(im)viewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:"></a>
-                    <a name="//apple_ref/swift/Method/-viewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(pl)FWAlertPlugin(im)viewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:">-viewController:<wbr>showAlert:<wbr>title:<wbr>message:<wbr>cancel:<wbr>actions:<wbr>promptCount:<wbr>promptBlock:<wbr>actionBlock:<wbr>cancelBlock:<wbr>customBlock:<wbr></a>
+                    <a name="/c:objc(pl)FWAlertPlugin(im)viewController:showAlertWithTitle:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:"></a>
+                    <a name="//apple_ref/swift/Method/-viewController:showAlertWithTitle:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)FWAlertPlugin(im)viewController:showAlertWithTitle:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:">-viewController:<wbr>showAlertWithTitle:<wbr>message:<wbr>cancel:<wbr>actions:<wbr>promptCount:<wbr>promptBlock:<wbr>actionBlock:<wbr>cancelBlock:<wbr>customBlock:<wbr></a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2759,8 +2769,7 @@
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span>
-               <span class="nf">showAlert</span><span class="p">:(</span><span class="n">UIAlertControllerStyle</span><span class="p">)</span><span class="nv">style</span>
-                   <span class="nf">title</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">title</span>
+      <span class="nf">showAlertWithTitle</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">title</span>
                  <span class="nf">message</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">message</span>
                   <span class="nf">cancel</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">cancel</span>
                  <span class="nf">actions</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">actions</span>
@@ -2775,12 +2784,47 @@
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(pl)FWAlertPlugin(im)viewController:showSheetWithTitle:message:cancel:actions:currentIndex:actionBlock:cancelBlock:customBlock:"></a>
+                    <a name="//apple_ref/swift/Method/-viewController:showSheetWithTitle:message:cancel:actions:currentIndex:actionBlock:cancelBlock:customBlock:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(pl)FWAlertPlugin(im)viewController:showSheetWithTitle:message:cancel:actions:currentIndex:actionBlock:cancelBlock:customBlock:">-viewController:<wbr>showSheetWithTitle:<wbr>message:<wbr>cancel:<wbr>actions:<wbr>currentIndex:<wbr>actionBlock:<wbr>cancelBlock:<wbr>customBlock:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">viewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span>
+      <span class="nf">showSheetWithTitle</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">title</span>
+                 <span class="nf">message</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">message</span>
+                  <span class="nf">cancel</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">id</span><span class="p">)</span><span class="nv">cancel</span>
+                 <span class="nf">actions</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nv">actions</span>
+            <span class="nf">currentIndex</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">currentIndex</span>
+             <span class="nf">actionBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">NSInteger</span> <span class="n">index</span><span class="p">))</span><span class="nv">actionBlock</span>
+             <span class="nf">cancelBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">cancelBlock</span>
+             <span class="nf">customBlock</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="n">id</span> <span class="n">alertController</span><span class="p">))</span><span class="nv">customBlock</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-15)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

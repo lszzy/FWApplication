@@ -57,8 +57,7 @@
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    [self showAlertWithStyle:UIAlertControllerStyleAlert
-                         title:title
+    [self showAlertWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
@@ -96,8 +95,7 @@
         confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
     }
     
-    [self showAlertWithStyle:UIAlertControllerStyleAlert
-                         title:title
+    [self showAlertWithTitle:title
                        message:message
                         cancel:cancel
                        actions:[NSArray arrayWithObjects:confirm, nil]
@@ -160,8 +158,7 @@
         confirm = FWAlertPluginImpl.sharedInstance.defaultConfirmButton ? FWAlertPluginImpl.sharedInstance.defaultConfirmButton() : FWAppBundle.confirmButton;
     }
     
-    [self showAlertWithStyle:UIAlertControllerStyleAlert
-                         title:title
+    [self showAlertWithTitle:title
                        message:message
                         cancel:cancel
                        actions:(confirm ? @[confirm] : nil)
@@ -174,6 +171,47 @@
                    customBlock:nil];
 }
 
+- (void)showAlertWithTitle:(id)title
+                     message:(id)message
+                      cancel:(id)cancel
+                     actions:(NSArray *)actions
+                 promptCount:(NSInteger)promptCount
+                 promptBlock:(void (^)(UITextField *, NSInteger))promptBlock
+                 actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
+                 cancelBlock:(void (^)(void))cancelBlock
+                 customBlock:(nullable void (^)(id))customBlock
+{
+    // 处理取消按钮，Alert多按钮时默认取消，单按钮时默认关闭
+    if (!cancel) {
+        if (actions.count > 0) {
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+        } else {
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
+        }
+    }
+    
+    // 优先调用插件，不存在时使用默认
+    id<FWAlertPlugin> alertPlugin = self.alertPlugin;
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:showAlertWithTitle:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
+        alertPlugin = FWAlertPluginImpl.sharedInstance;
+    }
+    [alertPlugin viewController:self.base showAlertWithTitle:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
+}
+
+- (void)showSheetWithTitle:(id)title
+                   message:(id)message
+                    cancel:(id)cancel
+               cancelBlock:(void (^)(void))cancelBlock
+{
+    [self showSheetWithTitle:title
+                     message:message
+                      cancel:cancel
+                     actions:nil
+                currentIndex:-1
+                 actionBlock:nil
+                 cancelBlock:cancelBlock];
+}
+
 - (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
@@ -184,6 +222,7 @@
                        message:message
                         cancel:cancel
                        actions:actions
+                  currentIndex:-1
                    actionBlock:actionBlock
                    cancelBlock:nil];
 }
@@ -192,49 +231,42 @@
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
+                currentIndex:(NSInteger)currentIndex
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    [self showAlertWithStyle:UIAlertControllerStyleActionSheet
-                         title:title
+    [self showSheetWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
-                   promptCount:0
-                   promptBlock:nil
-                   actionBlock:^(NSArray<NSString *> * _Nonnull values, NSInteger index) {
+                  currentIndex:currentIndex
+                   actionBlock:^(NSInteger index) {
                        if (actionBlock) actionBlock(index);
                    }
                    cancelBlock:cancelBlock
                    customBlock:nil];
 }
 
-- (void)showAlertWithStyle:(UIAlertControllerStyle)style
-                       title:(id)title
+- (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
-                 promptCount:(NSInteger)promptCount
-                 promptBlock:(void (^)(UITextField *, NSInteger))promptBlock
-                 actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
+                currentIndex:(NSInteger)currentIndex
+                 actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
 {
-    // 处理取消按钮，Sheet时默认取消，Alert多按钮时默认取消，单按钮时默认关闭
+    // 处理取消按钮，Sheet时默认取消
     if (!cancel) {
-        if (style == UIAlertControllerStyleActionSheet || actions.count > 0) {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
-        } else {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
-        }
+        cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
     }
     
     // 优先调用插件，不存在时使用默认
     id<FWAlertPlugin> alertPlugin = self.alertPlugin;
-    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:showAlert:title:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:showSheetWithTitle:message:cancel:actions:currentIndex:actionBlock:cancelBlock:customBlock:)]) {
         alertPlugin = FWAlertPluginImpl.sharedInstance;
     }
-    [alertPlugin viewController:self.base showAlert:style title:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
+    [alertPlugin viewController:self.base showSheetWithTitle:title message:message cancel:cancel actions:actions currentIndex:currentIndex actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
 }
 
 @end
@@ -383,6 +415,46 @@
                     cancelBlock:cancelBlock];
 }
 
+- (void)showAlertWithTitle:(id)title
+                     message:(id)message
+                      cancel:(id)cancel
+                     actions:(NSArray *)actions
+                 promptCount:(NSInteger)promptCount
+                 promptBlock:(void (^)(UITextField *, NSInteger))promptBlock
+                 actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
+                 cancelBlock:(void (^)(void))cancelBlock
+                 customBlock:(nullable void (^)(id))customBlock
+{
+    UIViewController *ctrl = self.base.fw.viewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fw.topPresentedController;
+    }
+    [ctrl.fw showAlertWithTitle:title
+                       message:message
+                        cancel:cancel
+                       actions:actions
+                   promptCount:promptCount
+                   promptBlock:promptBlock
+                   actionBlock:actionBlock
+                   cancelBlock:cancelBlock
+                   customBlock:customBlock];
+}
+
+- (void)showSheetWithTitle:(id)title
+                   message:(id)message
+                    cancel:(id)cancel
+               cancelBlock:(void (^)(void))cancelBlock
+{
+    UIViewController *ctrl = self.base.fw.viewController;
+    if (!ctrl || ctrl.presentedViewController) {
+        ctrl = UIWindow.fw.topPresentedController;
+    }
+    [ctrl.fw showSheetWithTitle:title
+                        message:message
+                         cancel:cancel
+                    cancelBlock:cancelBlock];
+}
+
 - (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
@@ -404,6 +476,7 @@
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
+                currentIndex:(NSInteger)currentIndex
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
@@ -415,18 +488,17 @@
                        message:message
                         cancel:cancel
                        actions:actions
+                   currentIndex:currentIndex
                    actionBlock:actionBlock
                    cancelBlock:cancelBlock];
 }
 
-- (void)showAlertWithStyle:(UIAlertControllerStyle)style
-                       title:(id)title
+- (void)showSheetWithTitle:(id)title
                      message:(id)message
                       cancel:(id)cancel
                      actions:(NSArray *)actions
-                 promptCount:(NSInteger)promptCount
-                 promptBlock:(void (^)(UITextField *, NSInteger))promptBlock
-                 actionBlock:(void (^)(NSArray<NSString *> *, NSInteger))actionBlock
+                currentIndex:(NSInteger)currentIndex
+                 actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
 {
@@ -434,13 +506,11 @@
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw.topPresentedController;
     }
-    [ctrl.fw showAlertWithStyle:style
-                         title:title
+    [ctrl.fw showSheetWithTitle:title
                        message:message
                         cancel:cancel
                        actions:actions
-                   promptCount:promptCount
-                   promptBlock:promptBlock
+                  currentIndex:currentIndex
                    actionBlock:actionBlock
                    cancelBlock:cancelBlock
                    customBlock:customBlock];

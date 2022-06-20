@@ -33,6 +33,8 @@ NS_SWIFT_NAME(EmptyView)
 @property(nonatomic, strong, readonly) UILabel *detailTextLabel;
 /// 动作按钮控件
 @property(nonatomic, strong, readonly) UIButton *actionButton;
+/// 更多动作按钮控件，默认隐藏
+@property(nonatomic, strong, readonly) UIButton *moreActionButton;
 
 /// 内容视图间距，默认为(0, 16, 0, 16)
 @property(nonatomic, assign) UIEdgeInsets contentViewInsets UI_APPEARANCE_SELECTOR;
@@ -46,6 +48,8 @@ NS_SWIFT_NAME(EmptyView)
 @property(nonatomic, assign) UIEdgeInsets detailTextLabelInsets UI_APPEARANCE_SELECTOR;
 /// 动作按钮间距，默认为(0, 0, 0, 0)
 @property(nonatomic, assign) UIEdgeInsets actionButtonInsets UI_APPEARANCE_SELECTOR;
+/// 更多动作按钮间距，默认为(0, 24, 0, 0)
+@property(nonatomic, assign) UIEdgeInsets moreActionButtonInsets;
 /// 如果不想要内容整体垂直居中，则可通过调整此属性来进行垂直偏移。默认为-30，即内容比中间略微偏上
 @property(nonatomic, assign) CGFloat verticalOffset UI_APPEARANCE_SELECTOR;
 /// 自定义垂直偏移句柄，参数依次为总高度，内容高度，图片高度
@@ -57,6 +61,8 @@ NS_SWIFT_NAME(EmptyView)
 @property(nonatomic, strong) UIFont *detailTextLabelFont UI_APPEARANCE_SELECTOR;
 /// actionButton标题字体，默认为15pt系统字体
 @property(nonatomic, strong) UIFont *actionButtonFont UI_APPEARANCE_SELECTOR;
+/// moreActionButton标题字体，默认为15pt系统字体
+@property(nonatomic, strong) UIFont *moreActionButtonFont UI_APPEARANCE_SELECTOR;
 
 /// loadingView颜色，默认灰色
 @property(nonatomic, strong) UIColor *loadingViewColor UI_APPEARANCE_SELECTOR;
@@ -66,6 +72,8 @@ NS_SWIFT_NAME(EmptyView)
 @property(nonatomic, strong) UIColor *detailTextLabelTextColor UI_APPEARANCE_SELECTOR;
 /// actionButton标题颜色，默认为 ButtonTintColor
 @property(nonatomic, strong) UIColor *actionButtonTitleColor UI_APPEARANCE_SELECTOR;
+/// moreActionButton标题颜色，默认为 ButtonTintColor
+@property(nonatomic, strong) UIColor *moreActionButtonTitleColor UI_APPEARANCE_SELECTOR;
 
 /// 显示或隐藏loading图标
 - (void)setLoadingViewHidden:(BOOL)hidden;
@@ -93,6 +101,12 @@ NS_SWIFT_NAME(EmptyView)
  * @param title 操作按钮的文本，若为nil则隐藏actionButton
  */
 - (void)setActionButtonTitle:(nullable NSString *)title;
+
+/**
+ * 设置更多操作按钮的文本
+ * @param title 操作按钮的文本，若为nil则隐藏moreActionButton
+ */
+- (void)setMoreActionButtonTitle:(nullable NSString *)title;
 
 /**
  *  如果要继承QMUIEmptyView并添加新的子 view，则必须：

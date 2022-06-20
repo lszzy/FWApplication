@@ -127,6 +127,14 @@ extension Theme {
                 return nil
             }
         }
+        ToastPluginImpl.sharedInstance.customBlock = { toastView in
+            if toastView.type == .indicator {
+                if (toastView.attributedTitle?.length ?? 0) < 1 {
+                    toastView.contentBackgroundColor = .clear
+                    toastView.indicatorColor = Theme.textColor
+                }
+            }
+        }
         EmptyPluginImpl.sharedInstance.customBlock = { (emptyView) in
             emptyView.loadingViewColor = Theme.textColor
         }

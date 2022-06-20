@@ -131,6 +131,46 @@ extension Wrapper where Base: UIViewController {
     ) {
         base.__fw.showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptCount: promptCount, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
+    
+    /// 显示弹出框(完整版)
+    /// - Parameters:
+    ///   - title: 操作表标题
+    ///   - message: 操作表消息
+    ///   - cancel: 取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
+    ///   - actions: 动作按钮标题列表
+    ///   - promptCount: 输入框数量
+    ///   - promptBlock: 输入框初始化事件，参数为输入框和索引index
+    ///   - actionBlock: 动作按钮点击事件，参数为输入值数组和索引index
+    ///   - cancelBlock: 取消按钮事件
+    ///   - customBlock: 自定义弹出框事件
+    public func showAlert(
+        title: Any?,
+        message: Any?,
+        cancel: Any?,
+        actions: [Any]?,
+        promptCount: Int,
+        promptBlock: ((UITextField, Int) -> Void)?,
+        actionBlock: (([String], Int) -> Void)?,
+        cancelBlock: (() -> Void)?,
+        customBlock: ((Any) -> Void)?
+    ) {
+        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+    }
+    
+    /// 显示操作表(无动作)
+    /// - Parameters:
+    ///   - title: 操作表标题
+    ///   - message: 操作表消息
+    ///   - cancel: 取消按钮标题，默认取消
+    ///   - cancelBlock: 取消按钮事件
+    public func showSheet(
+        title: Any?,
+        message: Any?,
+        cancel: Any?,
+        cancelBlock: (() -> Void)? = nil
+    ) {
+        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
+    }
 
     /// 显示操作表(简单版)
     /// - Parameters:
@@ -146,7 +186,7 @@ extension Wrapper where Base: UIViewController {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: nil, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw.showSheet(withTitle: title, message: message, cancel: nil, actions: actions, currentIndex: -1, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示操作表(详细版)
@@ -155,6 +195,7 @@ extension Wrapper where Base: UIViewController {
     ///   - message: 操作表消息
     ///   - cancel: 取消按钮标题，默认取消
     ///   - actions: 动作按钮标题列表
+    ///   - currentIndex: 当前选中动作索引
     ///   - actionBlock: 动作按钮点击事件，参数为索引index
     ///   - cancelBlock: 取消按钮事件
     public func showSheet(
@@ -162,37 +203,34 @@ extension Wrapper where Base: UIViewController {
         message: Any?,
         cancel: Any?,
         actions: [Any]?,
+        currentIndex: Int,
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
-    /// 显示弹出框(完整版)
+    /// 显示操作表(完整版)
     /// - Parameters:
-    ///   - style: 弹出框样式
     ///   - title: 操作表标题
     ///   - message: 操作表消息
     ///   - cancel: 取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
     ///   - actions: 动作按钮标题列表
-    ///   - promptCount: 输入框数量
-    ///   - promptBlock: 输入框初始化事件，参数为输入框和索引index
+    ///   - currentIndex: 当前选中动作索引
     ///   - actionBlock: 动作按钮点击事件，参数为输入值数组和索引index
     ///   - cancelBlock: 取消按钮事件
     ///   - customBlock: 自定义弹出框事件
-    public func showAlert(
-        style: UIAlertController.Style,
+    public func showSheet(
         title: Any?,
         message: Any?,
         cancel: Any?,
         actions: [Any]?,
-        promptCount: Int,
-        promptBlock: ((UITextField, Int) -> Void)?,
-        actionBlock: (([String], Int) -> Void)?,
+        currentIndex: Int,
+        actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showAlert(with: style, title: title, message: message, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
 }
@@ -310,6 +348,46 @@ extension Wrapper where Base: UIView {
     ) {
         base.__fw.showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptCount: promptCount, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
+    
+    /// 显示弹出框(完整版)
+    /// - Parameters:
+    ///   - title: 操作表标题
+    ///   - message: 操作表消息
+    ///   - cancel: 取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
+    ///   - actions: 动作按钮标题列表
+    ///   - promptCount: 输入框数量
+    ///   - promptBlock: 输入框初始化事件，参数为输入框和索引index
+    ///   - actionBlock: 动作按钮点击事件，参数为输入值数组和索引index
+    ///   - cancelBlock: 取消按钮事件
+    ///   - customBlock: 自定义弹出框事件
+    public func showAlert(
+        title: Any?,
+        message: Any?,
+        cancel: Any?,
+        actions: [Any]?,
+        promptCount: Int,
+        promptBlock: ((UITextField, Int) -> Void)?,
+        actionBlock: (([String], Int) -> Void)?,
+        cancelBlock: (() -> Void)?,
+        customBlock: ((Any) -> Void)?
+    ) {
+        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+    }
+    
+    /// 显示操作表(无动作)
+    /// - Parameters:
+    ///   - title: 操作表标题
+    ///   - message: 操作表消息
+    ///   - cancel: 取消按钮标题，默认取消
+    ///   - cancelBlock: 取消按钮事件
+    public func showSheet(
+        title: Any?,
+        message: Any?,
+        cancel: Any?,
+        cancelBlock: (() -> Void)? = nil
+    ) {
+        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
+    }
 
     /// 显示操作表(简单版)
     /// - Parameters:
@@ -325,7 +403,7 @@ extension Wrapper where Base: UIView {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: nil, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw.showSheet(withTitle: title, message: message, cancel: nil, actions: actions, currentIndex: -1, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示操作表(详细版)
@@ -334,6 +412,7 @@ extension Wrapper where Base: UIView {
     ///   - message: 操作表消息
     ///   - cancel: 取消按钮标题，默认取消
     ///   - actions: 动作按钮标题列表
+    ///   - currentIndex: 当前选中动作索引
     ///   - actionBlock: 动作按钮点击事件，参数为索引index
     ///   - cancelBlock: 取消按钮事件
     public func showSheet(
@@ -341,37 +420,34 @@ extension Wrapper where Base: UIView {
         message: Any?,
         cancel: Any?,
         actions: [Any]?,
+        currentIndex: Int,
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示弹出框(完整版)
     /// - Parameters:
-    ///   - style: 弹出框样式
     ///   - title: 操作表标题
     ///   - message: 操作表消息
     ///   - cancel: 取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
     ///   - actions: 动作按钮标题列表
-    ///   - promptCount: 输入框数量
-    ///   - promptBlock: 输入框初始化事件，参数为输入框和索引index
+    ///   - currentIndex: 当前选中动作索引
     ///   - actionBlock: 动作按钮点击事件，参数为输入值数组和索引index
     ///   - cancelBlock: 取消按钮事件
     ///   - customBlock: 自定义弹出框事件
-    public func showAlert(
-        style: UIAlertController.Style,
+    public func showSheet(
         title: Any?,
         message: Any?,
         cancel: Any?,
         actions: [Any]?,
-        promptCount: Int,
-        promptBlock: ((UITextField, Int) -> Void)?,
-        actionBlock: (([String], Int) -> Void)?,
+        currentIndex: Int,
+        actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showAlert(with: style, title: title, message: message, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
 }

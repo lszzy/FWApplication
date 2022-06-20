@@ -71,17 +71,22 @@
 
 - (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
+    [self showEmptyViewWithText:text detail:detail image:image loading:loading actions:action ? @[action] : nil block:block ? ^(NSInteger index, id  _Nonnull sender) { if (block) block(sender); } : nil];
+}
+
+- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id _Nonnull))block
+{
     id<FWEmptyPlugin> plugin = self.emptyPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(showEmptyViewWithText:detail:image:loading:action:block:inView:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(showEmptyViewWithText:detail:image:loading:actions:block:inView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
     
     if ([self.base isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView *)self.base;
         [scrollView.fw showOverlayView];
-        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block inView:scrollView.fw.overlayView];
+        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block inView:scrollView.fw.overlayView];
     } else {
-        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block inView:self.base];
+        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block inView:self.base];
     }
 }
 
@@ -163,6 +168,11 @@
 - (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
     [self.base.view.fw showEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block];
+}
+
+- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id _Nonnull))block
+{
+    [self.base.view.fw showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block];
 }
 
 - (void)hideEmptyView

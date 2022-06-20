@@ -175,31 +175,34 @@ NS_SWIFT_NAME(PresentationController)
 NS_SWIFT_NAME(PanGestureRecognizer)
 @interface FWPanGestureRecognizer : UIPanGestureRecognizer
 
-// 是否自动检测滚动视图，默认YES。如需手工指定，请禁用之
+/// 是否自动检测滚动视图，默认YES。如需手工指定，请禁用之
 @property (nonatomic, assign) BOOL autoDetected;
 
-// 指定滚动视图，自动处理与滚动视图pan手势在指定方向的冲突。自动设置默认delegate为自身
+/// 是否按下就立即转换Began状态，默认NO，需要等待移动才会触发Began
+@property (nonatomic, assign) BOOL instantBegan;
+
+/// 指定滚动视图，自动处理与滚动视图pan手势在指定方向的冲突。自动设置默认delegate为自身
 @property (nullable, nonatomic, weak) UIScrollView *scrollView;
 
-// 指定与滚动视图pan手势的冲突交互方向，默认向下
+/// 指定与滚动视图pan手势的冲突交互方向，默认向下
 @property (nonatomic, assign) UISwipeGestureRecognizerDirection direction;
 
-// 获取当前手势在指定交互方向的滑动进度
+/// 获取当前手势在指定交互方向的滑动进度
 @property (nonatomic, assign) CGFloat swipePercent;
 
-// 指定当前手势在指定交互方向的最大识别距离，默认0，无限制
+/// 指定当前手势在指定交互方向的最大识别距离，默认0，无限制
 @property (nonatomic, assign) CGFloat maximumDistance;
 
-// 自定义Failed判断句柄。默认判定失败时直接修改状态为Failed，可设置此block修改判定条件
+/// 自定义Failed判断句柄。默认判定失败时直接修改状态为Failed，可设置此block修改判定条件
 @property (nullable, nonatomic, copy) BOOL (^shouldFailed)(FWPanGestureRecognizer *gestureRecognizer);
 
-// 自定义shouldBegin判断句柄
+/// 自定义shouldBegin判断句柄
 @property (nullable, nonatomic, copy) BOOL (^shouldBegin)(FWPanGestureRecognizer *gestureRecognizer);
 
-// 自定义shouldBeRequiredToFail判断句柄
+/// 自定义shouldBeRequiredToFail判断句柄
 @property (nullable, nonatomic, copy) BOOL (^shouldBeRequiredToFail)(UIGestureRecognizer *otherGestureRecognizer);
 
-// 自定义shouldRequireFailure判断句柄
+/// 自定义shouldRequireFailure判断句柄
 @property (nullable, nonatomic, copy) BOOL (^shouldRequireFailure)(UIGestureRecognizer *otherGestureRecognizer);
 
 @end

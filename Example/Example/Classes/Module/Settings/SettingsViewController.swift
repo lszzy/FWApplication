@@ -88,7 +88,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onLanguage() {
-        fw.showSheet(title: FW.localized("languageTitle"), message: nil, cancel: FW.localized("取消"), actions: [FW.localized("systemTitle"), "中文", "English", FW.localized("changeTitle")]) { [weak self] (index) in
+        fw.showSheet(title: FW.localized("languageTitle"), message: nil, cancel: FW.localized("取消"), actions: [FW.localized("systemTitle"), "中文", "English", FW.localized("changeTitle")], currentIndex: -1) { [weak self] (index) in
             if index < 3 {
                 let language: String? = index == 1 ? "zh-Hans" : (index == 2 ? "en" : nil)
                 Bundle.fw.localizedLanguage = language
@@ -109,7 +109,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
         }
         actions.append(FW.localized("changeTitle"))
         
-        fw.showSheet(title: FW.localized("themeTitle"), message: nil, cancel: FW.localized("取消"), actions: actions) { (index) in
+        fw.showSheet(title: FW.localized("themeTitle"), message: nil, cancel: FW.localized("取消"), actions: actions, currentIndex:-1) { (index) in
             var mode = ThemeMode(index)
             if index > actions.count - 2 {
                 let currentMode = ThemeManager.sharedInstance.mode
@@ -121,7 +121,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onRoot() {
-        fw.showSheet(title: FW.localized("rootTitle"), message: nil, cancel: FW.localized("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"]) { (index) in
+        fw.showSheet(title: FW.localized("rootTitle"), message: nil, cancel: FW.localized("取消"), actions: ["UITabBar+Navigation", "FWTabBar+Navigation", "Navigation+UITabBar", "Navigation+FWTabBar"], currentIndex: -1) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootNavigation = false
@@ -143,7 +143,7 @@ class SettingsViewController: UIViewController, TableViewControllerProtocol {
     }
     
     @objc func onOption() {
-        fw.showSheet(title: FW.localized("optionTitle"), message: nil, cancel: FW.localized("取消"), actions: [AppConfig.isRootLogin ? FW.localized("loginOptional") : FW.localized("loginRequired"), Theme.isLargeTitles ? FW.localized("normalTitles") : FW.localized("largeTitles"), Theme.isBarTranslucent ? FW.localized("defaultTitles") : FW.localized("translucentTitles")]) { (index) in
+        fw.showSheet(title: FW.localized("optionTitle"), message: nil, cancel: FW.localized("取消"), actions: [AppConfig.isRootLogin ? FW.localized("loginOptional") : FW.localized("loginRequired"), Theme.isLargeTitles ? FW.localized("normalTitles") : FW.localized("largeTitles"), Theme.isBarTranslucent ? FW.localized("defaultTitles") : FW.localized("translucentTitles")], currentIndex: -1) { (index) in
             switch index {
             case 0:
                 AppConfig.isRootLogin = !AppConfig.isRootLogin
