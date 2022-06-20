@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.3.2] - 2022-06-20
+
+### Changed
+* Split popup plugin showAlert and showSheet methods
+* Added custom style configuration parameters for popup plugins
+
 ## [3.3.1] - 2022-06-15
 
 ### Changed
