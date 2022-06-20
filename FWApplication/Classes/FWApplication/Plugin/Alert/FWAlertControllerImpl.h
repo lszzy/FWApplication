@@ -29,12 +29,13 @@ NS_SWIFT_NAME(AlertControllerPlugin)
 
 /// 显示自定义视图弹窗，无默认按钮
 - (void)viewController:(UIViewController *)viewController
- showAlertWithHeaderView:(UIView *)headerView
-                  cancel:(nullable id)cancel
-                 actions:(nullable NSArray *)actions
-             actionBlock:(nullable void (^)(NSInteger index))actionBlock
-             cancelBlock:(nullable void (^)(void))cancelBlock
-             customBlock:(nullable void (^)(id alertController))customBlock;
+    showAlertWithStyle:(UIAlertControllerStyle)style
+            headerView:(UIView *)headerView
+                cancel:(nullable id)cancel
+               actions:(nullable NSArray *)actions
+           actionBlock:(nullable void (^)(NSInteger index))actionBlock
+           cancelBlock:(nullable void (^)(void))cancelBlock
+           customBlock:(nullable void (^)(id alertController))customBlock;
 
 @end
 

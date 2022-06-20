@@ -31,9 +31,9 @@
         _actionHeight = 55.0;
         _actionFont = [UIFont systemFontOfSize:18];
         _actionBoldFont = [UIFont boldSystemFontOfSize:18];
-        _textFieldHeight = 30.0;
         _imageTitleSpacing = 16.0;
         _titleMessageSpacing = 8.0;
+        _textFieldHeight = 30.0;
         _sheetContainerInsets = UIEdgeInsetsZero;
         
         _normalColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]
@@ -388,7 +388,7 @@
         // 最后一个子控件底部间距
         if (idx == labels.count - 1) {
             if (self.textFields.count) {
-                [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textFieldView attribute:NSLayoutAttributeTop multiplier:1.f constant:-bottomMargin]];
+                [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:textFieldView attribute:NSLayoutAttributeTop multiplier:1.f constant:-(self.alertAppearance.textFieldTopMargin > 0 ? self.alertAppearance.textFieldTopMargin : bottomMargin)]];
             } else {
                 [titleLabelConstraints addObject:[NSLayoutConstraint constraintWithItem:label attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:contentView attribute:NSLayoutAttributeBottom multiplier:1.f constant:-bottomMargin]];
             }
@@ -470,6 +470,7 @@
         textFieldView.translatesAutoresizingMaskIntoConstraints = NO;
         textFieldView.distribution = UIStackViewDistributionFillEqually;
         textFieldView.axis = UILayoutConstraintAxisVertical;
+        textFieldView.spacing = self.alertAppearance.textFieldSpacing;
         if (self.textFields.count) {
             [self.contentView addSubview:textFieldView];
         }

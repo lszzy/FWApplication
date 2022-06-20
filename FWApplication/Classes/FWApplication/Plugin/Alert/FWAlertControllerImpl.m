@@ -175,17 +175,18 @@
 }
 
 - (void)viewController:(UIViewController *)viewController
- showAlertWithHeaderView:(UIView *)headerView
-                  cancel:(id)cancel
-                 actions:(NSArray *)actions
-             actionBlock:(void (^)(NSInteger))actionBlock
-             cancelBlock:(void (^)(void))cancelBlock
-             customBlock:(void (^)(id _Nonnull))customBlock
+    showAlertWithStyle:(UIAlertControllerStyle)style
+            headerView:(UIView *)headerView
+                cancel:(id)cancel
+               actions:(NSArray *)actions
+           actionBlock:(void (^)(NSInteger))actionBlock
+           cancelBlock:(void (^)(void))cancelBlock
+           customBlock:(void (^)(id _Nonnull))customBlock
 {
     // 初始化Alert
-    FWAlertControllerAppearance *customAppearance = self.customAlertAppearance;
+    FWAlertControllerAppearance *customAppearance = style == UIAlertControllerStyleActionSheet ? self.customSheetAppearance : self.customAlertAppearance;
     FWAlertController *alertController = [self alertControllerWithHeaderView:headerView
-                                                              preferredStyle:FWAlertControllerStyleAlert
+                                                              preferredStyle:(FWAlertControllerStyle)style
                                                                   appearance:customAppearance];
     
     // 添加动作按钮
