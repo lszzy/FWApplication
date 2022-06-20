@@ -213,6 +213,7 @@
                        message:@"操作表消息"
                         cancel:@"取消"
                        actions:@[@"操作1", @"操作2", @"操作3"]
+                   currentIndex:1
                    actionBlock:^(NSInteger index) {
                        NSLog(@"点击的操作index: %@", @(index));
                    }
@@ -224,8 +225,7 @@
 - (void)onAlertF
 {
     FWWeakifySelf();
-    [self.fw showAlertWithStyle:UIAlertControllerStyleAlert
-                         title:@"请输入账号信息，我是很长很长很长很长很长很长的标题"
+    [self.fw showAlertWithTitle:@"请输入账号信息，我是很长很长很长很长很长很长的标题"
                        message:@"账户信息必填，我是很长很长很长很长很长很长的消息"
                         cancel:@"取消"
                        actions:@[@"重试", @"高亮", @"禁用", @"确定"]
@@ -265,8 +265,7 @@
     headerView.backgroundColor = UIColor.whiteColor;
     
     [[FWAlertControllerPlugin sharedInstance] viewController:self
-                                              showAlert:UIAlertControllerStyleAlert
-                                             headerView:headerView
+                                     showAlertWithHeaderView:headerView
                                                  cancel:@"取消"
                                                 actions:@[@"确定"]
                                             actionBlock:^(NSInteger index) {
@@ -289,8 +288,7 @@
     }];
     
     [[FWAlertControllerPlugin sharedInstance] viewController:self
-                                              showAlert:UIAlertControllerStyleAlert
-                                             headerView:alertView
+                                     showAlertWithHeaderView:alertView
                                                  cancel:nil
                                                 actions:nil
                                             actionBlock:nil
@@ -360,11 +358,11 @@
 - (void)onAlertP
 {
     FWWeakifySelf();
-    [self.fw showAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+    [self.fw showAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil cancelBlock:^{
         FWStrongifySelf();
-        [self.fw showAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+        [self.fw showAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil cancelBlock:^{
             FWStrongifySelf();
-            [self.fw showAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+            [self.fw showAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil cancelBlock:nil];
         }];
     }];
 }
@@ -372,11 +370,11 @@
 - (void)onSheetP
 {
     FWWeakifySelf();
-    [self.fw showSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+    [self.fw showSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil cancelBlock:^{
         FWStrongifySelf();
-        [self.fw showSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:^{
+        [self.fw showSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil cancelBlock:^{
             FWStrongifySelf();
-            [self.fw showSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+            [self.fw showSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil cancelBlock:nil];
         }];
     }];
 }

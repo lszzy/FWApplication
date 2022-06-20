@@ -58,8 +58,7 @@
 }
 
 - (void)viewController:(UIViewController *)viewController
-               showAlert:(UIAlertControllerStyle)style
-                   title:(id)title
+      showAlertWithTitle:(id)title
                  message:(id)message
                   cancel:(id)cancel
                  actions:(NSArray *)actions
@@ -70,10 +69,10 @@
              customBlock:(void (^)(id))customBlock
 {
     // 初始化Alert
-    FWAlertControllerAppearance *customAppearance = style == UIAlertControllerStyleActionSheet ? self.customSheetAppearance : self.customAlertAppearance;
+    FWAlertControllerAppearance *customAppearance = self.customAlertAppearance;
     FWAlertController *alertController = [self alertControllerWithTitle:title
                                                                 message:message
-                                                         preferredStyle:(FWAlertControllerStyle)style
+                                                         preferredStyle:FWAlertControllerStyleAlert
                                                              appearance:customAppearance];
     
     // 添加输入框
@@ -123,8 +122,60 @@
 }
 
 - (void)viewController:(UIViewController *)viewController
-               showAlert:(UIAlertControllerStyle)style
-              headerView:(UIView *)headerView
+      showSheetWithTitle:(id)title
+                 message:(id)message
+                  cancel:(id)cancel
+                 actions:(NSArray *)actions
+            currentIndex:(NSInteger)currentIndex
+             actionBlock:(void (^)(NSInteger))actionBlock
+             cancelBlock:(void (^)(void))cancelBlock
+             customBlock:(void (^)(id))customBlock
+{
+    // 初始化Alert
+    FWAlertControllerAppearance *customAppearance = self.customSheetAppearance;
+    FWAlertController *alertController = [self alertControllerWithTitle:title
+                                                                message:message
+                                                         preferredStyle:FWAlertControllerStyleActionSheet
+                                                             appearance:customAppearance];
+    
+    // 添加动作按钮
+    for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
+        FWAlertAction *alertAction = [self actionWithObject:actions[actionIndex] style:FWAlertActionStyleDefault appearance:customAppearance handler:^(FWAlertAction *action) {
+            if (actionBlock) {
+                actionBlock(actionIndex);
+            }
+        }];
+        [alertController addAction:alertAction];
+    }
+    
+    // 添加取消按钮
+    if (cancel != nil) {
+        FWAlertAction *cancelAction = [self actionWithObject:cancel style:FWAlertActionStyleCancel appearance:customAppearance handler:^(FWAlertAction *action) {
+            if (cancelBlock) cancelBlock();
+        }];
+        [alertController addAction:cancelAction];
+    }
+    
+    // 添加首选按钮
+    if (currentIndex >= 0 && alertController.actions.count > currentIndex) {
+        alertController.preferredAction = alertController.actions[currentIndex];
+    } else if (alertController.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
+        FWAlertAction *preferredAction = alertController.alertAppearance.preferredActionBlock(alertController);
+        if (preferredAction) {
+            alertController.preferredAction = preferredAction;
+        }
+    }
+    
+    // 自定义Alert
+    if (self.customBlock) self.customBlock(alertController);
+    if (customBlock) customBlock(alertController);
+    
+    // 显示Alert
+    [viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)viewController:(UIViewController *)viewController
+ showAlertWithHeaderView:(UIView *)headerView
                   cancel:(id)cancel
                  actions:(NSArray *)actions
              actionBlock:(void (^)(NSInteger))actionBlock
@@ -132,9 +183,9 @@
              customBlock:(void (^)(id _Nonnull))customBlock
 {
     // 初始化Alert
-    FWAlertControllerAppearance *customAppearance = style == UIAlertControllerStyleActionSheet ? self.customSheetAppearance : self.customAlertAppearance;
+    FWAlertControllerAppearance *customAppearance = self.customAlertAppearance;
     FWAlertController *alertController = [self alertControllerWithHeaderView:headerView
-                                                              preferredStyle:(FWAlertControllerStyle)style
+                                                              preferredStyle:FWAlertControllerStyleAlert
                                                                   appearance:customAppearance];
     
     // 添加动作按钮

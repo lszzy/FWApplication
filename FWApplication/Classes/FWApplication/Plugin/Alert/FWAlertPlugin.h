@@ -16,18 +16,28 @@ NS_ASSUME_NONNULL_BEGIN
 NS_SWIFT_NAME(AlertPlugin)
 @protocol FWAlertPlugin <NSObject>
 
-@required
+@optional
 
 // 显示弹出框插件方法，默认使用系统UIAlertController
 - (void)viewController:(UIViewController *)viewController
-               showAlert:(UIAlertControllerStyle)style
-                   title:(nullable id)title
+      showAlertWithTitle:(nullable id)title
                  message:(nullable id)message
                   cancel:(nullable id)cancel
                  actions:(nullable NSArray *)actions
              promptCount:(NSInteger)promptCount
              promptBlock:(nullable void (^)(UITextField *textField, NSInteger index))promptBlock
              actionBlock:(nullable void (^)(NSArray<NSString *> *values, NSInteger index))actionBlock
+             cancelBlock:(nullable void (^)(void))cancelBlock
+             customBlock:(nullable void (^)(id alertController))customBlock;
+
+// 显示操作表插件方法，默认使用系统UIAlertController
+- (void)viewController:(UIViewController *)viewController
+      showSheetWithTitle:(nullable id)title
+                 message:(nullable id)message
+                  cancel:(nullable id)cancel
+                 actions:(nullable NSArray *)actions
+            currentIndex:(NSInteger)currentIndex
+             actionBlock:(nullable void (^)(NSInteger index))actionBlock
              cancelBlock:(nullable void (^)(void))cancelBlock
              customBlock:(nullable void (^)(id alertController))customBlock;
 
@@ -167,6 +177,42 @@ NS_REFINED_FOR_SWIFT
                   cancelBlock:(nullable void (^)(void))cancelBlock;
 
 /**
+ *  显示弹出框(完整版)
+ *
+ *  @param title       操作表标题
+ *  @param message     操作表消息
+ *  @param cancel      取消按钮标题，默认Alert单按钮关闭，Alert多按钮取消
+ *  @param actions     动作按钮标题列表
+ *  @param promptCount 输入框数量
+ *  @param promptBlock 输入框初始化事件，参数为输入框和索引index
+ *  @param actionBlock 动作按钮点击事件，参数为输入值数组和索引index
+ *  @param cancelBlock 取消按钮事件
+ *  @param customBlock 自定义弹出框事件
+ */
+- (void)showAlertWithTitle:(nullable id)title
+                     message:(nullable id)message
+                      cancel:(nullable id)cancel
+                     actions:(nullable NSArray *)actions
+                 promptCount:(NSInteger)promptCount
+                 promptBlock:(nullable void (^)(UITextField *textField, NSInteger index))promptBlock
+                 actionBlock:(nullable void (^)(NSArray<NSString *> *values, NSInteger index))actionBlock
+                 cancelBlock:(nullable void (^)(void))cancelBlock
+                 customBlock:(nullable void (^)(id alertController))customBlock;
+
+/**
+ *  显示操作表(无动作)
+ *
+ *  @param title       操作表标题
+ *  @param message     操作表消息
+ *  @param cancel      取消按钮标题，默认取消
+ *  @param cancelBlock 取消按钮事件
+ */
+- (void)showSheetWithTitle:(nullable id)title
+                     message:(nullable id)message
+                      cancel:(nullable id)cancel
+                 cancelBlock:(nullable void (^)(void))cancelBlock;
+
+/**
  *  显示操作表(简单版)
  *
  *  @param title       操作表标题
@@ -188,6 +234,7 @@ NS_REFINED_FOR_SWIFT
  *  @param message     操作表消息
  *  @param cancel      取消按钮标题，默认取消
  *  @param actions     动作按钮标题列表
+ *  @param currentIndex 当前选中动作索引
  *  @param actionBlock 动作按钮点击事件，参数为索引index
  *  @param cancelBlock 取消按钮事件
  */
@@ -195,31 +242,28 @@ NS_REFINED_FOR_SWIFT
                      message:(nullable id)message
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
+                currentIndex:(NSInteger)currentIndex
                  actionBlock:(nullable void (^)(NSInteger index))actionBlock
                  cancelBlock:(nullable void (^)(void))cancelBlock;
 
 /**
- *  显示弹出框(完整版)
+ *  显示操作表(完整版)
  *
- *  @param style       弹出框样式
  *  @param title       操作表标题
  *  @param message     操作表消息
  *  @param cancel      取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
  *  @param actions     动作按钮标题列表
- *  @param promptCount 输入框数量
- *  @param promptBlock 输入框初始化事件，参数为输入框和索引index
+ *  @param currentIndex 当前选中动作索引
  *  @param actionBlock 动作按钮点击事件，参数为输入值数组和索引index
  *  @param cancelBlock 取消按钮事件
  *  @param customBlock 自定义弹出框事件
  */
-- (void)showAlertWithStyle:(UIAlertControllerStyle)style
-                       title:(nullable id)title
+- (void)showSheetWithTitle:(nullable id)title
                      message:(nullable id)message
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
-                 promptCount:(NSInteger)promptCount
-                 promptBlock:(nullable void (^)(UITextField *textField, NSInteger index))promptBlock
-                 actionBlock:(nullable void (^)(NSArray<NSString *> *values, NSInteger index))actionBlock
+                currentIndex:(NSInteger)currentIndex
+                 actionBlock:(nullable void (^)(NSInteger index))actionBlock
                  cancelBlock:(nullable void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id alertController))customBlock;
 
