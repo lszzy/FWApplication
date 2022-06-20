@@ -265,7 +265,8 @@
     headerView.backgroundColor = UIColor.whiteColor;
     
     [[FWAlertControllerPlugin sharedInstance] viewController:self
-                                     showAlertWithHeaderView:headerView
+                                          showAlertWithStyle:UIAlertControllerStyleAlert
+                                                  headerView:headerView
                                                  cancel:@"取消"
                                                 actions:@[@"确定"]
                                             actionBlock:^(NSInteger index) {
@@ -288,7 +289,8 @@
     }];
     
     [[FWAlertControllerPlugin sharedInstance] viewController:self
-                                     showAlertWithHeaderView:alertView
+                                          showAlertWithStyle:UIAlertControllerStyleAlert
+                                                  headerView:alertView
                                                  cancel:nil
                                                 actions:nil
                                             actionBlock:nil
