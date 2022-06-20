@@ -47,9 +47,11 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 @property (nonatomic, assign) CGFloat actionHeight;
 @property (nonatomic, strong) UIFont *actionFont;
 @property (nonatomic, strong) UIFont *actionBoldFont;
-@property (nonatomic, assign) CGFloat textFieldHeight;
 @property (nonatomic, assign) CGFloat imageTitleSpacing;
 @property (nonatomic, assign) CGFloat titleMessageSpacing;
+@property (nonatomic, assign) CGFloat textFieldHeight;
+@property (nonatomic, assign) CGFloat textFieldTopMargin;
+@property (nonatomic, assign) CGFloat textFieldSpacing;
 
 @property (nonatomic, strong) UIColor *normalColor;
 @property (nonatomic, strong) UIColor *selectedColor;
