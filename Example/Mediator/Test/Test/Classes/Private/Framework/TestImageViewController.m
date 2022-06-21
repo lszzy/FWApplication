@@ -336,7 +336,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         FWStrongifySelf();
         self.isSDWebImage = !self.isSDWebImage;
         [FWPluginManager unloadPlugin:@protocol(FWImagePlugin)];
-        [FWPluginManager registerPlugin:@protocol(FWImagePlugin) withObject:self.isSDWebImage ? [FWSDWebImagePlugin class] : [FWImagePluginImpl class]];
+        [FWPluginManager registerPlugin:@protocol(FWImagePlugin) withObject:self.isSDWebImage ? [FWSDWebImageImpl class] : [FWImagePluginImpl class]];
         if (self.isSDWebImage) {
             [[SDImageCache sharedImageCache] clearWithCacheType:SDImageCacheTypeAll completion:nil];
         }
@@ -351,9 +351,9 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 
 - (void)renderData
 {
-    self.isSDWebImage = [[FWPluginManager loadPlugin:@protocol(FWImagePlugin)] isKindOfClass:[FWSDWebImagePlugin class]];
+    self.isSDWebImage = [[FWPluginManager loadPlugin:@protocol(FWImagePlugin)] isKindOfClass:[FWSDWebImageImpl class]];
     self.fw.title = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
-    FWSDWebImagePlugin.sharedInstance.fadeAnimated = YES;
+    FWSDWebImageImpl.sharedInstance.fadeAnimated = YES;
     FWImagePluginImpl.sharedInstance.fadeAnimated = YES;
     
     [self.tableData setArray:@[

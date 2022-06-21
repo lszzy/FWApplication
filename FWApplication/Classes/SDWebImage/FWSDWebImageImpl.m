@@ -1,13 +1,13 @@
 /**
- @header     FWSDWebImagePlugin.m
+ @header     FWSDWebImageImpl.m
  @indexgroup FWApplication
- @discussion FWSDWebImagePlugin
+ @discussion FWSDWebImageImpl
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/11/30
  */
 
-#import "FWSDWebImagePlugin.h"
+#import "FWSDWebImageImpl.h"
 @import FWFramework;
 @import SDWebImage;
 #if FWMacroSPM
@@ -16,26 +16,26 @@
 #import "FWImagePlugin.h"
 #endif
 
-@interface FWSDWebImagePlugin () <FWImagePlugin>
+@interface FWSDWebImageImpl () <FWImagePlugin>
 
 @end
 
-@implementation FWSDWebImagePlugin
+@implementation FWSDWebImageImpl
 
 + (void)load
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [FWPluginManager registerPlugin:@protocol(FWImagePlugin) withObject:[FWSDWebImagePlugin class]];
+        [FWPluginManager registerPlugin:@protocol(FWImagePlugin) withObject:[FWSDWebImageImpl class]];
     });
 }
 
-+ (FWSDWebImagePlugin *)sharedInstance
++ (FWSDWebImageImpl *)sharedInstance
 {
-    static FWSDWebImagePlugin *instance = nil;
+    static FWSDWebImageImpl *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[FWSDWebImagePlugin alloc] init];
+        instance = [[FWSDWebImageImpl alloc] init];
     });
     return instance;
 }

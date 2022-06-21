@@ -52,6 +52,10 @@ NS_SWIFT_NAME(AlertControllerAppearance)
 @property (nonatomic, assign) CGFloat textFieldHeight;
 @property (nonatomic, assign) CGFloat textFieldTopMargin;
 @property (nonatomic, assign) CGFloat textFieldSpacing;
+@property (nonatomic, assign) CGFloat alertCornerRadius;
+@property (nonatomic, assign) CGFloat alertEdgeDistance;
+@property (nonatomic, assign) CGFloat sheetCornerRadius;
+@property (nonatomic, assign) CGFloat sheetEdgeDistance;
 
 @property (nonatomic, strong) UIColor *normalColor;
 @property (nonatomic, strong) UIColor *selectedColor;

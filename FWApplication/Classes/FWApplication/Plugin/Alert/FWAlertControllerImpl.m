@@ -45,14 +45,14 @@
 
 @end
 
-@implementation FWAlertControllerPlugin
+@implementation FWAlertControllerImpl
 
-+ (FWAlertControllerPlugin *)sharedInstance
++ (FWAlertControllerImpl *)sharedInstance
 {
-    static FWAlertControllerPlugin *instance = nil;
+    static FWAlertControllerImpl *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[FWAlertControllerPlugin alloc] init];
+        instance = [[FWAlertControllerImpl alloc] init];
     });
     return instance;
 }

@@ -1,7 +1,7 @@
 /**
- @header     FWSDWebImagePlugin.h
+ @header     FWSDWebImageImpl.h
  @indexgroup FWApplication
- @discussion FWSDWebImagePlugin
+ @discussion FWSDWebImageImpl
  @author     wuyong
  @copyright  Copyright © 2020 wuyong.site. All rights reserved.
  @updated    2020/11/30
@@ -12,11 +12,11 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /// SDWebImage图片插件，启用SDWebImage子模块后生效
-NS_SWIFT_NAME(SDWebImagePlugin)
-@interface FWSDWebImagePlugin : NSObject
+NS_SWIFT_NAME(SDWebImageImpl)
+@interface FWSDWebImageImpl : NSObject
 
 /// 单例模式
-@property (class, nonatomic, readonly) FWSDWebImagePlugin *sharedInstance;
+@property (class, nonatomic, readonly) FWSDWebImageImpl *sharedInstance;
 
 /// 图片加载完成是否显示渐变动画，默认NO
 @property (nonatomic, assign) BOOL fadeAnimated;
