@@ -140,6 +140,8 @@ NS_SWIFT_NAME(AlertController)
 @property(nullable, nonatomic, copy) NSString *title;
 /** 副标题 */
 @property(nullable, nonatomic, copy) NSString *message;
+/** 弹窗样式，默认Default */
+@property(nonatomic, assign) FWAlertStyle alertStyle;
 /** 主标题(富文本) */
 @property(nullable, nonatomic, copy) NSAttributedString *attributedTitle;
 /** 副标题(富文本) */

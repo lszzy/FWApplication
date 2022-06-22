@@ -39,6 +39,7 @@ extension Wrapper where Base: UIViewController {
     /// - Parameters:
     ///   - title: 警告框标题
     ///   - message: 警告框消息
+    ///   - style: 警告框样式
     ///   - cancel: 取消按钮标题，默认单按钮关闭，多按钮取消
     ///   - actions: 动作按钮标题列表
     ///   - actionBlock: 动作按钮点击事件，参数为索引index
@@ -46,12 +47,13 @@ extension Wrapper where Base: UIViewController {
     public func showAlert(
         title: Any?,
         message: Any?,
+        style: AlertStyle = .default,
         cancel: Any?,
         actions: [Any]?,
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
     }
     
     /// 显示确认框(简单版)
@@ -134,8 +136,9 @@ extension Wrapper where Base: UIViewController {
     
     /// 显示弹出框(完整版)
     /// - Parameters:
-    ///   - title: 操作表标题
-    ///   - message: 操作表消息
+    ///   - title: 弹出框标题
+    ///   - message: 弹出框消息
+    ///   - style: 警告框样式
     ///   - cancel: 取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
     ///   - actions: 动作按钮标题列表
     ///   - promptCount: 输入框数量
@@ -146,6 +149,7 @@ extension Wrapper where Base: UIViewController {
     public func showAlert(
         title: Any?,
         message: Any?,
+        style: AlertStyle = .default,
         cancel: Any?,
         actions: [Any]?,
         promptCount: Int,
@@ -154,7 +158,7 @@ extension Wrapper where Base: UIViewController {
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
     /// 显示操作表(无动作)
@@ -256,6 +260,7 @@ extension Wrapper where Base: UIView {
     /// - Parameters:
     ///   - title: 警告框标题
     ///   - message: 警告框消息
+    ///   - style: 警告框样式
     ///   - cancel: 取消按钮标题，默认单按钮关闭，多按钮取消
     ///   - actions: 动作按钮标题列表
     ///   - actionBlock: 动作按钮点击事件，参数为索引index
@@ -263,12 +268,13 @@ extension Wrapper where Base: UIView {
     public func showAlert(
         title: Any?,
         message: Any?,
+        style: AlertStyle = .default,
         cancel: Any?,
         actions: [Any]?,
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
     }
     
     /// 显示确认框(简单版)
@@ -351,8 +357,9 @@ extension Wrapper where Base: UIView {
     
     /// 显示弹出框(完整版)
     /// - Parameters:
-    ///   - title: 操作表标题
-    ///   - message: 操作表消息
+    ///   - title: 弹出框标题
+    ///   - message: 弹出框消息
+    ///   - style: 弹出框样式
     ///   - cancel: 取消按钮标题，默认Alert单按钮关闭，Alert多按钮或Sheet取消
     ///   - actions: 动作按钮标题列表
     ///   - promptCount: 输入框数量
@@ -363,6 +370,7 @@ extension Wrapper where Base: UIView {
     public func showAlert(
         title: Any?,
         message: Any?,
+        style: AlertStyle = .default,
         cancel: Any?,
         actions: [Any]?,
         promptCount: Int,
@@ -371,7 +379,7 @@ extension Wrapper where Base: UIView {
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
     /// 显示操作表(无动作)
@@ -484,6 +492,12 @@ extension Wrapper where Base: UIAlertController {
     public var alertAppearance: AlertAppearance {
         get { return base.__fw.alertAppearance }
         set { base.__fw.alertAppearance = newValue }
+    }
+    
+    /// 弹出框样式，默认为Default
+    public var alertStyle: AlertStyle {
+        get { return base.__fw.alertStyle }
+        set { base.__fw.alertStyle = newValue }
     }
 
     /// 设置属性标题

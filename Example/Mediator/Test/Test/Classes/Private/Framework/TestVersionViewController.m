@@ -58,13 +58,13 @@
         NSLog(@"version status: %@", @([FWVersionManager sharedInstance].status));
         
         if ([FWVersionManager sharedInstance].status == FWVersionStatusAuditing) {
-            [self.fw showAlertWithTitle:nil message:@"当前版本正在审核中" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+            [self.fw showAlertWithTitle:nil message:@"当前版本正在审核中" style:FWAlertStyleDefault cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
         } else if ([FWVersionManager sharedInstance].status == FWVersionStatusUpdating) {
             BOOL isForce = NO;
             if (isForce) {
                 // 强制更新
                 NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"微信", [FWVersionManager sharedInstance].latestVersion];
-                [self.fw showAlertWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"更新" actions:nil actionBlock:nil cancelBlock:^{
+                [self.fw showAlertWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes style:FWAlertStyleDefault cancel:@"更新" actions:nil actionBlock:nil cancelBlock:^{
                     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apps.apple.com/app/id%@", [FWVersionManager sharedInstance].appId]];
                     [UIApplication.fw openURL:url completionHandler:^(BOOL success) {
                         if (success) {

@@ -163,7 +163,7 @@
 {
     /*
     // FWViewController全局拦截器init方法示例：
-    // 开启不透明bar(translucent为NO)情况下视图延伸到屏幕顶部
+    // 开启不透明bar(translucent为NO)情况下视图延伸到屏幕顶部，顶部推荐safeArea方式布局
     viewController.extendedLayoutIncludesOpaqueBars = YES;
     // 默认push时隐藏TabBar，TabBar初始化控制器时设置为NO
     viewController.hidesBottomBarWhenPushed = YES;

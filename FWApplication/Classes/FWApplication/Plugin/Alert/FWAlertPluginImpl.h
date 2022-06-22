@@ -89,6 +89,9 @@ NS_SWIFT_NAME(AlertAppearance)
 // 自定义样式，默认为样式单例
 @property (nonatomic, strong) FWAlertAppearance *alertAppearance;
 
+// 当前弹窗样式，默认为Default样式
+@property (nonatomic, assign) FWAlertStyle alertStyle;
+
 // 设置属性标题
 @property (nonatomic, copy, nullable) NSAttributedString *attributedTitle;
 

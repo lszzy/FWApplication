@@ -101,6 +101,16 @@
     objc_setAssociatedObject(self.base, @selector(alertAppearance), alertAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (FWAlertStyle)alertStyle
+{
+    return [objc_getAssociatedObject(self.base, @selector(alertStyle)) integerValue];
+}
+
+- (void)setAlertStyle:(FWAlertStyle)alertStyle
+{
+    objc_setAssociatedObject(self.base, @selector(alertStyle), @(alertStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (NSAttributedString *)attributedTitle
 {
     return objc_getAssociatedObject(self.base, @selector(attributedTitle));
@@ -271,6 +281,7 @@
 - (void)viewController:(UIViewController *)viewController
       showAlertWithTitle:(id)title
                  message:(id)message
+                   style:(FWAlertStyle)style
                   cancel:(id)cancel
                  actions:(NSArray *)actions
              promptCount:(NSInteger)promptCount
@@ -285,6 +296,7 @@
                                                                                message:message
                                                                         preferredStyle:UIAlertControllerStyleAlert
                                                                             appearance:customAppearance];
+    alertController.fw.alertStyle = style;
     
     // 添加输入框
     for (NSInteger promptIndex = 0; promptIndex < promptCount; promptIndex++) {

@@ -12,6 +12,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark - FWAlertPlugin
 
+/// 弹框样式枚举，可扩展
+typedef NSInteger FWAlertStyle NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(AlertStyle);
+/// 默认弹框样式
+static const FWAlertStyle FWAlertStyleDefault = 0;
+/// 成功弹框样式
+static const FWAlertStyle FWAlertStyleSuccess = 1;
+/// 失败弹框样式
+static const FWAlertStyle FWAlertStyleFailure = 2;
+
 // 弹窗插件协议，应用可自定义弹窗实现
 NS_SWIFT_NAME(AlertPlugin)
 @protocol FWAlertPlugin <NSObject>
@@ -22,6 +31,7 @@ NS_SWIFT_NAME(AlertPlugin)
 - (void)viewController:(UIViewController *)viewController
       showAlertWithTitle:(nullable id)title
                  message:(nullable id)message
+                   style:(FWAlertStyle)style
                   cancel:(nullable id)cancel
                  actions:(nullable NSArray *)actions
              promptCount:(NSInteger)promptCount
@@ -77,6 +87,7 @@ NS_REFINED_FOR_SWIFT
  *
  *  @param title       警告框标题
  *  @param message     警告框消息
+ *  @param style        警告框样式
  *  @param cancel      取消按钮标题，默认单按钮关闭，多按钮取消
  *  @param actions     动作按钮标题列表
  *  @param actionBlock 动作按钮点击事件，参数为索引index
@@ -84,6 +95,7 @@ NS_REFINED_FOR_SWIFT
  */
 - (void)showAlertWithTitle:(nullable id)title
                      message:(nullable id)message
+                       style:(FWAlertStyle)style
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
                  actionBlock:(nullable void (^)(NSInteger index))actionBlock
@@ -181,6 +193,7 @@ NS_REFINED_FOR_SWIFT
  *
  *  @param title       操作表标题
  *  @param message     操作表消息
+ *  @param style        警告框样式
  *  @param cancel      取消按钮标题，默认Alert单按钮关闭，Alert多按钮取消
  *  @param actions     动作按钮标题列表
  *  @param promptCount 输入框数量
@@ -191,6 +204,7 @@ NS_REFINED_FOR_SWIFT
  */
 - (void)showAlertWithTitle:(nullable id)title
                      message:(nullable id)message
+                       style:(FWAlertStyle)style
                       cancel:(nullable id)cancel
                      actions:(nullable NSArray *)actions
                  promptCount:(NSInteger)promptCount

@@ -98,6 +98,7 @@
 {
     [self.fw showAlertWithTitle:@"警告框标题"
                        message:@"警告框消息"
+                         style:FWAlertStyleDefault
                         cancel:nil
                        actions:@[@"按钮1", @"按钮2"]
                    actionBlock:^(NSInteger index) {
@@ -227,6 +228,7 @@
     FWWeakifySelf();
     [self.fw showAlertWithTitle:@"请输入账号信息，我是很长很长很长很长很长很长的标题"
                        message:@"账户信息必填，我是很长很长很长很长很长很长的消息"
+                         style:FWAlertStyleDefault
                         cancel:@"取消"
                        actions:@[@"重试", @"高亮", @"禁用", @"确定"]
                    promptCount:2
@@ -322,6 +324,7 @@
     
     [self.fw showAlertWithTitle:title
                        message:message
+                         style:FWAlertStyleDefault
                         cancel:nil
                        actions:@[@"按钮1", @"按钮2", @"按钮3", @"按钮4"]
                    actionBlock:nil

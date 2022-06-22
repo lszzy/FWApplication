@@ -43,7 +43,8 @@
                  cancelBlock:(void (^)(void))cancelBlock
 {
     [self showAlertWithTitle:title
-                       message:message
+                     message:message
+                       style:FWAlertStyleDefault
                         cancel:cancel
                        actions:nil
                    actionBlock:nil
@@ -51,7 +52,8 @@
 }
 
 - (void)showAlertWithTitle:(id)title
-                     message:(id)message
+                   message:(id)message
+                     style:(FWAlertStyle)style
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
@@ -59,6 +61,7 @@
 {
     [self showAlertWithTitle:title
                        message:message
+                         style:style
                         cancel:cancel
                        actions:actions
                    promptCount:0
@@ -97,6 +100,7 @@
     
     [self showAlertWithTitle:title
                        message:message
+                         style:FWAlertStyleDefault
                         cancel:cancel
                        actions:[NSArray arrayWithObjects:confirm, nil]
                    promptCount:0
@@ -160,6 +164,7 @@
     
     [self showAlertWithTitle:title
                        message:message
+                         style:FWAlertStyleDefault
                         cancel:cancel
                        actions:(confirm ? @[confirm] : nil)
                    promptCount:promptCount
@@ -173,6 +178,7 @@
 
 - (void)showAlertWithTitle:(id)title
                      message:(id)message
+                       style:(FWAlertStyle)style
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  promptCount:(NSInteger)promptCount
@@ -192,10 +198,10 @@
     
     // 优先调用插件，不存在时使用默认
     id<FWAlertPlugin> alertPlugin = self.alertPlugin;
-    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:showAlertWithTitle:message:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:showAlertWithTitle:message:style:cancel:actions:promptCount:promptBlock:actionBlock:cancelBlock:customBlock:)]) {
         alertPlugin = FWAlertPluginImpl.sharedInstance;
     }
-    [alertPlugin viewController:self.base showAlertWithTitle:title message:message cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
+    [alertPlugin viewController:self.base showAlertWithTitle:title message:message style:style cancel:cancel actions:actions promptCount:promptCount promptBlock:promptBlock actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
 }
 
 - (void)showSheetWithTitle:(id)title
@@ -256,9 +262,13 @@
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
 {
-    // 处理取消按钮，Sheet时默认取消
+    // 处理取消按钮，Sheet多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
-        cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+        if (actions.count > 0) {
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+        } else {
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
+        }
     }
     
     // 优先调用插件，不存在时使用默认
@@ -301,6 +311,7 @@
 
 - (void)showAlertWithTitle:(id)title
                      message:(id)message
+                       style:(FWAlertStyle)style
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
@@ -312,6 +323,7 @@
     }
     [ctrl.fw showAlertWithTitle:title
                        message:message
+                         style:style
                         cancel:cancel
                        actions:actions
                    actionBlock:actionBlock
@@ -417,6 +429,7 @@
 
 - (void)showAlertWithTitle:(id)title
                      message:(id)message
+                       style:(FWAlertStyle)style
                       cancel:(id)cancel
                      actions:(NSArray *)actions
                  promptCount:(NSInteger)promptCount
@@ -431,6 +444,7 @@
     }
     [ctrl.fw showAlertWithTitle:title
                        message:message
+                         style:style
                         cancel:cancel
                        actions:actions
                    promptCount:promptCount
