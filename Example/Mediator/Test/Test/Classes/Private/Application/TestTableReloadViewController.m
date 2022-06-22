@@ -94,9 +94,9 @@
 
 - (void)renderView
 {
-    self.tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top;
+    self.tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw_safeAreaInsets.top;
     [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
-    self.tableView.fw.infiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw.safeAreaInsets.bottom;
+    self.tableView.fw.infiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw_safeAreaInsets.bottom;
     [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
 }
 

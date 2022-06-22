@@ -204,7 +204,7 @@ FWPropertyCopy(NSString *, appendString);
 
 - (void)renderData
 {
-    CGFloat marginTop = FWScreenHeight - (390 + 15 + FWTopBarHeight + UIScreen.fw.safeAreaInsets.bottom);
+    CGFloat marginTop = FWScreenHeight - (390 + 15 + FWTopBarHeight + UIScreen.fw_safeAreaInsets.bottom);
     CGFloat topInset = self.canScroll ? FWScreenHeight : marginTop;
     [self.mobileField.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:topInset];
 }

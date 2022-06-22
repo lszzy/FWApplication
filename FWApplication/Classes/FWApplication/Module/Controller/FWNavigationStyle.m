@@ -169,7 +169,7 @@
 - (void)updateNavigationBarStyle:(BOOL)animated
 {
     // 含有导航栏且不是child控制器且不是导航栏控制器时才处理
-    if (!self.base.navigationController || self.isChild ||
+    if (!self.base.navigationController || self.base.fw_isChild ||
         [self.base isKindOfClass:[UINavigationController class]]) return;
     
     // fwNavigationBarHidden设置即生效，动态切换导航栏不突兀，一般在viewWillAppear:中调用

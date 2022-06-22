@@ -68,11 +68,11 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    if (self.isExtendedBottom || !self.fw.isLoaded) return;
+    if (self.isExtendedBottom || !self.fw_isLoaded) return;
     
     // 顶部延伸时，不需要减顶部栏高度
-    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw.topBarHeight;
-    self.view.fw.height = FWScreenHeight - topHeight - self.fw.bottomBarHeight;
+    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw_topBarHeight;
+    self.view.fw.height = FWScreenHeight - topHeight - self.fw_bottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -171,15 +171,15 @@
 
 - (void)webViewFinishLoad
 {
-    if (self.fw.isLoaded) return;
-    self.fw.isLoaded = YES;
+    if (self.fw_isLoaded) return;
+    self.fw_isLoaded = YES;
     
     [self.fw setRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
 }
 
 - (void)webViewFailLoad:(NSError *)error
 {
-    if (self.fw.isLoaded) return;
+    if (self.fw_isLoaded) return;
     
     [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     

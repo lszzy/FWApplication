@@ -69,8 +69,8 @@
             break;
         }
         case FWToolbarViewTypeTabBar: {
-            _menuHeight = FWTabBarHeight - UIScreen.fw.safeAreaInsets.bottom;
-            _bottomHeight = UIScreen.fw.safeAreaInsets.bottom;
+            _menuHeight = FWTabBarHeight - UIScreen.fw_safeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fw_safeAreaInsets.bottom;
             break;
         }
         case FWToolbarViewTypeCustom: {
@@ -79,8 +79,8 @@
         }
         case FWToolbarViewTypeDefault:
         default: {
-            _menuHeight = FWToolBarHeight - UIScreen.fw.safeAreaInsets.bottom;
-            _bottomHeight = UIScreen.fw.safeAreaInsets.bottom;
+            _menuHeight = FWToolBarHeight - UIScreen.fw_safeAreaInsets.bottom;
+            _bottomHeight = UIScreen.fw_safeAreaInsets.bottom;
             break;
         }
     }
@@ -359,11 +359,11 @@
                 [subviewContraints addObject:[subviewButton.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:previousButton]];
                 [subviewContraints addObject:[subviewButton.fw matchDimension:NSLayoutAttributeWidth toDimension:NSLayoutAttributeWidth ofView:previousButton]];
             } else {
-                [subviewContraints addObject:[subviewButton.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:UIScreen.fw.safeAreaInsets.left]];
+                [subviewContraints addObject:[subviewButton.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:UIScreen.fw_safeAreaInsets.left]];
             }
             previousButton = subviewButton;
         }
-        [subviewContraints addObject:[previousButton.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:UIScreen.fw.safeAreaInsets.right]];
+        [subviewContraints addObject:[previousButton.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:UIScreen.fw_safeAreaInsets.right]];
         self.subviewContraints = subviewContraints;
     } else {
         NSMutableArray *subviewContraints = [NSMutableArray array];
@@ -372,12 +372,12 @@
         UIView *leftButton = self.leftButton ?: self.leftMoreButton;
         UIView *leftMoreButton = self.leftButton && self.leftMoreButton ? self.leftMoreButton : nil;
         if (leftButton) {
-            [subviewContraints addObject:[leftButton.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:UIScreen.fw.safeAreaInsets.left + 8]];
+            [subviewContraints addObject:[leftButton.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:UIScreen.fw_safeAreaInsets.left + 8]];
             [subviewContraints addObject:[leftButton.fw alignAxisToSuperview:NSLayoutAttributeCenterY]];
             [subviewContraints addObject:[leftButton.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual]];
             [subviewContraints addObject:[leftButton.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual]];
             CGFloat buttonWidth = leftButton.frame.size.width ?: [leftButton sizeThatFits:fitsSize].width;
-            leftWidth += UIScreen.fw.safeAreaInsets.left + 8 + buttonWidth + 8;
+            leftWidth += UIScreen.fw_safeAreaInsets.left + 8 + buttonWidth + 8;
         }
         if (leftMoreButton) {
             [subviewContraints addObject:[leftMoreButton.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:leftButton withOffset:8]];
@@ -392,12 +392,12 @@
         UIView *rightButton = self.rightButton ?: self.rightMoreButton;
         UIView *rightMoreButton = self.rightButton && self.rightMoreButton ? self.rightMoreButton : nil;
         if (rightButton) {
-            [subviewContraints addObject:[rightButton.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:8 + UIScreen.fw.safeAreaInsets.right]];
+            [subviewContraints addObject:[rightButton.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:8 + UIScreen.fw_safeAreaInsets.right]];
             [subviewContraints addObject:[rightButton.fw alignAxisToSuperview:NSLayoutAttributeCenterY]];
             [subviewContraints addObject:[rightButton.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:0 relation:NSLayoutRelationGreaterThanOrEqual]];
             [subviewContraints addObject:[rightButton.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:0 relation:NSLayoutRelationGreaterThanOrEqual]];
             CGFloat buttonWidth = rightButton.frame.size.width ?: [rightButton sizeThatFits:fitsSize].width;
-            rightWidth += 8 + buttonWidth + 8 + UIScreen.fw.safeAreaInsets.right;
+            rightWidth += 8 + buttonWidth + 8 + UIScreen.fw_safeAreaInsets.right;
         }
         if (rightMoreButton) {
             [subviewContraints addObject:[rightMoreButton.fw pinEdge:NSLayoutAttributeRight toEdge:NSLayoutAttributeLeft ofView:rightButton withOffset:-8]];

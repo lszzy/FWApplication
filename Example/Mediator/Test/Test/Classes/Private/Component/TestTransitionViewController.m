@@ -105,7 +105,7 @@
     [super viewWillAppear:animated];
     
     self.frameLabel.text = NSStringFromCGRect(self.view.frame);
-    if (!self.fw.isPresented) {
+    if (!self.fw_isPresented) {
         self.fw.navigationBarHidden = YES;
     }
 }

@@ -197,12 +197,12 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)refreshBarFrame
 {
     self.frameLabel.text = [NSString stringWithFormat:@"全局状态栏：%.0f 当前状态栏：%.0f\n全局导航栏：%.0f 当前导航栏：%.0f\n全局顶部栏：%.0f 当前顶部栏：%.0f\n全局标签栏：%.0f 当前标签栏：%.0f\n全局工具栏：%.0f 当前工具栏：%.0f\n全局安全区域：%@",
-                            [UIScreen.fw statusBarHeight], [self.fw statusBarHeight],
-                            [UIScreen.fw navigationBarHeight], [self.fw navigationBarHeight],
-                            [UIScreen.fw topBarHeight], [self.fw topBarHeight],
-                            [UIScreen.fw tabBarHeight], [self.fw tabBarHeight],
-                            [UIScreen.fw toolBarHeight], [self.fw toolBarHeight],
-                            NSStringFromUIEdgeInsets([UIScreen.fw safeAreaInsets])];
+                            [UIScreen fw_statusBarHeight], [self fw_statusBarHeight],
+                            [UIScreen fw_navigationBarHeight], [self fw_navigationBarHeight],
+                            [UIScreen fw_topBarHeight], [self fw_topBarHeight],
+                            [UIScreen fw_tabBarHeight], [self fw_tabBarHeight],
+                            [UIScreen fw_toolBarHeight], [self fw_toolBarHeight],
+                            NSStringFromUIEdgeInsets([UIScreen fw_safeAreaInsets])];
 }
 
 - (void)onStatusBar
@@ -357,10 +357,10 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onOrientation
 {
-    if ([UIDevice.fw isDeviceLandscape]) {
-        [UIDevice.fw setDeviceOrientation:UIDeviceOrientationPortrait];
+    if ([UIDevice fw_isDeviceLandscape]) {
+        [UIDevice fw_setDeviceOrientation:UIDeviceOrientationPortrait];
     } else {
-        [UIDevice.fw setDeviceOrientation:UIDeviceOrientationLandscapeLeft];
+        [UIDevice fw_setDeviceOrientation:UIDeviceOrientationLandscapeLeft];
     }
     [self refreshBarFrame];
 }

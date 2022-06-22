@@ -66,7 +66,7 @@
 
 - (void)renderButtons:(WKWebView*)webView {
     UIFont* font = [UIFont fontWithName:@"HelveticaNeue" size:12.0];
-    CGFloat y = FWScreenHeight - FWTopBarHeight - UIScreen.fw.safeAreaInsets.bottom - 45;
+    CGFloat y = FWScreenHeight - FWTopBarHeight - UIScreen.fw_safeAreaInsets.bottom - 45;
     
     UIButton *callbackButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [callbackButton setTitle:@"Call" forState:UIControlStateNormal];

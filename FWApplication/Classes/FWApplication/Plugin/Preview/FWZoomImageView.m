@@ -118,7 +118,7 @@
     }
     if (_videoCloseButton) {
         [_videoCloseButton sizeToFit];
-        CGPoint videoCloseButtonCenter = self.videoCloseButtonCenter ? self.videoCloseButtonCenter() : CGPointMake(UIScreen.fw.safeAreaInsets.left + 24, FWStatusBarHeight + FWNavigationBarHeight / 2);
+        CGPoint videoCloseButtonCenter = self.videoCloseButtonCenter ? self.videoCloseButtonCenter() : CGPointMake(UIScreen.fw_safeAreaInsets.left + 24, FWStatusBarHeight + FWNavigationBarHeight / 2);
         _videoCloseButton.center = videoCloseButtonCenter;
     }
     
@@ -497,7 +497,7 @@
 
 - (void)handleCloseButton:(UIButton *)button {
     UIViewController *viewController = self.fw.viewController;
-    if (viewController && viewController.fw.isPresented) {
+    if (viewController && viewController.fw_isPresented) {
         [viewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
