@@ -259,7 +259,7 @@ static WKProcessPool *fwStaticProcessPool = nil;
     
     NSURL *requestUrl = [webRequest isKindOfClass:[NSURL class]] ? webRequest : nil;
     if (!requestUrl && [webRequest isKindOfClass:[NSString class]]) {
-        requestUrl = [NSURL.fw urlWithString:webRequest];
+        requestUrl = [NSURL fw_urlWithString:webRequest];
     }
     if (requestUrl.absoluteString.length < 1) return;
     
@@ -1048,7 +1048,7 @@ NSString * FWWebViewJsBridge_js() {
 - (NSString *)userAgent
 {
     if (self.base.customUserAgent.length > 0) return self.base.customUserAgent;
-    NSString *userAgent = [self invokeGetter:@"userAgent"];
+    NSString *userAgent = [self.base fw_invokeGetter:@"userAgent"];
     if ([userAgent isKindOfClass:[NSString class]] && userAgent.length > 0) return userAgent;
     return [WKWebView.fw browserUserAgent];
 }

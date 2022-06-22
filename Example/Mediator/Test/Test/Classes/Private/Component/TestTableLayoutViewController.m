@@ -142,7 +142,7 @@
 
 - (void)renderView
 {
-    self.isShort = [@[@0, @1].fw.randomObject fw].safeInteger == 0;
+    self.isShort = [@[@0, @1].fw.randomObject fw_safeInteger] == 0;
     FWWeakifySelf();
     [self.tableView.fw setRefreshingBlock:^{
         FWStrongifySelf();

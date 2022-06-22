@@ -1161,7 +1161,7 @@ static NSString *(^kPlayerFileNameRules)(NSURL *url);
     if (kPlayerFileNameRules) {
         pathComponent = kPlayerFileNameRules(url);
     } else {
-        pathComponent = [url.absoluteString.fw md5Encode];
+        pathComponent = [url.absoluteString fw_md5Encode];
         pathComponent = [pathComponent stringByAppendingPathExtension:url.pathExtension];
     }
     return [[self cacheDirectory] stringByAppendingPathComponent:pathComponent];

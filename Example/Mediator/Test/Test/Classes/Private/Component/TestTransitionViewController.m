@@ -87,7 +87,7 @@
     FWWeakifySelf();
     [self.fw setLeftBarItem:FWIcon.closeImage block:^(id sender) {
         FWStrongifySelf();
-        [self.fw closeViewControllerAnimated:!self.noAnimate];
+        [self fw_closeViewControllerAnimated:!self.noAnimate];
     }];
     
     // 设置背景(present时透明，push时不透明)
@@ -96,7 +96,7 @@
     // 点击背景关闭，默认子视图也会响应，解决方法：子视图设为UIButton或子视图添加空手势事件
     [self.view.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
-        [self.fw closeViewControllerAnimated:!self.noAnimate];
+        [self fw_closeViewControllerAnimated:!self.noAnimate];
     }];
 }
 
@@ -172,7 +172,7 @@ FWDealloc();
         if (self.useAnimator) {
             [self configAnimator];
         }
-        [self.fw closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
     
     // 方式3：手工指定动画参数

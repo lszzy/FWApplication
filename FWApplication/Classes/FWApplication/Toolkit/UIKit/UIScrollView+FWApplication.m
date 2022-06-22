@@ -19,10 +19,10 @@
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizerShouldBegin:) swizzleMethod:@selector(innerGestureRecognizerShouldBegin:)];
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)];
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldRequireFailureOfGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldRequireFailureOfGestureRecognizer:)];
-        [UIScrollView.fw exchangeInstanceMethod:@selector(gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:)];
+        [UIScrollView fw_exchangeInstanceMethod:@selector(gestureRecognizerShouldBegin:) swizzleMethod:@selector(innerGestureRecognizerShouldBegin:)];
+        [UIScrollView fw_exchangeInstanceMethod:@selector(gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:)];
+        [UIScrollView fw_exchangeInstanceMethod:@selector(gestureRecognizer:shouldRequireFailureOfGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldRequireFailureOfGestureRecognizer:)];
+        [UIScrollView fw_exchangeInstanceMethod:@selector(gestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:) swizzleMethod:@selector(innerGestureRecognizer:shouldBeRequiredToFailByGestureRecognizer:)];
     });
 }
 

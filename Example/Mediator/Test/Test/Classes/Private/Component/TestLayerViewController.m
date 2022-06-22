@@ -308,7 +308,7 @@ FWPropertyWeak(UIButton *, snapshotButton);
 
 - (void)onSnapshot
 {
-    UIImage *image = [UIWindow.fw.mainWindow.fw snapshotImage];
+    UIImage *image = [UIWindow.fw_mainWindow.fw snapshotImage];
     [image.fw saveImageWithCompletion:^(NSError *error){
         NSLog(@"%@", error == nil ? @"保存成功" : @"保存失败");
     }];

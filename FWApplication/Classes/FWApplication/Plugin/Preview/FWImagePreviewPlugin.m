@@ -69,7 +69,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos
@@ -87,7 +87,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos

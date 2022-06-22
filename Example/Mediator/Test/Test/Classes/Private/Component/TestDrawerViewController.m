@@ -24,7 +24,7 @@
     FWWeakifySelf();
     [self.fw setLeftBarItem:FWIcon.backImage block:^(id sender) {
         FWStrongifySelf();
-        [self.fw closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
 }
 

@@ -140,12 +140,12 @@
 
 - (UITextField *)textField
 {
-    return [self invokeGetter:@"searchField"];
+    return [self.base fw_invokeGetter:@"searchField"];
 }
 
 - (UIButton *)cancelButton
 {
-    return [self invokeGetter:@"cancelButton"];
+    return [self.base fw_invokeGetter:@"cancelButton"];
 }
 
 - (UIColor *)backgroundColor

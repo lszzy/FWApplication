@@ -186,62 +186,62 @@
 
 - (UIEdgeInsets)toastInsets
 {
-    return UIWindow.fw.mainWindow.fw.toastInsets;
+    return UIWindow.fw_mainWindow.fw.toastInsets;
 }
 
 - (void)setToastInsets:(UIEdgeInsets)toastInsets
 {
-    UIWindow.fw.mainWindow.fw.toastInsets = toastInsets;
+    UIWindow.fw_mainWindow.fw.toastInsets = toastInsets;
 }
 
 - (void)showLoading
 {
-    [UIWindow.fw.mainWindow.fw showLoading];
+    [UIWindow.fw_mainWindow.fw showLoading];
 }
 
 - (void)showLoadingWithText:(id)text
 {
-    [UIWindow.fw.mainWindow.fw showLoadingWithText:text];
+    [UIWindow.fw_mainWindow.fw showLoadingWithText:text];
 }
 
 - (void)hideLoading
 {
-    [UIWindow.fw.mainWindow.fw hideLoading];
+    [UIWindow.fw_mainWindow.fw hideLoading];
 }
 
 - (void)showProgressWithText:(id)text progress:(CGFloat)progress
 {
-    [UIWindow.fw.mainWindow.fw showProgressWithText:text progress:progress];
+    [UIWindow.fw_mainWindow.fw showProgressWithText:text progress:progress];
 }
 
 - (void)hideProgress
 {
-    [UIWindow.fw.mainWindow.fw hideProgress];
+    [UIWindow.fw_mainWindow.fw hideProgress];
 }
 
 - (void)showMessageWithText:(id)text
 {
-    [UIWindow.fw.mainWindow.fw showMessageWithText:text];
+    [UIWindow.fw_mainWindow.fw showMessageWithText:text];
 }
 
 - (void)showMessageWithText:(id)text style:(FWToastStyle)style
 {
-    [UIWindow.fw.mainWindow.fw showMessageWithText:text style:style];
+    [UIWindow.fw_mainWindow.fw showMessageWithText:text style:style];
 }
 
 - (void)showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
-    [UIWindow.fw.mainWindow.fw showMessageWithText:text style:style completion:completion];
+    [UIWindow.fw_mainWindow.fw showMessageWithText:text style:style completion:completion];
 }
 
 - (void)showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
 {
-    [UIWindow.fw.mainWindow.fw showMessageWithText:text style:style autoHide:autoHide completion:completion];
+    [UIWindow.fw_mainWindow.fw showMessageWithText:text style:style autoHide:autoHide completion:completion];
 }
 
 - (void)hideMessage
 {
-    [UIWindow.fw.mainWindow.fw hideMessage];
+    [UIWindow.fw_mainWindow.fw hideMessage];
 }
 
 @end

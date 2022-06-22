@@ -327,9 +327,9 @@
             }
         }));
         
-        [UIViewController.fw exchangeInstanceMethod:@selector(respondsToSelector:) swizzleMethod:@selector(innerIntercepterRespondsToSelector:)];
-        [UIViewController.fw exchangeInstanceMethod:@selector(methodSignatureForSelector:) swizzleMethod:@selector(innerIntercepterMethodSignatureForSelector:)];
-        [UIViewController.fw exchangeInstanceMethod:@selector(forwardInvocation:) swizzleMethod:@selector(innerIntercepterForwardInvocation:)];
+        [UIViewController fw_exchangeInstanceMethod:@selector(respondsToSelector:) swizzleMethod:@selector(innerIntercepterRespondsToSelector:)];
+        [UIViewController fw_exchangeInstanceMethod:@selector(methodSignatureForSelector:) swizzleMethod:@selector(innerIntercepterMethodSignatureForSelector:)];
+        [UIViewController fw_exchangeInstanceMethod:@selector(forwardInvocation:) swizzleMethod:@selector(innerIntercepterForwardInvocation:)];
     });
 }
 

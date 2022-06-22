@@ -22,7 +22,7 @@
         self.step = 1;
     }
     
-    self.fw.workflowName = [NSString stringWithFormat:@"workflow.%ld", self.step];
+    self.fw_workflowName = [NSString stringWithFormat:@"workflow.%ld", self.step];
     self.navigationItem.title = [NSString stringWithFormat:@"工作流-%ld", self.step];
     
     if (self.step < 3) {
@@ -44,12 +44,12 @@
 
 - (void)onExit
 {
-    [self.navigationController.fw popWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController fw_popWorkflows:@[@"workflow"] animated:YES];
 }
 
 - (void)onOpen
 {
-    [self.navigationController.fw pushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController fw_pushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
 }
 
 @end

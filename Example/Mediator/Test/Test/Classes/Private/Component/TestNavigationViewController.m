@@ -34,10 +34,10 @@
     [super viewWillAppear:animated];
     
     if (self.fullscreenPop) {
-        if (!self.fw.tempObject) {
-            self.fw.tempObject = UIColor.fw.randomColor;
+        if (!self.fw_tempObject) {
+            self.fw_tempObject = UIColor.fw.randomColor;
         }
-        self.navigationController.navigationBar.fw_backgroundColor = self.fw.tempObject;
+        self.navigationController.navigationBar.fw_backgroundColor = self.fw_tempObject;
     }
 }
 

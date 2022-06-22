@@ -288,7 +288,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showAlertWithTitle:title
                        message:message];
@@ -301,7 +301,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showAlertWithTitle:title
                        message:message
@@ -319,7 +319,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showAlertWithTitle:title
                        message:message
@@ -338,7 +338,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showConfirmWithTitle:title
                          message:message
@@ -356,7 +356,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showConfirmWithTitle:title
                          message:message
@@ -374,7 +374,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showPromptWithTitle:title
                         message:message
@@ -393,7 +393,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showPromptWithTitle:title
                         message:message
@@ -415,7 +415,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showPromptWithTitle:title
                         message:message
@@ -440,7 +440,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showAlertWithTitle:title
                        message:message
@@ -461,7 +461,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showSheetWithTitle:title
                         message:message
@@ -477,7 +477,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showSheetWithTitle:title
                        message:message
@@ -496,7 +496,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showSheetWithTitle:title
                        message:message
@@ -518,7 +518,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showSheetWithTitle:title
                        message:message

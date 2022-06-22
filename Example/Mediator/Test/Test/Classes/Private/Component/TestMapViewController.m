@@ -35,8 +35,8 @@
 
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    if (!mapView.fw.tempObject) {
-        mapView.fw.tempObject = @(YES);
+    if (!mapView.fw_tempObject) {
+        mapView.fw_tempObject = @(YES);
         
         MKCoordinateRegion region = MKCoordinateRegionMake(userLocation.location.coordinate, MKCoordinateSpanMake(0.01, 0.01));
         mapView.region = region;

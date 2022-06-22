@@ -185,7 +185,7 @@ NSNotificationName const FWStatisticalEventTriggeredNotification = @"FWStatistic
         FWSwizzleMethod(((UITableView *)self.base).delegate, @selector(tableView:didSelectRowAtIndexPath:), @"FWStatisticalManager", FWSwizzleType(NSObject<UITableViewDelegate> *), FWSwizzleReturn(void), FWSwizzleArgs(UITableView *tableView, NSIndexPath *indexPath), FWSwizzleCode({
             FWSwizzleOriginal(tableView, indexPath);
             
-            if (![selfObject.fw isSwizzleInstanceMethod:@selector(tableView:didSelectRowAtIndexPath:) identifier:@"FWStatisticalManager"]) return;
+            if (![selfObject fw_isSwizzleInstanceMethod:@selector(tableView:didSelectRowAtIndexPath:) identifier:@"FWStatisticalManager"]) return;
             if (![tableView.fw statisticalClickIsRegistered]) return;
             UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
             [tableView.fw statisticalTriggerClick:cell indexPath:indexPath];
@@ -197,7 +197,7 @@ NSNotificationName const FWStatisticalEventTriggeredNotification = @"FWStatistic
         FWSwizzleMethod(((UICollectionView *)self.base).delegate, @selector(collectionView:didSelectItemAtIndexPath:), @"FWStatisticalManager", FWSwizzleType(NSObject<UICollectionViewDelegate> *), FWSwizzleReturn(void), FWSwizzleArgs(UICollectionView *collectionView, NSIndexPath *indexPath), FWSwizzleCode({
             FWSwizzleOriginal(collectionView, indexPath);
             
-            if (![selfObject.fw isSwizzleInstanceMethod:@selector(collectionView:didSelectItemAtIndexPath:) identifier:@"FWStatisticalManager"]) return;
+            if (![selfObject fw_isSwizzleInstanceMethod:@selector(collectionView:didSelectItemAtIndexPath:) identifier:@"FWStatisticalManager"]) return;
             if (![collectionView.fw statisticalClickIsRegistered]) return;
             UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
             [collectionView.fw statisticalTriggerClick:cell indexPath:indexPath];

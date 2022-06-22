@@ -137,17 +137,17 @@
     [statusStr appendString:NSStringFromClass([self.cache class])];
     [statusStr appendString:@"\n"];
     NSString *cacheStr = [self.cache objectForKey:TestCacheKey];
-    if ([cacheStr.fw isNotEmpty]) {
+    if ([cacheStr fw_isNotEmpty]) {
         [statusStr appendString:cacheStr];
     } else {
         [statusStr appendString:@"缓存不存在"];
     }
     [statusStr appendString:@"\n"];
     NSNumber *expireNum = [self.cache objectForKey:TestExpireKey];
-    if ([expireNum.fw isNotEmpty]) {
+    if ([expireNum fw_isNotEmpty]) {
         [statusStr appendString:[NSString stringWithFormat:@"%.1fs有效", [expireNum doubleValue] - [[NSDate date] timeIntervalSince1970]]];
     } else {
-        [statusStr appendString:cacheStr.fw.isNotEmpty ? @"永久有效" : @"缓存无效"];
+        [statusStr appendString:cacheStr.fw_isNotEmpty ? @"永久有效" : @"缓存无效"];
     }
     self.cacheLabel.text = statusStr;
 }

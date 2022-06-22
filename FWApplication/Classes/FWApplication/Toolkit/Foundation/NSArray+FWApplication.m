@@ -19,7 +19,7 @@
     
     __block NSInteger sum = 0;
     [weights enumerateObjectsUsingBlock:^(NSObject *obj, NSUInteger idx, BOOL *stop) {
-        NSInteger val = [obj.fw safeInteger];
+        NSInteger val = [obj fw_safeInteger];
         if (val > 0 && idx < count) {
             sum += val;
         }
@@ -30,7 +30,7 @@
     __block NSInteger weight = 0;
     NSInteger random = arc4random_uniform((u_int32_t)sum);
     [weights enumerateObjectsUsingBlock:^(NSObject *obj, NSUInteger idx, BOOL *stop) {
-        NSInteger val = [obj.fw safeInteger];
+        NSInteger val = [obj fw_safeInteger];
         if (val > 0 && idx < count) {
             weight += val;
             if (weight > random) {

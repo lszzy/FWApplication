@@ -41,7 +41,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     }];
     
     [FWRouter setRouteFilter:^BOOL(FWRouterContext * _Nonnull context) {
-        NSURL *url = [NSURL.fw urlWithString:context.URL];
+        NSURL *url = [NSURL fw_urlWithString:context.URL];
         if ([UIApplication.fw isSystemURL:url]) {
             [UIApplication.fw openURL:url];
             return NO;
@@ -59,13 +59,13 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
             if ([object isKindOfClass:[UIViewController class]]) {
                 [FWRouter openViewController:object animated:YES];
             } else {
-                [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+                [UIWindow.fw_topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             }
         }
         return object;
     }];
     [FWRouter setErrorHandler:^(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+        [UIWindow.fw_topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
     }];
 }
 
@@ -122,47 +122,47 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         if (context.isOpening) {
             return @"OBJECT UNMATCH";
         } else {
-            [UIWindow.fw.topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+            [UIWindow.fw_topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             return nil;
         }
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_JAVASCRIPT withHandler:^id(FWRouterContext *context) {
-        UIViewController *topController = [UIWindow.fw topViewController];
+        UIViewController *topController = [UIWindow fw_topViewController];
         if (![topController isKindOfClass:[TestWebViewController class]] || !topController.isViewLoaded) return nil;
         
-        NSString *param = [context.parameters[@"param"] fw].safeString;
+        NSString *param = [context.parameters[@"param"] fw_safeString];
         NSString *result = [NSString stringWithFormat:@"js:%@ => app:%@", param, @"2"];
         
-        NSString *callback = [context.parameters[@"callback"] fw].safeString;
+        NSString *callback = [context.parameters[@"callback"] fw_safeString];
         NSString *javascript = [NSString stringWithFormat:@"%@('%@');", callback, result];
         
         TestWebViewController *viewController = (TestWebViewController *)topController;
         [viewController.webView evaluateJavaScript:javascript completionHandler:^(id value, NSError *error) {
-            [[UIWindow.fw topViewController].fw showAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
+            [[UIWindow fw_topViewController].fw showAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
         }];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME withHandler:^id(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw.mainWindow.fw selectTabBarIndex:0];
+        [UIWindow.fw_mainWindow.fw selectTabBarIndex:0];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME_TEST withHandler:^id(FWRouterContext * _Nonnull context) {
-        TestModuleController *testController = [UIWindow.fw.mainWindow.fw selectTabBarController:[TestModuleController class]];
+        TestModuleController *testController = [UIWindow.fw_mainWindow.fw selectTabBarController:[TestModuleController class]];
         [testController setSelectedIndex:1];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_HOME_SETTINGS withHandler:^id(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw.mainWindow.fw selectTabBarIndex:2];
+        [UIWindow.fw_mainWindow.fw selectTabBarIndex:2];
         return nil;
     }];
     
     [FWRouter registerURL:TestRouter.ROUTE_CLOSE withHandler:^id(FWRouterContext * _Nonnull context) {
-        UIViewController *topController = [UIWindow.fw topViewController];
-        [topController.fw closeViewControllerAnimated:YES];
+        UIViewController *topController = [UIWindow fw_topViewController];
+        [topController fw_closeViewControllerAnimated:YES];
         return nil;
     }];
     
@@ -207,7 +207,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         [self.fw setRightBarItem:@"完成" block:^(id sender) {
             FWStrongifySelf();
             [FWRouter completeURL:self.context result:@"我是回调数据"];
-            [self.fw closeViewControllerAnimated:YES];
+            [self fw_closeViewControllerAnimated:YES];
         }];
     }
 }
@@ -234,17 +234,17 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 {
     self.navigationItem.title = @"FWRouter";
     NSString *url = @"http://test.com?id=我是中文";
-    FWLogDebug(@"fwUrlEncode: %@", [url.fw urlEncode]);
-    FWLogDebug(@"fwUrlDecode: %@", [[url.fw urlEncode].fw urlDecode]);
-    FWLogDebug(@"fwUrlEncodeComponent: %@", [url.fw urlEncodeComponent]);
-    FWLogDebug(@"fwUrlDecodeComponent: %@", [[url.fw urlEncodeComponent].fw urlDecodeComponent]);
+    FWLogDebug(@"fwUrlEncode: %@", [url fw_urlEncode]);
+    FWLogDebug(@"fwUrlDecode: %@", [[url fw_urlEncode] fw_urlDecode]);
+    FWLogDebug(@"fwUrlEncodeComponent: %@", [url fw_urlEncodeComponent]);
+    FWLogDebug(@"fwUrlDecodeComponent: %@", [[url fw_urlEncodeComponent] fw_urlDecodeComponent]);
     
     url = @"app://test/1?value=2&name=name2&title=我是字符串100%&url=https%3A%2F%2Fkvm.wuyong.site%2Ftest.php%3Fvalue%3D1%26name%3Dname1%23%2Fhome1#/home2";
-    FWLogDebug(@"string.fwQueryDecode: %@", [url.fw queryDecode]);
-    FWLogDebug(@"string.fwQueryEncode: %@", [NSString.fw queryEncode:[url.fw queryDecode]]);
-    NSURL *nsurl = [NSURL.fw urlWithString:url];
-    FWLogDebug(@"query.fwQueryDecode: %@", [nsurl.query.fw queryDecode]);
-    FWLogDebug(@"url.fwQueryDictionary: %@", nsurl.fw.queryDictionary);
+    FWLogDebug(@"string.fwQueryDecode: %@", [url fw_queryDecode]);
+    FWLogDebug(@"string.fwQueryEncode: %@", [NSString fw_queryEncode:[url fw_queryDecode]]);
+    NSURL *nsurl = [NSURL fw_urlWithString:url];
+    FWLogDebug(@"query.fwQueryDecode: %@", [nsurl.query fw_queryDecode]);
+    FWLogDebug(@"url.fwQueryDictionary: %@", nsurl.fw_queryDictionary);
 }
 
 - (void)renderData
@@ -252,7 +252,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     NSString *str = @"http://test.com?id=我是中文";
     NSURL *url = [NSURL URLWithString:str];
     FWLogDebug(@"str: %@ =>\nurl: %@", str, url);
-    url = [NSURL.fw urlWithString:str];
+    url = [NSURL fw_urlWithString:str];
     FWLogDebug(@"str: %@ =>\nurl: %@", str, url);
     
     NSString *urlStr = [FWRouter generateURL:TestRouter.ROUTE_TEST parameters:nil];

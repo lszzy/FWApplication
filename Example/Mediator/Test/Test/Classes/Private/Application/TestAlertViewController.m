@@ -90,7 +90,7 @@
                        message:@"警告框消息"
                         cancel:nil
                    cancelBlock:^{
-                        NSLog(@"顶部控制器：%@", UIWindow.fw.topPresentedController);
+                        NSLog(@"顶部控制器：%@", UIWindow.fw_topPresentedController);
                     }];
 }
 
@@ -193,7 +193,7 @@
                        message:nil
                         cancel:nil
                    cancelBlock:^{
-                        NSLog(@"顶部控制器：%@", UIWindow.fw.topPresentedController);
+                        NSLog(@"顶部控制器：%@", UIWindow.fw_topPresentedController);
                     }];
 }
 

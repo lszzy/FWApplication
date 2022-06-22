@@ -163,7 +163,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TestNestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTestNestCollectionCellID forIndexPath:indexPath];
-    cell.textLabel.text = [@(indexPath.row) fw].safeString;
+    cell.textLabel.text = [@(indexPath.row) fw_safeString];
     cell.selected = NO;
     return cell;
 }
@@ -300,7 +300,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
             FWStrongifySelf();
             TestNestScrollViewController *viewController = [TestNestScrollViewController new];
             viewController.refreshList = YES;
-            [self.fw openViewController:viewController animated:YES];
+            [self fw_openViewController:viewController animated:YES];
         }];
     }
 }

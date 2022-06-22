@@ -2601,7 +2601,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         if (checkVideo && asset.assetType == FWAssetTypeVideo) {
             NSString *filePath = [PHPhotoLibrary.fw pickerControllerVideoCachePath];
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
-            filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString.fw md5Encode]] stringByAppendingPathExtension:@"mp4"];
+            filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fw_md5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
             [asset requestVideoURLWithOutputURL:fileURL exportPreset:useOrigin ? AVAssetExportPresetHighestQuality : AVAssetExportPresetMediumQuality completion:^(NSURL * _Nullable videoURL, NSDictionary<NSString *,id> * _Nullable info) {
                 dispatch_async(dispatch_get_main_queue(), ^{

@@ -220,7 +220,7 @@
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    self.isSearch = searchText.fw.trimString.length > 0;
+    self.isSearch = searchText.fw_trimString.length > 0;
     if (!self.isSearch) {
         self.searchResult = [NSMutableArray array];
         [self.tableView reloadData];
@@ -228,7 +228,7 @@
     }
     
     NSMutableArray *searchResult = [NSMutableArray array];
-    NSString *searchString = searchText.fw.trimString.lowercaseString;
+    NSString *searchString = searchText.fw_trimString.lowercaseString;
     for (NSArray *sectionData in self.tableData) {
         NSMutableArray *sectionResult = [NSMutableArray array];
         for (NSArray *rowData in sectionData[1]) {

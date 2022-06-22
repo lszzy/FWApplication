@@ -73,7 +73,7 @@
     closeLabel.userInteractionEnabled = YES;
     [closeLabel.fw addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
-        [self.fw closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
     [contentView addSubview:closeLabel];
     [self.view addSubview:contentView];
@@ -131,7 +131,7 @@
                 [string appendFormat:@"text: %@\nconfidence: %@\n", object.text, @(object.confidence)];
             }
             NSString *message = string.length > 0 ? string.copy : @"识别结果为空";
-            [UIWindow.fw.mainWindow.fw showAlertWithTitle:@"扫描结果" message:message];
+            [UIWindow.fw_mainWindow.fw showAlertWithTitle:@"扫描结果" message:message];
         }];
     }
 }

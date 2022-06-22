@@ -116,7 +116,7 @@
     }
     
     if ([self.base respondsToSelector:@selector(view)]) {
-        return [self invokeGetter:@"view"];
+        return [self.base fw_invokeGetter:@"view"];
     }
     return nil;
 }

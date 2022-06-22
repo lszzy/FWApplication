@@ -92,7 +92,7 @@
 + (void)refreshController
 {
     if (@available(iOS 13.0, *)) {
-        FWSceneDelegate *sceneDelegete = (FWSceneDelegate *)UIWindow.fw.mainScene.delegate;
+        FWSceneDelegate *sceneDelegete = (FWSceneDelegate *)UIWindow.fw_mainScene.delegate;
         [sceneDelegete setupController];
     } else {
         FWAppDelegate *appDelegate = (FWAppDelegate *)UIApplication.sharedApplication.delegate;

@@ -137,7 +137,7 @@
 
 - (UIView *)backgroundView
 {
-    return [self invokeGetter:@"_backgroundView"];
+    return [self.base fw_invokeGetter:@"_backgroundView"];
 }
 
 @end

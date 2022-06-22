@@ -47,7 +47,7 @@
         titleColor = self.alertAppearance.actionColor;
     }
     if (titleColor) {
-        [self invokeSetter:@"titleTextColor" withObject:titleColor];
+        [self.base fw_invokeSetter:@"titleTextColor" withObject:titleColor];
     }
 }
 
@@ -59,7 +59,7 @@
 - (void)setTitleColor:(UIColor *)titleColor
 {
     objc_setAssociatedObject(self.base, @selector(titleColor), titleColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self invokeSetter:@"titleTextColor" withObject:titleColor];
+    [self.base fw_invokeSetter:@"titleTextColor" withObject:titleColor];
 }
 
 @end
@@ -119,7 +119,7 @@
 - (void)setAttributedTitle:(NSAttributedString *)attributedTitle
 {
     objc_setAssociatedObject(self.base, @selector(attributedTitle), attributedTitle, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self invokeSetter:@"attributedTitle" withObject:attributedTitle];
+    [self.base fw_invokeSetter:@"attributedTitle" withObject:attributedTitle];
 }
 
 - (NSAttributedString *)attributedMessage
@@ -130,7 +130,7 @@
 - (void)setAttributedMessage:(NSAttributedString *)attributedMessage
 {
     objc_setAssociatedObject(self.base, @selector(attributedMessage), attributedMessage, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self invokeSetter:@"attributedMessage" withObject:attributedMessage];
+    [self.base fw_invokeSetter:@"attributedMessage" withObject:attributedMessage];
 }
 
 @end

@@ -89,7 +89,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImageCameraWithAllowsEditing:allowsEditing
                                   completion:completion];
@@ -102,7 +102,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImageCameraWithFilterType:filterType
                             allowsEditing:allowsEditing
@@ -115,7 +115,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImagePickerWithAllowsEditing:allowsEditing
                                   completion:completion];
@@ -127,7 +127,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImagePickerWithSelectionLimit:selectionLimit
                                 allowsEditing:allowsEditing
@@ -142,7 +142,7 @@
 {
     UIViewController *ctrl = self.base.fw.viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
     [ctrl.fw showImagePickerWithFilterType:filterType
                            selectionLimit:selectionLimit

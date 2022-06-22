@@ -331,7 +331,7 @@ FWPropertyAssign(BOOL, hideToast);
         controller.permittedArrowDirections = UIPopoverArrowDirectionUp;
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         controller.passthroughViews = [NSArray arrayWithObjects:cell, nil];
-    } shouldDismiss:[@[@0, @1].fw.randomObject fw].safeBool];
+    } shouldDismiss:[@[@0, @1].fw.randomObject fw_safeBool]];
     viewController.fw.presentationDidDismiss = ^{
         [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
     };
