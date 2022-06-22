@@ -225,12 +225,12 @@ static WKProcessPool *fwStaticProcessPool = nil;
     [self addSubview:self.progressView];
     [self.progressView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
     [self.progressView.fw setDimension:NSLayoutAttributeHeight toSize:2.f];
-    [self.fw observeProperty:@"estimatedProgress" block:^(FWWebView *webView, NSDictionary *change) {
+    [self fw_observeProperty:@"estimatedProgress" block:^(FWWebView *webView, NSDictionary *change) {
         if (webView.estimatedProgress < 1.0) {
             webView.progressView.fw.webProgress = webView.estimatedProgress;
         }
     }];
-    [self.fw observeProperty:@"loading" block:^(FWWebView *webView, NSDictionary *change) {
+    [self fw_observeProperty:@"loading" block:^(FWWebView *webView, NSDictionary *change) {
         if (!webView.isLoading) {
             webView.progressView.fw.webProgress = 1.0;
         }

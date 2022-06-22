@@ -28,7 +28,7 @@
 {
     self = [super init];
     if (self) {
-        [self.fw applyAppearance];
+        [self fw_applyAppearance];
     }
     return self;
 }

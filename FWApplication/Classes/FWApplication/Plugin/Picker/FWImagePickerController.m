@@ -47,7 +47,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self didInitializeWithStyle:style];
-        [self.fw applyAppearance];
+        [self fw_applyAppearance];
     }
     return self;
 }
@@ -504,7 +504,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self didInitialize];
-        [self.fw applyAppearance];
+        [self fw_applyAppearance];
     }
     return self;
 }
@@ -1503,7 +1503,7 @@
     if (self) {
         _checkedIndex = NSNotFound;
         [self didInitialize];
-        [self.fw applyAppearance];
+        [self fw_applyAppearance];
     }
     return self;
 }

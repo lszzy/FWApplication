@@ -226,7 +226,7 @@
         alertController.fw.attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
     
-    [alertController.fw observeProperty:@"preferredAction" block:^(UIAlertController *object, NSDictionary *change) {
+    [alertController fw_observeProperty:@"preferredAction" block:^(UIAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(UIAlertAction *obj, NSUInteger idx, BOOL *stop) {
             if (obj.fw.isPreferred) obj.fw.isPreferred = NO;
         }];

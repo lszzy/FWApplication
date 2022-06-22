@@ -25,7 +25,7 @@
 
 - (void)renderInit
 {
-    [self.fw observeNotification:FWThemeChangedNotification block:^(NSNotification * _Nonnull notification) {
+    [self fw_observeNotification:FWThemeChangedNotification block:^(NSNotification * _Nonnull notification) {
         NSLog(@"主题改变通知：%@", @(FWThemeManager.sharedInstance.style));
     }];
     

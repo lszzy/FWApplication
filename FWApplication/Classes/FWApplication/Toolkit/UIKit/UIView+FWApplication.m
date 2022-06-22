@@ -360,7 +360,7 @@
     
     // 设置完成事件，需要在add之前设置才能生效，因为add时会copy动画对象
     if (completion) {
-        animation.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
+        animation.fw_stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
@@ -484,7 +484,7 @@
     
     // 设置完成事件
     if (completion) {
-        transition.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
+        transition.fw_stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
@@ -520,7 +520,7 @@
     
     // 设置完成事件
     if (completion) {
-        animation.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
+        animation.fw_stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }

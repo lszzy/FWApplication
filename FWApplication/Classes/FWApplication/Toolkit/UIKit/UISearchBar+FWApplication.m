@@ -219,11 +219,11 @@
     UIButton *cancelButton = [self cancelButton];
     if (enabled) {
         cancelButton.enabled = YES;
-        [cancelButton.fw observeProperty:@"enabled" block:^(UIButton *object, NSDictionary *change) {
+        [cancelButton fw_observeProperty:@"enabled" block:^(UIButton *object, NSDictionary *change) {
             if (!object.enabled) object.enabled = YES;
         }];
     } else {
-        [cancelButton.fw unobserveProperty:@"enabled"];
+        [cancelButton fw_unobserveProperty:@"enabled"];
     }
 }
 

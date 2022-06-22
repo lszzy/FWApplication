@@ -556,7 +556,7 @@
         self.showsSubAccessoryPlaceholder = NO;
         self.showsLoadingPlaceholder = YES;
         
-        [self.fw applyAppearance];
+        [self fw_applyAppearance];
     }
     return self;
 }

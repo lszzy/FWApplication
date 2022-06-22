@@ -72,6 +72,7 @@ FWPropertyCopy(NSString *, appendString);
     textViewAppearance.fw.reboundDistance = 200;
     
     UITextField *mobileField = [self createTextField];
+    mobileField.tag = 1;
     self.mobileField = mobileField;
     mobileField.fw.maxUnicodeLength = 10;
     mobileField.fw.menuDisabled = YES;
@@ -84,36 +85,42 @@ FWPropertyCopy(NSString *, appendString);
     [mobileField.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextField *passwordField = [self createTextField];
+    passwordField.tag = 2;
     self.passwordField = passwordField;
     passwordField.delegate = self;
     passwordField.fw.maxLength = 20;
     passwordField.placeholder = @"仅数字和字母转大写，最多20个英文";
     passwordField.keyboardType = UIKeyboardTypeDefault;
     passwordField.returnKeyType = UIReturnKeyNext;
-    mobileField.fw.returnResponder = passwordField;
-    mobileField.fw.nextResponder = passwordField;
+    mobileField.fw.returnNext = YES;
+    FWWeakifySelf();
+    mobileField.fw.nextResponder = ^(UITextField *textField){
+        FWStrongifySelf();
+        return self.passwordField;
+    };
     [mobileField.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:mobileField.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
-    passwordField.delegate = self;
     [self.contentView addSubview:passwordField];
     [passwordField.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:mobileField];
     [passwordField.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextView *textView = [self createTextView];
+    textView.tag = 3;
     self.textView = textView;
     textView.delegate = self;
     textView.backgroundColor = [Theme backgroundColor];
     textView.fw.maxUnicodeLength = 10;
     textView.fw.placeholder = @"问题，最多10个中文";
     textView.returnKeyType = UIReturnKeyNext;
-    passwordField.fw.returnResponder = textView;
-    passwordField.fw.previousResponder = mobileField;
-    passwordField.fw.nextResponder = textView;
+    passwordField.fw.returnNext = YES;
+    passwordField.fw.previousResponderTag = 1;
+    passwordField.fw.nextResponderTag = 3;
     [passwordField.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:passwordField.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
     [self.contentView addSubview:textView];
     [textView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:passwordField withOffset:15];
     [textView.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UITextView *inputView = [self createTextView];
+    inputView.tag = 4;
     self.inputView = inputView;
     inputView.backgroundColor = [Theme backgroundColor];
     inputView.fw.maxLength = 20;
@@ -122,12 +129,12 @@ FWPropertyCopy(NSString *, appendString);
     inputView.returnKeyType = UIReturnKeyDone;
     inputView.fw.returnResign = YES;
     inputView.fw.keyboardDistance = 80;
-    textView.fw.returnResponder = inputView;
-    textView.fw.previousResponder = passwordField;
-    textView.fw.nextResponder = inputView;
+    textView.fw.returnNext = YES;
+    textView.fw.previousResponderTag = 2;
+    textView.fw.nextResponderTag = 4;
     [textView.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:textView.fw.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
     inputView.fw.delegate = self;
-    inputView.fw.previousResponder = textView;
+    inputView.fw.previousResponderTag = 3;
     [inputView.fw addToolbarWithTitle:[NSAttributedString.fw attributedString:inputView.fw.placeholder withFont:[UIFont systemFontOfSize:13.0]] doneBlock:nil];
     [self.contentView addSubview:inputView];
     [inputView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textView withOffset:15];
@@ -233,6 +240,10 @@ FWPropertyCopy(NSString *, appendString);
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    if ([string isEqualToString:@"\n"]) {
+        return YES;
+    }
+    
     NSString *allowedChars = @"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:allowedChars] invertedSet];
     NSString *filterString = [[string componentsSeparatedByCharactersInSet:characterSet] componentsJoinedByString:@""];

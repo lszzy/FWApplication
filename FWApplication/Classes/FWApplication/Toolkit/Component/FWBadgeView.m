@@ -134,9 +134,9 @@
     if (view) {
         block(self.base, view);
     } else {
-        [self observeProperty:@"view" block:^(UIBarItem *object, NSDictionary *change) {
+        [self.base fw_observeProperty:@"view" block:^(UIBarItem *object, NSDictionary *change) {
             if (![change objectForKey:NSKeyValueChangeNewKey]) return;
-            [object.fw unobserveProperty:@"view"];
+            [object fw_unobserveProperty:@"view"];
             
             UIView *view = [object.fw view];
             if (view && object.fw.viewLoadedBlock) {

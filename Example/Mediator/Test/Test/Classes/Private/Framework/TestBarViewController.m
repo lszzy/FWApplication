@@ -63,7 +63,7 @@ FWPropertyAssign(BOOL, hideToast);
     [super viewDidLoad];
     
     self.fw.tabBarHidden = YES;
-    [self.fw observeNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
+    [self fw_observeNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
     
     if (!self.hideToast) {
         [self.fw setRightBarItem:@"启用" block:^(id sender) {
