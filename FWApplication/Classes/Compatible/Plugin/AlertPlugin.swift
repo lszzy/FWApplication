@@ -237,6 +237,17 @@ extension Wrapper where Base: UIViewController {
         base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
+    /// 手工隐藏弹出框，完成后回调
+    /// - Parameters:
+    ///   - animated: 是否执行动画
+    ///   - completion: 完成回调
+    public func hideAlert(
+        animated: Bool,
+        completion: (() -> Void)? = nil
+    ) {
+        base.__fw_hideAlert(animated, completion: completion)
+    }
+    
 }
 
 extension Wrapper where Base: UIView {
@@ -456,6 +467,17 @@ extension Wrapper where Base: UIView {
         customBlock: ((Any) -> Void)?
     ) {
         base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+    }
+    
+    /// 手工隐藏弹出框，完成后回调
+    /// - Parameters:
+    ///   - animated: 是否执行动画
+    ///   - completion: 完成回调
+    public func hideAlert(
+        animated: Bool,
+        completion: (() -> Void)? = nil
+    ) {
+        base.__fw_hideAlert(animated, completion: completion)
     }
     
 }

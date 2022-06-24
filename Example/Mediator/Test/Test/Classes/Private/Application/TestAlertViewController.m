@@ -52,6 +52,7 @@
                                          @[@"操作表(样式)", @"onSheetA"],
                                          @[@"警告框(优先)", @"onAlertP"],
                                          @[@"操作表(优先)", @"onSheetP"],
+                                         @[@"关闭弹出框", @"onCloseA"],
                                          ]];
 }
 
@@ -382,6 +383,17 @@
             [self fw_showSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil cancelBlock:nil];
         }];
     }];
+}
+
+- (void)onCloseA
+{
+    [self fw_showAlertWithTitle:nil message:@"我将在两秒后自动关闭"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIWindow.fw_topPresentedController fw_showAlertWithTitle:nil message:@"我将在一秒后自动关闭"];
+    });
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self fw_hideAlert:YES completion:nil];
+    });
 }
 
 @end

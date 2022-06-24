@@ -7,6 +7,7 @@
 //
 
 #import "FWAlertPluginImpl.h"
+#import "FWAlertController.h""
 #import <objc/runtime.h>
 
 #pragma mark - UIAlertAction+FWAlert
@@ -387,6 +388,31 @@
     
     // 显示Alert
     [viewController presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)viewController:(UIViewController *)viewController
+             hideAlert:(BOOL)animated
+            completion:(void (^)(void))completion
+{
+    UIViewController *alertController = nil;
+    NSArray<Class> *alertClasses = self.customAlertClasses.count > 0 ? self.customAlertClasses : @[UIAlertController.class, FWAlertController.class];
+    
+    UIViewController *presentedController = viewController.presentedViewController;
+    while (presentedController != nil) {
+        for (Class alertClass in alertClasses) {
+            if ([presentedController isKindOfClass:alertClass]) {
+                alertController = presentedController; break;
+            }
+        }
+        if (alertController) break;
+        presentedController = presentedController.presentedViewController;
+    }
+    
+    if (alertController) {
+        [alertController.presentingViewController dismissViewControllerAnimated:animated completion:completion];
+    } else {
+        if (completion) completion();
+    }
 }
 
 @end

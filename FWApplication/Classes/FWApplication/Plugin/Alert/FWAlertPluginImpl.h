@@ -116,6 +116,9 @@ NS_SWIFT_NAME(AlertPluginImpl)
 /// 自定义ActionSheet弹窗样式，nil时使用单例
 @property (nonatomic, strong, nullable) FWAlertAppearance *customSheetAppearance;
 
+/// 自定义弹窗类数组，默认nil时查找UIAlertController|FWAlertController
+@property (nonatomic, copy, nullable) NSArray<Class> *customAlertClasses;
+
 /// 弹窗自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(UIAlertController *alertController);
 

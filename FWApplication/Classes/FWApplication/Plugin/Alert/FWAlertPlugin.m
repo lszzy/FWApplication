@@ -279,6 +279,17 @@
     [alertPlugin viewController:self showSheetWithTitle:title message:message cancel:cancel actions:actions currentIndex:currentIndex actionBlock:actionBlock cancelBlock:cancelBlock customBlock:customBlock];
 }
 
+- (void)fw_hideAlert:(BOOL)animated
+          completion:(void (^)(void))completion
+{
+    // 优先调用插件，不存在时使用默认
+    id<FWAlertPlugin> alertPlugin = self.fw_alertPlugin;
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(viewController:hideAlert:completion:)]) {
+        alertPlugin = FWAlertPluginImpl.sharedInstance;
+    }
+    [alertPlugin viewController:self hideAlert:animated completion:completion];
+}
+
 @end
 
 #pragma mark - UIView+FWAlertPlugin
@@ -530,6 +541,14 @@
                    actionBlock:actionBlock
                    cancelBlock:cancelBlock
                    customBlock:customBlock];
+}
+
+- (void)fw_hideAlert:(BOOL)animated
+          completion:(void (^)(void))completion
+{
+    UIViewController *ctrl = self.fw_viewController;
+    if (!ctrl) ctrl = UIWindow.fw_mainWindow.rootViewController;
+    [ctrl fw_hideAlert:animated completion:completion];
 }
 
 @end

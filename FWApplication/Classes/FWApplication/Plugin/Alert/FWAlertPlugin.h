@@ -27,7 +27,7 @@ NS_SWIFT_NAME(AlertPlugin)
 
 @optional
 
-// 显示弹出框插件方法，默认使用系统UIAlertController
+/// 显示弹出框插件方法，默认使用系统UIAlertController
 - (void)viewController:(UIViewController *)viewController
       showAlertWithTitle:(nullable id)title
                  message:(nullable id)message
@@ -40,7 +40,7 @@ NS_SWIFT_NAME(AlertPlugin)
              cancelBlock:(nullable void (^)(void))cancelBlock
              customBlock:(nullable void (^)(id alertController))customBlock;
 
-// 显示操作表插件方法，默认使用系统UIAlertController
+/// 显示操作表插件方法，默认使用系统UIAlertController
 - (void)viewController:(UIViewController *)viewController
       showSheetWithTitle:(nullable id)title
                  message:(nullable id)message
@@ -50,6 +50,11 @@ NS_SWIFT_NAME(AlertPlugin)
              actionBlock:(nullable void (^)(NSInteger index))actionBlock
              cancelBlock:(nullable void (^)(void))cancelBlock
              customBlock:(nullable void (^)(id alertController))customBlock;
+
+/// 手工隐藏弹出框插件方法，默认查找UIAlertController|FWAlertController
+- (void)viewController:(UIViewController *)viewController
+             hideAlert:(BOOL)animated
+            completion:(nullable void (^)(void))completion;
 
 @end
 
@@ -282,6 +287,15 @@ NS_SWIFT_NAME(AlertPlugin)
                  cancelBlock:(nullable void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id alertController))customBlock NS_REFINED_FOR_SWIFT;
 
+/**
+ * 手工隐藏弹出框，完成后回调
+ *
+ * @param animated 是否执行动画
+ * @param completion 完成回调
+ */
+- (void)fw_hideAlert:(BOOL)animated
+          completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
 @end
 
 #pragma mark - UIView+FWAlertPlugin
@@ -509,6 +523,15 @@ NS_SWIFT_NAME(AlertPlugin)
                  actionBlock:(nullable void (^)(NSInteger index))actionBlock
                  cancelBlock:(nullable void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id alertController))customBlock NS_REFINED_FOR_SWIFT;
+
+/**
+ * 手工隐藏弹出框，完成后回调
+ *
+ * @param animated 是否执行动画
+ * @param completion 完成回调
+ */
+- (void)fw_hideAlert:(BOOL)animated
+          completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 @end
 
