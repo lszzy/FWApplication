@@ -9,7 +9,6 @@
 
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
-@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,18 +16,18 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWDefCopying() \
     - (id)copyWithZone:(NSZone *)zone \
     { \
-        return [self.fw modelCopy]; \
+        return [self fw_modelCopy]; \
     }
 
 /// 定义NSCoding实现宏
 #define FWDefCoding( ) \
     - (instancetype)initWithCoder:(NSCoder *)aDecoder \
     { \
-        return [self.fw modelInitWithCoder:aDecoder]; \
+        return [self fw_modelInitWithCoder:aDecoder]; \
     } \
     - (void)encodeWithCoder:(NSCoder *)aCoder \
     { \
-        [self.fw modelEncodeWithCoder:aCoder]; \
+        [self fw_modelEncodeWithCoder:aCoder]; \
     }
 
 /// 定义数组类型模型
@@ -82,7 +81,12 @@ NS_SWIFT_NAME(ViewModelProtocol)
 
 @end
 
-@interface FWClassWrapper (FWModel)
+/**
+ Model模型解析分类，参考自YYModel
+ 
+ @see https://github.com/ibireme/YYModel
+ */
+@interface NSObject (FWModel)
 
 /**
  从json创建对象，线程安全。NSDate会按照UTC时间解析，下同
@@ -90,7 +94,7 @@ NS_SWIFT_NAME(ViewModelProtocol)
  @param json json对象，支持NSDictionary、NSString、NSData
  @return 实例对象，失败为nil
  */
-- (nullable __kindof NSObject *)modelWithJson:(id)json;
++ (nullable instancetype)fw_modelWithJson:(id)json NS_REFINED_FOR_SWIFT;
 
 /**
  从字典创建对象，线程安全
@@ -98,7 +102,7 @@ NS_SWIFT_NAME(ViewModelProtocol)
  @param dictionary 字典数据
  @return 实例对象，失败为nil
  */
-- (nullable __kindof NSObject *)modelWithDictionary:(NSDictionary *)dictionary;
++ (nullable instancetype)fw_modelWithDictionary:(NSDictionary *)dictionary NS_REFINED_FOR_SWIFT;
 
 /**
  从json创建Model数组
@@ -106,7 +110,7 @@ NS_SWIFT_NAME(ViewModelProtocol)
  @param json json对象，支持NSDictionary、NSString、NSData
  @return Model数组
  */
-- (nullable NSArray *)modelArrayWithJson:(id)json;
++ (nullable NSArray *)fw_modelArrayWithJson:(id)json NS_REFINED_FOR_SWIFT;
 
 /**
  从json创建Model字典
@@ -114,16 +118,7 @@ NS_SWIFT_NAME(ViewModelProtocol)
  @param json json对象，支持NSDictionary、NSString、NSData
  @return Model字典
  */
-- (nullable NSDictionary *)modelDictionaryWithJson:(id)json;
-
-@end
-
-/**
- Model模型解析分类，参考自YYModel
- 
- @see https://github.com/ibireme/YYModel
- */
-@interface FWObjectWrapper (FWModel)
++ (nullable NSDictionary *)fw_modelDictionaryWithJson:(id)json NS_REFINED_FOR_SWIFT;
 
 /**
  从json对象设置对象属性
@@ -131,7 +126,7 @@ NS_SWIFT_NAME(ViewModelProtocol)
  @param json json对象，支持NSDictionary、NSString、NSData
  @return 是否设置成功
  */
-- (BOOL)modelSetWithJson:(id)json;
+- (BOOL)fw_modelSetWithJson:(id)json NS_REFINED_FOR_SWIFT;
 
 /**
  从字典设置对象属性
@@ -139,50 +134,50 @@ NS_SWIFT_NAME(ViewModelProtocol)
  @param dictionary 字典数据
  @return 是否设置成功
  */
-- (BOOL)modelSetWithDictionary:(NSDictionary *)dictionary;
+- (BOOL)fw_modelSetWithDictionary:(NSDictionary *)dictionary NS_REFINED_FOR_SWIFT;
 
 /**
  转换为json对象
  
  @return json对象，如NSDictionary、NSArray，失败为nil
  */
-- (nullable id)modelToJsonObject;
+- (nullable id)fw_modelToJsonObject NS_REFINED_FOR_SWIFT;
 
 /**
  转换为json字符串数据
  
  @return NSData，失败为nil
  */
-- (nullable NSData *)modelToJsonData;
+- (nullable NSData *)fw_modelToJsonData NS_REFINED_FOR_SWIFT;
 
 /**
  转换为json字符串
  
  @return NSString，失败为nil
  */
-- (nullable NSString *)modelToJsonString;
+- (nullable NSString *)fw_modelToJsonString NS_REFINED_FOR_SWIFT;
 
 /**
  从属性拷贝当前对象
  
  @return 拷贝对象，失败为nil
  */
-- (nullable id)modelCopy;
+- (nullable id)fw_modelCopy NS_REFINED_FOR_SWIFT;
 
 /// 对象编码
-- (void)modelEncodeWithCoder:(NSCoder *)aCoder;
+- (void)fw_modelEncodeWithCoder:(NSCoder *)aCoder NS_REFINED_FOR_SWIFT;
 
 /// 对象解码
-- (id)modelInitWithCoder:(NSCoder *)aDecoder;
+- (id)fw_modelInitWithCoder:(NSCoder *)aDecoder NS_REFINED_FOR_SWIFT;
 
 /// 对象的hash编码
-- (NSUInteger)modelHash;
+- (NSUInteger)fw_modelHash NS_REFINED_FOR_SWIFT;
 
 /// 比较Model
-- (BOOL)modelIsEqual:(id)model;
+- (BOOL)fw_modelIsEqual:(id)model NS_REFINED_FOR_SWIFT;
 
 /// 对象描述
-- (NSString *)modelDescription;
+- (NSString *)fw_modelDescription NS_REFINED_FOR_SWIFT;
 
 @end
 
