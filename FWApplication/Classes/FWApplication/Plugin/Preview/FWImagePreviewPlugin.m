@@ -67,7 +67,7 @@
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(id  _Nullable (^)(NSInteger))sourceView
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -85,7 +85,7 @@
                             renderBlock:(void (^)(__kindof UIView * _Nonnull, NSInteger))renderBlock
                             customBlock:(void (^)(id _Nonnull))customBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }

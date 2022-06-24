@@ -99,7 +99,7 @@
     UIButton* jumpButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     [jumpButton setTitle:@"Jump" forState:UIControlStateNormal];
     FWWeakifySelf();
-    [jumpButton.fw addTouchBlock:^(id  _Nonnull sender) {
+    [jumpButton fw_addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.webRequest = @"http://kvm.wuyong.site/jssdk.html";
     }];

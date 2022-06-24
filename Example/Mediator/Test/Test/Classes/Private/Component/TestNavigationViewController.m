@@ -21,7 +21,7 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self.fw setRightBarItem:@"Push" block:^(id sender) {
+    [self fw_setRightBarItem:@"Push" block:^(id sender) {
         FWStrongifySelf();
         TestNavigationViewController *viewController = [TestNavigationViewController new];
         viewController.fullscreenPop = YES;
@@ -35,7 +35,7 @@
     
     if (self.fullscreenPop) {
         if (!self.fw_tempObject) {
-            self.fw_tempObject = UIColor.fw.randomColor;
+            self.fw_tempObject = UIColor.fw_randomColor;
         }
         self.navigationController.navigationBar.fw_backgroundColor = self.fw_tempObject;
     }
@@ -72,9 +72,9 @@
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.image = [TestBundle imageNamed:@"public_picture"];
     [self.contentView addSubview:imageView]; {
-        [imageView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-        [imageView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero];
-        [imageView.fw setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
+        [imageView fw_setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+        [imageView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero];
+        [imageView fw_setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
     }
 }
 

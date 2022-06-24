@@ -28,72 +28,72 @@
     cacheLabel.numberOfLines = 0;
     cacheLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:cacheLabel]; {
-        [cacheLabel.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
+        [cacheLabel fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(10, 10, 10, 10) excludingEdge:NSLayoutAttributeBottom];
     }
     
     UIButton *refreshButton = [Theme largeButton];
     [refreshButton setTitle:@"读取缓存" forState:UIControlStateNormal];
     FWWeakifySelf();
-    [refreshButton.fw addTouchBlock:^(id sender) {
+    [refreshButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self refreshCache];
     }];
     [self.view addSubview:refreshButton]; {
-        [refreshButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheLabel withOffset:10];
-        [refreshButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [refreshButton fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheLabel withOffset:10];
+        [refreshButton fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *cacheButton = [Theme largeButton];
     [cacheButton setTitle:@"写入缓存" forState:UIControlStateNormal];
-    [cacheButton.fw addTouchBlock:^(id sender) {
+    [cacheButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache setObject:[NSString.fw UUIDString] forKey:TestCacheKey];
         [self refreshCache];
     }];
     [self.view addSubview:cacheButton]; {
-        [cacheButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:refreshButton withOffset:10];
-        [cacheButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [cacheButton fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:refreshButton withOffset:10];
+        [cacheButton fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *expireButton = [Theme largeButton];
     [expireButton setTitle:@"写入缓存(10s)" forState:UIControlStateNormal];
-    [expireButton.fw addTouchBlock:^(id sender) {
+    [expireButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache setObject:[NSString.fw UUIDString] forKey:TestCacheKey withExpire:10];
         [self refreshCache];
     }];
     [self.view addSubview:expireButton]; {
-        [expireButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheButton withOffset:10];
-        [expireButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [expireButton fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:cacheButton withOffset:10];
+        [expireButton fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *deleteButton = [Theme largeButton];
     [deleteButton setTitle:@"删除缓存" forState:UIControlStateNormal];
-    [deleteButton.fw addTouchBlock:^(id sender) {
+    [deleteButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache removeObjectForKey:TestCacheKey];
         [self refreshCache];
     }];
     [self.view addSubview:deleteButton]; {
-        [deleteButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:expireButton withOffset:10];
-        [deleteButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [deleteButton fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:expireButton withOffset:10];
+        [deleteButton fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
     
     UIButton *clearButton = [Theme largeButton];
     [clearButton setTitle:@"清空缓存" forState:UIControlStateNormal];
-    [clearButton.fw addTouchBlock:^(id sender) {
+    [clearButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
         [self.cache removeAllObjects];
         [self refreshCache];
     }];
     [self.view addSubview:clearButton]; {
-        [clearButton.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:deleteButton withOffset:10];
-        [clearButton.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [clearButton fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:deleteButton withOffset:10];
+        [clearButton fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     }
 }
 
@@ -108,7 +108,7 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self.fw setRightBarItem:@"切换" block:^(id sender) {
+    [self fw_setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
         
         [self.fw showSheetWithTitle:@"选择缓存类型" message:nil cancel:@"取消" actions:@[@"FWCacheMemory", @"FWCacheUserDefaults", @"FWCacheKeychain", @"FWCacheFile", @"FWCacheSqlite"] actionBlock:^(NSInteger index) {

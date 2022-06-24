@@ -39,7 +39,7 @@
     cycleView.autoScrollTimeInterval = 4;
     cycleView.placeholderImage = [TestBundle imageNamed:@"public_icon"];
     [self.contentView addSubview:cycleView];
-    cycleView.fw.layoutChain.left().top().width(FWScreenWidth).height(200);
+    cycleView.fw_layoutChain.left().top().width(FWScreenWidth).height(200);
     
     NSMutableArray *imageUrls = [NSMutableArray array];
     [imageUrls addObject:@"http://e.hiphotos.baidu.com/image/h%3D300/sign=0e95c82fa90f4bfb93d09854334e788f/10dfa9ec8a136327ee4765839c8fa0ec09fac7dc.jpg"];
@@ -54,24 +54,24 @@
     UIView *footerView = [[UIView alloc] init];
     footerView.backgroundColor = [Theme tableColor];
     [self.contentView addSubview:footerView];
-    footerView.fw.layoutChain.left().bottom().topToViewBottom(cycleView).width(FWScreenWidth).height(1000);
+    footerView.fw_layoutChain.left().bottom().topToViewBottom(cycleView).width(FWScreenWidth).height(1000);
     
     UILabel *frameLabel = [[UILabel alloc] init];
     _frameLabel = frameLabel;
     frameLabel.textColor = [Theme textColor];
     frameLabel.text = NSStringFromCGRect(self.view.frame);
     [footerView addSubview:frameLabel];
-    frameLabel.fw.layoutChain.centerX().topWithInset(50);
+    frameLabel.fw_layoutChain.centerX().topWithInset(50);
     
     // 添加视图
     UIButton *button = [[UIButton alloc] init];
     button.backgroundColor = [Theme cellColor];
-    button.titleLabel.font = [UIFont.fw fontOfSize:15];
+    button.titleLabel.font = [UIFont fw_fontOfSize:15];
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"点击背景关闭" forState:UIControlStateNormal];
     [footerView addSubview:button];
-    [button.fw setDimensionsToSize:CGSizeMake(200, 100)];
-    [button.fw alignCenterToSuperview];
+    [button fw_setDimensionsToSize:CGSizeMake(200, 100)];
+    [button fw_alignCenterToSuperview];
 }
 
 - (void)viewDidLoad
@@ -85,7 +85,7 @@
     
     // 自定义关闭按钮
     FWWeakifySelf();
-    [self.fw setLeftBarItem:FWIcon.closeImage block:^(id sender) {
+    [self fw_setLeftBarItem:FWIcon.closeImage block:^(id sender) {
         FWStrongifySelf();
         [self fw_closeViewControllerAnimated:!self.noAnimate];
     }];
@@ -94,7 +94,7 @@
     self.view.backgroundColor = self.navigationController ? [Theme tableColor] : [[Theme tableColor] colorWithAlphaComponent:0.9];
     
     // 点击背景关闭，默认子视图也会响应，解决方法：子视图设为UIButton或子视图添加空手势事件
-    [self.view.fw addTapGestureWithBlock:^(id sender) {
+    [self.view fw_addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         [self fw_closeViewControllerAnimated:!self.noAnimate];
     }];
@@ -160,14 +160,14 @@ FWDealloc();
     _contentView = contentView;
     contentView.backgroundColor = Theme.cellColor;
     [self.view addSubview:contentView];
-    contentView.fw.layoutChain.center();
+    contentView.fw_layoutChain.center();
     
     UIView *childView = [[UIView alloc] init];
     [contentView addSubview:childView];
-    childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
+    childView.fw_layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
-    [contentView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [contentView fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (self.useAnimator) {
             [self configAnimator];
@@ -236,15 +236,15 @@ FWDealloc();
     contentView.layer.cornerRadius = 10;
     contentView.backgroundColor = Theme.cellColor;
     [self.view addSubview:contentView];
-    contentView.fw.layoutChain.center();
+    contentView.fw_layoutChain.center();
     
     UIView *childView = [[UIView alloc] init];
     [contentView addSubview:childView];
-    childView.fw.layoutChain.edges().size(CGSizeMake(300, 250));
+    childView.fw_layoutChain.edges().size(CGSizeMake(300, 250));
     
     FWWeakifySelf();
     self.view.backgroundColor = [[Theme backgroundColor] colorWithAlphaComponent:0.5];
-    [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.view fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self dismiss];
     }];
@@ -334,7 +334,7 @@ FWDealloc();
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *cellData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [cellData objectAtIndex:0];
     return cell;

@@ -47,7 +47,7 @@
     self.dismissTappedVideo = YES;
     
     FWWeakifySelf();
-    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         NSString *pluginText = self.usePlugin ? @"不使用插件" : @"使用插件";
         NSString *progressText = self.mockProgress ? @"关闭进度" : @"开启进度";
@@ -114,7 +114,7 @@
     [super viewDidLayoutSubviews];
     
     UIEdgeInsets margins = UIEdgeInsetsMake(24 + self.fw_topBarHeight, 24 + self.view.safeAreaInsets.left, 24, 24 + self.view.safeAreaInsets.right);
-    CGFloat contentWidth = self.view.fw.width - (margins.left + margins.right);
+    CGFloat contentWidth = self.view.fw_width - (margins.left + margins.right);
     NSInteger column = FWIsIpad || FWIsLandscape ? self.images.count : 3;
     CGFloat imageWidth = contentWidth / column - (column - 1) * (self.floatLayoutView.itemMargins.left + self.floatLayoutView.itemMargins.right);
     self.floatLayoutView.minimumItemSize = CGSizeMake(imageWidth, imageWidth);
@@ -150,8 +150,8 @@
             if (!tipLabel) {
                 tipLabel = [UILabel new];
                 tipLabel.tag = 102;
-                tipLabel.fw.contentInset = UIEdgeInsetsMake(2, 8, 2, 8);
-                [tipLabel.fw setCornerRadius:FWFontRegular(12).lineHeight / 2 + 2];
+                tipLabel.fw_contentInset = UIEdgeInsetsMake(2, 8, 2, 8);
+                [tipLabel fw_setCornerRadius:FWFontRegular(12).lineHeight / 2 + 2];
                 tipLabel.backgroundColor = [[UIColor redColor] colorWithAlphaComponent:0.5];
                 tipLabel.text = @"图片仅供参考";
                 tipLabel.font = FWFontRegular(12);
@@ -164,12 +164,12 @@
                 tipLabel.transform = CGAffineTransformMakeScale(labelScale, labelScale);
                 CGSize imageSize = zoomImageView.image.size;
                 CGSize labelSize = tipLabel.frame.size;
-                tipLabel.fw.origin = CGPointMake(imageSize.width - 16 * labelScale - labelSize.width, imageSize.height - 16 * labelScale - labelSize.height);
-                tipLabel.hidden = tipLabel.fw.y < 0;
+                tipLabel.fw_origin = CGPointMake(imageSize.width - 16 * labelScale - labelSize.width, imageSize.height - 16 * labelScale - labelSize.height);
+                tipLabel.hidden = tipLabel.fw_y < 0;
             }
         };
         
-        self.imagePreviewViewController.fw.visibleStateChanged = ^(FWImagePreviewController *viewController, FWViewControllerVisibleState visibleState) {
+        self.imagePreviewViewController.fw_visibleStateChanged = ^(FWImagePreviewController *viewController, FWViewControllerVisibleState visibleState) {
             if (visibleState == FWViewControllerVisibleStateWillDisappear) {
                 NSInteger exitAtIndex = viewController.imagePreviewView.currentImageIndex;
                 weakSelf.tipsLabel.text = [NSString stringWithFormat:@"浏览到第%@张就退出了", @(exitAtIndex + 1)];

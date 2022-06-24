@@ -58,7 +58,7 @@
         [FWRouter closeViewControllerAnimated:YES];
     }];
     [self.view addSubview:self.navigationView];
-    self.navigationView.fw.layoutChain.left().right().top();
+    self.navigationView.fw_layoutChain.left().right().top();
     
     self.toolbarView = [[FWToolbarView alloc] init];
     self.toolbarView.tintColor = Theme.textColor;
@@ -77,10 +77,10 @@
         [self.fw showMessageWithText:@"点击了确定"];
     }];
     [self.view addSubview:self.toolbarView];
-    self.toolbarView.fw.layoutChain.left().right().bottom();
+    self.toolbarView.fw_layoutChain.left().right().bottom();
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
-    self.tableView.fw.layoutChain.left().right().topToViewBottom(self.navigationView).bottomToViewTop(self.toolbarView);
+    self.tableView.fw_layoutChain.left().right().topToViewBottom(self.navigationView).bottomToViewTop(self.toolbarView);
 }
 
 - (void)renderData
@@ -242,7 +242,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleValue1];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleValue1];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.detailTextLabel.text = nil;
     

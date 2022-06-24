@@ -29,26 +29,26 @@
         UIImage *accessoryImage = [[bezierPath.fw shapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         pickerController.titleAccessoryImage = accessoryImage;
         
-        BOOL showsCheckedIndexLabel = [@[@YES, @NO].fw.randomObject fw_safeBool];
+        BOOL showsCheckedIndexLabel = [@[@YES, @NO].fw_randomObject fw_safeBool];
         pickerController.customCellBlock = ^(FWImagePickerCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
             cell.showsCheckedIndexLabel = showsCheckedIndexLabel;
-            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12).fw imageWithTintColor:[UIColor whiteColor]];
+            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fw_imageWithTintColor:[UIColor whiteColor]];
         };
         return pickerController;
     };
     FWImagePickerControllerImpl.sharedInstance.albumControllerBlock = ^FWImageAlbumController * _Nonnull{
         FWImageAlbumController *albumController = [[FWImageAlbumController alloc] init];
         albumController.customCellBlock = ^(FWImageAlbumTableCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
-            cell.checkedMaskColor = [UIColor.fw colorWithHex:0xFFFFFF alpha:0.1];
+            cell.checkedMaskColor = [UIColor fw_colorWithHex:0xFFFFFF alpha:0.1];
         };
         return albumController;
     };
     FWImagePickerControllerImpl.sharedInstance.previewControllerBlock = ^FWImagePickerPreviewController * _Nonnull{
         FWImagePickerPreviewController *previewController = [[FWImagePickerPreviewController alloc] init];
-        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fw.randomObject fw_safeBool];
-        previewController.showsEditButton = [@[@YES, @NO].fw.randomObject fw_safeBool];
+        previewController.showsOriginImageCheckboxButton = [@[@YES, @NO].fw_randomObject fw_safeBool];
+        previewController.showsEditButton = [@[@YES, @NO].fw_randomObject fw_safeBool];
         previewController.customCellBlock = ^(FWImagePickerPreviewCollectionCell * _Nonnull cell, NSIndexPath * _Nonnull indexPath) {
-            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12).fw imageWithTintColor:[UIColor whiteColor]];
+            cell.editedIconImage = [FWIconImage(@"fa-picture-o", 12) fw_imageWithTintColor:[UIColor whiteColor]];
         };
         return previewController;
     };
@@ -57,9 +57,9 @@
         cropController.aspectRatioPickerButtonHidden = YES;
         cropController.cropView.backgroundColor = UIColor.blackColor;
         cropController.toolbar.tintColor = UIColor.whiteColor;
-        [cropController.toolbar.cancelTextButton.fw setImage:FWIconImage(@"ion-android-close", 22)];
+        [cropController.toolbar.cancelTextButton fw_setImage:FWIconImage(@"ion-android-close", 22)];
         [cropController.toolbar.cancelTextButton setTitle:nil forState:UIControlStateNormal];
-        [cropController.toolbar.doneTextButton.fw setImage:FWIconImage(@"ion-android-done", 22)];
+        [cropController.toolbar.doneTextButton fw_setImage:FWIconImage(@"ion-android-done", 22)];
         [cropController.toolbar.doneTextButton setTitle:nil forState:UIControlStateNormal];
         return cropController;
     };
@@ -67,7 +67,7 @@
 
 - (void)renderModel {
     FWWeakifySelf();
-    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换选取插件", @"切换选取样式"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
@@ -105,7 +105,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;

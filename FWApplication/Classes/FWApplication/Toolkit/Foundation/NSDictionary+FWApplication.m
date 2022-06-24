@@ -16,14 +16,14 @@
 {
     if (self.base.count < 1) return nil;
     
-    return self.base.allKeys.fw.randomObject;
+    return self.base.allKeys.fw_randomObject;
 }
 
 - (id)randomObject
 {
     if (self.base.count < 1) return nil;
         
-    return self.base.allValues.fw.randomObject;
+    return self.base.allValues.fw_randomObject;
 }
 
 - (id)randomWeightKey

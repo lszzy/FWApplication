@@ -20,10 +20,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
         _titleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        titleLabel.fw.layoutChain.centerY().leftWithInset(15).rightWithInset(15);
+        titleLabel.fw_layoutChain.centerY().leftWithInset(15).rightWithInset(15);
     }
     return self;
 }
@@ -58,7 +58,7 @@
 - (void)setupItem
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:self.timer ? FWIcon.stopImage : FWIcon.playImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:self.timer ? FWIcon.stopImage : FWIcon.playImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         if (self.timer) {
@@ -73,7 +73,7 @@
 - (void)startTimer
 {
     FWWeakifySelf();
-    self.timer = [NSTimer.fw commonTimerWithTimeInterval:10 block:^(NSTimer * _Nonnull timer) {
+    self.timer = [NSTimer fw_commonTimerWithTimeInterval:10 block:^(NSTimer * _Nonnull timer) {
         FWStrongifySelf();
         self.isTimer = YES;
         [self onRefreshing];

@@ -31,7 +31,7 @@
 - (dispatch_source_t)startCountDown:(NSInteger)seconds title:(NSString *)title waitTitle:(NSString *)waitTitle
 {
     __weak UIButton *weakBase = self.base;
-    return [self startCountDown:seconds block:^(NSInteger countDown) {
+    return [self.base fw_startCountDown:seconds block:^(NSInteger countDown) {
         // 先设置titleLabel，再设置title，防止闪烁
         if (countDown <= 0) {
             weakBase.titleLabel.text = title;

@@ -25,23 +25,23 @@
         if (self.transitionType > 8) {
             self.backgroundColor = [UIColor clearColor];
         } else {
-            self.backgroundColor = [UIColor.fw colorWithHex:0x000000 alpha:0.5];
+            self.backgroundColor = [UIColor fw_colorWithHex:0x000000 alpha:0.5];
         }
         
         self.bottomView = [UIView new];
         self.bottomView.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.bottomView];
         if (self.transitionType == 6 || self.transitionType == 9) {
-            self.bottomView.fw.layoutChain.left().right().bottom().height(FWScreenHeight / 2);
+            self.bottomView.fw_layoutChain.left().right().bottom().height(FWScreenHeight / 2);
         } else {
-            self.bottomView.fw.layoutChain.center().width(300).height(200);
+            self.bottomView.fw_layoutChain.center().width(300).height(200);
         }
         
         FWWeakifySelf();
-        [self.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+        [self fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
             FWStrongifySelf();
             if (self.transitionType > 8) {
-                [self.fw.viewController dismissViewControllerAnimated:YES completion:nil];
+                [self.fw_viewController dismissViewControllerAnimated:YES completion:nil];
                 return;
             }
             
@@ -99,7 +99,7 @@
     self.fw.navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor clearColor];
     FWWeakifySelf();
-    [self.view.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.view fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self fw_closeViewControllerAnimated:YES];
     }];
@@ -108,9 +108,9 @@
     self.bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.bottomView];
     if (self.transitionType == 0 || self.transitionType == 3) {
-        self.bottomView.fw.layoutChain.left().right().bottom().height(FWScreenHeight / 2);
+        self.bottomView.fw_layoutChain.left().right().bottom().height(FWScreenHeight / 2);
     } else {
-        self.bottomView.fw.layoutChain.center().width(300).height(200);
+        self.bottomView.fw_layoutChain.center().width(300).height(200);
     }
     
     UIButton *button = [UIButton new];
@@ -118,13 +118,13 @@
     NSString *buttonTitle = self.navigationController ? @"支持push" : @"不支持push";
     [button setTitle:buttonTitle forState:UIControlStateNormal];
     [self.bottomView addSubview:button];
-    [button.fw addTouchBlock:^(id  _Nonnull sender) {
+    [button fw_addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         TestAnimationChildController *animationController = [TestAnimationChildController new];
         animationController.transitionType = self.transitionType;
         [self.navigationController pushViewController:animationController animated:YES];
     }];
-    button.fw.layoutChain.center();
+    button.fw_layoutChain.center();
 }
 
 - (void)showInViewController:(UIViewController *)viewController
@@ -174,30 +174,30 @@ FWDefLazyProperty(UIView *, animationView, {
 {
     UIButton *button = [Theme largeButton];
     [button setTitle:@"转场动画" forState:UIControlStateNormal];
-    [button.fw addTouchTarget:self action:@selector(onPresent)];
+    [button fw_addTouchTarget:self action:@selector(onPresent)];
     [self.view addSubview:button];
-    [button.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-    [button.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+    [button fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button2 = [Theme largeButton];
     [button2 setTitle:@"切换拖动" forState:UIControlStateNormal];
-    [button2.fw addTouchTarget:self action:@selector(onDrag:)];
+    [button2 fw_addTouchTarget:self action:@selector(onDrag:)];
     [self.view addSubview:button2];
-    [button2.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
-    [button2.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button2 fw_pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button withOffset:-15];
+    [button2 fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
     
     UIButton *button3 = [Theme largeButton];
     [button3 setTitle:@"切换动画" forState:UIControlStateNormal];
-    [button3.fw addTouchTarget:self action:@selector(onAnimation:)];
+    [button3 fw_addTouchTarget:self action:@selector(onAnimation:)];
     [self.view addSubview:button3];
-    [button3.fw pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
-    [button3.fw  alignAxisToSuperview:NSLayoutAttributeCenterX];
+    [button3 fw_pinEdge:NSLayoutAttributeBottom toEdge:NSLayoutAttributeTop ofView:button2 withOffset:-15];
+    [button3 fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
 }
 
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:@("Animator") block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         UIViewController *viewController = [NSClassFromString(@"Test.TestPropertyAnimatorViewController") new];
         [self.navigationController pushViewController:viewController animated:true];

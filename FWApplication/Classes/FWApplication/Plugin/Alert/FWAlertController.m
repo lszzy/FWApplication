@@ -1984,7 +1984,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         }
         [self.alertControllerView addSubview:containerView];
         if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
-            [containerView.fw pinEdgesToSuperviewWithInsets:self.alertAppearance.sheetContainerInsets];
+            [containerView fw_pinEdgesToSuperviewWithInsets:self.alertAppearance.sheetContainerInsets];
         } else {
             containerView.frame = self.alertControllerView.bounds;
             containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

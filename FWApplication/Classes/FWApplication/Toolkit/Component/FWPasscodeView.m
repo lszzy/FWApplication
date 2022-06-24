@@ -88,8 +88,8 @@
     [self addSubview:_lineView];
     _lineView.backgroundColor = _underlineColorNormal;
     _lineView.layer.cornerRadius = sepLineViewHeight / 2.0;
-    [_lineView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-    [_lineView.fw setDimension:NSLayoutAttributeHeight toSize:sepLineViewHeight];
+    [_lineView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
+    [_lineView fw_setDimension:NSLayoutAttributeHeight toSize:sepLineViewHeight];
     
     _lineView.layer.shadowColor = [[UIColor blackColor] colorWithAlphaComponent:0.2].CGColor;
     _lineView.layer.shadowOpacity = 1;
@@ -129,7 +129,7 @@
 {
     _lockImgView = [UIImageView new];
     [self addSubview:_lockImgView];
-    [_lockImgView.fw alignCenterToSuperview];
+    [_lockImgView fw_alignCenterToSuperview];
 }
 
 #pragma mark - Setter & Getter
@@ -142,13 +142,13 @@
 - (void)setImageWidth:(CGFloat)imageWidth
 {
     _imageWidth = imageWidth;
-    [_lockImgView.fw setDimension:NSLayoutAttributeWidth toSize:imageWidth];
+    [_lockImgView fw_setDimension:NSLayoutAttributeWidth toSize:imageWidth];
 }
 
 - (void)setImageHeight:(CGFloat)imageHeight
 {
     _imageHeight = imageHeight;
-    [_lockImgView.fw setDimension:NSLayoutAttributeHeight toSize:imageHeight];
+    [_lockImgView fw_setDimension:NSLayoutAttributeHeight toSize:imageHeight];
 }
 
 @end
@@ -284,8 +284,8 @@
     circleView.backgroundColor = [UIColor blackColor];
     circleView.layer.cornerRadius = 4;
     [customSecurityView addSubview:circleView];
-    [circleView.fw setDimensionsToSize:CGSizeMake(circleViewWidth, circleViewWidth)];
-    [circleView.fw alignCenterToSuperview];
+    [circleView fw_setDimensionsToSize:CGSizeMake(circleViewWidth, circleViewWidth)];
+    [circleView fw_alignCenterToSuperview];
     return customSecurityView;
 }
 
@@ -335,11 +335,11 @@
     _valueLabel = [UILabel new];
     _valueLabel.font = [UIFont systemFontOfSize:38];
     [self.contentView addSubview:_valueLabel];
-    [_valueLabel.fw alignCenterToSuperview];
+    [_valueLabel fw_alignCenterToSuperview];
     
     _cursorView = [UIView new];
     [self.contentView addSubview:_cursorView];
-    [_cursorView.fw alignCenterToSuperview];
+    [_cursorView fw_alignCenterToSuperview];
     
     [self initCellProperty];
 }
@@ -414,7 +414,7 @@
 {
     if (!self.customSecurityView.superview) {
         [self.contentView addSubview:self.customSecurityView];
-        [self.customSecurityView.fw pinEdgesToSuperview];
+        [self.customSecurityView fw_pinEdgesToSuperview];
     }
     
     self.customSecurityView.alpha = 1;
@@ -510,8 +510,8 @@
     _cellProperty = cellProperty;
     
     _cursorView.backgroundColor = cellProperty.cellCursorColor;
-    [_cursorView.fw setDimension:NSLayoutAttributeWidth toSize:cellProperty.cellCursorWidth];
-    [_cursorView.fw setDimension:NSLayoutAttributeHeight toSize:cellProperty.cellCursorHeight];
+    [_cursorView fw_setDimension:NSLayoutAttributeWidth toSize:cellProperty.cellCursorWidth];
+    [_cursorView fw_setDimension:NSLayoutAttributeHeight toSize:cellProperty.cellCursorHeight];
     self.layer.cornerRadius = cellProperty.cornerRadius;
     self.layer.borderWidth = cellProperty.borderWidth;
     
@@ -537,7 +537,7 @@
         NSAssert(_cellProperty.customLineViewBlock, @"customLineViewBlock can not be null！");
         _lineView = _cellProperty.customLineViewBlock();
         [self.contentView addSubview:_lineView];
-        [_lineView.fw pinEdgesToSuperview];
+        [_lineView fw_pinEdgesToSuperview];
     }
     
     if (_cellProperty.configCellShadowBlock) {
@@ -678,15 +678,15 @@ typedef NS_ENUM(NSInteger, FWPasscodeTextChangeType) {
     // collectionView
     if (!self.collectionView || ![self.subviews containsObject:self.collectionView]) {
         [self addSubview:self.collectionView];
-        [self.collectionView.fw pinEdgesToSuperview];
+        [self.collectionView fw_pinEdgesToSuperview];
     }
     
     // textField
     if (!self.textField || ![self.subviews containsObject:self.textField]) {
         [self addSubview:self.textField];
-        [self.textField.fw setDimensionsToSize:CGSizeZero];
-        [self.textField.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
-        [self.textField.fw pinEdgeToSuperview:NSLayoutAttributeTop];
+        [self.textField fw_setDimensionsToSize:CGSizeZero];
+        [self.textField fw_pinEdgeToSuperview:NSLayoutAttributeLeft];
+        [self.textField fw_pinEdgeToSuperview:NSLayoutAttributeTop];
     }
     
     // tap

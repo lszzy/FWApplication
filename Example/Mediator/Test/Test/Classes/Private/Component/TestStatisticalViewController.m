@@ -21,10 +21,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UILabel *textLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+        UILabel *textLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
         _textLabel = textLabel;
         [self.contentView addSubview:textLabel];
-        textLabel.fw.layoutChain.center();
+        textLabel.fw_layoutChain.center();
     }
     return self;
 }
@@ -60,33 +60,33 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     bannerView.autoScrollTimeInterval = 6;
     bannerView.placeholderImage = [TestBundle imageNamed:@"public_icon"];
     [headerView addSubview:bannerView];
-    bannerView.fw.layoutChain.leftWithInset(10).topWithInset(50).rightWithInset(10).height(100);
+    bannerView.fw_layoutChain.leftWithInset(10).topWithInset(50).rightWithInset(10).height(100);
     
     UIView *testView = [UIView new];
     _testView = testView;
-    testView.backgroundColor = UIColor.fw.randomColor;
+    testView.backgroundColor = UIColor.fw_randomColor;
     [headerView addSubview:testView];
-    testView.fw.layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(bannerView, 50);
+    testView.fw_layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(bannerView, 50);
     
     UILabel *testLabel = [UILabel new];
     testLabel.text = @"Banner";
     testLabel.textAlignment = NSTextAlignmentCenter;
     [testView addSubview:testLabel];
-    testLabel.fw.layoutChain.edges();
+    testLabel.fw_layoutChain.edges();
     
     UIButton *testButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _testButton = testButton;
     [testButton setTitle:@"Button" forState:UIControlStateNormal];
-    [testButton.fw setBackgroundColor:[UIColor.fw randomColor] forState:UIControlStateNormal];
+    [testButton.fw setBackgroundColor:[UIColor fw_randomColor] forState:UIControlStateNormal];
     [headerView addSubview:testButton];
-    testButton.fw.layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(testView, 50);
+    testButton.fw_layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(testView, 50);
     
     UISwitch *testSwitch = [UISwitch new];
     _testSwitch = testSwitch;
-    testSwitch.thumbTintColor = [UIColor.fw randomColor];
+    testSwitch.thumbTintColor = [UIColor fw_randomColor];
     testSwitch.onTintColor = testSwitch.thumbTintColor;
     [headerView addSubview:testSwitch];
-    testSwitch.fw.layoutChain.centerX().topToViewBottomWithOffset(testButton, 50);
+    testSwitch.fw_layoutChain.centerX().topToViewBottomWithOffset(testButton, 50);
     
     FWSegmentedControl *segmentedControl = [FWSegmentedControl new];
     self.segmentedControl = segmentedControl;
@@ -97,25 +97,25 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     self.segmentedControl.selectionIndicatorEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 10);
     self.segmentedControl.segmentWidthStyle = FWSegmentedControlSegmentWidthStyleDynamic;
     self.segmentedControl.selectionIndicatorLocation = FWSegmentedControlSelectionIndicatorLocationBottom;
-    self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont.fw fontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
-    self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont.fw boldFontOfSize:18], NSForegroundColorAttributeName: Theme.textColor};
+    self.segmentedControl.titleTextAttributes = @{NSFontAttributeName: [UIFont fw_fontOfSize:16], NSForegroundColorAttributeName: Theme.textColor};
+    self.segmentedControl.selectedTitleTextAttributes = @{NSFontAttributeName: [UIFont fw_boldFontOfSize:18], NSForegroundColorAttributeName: Theme.textColor};
     [headerView addSubview:self.segmentedControl];
-    segmentedControl.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToViewBottomWithOffset(testSwitch, 50).height(50);
+    segmentedControl.fw_layoutChain.leftWithInset(10).rightWithInset(10).topToViewBottomWithOffset(testSwitch, 50).height(50);
     
     FWTextTagCollectionView *tagCollectionView = [FWTextTagCollectionView new];
     _tagCollectionView = tagCollectionView;
     tagCollectionView.verticalSpacing = 10;
     tagCollectionView.horizontalSpacing = 10;
     [headerView addSubview:tagCollectionView];
-    tagCollectionView.fw.layoutChain.leftWithInset(10).rightWithInset(10).topToViewBottomWithOffset(segmentedControl, 50).height(100).bottomWithInset(50);
+    tagCollectionView.fw_layoutChain.leftWithInset(10).rightWithInset(10).topToViewBottomWithOffset(segmentedControl, 50).height(100).bottomWithInset(50);
     
     self.tableView.tableHeaderView = headerView;
-    [headerView.fw autoLayoutSubviews];
+    [headerView fw_autoLayoutSubviews];
 }
 
 - (void)renderTableLayout
 {
-    self.tableView.fw.layoutChain.edges();
+    self.tableView.fw_layoutChain.edges();
 }
 
 - (UICollectionView *)collectionView
@@ -144,7 +144,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 
 - (void)renderCollectionLayout
 {
-    self.collectionView.fw.layoutChain.edges();
+    self.collectionView.fw_layoutChain.edges();
 }
 
 - (void)renderView
@@ -154,7 +154,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     self.shieldView = shieldView;
     shieldView.backgroundColor = [Theme tableColor];
     FWWeakifySelf();
-    [shieldView.fw addTapGestureWithBlock:^(UITapGestureRecognizer *sender) {
+    [shieldView fw_addTapGestureWithBlock:^(UITapGestureRecognizer *sender) {
         FWStrongifySelf();
         [self.shieldView removeFromSuperview];
         self.shieldView = nil;
@@ -162,28 +162,28 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
         self.view.hidden = self.view.hidden;
     }];
     [UIWindow.fw_mainWindow addSubview:shieldView];
-    [shieldView.fw pinEdgesToSuperview];
+    [shieldView fw_pinEdgesToSuperview];
     
     UILabel *shieldLabel = [UILabel new];
     shieldLabel.text = @"点击关闭";
     shieldLabel.textAlignment = NSTextAlignmentCenter;
     [shieldView addSubview:shieldLabel];
-    shieldLabel.fw.layoutChain.edges();
+    shieldLabel.fw_layoutChain.edges();
     
-    [self.testView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [self.testView fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        self.testView.backgroundColor = UIColor.fw.randomColor;
+        self.testView.backgroundColor = UIColor.fw_randomColor;
         [self.bannerView makeScrollViewScrollToIndex:0];
     }];
     
-    [self.testButton.fw addTouchBlock:^(id  _Nonnull sender) {
+    [self.testButton fw_addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self.testButton.fw setBackgroundColor:UIColor.fw.randomColor forState:UIControlStateNormal];
+        [self.testButton.fw setBackgroundColor:UIColor.fw_randomColor forState:UIControlStateNormal];
     }];
     
-    [self.testSwitch.fw addBlock:^(id  _Nonnull sender) {
+    [self.testSwitch fw_addBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        self.testSwitch.thumbTintColor = UIColor.fw.randomColor;
+        self.testSwitch.thumbTintColor = UIColor.fw_randomColor;
         self.testSwitch.onTintColor = self.testSwitch.thumbTintColor;
     } forControlEvents:UIControlEventValueChanged];
     
@@ -194,7 +194,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     
     self.segmentedControl.indexChangeBlock = ^(NSUInteger index) {
         FWStrongifySelf();
-        self.segmentedControl.selectionIndicatorBoxColor = UIColor.fw.randomColor;
+        self.segmentedControl.selectionIndicatorBoxColor = UIColor.fw_randomColor;
     };
 }
 
@@ -202,7 +202,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 {
     self.collectionView.hidden = YES;
     FWWeakifySelf();
-    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (self.collectionView.hidden) {
             self.collectionView.hidden = NO;
@@ -312,14 +312,14 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
-    cell.contentView.backgroundColor = UIColor.fw.randomColor;
+    cell.contentView.backgroundColor = UIColor.fw_randomColor;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = UIColor.fw.randomColor;
+    cell.contentView.backgroundColor = UIColor.fw_randomColor;
     
     [self clickHandler:indexPath.row];
 }
@@ -335,7 +335,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 {
     TestStatisticalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
-    cell.contentView.backgroundColor = UIColor.fw.randomColor;
+    cell.contentView.backgroundColor = UIColor.fw_randomColor;
     cell.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_collectionView" object:@"cell"];
     cell.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_collectionView" object:@"cell"];
     cell.fw.statisticalExposure.triggerOnce = YES;
@@ -346,7 +346,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
-    cell.contentView.backgroundColor = UIColor.fw.randomColor;
+    cell.contentView.backgroundColor = UIColor.fw_randomColor;
     
     [self clickHandler:indexPath.row];
 }

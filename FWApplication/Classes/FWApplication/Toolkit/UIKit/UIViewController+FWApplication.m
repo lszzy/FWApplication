@@ -48,7 +48,7 @@
     [viewController didMoveToParentViewController:self.base];
     [view addSubview:viewController.view];
     // viewController.view.frame = view.bounds;
-    [viewController.view.fw pinEdgesToSuperview];
+    [viewController.view fw_pinEdgesToSuperview];
 }
 
 #pragma mark - Previous

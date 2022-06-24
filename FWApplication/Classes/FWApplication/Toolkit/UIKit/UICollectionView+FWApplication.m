@@ -24,7 +24,7 @@
 
 - (void)reloadDataWithoutCache
 {
-    [self clearSizeCache];
+    [self.base fw_clearSizeCache];
     [self.base reloadData];
 }
 

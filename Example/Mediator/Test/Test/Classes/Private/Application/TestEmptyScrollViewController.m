@@ -22,7 +22,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.tableData removeAllObjects];
         [self.tableView reloadData];
@@ -55,9 +55,9 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 100)];
     view.backgroundColor = Theme.cellColor;
     
-    UILabel *label = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
+    UILabel *label = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:Theme.textColor text:@"我是Section头视图"];
     [view addSubview:label];
-    label.fw.layoutChain.leftWithInset(15).centerY();
+    label.fw_layoutChain.leftWithInset(15).centerY();
     return view;
 }
 
@@ -68,7 +68,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     cell.textLabel.textColor = Theme.textColor;
     cell.textLabel.text = FWSafeString([self.tableData objectAtIndex:indexPath.row]);
     return cell;

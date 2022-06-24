@@ -81,7 +81,7 @@
             [leftItems addObject:webItem];
         } else {
             if (i == 0) {
-                UIBarButtonItem *leftItem = [UIBarButtonItem.fw itemWithObject:webItem block:^(id sender) {
+                UIBarButtonItem *leftItem = [UIBarButtonItem fw_itemWithObject:webItem block:^(id sender) {
                     if (weakController.webView.canGoBack) {
                         [weakController.webView goBack];
                     } else {
@@ -90,7 +90,7 @@
                 }];
                 [leftItems addObject:leftItem];
             } else {
-                UIBarButtonItem *leftItem = [UIBarButtonItem.fw itemWithObject:webItem block:^(id sender) {
+                UIBarButtonItem *leftItem = [UIBarButtonItem fw_itemWithObject:webItem block:^(id sender) {
                     [weakController onWebClose];
                 }];
                 [leftItems addObject:leftItem];
@@ -104,7 +104,7 @@
         showClose = NO;
     }
     viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:showClose ? leftItems.firstObject : nil, nil];
-    viewController.fw.allowsPopGesture = ^BOOL{
+    viewController.fw_allowsPopGesture = ^BOOL{
         return !weakController.webView.canGoBack;
     };
     [viewController.webView fw_observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary *change) {
@@ -182,7 +182,7 @@
 - (void)innerRenderWebLayout
 {
     FWWebView *webView = [(id<FWWebViewController>)self webView];
-    [webView.fw pinEdgesToSuperview];
+    [webView fw_pinEdgesToSuperview];
 }
 
 @end

@@ -24,7 +24,7 @@
     [loginButton addTarget:self action:@selector(onMediator) forControlEvents:UIControlEventTouchUpInside];
     loginButton.frame = CGRectMake(self.view.frame.size.width / 2 - 75, 20, 150, 30);
     [self.view addSubview:loginButton];
-    [self.view.fw addTapGestureWithTarget:self action:@selector(onClose)];
+    [self.view fw_addTapGestureWithTarget:self action:@selector(onClose)];
 }
 
 - (void)renderData {
@@ -108,7 +108,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -170,12 +170,12 @@
 
 - (void)onReview
 {
-    [UIApplication.fw openAppStoreReview:@"923302754"];
+    [UIApplication fw_openAppStoreReview:@"923302754"];
 }
 
 - (void)onReview2
 {
-    [UIApplication.fw openAppReview];
+    [UIApplication fw_openAppReview];
 }
 
 @end

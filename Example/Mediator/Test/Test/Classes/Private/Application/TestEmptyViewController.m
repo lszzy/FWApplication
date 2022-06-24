@@ -22,7 +22,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.fw hideEmptyView];
         [self.tableView reloadData];
@@ -37,7 +37,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSInteger row = indexPath.row;
     if (row == 0) {
         cell.textLabel.text = @"显示提示语";

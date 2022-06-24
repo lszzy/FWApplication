@@ -42,19 +42,19 @@
     UIViewController *firstController = [TestRouterViewController new];
     firstController.hidesBottomBarWhenPushed = NO;
     FWWeakifySelf();
-    firstController.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+    firstController.navigationItem.leftBarButtonItem = [UIBarButtonItem fw_itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.navigationController popViewControllerAnimated:YES];
     }];
     UIViewController *secondController = [TestModuleController new];
     secondController.hidesBottomBarWhenPushed = NO;
-    secondController.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+    secondController.navigationItem.leftBarButtonItem = [UIBarButtonItem fw_itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.navigationController popViewControllerAnimated:YES];
     }];
     UIViewController *thirdController = [[TestWebViewController alloc] initWithRequestUrl:@"http://kvm.wuyong.site/test.php"];
     thirdController.hidesBottomBarWhenPushed = NO;
-    thirdController.navigationItem.leftBarButtonItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
+    thirdController.navigationItem.leftBarButtonItem = [UIBarButtonItem fw_itemWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.navigationController popViewControllerAnimated:YES];
     }];

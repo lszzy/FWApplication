@@ -44,39 +44,39 @@
         
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont.fw fontOfSize:15];
+        titleLabel.font = [UIFont fw_fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel]; {
-            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
-            [titleLabel.fw addCollapseConstraint:constraint];
-            titleLabel.fw.autoCollapse = YES;
+            [titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
+            [titleLabel fw_addCollapseConstraint:constraint];
+            titleLabel.fw_autoCollapse = YES;
         }
         
         UILabel *textLabel = [[UILabel alloc] init];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont.fw fontOfSize:13];
+        textLabel.font = [UIFont fw_fontOfSize:13];
         textLabel.textColor = [Theme textColor];
-        textLabel.fw.hiddenCollapse = YES;
+        textLabel.fw_hiddenCollapse = YES;
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel]; {
-            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel.fw addCollapseConstraint:constraint];
+            [textLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [textLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [textLabel fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel fw_addCollapseConstraint:constraint];
         }
         
         UIImageView *imageView = [[UIImageView alloc] init];
         self.myImageView = imageView;
         [self.contentView addSubview:imageView]; {
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView.fw addCollapseConstraint:constraint];
-            imageView.fw.autoCollapse = YES;
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *constraint = [imageView fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView fw_addCollapseConstraint:constraint];
+            imageView.fw_autoCollapse = YES;
         }
     }
     return self;
@@ -181,9 +181,9 @@
     });
     
     TestTableScrollObject *object = [TestTableScrollObject new];
-    object.title = [[randomArray objectAtIndex:0].fw randomObject];
-    object.text = [[randomArray objectAtIndex:1].fw randomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
+    object.title = [[randomArray objectAtIndex:0] fw_randomObject];
+    object.text = [[randomArray objectAtIndex:1] fw_randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2] fw_randomObject];
     if (imageName.length > 0) {
         object.image = [TestBundle imageNamed:imageName];
     }

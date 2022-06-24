@@ -157,7 +157,7 @@
         }
     }
     
-    return [self attributedStringWithHtmlString:htmlString];
+    return [self.base fw_attributedStringWithHtmlString:htmlString];
 }
 
 - (FWThemeObject<NSAttributedString *> *)themeObjectWithHtmlString:(NSString *)htmlString defaultAttributes:(NSDictionary<NSAttributedStringKey,id> *)attributes

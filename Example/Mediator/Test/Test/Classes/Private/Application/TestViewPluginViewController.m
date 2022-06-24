@@ -44,7 +44,7 @@
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
     NSInteger rowData = [sectionData[indexPath.row] fw_safeInteger];
     if (indexPath.section == 0) {
-        UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+        UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FWProgressView *view = [cell viewWithTag:100];
         if (!view) {
@@ -52,7 +52,7 @@
             view.tag = 100;
             view.color = Theme.textColor;
             [cell.contentView addSubview:view];
-            view.fw.layoutChain.center();
+            view.fw_layoutChain.center();
         }
         view.annular = rowData == 0 ? YES : NO;
         [self mockProgress:^(double progress, BOOL finished) {
@@ -61,7 +61,7 @@
         return cell;
     }
     
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FWIndicatorView *view = [cell viewWithTag:100];
     if (!view) {
@@ -69,7 +69,7 @@
         view.tag = 100;
         view.color = Theme.textColor;
         [cell.contentView addSubview:view];
-        view.fw.layoutChain.center();
+        view.fw_layoutChain.center();
     }
     view.type = (FWIndicatorViewAnimationType)rowData;
     [view startAnimating];

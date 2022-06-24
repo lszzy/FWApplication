@@ -51,52 +51,52 @@
         bgView.backgroundColor = [Theme cellColor];
         bgView.layer.masksToBounds = NO;
         bgView.layer.cornerRadius = 10;
-        [bgView.fw setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:5];
+        [bgView fw_setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:5];
         [self.contentView addSubview:bgView];
-        bgView.fw.layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
+        bgView.fw_layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
         
         UIView *expectView = [UIView new];
         expectView.backgroundColor = [UIColor redColor];
         expectView.hidden = YES;
         [bgView addSubview:expectView];
-        expectView.fw.layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
+        expectView.fw_layoutChain.edgesWithInsets(UIEdgeInsetsMake(10, 10, 10, 10));
         
         UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont.fw fontOfSize:15];
+        titleLabel.font = [UIFont fw_fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [bgView addSubview:titleLabel]; {
-            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
-            [titleLabel.fw addCollapseConstraint:constraint];
-            titleLabel.fw.autoCollapse = YES;
+            [titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:15];
+            [titleLabel fw_addCollapseConstraint:constraint];
+            titleLabel.fw_autoCollapse = YES;
         }
         
         UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont.fw fontOfSize:13];
+        textLabel.font = [UIFont fw_fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [bgView addSubview:textLabel]; {
-            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [textLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
-            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel.fw addCollapseConstraint:constraint];
+            [textLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [textLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:15];
+            NSLayoutConstraint *constraint = [textLabel fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel fw_addCollapseConstraint:constraint];
         }
         
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         imageView.userInteractionEnabled = YES;
-        [imageView.fw addTapGestureWithTarget:self action:@selector(onImageClick:)];
+        [imageView fw_addTapGestureWithTarget:self action:@selector(onImageClick:)];
         [bgView addSubview:imageView]; {
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
-            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView.fw addCollapseConstraint:constraint];
-            imageView.fw.autoCollapse = YES;
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:15 relation:NSLayoutRelationGreaterThanOrEqual];
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:15];
+            NSLayoutConstraint *constraint = [imageView fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView fw_addCollapseConstraint:constraint];
+            imageView.fw_autoCollapse = YES;
         }
     }
     return self;
@@ -117,9 +117,9 @@
     // 手工收缩
     self.myTextLabel.text = object.text;
     if (object.text.length > 0) {
-        self.myTextLabel.fw.collapsed = NO;
+        self.myTextLabel.fw_collapsed = NO;
     } else {
-        self.myTextLabel.fw.collapsed = YES;
+        self.myTextLabel.fw_collapsed = YES;
     }
 }
 
@@ -142,7 +142,7 @@
 
 - (void)renderView
 {
-    self.isShort = [@[@0, @1].fw.randomObject fw_safeInteger] == 0;
+    self.isShort = [@[@0, @1].fw_randomObject fw_safeInteger] == 0;
     FWWeakifySelf();
     [self.tableView.fw setRefreshingBlock:^{
         FWStrongifySelf();
@@ -181,7 +181,7 @@
 
 - (void)renderModel
 {
-    [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(renderData)];
+    [self fw_setRightBarItem:FWIcon.refreshImage target:self action:@selector(renderData)];
 }
 
 - (void)renderData
@@ -282,9 +282,9 @@
     });
     
     TestTableLayoutObject *object = [TestTableLayoutObject new];
-    object.title = [[randomArray objectAtIndex:0].fw randomObject];
-    object.text = [[randomArray objectAtIndex:1].fw randomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
+    object.title = [[randomArray objectAtIndex:0] fw_randomObject];
+    object.text = [[randomArray objectAtIndex:1] fw_randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2] fw_randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }

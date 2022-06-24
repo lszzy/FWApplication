@@ -507,7 +507,7 @@
     [super viewDidLoad];
     
     // Do any additional setup after loading the view, typically from a nib.
-    self.view.fw.height = FWScreenHeight - FWTopBarHeight;
+    self.view.fw_height = FWScreenHeight - FWTopBarHeight;
     self.barrageManager = [[FWBarrageManager alloc] init];
     [self.view addSubview:self.barrageManager.renderView];
     self.barrageManager.renderView.frame = CGRectMake(0.0, 0.0, self.view.frame.size.width, self.view.frame.size.height);
@@ -601,7 +601,7 @@
     gradientBackgroundDescriptor.strokeWidth = -1;
     gradientBackgroundDescriptor.fixedSpeed = 50.0;//用fixedSpeed属性设定速度
     gradientBackgroundDescriptor.barrageCellClass = [FWBarrageGradientBackgroundColorCell class];
-    gradientBackgroundDescriptor.gradientColor = UIColor.fw.randomColor;
+    gradientBackgroundDescriptor.gradientColor = UIColor.fw_randomColor;
     
     [self.barrageManager renderBarrageDescriptor:gradientBackgroundDescriptor];
     

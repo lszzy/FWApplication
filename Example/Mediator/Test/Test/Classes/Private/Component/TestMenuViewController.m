@@ -35,14 +35,14 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self.fw setLeftBarItem:@"Menu" block:^(id sender) {
+    [self fw_setLeftBarItem:@"Menu" block:^(id sender) {
         FWStrongifySelf();
         FWDrawerView *drawerView = self.contentView.fw.drawerView;
         CGFloat position = (drawerView.position == drawerView.openPosition) ? drawerView.closePosition : drawerView.openPosition;
         [drawerView setPosition:position animated:YES];
     }];
     
-    [self.fw addRightBarItem:@"相册" target:self action:@selector(onPhotoSheet:)];
+    [self fw_addRightBarItem:@"相册" target:self action:@selector(onPhotoSheet:)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -55,7 +55,7 @@
 {
     self.view.backgroundColor = [Theme tableColor];
     
-    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 2.0, 0, FWScreenWidth / 2.0, self.view.fw.height)];
+    UIView *contentView = [[UIView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 2.0, 0, FWScreenWidth / 2.0, self.view.fw_height)];
     _contentView = contentView;
     contentView.backgroundColor = [UIColor brownColor];
     UILabel *topLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 200, 100, 30)];
@@ -71,7 +71,7 @@
     closeLabel.text = @"Back";
     FWWeakifySelf();
     closeLabel.userInteractionEnabled = YES;
-    [closeLabel.fw addTapGestureWithBlock:^(id sender) {
+    [closeLabel fw_addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         [self fw_closeViewControllerAnimated:YES];
     }];
@@ -87,7 +87,7 @@
     _imageView = imageView;
     imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self.view addSubview:imageView];
-    imageView.fw.layoutChain.center().size(CGSizeMake(200, 200));
+    imageView.fw_layoutChain.center().size(CGSizeMake(200, 200));
 }
 
 - (void)onPhotoSheet:(UIBarButtonItem *)sender

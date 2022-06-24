@@ -22,17 +22,17 @@
     
     self.fw.tabBarHidden = NO;
     
-    [self.fw setLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
+    [self fw_setLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
     [self.navigationItem.leftBarButtonItem.fw showBadgeView:badgeView badgeValue:nil];
     
-    UIBarButtonItem *rightItem = [UIBarButtonItem.fw itemWithObject:FWIcon.backImage target:self action:@selector(onClick:)];
+    UIBarButtonItem *rightItem = [UIBarButtonItem fw_itemWithObject:FWIcon.backImage target:self action:@selector(onClick:)];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
     [rightItem.fw showBadgeView:badgeView badgeValue:@"1"];
     
     UIButton *customView = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
     customView.backgroundColor = [Theme textColor];
-    UIBarButtonItem *customItem = [UIBarButtonItem.fw itemWithObject:customView target:self action:@selector(onClick:)];
+    UIBarButtonItem *customItem = [UIBarButtonItem fw_itemWithObject:customView target:self action:@selector(onClick:)];
     badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleSmall];
     [customItem.fw showBadgeView:badgeView badgeValue:@"1"];
     self.navigationItem.rightBarButtonItems = @[rightItem, customItem];

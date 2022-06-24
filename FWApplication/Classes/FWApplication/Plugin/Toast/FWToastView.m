@@ -103,12 +103,12 @@
 {
     self.contentView.backgroundColor = self.contentBackgroundColor;
     self.contentView.layer.cornerRadius = self.contentCornerRadius;
-    [self.contentView.fw alignAxisToSuperview:NSLayoutAttributeCenterX];
-    [self.contentView.fw alignAxisToSuperview:NSLayoutAttributeCenterY withOffset:self.verticalOffset];
-    [self.contentView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentMarginInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentMarginInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentMarginInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentMarginInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.contentView fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
+    [self.contentView fw_alignAxisToSuperview:NSLayoutAttributeCenterY withOffset:self.verticalOffset];
+    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentMarginInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentMarginInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentMarginInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
+    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentMarginInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
     
     self.titleLabel.font = self.titleFont;
     self.titleLabel.textColor = self.titleColor;
@@ -144,42 +144,42 @@
     }
     
     if (!self.firstView) {
-        [self.titleLabel.fw pinEdgesToSuperviewWithInsets:self.contentInsets];
+        [self.titleLabel fw_pinEdgesToSuperviewWithInsets:self.contentInsets];
         return;
     }
     
     if (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) {
-        [self.firstView.fw setDimensionsToSize:self.indicatorSize];
+        [self.firstView fw_setDimensionsToSize:self.indicatorSize];
     }
     if (self.firstView && [self.firstView respondsToSelector:@selector(startAnimating)]) {
         [(UIView<FWIndicatorViewPlugin> *)self.firstView startAnimating];
     }
     
     if (self.horizontalAlignment) {
-        [self.firstView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left];
-        [self.firstView.fw alignAxisToSuperview:NSLayoutAttributeCenterY];
-        [self.firstView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.firstView.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right];
-        [self.titleLabel.fw alignAxisToSuperview:NSLayoutAttributeCenterY];
-        [self.titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
-        self.titleLabel.fw.autoCollapse = YES;
-        NSLayoutConstraint *collapseConstraint = [self.titleLabel.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:self.firstView withOffset:self.contentSpacing];
-        [self.titleLabel.fw addCollapseConstraint:collapseConstraint];
+        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left];
+        [self.firstView fw_alignAxisToSuperview:NSLayoutAttributeCenterY];
+        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right];
+        [self.titleLabel fw_alignAxisToSuperview:NSLayoutAttributeCenterY];
+        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
+        self.titleLabel.fw_autoCollapse = YES;
+        NSLayoutConstraint *collapseConstraint = [self.titleLabel fw_pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:self.firstView withOffset:self.contentSpacing];
+        [self.titleLabel fw_addCollapseConstraint:collapseConstraint];
     // 上下布局
     } else {
-        [self.firstView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top];
-        [self.firstView.fw alignAxisToSuperview:NSLayoutAttributeCenterX];
-        [self.firstView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.firstView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom];
-        [self.titleLabel.fw alignAxisToSuperview:NSLayoutAttributeCenterX];
-        [self.titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
-        self.titleLabel.fw.autoCollapse = YES;
-        NSLayoutConstraint *collapseConstraint = [self.titleLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.firstView withOffset:self.contentSpacing];
-        [self.titleLabel.fw addCollapseConstraint:collapseConstraint];
+        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top];
+        [self.firstView fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom];
+        [self.titleLabel fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
+        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
+        self.titleLabel.fw_autoCollapse = YES;
+        NSLayoutConstraint *collapseConstraint = [self.titleLabel fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.firstView withOffset:self.contentSpacing];
+        [self.titleLabel fw_addCollapseConstraint:collapseConstraint];
     }
 }
 
@@ -251,7 +251,7 @@
     if (self.superview != nil) {
         [self invalidateTimer];
         __weak __typeof__(self) self_weak_ = self;
-        self.hideTimer = [NSTimer.fw commonTimerWithTimeInterval:delay block:^(NSTimer *timer) {
+        self.hideTimer = [NSTimer fw_commonTimerWithTimeInterval:delay block:^(NSTimer *timer) {
             __typeof__(self) self = self_weak_;
             BOOL hideSuccess = [self hide];
             if (hideSuccess && completion) {

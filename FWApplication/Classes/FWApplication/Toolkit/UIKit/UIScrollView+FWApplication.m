@@ -80,7 +80,7 @@
         objc_setAssociatedObject(self.base, _cmd, contentView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
         [self.base addSubview:contentView];
-        [contentView.fw pinEdgesToSuperview];
+        [contentView fw_pinEdgesToSuperview];
     }
     return contentView;
 }
@@ -222,16 +222,16 @@
         if (view.superview != toSuperview) {
             [view removeFromSuperview];
             [toSuperview addSubview:view]; {
-                [view.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
-                [view.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:toPosition];
-                [view.fw setDimensionsToSize:view.bounds.size];
+                [view fw_pinEdgeToSuperview:NSLayoutAttributeLeft];
+                [view fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:toPosition];
+                [view fw_setDimensionsToSize:view.bounds.size];
             }
         }
     } else {
         if (view.superview != fromSuperview) {
             [view removeFromSuperview];
             [fromSuperview addSubview:view]; {
-                [view.fw pinEdgesToSuperview];
+                [view fw_pinEdgesToSuperview];
             }
         }
     }

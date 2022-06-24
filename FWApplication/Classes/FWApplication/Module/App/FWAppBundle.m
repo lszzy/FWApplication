@@ -29,7 +29,7 @@
     
     if ([name isEqualToString:@"fw.navBack"]) {
         CGSize size = CGSizeMake(12, 20);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGFloat lineWidth = 2;
@@ -42,7 +42,7 @@
         }];
     } else if ([name isEqualToString:@"fw.navClose"]) {
         CGSize size = CGSizeMake(16, 16);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGFloat lineWidth = 2;
@@ -59,7 +59,7 @@
         }];
     } else if ([name isEqualToString:@"fw.videoPlay"]) {
         CGSize size = CGSizeMake(60, 60);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             UIColor *fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.25];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
@@ -83,7 +83,7 @@
         }];
     } else if ([name isEqualToString:@"fw.videoPause"]) {
         CGSize size = CGSizeMake(12, 18);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
             CGFloat lineWidth = 2;
@@ -97,7 +97,7 @@
         }];
     } else if ([name isEqualToString:@"fw.videoStart"]) {
         CGSize size = CGSizeMake(17, 17);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             CGContextSetFillColorWithColor(contextRef, color.CGColor);
             UIBezierPath *path = [UIBezierPath bezierPath];
@@ -109,7 +109,7 @@
         }];
     } else if ([name isEqualToString:@"fw.pickerCheck"]) {
         CGSize size = CGSizeMake(20, 20);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
             UIColor *fillColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:.25];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);
@@ -122,7 +122,7 @@
         }];
     } else if ([name isEqualToString:@"fw.pickerChecked"]) {
         CGSize size = CGSizeMake(20, 20);
-        return [UIImage.fw imageWithSize:size block:^(CGContextRef contextRef) {
+        return [UIImage fw_imageWithSize:size block:^(CGContextRef contextRef) {
             UIColor *color = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
             UIColor *fillColor = [UIColor colorWithRed:7/255.f green:193/255.f blue:96/255.f alpha:1.0];
             CGContextSetStrokeColorWithColor(contextRef, color.CGColor);

@@ -164,7 +164,7 @@
 
 - (UIImage *)snapshotImage
 {
-    return [UIImage.fw imageWithView:self.base];
+    return [UIImage fw_imageWithView:self.base];
 }
 
 - (NSData *)snapshotPdf
@@ -834,7 +834,7 @@
         UIBlurEffect *effect = [UIBlurEffect effectWithStyle:style];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
         [self.base addSubview:effectView];
-        [effectView.fw pinEdgesToSuperview];
+        [effectView fw_pinEdgesToSuperview];
         return effectView;
     }
     return nil;

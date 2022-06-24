@@ -42,8 +42,8 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     
     [FWRouter setRouteFilter:^BOOL(FWRouterContext * _Nonnull context) {
         NSURL *url = [NSURL fw_urlWithString:context.URL];
-        if ([UIApplication.fw isSystemURL:url]) {
-            [UIApplication.fw openURL:url];
+        if ([UIApplication fw_isSystemURL:url]) {
+            [UIApplication fw_openURL:url];
             return NO;
         }
         if ([url.absoluteString hasPrefix:@"app://filter/"]) {
@@ -73,7 +73,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 {
     [FWRouter registerURL:@[@"http://*", @"https://*"] withHandler:^id(FWRouterContext *context) {
         // 尝试打开通用链接，失败了再内部浏览器打开
-        [UIApplication.fw openUniversalLinks:context.URL completionHandler:^(BOOL success) {
+        [UIApplication fw_openUniversalLinks:context.URL completionHandler:^(BOOL success) {
             if (success) return;
             
             TestWebViewController *viewController = [TestWebViewController new];
@@ -193,18 +193,18 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.title = self.context.URL;
+    self.fw_title = self.context.URL;
     
     UILabel *label = [[UILabel alloc] init];
     label.numberOfLines = 0;
     label.text = [NSString stringWithFormat:@"URL: %@\n\nparameters: %@", self.context.URL, self.context.parameters];
     [self.view addSubview:label];
-    [label.fw alignCenterToSuperview];
-    [label.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 40];
+    [label fw_alignCenterToSuperview];
+    [label fw_setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 40];
     
     if (self.context.completion) {
         FWWeakifySelf();
-        [self.fw setRightBarItem:@"完成" block:^(id sender) {
+        [self fw_setRightBarItem:@"完成" block:^(id sender) {
             FWStrongifySelf();
             [FWRouter completeURL:self.context result:@"我是回调数据"];
             [self fw_closeViewControllerAnimated:YES];
@@ -227,7 +227,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)renderTableLayout
 {
-    [self.tableView.fw pinEdgesToSuperview];
+    [self.tableView fw_pinEdgesToSuperview];
 }
 
 - (void)renderModel
@@ -310,7 +310,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -486,12 +486,12 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)onOpenUrl
 {
-    [UIApplication.fw openURL:@"http://kvm.wuyong.site/test.php"];
+    [UIApplication fw_openURL:@"http://kvm.wuyong.site/test.php"];
 }
 
 - (void)onOpenSafari
 {
-    [UIApplication.fw openSafariController:@"http://kvm.wuyong.site/test.php" completionHandler:^{
+    [UIApplication fw_openSafariController:@"http://kvm.wuyong.site/test.php" completionHandler:^{
         FWLogDebug(@"SafariController completionHandler");
     }];
 }
@@ -501,7 +501,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     TestViewController *viewController = [TestViewController new];
     viewController.navigationItem.title = @"iOS14 bug";
     FWWeakifySelf();
-    viewController.fw.shouldPopController = ^BOOL{
+    viewController.fw_shouldPopController = ^BOOL{
         FWStrongifySelf();
         static NSInteger count = 0;
         NSInteger index = count++ % 3;

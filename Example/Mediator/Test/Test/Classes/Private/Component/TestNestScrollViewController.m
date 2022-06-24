@@ -30,10 +30,10 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _textLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+        _textLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_textLabel];
-        [_textLabel.fw pinEdgesToSuperview];
+        [_textLabel fw_pinEdgesToSuperview];
     }
     return self;
 }
@@ -64,7 +64,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (void)renderTableLayout
 {
-    [self.tableView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, self.cart ? CategoryViewWidth : 0, self.cart ? CartViewHeight : 0, 0)];
+    [self.tableView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, self.cart ? CategoryViewWidth : 0, self.cart ? CartViewHeight : 0, 0)];
 }
 
 - (UICollectionViewLayout *)renderCollectionViewLayout
@@ -81,8 +81,8 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self.collectionView.backgroundColor = [Theme backgroundColor];
     [self.collectionView registerClass:[TestNestCollectionCell class] forCellWithReuseIdentifier:kTestNestCollectionCellID];
-    [self.collectionView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, 0, self.cart ? CartViewHeight : 0, 0) excludingEdge:NSLayoutAttributeRight];
-    [self.collectionView.fw setDimension:NSLayoutAttributeWidth toSize:self.cart ? CategoryViewWidth : 0];
+    [self.collectionView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, 0, self.cart ? CartViewHeight : 0, 0) excludingEdge:NSLayoutAttributeRight];
+    [self.collectionView fw_setDimension:NSLayoutAttributeWidth toSize:self.cart ? CategoryViewWidth : 0];
 }
 
 - (void)renderView
@@ -188,7 +188,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSInteger index = indexPath.section * 5 + indexPath.row;
     cell.textLabel.text = [self.tableData objectAtIndex:index];
     return cell;
@@ -204,7 +204,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     UIView *view = [UIView new];
     view.backgroundColor = [Theme cellColor];
     
-    UILabel *headerLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:[NSString stringWithFormat:@"Header%@", @(section)]];
+    UILabel *headerLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor] text:[NSString stringWithFormat:@"Header%@", @(section)]];
     headerLabel.frame = CGRectMake(0, 0, FWScreenWidth, ItemViewHeight);
     [view addSubview:headerLabel];
     return view;
@@ -296,7 +296,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         [self.pagerView.mainTableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
         
         FWWeakifySelf();
-        [self.fw setRightBarItem:@"测试" block:^(id  _Nonnull sender) {
+        [self fw_setRightBarItem:@"测试" block:^(id  _Nonnull sender) {
             FWStrongifySelf();
             TestNestScrollViewController *viewController = [TestNestScrollViewController new];
             viewController.refreshList = YES;
@@ -341,7 +341,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     if (self.refreshList) {
         FWPagingListRefreshView *pagerView = [[FWPagingListRefreshView alloc] initWithDelegate:self listContainerType:FWPagingListContainerTypeScrollView];
         pagerView.listScrollViewPinContentInsetBlock = ^CGFloat(UIScrollView *scrollView) {
-            TestNestChildController *viewController = scrollView.fw.viewController;
+            TestNestChildController *viewController = scrollView.fw_viewController;
             if (viewController.refreshList && viewController.section && !viewController.isInserted) {
                 return FWScreenHeight;
             }
@@ -353,15 +353,15 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     }
     self.pagerView.pinSectionHeaderVerticalOffset = FWTopBarHeight;
     [self.view addSubview:self.pagerView];
-    [self.pagerView.fw pinEdgesToSuperview];
+    [self.pagerView fw_pinEdgesToSuperview];
     
     UIView *cartView = [UIView new];
     _cartView = cartView;
     cartView.backgroundColor = [UIColor greenColor];
     [self.view addSubview:cartView];
-    [cartView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-    [cartView.fw setDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
-    UILabel *cartLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[UIColor blackColor] text:@"我是购物车"];
+    [cartView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
+    [cartView fw_setDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
+    UILabel *cartLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[UIColor blackColor] text:@"我是购物车"];
     cartLabel.textAlignment = NSTextAlignmentCenter;
     cartLabel.frame = CGRectMake(0, 0, FWScreenWidth, CartViewHeight);
     [cartView addSubview:cartLabel];

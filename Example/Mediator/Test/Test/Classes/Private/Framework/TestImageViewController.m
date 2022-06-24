@@ -283,15 +283,15 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
     if (self) {
         _nameLabel = [UILabel new];
         [self.contentView addSubview:_nameLabel];
-        _nameLabel.fw.layoutChain.leftWithInset(10).topWithInset(10).height(20);
+        _nameLabel.fw_layoutChain.leftWithInset(10).topWithInset(10).height(20);
         
         _systemView = [UIImageView new];
         [self.contentView addSubview:_systemView];
-        _systemView.fw.layoutChain.leftWithInset(10).topToViewBottomWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
+        _systemView.fw_layoutChain.leftWithInset(10).topToViewBottomWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
         
         _animatedView = [[UIImageView.fw imageViewAnimatedClass] new];
         [self.contentView addSubview:_animatedView];
-        _animatedView.fw.layoutChain.leftToViewRightWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
+        _animatedView.fw_layoutChain.leftToViewRightWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
     }
     return self;
 }
@@ -332,7 +332,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:@"Change" block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:@"Change" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.isSDWebImage = !self.isSDWebImage;
         [FWPluginManager unloadPlugin:@protocol(FWImagePlugin)];
@@ -352,7 +352,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 - (void)renderData
 {
     self.isSDWebImage = [[FWPluginManager loadPlugin:@protocol(FWImagePlugin)] isKindOfClass:[FWSDWebImageImpl class]];
-    self.fw.title = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
+    self.fw_title = self.isSDWebImage ? @"FWImage - SDWebImage" : @"FWImage - FWWebImage";
     FWSDWebImageImpl.sharedInstance.fadeAnimated = YES;
     FWImagePluginImpl.sharedInstance.fadeAnimated = YES;
     
@@ -407,7 +407,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TestImageCell *cell = [TestImageCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
+    TestImageCell *cell = [TestImageCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
     NSString *fileName = [self.tableData objectAtIndex:indexPath.row];
     cell.nameLabel.text = [[fileName lastPathComponent] stringByAppendingFormat:@"(%@)", [NSData.fw mimeTypeFromExtension:[fileName pathExtension]]];
     if (!fileName.fw.isFormatUrl) {
@@ -426,7 +426,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         cell.fw_tempObject = nil;
         NSString *url = fileName;
         if ([url hasPrefix:@"http://kvm.wuyong.site"]) {
-            url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fw.currentTime)];
+            url = [url stringByAppendingFormat:@"?t=%@", @(NSDate.fw_currentTime)];
         }
         [cell.systemView.fw setImageWithURL:url];
         [cell.animatedView.fw setImageWithURL:url placeholderImage:[TestBundle imageNamed:@"public_icon"]];

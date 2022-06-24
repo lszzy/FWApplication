@@ -67,7 +67,7 @@
 
 - (void)reloadDataWithoutCache
 {
-    [self clearHeightCache];
+    [self.base fw_clearHeightCache];
     [self.base reloadData];
 }
 
@@ -162,7 +162,7 @@
         _contentView = [[UIView alloc] initWithFrame:CGRectZero];
         _contentView.layer.masksToBounds = NO;
         [self addSubview:_contentView];
-        [_contentView.fw pinEdgesToSuperview];
+        [_contentView fw_pinEdgesToSuperview];
     }
     return self;
 }
@@ -171,7 +171,7 @@
 {
     _contentInset = contentInset;
     
-    [self.contentView.fw pinEdgesToSuperviewWithInsets:contentInset];
+    [self.contentView fw_pinEdgesToSuperviewWithInsets:contentInset];
 }
 
 - (void)setSectionContentInset:(UIEdgeInsets)contentInset tableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath

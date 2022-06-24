@@ -17,7 +17,7 @@
     
     // 设置默认导航栏样式
     // FWNavigationBarAppearance *defaultAppearance = [FWNavigationBarAppearance new];
-    // defaultAppearance.foregroundColor = [UIColor.fw colorWithHex:0x111111];
+    // defaultAppearance.foregroundColor = [UIColor fw_colorWithHex:0x111111];
     // 1. 指定导航栏背景色
     // defaultAppearance.backgroundColor = UIColor.whiteColor;
     // 2. 设置导航栏样式全透明

@@ -60,8 +60,8 @@
         
         UITextField *textField = [_searchBar.fw textField];
         textField.font = [UIFont systemFontOfSize:12];
-        [textField.fw setCornerRadius:16];
-        textField.fw.touchResign = YES;
+        [textField fw_setCornerRadius:16];
+        textField.fw_touchResign = YES;
     }
     return _searchBar;
 }
@@ -69,10 +69,10 @@
 - (UIView *)titleView
 {
     UIView *titleView = [[TestModuleExpandedView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, FWNavigationBarHeight)];
-    [titleView.fw setDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
+    [titleView fw_setDimension:NSLayoutAttributeHeight toSize:FWNavigationBarHeight];
     titleView.backgroundColor = [UIColor clearColor];
     [titleView addSubview:self.searchBar];
-    [self.searchBar.fw pinEdgesToSuperview];
+    [self.searchBar fw_pinEdgesToSuperview];
     return titleView;
 }
 
@@ -260,7 +260,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSArray *sectionData = [self.displayData objectAtIndex:indexPath.section];
     NSArray *sectionList = [sectionData objectAtIndex:1];

@@ -286,7 +286,7 @@
 - (void)showAlertWithTitle:(id)title
                      message:(id)message
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -299,7 +299,7 @@
                       cancel:(id)cancel
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -317,7 +317,7 @@
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -336,7 +336,7 @@
                        confirm:(id)confirm
                   confirmBlock:(void (^)(void))confirmBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -354,7 +354,7 @@
                   confirmBlock:(void (^)(void))confirmBlock
                    cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -372,7 +372,7 @@
                       confirm:(id)confirm
                  confirmBlock:(void (^)(NSString *))confirmBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -391,7 +391,7 @@
                  confirmBlock:(void (^)(NSString *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -413,7 +413,7 @@
                  confirmBlock:(void (^)(NSArray<NSString *> *))confirmBlock
                   cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -438,7 +438,7 @@
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -459,7 +459,7 @@
                     cancel:(id)cancel
                cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -475,7 +475,7 @@
                      actions:(NSArray *)actions
                  actionBlock:(void (^)(NSInteger))actionBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -494,7 +494,7 @@
                  actionBlock:(void (^)(NSInteger))actionBlock
                  cancelBlock:(void (^)(void))cancelBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -516,7 +516,7 @@
                  cancelBlock:(void (^)(void))cancelBlock
                  customBlock:(nullable void (^)(id))customBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }

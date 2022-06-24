@@ -26,10 +26,10 @@
     self.navigationItem.title = [NSString stringWithFormat:@"工作流-%ld", self.step];
     
     if (self.step < 3) {
-        [self.fw setRightBarItem:@"下一步" target:self action:@selector(onNext)];
+        [self fw_setRightBarItem:@"下一步" target:self action:@selector(onNext)];
     } else {
-        [self.fw addRightBarItem:@"退出" target:self action:@selector(onExit)];
-        [self.fw addRightBarItem:@"重来" target:self action:@selector(onOpen)];
+        [self fw_addRightBarItem:@"退出" target:self action:@selector(onExit)];
+        [self fw_addRightBarItem:@"重来" target:self action:@selector(onOpen)];
     }
 }
 

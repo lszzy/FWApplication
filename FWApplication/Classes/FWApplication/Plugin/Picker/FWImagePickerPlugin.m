@@ -87,7 +87,7 @@
 - (void)showImageCameraWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -100,7 +100,7 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(id _Nullable, id _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -113,7 +113,7 @@
 - (void)showImagePickerWithAllowsEditing:(BOOL)allowsEditing
                                 completion:(void (^)(UIImage * _Nullable, BOOL))completion
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -125,7 +125,7 @@
                               allowsEditing:(BOOL)allowsEditing
                                  completion:(void (^)(NSArray<UIImage *> * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }
@@ -140,7 +140,7 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
                              completion:(void (^)(NSArray * _Nonnull, NSArray * _Nonnull, BOOL))completion
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.base.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
         ctrl = UIWindow.fw_topPresentedController;
     }

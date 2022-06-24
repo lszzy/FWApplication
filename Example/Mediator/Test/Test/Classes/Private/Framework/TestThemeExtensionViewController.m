@@ -48,7 +48,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
         } else if (style == FWThemeStyleLight) {
             return [TestBundle imageNamed:@"theme_image_light"];
         } else {
-            return [[TestBundle imageNamed:@"theme_image_dark"].fw imageWithTintColor:[UIColor redColor]];
+            return [[TestBundle imageNamed:@"theme_image_dark"] fw_imageWithTintColor:[UIColor redColor]];
         }
     }];
     [self.view addSubview:imageView];
@@ -60,7 +60,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
         } else if (style == FWThemeStyleLight) {
             return [TestBundle imageNamed:@"theme_image_light"];
         } else {
-            return [[TestBundle imageNamed:@"theme_image_dark"].fw imageWithTintColor:[UIColor redColor]];
+            return [[TestBundle imageNamed:@"theme_image_dark"] fw_imageWithTintColor:[UIColor redColor]];
         }
     }];
     [self.view addSubview:assetView];
@@ -101,7 +101,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     NSString *title = mode < themes.count ? [themes objectAtIndex:mode] : @"红色";
     [themes addObject:@"红色"];
     FWWeakifySelf();
-    [self.fw setRightBarItem:title block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:themes actionBlock:^(NSInteger index) {

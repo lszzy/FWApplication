@@ -72,14 +72,14 @@
     CGFloat imageEdgeLeft = self.albumImageMarginLeft == -1 ? imageEdgeTop : self.albumImageMarginLeft;
     self.imageView.frame = CGRectMake(imageEdgeLeft, imageEdgeTop, self.albumImageSize, self.albumImageSize);
     
-    self.textLabel.fw.origin = CGPointMake(CGRectGetMaxX(self.imageView.frame) + self.albumNameInsets.left, (CGRectGetHeight(self.textLabel.superview.bounds) - CGRectGetHeight(self.textLabel.frame)) / 2.0);
+    self.textLabel.fw_origin = CGPointMake(CGRectGetMaxX(self.imageView.frame) + self.albumNameInsets.left, (CGRectGetHeight(self.textLabel.superview.bounds) - CGRectGetHeight(self.textLabel.frame)) / 2.0);
     
     CGFloat textLabelMaxWidth = CGRectGetWidth(self.contentView.bounds) - CGRectGetMinX(self.textLabel.frame) - CGRectGetWidth(self.detailTextLabel.bounds) - self.albumNameInsets.right;
     if (CGRectGetWidth(self.textLabel.bounds) > textLabelMaxWidth) {
-        self.textLabel.fw.width = textLabelMaxWidth;
+        self.textLabel.fw_width = textLabelMaxWidth;
     }
     
-    self.detailTextLabel.fw.origin = CGPointMake(CGRectGetMaxX(self.textLabel.frame) + self.albumNameInsets.right, (CGRectGetHeight(self.detailTextLabel.superview.bounds) - CGRectGetHeight(self.detailTextLabel.frame)) / 2.0);
+    self.detailTextLabel.fw_origin = CGPointMake(CGRectGetMaxX(self.textLabel.frame) + self.albumNameInsets.right, (CGRectGetHeight(self.detailTextLabel.superview.bounds) - CGRectGetHeight(self.detailTextLabel.frame)) / 2.0);
 }
 
 - (void)setAlbumNameFont:(UIFont *)albumNameFont {
@@ -531,12 +531,12 @@
     
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
-        self.videoDurationLabel.fw.origin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+        self.videoDurationLabel.fw_origin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
     }
     
     if (!self.iconImageView.hidden) {
         [self.iconImageView sizeToFit];
-        self.iconImageView.fw.origin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
+        self.iconImageView.fw_origin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
     }
 }
 
@@ -681,8 +681,8 @@
         
         _checkboxImage = FWAppBundle.pickerCheckImage;
         _checkboxCheckedImage = FWAppBundle.pickerCheckedImage;
-        _originImageCheckboxImage = [FWAppBundle.pickerCheckImage.fw imageWithScaleSize:CGSizeMake(18, 18)];
-        _originImageCheckboxCheckedImage = [FWAppBundle.pickerCheckedImage.fw imageWithScaleSize:CGSizeMake(18, 18)];
+        _originImageCheckboxImage = [FWAppBundle.pickerCheckImage fw_imageWithScaleSize:CGSizeMake(18, 18)];
+        _originImageCheckboxCheckedImage = [FWAppBundle.pickerCheckedImage fw_imageWithScaleSize:CGSizeMake(18, 18)];
     }
     return self;
 }
@@ -715,9 +715,9 @@
     self.topToolBarView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), FWTopBarHeight);
     CGFloat topToolbarPaddingTop = self.view.safeAreaInsets.top;
     CGFloat topToolbarContentHeight = CGRectGetHeight(self.topToolBarView.bounds) - topToolbarPaddingTop;
-    self.backButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
+    self.backButton.fw_origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.backButton.frame)) / 2.0);
     if (!self.checkboxButton.hidden) {
-        self.checkboxButton.fw.origin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
+        self.checkboxButton.fw_origin = CGPointMake(CGRectGetWidth(self.topToolBarView.frame) - self.toolBarPaddingHorizontal - self.view.safeAreaInsets.right - CGRectGetWidth(self.checkboxButton.frame), topToolbarPaddingTop + (topToolbarContentHeight - CGRectGetHeight(self.checkboxButton.frame)) / 2.0);
     }
     
     CGFloat bottomToolBarHeight = self.bottomToolBarHeight;
@@ -725,11 +725,11 @@
     self.bottomToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - bottomToolBarHeight, CGRectGetWidth(self.view.bounds), bottomToolBarHeight);
     [self updateSendButtonLayout];
     
-    self.editButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
+    self.editButton.fw_origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.editButton.frame)) / 2.0);
     if (self.showsEditButton) {
-        self.originImageCheckboxButton.fw.origin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+        self.originImageCheckboxButton.fw_origin = CGPointMake((CGRectGetWidth(self.bottomToolBarView.frame) - CGRectGetWidth(self.originImageCheckboxButton.frame)) / 2.0, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     } else {
-        self.originImageCheckboxButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
+        self.originImageCheckboxButton.fw_origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (bottomToolBarContentHeight - CGRectGetHeight(self.originImageCheckboxButton.frame)) / 2.0);
     }
     
     self.editCollectionView.frame = CGRectMake(0, CGRectGetMinY(self.bottomToolBarView.frame) - self.editCollectionViewHeight, CGRectGetWidth(self.view.bounds), self.editCollectionViewHeight);
@@ -797,9 +797,9 @@
         [_backButton setImage:FWAppBundle.navBackImage forState:UIControlStateNormal];
         [_backButton sizeToFit];
         [_backButton addTarget:self action:@selector(handleCancelButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _backButton.fw.touchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
-        _backButton.fw.disabledAlpha = 0.3;
-        _backButton.fw.highlightedAlpha = 0.5;
+        _backButton.fw_touchInsets = UIEdgeInsetsMake(30, 20, 50, 80);
+        _backButton.fw_disabledAlpha = 0.3;
+        _backButton.fw_highlightedAlpha = 0.5;
     }
     return _backButton;
 }
@@ -813,9 +813,9 @@
         [_checkboxButton setImage:self.checkboxCheckedImage forState:UIControlStateSelected|UIControlStateHighlighted];
         [_checkboxButton sizeToFit];
         [_checkboxButton addTarget:self action:@selector(handleCheckButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        _checkboxButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        _checkboxButton.fw.disabledAlpha = 0.3;
-        _checkboxButton.fw.highlightedAlpha = 0.5;
+        _checkboxButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _checkboxButton.fw_disabledAlpha = 0.3;
+        _checkboxButton.fw_highlightedAlpha = 0.5;
     }
     return _checkboxButton;
 }
@@ -841,12 +841,12 @@
     if (!_editButton) {
         _editButton = [[UIButton alloc] init];
         _editButton.hidden = !self.showsEditButton;
-        _editButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _editButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [_editButton setTitle:FWAppBundle.editButton forState:UIControlStateNormal];
         _editButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_editButton sizeToFit];
-        _editButton.fw.disabledAlpha = 0.3;
-        _editButton.fw.highlightedAlpha = 0.5;
+        _editButton.fw_disabledAlpha = 0.3;
+        _editButton.fw_highlightedAlpha = 0.5;
         [_editButton addTarget:self action:@selector(handleEditButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _editButton;
@@ -856,12 +856,12 @@
 - (UIButton *)sendButton {
     if (!_sendButton) {
         _sendButton = [[UIButton alloc] init];
-        _sendButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _sendButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
         _sendButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_sendButton sizeToFit];
-        _sendButton.fw.disabledAlpha = 0.3;
-        _sendButton.fw.highlightedAlpha = 0.5;
+        _sendButton.fw_disabledAlpha = 0.3;
+        _sendButton.fw_highlightedAlpha = 0.5;
         [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _sendButton;
@@ -880,9 +880,9 @@
         [_originImageCheckboxButton setImageEdgeInsets:UIEdgeInsetsMake(0, -5.0f, 0, 5.0f)];
         [_originImageCheckboxButton setContentEdgeInsets:UIEdgeInsetsMake(0, 5.0f, 0, 0)];
         [_originImageCheckboxButton sizeToFit];
-        _originImageCheckboxButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
-        _originImageCheckboxButton.fw.disabledAlpha = 0.3;
-        _originImageCheckboxButton.fw.highlightedAlpha = 0.5;
+        _originImageCheckboxButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        _originImageCheckboxButton.fw_disabledAlpha = 0.3;
+        _originImageCheckboxButton.fw_highlightedAlpha = 0.5;
         [_originImageCheckboxButton addTarget:self action:@selector(handleOriginImageCheckboxButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _originImageCheckboxButton;
@@ -1400,7 +1400,7 @@
 - (void)updateSendButtonLayout {
     CGFloat bottomToolBarContentHeight = self.bottomToolBarHeight - self.view.safeAreaInsets.bottom;
     [self.sendButton sizeToFit];
-    self.sendButton.fw.origin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
+    self.sendButton.fw_origin = CGPointMake(CGRectGetWidth(self.bottomToolBarView.frame) - self.toolBarPaddingHorizontal - CGRectGetWidth(self.sendButton.frame) - self.view.safeAreaInsets.right, (bottomToolBarContentHeight - CGRectGetHeight(self.sendButton.frame)) / 2.0);
 }
 
 - (void)updateImageCountAndCollectionView:(BOOL)animated {
@@ -1522,7 +1522,7 @@
     [self.contentView addSubview:self.iconImageView];
     
     self.checkboxButton = [[UIButton alloc] init];
-    self.checkboxButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    self.checkboxButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
     self.checkboxButton.hidden = YES;
     [self.contentView addSubview:self.checkboxButton];
 }
@@ -1581,12 +1581,12 @@
     
     if (self.videoDurationLabel && !self.videoDurationLabel.hidden) {
         [self.videoDurationLabel sizeToFit];
-        self.videoDurationLabel.fw.origin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
+        self.videoDurationLabel.fw_origin = CGPointMake(CGRectGetWidth(self.contentView.bounds) - self.videoDurationLabelMargins.right - CGRectGetWidth(self.videoDurationLabel.frame), CGRectGetHeight(self.contentView.bounds) - self.videoDurationLabelMargins.bottom - CGRectGetHeight(self.videoDurationLabel.frame));
     }
     
     if (!self.iconImageView.hidden) {
         [self.iconImageView sizeToFit];
-        self.iconImageView.fw.origin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
+        self.iconImageView.fw_origin = CGPointMake(self.iconImageViewMargins.left, CGRectGetHeight(self.contentView.bounds) - self.iconImageViewMargins.bottom - CGRectGetHeight(self.iconImageView.frame));
     }
 }
 
@@ -1901,7 +1901,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     if (self.allowsMultipleSelection) {
         operationToolBarViewHeight = self.operationToolBarHeight;
         self.operationToolBarView.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - operationToolBarViewHeight, CGRectGetWidth(self.view.bounds), operationToolBarViewHeight);
-        self.previewButton.fw.origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (CGRectGetHeight(self.operationToolBarView.bounds) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
+        self.previewButton.fw_origin = CGPointMake(self.toolBarPaddingHorizontal + self.view.safeAreaInsets.left, (CGRectGetHeight(self.operationToolBarView.bounds) - self.view.safeAreaInsets.bottom - CGRectGetHeight(self.previewButton.frame)) / 2.0);
         [self updateSendButtonLayout];
         operationToolBarViewHeight = CGRectGetHeight(self.operationToolBarView.frame);
     }
@@ -2216,9 +2216,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _sendButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [_sendButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_sendButton setTitle:FWAppBundle.doneButton forState:UIControlStateNormal];
-        _sendButton.fw.touchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
-        _sendButton.fw.disabledAlpha = 0.3;
-        _sendButton.fw.highlightedAlpha = 0.5;
+        _sendButton.fw_touchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
+        _sendButton.fw_disabledAlpha = 0.3;
+        _sendButton.fw_highlightedAlpha = 0.5;
         [_sendButton sizeToFit];
         [_sendButton addTarget:self action:@selector(handleSendButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -2233,9 +2233,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
         _previewButton.titleLabel.font = [UIFont systemFontOfSize:16];
         [_previewButton setTitleColor:self.toolBarTintColor forState:UIControlStateNormal];
         [_previewButton setTitle:FWAppBundle.previewButton forState:UIControlStateNormal];
-        _previewButton.fw.touchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
-        _previewButton.fw.disabledAlpha = 0.3;
-        _previewButton.fw.highlightedAlpha = 0.5;
+        _previewButton.fw_touchInsets = UIEdgeInsetsMake(12, 20, 12, 20);
+        _previewButton.fw_disabledAlpha = 0.3;
+        _previewButton.fw_highlightedAlpha = 0.5;
         [_previewButton sizeToFit];
         [_previewButton addTarget:self action:@selector(handlePreviewButtonClick:) forControlEvents:UIControlEventTouchUpInside];
     }

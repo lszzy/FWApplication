@@ -24,7 +24,7 @@
             sum += val;
         }
     }];
-    if (sum < 1) return self.randomObject;
+    if (sum < 1) return self.base.fw_randomObject;
     
     __block NSInteger index = -1;
     __block NSInteger weight = 0;
@@ -39,7 +39,7 @@
             }
         }
     }];
-    return index >= 0 && index < count ? [self.base objectAtIndex:index] : self.randomObject;
+    return index >= 0 && index < count ? [self.base objectAtIndex:index] : self.base.fw_randomObject;
 }
 
 - (NSArray *)reverseArray

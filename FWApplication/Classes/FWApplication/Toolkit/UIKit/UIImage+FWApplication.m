@@ -405,7 +405,7 @@
 
 - (UIImage *)alphaImage
 {
-    if ([self hasAlpha]) {
+    if ([self.base fw_hasAlpha]) {
         return self.base;
     }
     

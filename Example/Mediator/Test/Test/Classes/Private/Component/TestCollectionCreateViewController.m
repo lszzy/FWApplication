@@ -40,46 +40,46 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = UIColor.fw.randomColor;
+        self.contentView.backgroundColor = UIColor.fw_randomColor;
         
         UILabel *titleLabel = [UILabel new];
         titleLabel.numberOfLines = 0;
-        titleLabel.font = [UIFont.fw fontOfSize:15];
+        titleLabel.font = [UIFont fw_fontOfSize:15];
         titleLabel.textColor = [Theme textColor];
         self.myTitleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        [titleLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [titleLabel fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftWithInset(15).rightWithInset(15).topWithInset(15);
         }];
         
         UILabel *textLabel = [UILabel new];
         textLabel.numberOfLines = 0;
-        textLabel.font = [UIFont.fw fontOfSize:13];
+        textLabel.font = [UIFont fw_fontOfSize:13];
         textLabel.textColor = [Theme textColor];
         self.myTextLabel = textLabel;
         [self.contentView addSubview:textLabel];
-        [textLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+        [textLabel fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
             make.leftToView(titleLabel).rightToView(titleLabel);
-            NSLayoutConstraint *constraint = [textLabel.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
-            [textLabel.fw addCollapseConstraint:constraint];
-            textLabel.fw.autoCollapse = YES;
+            NSLayoutConstraint *constraint = [textLabel fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:titleLabel withOffset:10];
+            [textLabel fw_addCollapseConstraint:constraint];
+            textLabel.fw_autoCollapse = YES;
         }];
         
         // maxY视图不需要和bottom布局，默认平齐，可设置底部间距
-        self.fw.maxYViewPadding = 15;
+        self.fw_maxYViewPadding = 15;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         [imageView.fw setContentModeAspectFill];
         [self.contentView addSubview:imageView];
-        [imageView.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
-            [imageView.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
-            NSLayoutConstraint *widthCons = [imageView.fw setDimension:NSLayoutAttributeWidth toSize:100];
-            NSLayoutConstraint *heightCons = [imageView.fw setDimension:NSLayoutAttributeHeight toSize:100];
-            NSLayoutConstraint *constraint = [imageView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
-            [imageView.fw addCollapseConstraint:widthCons];
-            [imageView.fw addCollapseConstraint:heightCons];
-            [imageView.fw addCollapseConstraint:constraint];
-            imageView.fw.autoCollapse = YES;
+        [imageView fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
+            [imageView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
+            NSLayoutConstraint *widthCons = [imageView fw_setDimension:NSLayoutAttributeWidth toSize:100];
+            NSLayoutConstraint *heightCons = [imageView fw_setDimension:NSLayoutAttributeHeight toSize:100];
+            NSLayoutConstraint *constraint = [imageView fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:textLabel withOffset:10];
+            [imageView fw_addCollapseConstraint:widthCons];
+            [imageView fw_addCollapseConstraint:heightCons];
+            [imageView fw_addCollapseConstraint:constraint];
+            imageView.fw_autoCollapse = YES;
         }];
     }
     return self;
@@ -122,14 +122,14 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = UIColor.fw.randomColor;
-        self.fw.maxYViewPadding = 15;
+        self.backgroundColor = UIColor.fw_randomColor;
+        self.fw_maxYViewPadding = 15;
         
-        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
         titleLabel.numberOfLines = 0;
         _titleLabel = titleLabel;
         [self addSubview:titleLabel];
-        titleLabel.fw.layoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15);
+        titleLabel.fw_layoutChain.leftWithInset(15).topWithInset(15).rightWithInset(15);
     }
     return self;
 }
@@ -180,7 +180,7 @@
     };
     
     [self.view addSubview:self.collectionView];
-    [self.collectionView.fw pinEdgesToSuperview];
+    [self.collectionView fw_pinEdgesToSuperview];
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
     
@@ -191,7 +191,7 @@
 - (void)renderModel
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:FWIcon.addImage block:^(id sender) {
+    [self fw_setRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
         NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
@@ -214,7 +214,7 @@
         [self.fw hideSkeleton];
         
         self.collectionView.fw.delegate.collectionData = @[@[[self randomObject], [self randomObject]]];
-        [self.collectionView.fw clearSizeCache];
+        [self.collectionView fw_clearSizeCache];
         [self.collectionView.fw reloadDataWithoutAnimation];
         
         [self.collectionView.fw endRefreshing];
@@ -277,9 +277,9 @@
     });
     
     TestCollectionCreateObject *object = [TestCollectionCreateObject new];
-    object.title = [[randomArray objectAtIndex:0].fw randomObject];
-    object.text = [[randomArray objectAtIndex:1].fw randomObject];
-    NSString *imageName =[[randomArray objectAtIndex:2].fw randomObject];
+    object.title = [[randomArray objectAtIndex:0] fw_randomObject];
+    object.text = [[randomArray objectAtIndex:1] fw_randomObject];
+    NSString *imageName =[[randomArray objectAtIndex:2] fw_randomObject];
     if (imageName.length > 0) {
         object.imageUrl = imageName;
     }

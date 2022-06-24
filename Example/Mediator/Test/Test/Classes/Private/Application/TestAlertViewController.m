@@ -21,7 +21,7 @@
 
 - (void)renderModel
 {
-    [self.fw setRightBarItem:@"切换插件" block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:@"切换插件" block:^(id  _Nonnull sender) {
         id<FWAlertPlugin> alertPlugin = [FWPluginManager loadPlugin:@protocol(FWAlertPlugin)];
         if (alertPlugin) {
             [FWPluginManager unloadPlugin:@protocol(FWAlertPlugin)];
@@ -64,7 +64,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -285,7 +285,7 @@
     UIView *alertView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 200)];
     alertView.backgroundColor = UIColor.whiteColor;
     FWWeakifySelf();
-    [alertView.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [alertView fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.presentedViewController dismissViewControllerAnimated:YES completion:nil];
     }];
@@ -310,14 +310,14 @@
     attachment.bounds = CGRectMake(0, -20, 30, 30);
     [title appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
     NSDictionary *attrs = @{
-        NSFontAttributeName: [UIFont.fw boldFontOfSize:17],
+        NSFontAttributeName: [UIFont fw_boldFontOfSize:17],
         NSForegroundColorAttributeName: [UIColor redColor],
     };
     [title appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\n警告框标题" attributes:attrs]];
         
     NSMutableAttributedString *message = [NSMutableAttributedString new];
     attrs = @{
-        NSFontAttributeName: [UIFont.fw fontOfSize:15],
+        NSFontAttributeName: [UIFont fw_fontOfSize:15],
         NSForegroundColorAttributeName: [UIColor greenColor],
     };
     [message appendAttributedString:[[NSAttributedString alloc] initWithString:@"警告框消息" attributes:attrs]];
@@ -339,14 +339,14 @@
     attachment.bounds = CGRectMake(0, -20, 30, 30);
     [title appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
     NSDictionary *attrs = @{
-        NSFontAttributeName: [UIFont.fw boldFontOfSize:17],
+        NSFontAttributeName: [UIFont fw_boldFontOfSize:17],
         NSForegroundColorAttributeName: [UIColor redColor],
     };
     [title appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\n操作表标题" attributes:attrs]];
         
     NSMutableAttributedString *message = [NSMutableAttributedString new];
     attrs = @{
-        NSFontAttributeName: [UIFont.fw fontOfSize:15],
+        NSFontAttributeName: [UIFont fw_fontOfSize:15],
         NSForegroundColorAttributeName: [UIColor greenColor],
     };
     [message appendAttributedString:[[NSAttributedString alloc] initWithString:@"操作表消息" attributes:attrs]];

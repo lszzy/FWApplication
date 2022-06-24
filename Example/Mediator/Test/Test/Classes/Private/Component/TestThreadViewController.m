@@ -67,7 +67,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -142,11 +142,11 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         NSInteger value = [objc_getAssociatedObject(self, _cmd) integerValue];
         value++;
         objc_setAssociatedObject(self, _cmd, @(value), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
@@ -214,11 +214,11 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
@@ -286,11 +286,11 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
             obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
@@ -317,7 +317,7 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         NSInteger value = [[dict.fw randomWeightKey] integerValue];
         if (value == 1) {
             count1 += 1;
@@ -328,7 +328,7 @@
         } else {
             count4 += 1;
         }
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
@@ -371,11 +371,11 @@
     [self onQueue:^{
 
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         NSInteger value = [[[FWCacheMemory sharedInstance] objectForKey:@"cache"] integerValue];
         value++;
         [[FWCacheMemory sharedInstance] setObject:@(value) forKey:@"cache"];
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();

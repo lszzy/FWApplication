@@ -59,15 +59,15 @@
     emptyView = [[FWEmptyView alloc] initWithFrame:view.bounds];
     emptyView.tag = 2021;
     [view addSubview:emptyView];
-    [emptyView.fw pinEdgesToSuperviewWithInsets:view.fw.emptyInsets];
+    [emptyView fw_pinEdgesToSuperviewWithInsets:view.fw.emptyInsets];
     [emptyView setLoadingViewHidden:!loading];
     [emptyView setImage:emptyImage];
     [emptyView setTextLabelText:emptyText];
     [emptyView setDetailTextLabelText:emptyDetail];
     [emptyView setActionButtonTitle:emptyAction];
     [emptyView setMoreActionButtonTitle:emptyMoreAction];
-    if (block) [emptyView.actionButton.fw addTouchBlock:^(id sender) { if (block) block(0, sender); }];
-    if (block && emptyMoreAction) [emptyView.moreActionButton.fw addTouchBlock:^(id sender) { if (block) block(1, sender); }];
+    if (block) [emptyView.actionButton fw_addTouchBlock:^(id sender) { if (block) block(0, sender); }];
+    if (block && emptyMoreAction) [emptyView.moreActionButton fw_addTouchBlock:^(id sender) { if (block) block(1, sender); }];
 
     if (self.customBlock) {
         self.customBlock(emptyView);

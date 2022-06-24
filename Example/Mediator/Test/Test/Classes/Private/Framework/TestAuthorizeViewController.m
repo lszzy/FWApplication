@@ -18,8 +18,8 @@
 {
     [super viewDidLoad];
     
-    [self.fw setRightBarItem:@"设置" block:^(id sender) {
-        [UIApplication.fw openAppSettings];
+    [self fw_setRightBarItem:@"设置" block:^(id sender) {
+        [UIApplication fw_openAppSettings];
     }];
     
     // 手工修改设置返回页面自动刷新权限，释放时自动移除监听
@@ -62,7 +62,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     FWAuthorizeType type = [[rowData objectAtIndex:1] integerValue];
     
