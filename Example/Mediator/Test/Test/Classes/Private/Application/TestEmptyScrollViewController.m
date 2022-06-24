@@ -33,13 +33,13 @@
 {
     self.tableView.fw_emptyViewDelegate = self;
     FWWeakifySelf();
-    [self.tableView.fw addPullRefreshWithBlock:^{
+    [self.tableView fw_addPullRefreshWithBlock:^{
         FWStrongifySelf();
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             FWStrongifySelf();
             [self.tableData removeAllObjects];
             [self.tableView reloadData];
-            [self.tableView.fw endRefreshing];
+            [self.tableView fw_endRefreshing];
         });
     }];
     [self.tableView reloadData];

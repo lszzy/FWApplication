@@ -173,35 +173,35 @@ static BOOL isExpanded = NO;
     FWWeakifySelf();
     [self.tableView.fw resetGroupedStyle];
     self.tableView.backgroundColor = [Theme tableColor];
-    [self.tableView.fw setRefreshingBlock:^{
+    [self.tableView fw_setRefreshingBlock:^{
         FWStrongifySelf();
         
         [self onRefreshing];
     }];
-    self.tableView.fw.pullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
+    self.tableView.fw_pullRefreshView.stateBlock = ^(FWPullRefreshView * _Nonnull view, FWPullRefreshState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh state-%@", @(state)];
     };
-    self.tableView.fw.pullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw_pullRefreshView.progressBlock = ^(FWPullRefreshView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"refresh progress-%.2f", progress];
     };
     
     FWInfiniteScrollView.height = 64;
-    [self.tableView.fw setLoadingBlock:^{
+    [self.tableView fw_setLoadingBlock:^{
         FWStrongifySelf();
         
         [self onLoading];
     }];
-    self.tableView.fw.infiniteScrollView.preloadHeight = 200;
-    self.tableView.fw.infiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
+    self.tableView.fw_infiniteScrollView.preloadHeight = 200;
+    self.tableView.fw_infiniteScrollView.stateBlock = ^(FWInfiniteScrollView * _Nonnull view, FWInfiniteScrollState state) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load state-%@", @(state)];
     };
-    self.tableView.fw.infiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
+    self.tableView.fw_infiniteScrollView.progressBlock = ^(FWInfiniteScrollView * _Nonnull view, CGFloat progress) {
         FWStrongifySelf();
         
         self.navigationItem.title = [NSString stringWithFormat:@"load progress-%.2f", progress];
@@ -228,7 +228,7 @@ static BOOL isExpanded = NO;
 
 - (void)renderData
 {
-    [self.tableView.fw beginRefreshing];
+    [self.tableView fw_beginRefreshing];
 }
 
 #pragma mark - TableView
@@ -380,9 +380,9 @@ static BOOL isExpanded = NO;
         }
         [self.tableView.fw reloadDataWithoutCache];
         
-        self.tableView.fw.shouldRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView.fw endRefreshing];
-        if (!self.tableView.fw.shouldRefreshing) {
+        self.tableView.fw_shouldRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView fw_endRefreshing];
+        if (!self.tableView.fw_shouldRefreshing) {
             self.navigationItem.rightBarButtonItem = nil;
         }
     });
@@ -399,8 +399,8 @@ static BOOL isExpanded = NO;
         }
         [self.tableView reloadData];
         
-        self.tableView.fw.shouldLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView.fw endLoading];
+        self.tableView.fw_shouldLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView fw_endLoading];
     });
 }
 

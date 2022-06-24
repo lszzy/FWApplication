@@ -257,8 +257,8 @@
     [self.headerView fw_autoLayoutSubviews];
     [self.footerView fw_autoLayoutSubviews];
     
-    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.tableView fw_setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderModel
@@ -309,7 +309,7 @@
 
 - (void)renderData
 {
-    [self.tableView.fw beginRefreshing];
+    [self.tableView fw_beginRefreshing];
 }
 
 - (void)onRefreshing
@@ -329,7 +329,7 @@
         [self.tableData removeAllObjects];
         [self.tableView reloadData];
         
-        [self.tableView.fw endRefreshing];
+        [self.tableView fw_endRefreshing];
     });
 }
 
@@ -343,7 +343,7 @@
         [self.tableData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
         [self.tableView reloadData];
         
-        [self.tableView.fw endLoading];
+        [self.tableView fw_endLoading];
     });
 }
 

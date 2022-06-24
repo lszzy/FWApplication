@@ -109,22 +109,22 @@
 - (void)renderView
 {
     FWInfiniteScrollView.height = 64;
-    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
-    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
+    [self.tableView fw_setLoadingTarget:self action:@selector(onLoading)];
     
     UIImageView *pullView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     pullView.image = [TestBundle imageNamed:@"test.gif"];
-    self.tableView.fw.pullRefreshView.shouldChangeAlpha = NO;
-    [self.tableView.fw.pullRefreshView setCustomView:pullView forState:FWPullRefreshStateAll];
+    self.tableView.fw_pullRefreshView.shouldChangeAlpha = NO;
+    [self.tableView.fw_pullRefreshView setCustomView:pullView forState:FWPullRefreshStateAll];
     
     UIImageView *infiniteView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     infiniteView.image = [TestBundle imageNamed:@"LoadingPlaceholder.gif"];
-    [self.tableView.fw.infiniteScrollView setCustomView:infiniteView forState:FWInfiniteScrollStateAll];
+    [self.tableView.fw_infiniteScrollView setCustomView:infiniteView forState:FWInfiniteScrollStateAll];
 }
 
 - (void)renderData
 {
-    [self.tableView.fw beginLoading];
+    [self.tableView fw_beginLoading];
 }
 
 #pragma mark - TableView
@@ -202,8 +202,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fw.shouldRefreshing = self.tableData.count < 20 ? YES : NO;
-        [self.tableView.fw endRefreshing];
+        self.tableView.fw_shouldRefreshing = self.tableData.count < 20 ? YES : NO;
+        [self.tableView fw_endRefreshing];
     });
 }
 
@@ -218,8 +218,8 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fw.shouldLoading = self.tableData.count < 20 ? YES : NO;
-        [self.tableView.fw endLoading];
+        self.tableView.fw_shouldLoading = self.tableData.count < 20 ? YES : NO;
+        [self.tableView fw_endLoading];
     });
 }
 

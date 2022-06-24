@@ -88,9 +88,9 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)renderView
 {
     if (self.refreshList) {
-        [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+        [self.tableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
     }
-    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView fw_setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderData
@@ -113,7 +113,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)onRefreshing
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.fw endRefreshing];
+        [self.tableView fw_endRefreshing];
         if (self.refreshList && self.section && !self.isInserted) {
             self.isInserted = YES;
             for (int i = 0; i < 5; i++) {
@@ -135,7 +135,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)onLoading
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.fw endLoading];
+        [self.tableView fw_endLoading];
         NSInteger rows = self.tableData.count;
         for (int i = 0; i < 5; i++) {
             if (self.isRefreshed) {
@@ -293,7 +293,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     [super viewDidLoad];
     
     if (!self.refreshList) {
-        [self.pagerView.mainTableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+        [self.pagerView.mainTableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
         
         FWWeakifySelf();
         [self fw_setRightBarItem:@"测试" block:^(id  _Nonnull sender) {
@@ -316,7 +316,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.isRefreshed = !self.isRefreshed;
         [self.pagerView reloadData];
-        [self.pagerView.mainTableView.fw endRefreshing];
+        [self.pagerView.mainTableView fw_endRefreshing];
     });
 }
 

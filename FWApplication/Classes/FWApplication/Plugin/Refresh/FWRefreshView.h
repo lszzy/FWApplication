@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FWScrollViewWrapper+FWPullRefresh
+#pragma mark - UIScrollView+FWPullRefresh
 
 typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
     FWPullRefreshStateStopped = 0,
@@ -56,23 +56,23 @@ NS_SWIFT_NAME(PullRefreshView)
 @end
 
 /**
- FWScrollViewWrapper+FWPullRefresh
+ UIScrollView+FWPullRefresh
  
  @see https://github.com/samvermette/SVPullToRefresh
  */
-@interface FWScrollViewWrapper (FWPullRefresh)
+@interface UIScrollView (FWPullRefresh)
 
-- (void)addPullRefreshWithBlock:(void (^)(void))block;
-- (void)addPullRefreshWithTarget:(id)target action:(SEL)action;
-- (void)triggerPullRefresh;
+- (void)fw_addPullRefreshWithBlock:(void (^)(void))block NS_REFINED_FOR_SWIFT;
+- (void)fw_addPullRefreshWithTarget:(id)target action:(SEL)action NS_REFINED_FOR_SWIFT;
+- (void)fw_triggerPullRefresh NS_REFINED_FOR_SWIFT;
 
-@property (nullable, nonatomic, strong, readonly) FWPullRefreshView *pullRefreshView;
-@property (nonatomic, assign) CGFloat pullRefreshHeight;
-@property (nonatomic, assign) BOOL showPullRefresh;
+@property (nullable, nonatomic, strong, readonly) FWPullRefreshView *fw_pullRefreshView NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) CGFloat fw_pullRefreshHeight NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) BOOL fw_showPullRefresh NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWScrollViewWrapper+FWInfiniteScroll
+#pragma mark - UIScrollView+FWInfiniteScroll
 
 typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
     FWInfiniteScrollStateStopped = 0,
@@ -108,19 +108,19 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @end
 
 /**
- FWScrollViewWrapper+FWInfiniteScroll
+ UIScrollView+FWInfiniteScroll
  
  @see https://github.com/samvermette/SVPullToRefresh
  */
-@interface FWScrollViewWrapper (FWInfiniteScroll)
+@interface UIScrollView (FWInfiniteScroll)
 
-- (void)addInfiniteScrollWithBlock:(void (^)(void))block;
-- (void)addInfiniteScrollWithTarget:(id)target action:(SEL)action;
-- (void)triggerInfiniteScroll;
+- (void)fw_addInfiniteScrollWithBlock:(void (^)(void))block NS_REFINED_FOR_SWIFT;
+- (void)fw_addInfiniteScrollWithTarget:(id)target action:(SEL)action NS_REFINED_FOR_SWIFT;
+- (void)fw_triggerInfiniteScroll NS_REFINED_FOR_SWIFT;
 
-@property (nullable, nonatomic, strong, readonly) FWInfiniteScrollView *infiniteScrollView;
-@property (nonatomic, assign) CGFloat infiniteScrollHeight;
-@property (nonatomic, assign) BOOL showInfiniteScroll;
+@property (nullable, nonatomic, strong, readonly) FWInfiniteScrollView *fw_infiniteScrollView NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) CGFloat fw_infiniteScrollHeight NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) BOOL fw_showInfiniteScroll NS_REFINED_FOR_SWIFT;
 
 @end
 

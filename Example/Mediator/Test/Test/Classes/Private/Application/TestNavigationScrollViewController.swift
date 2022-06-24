@@ -44,9 +44,9 @@ class TestNavigationTitleLabel: UILabel, TitleViewProtocol {
     }
     
     override func renderView() {
-        tableView.__fw.contentInsetAdjustmentNever()
-        tableView.__fw.pullRefreshHeight = PullRefreshView.height + UIScreen.fw.safeAreaInsets.top
-        tableView.__fw.setRefreshingTarget(self, action: #selector(onRefreshing))
+        tableView.fw.contentInsetAdjustmentNever()
+        tableView.fw.pullRefreshHeight = PullRefreshView.height + UIScreen.fw.safeAreaInsets.top
+        tableView.fw.setRefreshing(target: self, action: #selector(onRefreshing))
         
         let toolbar = UIToolbar()
         toolbar.fw.barPosition = .bottom
@@ -119,7 +119,7 @@ class TestNavigationTitleLabel: UILabel, TitleViewProtocol {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
             NSLog("刷新完成")
             self?.tableView.reloadData()
-            self?.tableView.__fw.endRefreshing()
+            self?.tableView.fw.endRefreshing()
         }
     }
 }
