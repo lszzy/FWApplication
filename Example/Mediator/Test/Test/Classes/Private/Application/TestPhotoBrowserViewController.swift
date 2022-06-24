@@ -79,42 +79,42 @@ import FWApplication
         tableView.deselectRow(at: indexPath, animated: true)
         switch indexPath.row {
         case 0:
-            __fw.showImagePicker(with: .image, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            fw.showImagePicker(filterType: .image, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 1:
-            __fw.showImagePicker(with: .livePhoto, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            fw.showImagePicker(filterType: .livePhoto, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 2:
-            __fw.showImagePicker(with: .video, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            fw.showImagePicker(filterType: .video, selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 3:
-            __fw.showImagePicker(with: [], selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
+            fw.showImagePicker(filterType: [], selectionLimit: 9, allowsEditing: allowsEditing, customBlock: nil) { [weak self] objects, results, cancel in
                 self?.showData(objects)
             }
             break
         case 4:
-            __fw.showImageCamera(with: .image, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            fw.showImageCamera(filterType: .image, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break
         case 5:
-            __fw.showImageCamera(with: .livePhoto, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            fw.showImageCamera(filterType: .livePhoto, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break
         case 6:
-            __fw.showImageCamera(with: .video, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            fw.showImageCamera(filterType: .video, allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break
         case 7:
-            __fw.showImageCamera(with: [], allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
+            fw.showImageCamera(filterType: [], allowsEditing: allowsEditing, customBlock: nil) { [weak self] object, info, cancel in
                 self?.showData(object != nil ? [object!] : [])
             }
             break

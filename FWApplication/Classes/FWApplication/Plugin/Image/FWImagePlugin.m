@@ -15,7 +15,7 @@ FWImageCoderOptions const FWImageCoderOptionScaleFactor = @"imageScaleFactor";
 #pragma mark - UIImage+FWImagePlugin
 
 UIImage * FWImageNamed(NSString *name) {
-    return [UIImage.fw imageNamed:name];
+    return [UIImage fw_imageNamed:name];
 }
 
 static NSArray *FWInnerBundlePreferredScales() {
@@ -54,19 +54,19 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     return scale;
 }
 
-@implementation FWImageClassWrapper (FWImagePlugin)
+@implementation UIImage (FWImagePlugin)
 
-- (UIImage *)imageNamed:(NSString *)name
++ (UIImage *)fw_imageNamed:(NSString *)name
 {
-    return [self imageNamed:name bundle:nil];
+    return [self fw_imageNamed:name bundle:nil];
 }
 
-- (UIImage *)imageNamed:(NSString *)name bundle:(NSBundle *)bundle
++ (UIImage *)fw_imageNamed:(NSString *)name bundle:(NSBundle *)bundle
 {
-    return [self imageNamed:name bundle:bundle options:nil];
+    return [self fw_imageNamed:name bundle:bundle options:nil];
 }
 
-- (UIImage *)imageNamed:(NSString *)name bundle:(NSBundle *)aBundle options:(NSDictionary<FWImageCoderOptions,id> *)options
++ (UIImage *)fw_imageNamed:(NSString *)name bundle:(NSBundle *)aBundle options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     if (name.length < 1) return nil;
     if ([name hasSuffix:@"/"]) return nil;
@@ -74,7 +74,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     if ([name isAbsolutePath]) {
         NSData *data = [NSData dataWithContentsOfFile:name];
         CGFloat scale = FWInnerStringPathScale(name);
-        return [self imageWithData:data scale:scale options:options];
+        return [self fw_imageWithData:data scale:scale options:options];
     }
     
     NSString *path = nil;
@@ -98,27 +98,27 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     if (data.length < 1) {
         return [UIImage imageNamed:name inBundle:bundle compatibleWithTraitCollection:nil];
     }
-    return [self imageWithData:data scale:scale options:options];
+    return [self fw_imageWithData:data scale:scale options:options];
 }
 
-- (UIImage *)imageWithContentsOfFile:(NSString *)path
++ (UIImage *)fw_imageWithContentsOfFile:(NSString *)path
 {
     NSData *data = [NSData dataWithContentsOfFile:path];
     CGFloat scale = FWInnerStringPathScale(path);
-    return [self imageWithData:data scale:scale];
+    return [self fw_imageWithData:data scale:scale];
 }
 
-- (UIImage *)imageWithData:(NSData *)data
++ (UIImage *)fw_imageWithData:(NSData *)data
 {
-    return [self imageWithData:data scale:1];
+    return [self fw_imageWithData:data scale:1];
 }
 
-- (UIImage *)imageWithData:(NSData *)data scale:(CGFloat)scale
++ (UIImage *)fw_imageWithData:(NSData *)data scale:(CGFloat)scale
 {
-    return [self imageWithData:data scale:scale options:nil];
+    return [self fw_imageWithData:data scale:scale options:nil];
 }
 
-- (UIImage *)imageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
++ (UIImage *)fw_imageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     if (data.length < 1) return nil;
     
@@ -132,12 +132,12 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     return [UIImage imageWithData:data scale:MAX(scale, 1)];
 }
 
-- (NSData *)dataWithImage:(UIImage *)image
++ (NSData *)fw_dataWithImage:(UIImage *)image
 {
-    return [self dataWithImage:image options:nil];
+    return [self fw_dataWithImage:image options:nil];
 }
 
-- (NSData *)dataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
++ (NSData *)fw_dataWithImage:(UIImage *)image options:(NSDictionary<FWImageCoderOptions,id> *)options
 {
     if (!image) return nil;
     
@@ -153,14 +153,14 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     }
 }
 
-- (id)downloadImage:(id)url
++ (id)fw_downloadImage:(id)url
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
              progress:(void (^)(double))progress
 {
-    return [self downloadImage:url options:0 context:nil completion:completion progress:progress];
+    return [self fw_downloadImage:url options:0 context:nil completion:completion progress:progress];
 }
 
-- (id)downloadImage:(id)url
++ (id)fw_downloadImage:(id)url
               options:(FWWebImageOptions)options
               context:(NSDictionary<FWImageCoderOptions,id> *)context
            completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
@@ -185,7 +185,7 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     return nil;
 }
 
-- (void)cancelImageDownload:(id)receipt
++ (void)fw_cancelImageDownload:(id)receipt
 {
     id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(cancelImageDownload:)]) {
@@ -195,57 +195,57 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
 
 @end
 
-#pragma mark - FWImageViewWrapper+FWImagePlugin
+#pragma mark - UIImageView+FWImagePlugin
 
-@implementation FWImageViewWrapper (FWImagePlugin)
+@implementation UIImageView (FWImagePlugin)
 
-- (id<FWImagePlugin>)imagePlugin
+- (id<FWImagePlugin>)fw_imagePlugin
 {
-    id<FWImagePlugin> imagePlugin = objc_getAssociatedObject(self.base, @selector(imagePlugin));
+    id<FWImagePlugin> imagePlugin = objc_getAssociatedObject(self, @selector(fw_imagePlugin));
     if (!imagePlugin) imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
     return imagePlugin;
 }
 
-- (void)setImagePlugin:(id<FWImagePlugin>)imagePlugin
+- (void)setFw_imagePlugin:(id<FWImagePlugin>)imagePlugin
 {
-    objc_setAssociatedObject(self.base, @selector(imagePlugin), imagePlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_imagePlugin), imagePlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSURL *)imageURL
+- (NSURL *)fw_imageURL
 {
-    id<FWImagePlugin> imagePlugin = self.imagePlugin;
+    id<FWImagePlugin> imagePlugin = self.fw_imagePlugin;
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(imageURL:)]) {
-        return [imagePlugin imageURL:self.base];
+        return [imagePlugin imageURL:self];
     }
     return nil;
 }
 
-- (void)setImageWithURL:(id)url
+- (void)fw_setImageWithURL:(id)url
 {
-    [self setImageWithURL:url placeholderImage:nil];
+    [self fw_setImageWithURL:url placeholderImage:nil];
 }
 
-- (void)setImageWithURL:(id)url
+- (void)fw_setImageWithURL:(id)url
          placeholderImage:(UIImage *)placeholderImage
 {
-    [self setImageWithURL:url placeholderImage:placeholderImage completion:nil];
+    [self fw_setImageWithURL:url placeholderImage:placeholderImage completion:nil];
 }
 
-- (void)setImageWithURL:(id)url
+- (void)fw_setImageWithURL:(id)url
          placeholderImage:(UIImage *)placeholderImage
                completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
 {
-    [self setImageWithURL:url placeholderImage:placeholderImage options:0 context:nil completion:completion progress:nil];
+    [self fw_setImageWithURL:url placeholderImage:placeholderImage options:0 context:nil completion:completion progress:nil];
 }
 
-- (void)setImageWithURL:(id)url
+- (void)fw_setImageWithURL:(id)url
          placeholderImage:(UIImage *)placeholderImage
                   options:(FWWebImageOptions)options
                   context:(NSDictionary<FWImageCoderOptions,id> *)context
                completion:(void (^)(UIImage * _Nullable, NSError * _Nullable))completion
                  progress:(void (^)(double))progress
 {
-    id<FWImagePlugin> imagePlugin = self.imagePlugin;
+    id<FWImagePlugin> imagePlugin = self.fw_imagePlugin;
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(imageView:setImageURL:placeholder:options:context:completion:progress:)]) {
         NSURL *imageURL = nil;
         if ([url isKindOfClass:[NSString class]] && [url length] > 0) {
@@ -259,35 +259,31 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
             imageURL = [url URL];
         }
         
-        [imagePlugin imageView:self.base setImageURL:imageURL placeholder:placeholderImage options:options context:context completion:completion progress:progress];
+        [imagePlugin imageView:self setImageURL:imageURL placeholder:placeholderImage options:options context:context completion:completion progress:progress];
     }
 }
 
-- (void)cancelImageRequest
+- (void)fw_cancelImageRequest
 {
-    id<FWImagePlugin> imagePlugin = self.imagePlugin;
+    id<FWImagePlugin> imagePlugin = self.fw_imagePlugin;
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(cancelImageRequest:)]) {
-        [imagePlugin cancelImageRequest:self.base];
+        [imagePlugin cancelImageRequest:self];
     }
 }
 
-@end
-
-@implementation FWImageViewClassWrapper (FWImagePlugin)
-
-- (Class)imageViewAnimatedClass
++ (Class)fw_imageViewAnimatedClass
 {
     id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
     if (imagePlugin && [imagePlugin respondsToSelector:@selector(imageViewAnimatedClass)]) {
         return [imagePlugin imageViewAnimatedClass];
     }
     
-    return objc_getAssociatedObject([UIImageView class], @selector(imageViewAnimatedClass)) ?: [UIImageView class];
+    return objc_getAssociatedObject([UIImageView class], @selector(fw_imageViewAnimatedClass)) ?: [UIImageView class];
 }
 
-- (void)setImageViewAnimatedClass:(Class)animatedClass
++ (void)setFw_imageViewAnimatedClass:(Class)animatedClass
 {
-    objc_setAssociatedObject([UIImageView class], @selector(imageViewAnimatedClass), animatedClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject([UIImageView class], @selector(fw_imageViewAnimatedClass), animatedClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

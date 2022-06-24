@@ -54,7 +54,7 @@
     progressView.progress = 0;
     progressView.hidden = NO;
     FWWeakifySelf();
-    [imageView.fw setImageWithURL:gifImageUrl placeholderImage:nil options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+    [imageView fw_setImageWithURL:gifImageUrl placeholderImage:nil options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
         FWStrongifySelf();
         progressView.hidden = YES;
         if (image) {

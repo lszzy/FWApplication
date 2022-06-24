@@ -91,7 +91,7 @@
             if ([image hasSuffix:@".mp4"]) {
                 [button setImage:[TestBundle imageNamed:@"public_icon"] forState:UIControlStateNormal];
             } else {
-                [UIImage.fw downloadImage:imageUrl completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+                [UIImage fw_downloadImage:imageUrl completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
                     [button setImage:image ?: [TestBundle imageNamed:@"public_icon"] forState:UIControlStateNormal];
                 } progress:nil];
             }

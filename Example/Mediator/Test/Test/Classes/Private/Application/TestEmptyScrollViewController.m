@@ -31,7 +31,7 @@
 
 - (void)renderView
 {
-    self.tableView.fw.emptyViewDelegate = self;
+    self.tableView.fw_emptyViewDelegate = self;
     FWWeakifySelf();
     [self.tableView.fw addPullRefreshWithBlock:^{
         FWStrongifySelf();
@@ -79,9 +79,9 @@
 - (void)showEmptyView:(UIScrollView *)scrollView
 {
     FWWeakifySelf();
-    scrollView.fw.overlayView.backgroundColor = Theme.tableColor;
-    scrollView.fw.overlayView.fw.emptyInsets = UIEdgeInsetsMake(35 + 50, 0, 0, 0);
-    [scrollView.fw showEmptyViewWithText:nil detail:nil image:nil action:nil block:^(id  _Nonnull sender) {
+    scrollView.fw_overlayView.backgroundColor = Theme.tableColor;
+    scrollView.fw_overlayView.fw_emptyInsets = UIEdgeInsetsMake(35 + 50, 0, 0, 0);
+    [scrollView fw_showEmptyViewWithText:nil detail:nil image:nil action:nil block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         [self.tableData addObjectsFromArray:@[@1, @2, @3, @4, @5, @6, @7, @8]];
@@ -91,7 +91,7 @@
 
 - (void)hideEmptyView:(UIScrollView *)scrollView
 {
-    [self.fw hideEmptyView];
+    [self fw_hideEmptyView];
 }
 
 @end

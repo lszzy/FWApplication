@@ -101,12 +101,12 @@
                 return;
             }
             
-            [self.fw showImageCameraWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
+            [self fw_showImageCameraWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
                 FWStrongifySelf();
                 [self onPickerResult:image cancelled:cancel];
             }];
         } else {
-            [self.fw showImagePickerWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
+            [self fw_showImagePickerWithAllowsEditing:YES completion:^(UIImage * _Nullable image, BOOL cancel) {
                 FWStrongifySelf();
                 [self onPickerResult:image cancelled:cancel];
             }];

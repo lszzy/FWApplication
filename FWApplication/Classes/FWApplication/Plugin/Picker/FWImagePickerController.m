@@ -1088,7 +1088,7 @@
         } else if (imageAsset.assetSubType == FWAssetSubTypeGIF) {
             [imageAsset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    UIImage *resultImage = [UIImage.fw imageWithData:imageData];
+                    UIImage *resultImage = [UIImage fw_imageWithData:imageData];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (resultImage) {
                             imageView.image = resultImage;
@@ -2599,7 +2599,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     BOOL checkVideo = (filterType & FWImagePickerFilterTypeVideo) || filterType < 1;
     [imagesAssetArray enumerateObjectsUsingBlock:^(FWAsset *asset, NSUInteger index, BOOL *stop) {
         if (checkVideo && asset.assetType == FWAssetTypeVideo) {
-            NSString *filePath = [PHPhotoLibrary.fw pickerControllerVideoCachePath];
+            NSString *filePath = [PHPhotoLibrary fw_pickerControllerVideoCachePath];
             [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
             filePath = [[filePath stringByAppendingPathComponent:[[NSUUID UUID].UUIDString fw_md5Encode]] stringByAppendingPathExtension:@"mp4"];
             NSURL *fileURL = [NSURL fileURLWithPath:filePath];
@@ -2625,7 +2625,7 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
             } else if (asset.assetSubType == FWAssetSubTypeGIF) {
                 [asset requestImageDataWithCompletion:^(NSData *imageData, NSDictionary<NSString *,id> *info, BOOL isGIF, BOOL isHEIC) {
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        UIImage *resultImage = imageData ? [UIImage.fw imageWithData:imageData] : nil;
+                        UIImage *resultImage = imageData ? [UIImage fw_imageWithData:imageData] : nil;
                         dispatch_async(dispatch_get_main_queue(), ^{
                             completionHandler(asset, resultImage, info);
                         });

@@ -108,7 +108,7 @@
     [self fw_showSheetWithTitle:nil message:nil cancel:nil actions:@[@"Crop Image", @"Make Profile"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         self.croppingStyle = index == 0 ? FWImageCropCroppingStyleDefault : FWImageCropCroppingStyleCircular;
-        [self.fw showImagePickerWithAllowsEditing:NO completion:^(UIImage * _Nullable image, BOOL cancel) {
+        [self fw_showImagePickerWithAllowsEditing:NO completion:^(UIImage * _Nullable image, BOOL cancel) {
             FWStrongifySelf();
             if (image) {
                 self.image = image;
