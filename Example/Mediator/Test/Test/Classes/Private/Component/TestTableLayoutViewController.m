@@ -354,7 +354,7 @@
     // 设置打开Index
     NSString *fromImageUrl = [cell.object.imageUrl stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
     NSInteger currentIndex = [pictureUrls indexOfObject:fromImageUrl];
-    [self.fw showImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:currentIndex != NSNotFound ? currentIndex : 0 sourceView:nil];
+    [self fw_showImagePreviewWithImageURLs:pictureUrls imageInfos:nil currentIndex:currentIndex != NSNotFound ? currentIndex : 0 sourceView:nil];
 }
 
 @end

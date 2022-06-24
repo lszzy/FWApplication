@@ -124,7 +124,7 @@
         if (cancel || objects.count < 1) {
             [self.fw showMessageWithText:@"已取消"];
         } else {
-            [self.fw showImagePreviewWithImageURLs:objects imageInfos:nil currentIndex:0 sourceView:nil];
+            [self fw_showImagePreviewWithImageURLs:objects imageInfos:nil currentIndex:0 sourceView:nil];
         }
     }];
 }

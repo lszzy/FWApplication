@@ -183,12 +183,12 @@ NS_SWIFT_NAME(ZoomImageVideoToolbar)
 
 @end
 
-#pragma mark - FWViewWrapper+FWZoomImageView
+#pragma mark - UIView+FWZoomImageView
 
-@interface FWViewWrapper (FWZoomImageView)
+@interface UIView (FWZoomImageView)
 
 /// 将要设置的frame按照view的anchorPoint(.5, .5)处理后再设置，而系统默认按照(0, 0)方式计算
-@property(nonatomic, assign) CGRect frameApplyTransform;
+@property(nonatomic, assign) CGRect fw_frameApplyTransform NS_REFINED_FOR_SWIFT;
 
 @end
 
