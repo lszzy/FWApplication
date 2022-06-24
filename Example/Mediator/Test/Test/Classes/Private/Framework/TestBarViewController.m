@@ -67,7 +67,7 @@ FWPropertyAssign(BOOL, hideToast);
     
     if (!self.hideToast) {
         [self fw_setRightBarItem:@"启用" block:^(id sender) {
-            [UINavigationController.fw enableBarTransition];
+            [UINavigationController fw_enableBarTransition];
         }];
     } else {
         [self fw_setLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {

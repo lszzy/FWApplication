@@ -46,9 +46,9 @@
     [super viewDidAppear:animated];
     
     if (self.fullscreenPop) {
-        self.navigationController.fw.fullscreenPopGestureEnabled = YES;
+        self.navigationController.fw_fullscreenPopGestureEnabled = YES;
     } else {
-        self.navigationController.fw.fullscreenPopGestureEnabled = NO;
+        self.navigationController.fw_fullscreenPopGestureEnabled = NO;
     }
 }
 
@@ -60,7 +60,7 @@
         self.scrollView.fw.shouldRecognizeSimultaneously = ^BOOL(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer) {
             FWStrongifySelf();
             if (self.scrollView.contentOffset.x <= 0) {
-                if ([UINavigationController.fw isFullscreenPopGestureRecognizer:otherGestureRecognizer]) {
+                if ([UINavigationController fw_isFullscreenPopGestureRecognizer:otherGestureRecognizer]) {
                     return YES;
                 }
             }
