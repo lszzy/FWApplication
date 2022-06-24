@@ -106,7 +106,7 @@
 
 - (void)onResult:(NSInteger)count
 {
-    [self.fw showAlertWithTitle:@"结果" message:[NSString stringWithFormat:@"期望：%@\n实际：%@", @([self queueCount]), @(count)] cancel:nil cancelBlock:nil];
+    [self fw_showAlertWithTitle:@"结果" message:[NSString stringWithFormat:@"期望：%@\n实际：%@", @([self queueCount]), @(count)] cancel:nil cancelBlock:nil];
 }
 
 - (void)onLock1

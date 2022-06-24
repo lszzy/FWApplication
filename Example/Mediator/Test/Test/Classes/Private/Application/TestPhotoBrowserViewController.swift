@@ -17,7 +17,7 @@ import FWApplication
         fw.setRightBarItem(Icon.refreshImage) { [weak self] sender in
             let allowsEditing = self?.allowsEditing ?? false
             let isFullscreen = self?.isFullscreen ?? false
-            self?.__fw.showSheet(withTitle: nil, message: nil, cancel: nil, actions: ["浏览已选图片", allowsEditing ? "切换不可编辑" : "切换可编辑", ImagePickerPluginImpl.sharedInstance.cropControllerEnabled ? "切换系统裁剪" : "切换自定义裁剪", isFullscreen ? "默认弹出样式" : "全屏弹出样式", ImagePickerPluginImpl.sharedInstance.photoPickerDisabled ? "启用PHPicker" : "禁用PHPicker"], actionBlock: { index in
+            self?.fw.showSheet(title: nil, message: nil, cancel: nil, actions: ["浏览已选图片", allowsEditing ? "切换不可编辑" : "切换可编辑", ImagePickerPluginImpl.sharedInstance.cropControllerEnabled ? "切换系统裁剪" : "切换自定义裁剪", isFullscreen ? "默认弹出样式" : "全屏弹出样式", ImagePickerPluginImpl.sharedInstance.photoPickerDisabled ? "启用PHPicker" : "禁用PHPicker"], currentIndex: -1, actionBlock: { index in
                 if index == 0 {
                     self?.showData(self?.results ?? [])
                 } else if index == 1 {

@@ -57,7 +57,7 @@
         NSString *dismissImageText = self.dismissTappedImage ? @"单击图片时不关闭" : @"单击图片时自动关闭";
         NSString *dismissVideoText = self.dismissTappedVideo ? @"单击视频时不关闭" : @"单击视频时自动关闭";
         NSString *closeText = self.showsClose ? @"隐藏视频关闭按钮" : @"开启视频关闭按钮";
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[pluginText, progressText, fadeText, toolbarText, autoText, dismissImageText, dismissVideoText, closeText] actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[pluginText, progressText, fadeText, toolbarText, autoText, dismissImageText, dismissVideoText, closeText] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             if (index == 0) {
                 self.usePlugin = !self.usePlugin;

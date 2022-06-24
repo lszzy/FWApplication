@@ -84,7 +84,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FWWeakifySelf();
-    [self.fw showAlertWithTitle:@"请选择" message:nil style:FWAlertStyleDefault cancel:nil actions:@[@"预览", @"设置全局样式"] actionBlock:^(NSInteger index) {
+    [self fw_showAlertWithTitle:@"请选择" message:nil style:FWAlertStyleDefault cancel:nil actions:@[@"预览", @"设置全局样式"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index == 0) {
             [self onPreview:indexPath];

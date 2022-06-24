@@ -9,133 +9,125 @@
 #import "FWAlertPluginImpl.h"
 #import <objc/runtime.h>
 
-#pragma mark - FWAlertActionWrapper+FWAlert
+#pragma mark - UIAlertAction+FWAlert
 
-@implementation FWAlertActionWrapper (FWAlert)
+@implementation UIAlertAction (FWAlert)
 
-- (FWAlertAppearance *)alertAppearance
+- (FWAlertAppearance *)fw_alertAppearance
 {
-    FWAlertAppearance *appearance = objc_getAssociatedObject(self.base, @selector(alertAppearance));
+    FWAlertAppearance *appearance = objc_getAssociatedObject(self, @selector(fw_alertAppearance));
     return appearance ?: FWAlertAppearance.appearance;
 }
 
-- (void)setAlertAppearance:(FWAlertAppearance *)alertAppearance
+- (void)setFw_alertAppearance:(FWAlertAppearance *)alertAppearance
 {
-    objc_setAssociatedObject(self.base, @selector(alertAppearance), alertAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_alertAppearance), alertAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)isPreferred
+- (BOOL)fw_isPreferred
 {
-    return [objc_getAssociatedObject(self.base, @selector(isPreferred)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_isPreferred)) boolValue];
 }
 
-- (void)setIsPreferred:(BOOL)isPreferred
+- (void)setFw_isPreferred:(BOOL)isPreferred
 {
-    objc_setAssociatedObject(self.base, @selector(isPreferred), @(isPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    if (self.titleColor || self.base.title.length < 1 || !self.alertAppearance.actionEnabled) return;
+    objc_setAssociatedObject(self, @selector(fw_isPreferred), @(isPreferred), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (self.fw_titleColor || self.title.length < 1 || !self.fw_alertAppearance.actionEnabled) return;
     
     UIColor *titleColor = nil;
-    if (!self.base.enabled) {
-        titleColor = self.alertAppearance.disabledActionColor;
+    if (!self.enabled) {
+        titleColor = self.fw_alertAppearance.disabledActionColor;
     } else if (isPreferred) {
-        titleColor = self.alertAppearance.preferredActionColor;
-    } else if (self.base.style == UIAlertActionStyleDestructive) {
-        titleColor = self.alertAppearance.destructiveActionColor;
-    } else if (self.base.style == UIAlertActionStyleCancel) {
-        titleColor = self.alertAppearance.cancelActionColor;
+        titleColor = self.fw_alertAppearance.preferredActionColor;
+    } else if (self.style == UIAlertActionStyleDestructive) {
+        titleColor = self.fw_alertAppearance.destructiveActionColor;
+    } else if (self.style == UIAlertActionStyleCancel) {
+        titleColor = self.fw_alertAppearance.cancelActionColor;
     } else {
-        titleColor = self.alertAppearance.actionColor;
+        titleColor = self.fw_alertAppearance.actionColor;
     }
     if (titleColor) {
-        [self.base fw_invokeSetter:@"titleTextColor" withObject:titleColor];
+        [self fw_invokeSetter:@"titleTextColor" withObject:titleColor];
     }
 }
 
-- (UIColor *)titleColor
+- (UIColor *)fw_titleColor
 {
-    return objc_getAssociatedObject(self.base, @selector(titleColor));
+    return objc_getAssociatedObject(self, @selector(fw_titleColor));
 }
 
-- (void)setTitleColor:(UIColor *)titleColor
+- (void)setFw_titleColor:(UIColor *)titleColor
 {
-    objc_setAssociatedObject(self.base, @selector(titleColor), titleColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base fw_invokeSetter:@"titleTextColor" withObject:titleColor];
+    objc_setAssociatedObject(self, @selector(fw_titleColor), titleColor, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self fw_invokeSetter:@"titleTextColor" withObject:titleColor];
 }
 
-@end
-
-@implementation FWAlertActionClassWrapper (FWAlert)
-
-- (UIAlertAction *)actionWithObject:(id)object style:(UIAlertActionStyle)style handler:(void (^)(UIAlertAction *))handler
++ (UIAlertAction *)fw_actionWithObject:(id)object style:(UIAlertActionStyle)style handler:(void (^)(UIAlertAction *))handler
 {
-    return [self actionWithObject:object style:style appearance:nil handler:handler];
+    return [self fw_actionWithObject:object style:style appearance:nil handler:handler];
 }
 
-- (UIAlertAction *)actionWithObject:(id)object style:(UIAlertActionStyle)style appearance:(FWAlertAppearance *)appearance handler:(void (^)(UIAlertAction *))handler
++ (UIAlertAction *)fw_actionWithObject:(id)object style:(UIAlertActionStyle)style appearance:(FWAlertAppearance *)appearance handler:(void (^)(UIAlertAction *))handler
 {
     NSAttributedString *attributedTitle = [object isKindOfClass:[NSAttributedString class]] ? object : nil;
     UIAlertAction *alertAction = [UIAlertAction actionWithTitle:(attributedTitle ? attributedTitle.string : object)
                                                           style:style
                                                          handler:handler];
     
-    alertAction.fw.alertAppearance = appearance;
-    alertAction.fw.isPreferred = NO;
+    alertAction.fw_alertAppearance = appearance;
+    alertAction.fw_isPreferred = NO;
     
     return alertAction;
 }
 
 @end
 
-#pragma mark - FWAlertControllerWrapper+FWAlert
+#pragma mark - UIAlertController+FWAlert
 
-@implementation FWAlertControllerWrapper (FWAlert)
+@implementation UIAlertController (FWAlert)
 
-- (FWAlertAppearance *)alertAppearance
+- (FWAlertAppearance *)fw_alertAppearance
 {
-    FWAlertAppearance *appearance = objc_getAssociatedObject(self.base, @selector(alertAppearance));
+    FWAlertAppearance *appearance = objc_getAssociatedObject(self, @selector(fw_alertAppearance));
     return appearance ?: FWAlertAppearance.appearance;
 }
 
-- (void)setAlertAppearance:(FWAlertAppearance *)alertAppearance
+- (void)setFw_alertAppearance:(FWAlertAppearance *)alertAppearance
 {
-    objc_setAssociatedObject(self.base, @selector(alertAppearance), alertAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_alertAppearance), alertAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (FWAlertStyle)alertStyle
+- (FWAlertStyle)fw_alertStyle
 {
-    return [objc_getAssociatedObject(self.base, @selector(alertStyle)) integerValue];
+    return [objc_getAssociatedObject(self, @selector(fw_alertStyle)) integerValue];
 }
 
-- (void)setAlertStyle:(FWAlertStyle)alertStyle
+- (void)setFw_alertStyle:(FWAlertStyle)alertStyle
 {
-    objc_setAssociatedObject(self.base, @selector(alertStyle), @(alertStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_alertStyle), @(alertStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSAttributedString *)attributedTitle
+- (NSAttributedString *)fw_attributedTitle
 {
-    return objc_getAssociatedObject(self.base, @selector(attributedTitle));
+    return objc_getAssociatedObject(self, @selector(fw_attributedTitle));
 }
 
-- (void)setAttributedTitle:(NSAttributedString *)attributedTitle
+- (void)setFw_attributedTitle:(NSAttributedString *)attributedTitle
 {
-    objc_setAssociatedObject(self.base, @selector(attributedTitle), attributedTitle, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self.base fw_invokeSetter:@"attributedTitle" withObject:attributedTitle];
+    objc_setAssociatedObject(self, @selector(fw_attributedTitle), attributedTitle, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self fw_invokeSetter:@"attributedTitle" withObject:attributedTitle];
 }
 
-- (NSAttributedString *)attributedMessage
+- (NSAttributedString *)fw_attributedMessage
 {
-    return objc_getAssociatedObject(self.base, @selector(attributedMessage));
+    return objc_getAssociatedObject(self, @selector(fw_attributedMessage));
 }
 
-- (void)setAttributedMessage:(NSAttributedString *)attributedMessage
+- (void)setFw_attributedMessage:(NSAttributedString *)attributedMessage
 {
-    objc_setAssociatedObject(self.base, @selector(attributedMessage), attributedMessage, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    [self.base fw_invokeSetter:@"attributedMessage" withObject:attributedMessage];
+    objc_setAssociatedObject(self, @selector(fw_attributedMessage), attributedMessage, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    [self fw_invokeSetter:@"attributedMessage" withObject:attributedMessage];
 }
-
-@end
-
-@implementation FWAlertControllerClassWrapper (FWAlert)
 
 + (void)load
 {
@@ -145,17 +137,17 @@
             FWSwizzleOriginal();
             
             if (selfObject.preferredStyle != UIAlertControllerStyleActionSheet) return;
-            if (!selfObject.fw.attributedTitle && !selfObject.fw.attributedMessage) return;
+            if (!selfObject.fw_attributedTitle && !selfObject.fw_attributedMessage) return;
             
             // 兼容iOS13操作表设置title和message样式不生效问题
             if (@available(iOS 13.0, *)) {
                 Class targetClass = objc_getClass("_UIInterfaceActionGroupHeaderScrollView");
                 if (!targetClass) return;
                 
-                [UIAlertController.fw alertSubview:selfObject.view block:^BOOL(UIView *view) {
+                [UIAlertController fw_alertSubview:selfObject.view block:^BOOL(UIView *view) {
                     if (![view isKindOfClass:targetClass]) return NO;
                     
-                    [UIAlertController.fw alertSubview:view block:^BOOL(UIView *view) {
+                    [UIAlertController fw_alertSubview:view block:^BOOL(UIView *view) {
                         if ([view isKindOfClass:[UIVisualEffectView class]]) {
                             // 取消effect效果，否则样式不生效，全是灰色
                             ((UIVisualEffectView *)view).effect = nil;
@@ -170,14 +162,14 @@
     });
 }
 
-- (UIView *)alertSubview:(UIView *)view block:(BOOL (^)(UIView *view))block
++ (UIView *)fw_alertSubview:(UIView *)view block:(BOOL (^)(UIView *view))block
 {
     if (block(view)) {
         return view;
     }
     
     for (UIView *subview in view.subviews) {
-        UIView *resultView = [self alertSubview:subview block:block];
+        UIView *resultView = [self fw_alertSubview:subview block:block];
         if (resultView) {
             return resultView;
         }
@@ -186,12 +178,12 @@
     return nil;
 }
 
-- (UIAlertController *)alertControllerWithTitle:(id)title message:(id)message preferredStyle:(UIAlertControllerStyle)preferredStyle
++ (UIAlertController *)fw_alertControllerWithTitle:(id)title message:(id)message preferredStyle:(UIAlertControllerStyle)preferredStyle
 {
-    return [self alertControllerWithTitle:title message:message preferredStyle:preferredStyle appearance:nil];
+    return [self fw_alertControllerWithTitle:title message:message preferredStyle:preferredStyle appearance:nil];
 }
 
-- (UIAlertController *)alertControllerWithTitle:(id)title message:(id)message preferredStyle:(UIAlertControllerStyle)preferredStyle appearance:(FWAlertAppearance *)appearance
++ (UIAlertController *)fw_alertControllerWithTitle:(id)title message:(id)message preferredStyle:(UIAlertControllerStyle)preferredStyle appearance:(FWAlertAppearance *)appearance
 {
     NSAttributedString *attributedTitle = [title isKindOfClass:[NSAttributedString class]] ? title : nil;
     NSAttributedString *attributedMessage = [message isKindOfClass:[NSAttributedString class]] ? message : nil;
@@ -199,38 +191,38 @@
                                                                              message:(attributedMessage ? attributedMessage.string : message)
                                                                       preferredStyle:preferredStyle];
     
-    alertController.fw.alertAppearance = appearance;
+    alertController.fw_alertAppearance = appearance;
     if (attributedTitle) {
-        alertController.fw.attributedTitle = attributedTitle;
-    } else if (alertController.title.length > 0 && alertController.fw.alertAppearance.controllerEnabled) {
+        alertController.fw_attributedTitle = attributedTitle;
+    } else if (alertController.title.length > 0 && alertController.fw_alertAppearance.controllerEnabled) {
         NSMutableDictionary *titleAttributes = [NSMutableDictionary new];
-        if (alertController.fw.alertAppearance.titleFont) {
-            titleAttributes[NSFontAttributeName] = alertController.fw.alertAppearance.titleFont;
+        if (alertController.fw_alertAppearance.titleFont) {
+            titleAttributes[NSFontAttributeName] = alertController.fw_alertAppearance.titleFont;
         }
-        if (alertController.fw.alertAppearance.titleColor) {
-            titleAttributes[NSForegroundColorAttributeName] = alertController.fw.alertAppearance.titleColor;
+        if (alertController.fw_alertAppearance.titleColor) {
+            titleAttributes[NSForegroundColorAttributeName] = alertController.fw_alertAppearance.titleColor;
         }
-        alertController.fw.attributedTitle = [[NSAttributedString alloc] initWithString:alertController.title attributes:titleAttributes];
+        alertController.fw_attributedTitle = [[NSAttributedString alloc] initWithString:alertController.title attributes:titleAttributes];
     }
     
     if (attributedMessage) {
-        alertController.fw.attributedMessage = attributedMessage;
-    } else if (alertController.message.length > 0 && alertController.fw.alertAppearance.controllerEnabled) {
+        alertController.fw_attributedMessage = attributedMessage;
+    } else if (alertController.message.length > 0 && alertController.fw_alertAppearance.controllerEnabled) {
         NSMutableDictionary *messageAttributes = [NSMutableDictionary new];
-        if (alertController.fw.alertAppearance.messageFont) {
-            messageAttributes[NSFontAttributeName] = alertController.fw.alertAppearance.messageFont;
+        if (alertController.fw_alertAppearance.messageFont) {
+            messageAttributes[NSFontAttributeName] = alertController.fw_alertAppearance.messageFont;
         }
-        if (alertController.fw.alertAppearance.messageColor) {
-            messageAttributes[NSForegroundColorAttributeName] = alertController.fw.alertAppearance.messageColor;
+        if (alertController.fw_alertAppearance.messageColor) {
+            messageAttributes[NSForegroundColorAttributeName] = alertController.fw_alertAppearance.messageColor;
         }
-        alertController.fw.attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
+        alertController.fw_attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
     
     [alertController fw_observeProperty:@"preferredAction" block:^(UIAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(UIAlertAction *obj, NSUInteger idx, BOOL *stop) {
-            if (obj.fw.isPreferred) obj.fw.isPreferred = NO;
+            if (obj.fw_isPreferred) obj.fw_isPreferred = NO;
         }];
-        object.preferredAction.fw.isPreferred = YES;
+        object.preferredAction.fw_isPreferred = YES;
     }];
     
     return alertController;
@@ -292,11 +284,11 @@
 {
     // 初始化Alert
     FWAlertAppearance *customAppearance = self.customAlertAppearance;
-    UIAlertController *alertController = [UIAlertController.fw alertControllerWithTitle:title
+    UIAlertController *alertController = [UIAlertController fw_alertControllerWithTitle:title
                                                                                message:message
                                                                         preferredStyle:UIAlertControllerStyleAlert
                                                                             appearance:customAppearance];
-    alertController.fw.alertStyle = style;
+    alertController.fw_alertStyle = style;
     
     // 添加输入框
     for (NSInteger promptIndex = 0; promptIndex < promptCount; promptIndex++) {
@@ -307,7 +299,7 @@
     
     // 添加动作按钮
     for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
-        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *alertAction = [UIAlertAction fw_actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
             if (actionBlock) {
                 NSMutableArray *values = [NSMutableArray new];
                 for (NSInteger fieldIndex = 0; fieldIndex < promptCount; fieldIndex++) {
@@ -322,15 +314,15 @@
     
     // 添加取消按钮
     if (cancel != nil) {
-        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *cancelAction = [UIAlertAction fw_actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
     }
     
     // 添加首选按钮
-    if (alertController.fw.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
-        UIAlertAction *preferredAction = alertController.fw.alertAppearance.preferredActionBlock(alertController);
+    if (alertController.fw_alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
+        UIAlertAction *preferredAction = alertController.fw_alertAppearance.preferredActionBlock(alertController);
         if (preferredAction) {
             alertController.preferredAction = preferredAction;
         }
@@ -356,14 +348,14 @@
 {
     // 初始化Alert
     FWAlertAppearance *customAppearance = self.customSheetAppearance;
-    UIAlertController *alertController = [UIAlertController.fw alertControllerWithTitle:title
+    UIAlertController *alertController = [UIAlertController fw_alertControllerWithTitle:title
                                                                                message:message
                                                                         preferredStyle:UIAlertControllerStyleActionSheet
                                                                             appearance:customAppearance];
     
     // 添加动作按钮
     for (NSInteger actionIndex = 0; actionIndex < actions.count; actionIndex++) {
-        UIAlertAction *alertAction = [UIAlertAction.fw actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *alertAction = [UIAlertAction fw_actionWithObject:actions[actionIndex] style:UIAlertActionStyleDefault appearance:customAppearance handler:^(UIAlertAction *action) {
             if (actionBlock) {
                 actionBlock(actionIndex);
             }
@@ -373,7 +365,7 @@
     
     // 添加取消按钮
     if (cancel != nil) {
-        UIAlertAction *cancelAction = [UIAlertAction.fw actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
+        UIAlertAction *cancelAction = [UIAlertAction fw_actionWithObject:cancel style:UIAlertActionStyleCancel appearance:customAppearance handler:^(UIAlertAction *action) {
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
@@ -382,8 +374,8 @@
     // 添加首选按钮
     if (currentIndex >= 0 && alertController.actions.count > currentIndex) {
         alertController.preferredAction = alertController.actions[currentIndex];
-    } else if (alertController.fw.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
-        UIAlertAction *preferredAction = alertController.fw.alertAppearance.preferredActionBlock(alertController);
+    } else if (alertController.fw_alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
+        UIAlertAction *preferredAction = alertController.fw_alertAppearance.preferredActionBlock(alertController);
         if (preferredAction) {
             alertController.preferredAction = preferredAction;
         }

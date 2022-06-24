@@ -249,12 +249,12 @@
     self.tableView.fw.delegate.cellClass = [TestTableCreateCell class];
     self.tableView.fw.delegate.didSelectRow = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
-        [self.fw showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
+        [self fw_showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
     };
     self.tableView.fw.delegate.deleteTitle = @"删除";
     self.tableView.fw.delegate.didDeleteRow = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
-        [self.fw showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了删除%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
+        [self fw_showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了删除%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
     };
     
     self.tableView.fw.delegate.viewForHeader = ^id _Nullable(NSInteger section) {

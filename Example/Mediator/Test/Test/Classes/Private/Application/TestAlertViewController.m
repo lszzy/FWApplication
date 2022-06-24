@@ -86,7 +86,7 @@
 
 - (void)onAlert1
 {
-    [self.fw showAlertWithTitle:@"警告框标题"
+    [self fw_showAlertWithTitle:@"警告框标题"
                        message:@"警告框消息"
                         cancel:nil
                    cancelBlock:^{
@@ -96,7 +96,7 @@
 
 - (void)onAlert2
 {
-    [self.fw showAlertWithTitle:@"警告框标题"
+    [self fw_showAlertWithTitle:@"警告框标题"
                        message:@"警告框消息"
                          style:FWAlertStyleDefault
                         cancel:nil
@@ -111,7 +111,7 @@
 
 - (void)onConfirm1
 {
-    [self.fw showConfirmWithTitle:@"确认框标题"
+    [self fw_showConfirmWithTitle:@"确认框标题"
                          message:@"确认框消息"
                           cancel:nil
                          confirm:nil
@@ -122,7 +122,7 @@
 
 - (void)onConfirm2
 {
-    [self.fw showConfirmWithTitle:@"确认框标题"
+    [self fw_showConfirmWithTitle:@"确认框标题"
                          message:@"确认框消息"
                           cancel:nil
                          confirm:@"我是很长的确定按钮"
@@ -136,7 +136,7 @@
 
 - (void)onPrompt1
 {
-    [self.fw showPromptWithTitle:@"输入框标题"
+    [self fw_showPromptWithTitle:@"输入框标题"
                         message:@"输入框消息"
                          cancel:nil
                         confirm:nil
@@ -147,7 +147,7 @@
 
 - (void)onPrompt2
 {
-    [self.fw showPromptWithTitle:@"输入框标题"
+    [self fw_showPromptWithTitle:@"输入框标题"
                         message:@"输入框消息"
                          cancel:nil
                         confirm:nil
@@ -165,7 +165,7 @@
 
 - (void)onPrompt3
 {
-    [self.fw showPromptWithTitle:@"输入框标题"
+    [self fw_showPromptWithTitle:@"输入框标题"
                         message:@"输入框消息"
                          cancel:nil
                         confirm:nil
@@ -189,7 +189,7 @@
 
 - (void)onAlertE
 {
-    [self.fw showAlertWithTitle:nil
+    [self fw_showAlertWithTitle:nil
                        message:nil
                         cancel:nil
                    cancelBlock:^{
@@ -199,7 +199,7 @@
 
 - (void)onSheet1
 {
-    [self.fw showSheetWithTitle:nil
+    [self fw_showSheetWithTitle:nil
                        message:nil
                         cancel:@"取消"
                        actions:@[@"操作1"]
@@ -210,7 +210,7 @@
 
 - (void)onSheet2
 {
-    [self.fw showSheetWithTitle:@"操作表标题"
+    [self fw_showSheetWithTitle:@"操作表标题"
                        message:@"操作表消息"
                         cancel:@"取消"
                        actions:@[@"操作1", @"操作2", @"操作3"]
@@ -226,7 +226,7 @@
 - (void)onAlertF
 {
     FWWeakifySelf();
-    [self.fw showAlertWithTitle:@"请输入账号信息，我是很长很长很长很长很长很长的标题"
+    [self fw_showAlertWithTitle:@"请输入账号信息，我是很长很长很长很长很长很长的标题"
                        message:@"账户信息必填，我是很长很长很长很长很长很长的消息"
                          style:FWAlertStyleDefault
                         cancel:@"取消"
@@ -322,7 +322,7 @@
     };
     [message appendAttributedString:[[NSAttributedString alloc] initWithString:@"警告框消息" attributes:attrs]];
     
-    [self.fw showAlertWithTitle:title
+    [self fw_showAlertWithTitle:title
                        message:message
                          style:FWAlertStyleDefault
                         cancel:nil
@@ -351,7 +351,7 @@
     };
     [message appendAttributedString:[[NSAttributedString alloc] initWithString:@"操作表消息" attributes:attrs]];
     
-    [self.fw showSheetWithTitle:title
+    [self fw_showSheetWithTitle:title
                        message:message
                         cancel:@"取消"
                        actions:@[@"操作1", @"操作2", @"操作3", @"操作4", @"操作5", @"操作6", @"操作7", @"操作8", @"操作9", @"操作10"]
@@ -363,11 +363,11 @@
 - (void)onAlertP
 {
     FWWeakifySelf();
-    [self.fw showAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil cancelBlock:^{
+    [self fw_showAlertWithTitle:@"高优先级" message:@"警告框消息" cancel:nil cancelBlock:^{
         FWStrongifySelf();
-        [self.fw showAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil cancelBlock:^{
+        [self fw_showAlertWithTitle:@"普通优先级" message:@"警告框消息" cancel:nil cancelBlock:^{
             FWStrongifySelf();
-            [self.fw showAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil cancelBlock:nil];
+            [self fw_showAlertWithTitle:@"低优先级" message:@"警告框消息" cancel:nil cancelBlock:nil];
         }];
     }];
 }
@@ -375,11 +375,11 @@
 - (void)onSheetP
 {
     FWWeakifySelf();
-    [self.fw showSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil cancelBlock:^{
+    [self fw_showSheetWithTitle:@"高优先级" message:@"操作表消息" cancel:nil cancelBlock:^{
         FWStrongifySelf();
-        [self.fw showSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil cancelBlock:^{
+        [self fw_showSheetWithTitle:@"普通优先级" message:@"操作表消息" cancel:nil cancelBlock:^{
             FWStrongifySelf();
-            [self.fw showSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil cancelBlock:nil];
+            [self fw_showSheetWithTitle:@"低优先级" message:@"操作表消息" cancel:nil cancelBlock:nil];
         }];
     }];
 }

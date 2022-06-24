@@ -187,7 +187,7 @@ FWPropertyCopy(NSString *, appendString);
     
     [self fw_setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换滚动", @"切换滚动时收起键盘", @"切换滚动视图", @"自动添加-"] actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"切换滚动", @"切换滚动时收起键盘", @"切换滚动视图", @"自动添加-"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             if (index == 0) {
                 self.canScroll = !self.canScroll;

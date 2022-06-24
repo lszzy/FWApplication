@@ -16,8 +16,8 @@ extension Wrapper where Base: UIViewController {
     
     /// 自定义弹窗插件，未设置时自动从插件池加载
     public var alertPlugin: AlertPlugin? {
-        get { return base.__fw.alertPlugin }
-        set { base.__fw.alertPlugin = newValue }
+        get { return base.__fw_alertPlugin }
+        set { base.__fw_alertPlugin = newValue }
     }
 
     /// 显示警告框(简单版)
@@ -32,7 +32,7 @@ extension Wrapper where Base: UIViewController {
         cancel: Any? = nil,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
+        base.__fw_showAlert(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
     }
 
     /// 显示警告框(详细版)
@@ -53,7 +53,7 @@ extension Wrapper where Base: UIViewController {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw_showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
     }
     
     /// 显示确认框(简单版)
@@ -68,7 +68,7 @@ extension Wrapper where Base: UIViewController {
         confirmBlock: (() -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showConfirm(withTitle: title, message: message, cancel: nil, confirm: nil, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showConfirm(withTitle: title, message: message, cancel: nil, confirm: nil, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
 
     /// 显示确认框(详细版)
@@ -87,7 +87,7 @@ extension Wrapper where Base: UIViewController {
         confirmBlock: (() -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showConfirm(withTitle: title, message: message, cancel: cancel, confirm: confirm, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showConfirm(withTitle: title, message: message, cancel: cancel, confirm: confirm, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
 
     /// 显示输入框(简单版)
@@ -108,7 +108,7 @@ extension Wrapper where Base: UIViewController {
         confirmBlock: ((String) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
 
     /// 显示输入框(详细版)
@@ -131,7 +131,7 @@ extension Wrapper where Base: UIViewController {
         confirmBlock: (([String]) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptCount: promptCount, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptCount: promptCount, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
     
     /// 显示弹出框(完整版)
@@ -158,7 +158,7 @@ extension Wrapper where Base: UIViewController {
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw_showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
     /// 显示操作表(无动作)
@@ -173,7 +173,7 @@ extension Wrapper where Base: UIViewController {
         cancel: Any?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
     }
 
     /// 显示操作表(简单版)
@@ -190,7 +190,7 @@ extension Wrapper where Base: UIViewController {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: nil, actions: actions, currentIndex: -1, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: nil, actions: actions, currentIndex: -1, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示操作表(详细版)
@@ -211,7 +211,7 @@ extension Wrapper where Base: UIViewController {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示操作表(完整版)
@@ -234,7 +234,7 @@ extension Wrapper where Base: UIViewController {
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
 }
@@ -253,7 +253,7 @@ extension Wrapper where Base: UIView {
         cancel: Any? = nil,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
+        base.__fw_showAlert(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
     }
 
     /// 显示警告框(详细版)
@@ -274,7 +274,7 @@ extension Wrapper where Base: UIView {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw_showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, actionBlock: actionBlock, cancel: cancelBlock)
     }
     
     /// 显示确认框(简单版)
@@ -289,7 +289,7 @@ extension Wrapper where Base: UIView {
         confirmBlock: (() -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showConfirm(withTitle: title, message: message, cancel: nil, confirm: nil, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showConfirm(withTitle: title, message: message, cancel: nil, confirm: nil, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
 
     /// 显示确认框(详细版)
@@ -308,7 +308,7 @@ extension Wrapper where Base: UIView {
         confirmBlock: (() -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showConfirm(withTitle: title, message: message, cancel: cancel, confirm: confirm, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showConfirm(withTitle: title, message: message, cancel: cancel, confirm: confirm, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
 
     /// 显示输入框(简单版)
@@ -329,7 +329,7 @@ extension Wrapper where Base: UIView {
         confirmBlock: ((String) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
 
     /// 显示输入框(详细版)
@@ -352,7 +352,7 @@ extension Wrapper where Base: UIView {
         confirmBlock: (([String]) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptCount: promptCount, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
+        base.__fw_showPrompt(withTitle: title, message: message, cancel: cancel, confirm: confirm, promptCount: promptCount, promptBlock: promptBlock, confirmBlock: confirmBlock, cancel: cancelBlock)
     }
     
     /// 显示弹出框(完整版)
@@ -379,7 +379,7 @@ extension Wrapper where Base: UIView {
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw_showAlert(withTitle: title, message: message, style: style, cancel: cancel, actions: actions, promptCount: promptCount, promptBlock: promptBlock, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
     /// 显示操作表(无动作)
@@ -394,7 +394,7 @@ extension Wrapper where Base: UIView {
         cancel: Any?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, cancel: cancelBlock)
     }
 
     /// 显示操作表(简单版)
@@ -411,7 +411,7 @@ extension Wrapper where Base: UIView {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: nil, actions: actions, currentIndex: -1, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: nil, actions: actions, currentIndex: -1, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示操作表(详细版)
@@ -432,7 +432,7 @@ extension Wrapper where Base: UIView {
         actionBlock: ((Int) -> Void)?,
         cancelBlock: (() -> Void)? = nil
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock)
     }
 
     /// 显示弹出框(完整版)
@@ -455,7 +455,7 @@ extension Wrapper where Base: UIView {
         cancelBlock: (() -> Void)?,
         customBlock: ((Any) -> Void)?
     ) {
-        base.__fw.showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
+        base.__fw_showSheet(withTitle: title, message: message, cancel: cancel, actions: actions, currentIndex: currentIndex, actionBlock: actionBlock, cancel: cancelBlock, customBlock: customBlock)
     }
     
 }
@@ -464,24 +464,24 @@ extension Wrapper where Base: UIAlertAction {
     
     /// 自定义样式，默认为样式单例
     public var alertAppearance: AlertAppearance {
-        get { return base.__fw.alertAppearance }
-        set { base.__fw.alertAppearance = newValue }
+        get { return base.__fw_alertAppearance }
+        set { base.__fw_alertAppearance = newValue }
     }
 
     /// 指定标题颜色
     public var titleColor: UIColor? {
-        get { return base.__fw.titleColor }
-        set { base.__fw.titleColor = newValue }
+        get { return base.__fw_titleColor }
+        set { base.__fw_titleColor = newValue }
     }
     
     /// 快速创建弹出动作，title仅支持NSString
     public static func action(object: Any?, style: UIAlertAction.Style, handler: ((UIAlertAction) -> Void)?) -> UIAlertAction {
-        return Base.__fw.action(with: object, style: style, handler: handler)
+        return Base.__fw_action(with: object, style: style, handler: handler)
     }
 
     /// 快速创建弹出动作，title仅支持NSString，支持appearance
     public static func action(object: Any?, style: UIAlertAction.Style, appearance: AlertAppearance?, handler: ((UIAlertAction) -> Void)?) -> UIAlertAction {
-        return Base.__fw.action(with: object, style: style, appearance: appearance, handler: handler)
+        return Base.__fw_action(with: object, style: style, appearance: appearance, handler: handler)
     }
     
 }
@@ -490,36 +490,36 @@ extension Wrapper where Base: UIAlertController {
     
     /// 自定义样式，默认为样式单例
     public var alertAppearance: AlertAppearance {
-        get { return base.__fw.alertAppearance }
-        set { base.__fw.alertAppearance = newValue }
+        get { return base.__fw_alertAppearance }
+        set { base.__fw_alertAppearance = newValue }
     }
     
     /// 弹出框样式，默认为Default
     public var alertStyle: AlertStyle {
-        get { return base.__fw.alertStyle }
-        set { base.__fw.alertStyle = newValue }
+        get { return base.__fw_alertStyle }
+        set { base.__fw_alertStyle = newValue }
     }
 
     /// 设置属性标题
     public var attributedTitle: NSAttributedString? {
-        get { return base.__fw.attributedTitle }
-        set { base.__fw.attributedTitle = newValue }
+        get { return base.__fw_attributedTitle }
+        set { base.__fw_attributedTitle = newValue }
     }
 
     /// 设置属性消息
     public var attributedMessage: NSAttributedString? {
-        get { return base.__fw.attributedMessage }
-        set { base.__fw.attributedMessage = newValue }
+        get { return base.__fw_attributedMessage }
+        set { base.__fw_attributedMessage = newValue }
     }
     
     /// 快速创建弹出控制器，title和message仅支持NSString
     public static func alertController(title: Any?, message: Any?, preferredStyle: UIAlertController.Style) -> UIAlertController {
-        return Base.__fw.alertController(withTitle: title, message: message, preferredStyle: preferredStyle)
+        return Base.__fw_alertController(withTitle: title, message: message, preferredStyle: preferredStyle)
     }
 
     /// 快速创建弹出控制器，title和message仅支持NSString，支持自定义样式
     public static func alertController(title: Any?, message: Any?, preferredStyle: UIAlertController.Style, appearance: AlertAppearance?) -> UIAlertController {
-        return Base.__fw.alertController(withTitle: title, message: message, preferredStyle: preferredStyle, appearance: appearance)
+        return Base.__fw_alertController(withTitle: title, message: message, preferredStyle: preferredStyle, appearance: appearance)
     }
     
 }

@@ -109,7 +109,7 @@
 - (BOOL)shouldPopController
 {
     FWWeakifySelf();
-    [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
+    [self fw_showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
         FWStrongifySelf();
         [self fw_closeViewControllerAnimated:YES];
     }];
@@ -153,7 +153,7 @@
         case 4:
         {
             FWWeakifySelf();
-            [self.fw showSheetWithTitle:@"水平对齐方式" message:nil cancel:@"取消" actions:@[@"左对齐", @"居中对齐", @"右对齐"] actionBlock:^(NSInteger index) {
+            [self fw_showSheetWithTitle:@"水平对齐方式" message:nil cancel:@"取消" actions:@[@"左对齐", @"居中对齐", @"右对齐"] actionBlock:^(NSInteger index) {
                 FWStrongifySelf();
                 if (index == 0) {
                     self.titleView.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;

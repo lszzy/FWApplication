@@ -104,7 +104,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     [self fw_setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:themes actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:themes actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             FWThemeManager.sharedInstance.mode = (index == themes.count - 1) ? FWThemeStyleRed : index;

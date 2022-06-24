@@ -93,11 +93,11 @@
 - (void)onPhotoSheet:(UIBarButtonItem *)sender
 {
     FWWeakifySelf();
-    [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"拍照", @"选取相册"] actionBlock:^(NSInteger index) {
+    [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"拍照", @"选取相册"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index == 0) {
             if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                [self.fw showAlertWithTitle:@"未检测到您的摄像头" message:nil cancel:nil cancelBlock:nil];
+                [self fw_showAlertWithTitle:@"未检测到您的摄像头" message:nil cancel:nil cancelBlock:nil];
                 return;
             }
             
@@ -131,7 +131,7 @@
                 [string appendFormat:@"text: %@\nconfidence: %@\n", object.text, @(object.confidence)];
             }
             NSString *message = string.length > 0 ? string.copy : @"识别结果为空";
-            [UIWindow.fw_mainWindow.fw showAlertWithTitle:@"扫描结果" message:message];
+            [UIWindow.fw_mainWindow fw_showAlertWithTitle:@"扫描结果" message:message];
         }];
     }
 }

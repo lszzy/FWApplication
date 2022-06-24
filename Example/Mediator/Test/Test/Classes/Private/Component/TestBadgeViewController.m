@@ -20,7 +20,7 @@
 {
     [super viewDidLoad];
     
-    self.fw.tabBarHidden = NO;
+    self.fw_tabBarHidden = NO;
     
     [self fw_setLeftBarItem:FWIcon.backImage target:self action:@selector(onClose)];
     FWBadgeView *badgeView = [[FWBadgeView alloc] initWithBadgeStyle:FWBadgeStyleDot];
@@ -112,7 +112,7 @@
 - (void)onClose
 {
     FWWeakifySelf();
-    [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
+    [self fw_showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
         FWStrongifySelf();
         [self fw_closeViewControllerAnimated:YES];
     }];

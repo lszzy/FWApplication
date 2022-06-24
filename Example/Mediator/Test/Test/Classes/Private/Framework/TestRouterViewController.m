@@ -59,13 +59,13 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
             if ([object isKindOfClass:[UIViewController class]]) {
                 [FWRouter openViewController:object animated:YES];
             } else {
-                [UIWindow.fw_topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+                [UIWindow.fw_topPresentedController fw_showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             }
         }
         return object;
     }];
     [FWRouter setErrorHandler:^(FWRouterContext * _Nonnull context) {
-        [UIWindow.fw_topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+        [UIWindow.fw_topPresentedController fw_showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
     }];
 }
 
@@ -122,7 +122,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         if (context.isOpening) {
             return @"OBJECT UNMATCH";
         } else {
-            [UIWindow.fw_topPresentedController.fw showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
+            [UIWindow.fw_topPresentedController fw_showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             return nil;
         }
     }];
@@ -139,7 +139,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         
         TestWebViewController *viewController = (TestWebViewController *)topController;
         [viewController.webView evaluateJavaScript:javascript completionHandler:^(id value, NSError *error) {
-            [[UIWindow fw_topViewController].fw showAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
+            [[UIWindow fw_topViewController] fw_showAlertWithTitle:@"App" message:[NSString stringWithFormat:@"app:%@ => js:%@", @"2", value] cancel:nil cancelBlock:nil];
         }];
         return nil;
     }];

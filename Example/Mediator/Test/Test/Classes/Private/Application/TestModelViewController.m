@@ -123,7 +123,7 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
     [request startWithCompletionBlockWithSuccess:^(TestModelRequest *request) {
         [self.fw showMessageWithText:[NSString stringWithFormat:@"json请求成功: \n%@", request.responseName]];
     } failure:^(TestModelRequest *request) {
-        [self.fw showAlertWithTitle:@"json请求失败" message:[NSString stringWithFormat:@"%@", request.error] cancel:nil cancelBlock:nil];
+        [self fw_showAlertWithTitle:@"json请求失败" message:[NSString stringWithFormat:@"%@", request.error] cancel:nil cancelBlock:nil];
     }];
 }
 
@@ -155,8 +155,8 @@ FWDefDynamicWeak(UIViewController *, weakController, setWeakController);
                                            }
                                        ],
                                };
-    TestModelObj *obj = [TestModelObj.fw modelWithJson:jsonDict];
-    self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj.fw modelToJsonObject]];
+    TestModelObj *obj = [TestModelObj fw_modelWithJson:jsonDict];
+    self.textView.text = [NSString stringWithFormat:@"obj: %@\ndict: %@", obj, [obj fw_modelToJsonObject]];
     
     // 测试\udf36|\udd75等字符会导致json解码失败问题
     NSString *jsonString = @"{\"name\": \"\\u8499\\u81ea\\u7f8e\\u5473\\u6ce1\\u6912\\u7b0b\\ud83d\\ude04\\\\udf36\\ufe0f\"}";

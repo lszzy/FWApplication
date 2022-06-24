@@ -563,7 +563,7 @@
     }
 
     __weak __typeof__(self) self_weak_ = self;
-    [self.fw showSheetWithTitle:nil message:nil cancel:cancelButtonTitle actions:itemStrings actionBlock:^(NSInteger index) {
+    [self fw_showSheetWithTitle:nil message:nil cancel:cancelButtonTitle actions:itemStrings actionBlock:^(NSInteger index) {
         __typeof__(self) self = self_weak_;
         [self setAspectRatioPreset:[ratioValues[index] integerValue] animated:YES];
         self.aspectRatioLockEnabled = YES;

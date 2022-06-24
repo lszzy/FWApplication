@@ -266,7 +266,7 @@
     FWWeakifySelf();
     [self fw_setRightBarItem:FWIcon.refreshImage block:^(id sender) {
         FWStrongifySelf();
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"shimmer", @"solid", @"scale", @"none", @"tableView滚动", @"scrollView滚动", @"添加数据"] actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:@[@"shimmer", @"solid", @"scale", @"none", @"tableView滚动", @"scrollView滚动", @"添加数据"] actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             // tableView滚动

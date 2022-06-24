@@ -218,7 +218,7 @@
         FWStrongifySelf();
         
         NSMutableArray *actions = [NSMutableArray arrayWithArray:@[@"系统", @"浅色", @"深色"]];
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:actions actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:actions actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             FWThemeManager.sharedInstance.mode = index;
