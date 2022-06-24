@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FWImageWrapper+FWAnimated
+#pragma mark - UIImage+FWAnimated
 
 /// 图片格式可扩展枚举
 typedef NSInteger FWImageFormat NS_TYPED_EXTENSIBLE_ENUM NS_SWIFT_NAME(ImageFormat);
@@ -27,27 +27,27 @@ static const FWImageFormat FWImageFormatPDF       = 7;
 static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 
 /**
- FWImageWrapper+FWAnimated
+ UIImage+FWAnimated
  
  @see https://github.com/SDWebImage/SDWebImage
  */
-@interface FWImageWrapper (FWAnimated)
+@interface UIImage (FWAnimated)
 
 /// 图片循环次数，静态图片始终是0，动态图片0代表无限循环
-@property (nonatomic, assign) NSUInteger imageLoopCount;
+@property (nonatomic, assign) NSUInteger fw_imageLoopCount NS_REFINED_FOR_SWIFT;
 
 /// 是否是动图，内部检查images数组
-@property (nonatomic, assign, readonly) BOOL isAnimated;
+@property (nonatomic, assign, readonly) BOOL fw_isAnimated NS_REFINED_FOR_SWIFT;
 
 /// 是否是向量图，内部检查isSymbolImage属性，iOS11+支持PDF，iOS13+支持SVG
-@property (nonatomic, assign, readonly) BOOL isVector;
+@property (nonatomic, assign, readonly) BOOL fw_isVector NS_REFINED_FOR_SWIFT;
 
 /// 获取图片原始数据格式，未指定时尝试从CGImage获取，获取失败返回FWImageFormatUndefined
-@property (nonatomic, assign) FWImageFormat imageFormat;
+@property (nonatomic, assign) FWImageFormat fw_imageFormat NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWDataClassWrapper+FWAnimated
+#pragma mark - NSData+FWAnimated
 
 /// 扩展系统UTType
 #define kFWUTTypeHEIC ((__bridge CFStringRef)@"public.heic")
@@ -55,25 +55,25 @@ static const FWImageFormat FWImageFormatSVG       = 8; //iOS13+
 #define kFWUTTypeHEICS ((__bridge CFStringRef)@"public.heics")
 #define kFWUTTypeWebP ((__bridge CFStringRef)@"org.webmproject.webp")
 
-@interface FWDataClassWrapper (FWAnimated)
+@interface NSData (FWAnimated)
 
 /// 获取图片数据的格式，未知格式返回FWImageFormatUndefined
-- (FWImageFormat)imageFormatForImageData:(nullable NSData *)data;
++ (FWImageFormat)fw_imageFormatForImageData:(nullable NSData *)data NS_REFINED_FOR_SWIFT;
 
 /// 图片格式转化为UTType，未知格式返回kUTTypeImage
-- (nonnull CFStringRef)UTTypeFromImageFormat:(FWImageFormat)format CF_RETURNS_NOT_RETAINED;
++ (nonnull CFStringRef)fw_UTTypeFromImageFormat:(FWImageFormat)format CF_RETURNS_NOT_RETAINED NS_REFINED_FOR_SWIFT;
 
 /// UTType转化为图片格式，未知格式返回FWImageFormatUndefined
-- (FWImageFormat)imageFormatFromUTType:(nonnull CFStringRef)uttype;
++ (FWImageFormat)fw_imageFormatFromUTType:(nonnull CFStringRef)uttype NS_REFINED_FOR_SWIFT;
 
 /// 图片格式转化为mimeType，未知格式返回application/octet-stream
-- (NSString *)mimeTypeFromImageFormat:(FWImageFormat)format;
++ (NSString *)fw_mimeTypeFromImageFormat:(FWImageFormat)format NS_REFINED_FOR_SWIFT;
 
 /// 文件后缀转化为mimeType，未知后缀返回application/octet-stream
-- (NSString *)mimeTypeFromExtension:(NSString *)extension;
++ (NSString *)fw_mimeTypeFromExtension:(NSString *)extension NS_REFINED_FOR_SWIFT;
 
 /// 图片数据编码为base64字符串，可直接用于H5显示等，字符串格式：data:image/png;base64,数据
-- (nullable NSString *)base64StringForImageData:(nullable NSData *)data;
++ (nullable NSString *)fw_base64StringForImageData:(nullable NSData *)data NS_REFINED_FOR_SWIFT;
 
 @end
 

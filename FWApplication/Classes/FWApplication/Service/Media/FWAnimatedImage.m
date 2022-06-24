@@ -13,74 +13,74 @@
 #import <dlfcn.h>
 #import <objc/runtime.h>
 
-#pragma mark - FWImageWrapper+FWAnimated
+#pragma mark - UIImage+FWAnimated
 
-@implementation FWImageWrapper (FWAnimated)
+@implementation UIImage (FWAnimated)
 
-- (NSUInteger)imageLoopCount
+- (NSUInteger)fw_imageLoopCount
 {
-    return [objc_getAssociatedObject(self.base, @selector(imageLoopCount)) unsignedIntegerValue];
+    return [objc_getAssociatedObject(self, @selector(fw_imageLoopCount)) unsignedIntegerValue];
 }
 
-- (void)setImageLoopCount:(NSUInteger)imageLoopCount
+- (void)setFw_imageLoopCount:(NSUInteger)imageLoopCount
 {
-    objc_setAssociatedObject(self.base, @selector(imageLoopCount), @(imageLoopCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_imageLoopCount), @(imageLoopCount), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (BOOL)isAnimated
+- (BOOL)fw_isAnimated
 {
-    return self.base.images != nil;
+    return self.images != nil;
 }
 
-- (BOOL)isVector
+- (BOOL)fw_isVector
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if (@available(iOS 13.0, *)) {
         // Xcode 11 supports symbol image, keep Xcode 10 compatible currently
         SEL SymbolSelector = NSSelectorFromString(@"isSymbolImage");
-        if ([self.base respondsToSelector:SymbolSelector] && [self.base performSelector:SymbolSelector]) {
+        if ([self respondsToSelector:SymbolSelector] && [self performSelector:SymbolSelector]) {
             return YES;
         }
         // SVG
         SEL SVGSelector = NSSelectorFromString([NSString stringWithFormat:@"_%@", @"CGSVGDocument"]);
-        if ([self.base respondsToSelector:SVGSelector] && [self.base performSelector:SVGSelector]) {
+        if ([self respondsToSelector:SVGSelector] && [self performSelector:SVGSelector]) {
             return YES;
         }
     }
     // PDF
     SEL PDFSelector = NSSelectorFromString([NSString stringWithFormat:@"_%@", @"CGPDFPage"]);
-    if ([self.base respondsToSelector:PDFSelector] && [self.base performSelector:PDFSelector]) {
+    if ([self respondsToSelector:PDFSelector] && [self performSelector:PDFSelector]) {
         return YES;
     }
     return NO;
 #pragma clang diagnostic pop
 }
 
-- (FWImageFormat)imageFormat
+- (FWImageFormat)fw_imageFormat
 {
-    NSNumber *value = objc_getAssociatedObject(self.base, @selector(imageFormat));
+    NSNumber *value = objc_getAssociatedObject(self, @selector(fw_imageFormat));
     if (value) {
         return [value integerValue];
     }
-    CFStringRef uttype = CGImageGetUTType(self.base.CGImage);
-    return [NSData.fw imageFormatFromUTType:uttype];
+    CFStringRef uttype = CGImageGetUTType(self.CGImage);
+    return [NSData fw_imageFormatFromUTType:uttype];
 }
 
-- (void)setImageFormat:(FWImageFormat)imageFormat
+- (void)setFw_imageFormat:(FWImageFormat)imageFormat
 {
-    objc_setAssociatedObject(self.base, @selector(imageFormat), @(imageFormat), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_imageFormat), @(imageFormat), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
 
-#pragma mark - FWDataClassWrapper+FWAnimated
+#pragma mark - NSData+FWAnimated
 
 #define kSVGTagEnd @"</svg>"
 
-@implementation FWDataClassWrapper (FWAnimated)
+@implementation NSData (FWAnimated)
 
-- (FWImageFormat)imageFormatForImageData:(NSData *)data
++ (FWImageFormat)fw_imageFormatForImageData:(NSData *)data
 {
     if (data.length < 1) {
         return FWImageFormatUndefined;
@@ -145,7 +145,7 @@
     return FWImageFormatUndefined;
 }
 
-- (nonnull CFStringRef)UTTypeFromImageFormat:(FWImageFormat)format
++ (nonnull CFStringRef)fw_UTTypeFromImageFormat:(FWImageFormat)format
 {
     CFStringRef UTType;
     switch (format) {
@@ -184,7 +184,7 @@
     return UTType;
 }
 
-- (FWImageFormat)imageFormatFromUTType:(CFStringRef)uttype
++ (FWImageFormat)fw_imageFormatFromUTType:(CFStringRef)uttype
 {
     if (!uttype) {
         return FWImageFormatUndefined;
@@ -214,7 +214,7 @@
     return imageFormat;
 }
 
-- (NSString *)mimeTypeFromImageFormat:(FWImageFormat)format
++ (NSString *)fw_mimeTypeFromImageFormat:(FWImageFormat)format
 {
     NSString *mimeType;
     switch (format) {
@@ -252,7 +252,7 @@
     return mimeType;
 }
 
-- (NSString *)mimeTypeFromExtension:(NSString *)extension
++ (NSString *)fw_mimeTypeFromExtension:(NSString *)extension
 {
     NSString *UTI = (__bridge_transfer NSString *)UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, (__bridge CFStringRef)extension, NULL);
     NSString *mimeType = (__bridge_transfer NSString *)UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)UTI, kUTTagClassMIMEType);
@@ -260,11 +260,11 @@
     return mimeType;
 }
 
-- (NSString *)base64StringForImageData:(NSData *)data
++ (NSString *)fw_base64StringForImageData:(NSData *)data
 {
     if (data.length < 1) return nil;
     NSString *base64String = [data base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
-    NSString *mimeType = [NSData.fw mimeTypeFromImageFormat:[NSData.fw imageFormatForImageData:data]];
+    NSString *mimeType = [NSData fw_mimeTypeFromImageFormat:[NSData fw_imageFormatForImageData:data]];
     NSString *base64Prefix = [NSString stringWithFormat:@"data:%@;base64,", mimeType];
     return [base64Prefix stringByAppendingString:base64String];
 }
@@ -437,7 +437,7 @@ static SEL FWCGSVGDocumentSEL = NULL;
     
     UIImage *animatedImage;
     size_t count = CGImageSourceGetCount(source);
-    FWImageFormat format = [NSData.fw imageFormatForImageData:data];
+    FWImageFormat format = [NSData fw_imageFormatForImageData:data];
     if (format == FWImageFormatSVG) {
         if (@available(iOS 13.0, *)) {
             if ([UIImage respondsToSelector:FWImageWithCGSVGDocumentSEL]) {
@@ -463,10 +463,10 @@ static SEL FWCGSVGDocumentSEL = NULL;
         
         NSUInteger loopCount = [self imageLoopCountWithSource:source format:format];
         animatedImage = [FWImageFrame animatedImageWithFrames:frames];
-        animatedImage.fw.imageLoopCount = loopCount;
+        animatedImage.fw_imageLoopCount = loopCount;
     }
     
-    animatedImage.fw.imageFormat = format;
+    animatedImage.fw_imageFormat = format;
     CFRelease(source);
     return animatedImage;
 }
@@ -495,7 +495,7 @@ static SEL FWCGSVGDocumentSEL = NULL;
     if (!imageRef) return nil;
     
     NSMutableData *imageData = [NSMutableData data];
-    CFStringRef imageUTType = [NSData.fw UTTypeFromImageFormat:format];
+    CFStringRef imageUTType = [NSData fw_UTTypeFromImageFormat:format];
     BOOL isAnimated = [self isAnimated:format forDecode:NO];
     NSArray<FWImageFrame *> *frames = isAnimated ? [FWImageFrame framesFromAnimatedImage:image] : nil;
     size_t count = frames.count > 0 ? frames.count : 1;
@@ -512,7 +512,7 @@ static SEL FWCGSVGDocumentSEL = NULL;
         CGImageDestinationAddImage(imageDestination, imageRef, (__bridge CFDictionaryRef)properties);
     } else {
         NSDictionary *containerProperties = @{
-            [self dictionaryProperty:format]: @{[self loopCountProperty:format] : @(image.fw.imageLoopCount)}
+            [self dictionaryProperty:format]: @{[self loopCountProperty:format] : @(image.fw_imageLoopCount)}
         };
         CGImageDestinationSetProperties(imageDestination, (__bridge CFDictionaryRef)containerProperties);
         
@@ -564,7 +564,7 @@ static SEL FWCGSVGDocumentSEL = NULL;
         NSArray *encodeUTTypes = (__bridge_transfer NSArray *)CGImageDestinationCopyTypeIdentifiers();
         encodeUTTypeSet = [NSSet setWithArray:encodeUTTypes];
     });
-    CFStringRef imageUTType = [NSData.fw UTTypeFromImageFormat:format];
+    CFStringRef imageUTType = [NSData fw_UTTypeFromImageFormat:format];
     NSSet *imageUTTypeSet = forDecode ? decodeUTTypeSet : encodeUTTypeSet;
     if ([imageUTTypeSet containsObject:(__bridge NSString *)(imageUTType)]) {
         return YES;
@@ -768,7 +768,7 @@ static SEL FWCGSVGDocumentSEL = NULL;
 - (UIImage *)createFrameAtIndex:(NSUInteger)index source:(CGImageSourceRef)source scale:(CGFloat)scale
 {
     CFStringRef uttype = CGImageSourceGetType(source);
-    BOOL isVector = ([NSData.fw imageFormatFromUTType:uttype] == FWImageFormatPDF);
+    BOOL isVector = ([NSData fw_imageFormatFromUTType:uttype] == FWImageFormatPDF);
 
     NSMutableDictionary *decodingOptions = [NSMutableDictionary dictionary];
     if (isVector) {
