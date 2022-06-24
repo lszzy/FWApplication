@@ -25,8 +25,8 @@
     _isTop = isTop;
     
     if (isTop) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
-        self.fw.extendedLayoutEdge = UIRectEdgeTop;
+        self.fw_navigationBarStyle = FWNavigationBarStyleTransparent;
+        self.fw_extendedLayoutEdge = UIRectEdgeTop;
     }
 }
 
@@ -46,7 +46,7 @@
 
 - (void)renderInit
 {
-    self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
+    self.fw_navigationBarStyle = FWNavigationBarStyleDefault;
 }
 
 - (void)renderView

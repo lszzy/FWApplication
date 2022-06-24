@@ -132,11 +132,11 @@
 - (void)reloadToolbar:(BOOL)animated
 {
     if (self.webView.canGoBack || self.webView.canGoForward) {
-        if (self.fw.toolBarHidden) {
+        if (self.fw_toolBarHidden) {
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
     } else {
-        if (!self.fw.toolBarHidden) {
+        if (!self.fw_toolBarHidden) {
             [self.navigationController setToolbarHidden:YES animated:animated];
         }
     }

@@ -34,7 +34,7 @@
     self.delegate = self;
     self.tabBar.fw_foregroundColor = [Theme textColor];
     self.tabBar.fw_backgroundColor = [Theme barColor];
-    self.fw.navigationBarHidden = YES;
+    self.fw_navigationBarHidden = YES;
 }
 
 - (void)setupController

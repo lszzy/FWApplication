@@ -20,7 +20,7 @@
 
 - (void)renderInit
 {
-    self.fw.extendedLayoutEdge = UIRectEdgeTop;
+    self.fw_extendedLayoutEdge = UIRectEdgeTop;
 }
 
 - (BOOL)shouldPopController

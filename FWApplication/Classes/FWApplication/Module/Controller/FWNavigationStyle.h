@@ -51,43 +51,43 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 
 @end
 
-#pragma mark - FWViewControllerWrapper+FWStyle
+#pragma mark - UIViewController+FWStyle
 
 /**
  视图控制器样式分类，兼容系统导航栏和自定义导航栏(default和custom样式)
  @note 需要设置UIViewControllerBasedStatusBarAppearance为YES，视图控制器修改状态栏样式才会生效
  */
-@interface FWViewControllerWrapper (FWStyle)
+@interface UIViewController (FWStyle)
 
 /// 状态栏样式，默认UIStatusBarStyleDefault，设置后才会生效
-@property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
+@property (nonatomic, assign) UIStatusBarStyle fw_statusBarStyle NS_REFINED_FOR_SWIFT;
 
 /// 状态栏是否隐藏，默认NO，设置后才会生效
-@property (nonatomic, assign) BOOL statusBarHidden;
+@property (nonatomic, assign) BOOL fw_statusBarHidden NS_REFINED_FOR_SWIFT;
 
 /// 当前导航栏设置，优先级高于style，设置后会在viewWillAppear:自动应用生效
-@property (nullable, nonatomic, strong) FWNavigationBarAppearance *navigationBarAppearance;
+@property (nullable, nonatomic, strong) FWNavigationBarAppearance *fw_navigationBarAppearance NS_REFINED_FOR_SWIFT;
 
 /// 当前导航栏样式，默认Default，设置后才会在viewWillAppear:自动应用生效
-@property (nonatomic, assign) FWNavigationBarStyle navigationBarStyle;
+@property (nonatomic, assign) FWNavigationBarStyle fw_navigationBarStyle NS_REFINED_FOR_SWIFT;
 
 /// 导航栏是否隐藏，默认NO，设置后才会在viewWillAppear:自动应用生效
-@property (nonatomic, assign) BOOL navigationBarHidden;
+@property (nonatomic, assign) BOOL fw_navigationBarHidden NS_REFINED_FOR_SWIFT;
 
 /// 动态隐藏导航栏，如果当前已经viewWillAppear:时立即执行
-- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
+- (void)fw_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated NS_REFINED_FOR_SWIFT;
 
 /// 标签栏是否隐藏，默认为NO，立即生效。如果tabBar一直存在，则用tabBar包裹navBar；如果tabBar只存在主界面，则用navBar包裹tabBar
-@property (nonatomic, assign) BOOL tabBarHidden;
+@property (nonatomic, assign) BOOL fw_tabBarHidden NS_REFINED_FOR_SWIFT;
 
 /// 工具栏是否隐藏，默认为YES。需设置toolbarItems，立即生效
-@property (nonatomic, assign) BOOL toolBarHidden;
+@property (nonatomic, assign) BOOL fw_toolBarHidden NS_REFINED_FOR_SWIFT;
 
 /// 动态隐藏工具栏。需设置toolbarItems，立即生效
-- (void)setToolBarHidden:(BOOL)hidden animated:(BOOL)animated;
+- (void)fw_setToolBarHidden:(BOOL)hidden animated:(BOOL)animated NS_REFINED_FOR_SWIFT;
 
 /// 设置视图布局Bar延伸类型，None为不延伸(Bar不覆盖视图)，Top|Bottom为顶部|底部延伸，All为全部延伸
-@property (nonatomic, assign) UIRectEdge extendedLayoutEdge;
+@property (nonatomic, assign) UIRectEdge fw_extendedLayoutEdge NS_REFINED_FOR_SWIFT;
 
 @end
 

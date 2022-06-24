@@ -40,16 +40,16 @@
 
 @end
 
-#pragma mark - FWViewControllerWrapper+FWStyle
+#pragma mark - UIViewController+FWStyle
 
-@implementation FWViewControllerWrapper (FWStyle)
+@implementation UIViewController (FWStyle)
 
 + (void)load
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UIViewController, @selector(prefersStatusBarHidden), FWSwizzleReturn(BOOL), FWSwizzleArgs(), FWSwizzleCode({
-            NSNumber *hiddenValue = objc_getAssociatedObject(selfObject, @selector(statusBarHidden));
+            NSNumber *hiddenValue = objc_getAssociatedObject(selfObject, @selector(fw_statusBarHidden));
             if (hiddenValue) {
                 return [hiddenValue boolValue];
             } else {
@@ -58,7 +58,7 @@
         }));
         
         FWSwizzleClass(UIViewController, @selector(preferredStatusBarStyle), FWSwizzleReturn(UIStatusBarStyle), FWSwizzleArgs(), FWSwizzleCode({
-            NSNumber *styleValue = objc_getAssociatedObject(selfObject, @selector(statusBarStyle));
+            NSNumber *styleValue = objc_getAssociatedObject(selfObject, @selector(fw_statusBarStyle));
             if (styleValue) {
                 return [styleValue integerValue];
             } else {
@@ -68,120 +68,120 @@
         
         FWSwizzleClass(UIViewController, @selector(viewWillAppear:), FWSwizzleReturn(void), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
             FWSwizzleOriginal(animated);
-            [selfObject.fw updateNavigationBarStyle:animated];
+            [selfObject fw_updateNavigationBarStyle:animated];
         }));
     });
 }
 
-- (UIStatusBarStyle)statusBarStyle
+- (UIStatusBarStyle)fw_statusBarStyle
 {
-    return [objc_getAssociatedObject(self.base, @selector(statusBarStyle)) integerValue];
+    return [objc_getAssociatedObject(self, @selector(fw_statusBarStyle)) integerValue];
 }
 
-- (void)setStatusBarStyle:(UIStatusBarStyle)statusBarStyle
+- (void)setFw_statusBarStyle:(UIStatusBarStyle)statusBarStyle
 {
-    objc_setAssociatedObject(self.base, @selector(statusBarStyle), @(statusBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base setNeedsStatusBarAppearanceUpdate];
+    objc_setAssociatedObject(self, @selector(fw_statusBarStyle), @(statusBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
-- (BOOL)statusBarHidden
+- (BOOL)fw_statusBarHidden
 {
-    return [objc_getAssociatedObject(self.base, @selector(statusBarHidden)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_statusBarHidden)) boolValue];
 }
 
-- (void)setStatusBarHidden:(BOOL)statusBarHidden
+- (void)setFw_statusBarHidden:(BOOL)statusBarHidden
 {
-    objc_setAssociatedObject(self.base, @selector(statusBarHidden), @(statusBarHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base setNeedsStatusBarAppearanceUpdate];
+    objc_setAssociatedObject(self, @selector(fw_statusBarHidden), @(statusBarHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
-- (FWNavigationBarAppearance *)navigationBarAppearance
+- (FWNavigationBarAppearance *)fw_navigationBarAppearance
 {
-    return objc_getAssociatedObject(self.base, @selector(navigationBarAppearance));
+    return objc_getAssociatedObject(self, @selector(fw_navigationBarAppearance));
 }
 
-- (void)setNavigationBarAppearance:(FWNavigationBarAppearance *)navigationBarAppearance
+- (void)setFw_navigationBarAppearance:(FWNavigationBarAppearance *)navigationBarAppearance
 {
-    objc_setAssociatedObject(self.base, @selector(navigationBarAppearance), navigationBarAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_navigationBarAppearance), navigationBarAppearance, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if (self.base.isViewLoaded && self.base.view.window) {
-        [self updateNavigationBarStyle:NO];
+    if (self.isViewLoaded && self.view.window) {
+        [self fw_updateNavigationBarStyle:NO];
     }
 }
 
-- (FWNavigationBarStyle)navigationBarStyle
+- (FWNavigationBarStyle)fw_navigationBarStyle
 {
-    return [objc_getAssociatedObject(self.base, @selector(navigationBarStyle)) integerValue];
+    return [objc_getAssociatedObject(self, @selector(fw_navigationBarStyle)) integerValue];
 }
 
-- (void)setNavigationBarStyle:(FWNavigationBarStyle)navigationBarStyle
+- (void)setFw_navigationBarStyle:(FWNavigationBarStyle)navigationBarStyle
 {
-    objc_setAssociatedObject(self.base, @selector(navigationBarStyle), @(navigationBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_navigationBarStyle), @(navigationBarStyle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if (self.base.isViewLoaded && self.base.view.window) {
-        [self updateNavigationBarStyle:NO];
+    if (self.isViewLoaded && self.view.window) {
+        [self fw_updateNavigationBarStyle:NO];
     }
 }
 
-- (BOOL)navigationBarHidden
+- (BOOL)fw_navigationBarHidden
 {
-    return [objc_getAssociatedObject(self.base, @selector(navigationBarHidden)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_navigationBarHidden)) boolValue];
 }
 
-- (void)setNavigationBarHidden:(BOOL)hidden
+- (void)setFw_navigationBarHidden:(BOOL)hidden
 {
-    [self setNavigationBarHidden:hidden animated:NO];
+    [self fw_setNavigationBarHidden:hidden animated:NO];
     // 直接设置navigtionBar.isHidden不会影响右滑关闭手势
     // self.navigationController.navigationBar.isHidden = YES;
 }
 
-- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated
+- (void)fw_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated
 {
-    objc_setAssociatedObject(self.base, @selector(navigationBarHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_navigationBarHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if (self.base.isViewLoaded && self.base.view.window) {
-        [self updateNavigationBarStyle:animated];
+    if (self.isViewLoaded && self.view.window) {
+        [self fw_updateNavigationBarStyle:animated];
     }
 }
 
-- (FWNavigationBarAppearance *)currentNavigationBarAppearance
+- (FWNavigationBarAppearance *)fw_currentNavigationBarAppearance
 {
     // 1. 检查VC是否自定义appearance
-    FWNavigationBarAppearance *appearance = self.navigationBarAppearance;
+    FWNavigationBarAppearance *appearance = self.fw_navigationBarAppearance;
     if (appearance) return appearance;
     // 2. 检查VC是否自定义style
-    NSNumber *style = objc_getAssociatedObject(self.base, @selector(navigationBarStyle));
+    NSNumber *style = objc_getAssociatedObject(self, @selector(fw_navigationBarStyle));
     if (style) {
         appearance = [FWNavigationBarAppearance appearanceForStyle:style.integerValue];
         return appearance;
     }
     // 3. 检查NAV是否自定义appearance
-    appearance = self.base.navigationController.fw.navigationBarAppearance;
+    appearance = self.navigationController.fw_navigationBarAppearance;
     if (appearance) return appearance;
     // 4. 检查NAV是否自定义style
-    style = objc_getAssociatedObject(self.base.navigationController, @selector(navigationBarStyle));
+    style = objc_getAssociatedObject(self.navigationController, @selector(fw_navigationBarStyle));
     if (style) {
         appearance = [FWNavigationBarAppearance appearanceForStyle:style.integerValue];
     }
     return appearance;
 }
 
-- (void)updateNavigationBarStyle:(BOOL)animated
+- (void)fw_updateNavigationBarStyle:(BOOL)animated
 {
     // 含有导航栏且不是child控制器且不是导航栏控制器时才处理
-    if (!self.base.navigationController || self.base.fw_isChild ||
-        [self.base isKindOfClass:[UINavigationController class]]) return;
+    if (!self.navigationController || self.fw_isChild ||
+        [self isKindOfClass:[UINavigationController class]]) return;
     
     // fwNavigationBarHidden设置即生效，动态切换导航栏不突兀，一般在viewWillAppear:中调用
-    NSNumber *hidden = objc_getAssociatedObject(self.base, @selector(navigationBarHidden));
-    if (hidden && self.base.navigationController.navigationBarHidden != hidden.boolValue) {
-        [self.base.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
+    NSNumber *hidden = objc_getAssociatedObject(self, @selector(fw_navigationBarHidden));
+    if (hidden && self.navigationController.navigationBarHidden != hidden.boolValue) {
+        [self.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
     }
     
     // 获取当前用于显示的appearance
-    FWNavigationBarAppearance *appearance = [self currentNavigationBarAppearance];
+    FWNavigationBarAppearance *appearance = [self fw_currentNavigationBarAppearance];
     if (!appearance) return;
-    UINavigationBar *navigationBar = self.base.navigationController.navigationBar;
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
     if (appearance.isTranslucent != navigationBar.fw_isTranslucent) {
         navigationBar.fw_isTranslucent = appearance.isTranslucent;
     }
@@ -205,40 +205,40 @@
     if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
 }
 
-- (BOOL)tabBarHidden
+- (BOOL)fw_tabBarHidden
 {
-    return self.base.tabBarController.tabBar.hidden;
+    return self.tabBarController.tabBar.hidden;
 }
 
-- (void)setTabBarHidden:(BOOL)tabBarHidden
+- (void)setFw_tabBarHidden:(BOOL)tabBarHidden
 {
-    self.base.tabBarController.tabBar.hidden = tabBarHidden;
+    self.tabBarController.tabBar.hidden = tabBarHidden;
 }
 
-- (BOOL)toolBarHidden
+- (BOOL)fw_toolBarHidden
 {
-    return self.base.navigationController.toolbarHidden;
+    return self.navigationController.toolbarHidden;
 }
 
-- (void)setToolBarHidden:(BOOL)toolBarHidden
+- (void)setFw_toolBarHidden:(BOOL)toolBarHidden
 {
-    self.base.navigationController.toolbarHidden = toolBarHidden;
+    self.navigationController.toolbarHidden = toolBarHidden;
 }
 
-- (void)setToolBarHidden:(BOOL)hidden animated:(BOOL)animated
+- (void)fw_setToolBarHidden:(BOOL)hidden animated:(BOOL)animated
 {
-    [self.base.navigationController setToolbarHidden:hidden animated:animated];
+    [self.navigationController setToolbarHidden:hidden animated:animated];
 }
 
-- (UIRectEdge)extendedLayoutEdge
+- (UIRectEdge)fw_extendedLayoutEdge
 {
-    return self.base.edgesForExtendedLayout;
+    return self.edgesForExtendedLayout;
 }
 
-- (void)setExtendedLayoutEdge:(UIRectEdge)edge
+- (void)setFw_extendedLayoutEdge:(UIRectEdge)edge
 {
-    self.base.edgesForExtendedLayout = edge;
-    self.base.extendedLayoutIncludesOpaqueBars = YES;
+    self.edgesForExtendedLayout = edge;
+    self.extendedLayoutIncludesOpaqueBars = YES;
 }
 
 @end

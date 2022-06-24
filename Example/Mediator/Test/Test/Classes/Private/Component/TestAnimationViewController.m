@@ -96,7 +96,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.navigationBarHidden = YES;
+    self.fw_navigationBarHidden = YES;
     self.view.backgroundColor = [UIColor clearColor];
     FWWeakifySelf();
     [self.view fw_addTapGestureWithBlock:^(id  _Nonnull sender) {

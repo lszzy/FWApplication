@@ -24,8 +24,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
-    self.fw.extendedLayoutEdge = UIRectEdgeTop;
+    self.fw_navigationBarStyle = FWNavigationBarStyleTransparent;
+    self.fw_extendedLayoutEdge = UIRectEdgeTop;
     self.navigationItem.title = @"扫一扫";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(onPhotoLibrary)];
     

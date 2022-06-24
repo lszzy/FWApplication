@@ -21,7 +21,7 @@
 
 - (void)renderInit
 {
-    self.fw.navigationBarHidden = YES;
+    self.fw_navigationBarHidden = YES;
 }
 
 - (UITableViewStyle)renderTableStyle

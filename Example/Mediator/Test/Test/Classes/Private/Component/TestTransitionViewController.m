@@ -81,7 +81,7 @@
     self.navigationItem.title = @"全屏弹出框";
     
     // 视图延伸到导航栏
-    self.fw.extendedLayoutEdge = UIRectEdgeNone;
+    self.fw_extendedLayoutEdge = UIRectEdgeNone;
     
     // 自定义关闭按钮
     FWWeakifySelf();
@@ -106,7 +106,7 @@
     
     self.frameLabel.text = NSStringFromCGRect(self.view.frame);
     if (!self.fw_isPresented) {
-        self.fw.navigationBarHidden = YES;
+        self.fw_navigationBarHidden = YES;
     }
 }
 
@@ -287,7 +287,7 @@ FWDealloc();
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.fw.navigationBarHidden = NO;
+    self.fw_navigationBarHidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated

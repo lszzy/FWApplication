@@ -19,18 +19,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.extendedLayoutEdge = UIRectEdgeAll;
+    self.fw_extendedLayoutEdge = UIRectEdgeAll;
     if (self.index < 1) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
+        self.fw_navigationBarStyle = FWNavigationBarStyleDefault;
     } else if (self.index < 2) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleWhite;
+        self.fw_navigationBarStyle = FWNavigationBarStyleWhite;
     } else if (self.index < 3) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
+        self.fw_navigationBarStyle = FWNavigationBarStyleTransparent;
     } else {
-        self.fw.navigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)] fw_randomObject] integerValue];
-        self.fw.navigationBarHidden = self.fw.navigationBarStyle == -1;
+        self.fw_navigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)] fw_randomObject] integerValue];
+        self.fw_navigationBarHidden = self.fw_navigationBarStyle == -1;
     }
-    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fw.navigationBarStyle)];
+    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fw_navigationBarStyle)];
     
     FWWeakifySelf();
     [self fw_setRightBarItem:@"打开界面" block:^(id sender) {
@@ -62,7 +62,7 @@ FWPropertyAssign(BOOL, hideToast);
 {
     [super viewDidLoad];
     
-    self.fw.tabBarHidden = YES;
+    self.fw_tabBarHidden = YES;
     [self fw_observeNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
     
     if (!self.hideToast) {
@@ -184,12 +184,12 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.fw.statusBarHidden;
+    return self.fw_statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return self.fw.statusBarStyle;
+    return self.fw_statusBarStyle;
 }
 
 #pragma mark - Action
@@ -207,32 +207,32 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onStatusBar
 {
-    self.fw.statusBarHidden = !self.fw.statusBarHidden;
+    self.fw_statusBarHidden = !self.fw_statusBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onStatusStyle
 {
-    if (self.fw.statusBarStyle == UIStatusBarStyleDefault) {
-        self.fw.statusBarStyle = UIStatusBarStyleLightContent;
+    if (self.fw_statusBarStyle == UIStatusBarStyleDefault) {
+        self.fw_statusBarStyle = UIStatusBarStyleLightContent;
     } else {
-        self.fw.statusBarStyle = UIStatusBarStyleDefault;
+        self.fw_statusBarStyle = UIStatusBarStyleDefault;
     }
     [self refreshBarFrame];
 }
 
 - (void)onNavigationBar
 {
-    self.fw.navigationBarHidden = !self.fw.navigationBarHidden;
+    self.fw_navigationBarHidden = !self.fw_navigationBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onNavigationStyle
 {
-    if (self.fw.navigationBarStyle == FWNavigationBarStyleDefault) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleWhite;
+    if (self.fw_navigationBarStyle == FWNavigationBarStyleDefault) {
+        self.fw_navigationBarStyle = FWNavigationBarStyleWhite;
     } else {
-        self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
+        self.fw_navigationBarStyle = FWNavigationBarStyleDefault;
     }
     [self refreshBarFrame];
 }
@@ -250,19 +250,19 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onTabBar
 {
-    self.fw.tabBarHidden = !self.fw.tabBarHidden;
+    self.fw_tabBarHidden = !self.fw_tabBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onToolBar
 {
-    if (self.fw.toolBarHidden) {
+    if (self.fw_toolBarHidden) {
         UIBarButtonItem *item = [UIBarButtonItem fw_itemWithObject:@(UIBarButtonSystemItemCancel) target:self action:@selector(onToolBar)];
         UIBarButtonItem *item2 = [UIBarButtonItem fw_itemWithObject:@(UIBarButtonSystemItemDone) target:self action:@selector(onPresent)];
         self.toolbarItems = @[item, item2];
-        self.fw.toolBarHidden = NO;
+        self.fw_toolBarHidden = NO;
     } else {
-        self.fw.toolBarHidden = YES;
+        self.fw_toolBarHidden = YES;
     }
     [self refreshBarFrame];
 }

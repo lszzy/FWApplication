@@ -20,7 +20,7 @@
 {
     self = [super init];
     if (self) {
-        self.fw.extendedLayoutEdge = UIRectEdgeTop;
+        self.fw_extendedLayoutEdge = UIRectEdgeTop;
     }
     return self;
 }
