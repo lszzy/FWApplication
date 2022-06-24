@@ -312,7 +312,7 @@
         if ([self.albumControllerDelegate respondsToSelector:@selector(albumControllerWillShowEmpty:)]) {
             [self.albumControllerDelegate albumControllerWillShowEmpty:self];
         } else {
-            [self.fw showEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
+            [self fw_showEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
         }
     }
     
@@ -334,7 +334,7 @@
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
         NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
         NSString *tipText = [NSString stringWithFormat:FWAppBundle.pickerDeniedTitle, appName];
-        [self.fw showEmptyViewWithText:tipText];
+        [self fw_showEmptyViewWithText:tipText];
     }
     
     if (self.albumArrayLoaded) {
@@ -2003,13 +2003,13 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
                 NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
                 NSString *appName = infoDictionary[@"CFBundleDisplayName"] ?: infoDictionary[(NSString *)kCFBundleNameKey];
                 NSString *tipText = [NSString stringWithFormat:FWAppBundle.pickerDeniedTitle, appName];
-                [self.fw showEmptyViewWithText:tipText];
+                [self fw_showEmptyViewWithText:tipText];
             }
         } else {
             if ([self.imagePickerControllerDelegate respondsToSelector:@selector(imagePickerControllerWillShowEmpty:)]) {
                 [self.imagePickerControllerDelegate imagePickerControllerWillShowEmpty:self];
             } else {
-                [self.fw showEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
+                [self fw_showEmptyViewWithText:FWAppBundle.pickerEmptyTitle];
             }
         }
     }

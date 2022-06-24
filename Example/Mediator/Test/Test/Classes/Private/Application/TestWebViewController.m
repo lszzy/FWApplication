@@ -161,7 +161,7 @@
 
 - (void)loadRequestUrl
 {
-    [self.fw hideEmptyView];
+    [self fw_hideEmptyView];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.requestUrl]];
     urlRequest.timeoutInterval = 30;
@@ -184,7 +184,7 @@
     [self fw_setRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     
     FWWeakifySelf();
-    [self.fw showEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {
+    [self fw_showEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self loadRequestUrl];
     }];
