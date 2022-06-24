@@ -120,12 +120,12 @@
     if (!self.imageView.image.CGImage) return;
     
     if (@available(iOS 13.0, *)) {
-        [UIWindow.fw showLoading];
+        [UIWindow fw_showLoading];
         [UIApplication.fw recognizeTextIn:self.imageView.image.CGImage configuration:^(VNRecognizeTextRequest *request) {
             request.recognitionLanguages = @[@"zh-CN", @"en-US"];
             request.usesLanguageCorrection = YES;
         } completion:^(NSArray<FWOcrObject *> *results) {
-            [UIWindow.fw hideLoading];
+            [UIWindow fw_hideLoading];
             NSMutableString *string = [NSMutableString string];
             for (FWOcrObject *object in results) {
                 [string appendFormat:@"text: %@\nconfidence: %@\n", object.text, @(object.confidence)];

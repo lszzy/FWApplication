@@ -70,9 +70,9 @@ import FWApplication
                 self?.renderState(.loading, with: nil)
             }
         case .loading:
-            view.__fw.showLoading(withText: "开始加载")
+            view.fw.showLoading(text: "开始加载")
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-                self?.view.__fw.hideLoading()
+                self?.view.fw.hideLoading()
                 
                 if [0, 1].randomElement() == 1 {
                     self?.renderState(.success, with: "加载成功")
@@ -197,7 +197,7 @@ import FWApplication
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item < collectionData.count {
-            view.__fw.showMessage(withText: "点击section: \(indexPath.section) item: \(indexPath.item)")
+            view.fw.showMessage(text: "点击section: \(indexPath.section) item: \(indexPath.item)")
         }
     }
     

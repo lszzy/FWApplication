@@ -81,7 +81,7 @@ FWPropertyAssign(BOOL, hideToast);
     [super viewWillAppear:animated];
     
     if (!self.hideToast) {
-        [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"viewWillAppear:%@", @(animated)]];
+        [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"viewWillAppear:%@", @(animated)]];
     }
 }
 
@@ -90,7 +90,7 @@ FWPropertyAssign(BOOL, hideToast);
     [super viewWillDisappear:animated];
     
     if (!self.hideToast) {
-        [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"viewWillDisappear:%@", @(animated)]];
+        [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"viewWillDisappear:%@", @(animated)]];
     }
 }
 
@@ -271,10 +271,10 @@ FWPropertyAssign(BOOL, hideToast);
 {
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
     viewController.fw_presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
     viewController.fw_completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
     [self presentViewController:viewController animated:YES completion:nil];
@@ -292,10 +292,10 @@ FWPropertyAssign(BOOL, hideToast);
 {
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
     viewController.fw_presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
     viewController.fw_completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
     viewController.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -308,10 +308,10 @@ FWPropertyAssign(BOOL, hideToast);
     viewController.hideToast = YES;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     navController.fw_presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
     navController.fw_completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -333,10 +333,10 @@ FWPropertyAssign(BOOL, hideToast);
         controller.passthroughViews = [NSArray arrayWithObjects:cell, nil];
     } shouldDismiss:[@[@0, @1].fw_randomObject fw_safeBool]];
     viewController.fw_presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
     viewController.fw_completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:viewController animated:YES completion:nil];
 }

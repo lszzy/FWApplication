@@ -126,7 +126,7 @@ class TestIconCell: UICollectionViewCell {
         collectionView.deselectItem(at: indexPath, animated: true)
         let name = collectionData.object(at: indexPath.item) as? String
         UIPasteboard.general.string = FW.safeString(name)
-        __fw.showMessage(withText: name)
+        fw.showMessage(text: name)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

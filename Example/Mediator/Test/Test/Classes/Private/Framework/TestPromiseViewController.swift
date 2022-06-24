@@ -100,15 +100,15 @@ extension TestPromiseViewController {
     }
     
     private static func showMessage(_ text: String) {
-        UIWindow.__fw.showMessage(withText: text)
+        UIWindow.fw.showMessage(text: text)
     }
     
     private static var isLoading: Bool = false {
         didSet {
             if isLoading {
-                UIWindow.__fw.showLoading()
+                UIWindow.fw.showLoading()
             } else {
-                UIWindow.__fw.hideLoading()
+                UIWindow.fw.hideLoading()
             }
         }
     }
@@ -246,7 +246,7 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.randomPromise().then({ value in
             DispatchQueue.main.async {
-                UIWindow.__fw.showLoading(withText: "delay")
+                UIWindow.fw.showLoading(text: "delay")
             }
             return value
         }).delay(1).done { result in
@@ -278,19 +278,19 @@ extension TestPromiseViewController {
         Self.isLoading = true
         Self.failurePromise().recover { error in
             DispatchQueue.main.async {
-                UIWindow.__fw.showLoading(withText: "\(error)")
+                UIWindow.fw.showLoading(text: "\(error)")
             }
             return 1
         }.delay(1).then({ value in
             DispatchQueue.main.async {
-                UIWindow.__fw.showLoading(withText: "\(value.safeInt)")
+                UIWindow.fw.showLoading(text: "\(value.safeInt)")
             }
             return Self.successPromise(value.safeInt)
         }).validate { value in
             return false
         }.recover { error in
             DispatchQueue.main.async {
-                UIWindow.__fw.showLoading(withText: "\(error)")
+                UIWindow.fw.showLoading(text: "\(error)")
             }
             return Self.successPromise()
         }.done { result in
@@ -316,7 +316,7 @@ extension TestPromiseViewController {
         Self.failurePromise().recover({ $0 }).retry(4, delay: 0) {
             count += 1
             DispatchQueue.main.async {
-                UIWindow.__fw.showLoading(withText: "retry: \(count)")
+                UIWindow.fw.showLoading(text: "retry: \(count)")
             }
             if count < 4 {
                 return Self.failurePromise()
@@ -338,7 +338,7 @@ extension TestPromiseViewController {
             count += 1
             if count == 1 { return Self.failurePromise() }
             DispatchQueue.main.async {
-                UIWindow.__fw.showLoading(withText: "retry: \(count - 1)")
+                UIWindow.fw.showLoading(text: "retry: \(count - 1)")
             }
             if count < 5 {
                 return Self.failurePromise()
@@ -368,7 +368,7 @@ extension TestPromiseViewController {
                 return Self.progressPromise()
             })
         }
-        UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.fw.showProgress(0, text: String(format: "\(index)下载中(%.0f%%)", 0 * 100))
         promise?.validate({ value in
             return false
         }).recover({ error in
@@ -382,9 +382,9 @@ extension TestPromiseViewController {
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.fw.showProgress(CGFloat(progress), text: String(format: "\(index)下载中(%.0f%%)", progress * 100))
         }, finally: {
-            UIWindow.__fw.hideProgress()
+            UIWindow.fw.hideProgress()
         })
     }
     
@@ -401,15 +401,15 @@ extension TestPromiseViewController {
         } else {
             promise = Promise.race(promises)
         }
-        UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", 0 * 100), progress: 0)
+        UIWindow.fw.showProgress(0, text: String(format: "\(index)下载中(%.0f%%)", 0 * 100))
         promise?.done({ value in
             Self.showMessage("\(value.safeString)")
         }, catch: { error in
             Self.showMessage("\(error)")
         }, progress: { progress in
-            UIWindow.__fw.showProgress(withText: String(format: "\(index)下载中(%.0f%%)", progress * 100), progress: CGFloat(progress))
+            UIWindow.fw.showProgress(CGFloat(progress), text: String(format: "\(index)下载中(%.0f%%)", progress * 100))
         }, finally: {
-            UIWindow.__fw.hideProgress()
+            UIWindow.fw.hideProgress()
         })
     }
 }

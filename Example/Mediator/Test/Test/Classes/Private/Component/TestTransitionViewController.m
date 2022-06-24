@@ -462,7 +462,7 @@ FWDealloc();
     FWWeakifySelf();
     transition.dismissCompletion = ^{
         FWStrongifySelf();
-        [self.fw showMessageWithText:@"dismiss完成"];
+        [self fw_showMessageWithText:@"dismiss完成"];
     };
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[TestFullScreenViewController alloc] init]];

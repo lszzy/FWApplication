@@ -52,7 +52,7 @@
     toastView.tag = 2011;
     toastView.attributedTitle = loadingText;
     [view addSubview:toastView];
-    [toastView fw_pinEdgesToSuperviewWithInsets:view.fw.toastInsets];
+    [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -87,7 +87,7 @@
     toastView.attributedTitle = progressText;
     toastView.progress = progress;
     [view addSubview:toastView];
-    [toastView fw_pinEdgesToSuperviewWithInsets:view.fw.toastInsets];
+    [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -118,7 +118,7 @@
     toastView.userInteractionEnabled = completion ? YES : NO;
     toastView.attributedTitle = messageText;
     [view addSubview:toastView];
-    [toastView fw_pinEdgesToSuperviewWithInsets:view.fw.toastInsets];
+    [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
     
     if (self.customBlock) {
         self.customBlock(toastView);

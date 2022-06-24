@@ -56,7 +56,7 @@ import FWApplication
     private func showData(_ results: [Any]) {
         self.results = results
         if results.count < 1 {
-            __fw.showMessage(withText: "请选择照片")
+            fw.showMessage(text: "请选择照片")
             return
         }
         

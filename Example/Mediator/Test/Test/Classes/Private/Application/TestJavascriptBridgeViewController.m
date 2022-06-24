@@ -14,7 +14,7 @@
 - (void)renderWebBridge:(FWWebViewJsBridge *)bridge {
     [FWWebViewJsBridge enableLogging];
     [bridge setErrorHandler:^(NSString *handlerName, id data, FWJsBridgeResponseCallback responseCallback) {
-        [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"handler %@ undefined: %@", handlerName, data] style:FWToastStyleDefault completion:^{
+        [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"handler %@ undefined: %@", handlerName, data] style:FWToastStyleDefault completion:^{
             responseCallback(@"Response from errorHandler");
         }];
     }];

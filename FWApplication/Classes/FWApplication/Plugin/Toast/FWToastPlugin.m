@@ -13,235 +13,235 @@
 
 #pragma mark - FWToastPluginView
 
-@implementation FWViewWrapper (FWToastPluginView)
+@implementation UIView (FWToastPlugin)
 
-- (id<FWToastPlugin>)toastPlugin
+- (id<FWToastPlugin>)fw_toastPlugin
 {
-    id<FWToastPlugin> toastPlugin = objc_getAssociatedObject(self.base, @selector(toastPlugin));
+    id<FWToastPlugin> toastPlugin = objc_getAssociatedObject(self, @selector(fw_toastPlugin));
     if (!toastPlugin) toastPlugin = [FWPluginManager loadPlugin:@protocol(FWToastPlugin)];
     if (!toastPlugin) toastPlugin = FWToastPluginImpl.sharedInstance;
     return toastPlugin;
 }
 
-- (void)setToastPlugin:(id<FWToastPlugin>)toastPlugin
+- (void)setFw_toastPlugin:(id<FWToastPlugin>)toastPlugin
 {
-    objc_setAssociatedObject(self.base, @selector(toastPlugin), toastPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_toastPlugin), toastPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIEdgeInsets)toastInsets
+- (UIEdgeInsets)fw_toastInsets
 {
-    NSValue *insets = objc_getAssociatedObject(self.base, @selector(toastInsets));
+    NSValue *insets = objc_getAssociatedObject(self, @selector(fw_toastInsets));
     return insets ? [insets UIEdgeInsetsValue] : UIEdgeInsetsZero;
 }
 
-- (void)setToastInsets:(UIEdgeInsets)toastInsets
+- (void)setFw_toastInsets:(UIEdgeInsets)toastInsets
 {
-    objc_setAssociatedObject(self.base, @selector(toastInsets), [NSValue valueWithUIEdgeInsets:toastInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_toastInsets), [NSValue valueWithUIEdgeInsets:toastInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)showLoading
+- (void)fw_showLoading
 {
-    [self showLoadingWithText:nil];
+    [self fw_showLoadingWithText:nil];
 }
 
-- (void)showLoadingWithText:(id)text
+- (void)fw_showLoadingWithText:(id)text
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
-    id<FWToastPlugin> plugin = self.toastPlugin;
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(showLoadingWithAttributedText:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin showLoadingWithAttributedText:attributedText inView:self.base];
+    [plugin showLoadingWithAttributedText:attributedText inView:self];
 }
 
-- (void)hideLoading
+- (void)fw_hideLoading
 {
-    id<FWToastPlugin> plugin = self.toastPlugin;
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(hideLoading:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin hideLoading:self.base];
+    [plugin hideLoading:self];
 }
 
-- (void)showProgressWithText:(id)text progress:(CGFloat)progress
+- (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
-    id<FWToastPlugin> plugin = self.toastPlugin;
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(showProgressWithAttributedText:progress:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin showProgressWithAttributedText:attributedText progress:progress inView:self.base];
+    [plugin showProgressWithAttributedText:attributedText progress:progress inView:self];
 }
 
-- (void)hideProgress
+- (void)fw_hideProgress
 {
-    id<FWToastPlugin> plugin = self.toastPlugin;
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(hideProgress:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin hideProgress:self.base];
+    [plugin hideProgress:self];
 }
 
-- (void)showMessageWithText:(id)text
+- (void)fw_showMessageWithText:(id)text
 {
-    [self showMessageWithText:text style:FWToastStyleDefault];
+    [self fw_showMessageWithText:text style:FWToastStyleDefault];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style
 {
-    [self showMessageWithText:text style:style completion:nil];
+    [self fw_showMessageWithText:text style:style completion:nil];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
-    [self showMessageWithText:text style:style autoHide:YES completion:completion];
+    [self fw_showMessageWithText:text style:style autoHide:YES completion:completion];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
-    id<FWToastPlugin> plugin = self.toastPlugin;
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(showMessageWithAttributedText:style:autoHide:completion:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin showMessageWithAttributedText:attributedText style:style autoHide:autoHide completion:completion inView:self.base];
+    [plugin showMessageWithAttributedText:attributedText style:style autoHide:autoHide completion:completion inView:self];
 }
 
-- (void)hideMessage
+- (void)fw_hideMessage
 {
-    id<FWToastPlugin> plugin = self.toastPlugin;
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(hideMessage:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin hideMessage:self.base];
+    [plugin hideMessage:self];
 }
 
 @end
 
-@implementation FWViewControllerWrapper (FWToastPluginView)
+@implementation UIViewController (FWToastPlugin)
 
-- (UIEdgeInsets)toastInsets
+- (UIEdgeInsets)fw_toastInsets
 {
-    return self.base.view.fw.toastInsets;
+    return self.view.fw_toastInsets;
 }
 
-- (void)setToastInsets:(UIEdgeInsets)toastInsets
+- (void)setFw_toastInsets:(UIEdgeInsets)toastInsets
 {
-    self.base.view.fw.toastInsets = toastInsets;
+    self.view.fw_toastInsets = toastInsets;
 }
 
-- (void)showLoading
+- (void)fw_showLoading
 {
-    [self.base.view.fw showLoading];
+    [self.view fw_showLoading];
 }
 
-- (void)showLoadingWithText:(id)text
+- (void)fw_showLoadingWithText:(id)text
 {
-    [self.base.view.fw showLoadingWithText:text];
+    [self.view fw_showLoadingWithText:text];
 }
 
-- (void)hideLoading
+- (void)fw_hideLoading
 {
-    [self.base.view.fw hideLoading];
+    [self.view fw_hideLoading];
 }
 
-- (void)showProgressWithText:(id)text progress:(CGFloat)progress
+- (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
-    [self.base.view.fw showProgressWithText:text progress:progress];
+    [self.view fw_showProgressWithText:text progress:progress];
 }
 
-- (void)hideProgress
+- (void)fw_hideProgress
 {
-    [self.base.view.fw hideProgress];
+    [self.view fw_hideProgress];
 }
 
-- (void)showMessageWithText:(id)text
+- (void)fw_showMessageWithText:(id)text
 {
-    [self.base.view.fw showMessageWithText:text];
+    [self.view fw_showMessageWithText:text];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style
 {
-    [self.base.view.fw showMessageWithText:text style:style];
+    [self.view fw_showMessageWithText:text style:style];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
-    [self.base.view.fw showMessageWithText:text style:style completion:completion];
+    [self.view fw_showMessageWithText:text style:style completion:completion];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
 {
-    [self.base.view.fw showMessageWithText:text style:style autoHide:autoHide completion:completion];
+    [self.view fw_showMessageWithText:text style:style autoHide:autoHide completion:completion];
 }
 
-- (void)hideMessage
+- (void)fw_hideMessage
 {
-    [self.base.view.fw hideMessage];
+    [self.view fw_hideMessage];
 }
 
 @end
 
-@implementation FWWindowClassWrapper (FWToastPluginView)
+@implementation UIWindow (FWToastPlugin)
 
-- (UIEdgeInsets)toastInsets
++ (UIEdgeInsets)fw_toastInsets
 {
-    return UIWindow.fw_mainWindow.fw.toastInsets;
+    return UIWindow.fw_mainWindow.fw_toastInsets;
 }
 
-- (void)setToastInsets:(UIEdgeInsets)toastInsets
++ (void)setFw_toastInsets:(UIEdgeInsets)toastInsets
 {
-    UIWindow.fw_mainWindow.fw.toastInsets = toastInsets;
+    UIWindow.fw_mainWindow.fw_toastInsets = toastInsets;
 }
 
-- (void)showLoading
++ (void)fw_showLoading
 {
-    [UIWindow.fw_mainWindow.fw showLoading];
+    [UIWindow.fw_mainWindow fw_showLoading];
 }
 
-- (void)showLoadingWithText:(id)text
++ (void)fw_showLoadingWithText:(id)text
 {
-    [UIWindow.fw_mainWindow.fw showLoadingWithText:text];
+    [UIWindow.fw_mainWindow fw_showLoadingWithText:text];
 }
 
-- (void)hideLoading
++ (void)fw_hideLoading
 {
-    [UIWindow.fw_mainWindow.fw hideLoading];
+    [UIWindow.fw_mainWindow fw_hideLoading];
 }
 
-- (void)showProgressWithText:(id)text progress:(CGFloat)progress
++ (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
-    [UIWindow.fw_mainWindow.fw showProgressWithText:text progress:progress];
+    [UIWindow.fw_mainWindow fw_showProgressWithText:text progress:progress];
 }
 
-- (void)hideProgress
++ (void)fw_hideProgress
 {
-    [UIWindow.fw_mainWindow.fw hideProgress];
+    [UIWindow.fw_mainWindow fw_hideProgress];
 }
 
-- (void)showMessageWithText:(id)text
++ (void)fw_showMessageWithText:(id)text
 {
-    [UIWindow.fw_mainWindow.fw showMessageWithText:text];
+    [UIWindow.fw_mainWindow fw_showMessageWithText:text];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style
++ (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style
 {
-    [UIWindow.fw_mainWindow.fw showMessageWithText:text style:style];
+    [UIWindow.fw_mainWindow fw_showMessageWithText:text style:style];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
++ (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
-    [UIWindow.fw_mainWindow.fw showMessageWithText:text style:style completion:completion];
+    [UIWindow.fw_mainWindow fw_showMessageWithText:text style:style completion:completion];
 }
 
-- (void)showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
++ (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
 {
-    [UIWindow.fw_mainWindow.fw showMessageWithText:text style:style autoHide:autoHide completion:completion];
+    [UIWindow.fw_mainWindow fw_showMessageWithText:text style:style autoHide:autoHide completion:completion];
 }
 
-- (void)hideMessage
++ (void)fw_hideMessage
 {
-    [UIWindow.fw_mainWindow.fw hideMessage];
+    [UIWindow.fw_mainWindow fw_hideMessage];
 }
 
 @end

@@ -252,7 +252,7 @@ FWPropertyAssign(NSInteger, count);
 
 - (void)showCount
 {
-    [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"点击计数：%@", @(self.count)]];
+    [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"点击计数：%@", @(self.count)]];
 }
 
 @end

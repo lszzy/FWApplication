@@ -23,14 +23,14 @@ import FWApplication
     }
     
     private func loadAlbums() {
-        __fw.showLoading()
+        fw.showLoading()
         DispatchQueue.global().async {
             AssetManager.sharedInstance.enumerateAllAlbums(with: .all) { [weak self] group in
                 if let album = group {
                     self?.albums.append(album)
                 } else {
                     DispatchQueue.main.async {
-                        self?.__fw.hideLoading()
+                        self?.fw.hideLoading()
                         self?.tableView.reloadData()
                     }
                 }
@@ -39,14 +39,14 @@ import FWApplication
     }
     
     private func loadPhotos() {
-        __fw.showLoading()
+        fw.showLoading()
         DispatchQueue.global().async { [weak self] in
             self?.album.enumerateAssets(withOptions: .reverse, using: { asset in
                 if let photo = asset {
                     self?.photos.append(photo)
                 } else {
                     DispatchQueue.main.async {
-                        self?.__fw.hideLoading()
+                        self?.fw.hideLoading()
                         self?.tableView.reloadData()
                     }
                 }
