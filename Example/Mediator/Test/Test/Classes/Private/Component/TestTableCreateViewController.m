@@ -38,7 +38,7 @@
 
 - (void)renderData
 {
-    self.iconLabel.text = [NSString stringWithFormat:@"我是文本%@", self.fw.viewModel];
+    self.iconLabel.text = [NSString stringWithFormat:@"我是文本%@", self.fw_viewModel];
 }
 
 @end
