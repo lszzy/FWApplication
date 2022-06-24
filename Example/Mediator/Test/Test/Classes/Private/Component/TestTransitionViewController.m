@@ -22,11 +22,11 @@
 - (void)renderView
 {
     if (self.canScroll) {
-        FWPanGestureRecognizer *modalRecognizer = self.navigationController.fw.modalTransition.gestureRecognizer;
+        FWPanGestureRecognizer *modalRecognizer = self.navigationController.fw_modalTransition.gestureRecognizer;
         if ([modalRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
             modalRecognizer.scrollView = self.scrollView;
         }
-        FWPanGestureRecognizer *navRecognizer = self.navigationController.fw.navigationTransition.gestureRecognizer;
+        FWPanGestureRecognizer *navRecognizer = self.navigationController.fw_navigationTransition.gestureRecognizer;
         if ([navRecognizer isKindOfClass:[FWPanGestureRecognizer class]]) {
             navRecognizer.scrollView = self.scrollView;
         }
@@ -146,7 +146,7 @@ FWDealloc();
             presentation.presentedFrame = self.contentView.frame;
             return presentation;
         };
-        self.fw.modalTransition = transition;
+        self.fw_modalTransition = transition;
     }
     return self;
 }
@@ -184,7 +184,7 @@ FWDealloc();
 
 - (void)configAnimator
 {
-    self.fw.modalTransition = nil;
+    self.fw_modalTransition = nil;
     
     // 测试仿真动画
     static int index = 0;
@@ -294,7 +294,7 @@ FWDealloc();
 {
     [super viewDidAppear:animated];
     // 自动还原动画
-    self.navigationController.fw.navigationTransition = nil;
+    self.navigationController.fw_navigationTransition = nil;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -394,7 +394,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fw.modalTransition = transition;
+    vc.fw_modalTransition = transition;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -427,7 +427,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fw.modalTransition = transition;
+    vc.fw_modalTransition = transition;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -439,7 +439,7 @@ FWDealloc();
     transition.outDirection = UISwipeGestureRecognizerDirectionRight;
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fw.modalTransition = transition;
+    vc.fw_modalTransition = transition;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -467,7 +467,7 @@ FWDealloc();
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[[TestFullScreenViewController alloc] init]];
     nav.modalPresentationStyle = UIModalPresentationCustom;
-    nav.fw.modalTransition = transition;
+    nav.fw_modalTransition = transition;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -499,7 +499,7 @@ FWDealloc();
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     vc.canScroll = YES;
-    nav.fw.modalTransition = transition;
+    nav.fw_modalTransition = transition;
     nav.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:nav animated:YES completion:nil];
 }
@@ -529,7 +529,7 @@ FWDealloc();
         return YES;
     };
     [transition interactWith:nav];
-    nav.fw.modalTransition = transition;
+    nav.fw_modalTransition = transition;
     [self presentViewController:nav animated:NO completion:nil];
 }
 
@@ -566,7 +566,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -599,7 +599,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -633,7 +633,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -664,7 +664,7 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -676,7 +676,7 @@ FWDealloc();
     transition.outDirection = UISwipeGestureRecognizerDirectionDown;
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -709,8 +709,8 @@ FWDealloc();
     };
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
-    vc.fw.viewTransition = transition;
-    self.navigationController.fw.navigationTransition = [FWAnimatedTransition systemTransition];
+    vc.fw_viewTransition = transition;
+    self.navigationController.fw_navigationTransition = [FWAnimatedTransition systemTransition];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -724,7 +724,7 @@ FWDealloc();
     
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
     vc.canScroll = YES;
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -750,7 +750,7 @@ FWDealloc();
         return YES;
     };
     [transition interactWith:vc];
-    self.navigationController.fw.navigationTransition = transition;
+    self.navigationController.fw_navigationTransition = transition;
     [self.navigationController pushViewController:vc animated:NO];
 }
 

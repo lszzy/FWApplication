@@ -46,11 +46,11 @@
             }
             
             if (self.transitionType == 6) {
-                [self.fw setPresentTransition:FWAnimatedTransitionTypeDismiss contentView:self.bottomView completion:nil];
+                [self fw_setPresentTransition:FWAnimatedTransitionTypeDismiss contentView:self.bottomView completion:nil];
             } else if (self.transitionType == 7) {
-                [self.fw setAlertTransition:FWAnimatedTransitionTypeDismiss completion:nil];
+                [self fw_setAlertTransition:FWAnimatedTransitionTypeDismiss completion:nil];
             } else {
-                [self.fw setFadeTransition:FWAnimatedTransitionTypeDismiss completion:nil];
+                [self fw_setFadeTransition:FWAnimatedTransitionTypeDismiss completion:nil];
             }
         }];
     }
@@ -60,25 +60,25 @@
 - (void)showInViewController:(UIViewController *)viewController
 {
     if (self.transitionType > 8) {
-        UIViewController *wrappedController = [self.fw wrappedTransitionController:YES];
+        UIViewController *wrappedController = [self fw_wrappedTransitionController:YES];
         if (self.transitionType == 9) {
-            [wrappedController.fw setPresentTransition:nil];
+            [wrappedController fw_setPresentTransition:nil];
         } else if (self.transitionType == 10) {
-            [wrappedController.fw setAlertTransition:nil];
+            [wrappedController fw_setAlertTransition:nil];
         } else {
-            [wrappedController.fw setFadeTransition:nil];
+            [wrappedController fw_setFadeTransition:nil];
         }
         [viewController presentViewController:wrappedController animated:YES completion:nil];
         return;
     }
     
-    [self.fw transitionToController:viewController pinEdges:YES];
+    [self fw_transitionToController:viewController pinEdges:YES];
     if (self.transitionType == 6) {
-        [self.fw setPresentTransition:FWAnimatedTransitionTypePresent contentView:self.bottomView completion:nil];
+        [self fw_setPresentTransition:FWAnimatedTransitionTypePresent contentView:self.bottomView completion:nil];
     } else if (self.transitionType == 7) {
-        [self.fw setAlertTransition:FWAnimatedTransitionTypePresent completion:nil];
+        [self fw_setAlertTransition:FWAnimatedTransitionTypePresent completion:nil];
     } else {
-        [self.fw setFadeTransition:FWAnimatedTransitionTypePresent completion:nil];
+        [self fw_setFadeTransition:FWAnimatedTransitionTypePresent completion:nil];
     }
 }
 
@@ -130,11 +130,11 @@
 - (void)showInViewController:(UIViewController *)viewController
 {
     if (self.transitionType == 0) {
-        [self.fw setPresentTransition:nil];
+        [self fw_setPresentTransition:nil];
     } else if (self.transitionType == 1) {
-        [self.fw setAlertTransition:nil];
+        [self fw_setAlertTransition:nil];
     } else {
-        [self.fw setFadeTransition:nil];
+        [self fw_setFadeTransition:nil];
     }
     [viewController presentViewController:self animated:YES completion:nil];
 }
@@ -143,11 +143,11 @@
 {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:self];
     if (self.transitionType == 3) {
-        [nav.fw setPresentTransition:nil];
+        [nav fw_setPresentTransition:nil];
     } else if (self.transitionType == 4) {
-        [nav.fw setAlertTransition:nil];
+        [nav fw_setAlertTransition:nil];
     } else {
-        [nav.fw setFadeTransition:nil];
+        [nav fw_setFadeTransition:nil];
     }
     [viewController presentViewController:nav animated:YES completion:nil];
 }

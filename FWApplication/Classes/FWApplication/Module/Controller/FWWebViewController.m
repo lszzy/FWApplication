@@ -59,7 +59,7 @@
         id<WKNavigationDelegate> delegate = webView.navigationDelegate;
         FWWebViewJsBridge *bridge = [FWWebViewJsBridge bridgeForWebView:webView];
         [bridge setWebViewDelegate:delegate];
-        webView.fw.jsBridge = bridge;
+        webView.fw_jsBridge = bridge;
         
         [viewController renderWebBridge:bridge];
     }

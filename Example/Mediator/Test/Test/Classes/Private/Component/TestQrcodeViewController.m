@@ -184,7 +184,7 @@
     [self.fw showImagePickerWithFilterType:FWImagePickerFilterTypeImage selectionLimit:1 allowsEditing:NO customBlock:^(UIViewController *imagePicker) {
         FWStrongifySelf();
         if ([imagePicker isKindOfClass:[UIViewController class]]) {
-            imagePicker.fw.presentationDidDismiss = ^{
+            imagePicker.fw_presentationDidDismiss = ^{
                 FWStrongifySelf();
                 [self startScanManager];
             };
