@@ -77,7 +77,7 @@
     _contentView = [[UIView alloc] init];
     [self.scrollView addSubview:self.contentView];
     
-    _loadingView = [UIView.fw indicatorViewWithStyle:FWIndicatorViewStyleDefault];
+    _loadingView = [UIView fw_indicatorViewWithStyle:FWIndicatorViewStyleDefault];
     [self.contentView addSubview:self.loadingView];
     
     _imageView = [[UIImageView alloc] init];

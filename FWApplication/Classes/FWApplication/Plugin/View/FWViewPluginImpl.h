@@ -15,7 +15,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FWActivityIndicatorViewClassWrapper+FWViewPlugin
+#pragma mark - UIActivityIndicatorView+FWViewPlugin
 
 /// 系统指示器默认实现指示器视图协议
 @interface UIActivityIndicatorView (FWViewPlugin) <FWIndicatorViewPlugin, FWProgressViewPlugin>
@@ -29,12 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 设置指示器进度，大于0小于1时开始动画，其它值停止动画。同setProgress:
 - (void)setProgress:(CGFloat)progress animated:(BOOL)animated;
 
-@end
-
-@interface FWActivityIndicatorViewClassWrapper (FWViewPlugin)
-
 /// 快速创建指示器，可指定颜色，默认白色
-- (UIActivityIndicatorView *)indicatorViewWithColor:(nullable UIColor *)color;
++ (UIActivityIndicatorView *)fw_indicatorViewWithColor:(nullable UIColor *)color NS_REFINED_FOR_SWIFT;
 
 @end
 

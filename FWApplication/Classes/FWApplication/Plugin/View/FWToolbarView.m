@@ -751,7 +751,7 @@
     _showsLoadingView = showsLoadingView;
     if (showsLoadingView) {
         if (!self.loadingView) {
-            self.loadingView = [UIActivityIndicatorView.fw indicatorViewWithColor:nil];
+            self.loadingView = [UIActivityIndicatorView fw_indicatorViewWithColor:nil];
         } else {
             [self refreshLayout];
         }
