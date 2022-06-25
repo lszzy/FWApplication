@@ -42,7 +42,7 @@ FWPropertyCopy(NSString *, appendString);
 {
     _dismissOnDrag = dismissOnDrag;
     [self.view endEditing:YES];
-    self.scrollView.fw.keyboardDismissOnDrag = dismissOnDrag;
+    self.scrollView.fw_keyboardDismissOnDrag = dismissOnDrag;
 }
 
 - (void)setUseScrollView:(BOOL)useScrollView
@@ -75,7 +75,7 @@ FWPropertyCopy(NSString *, appendString);
     mobileField.tag = 1;
     self.mobileField = mobileField;
     mobileField.fw_maxUnicodeLength = 10;
-    mobileField.fw.menuDisabled = YES;
+    mobileField.fw_menuDisabled = YES;
     mobileField.placeholder = @"禁止粘贴，最多10个中文";
     mobileField.keyboardType = UIKeyboardTypeDefault;
     mobileField.returnKeyType = UIReturnKeyNext;
@@ -124,7 +124,7 @@ FWPropertyCopy(NSString *, appendString);
     self.inputView = inputView;
     inputView.backgroundColor = [Theme backgroundColor];
     inputView.fw_maxLength = 20;
-    inputView.fw.menuDisabled = YES;
+    inputView.fw_menuDisabled = YES;
     inputView.fw_placeholder = @"建议，最多20个英文";
     inputView.returnKeyType = UIReturnKeyDone;
     inputView.fw_returnResign = YES;
@@ -214,8 +214,8 @@ FWPropertyCopy(NSString *, appendString);
     UITextView *textView = [UITextView new];
     textView.font = [UIFont fw_fontOfSize:15];
     textView.textColor = [Theme textColor];
-    textView.fw.cursorColor = Theme.textColor;
-    textView.fw.cursorRect = CGRectMake(0, 0, 2, 0);
+    textView.fw_cursorColor = Theme.textColor;
+    textView.fw_cursorRect = CGRectMake(0, 0, 2, 0);
     [textView fw_setBorderColor:[Theme borderColor] width:0.5 cornerRadius:5];
     [textView fw_setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
     [textView fw_setDimension:NSLayoutAttributeHeight toSize:100];
@@ -227,8 +227,8 @@ FWPropertyCopy(NSString *, appendString);
     UITextField *textField = [UITextField new];
     textField.font = [UIFont fw_fontOfSize:15];
     textField.textColor = [Theme textColor];
-    textField.fw.cursorColor = Theme.textColor;
-    textField.fw.cursorRect = CGRectMake(0, 0, 2, 0);
+    textField.fw_cursorColor = Theme.textColor;
+    textField.fw_cursorRect = CGRectMake(0, 0, 2, 0);
     textField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [textField fw_setBorderView:UIRectEdgeBottom color:[Theme borderColor] width:0.5];
     [textField fw_setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth - 15 * 2];
@@ -259,7 +259,7 @@ FWPropertyCopy(NSString *, appendString);
         
         NSInteger offset = range.location + replaceString.length;
         if (offset > textField.fw_maxLength) offset = textField.fw_maxLength;
-        [textField.fw moveCursor:offset];
+        [textField fw_moveCursor:offset];
         return NO;
     }
     

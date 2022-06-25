@@ -10,7 +10,7 @@
 #import "UISearchBar+FWApplication.h"
 #import <objc/runtime.h>
 
-@implementation FWSearchBarWrapper (FWApplication)
+@implementation UISearchBar (FWApplication)
 
 + (void)load
 {
@@ -21,14 +21,14 @@
             
             if (@available(iOS 13, *)) { } else {
                 CGFloat textFieldMaxX = selfObject.bounds.size.width;
-                NSValue *cancelInsetValue = objc_getAssociatedObject(selfObject, @selector(cancelButtonInset));
+                NSValue *cancelInsetValue = objc_getAssociatedObject(selfObject, @selector(fw_cancelButtonInset));
                 if (cancelInsetValue) {
-                    UIButton *cancelButton = [selfObject.fw cancelButton];
+                    UIButton *cancelButton = [selfObject fw_cancelButton];
                     if (cancelButton) {
                         UIEdgeInsets cancelInset = [cancelInsetValue UIEdgeInsetsValue];
                         CGFloat cancelWidth = [cancelButton sizeThatFits:selfObject.bounds.size].width;
                         textFieldMaxX = selfObject.bounds.size.width - cancelWidth - cancelInset.left - cancelInset.right;
-                        UITextField *textField = [selfObject.fw textField];
+                        UITextField *textField = [selfObject fw_textField];
                         CGRect frame = textField.frame;
                         frame.size.width = textFieldMaxX - frame.origin.x;
                         textField.frame = frame;
@@ -38,18 +38,18 @@
                 NSValue *contentInsetValue = objc_getAssociatedObject(selfObject, @selector(contentInset));
                 if (contentInsetValue) {
                     UIEdgeInsets contentInset = [contentInsetValue UIEdgeInsetsValue];
-                    UITextField *textField = [selfObject.fw textField];
+                    UITextField *textField = [selfObject fw_textField];
                     textField.frame = CGRectMake(contentInset.left, contentInset.top, textFieldMaxX - contentInset.left - contentInset.right, selfObject.bounds.size.height - contentInset.top - contentInset.bottom);
                 }
             }
             
-            NSNumber *isCenterValue = objc_getAssociatedObject(selfObject, @selector(searchIconCenter));
+            NSNumber *isCenterValue = objc_getAssociatedObject(selfObject, @selector(fw_searchIconCenter));
             if (isCenterValue) {
                 if (![isCenterValue boolValue]) {
-                    NSNumber *offset = objc_getAssociatedObject(selfObject, @selector(searchIconOffset));
+                    NSNumber *offset = objc_getAssociatedObject(selfObject, @selector(fw_searchIconOffset));
                     [selfObject setPositionAdjustment:UIOffsetMake(offset ? offset.doubleValue : 0, 0) forSearchBarIcon:UISearchBarIconSearch];
                 } else {
-                    UITextField *textField = [selfObject.fw textField];
+                    UITextField *textField = [selfObject fw_textField];
                     CGFloat placeholdWidth = [selfObject.placeholder boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:textField.font, NSFontAttributeName, nil] context:nil].size.width;
                     CGFloat textOffset = 4 + [selfObject searchTextPositionAdjustment].horizontal;
                     CGFloat iconWidth = textField.leftView ? textField.leftView.frame.size.width : 0;
@@ -71,9 +71,9 @@
                 }
                 if ([searchBar isKindOfClass:[UISearchBar class]]) {
                     CGFloat textFieldMaxX = searchBar.bounds.size.width;
-                    NSValue *cancelInsetValue = objc_getAssociatedObject(searchBar, @selector(cancelButtonInset));
+                    NSValue *cancelInsetValue = objc_getAssociatedObject(searchBar, @selector(fw_cancelButtonInset));
                     if (cancelInsetValue) {
-                        UIButton *cancelButton = [searchBar.fw cancelButton];
+                        UIButton *cancelButton = [searchBar fw_cancelButton];
                         if (cancelButton) {
                             UIEdgeInsets cancelInset = [cancelInsetValue UIEdgeInsetsValue];
                             CGFloat cancelWidth = [cancelButton sizeThatFits:searchBar.bounds.size].width;
@@ -101,7 +101,7 @@
                 searchBar = (UISearchBar *)selfObject.superview.superview;
             }
             if ([searchBar isKindOfClass:[UISearchBar class]]) {
-                NSValue *cancelButtonInsetValue = objc_getAssociatedObject(searchBar, @selector(cancelButtonInset));
+                NSValue *cancelButtonInsetValue = objc_getAssociatedObject(searchBar, @selector(fw_cancelButtonInset));
                 if (cancelButtonInsetValue) {
                     UIEdgeInsets cancelButtonInset = [cancelButtonInsetValue UIEdgeInsetsValue];
                     CGFloat cancelButtonWidth = [selfObject sizeThatFits:searchBar.bounds.size].width;
@@ -116,107 +116,107 @@
     });
 }
 
-- (UIEdgeInsets)contentInset
+- (UIEdgeInsets)fw_contentInset
 {
-    return [objc_getAssociatedObject(self.base, @selector(contentInset)) UIEdgeInsetsValue];
+    return [objc_getAssociatedObject(self, @selector(fw_contentInset)) UIEdgeInsetsValue];
 }
 
-- (void)setContentInset:(UIEdgeInsets)contentInset
+- (void)setFw_contentInset:(UIEdgeInsets)contentInset
 {
-    objc_setAssociatedObject(self.base, @selector(contentInset), [NSValue valueWithUIEdgeInsets:contentInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base setNeedsLayout];
+    objc_setAssociatedObject(self, @selector(fw_contentInset), [NSValue valueWithUIEdgeInsets:contentInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self setNeedsLayout];
 }
 
-- (UIEdgeInsets)cancelButtonInset
+- (UIEdgeInsets)fw_cancelButtonInset
 {
-    return [objc_getAssociatedObject(self.base, @selector(cancelButtonInset)) UIEdgeInsetsValue];
+    return [objc_getAssociatedObject(self, @selector(fw_cancelButtonInset)) UIEdgeInsetsValue];
 }
 
-- (void)setCancelButtonInset:(UIEdgeInsets)cancelButtonInset
+- (void)setFw_cancelButtonInset:(UIEdgeInsets)cancelButtonInset
 {
-    objc_setAssociatedObject(self.base, @selector(cancelButtonInset), [NSValue valueWithUIEdgeInsets:cancelButtonInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base setNeedsLayout];
+    objc_setAssociatedObject(self, @selector(fw_cancelButtonInset), [NSValue valueWithUIEdgeInsets:cancelButtonInset], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self setNeedsLayout];
 }
 
-- (UITextField *)textField
+- (UITextField *)fw_textField
 {
-    return [self.base fw_invokeGetter:@"searchField"];
+    return [self fw_invokeGetter:@"searchField"];
 }
 
-- (UIButton *)cancelButton
+- (UIButton *)fw_cancelButton
 {
-    return [self.base fw_invokeGetter:@"cancelButton"];
+    return [self fw_invokeGetter:@"cancelButton"];
 }
 
-- (UIColor *)backgroundColor
+- (UIColor *)fw_backgroundColor
 {
-    return objc_getAssociatedObject(self.base, @selector(backgroundColor));
+    return objc_getAssociatedObject(self, @selector(fw_backgroundColor));
 }
 
-- (void)setBackgroundColor:(UIColor *)color
+- (void)setFw_backgroundColor:(UIColor *)color
 {
-    objc_setAssociatedObject(self.base, @selector(backgroundColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_backgroundColor), color, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    self.base.backgroundImage = [UIImage fw_imageWithColor:color];
+    self.backgroundImage = [UIImage fw_imageWithColor:color];
 }
 
-- (UIColor *)textFieldBackgroundColor
+- (UIColor *)fw_textFieldBackgroundColor
 {
-    UITextField *textField = [self textField];
+    UITextField *textField = [self fw_textField];
     return textField.backgroundColor;
 }
 
-- (void)setTextFieldBackgroundColor:(UIColor *)color
+- (void)setFw_textFieldBackgroundColor:(UIColor *)color
 {
-    UITextField *textField = [self textField];
+    UITextField *textField = [self fw_textField];
     textField.backgroundColor = color;
 }
 
-- (CGFloat)searchIconOffset
+- (CGFloat)fw_searchIconOffset
 {
-    NSNumber *value = objc_getAssociatedObject(self.base, @selector(searchIconOffset));
+    NSNumber *value = objc_getAssociatedObject(self, @selector(fw_searchIconOffset));
     if (value) return value.doubleValue;
-    return [self.base positionAdjustmentForSearchBarIcon:UISearchBarIconSearch].horizontal;
+    return [self positionAdjustmentForSearchBarIcon:UISearchBarIconSearch].horizontal;
 }
 
-- (void)setSearchIconOffset:(CGFloat)offset
+- (void)setFw_searchIconOffset:(CGFloat)offset
 {
-    objc_setAssociatedObject(self.base, @selector(searchIconOffset), @(offset), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base setPositionAdjustment:UIOffsetMake(offset, 0) forSearchBarIcon:UISearchBarIconSearch];
+    objc_setAssociatedObject(self, @selector(fw_searchIconOffset), @(offset), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self setPositionAdjustment:UIOffsetMake(offset, 0) forSearchBarIcon:UISearchBarIconSearch];
 }
 
-- (CGFloat)searchTextOffset
+- (CGFloat)fw_searchTextOffset
 {
-    return [self.base searchTextPositionAdjustment].horizontal;
+    return [self searchTextPositionAdjustment].horizontal;
 }
 
-- (void)setSearchTextOffset:(CGFloat)offset
+- (void)setFw_searchTextOffset:(CGFloat)offset
 {
-    [self.base setSearchTextPositionAdjustment:UIOffsetMake(offset, 0)];
+    [self setSearchTextPositionAdjustment:UIOffsetMake(offset, 0)];
 }
 
-- (BOOL)searchIconCenter
+- (BOOL)fw_searchIconCenter
 {
-    return [objc_getAssociatedObject(self.base, @selector(searchIconCenter)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_searchIconCenter)) boolValue];
 }
 
-- (void)setSearchIconCenter:(BOOL)center
+- (void)setFw_searchIconCenter:(BOOL)center
 {
-    objc_setAssociatedObject(self.base, @selector(searchIconCenter), @(center), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self.base setNeedsLayout];
-    [self.base layoutIfNeeded];
+    objc_setAssociatedObject(self, @selector(fw_searchIconCenter), @(center), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
-- (BOOL)forceCancelButtonEnabled
+- (BOOL)fw_forceCancelButtonEnabled
 {
-    return [objc_getAssociatedObject(self.base, @selector(forceCancelButtonEnabled)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_forceCancelButtonEnabled)) boolValue];
 }
 
-- (void)setForceCancelButtonEnabled:(BOOL)enabled
+- (void)setFw_forceCancelButtonEnabled:(BOOL)enabled
 {
-    objc_setAssociatedObject(self.base, @selector(forceCancelButtonEnabled), @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_forceCancelButtonEnabled), @(enabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    UIButton *cancelButton = [self cancelButton];
+    UIButton *cancelButton = [self fw_cancelButton];
     if (enabled) {
         cancelButton.enabled = YES;
         [cancelButton fw_observeProperty:@"enabled" block:^(UIButton *object, NSDictionary *change) {

@@ -63,7 +63,7 @@
         scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, ViewHeight / 4 * 3, self.view.fw_width, ViewHeight)];
         drawerView = scrollView;
     }
-    [scrollView.fw contentInsetAdjustmentNever];
+    [scrollView fw_contentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor whiteColor];
@@ -124,7 +124,7 @@
 - (void)renderViewDown
 {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -ViewHeight / 4 * 3, self.view.fw_width, ViewHeight)];
-    [scrollView.fw contentInsetAdjustmentNever];
+    [scrollView fw_contentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor redColor];
@@ -172,7 +172,7 @@
 - (void)renderViewLeft
 {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(FWScreenWidth / 4 * 3, 0, self.view.fw_width, ViewHeight)];
-    [scrollView.fw contentInsetAdjustmentNever];
+    [scrollView fw_contentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor blueColor];
@@ -220,7 +220,7 @@
 - (void)renderViewRight
 {
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(-FWScreenWidth / 4 * 3, 0, self.view.fw_width, ViewHeight)];
-    [scrollView.fw contentInsetAdjustmentNever];
+    [scrollView fw_contentInsetAdjustmentNever];
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.showsVerticalScrollIndicator = NO;
     scrollView.backgroundColor = [UIColor greenColor];

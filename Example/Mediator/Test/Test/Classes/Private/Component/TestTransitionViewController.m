@@ -405,7 +405,7 @@ FWDealloc();
     transition.transitionBlock = ^(FWAnimatedTransition *transition){
         if (transition.transitionType == FWAnimatedTransitionTypePresent) {
             [transition start];
-            [[transition.transitionContext viewForKey:UITransitionContextToViewKey].fw addTransitionWithType:kCATransitionMoveIn
+            [[transition.transitionContext viewForKey:UITransitionContextToViewKey] fw_addTransitionWithType:kCATransitionMoveIn
                                                subtype:kCATransitionFromTop
                                         timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                               duration:[transition transitionDuration:transition.transitionContext]
@@ -416,7 +416,7 @@ FWDealloc();
             [transition start];
             // 这种转场动画需要先隐藏目标视图
             [transition.transitionContext viewForKey:UITransitionContextFromViewKey].hidden = YES;
-            [[transition.transitionContext viewForKey:UITransitionContextFromViewKey].fw addTransitionWithType:kCATransitionReveal
+            [[transition.transitionContext viewForKey:UITransitionContextFromViewKey] fw_addTransitionWithType:kCATransitionReveal
                                                  subtype:kCATransitionFromBottom
                                           timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                                 duration:[transition transitionDuration:transition.transitionContext]
@@ -611,7 +611,7 @@ FWDealloc();
         if (transition.transitionType == FWAnimatedTransitionTypePush) {
             [transition start];
             // 使用navigationController.view做动画，而非containerView做动画，下同
-            [self.navigationController.view.fw addTransitionWithType:kCATransitionMoveIn
+            [self.navigationController.view fw_addTransitionWithType:kCATransitionMoveIn
                                                             subtype:kCATransitionFromTop
                                                      timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                                            duration:[transition transitionDuration:transition.transitionContext]
@@ -622,7 +622,7 @@ FWDealloc();
             [transition start];
             // 这种转场动画需要先隐藏目标视图
             [transition.transitionContext viewForKey:UITransitionContextFromViewKey].hidden = YES;
-            [self.navigationController.view.fw addTransitionWithType:kCATransitionReveal
+            [self.navigationController.view fw_addTransitionWithType:kCATransitionReveal
                                                             subtype:kCATransitionFromBottom
                                                      timingFunction:kCAMediaTimingFunctionEaseInEaseOut
                                                            duration:[transition transitionDuration:transition.transitionContext]
@@ -644,7 +644,7 @@ FWDealloc();
     transition.transitionBlock = ^(FWAnimatedTransition *transition){
         if (transition.transitionType == FWAnimatedTransitionTypePush) {
             [transition start];
-            [self.navigationController.view.fw addAnimationWithCurve:UIViewAnimationCurveEaseInOut
+            [self.navigationController.view fw_addAnimationWithCurve:UIViewAnimationCurveEaseInOut
                                                          transition:UIViewAnimationTransitionCurlUp
                                                            duration:[transition transitionDuration:transition.transitionContext]
                                                          completion:^(BOOL finished){
@@ -654,7 +654,7 @@ FWDealloc();
             [transition start];
             // 这种转场动画需要先隐藏目标视图
             [transition.transitionContext viewForKey:UITransitionContextFromViewKey].hidden = YES;
-            [self.navigationController.view.fw addAnimationWithCurve:UIViewAnimationCurveEaseInOut
+            [self.navigationController.view fw_addAnimationWithCurve:UIViewAnimationCurveEaseInOut
                                                          transition:UIViewAnimationTransitionCurlDown
                                                            duration:[transition transitionDuration:transition.transitionContext]
                                                          completion:^(BOOL finished){

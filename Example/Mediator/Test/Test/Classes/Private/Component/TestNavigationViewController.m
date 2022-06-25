@@ -57,7 +57,7 @@
     // 允许同时识别手势处理
     if (self.fullscreenPop) {
         FWWeakifySelf();
-        self.scrollView.fw.shouldRecognizeSimultaneously = ^BOOL(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer) {
+        self.scrollView.fw_shouldRecognizeSimultaneously = ^BOOL(UIGestureRecognizer *gestureRecognizer, UIGestureRecognizer *otherGestureRecognizer) {
             FWStrongifySelf();
             if (self.scrollView.contentOffset.x <= 0) {
                 if ([UINavigationController fw_isFullscreenPopGestureRecognizer:otherGestureRecognizer]) {

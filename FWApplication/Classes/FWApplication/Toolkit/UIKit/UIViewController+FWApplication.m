@@ -9,43 +9,46 @@
 #import "UIViewController+FWApplication.h"
 #import <objc/runtime.h>
 
-@implementation FWViewControllerWrapper (FWApplication)
+API_AVAILABLE(ios(13.0))
+static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresentationAutomatic;
+
+@implementation UIViewController (FWApplication)
 
 #pragma mark - Child
 
-- (UIViewController *)childViewController
+- (UIViewController *)fw_childViewController
 {
-    return [self.base.childViewControllers firstObject];
+    return [self.childViewControllers firstObject];
 }
 
-- (void)setChildViewController:(UIViewController *)viewController
+- (void)fw_setChildViewController:(UIViewController *)viewController
 {
     // 移除旧的控制器
-    UIViewController *childViewController = [self childViewController];
+    UIViewController *childViewController = [self fw_childViewController];
     if (childViewController) {
-        [self removeChildViewController:childViewController];
+        [self fw_removeChildViewController:childViewController];
     }
     
     // 设置新的控制器
-    [self addChildViewController:viewController];
+    [self fw_addChildViewController:viewController];
 }
 
-- (void)removeChildViewController:(UIViewController *)viewController
+- (void)fw_removeChildViewController:(UIViewController *)viewController
 {
     [viewController willMoveToParentViewController:nil];
     [viewController removeFromParentViewController];
     [viewController.view removeFromSuperview];
 }
 
-- (void)addChildViewController:(UIViewController *)viewController
+- (void)fw_addChildViewController:(UIViewController *)viewController
 {
-    [self addChildViewController:viewController inView:self.base.view];
+    [self fw_addChildViewController:viewController inView:self.view];
 }
 
-- (void)addChildViewController:(UIViewController *)viewController inView:(UIView *)view
+- (void)fw_addChildViewController:(UIViewController *)viewController inView:(UIView *)view
 {
-    [self.base addChildViewController:viewController];
-    [viewController didMoveToParentViewController:self.base];
+    [self addChildViewController:viewController];
+    [viewController didMoveToParentViewController:self];
     [view addSubview:viewController.view];
     // viewController.view.frame = view.bounds;
     [viewController.view fw_pinEdgesToSuperview];
@@ -53,25 +56,18 @@
 
 #pragma mark - Previous
 
-- (UIViewController *)previousViewController
+- (UIViewController *)fw_previousViewController
 {
-    if (self.base.navigationController.viewControllers &&
-        self.base.navigationController.viewControllers.count > 1 &&
-        self.base.navigationController.topViewController == self.base) {
-        NSUInteger count = self.base.navigationController.viewControllers.count;
-        return (UIViewController *)[self.base.navigationController.viewControllers objectAtIndex:count - 2];
+    if (self.navigationController.viewControllers &&
+        self.navigationController.viewControllers.count > 1 &&
+        self.navigationController.topViewController == self) {
+        NSUInteger count = self.navigationController.viewControllers.count;
+        return (UIViewController *)[self.navigationController.viewControllers objectAtIndex:count - 2];
     }
     return nil;
 }
 
-@end
-
-API_AVAILABLE(ios(13.0))
-static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresentationAutomatic;
-
-@implementation FWViewControllerClassWrapper (FWApplication)
-
-- (UIModalPresentationStyle)defaultModalPresentationStyle
++ (UIModalPresentationStyle)fw_defaultModalPresentationStyle
 {
     if (@available(iOS 13.0, *)) {
         return fwStaticModalPresentationStyle;
@@ -80,17 +76,17 @@ static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresenta
     }
 }
 
-- (void)setDefaultModalPresentationStyle:(UIModalPresentationStyle)style
++ (void)setFw_defaultModalPresentationStyle:(UIModalPresentationStyle)style
 {
     if (@available(iOS 13.0, *)) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             FWSwizzleClass(UIViewController, @selector(setModalPresentationStyle:), FWSwizzleReturn(void), FWSwizzleArgs(UIModalPresentationStyle style), FWSwizzleCode({
-                objc_setAssociatedObject(selfObject, @selector(defaultModalPresentationStyle), @(style), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                objc_setAssociatedObject(selfObject, @selector(fw_defaultModalPresentationStyle), @(style), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                 FWSwizzleOriginal(style);
             }));
             FWSwizzleClass(UIViewController, @selector(presentViewController:animated:completion:), FWSwizzleReturn(void), FWSwizzleArgs(UIViewController *viewController, BOOL animated, void (^completion)(void)), FWSwizzleCode({
-                if (!objc_getAssociatedObject(viewController, @selector(defaultModalPresentationStyle)) &&
+                if (!objc_getAssociatedObject(viewController, @selector(fw_defaultModalPresentationStyle)) &&
                     fwStaticModalPresentationStyle != UIModalPresentationAutomatic) {
                     if (viewController.modalPresentationStyle == UIModalPresentationAutomatic ||
                         viewController.modalPresentationStyle == UIModalPresentationPageSheet) {

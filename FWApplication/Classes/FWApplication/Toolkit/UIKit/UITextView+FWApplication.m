@@ -9,16 +9,16 @@
 #import "UITextView+FWApplication.h"
 #import <objc/runtime.h>
 
-#pragma mark - FWTextViewWrapper+FWApplication
+#pragma mark - UITextView+FWApplication
 
-@implementation FWTextViewWrapper (FWApplication)
+@implementation UITextView (FWApplication)
 
 + (void)load
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UITextView, @selector(canPerformAction:withSender:), FWSwizzleReturn(BOOL), FWSwizzleArgs(SEL action, id sender), FWSwizzleCode({
-            if (selfObject.fw.menuDisabled) {
+            if (selfObject.fw_menuDisabled) {
                 return NO;
             }
             return FWSwizzleOriginal(action, sender);
@@ -26,7 +26,7 @@
         
         FWSwizzleClass(UITextView, @selector(caretRectForPosition:), FWSwizzleReturn(CGRect), FWSwizzleArgs(UITextPosition *position), FWSwizzleCode({
             CGRect caretRect = FWSwizzleOriginal(position);
-            NSValue *rectValue = objc_getAssociatedObject(selfObject, @selector(cursorRect));
+            NSValue *rectValue = objc_getAssociatedObject(selfObject, @selector(fw_cursorRect));
             if (!rectValue) return caretRect;
             
             CGRect rect = rectValue.CGRectValue;
@@ -41,71 +41,71 @@
 
 #pragma mark - Menu
 
-- (BOOL)menuDisabled
+- (BOOL)fw_menuDisabled
 {
-    return [objc_getAssociatedObject(self.base, @selector(menuDisabled)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_menuDisabled)) boolValue];
 }
 
-- (void)setMenuDisabled:(BOOL)menuDisabled
+- (void)setFw_menuDisabled:(BOOL)menuDisabled
 {
-    objc_setAssociatedObject(self.base, @selector(menuDisabled), @(menuDisabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_menuDisabled), @(menuDisabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Select
 
-- (UIColor *)cursorColor
+- (UIColor *)fw_cursorColor
 {
-    return self.base.tintColor;
+    return self.tintColor;
 }
 
-- (void)setCursorColor:(UIColor *)cursorColor
+- (void)setFw_cursorColor:(UIColor *)cursorColor
 {
-    self.base.tintColor = cursorColor;
+    self.tintColor = cursorColor;
 }
 
-- (CGRect)cursorRect
+- (CGRect)fw_cursorRect
 {
-    NSValue *value = objc_getAssociatedObject(self.base, @selector(cursorRect));
+    NSValue *value = objc_getAssociatedObject(self, @selector(fw_cursorRect));
     return value ? [value CGRectValue] : CGRectZero;
 }
 
-- (void)setCursorRect:(CGRect)cursorRect
+- (void)setFw_cursorRect:(CGRect)cursorRect
 {
-    objc_setAssociatedObject(self.base, @selector(cursorRect), [NSValue valueWithCGRect:cursorRect], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_cursorRect), [NSValue valueWithCGRect:cursorRect], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSRange)selectedRange
+- (NSRange)fw_selectedRange
 {
-    UITextPosition *beginning = self.base.beginningOfDocument;
+    UITextPosition *beginning = self.beginningOfDocument;
     
-    UITextRange *selectedRange = self.base.selectedTextRange;
+    UITextRange *selectedRange = self.selectedTextRange;
     UITextPosition *selectionStart = selectedRange.start;
     UITextPosition *selectionEnd = selectedRange.end;
     
-    NSInteger location = [self.base offsetFromPosition:beginning toPosition:selectionStart];
-    NSInteger length = [self.base offsetFromPosition:selectionStart toPosition:selectionEnd];
+    NSInteger location = [self offsetFromPosition:beginning toPosition:selectionStart];
+    NSInteger length = [self offsetFromPosition:selectionStart toPosition:selectionEnd];
     
     return NSMakeRange(location, length);
 }
 
-- (void)setSelectedRange:(NSRange)range
+- (void)setFw_selectedRange:(NSRange)range
 {
-    UITextPosition *beginning = self.base.beginningOfDocument;
-    UITextPosition *startPosition = [self.base positionFromPosition:beginning offset:range.location];
-    UITextPosition *endPosition = [self.base positionFromPosition:beginning offset:NSMaxRange(range)];
-    UITextRange *selectionRange = [self.base textRangeFromPosition:startPosition toPosition:endPosition];
-    [self.base setSelectedTextRange:selectionRange];
+    UITextPosition *beginning = self.beginningOfDocument;
+    UITextPosition *startPosition = [self positionFromPosition:beginning offset:range.location];
+    UITextPosition *endPosition = [self positionFromPosition:beginning offset:NSMaxRange(range)];
+    UITextRange *selectionRange = [self textRangeFromPosition:startPosition toPosition:endPosition];
+    [self setSelectedTextRange:selectionRange];
 }
 
-- (void)selectAllRange
+- (void)fw_selectAllRange
 {
-    UITextRange *range = [self.base textRangeFromPosition:self.base.beginningOfDocument toPosition:self.base.endOfDocument];
-    [self.base setSelectedTextRange:range];
+    UITextRange *range = [self textRangeFromPosition:self.beginningOfDocument toPosition:self.endOfDocument];
+    [self setSelectedTextRange:range];
 }
 
-- (void)moveCursor:(NSInteger)offset
+- (void)fw_moveCursor:(NSInteger)offset
 {
-    __weak UITextView *weakBase = self.base;
+    __weak UITextView *weakBase = self;
     dispatch_async(dispatch_get_main_queue(), ^{
         UITextPosition *position = [weakBase positionFromPosition:weakBase.beginningOfDocument offset:offset];
         weakBase.selectedTextRange = [weakBase textRangeFromPosition:position toPosition:position];
@@ -114,36 +114,36 @@
 
 #pragma mark - Size
 
-- (CGSize)textSize
+- (CGSize)fw_textSize
 {
-    if (CGSizeEqualToSize(self.base.frame.size, CGSizeZero)) {
-        [self.base setNeedsLayout];
-        [self.base layoutIfNeeded];
+    if (CGSizeEqualToSize(self.frame.size, CGSizeZero)) {
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
     }
     
     NSMutableDictionary *attr = [[NSMutableDictionary alloc] init];
-    attr[NSFontAttributeName] = self.base.font;
+    attr[NSFontAttributeName] = self.font;
     
-    CGSize drawSize = CGSizeMake(self.base.frame.size.width, CGFLOAT_MAX);
-    CGSize size = [self.base.text boundingRectWithSize:drawSize
+    CGSize drawSize = CGSizeMake(self.frame.size.width, CGFLOAT_MAX);
+    CGSize size = [self.text boundingRectWithSize:drawSize
                                           options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
                                        attributes:attr
                                           context:nil].size;
-    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)) + self.base.textContainerInset.left + self.base.textContainerInset.right, MIN(drawSize.height, ceilf(size.height)) + self.base.textContainerInset.top + self.base.textContainerInset.bottom);
+    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)) + self.textContainerInset.left + self.textContainerInset.right, MIN(drawSize.height, ceilf(size.height)) + self.textContainerInset.top + self.textContainerInset.bottom);
 }
 
-- (CGSize)attributedTextSize
+- (CGSize)fw_attributedTextSize
 {
-    if (CGSizeEqualToSize(self.base.frame.size, CGSizeZero)) {
-        [self.base setNeedsLayout];
-        [self.base layoutIfNeeded];
+    if (CGSizeEqualToSize(self.frame.size, CGSizeZero)) {
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
     }
     
-    CGSize drawSize = CGSizeMake(self.base.frame.size.width, CGFLOAT_MAX);
-    CGSize size = [self.base.attributedText boundingRectWithSize:drawSize
+    CGSize drawSize = CGSizeMake(self.frame.size.width, CGFLOAT_MAX);
+    CGSize size = [self.attributedText boundingRectWithSize:drawSize
                                                     options:NSStringDrawingUsesFontLeading | NSStringDrawingUsesLineFragmentOrigin
                                                     context:nil].size;
-    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)) + self.base.textContainerInset.left + self.base.textContainerInset.right, MIN(drawSize.height, ceilf(size.height)) + self.base.textContainerInset.top + self.base.textContainerInset.bottom);
+    return CGSizeMake(MIN(drawSize.width, ceilf(size.width)) + self.textContainerInset.left + self.textContainerInset.right, MIN(drawSize.height, ceilf(size.height)) + self.textContainerInset.top + self.textContainerInset.bottom);
 }
 
 @end

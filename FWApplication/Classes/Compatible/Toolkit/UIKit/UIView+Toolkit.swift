@@ -18,111 +18,111 @@ extension Wrapper where Base: UIView {
 
     /// 获取当前view的transform scale x
     public var scaleX: CGFloat {
-        return base.__fw.scaleX
+        return base.__fw_scaleX
     }
 
     /// 获取当前view的transform scale y
     public var scaleY: CGFloat {
-        return base.__fw.scaleY
+        return base.__fw_scaleY
     }
 
     /// 获取当前view的transform translation x
     public var translationX: CGFloat {
-        return base.__fw.translationX
+        return base.__fw_translationX
     }
 
     /// 获取当前view的transform translation y
     public var translationY: CGFloat {
-        return base.__fw.translationY
+        return base.__fw_translationY
     }
 
     // MARK: - Subview
 
     /// 移除所有子视图
     public func removeAllSubviews() {
-        base.__fw.removeAllSubviews()
+        base.__fw_removeAllSubviews()
     }
 
     /// 递归查找指定子类的第一个视图
     public func subview(of clazz: AnyClass) -> UIView? {
-        return base.__fw.subview(of: clazz)
+        return base.__fw_subview(of: clazz)
     }
 
     /// 递归查找指定条件的第一个视图
     public func subview(of block: @escaping (UIView) -> Bool) -> UIView? {
-        return base.__fw.subview(of: block)
+        return base.__fw_subview(of: block)
     }
 
     /// 添加到父视图，nil时为从父视图移除
     public func move(toSuperview view: UIView?) {
-        base.__fw.move(toSuperview: view)
+        base.__fw_move(toSuperview: view)
     }
 
     // MARK: - Snapshot
 
     /// 图片截图
     public var snapshotImage: UIImage? {
-        return base.__fw.snapshotImage
+        return base.__fw_snapshotImage
     }
 
     /// Pdf截图
     public var snapshotPdf: Data? {
-        return base.__fw.snapshotPdf
+        return base.__fw_snapshotPdf
     }
 
     // MARK: - Drag
 
     /// 是否启用拖动，默认NO
     public var dragEnabled: Bool {
-        get { return base.__fw.dragEnabled }
-        set { base.__fw.dragEnabled = newValue }
+        get { return base.__fw_dragEnabled }
+        set { base.__fw_dragEnabled = newValue }
     }
 
     /// 拖动手势，延迟加载
     public var dragGesture: UIPanGestureRecognizer {
-        return base.__fw.dragGesture
+        return base.__fw_dragGesture
     }
 
     /// 设置拖动限制区域，默认CGRectZero，无限制
     public var dragLimit: CGRect {
-        get { return base.__fw.dragLimit }
-        set { base.__fw.dragLimit = newValue }
+        get { return base.__fw_dragLimit }
+        set { base.__fw_dragLimit = newValue }
     }
 
     /// 设置拖动动作有效区域，默认self.frame
     public var dragArea: CGRect {
-        get { return base.__fw.dragArea }
-        set { base.__fw.dragArea = newValue }
+        get { return base.__fw_dragArea }
+        set { base.__fw_dragArea = newValue }
     }
 
     /// 是否允许横向拖动(X)，默认YES
     public var dragHorizontal: Bool {
-        get { return base.__fw.dragHorizontal }
-        set { base.__fw.dragHorizontal = newValue }
+        get { return base.__fw_dragHorizontal }
+        set { base.__fw_dragHorizontal = newValue }
     }
 
     /// 是否允许纵向拖动(Y)，默认YES
     public var dragVertical: Bool {
-        get { return base.__fw.dragVertical }
-        set { base.__fw.dragVertical = newValue }
+        get { return base.__fw_dragVertical }
+        set { base.__fw_dragVertical = newValue }
     }
 
     /// 开始拖动回调
     public var dragStartedBlock: ((UIView) -> Void)? {
-        get { return base.__fw.dragStartedBlock }
-        set { base.__fw.dragStartedBlock = newValue }
+        get { return base.__fw_dragStartedBlock }
+        set { base.__fw_dragStartedBlock = newValue }
     }
 
     /// 拖动移动回调
     public var dragMovedBlock: ((UIView) -> Void)? {
-        get { return base.__fw.dragMovedBlock }
-        set { base.__fw.dragMovedBlock = newValue }
+        get { return base.__fw_dragMovedBlock }
+        set { base.__fw_dragMovedBlock = newValue }
     }
 
     /// 结束拖动回调
     public var dragEndedBlock: ((UIView) -> Void)? {
-        get { return base.__fw.dragEndedBlock }
-        set { base.__fw.dragEndedBlock = newValue }
+        get { return base.__fw_dragEndedBlock }
+        set { base.__fw_dragEndedBlock = newValue }
     }
     
 }
@@ -139,7 +139,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public func addAnimation(block: @escaping () -> Void, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.addAnimation(block, completion: completion)
+        base.__fw_addAnimation(block, completion: completion)
     }
 
     /**
@@ -150,7 +150,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public func addAnimation(block: @escaping () -> Void, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.addAnimation(block, duration: duration, completion: completion)
+        base.__fw_addAnimation(block, duration: duration, completion: completion)
     }
 
     /**
@@ -162,7 +162,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public func addAnimation(curve: UIView.AnimationCurve, transition: UIView.AnimationTransition, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.addAnimation(with: curve, transition: transition, duration: duration, completion: completion)
+        base.__fw_addAnimation(with: curve, transition: transition, duration: duration, completion: completion)
     }
 
     /**
@@ -177,7 +177,7 @@ extension Wrapper where Base: UIView {
      */
     @discardableResult
     public func addAnimation(keyPath: String, fromValue: Any, toValue: Any, duration: CFTimeInterval, completion: ((Bool) -> Void)? = nil) -> CABasicAnimation {
-        return base.__fw.addAnimation(withKeyPath: keyPath, fromValue: fromValue, toValue: toValue, duration: duration, completion: completion)
+        return base.__fw_addAnimation(withKeyPath: keyPath, fromValue: fromValue, toValue: toValue, duration: duration, completion: completion)
     }
 
     /**
@@ -189,7 +189,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public func addTransition(option: UIView.AnimationOptions = [], block: @escaping () -> Void, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.addTransition(option: option, block: block, duration: duration, completion: completion)
+        base.__fw_addTransition(option: option, block: block, duration: duration, completion: completion)
     }
 
     /**
@@ -202,7 +202,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public func addTransition(option: UIView.AnimationOptions = [], block: @escaping () -> Void, duration: TimeInterval, animationsEnabled: Bool, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.addTransition(option: option, block: block, duration: duration, animationsEnabled: animationsEnabled, completion: completion)
+        base.__fw_addTransition(option: option, block: block, duration: duration, animationsEnabled: animationsEnabled, completion: completion)
     }
 
     /**
@@ -214,7 +214,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public func addTransition(toView: UIView, option: UIView.AnimationOptions = [], duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.addTransition(to: toView, withOption: option, duration: duration, completion: completion)
+        base.__fw_addTransition(to: toView, withOption: option, duration: duration, completion: completion)
     }
 
     /**
@@ -230,21 +230,21 @@ extension Wrapper where Base: UIView {
      */
     @discardableResult
     public func addTransition(type: String, subtype: String?, timingFunction: String?, duration: CFTimeInterval, completion: ((Bool) -> Void)? = nil) -> CATransition {
-        return base.__fw.addTransition(withType: type, subtype: subtype, timingFunction: timingFunction, duration: duration, completion: completion)
+        return base.__fw_addTransition(withType: type, subtype: subtype, timingFunction: timingFunction, duration: duration, completion: completion)
     }
 
     /**
      移除单个框架视图动画
      */
     public func removeAnimation() {
-        base.__fw.removeAnimation()
+        base.__fw_removeAnimation()
     }
 
     /**
      移除所有视图动画
      */
     public func removeAllAnimations() {
-        base.__fw.removeAllAnimations()
+        base.__fw_removeAllAnimations()
     }
 
     // MARK: - Custom
@@ -259,7 +259,7 @@ extension Wrapper where Base: UIView {
      */
     @discardableResult
     public func stroke(layer: CAShapeLayer, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) -> CABasicAnimation {
-        return base.__fw.stroke(with: layer, duration: duration, completion: completion)
+        return base.__fw_stroke(with: layer, duration: duration, completion: completion)
     }
 
     /**
@@ -271,7 +271,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func shake(times: Int, delta: CGFloat, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.shake(withTimes: times, delta: delta, duration: duration, completion: completion)
+        base.__fw_shake(withTimes: times, delta: delta, duration: duration, completion: completion)
     }
 
     /**
@@ -282,7 +282,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func fade(alpha: Float, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.fade(withAlpha: alpha, duration: duration, completion: completion)
+        base.__fw_fade(withAlpha: alpha, duration: duration, completion: completion)
     }
 
     /**
@@ -293,7 +293,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func fade(block: @escaping () -> Void, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.fade(block, duration: duration, completion: completion)
+        base.__fw_fade(block, duration: duration, completion: completion)
     }
 
     /**
@@ -304,7 +304,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func rotate(degree: CGFloat, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.rotate(withDegree: degree, duration: duration, completion: completion)
+        base.__fw_rotate(withDegree: degree, duration: duration, completion: completion)
     }
 
     /**
@@ -316,7 +316,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func scale(scaleX: Float, scaleY: Float, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.scale(withScaleX: scaleX, scaleY: scaleY, duration: duration, completion: completion)
+        base.__fw_scale(withScaleX: scaleX, scaleY: scaleY, duration: duration, completion: completion)
     }
 
     /**
@@ -327,7 +327,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func move(point: CGPoint, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.move(with: point, duration: duration, completion: completion)
+        base.__fw_move(with: point, duration: duration, completion: completion)
     }
 
     /**
@@ -338,7 +338,7 @@ extension Wrapper where Base: UIView {
      *  @param completion 完成回调
      */
     public func move(frame: CGRect, duration: TimeInterval, completion: ((Bool) -> Void)? = nil) {
-        base.__fw.move(withFrame: frame, duration: duration, completion: completion)
+        base.__fw_move(withFrame: frame, duration: duration, completion: completion)
     }
     
     // MARK: - Block
@@ -350,7 +350,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public static func animateNone(block: () -> Void, completion: (() -> Void)? = nil) {
-        Base.__fw.animateNone(block, completion: completion)
+        Base.__fw_animateNone(block, completion: completion)
     }
 
     /**
@@ -360,7 +360,7 @@ extension Wrapper where Base: UIView {
      @param completion 完成事件
      */
     public static func animate(block: () -> Void, completion: (() -> Void)? = nil) {
-        Base.__fw.animate(block, completion: completion)
+        Base.__fw_animate(block, completion: completion)
     }
     
 }
@@ -369,7 +369,7 @@ extension Wrapper where Base: CALayer {
     
     // 设置阴影颜色、偏移和半径
     public func setShadowColor(_ color: UIColor?, offset: CGSize, radius: CGFloat) {
-        base.__fw.setShadowColor(color, offset: offset, radius: radius)
+        base.__fw_setShadowColor(color, offset: offset, radius: radius)
     }
     
 }
@@ -393,7 +393,7 @@ extension Wrapper where Base: CAGradientLayer {
         startPoint: CGPoint,
         endPoint: CGPoint
     ) -> CAGradientLayer {
-        return Base.__fw.gradientLayer(frame, colors: colors, locations: locations, start: startPoint, end: endPoint)
+        return Base.__fw_gradientLayer(frame, colors: colors, locations: locations, start: startPoint, end: endPoint)
     }
     
 }
@@ -409,7 +409,7 @@ extension Wrapper where Base: UIView {
      */
     @discardableResult
     public func setBlurEffect(_ style: UIBlurEffect.Style) -> UIVisualEffectView? {
-        return base.__fw.setBlurEffect(style)
+        return base.__fw_setBlurEffect(style)
     }
 
     // MARK: - Bezier
@@ -423,7 +423,7 @@ extension Wrapper where Base: UIView {
      @param fillColor 填充颜色
      */
     public func drawBezierPath(_ bezierPath: UIBezierPath, strokeWidth: CGFloat, strokeColor: UIColor, fillColor: UIColor?) {
-        base.__fw.draw(bezierPath, strokeWidth: strokeWidth, stroke: strokeColor, fill: fillColor)
+        base.__fw_draw(bezierPath, strokeWidth: strokeWidth, stroke: strokeColor, fill: fillColor)
     }
 
     // MARK: - Gradient
@@ -437,7 +437,7 @@ extension Wrapper where Base: UIView {
      @param direction 渐变方向，自动计算startPoint和endPoint，支持四个方向，默认向下Down
      */
     public func drawLinearGradient(_ rect: CGRect, colors: [Any], locations: UnsafePointer<CGFloat>?, direction: UISwipeGestureRecognizer.Direction) {
-        base.__fw.drawLinearGradient(rect, colors: colors, locations: locations, direction: direction)
+        base.__fw_drawLinearGradient(rect, colors: colors, locations: locations, direction: direction)
     }
 
     /**
@@ -450,7 +450,7 @@ extension Wrapper where Base: UIView {
      @param endPoint 渐变结束点，需要根据rect计算
      */
     public func drawLinearGradient(_ rect: CGRect, colors: [Any], locations: UnsafePointer<CGFloat>?, startPoint: CGPoint, endPoint: CGPoint) {
-        base.__fw.drawLinearGradient(rect, colors: colors, locations: locations, start: startPoint, end: endPoint)
+        base.__fw_drawLinearGradient(rect, colors: colors, locations: locations, start: startPoint, end: endPoint)
     }
 
     /**
@@ -465,7 +465,7 @@ extension Wrapper where Base: UIView {
      */
     @discardableResult
     public func addGradientLayer(_ frame: CGRect, colors: [Any], locations: [NSNumber]?, startPoint: CGPoint, endPoint: CGPoint) -> CAGradientLayer {
-        return base.__fw.addGradientLayer(frame, colors: colors, locations: locations, start: startPoint, end: endPoint)
+        return base.__fw_addGradientLayer(frame, colors: colors, locations: locations, start: startPoint, end: endPoint)
     }
 
     // MARK: - Circle
@@ -473,19 +473,19 @@ extension Wrapper where Base: UIView {
     /// 添加进度圆形Layer，可设置绘制颜色和宽度，返回进度CAShapeLayer用于动画，degree为起始角度，如-90
     @discardableResult
     public func addCircleLayer(_ rect: CGRect, degree: CGFloat, progress: CGFloat, strokeColor: UIColor, strokeWidth: CGFloat) -> CAShapeLayer {
-        return base.__fw.addCircleLayer(rect, degree: degree, progress: progress, stroke: strokeColor, strokeWidth: strokeWidth)
+        return base.__fw_addCircleLayer(rect, degree: degree, progress: progress, stroke: strokeColor, strokeWidth: strokeWidth)
     }
 
     /// 添加进度圆形Layer，可设置绘制底色和进度颜色，返回进度CAShapeLayer用于动画，degree为起始角度，如-90
     @discardableResult
     public func addCircleLayer(_ rect: CGRect, degree: CGFloat, progress: CGFloat, progressColor: UIColor, strokeColor: UIColor, strokeWidth: CGFloat) -> CAShapeLayer {
-        return base.__fw.addCircleLayer(rect, degree: degree, progress: progress, progressColor: progressColor, stroke: strokeColor, strokeWidth: strokeWidth)
+        return base.__fw_addCircleLayer(rect, degree: degree, progress: progress, progressColor: progressColor, stroke: strokeColor, strokeWidth: strokeWidth)
     }
 
     /// 添加渐变进度圆形Layer，返回渐变Layer容器，添加strokeEnd动画请使用layer.mask即可
     @discardableResult
     public func addCircleLayer(_ rect: CGRect, degree: CGFloat, progress: CGFloat, gradientBlock: ((CALayer) -> Void)?, strokeColor: UIColor, strokeWidth: CGFloat) -> CALayer {
-        return base.__fw.addCircleLayer(rect, degree: degree, progress: progress, gradientBlock: gradientBlock, stroke: strokeColor, strokeWidth: strokeWidth)
+        return base.__fw_addCircleLayer(rect, degree: degree, progress: progress, gradientBlock: gradientBlock, stroke: strokeColor, strokeWidth: strokeWidth)
     }
 
     // MARK: - Dash
@@ -501,7 +501,7 @@ extension Wrapper where Base: UIView {
      */
     @discardableResult
     public func addDashLayer(_ rect: CGRect, lineLength: CGFloat, lineSpacing: CGFloat, lineColor: UIColor) -> CALayer {
-        return base.__fw.addDashLayer(rect, lineLength: lineLength, lineSpacing: lineSpacing, lineColor: lineColor)
+        return base.__fw_addDashLayer(rect, lineLength: lineLength, lineSpacing: lineSpacing, lineColor: lineColor)
     }
     
 }

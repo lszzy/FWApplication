@@ -414,7 +414,7 @@
         tableView.tableDelegate.cellClass = [TestSkeletonCell class];
         tableView.tableView.scrollEnabled = YES;
     } else {
-        UIScrollView *scrollView = [UIScrollView.fw scrollView];
+        UIScrollView *scrollView = [UIScrollView fw_scrollView];
         [layout addSubview:scrollView];
         scrollView.fw_layoutChain.edges();
         
@@ -422,7 +422,7 @@
         // 没有数据时需要指定cell，有数据时无需指定
         tableView.tableDelegate.cellClass = [TestSkeletonCell class];
         [layout addAnimationView:tableView];
-        [scrollView.fw.contentView addSubview:tableView];
+        [scrollView.fw_contentView addSubview:tableView];
         tableView.fw_layoutChain.edges();
     }
 }

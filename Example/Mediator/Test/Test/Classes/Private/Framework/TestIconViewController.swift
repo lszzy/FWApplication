@@ -46,14 +46,14 @@ class TestIconCell: UICollectionViewCell {
         searchBar.placeholder = "Search"
         searchBar.delegate = self
         searchBar.tintColor = Theme.textColor
-        searchBar.__fw.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
-        searchBar.__fw.backgroundColor = Theme.barColor
-        searchBar.__fw.textFieldBackgroundColor = Theme.tableColor
-        searchBar.__fw.searchIconOffset = 16 - 6
-        searchBar.__fw.searchTextOffset = 4
-        searchBar.__fw.searchIconCenter = false
+        searchBar.fw.contentInset = UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16)
+        searchBar.fw.backgroundColor = Theme.barColor
+        searchBar.fw.textFieldBackgroundColor = Theme.tableColor
+        searchBar.fw.searchIconOffset = 16 - 6
+        searchBar.fw.searchTextOffset = 4
+        searchBar.fw.searchIconCenter = false
         
-        let textField = searchBar.__fw.textField
+        let textField = searchBar.fw.textField
         textField?.font = UIFont.systemFont(ofSize: 12)
         textField?.fw.setCornerRadius(16)
         textField?.fw.touchResign = true
@@ -62,7 +62,7 @@ class TestIconCell: UICollectionViewCell {
     
     override func renderView() {
         collectionView.backgroundColor = Theme.backgroundColor
-        collectionView.__fw.keyboardDismissOnDrag = true
+        collectionView.fw.keyboardDismissOnDrag = true
     }
     
     func renderCollectionViewLayout() -> UICollectionViewLayout {
