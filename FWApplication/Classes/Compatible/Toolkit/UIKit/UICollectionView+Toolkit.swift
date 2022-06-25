@@ -279,19 +279,20 @@ extension Wrapper where Base: UICollectionView {
     }
 }
 
-@objc extension __FWCollectionViewWrapper {
-    public var delegate: CollectionViewDelegate {
-        return base.fw.delegate
-    }
-}
-
-@objc extension __FWCollectionViewClassWrapper {
-    public func collectionView() -> UICollectionView {
-        return UICollectionView.fw.collectionView()
+@objc extension UICollectionView {
+    @objc(fw_delegate)
+    public var __fw_delegate: CollectionViewDelegate {
+        return fw.delegate
     }
     
-    public func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
-        return UICollectionView.fw.collectionView(collectionViewLayout)
+    @objc(fw_collectionView)
+    public static func __fw_collectionView() -> UICollectionView {
+        return fw.collectionView()
+    }
+    
+    @objc(fw_collectionView:)
+    public static func __fw_collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
+        return fw.collectionView(collectionViewLayout)
     }
 }
 

@@ -11,7 +11,6 @@
 #import "FWIndicatorView.h"
 #import "FWToolbarView.h"
 #import "FWProgressView.h"
-#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -544,9 +544,9 @@ id FWJSONObjectByRemovingKeysWithNullValues(id JSONObject, NSJSONReadingOptions 
 
 #pragma mark -
 
-@interface FWImageClassWrapper ()
+@interface UIImage ()
 
-- (UIImage *)imageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary *)options;
++ (UIImage *)fw_imageWithData:(NSData *)data scale:(CGFloat)scale options:(NSDictionary *)options;
 
 @end
 
@@ -560,14 +560,14 @@ static UIImage * FWImageWithDataAtScale(NSData *data, CGFloat scale, NSDictionar
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         imageLock = [[NSLock alloc] init];
-        imageHook = [UIImage.fw respondsToSelector:@selector(imageWithData:scale:options:)];
+        imageHook = [UIImage respondsToSelector:@selector(fw_imageWithData:scale:options:)];
     });
     
     // Use hook method if exists
     if (imageHook) {
         UIImage *image = nil;
         [imageLock lock];
-        image = [UIImage.fw imageWithData:data scale:scale options:options];
+        image = [UIImage fw_imageWithData:data scale:scale options:options];
         [imageLock unlock];
         
         return image;

@@ -166,13 +166,14 @@ extension Wrapper where Base: UIApplication {
     
 }
 
-// MARK: - FWApplicationClassWrapper+OcrObject
-@objc extension __FWApplicationClassWrapper {
+// MARK: - UIApplication+OcrObject
+@objc extension UIApplication {
     
     /// 识别图片文字，可设置语言(zh-CN,en-US)等，完成时主线程回调结果
+    @objc(fw_recognizeText:configuration:completion:)
     @available(iOS 13.0, *)
-    public func recognizeText(in image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([OcrObject]) -> Void) {
-        UIApplication.fw.recognizeText(in: image, configuration: configuration, completion: completion)
+    public static func __fw_recognizeText(in image: CGImage, configuration: ((VNRecognizeTextRequest) -> Void)?, completion: @escaping ([OcrObject]) -> Void) {
+        fw.recognizeText(in: image, configuration: configuration, completion: completion)
     }
     
 }

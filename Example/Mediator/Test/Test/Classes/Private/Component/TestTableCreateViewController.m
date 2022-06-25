@@ -244,20 +244,20 @@
 
 - (void)renderView
 {
-    self.tableView = [UITableView.fw tableView];
+    self.tableView = [UITableView fw_tableView];
     FWWeakifySelf();
-    self.tableView.fw.delegate.cellClass = [TestTableCreateCell class];
-    self.tableView.fw.delegate.didSelectRow = ^(NSIndexPath * indexPath) {
+    self.tableView.fw_delegate.cellClass = [TestTableCreateCell class];
+    self.tableView.fw_delegate.didSelectRow = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
         [self fw_showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
     };
-    self.tableView.fw.delegate.deleteTitle = @"删除";
-    self.tableView.fw.delegate.didDeleteRow = ^(NSIndexPath * indexPath) {
+    self.tableView.fw_delegate.deleteTitle = @"删除";
+    self.tableView.fw_delegate.didDeleteRow = ^(NSIndexPath * indexPath) {
         FWStrongifySelf();
         [self fw_showAlertWithTitle:nil message:[NSString stringWithFormat:@"点击了删除%@", @(indexPath.row)] cancel:nil cancelBlock:nil];
     };
     
-    self.tableView.fw.delegate.viewForHeader = ^id _Nullable(NSInteger section) {
+    self.tableView.fw_delegate.viewForHeader = ^id _Nullable(NSInteger section) {
         FWStrongifySelf();
         TestTableCreateHeaderView *viewForHeader = [TestTableCreateHeaderView fw_headerFooterViewWithTableView:self.tableView];
         viewForHeader.object = @1;
@@ -268,8 +268,8 @@
         viewForHeader.frame = CGRectMake(0, 0, self.tableView.fw_width, height);
         return viewForHeader;
     };
-    self.tableView.fw.delegate.footerViewClass = [TestTableCreateFooterView class];
-    self.tableView.fw.delegate.footerConfiguration = ^(TestTableCreateFooterView * _Nonnull headerFooterView, NSInteger section) {
+    self.tableView.fw_delegate.footerViewClass = [TestTableCreateFooterView class];
+    self.tableView.fw_delegate.footerConfiguration = ^(TestTableCreateFooterView * _Nonnull headerFooterView, NSInteger section) {
         headerFooterView.object = @1;
     };
     
@@ -292,10 +292,10 @@
     FWWeakifySelf();
     [self fw_setRightBarItem:FWIcon.addImage block:^(id sender) {
         FWStrongifySelf();
-        NSMutableArray *sectionData = self.tableView.fw.delegate.tableData[0].mutableCopy;
+        NSMutableArray *sectionData = self.tableView.fw_delegate.tableData[0].mutableCopy;
         NSInteger lastIndex = [sectionData.lastObject fw_safeInteger];
         [sectionData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
-        self.tableView.fw.delegate.tableData = @[sectionData];
+        self.tableView.fw_delegate.tableData = @[sectionData];
         [self.tableView reloadData];
     }];
 }
@@ -311,7 +311,7 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"刷新完成");
         
-        self.tableView.fw.delegate.tableData = @[@[@1, @2]];
+        self.tableView.fw_delegate.tableData = @[@[@1, @2]];
         [self.tableView reloadData];
         
         [self.tableView fw_endRefreshing];
@@ -324,10 +324,10 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"加载完成");
         
-        NSMutableArray *sectionData = self.tableView.fw.delegate.tableData[0].mutableCopy;
+        NSMutableArray *sectionData = self.tableView.fw_delegate.tableData[0].mutableCopy;
         NSInteger lastIndex = [sectionData.lastObject fw_safeInteger];
         [sectionData addObjectsFromArray:@[@(lastIndex + 1), @(lastIndex + 2)]];
-        self.tableView.fw.delegate.tableData = @[sectionData];
+        self.tableView.fw_delegate.tableData = @[sectionData];
         [self.tableView reloadData];
         
         [self.tableView fw_endLoading];

@@ -283,19 +283,20 @@ extension Wrapper where Base: UITableView {
     }
 }
 
-@objc extension __FWTableViewWrapper {
-    public var delegate: TableViewDelegate {
-        return base.fw.delegate
-    }
-}
-
-@objc extension __FWTableViewClassWrapper {
-    public func tableView() -> UITableView {
-        return UITableView.fw.tableView()
+@objc extension UITableView {
+    @objc(fw_delegate)
+    public var __fw_delegate: TableViewDelegate {
+        return fw.delegate
     }
     
-    public func tableView(_ style: UITableView.Style) -> UITableView {
-        return UITableView.fw.tableView(style)
+    @objc(fw_tableView)
+    public static func __fw_tableView() -> UITableView {
+        return fw.tableView()
+    }
+    
+    @objc(fw_tableView:)
+    public static func __fw_tableView(_ style: UITableView.Style) -> UITableView {
+        return fw.tableView(style)
     }
 }
 
