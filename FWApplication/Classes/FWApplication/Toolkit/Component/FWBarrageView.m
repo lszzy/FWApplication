@@ -900,7 +900,7 @@ NSString *const FWBarrageAnimation = @"FWBarrageAnimation";
 }
 
 - (void)convertContentToImage {
-    UIImage *contentImage = [self.layer.fw convertContentToImageWithSize:_textLabel.frame.size];
+    UIImage *contentImage = [self.layer fw_convertContentToImageWithSize:_textLabel.frame.size];
     [self.layer setContents:(__bridge id)contentImage.CGImage];
 }
 
@@ -960,12 +960,12 @@ NSString *const FWBarrageAnimation = @"FWBarrageAnimation";
 
 @end
 
-@implementation FWLayerWrapper (FWBarrage)
+@implementation CALayer (FWBarrage)
 
-- (UIImage *)convertContentToImageWithSize:(CGSize)contentSize {
+- (UIImage *)fw_convertContentToImageWithSize:(CGSize)contentSize {
     UIGraphicsBeginImageContextWithOptions(contentSize, 0.0, [UIScreen mainScreen].scale);
     //self.base为需要截屏的UI控件 即通过改变此参数可以截取特定的UI控件
-    [self.base renderInContext:UIGraphicsGetCurrentContext()];
+    [self renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;

@@ -8,7 +8,6 @@
  */
 
 #import <UIKit/UIKit.h>
-@import FWFramework;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -197,9 +196,9 @@ NS_SWIFT_NAME(BarrageTrackInfo)
 
 @end
 
-@interface FWLayerWrapper (FWBarrage)
+@interface CALayer (FWBarrage)
 
-- (nullable UIImage *)convertContentToImageWithSize:(CGSize)contentSize;
+- (nullable UIImage *)fw_convertContentToImageWithSize:(CGSize)contentSize NS_REFINED_FOR_SWIFT;
 
 @end
 

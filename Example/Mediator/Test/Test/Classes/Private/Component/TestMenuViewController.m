@@ -25,7 +25,7 @@
 
 - (BOOL)shouldPopController
 {
-    FWDrawerView *drawerView = self.contentView.fw.drawerView;
+    FWDrawerView *drawerView = self.contentView.fw_drawerView;
     [drawerView setPosition:drawerView.openPosition animated:YES];
     return NO;
 }
@@ -37,7 +37,7 @@
     FWWeakifySelf();
     [self fw_setLeftBarItem:@"Menu" block:^(id sender) {
         FWStrongifySelf();
-        FWDrawerView *drawerView = self.contentView.fw.drawerView;
+        FWDrawerView *drawerView = self.contentView.fw_drawerView;
         CGFloat position = (drawerView.position == drawerView.openPosition) ? drawerView.closePosition : drawerView.openPosition;
         [drawerView setPosition:position animated:YES];
     }];
@@ -78,7 +78,7 @@
     [contentView addSubview:closeLabel];
     [self.view addSubview:contentView];
     
-    [contentView.fw drawerView:UISwipeGestureRecognizerDirectionRight
+    [contentView fw_drawerView:UISwipeGestureRecognizerDirectionRight
                     positions:@[@(-FWScreenWidth / 2.0), @(0)]
                kickbackHeight:25
                      callback:nil];

@@ -9,6 +9,7 @@
 
 #import "FWDrawerView.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWDrawerView
 
@@ -42,7 +43,7 @@
         _gestureRecognizer = gestureRecognizer;
         gestureRecognizer.delegate = self;
         [view addGestureRecognizer:gestureRecognizer];
-        view.fw.drawerView = self;
+        view.fw_drawerView = self;
     }
     return self;
 }
@@ -321,26 +322,26 @@
 
 @end
 
-#pragma mark - FWViewWrapper+FWDrawerView
+#pragma mark - UIView+FWDrawerView
 
-@implementation FWViewWrapper (FWDrawerView)
+@implementation UIView (FWDrawerView)
 
-- (FWDrawerView *)drawerView
+- (FWDrawerView *)fw_drawerView
 {
-    return objc_getAssociatedObject(self.base, @selector(drawerView));
+    return objc_getAssociatedObject(self, @selector(fw_drawerView));
 }
 
-- (void)setDrawerView:(FWDrawerView *)drawerView
+- (void)setFw_drawerView:(FWDrawerView *)drawerView
 {
-    objc_setAssociatedObject(self.base, @selector(drawerView), drawerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_drawerView), drawerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (FWDrawerView *)drawerView:(UISwipeGestureRecognizerDirection)direction
+- (FWDrawerView *)fw_drawerView:(UISwipeGestureRecognizerDirection)direction
                      positions:(NSArray<NSNumber *> *)positions
                 kickbackHeight:(CGFloat)kickbackHeight
                       callback:(void (^)(CGFloat, BOOL))callback
 {
-    FWDrawerView *drawerView = [[FWDrawerView alloc] initWithView:self.base];
+    FWDrawerView *drawerView = [[FWDrawerView alloc] initWithView:self];
     if (direction > 0) drawerView.direction = direction;
     drawerView.positions = positions;
     drawerView.kickbackHeight = kickbackHeight;
@@ -350,37 +351,37 @@
 
 @end
 
-#pragma mark - FWScrollViewWrapper+FWDrawerView
+#pragma mark - UIScrollView+FWDrawerView
 
-@implementation FWScrollViewWrapper (FWDrawerView)
+@implementation UIScrollView (FWDrawerView)
 
-- (BOOL)drawerSuperviewFixed
+- (BOOL)fw_drawerSuperviewFixed
 {
-    return [objc_getAssociatedObject(self.base, @selector(drawerSuperviewFixed)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_drawerSuperviewFixed)) boolValue];
 }
 
-- (void)setDrawerSuperviewFixed:(BOOL)fixed
+- (void)setFw_drawerSuperviewFixed:(BOOL)fixed
 {
-    objc_setAssociatedObject(self.base, @selector(drawerSuperviewFixed), @(fixed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_drawerSuperviewFixed), @(fixed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)drawerSuperviewDidScroll:(CGFloat)position
+- (void)fw_drawerSuperviewDidScroll:(CGFloat)position
 {
-    if (self.base.contentOffset.y >= position) {
-        self.drawerSuperviewFixed = YES;
+    if (self.contentOffset.y >= position) {
+        self.fw_drawerSuperviewFixed = YES;
     }
-    if (self.drawerSuperviewFixed) {
-        self.base.contentOffset = CGPointMake(self.base.contentOffset.x, position);
+    if (self.fw_drawerSuperviewFixed) {
+        self.contentOffset = CGPointMake(self.contentOffset.x, position);
     }
 }
 
-- (void)drawerSubviewDidScroll:(UIScrollView *)superview
+- (void)fw_drawerSubviewDidScroll:(UIScrollView *)superview
 {
-    if (self.base.contentOffset.y <= 0) {
-        superview.fw.drawerSuperviewFixed = NO;
+    if (self.contentOffset.y <= 0) {
+        superview.fw_drawerSuperviewFixed = NO;
     }
-    if (!superview.fw.drawerSuperviewFixed) {
-        self.base.contentOffset = CGPointMake(self.base.contentOffset.x, 0);
+    if (!superview.fw_drawerSuperviewFixed) {
+        self.contentOffset = CGPointMake(self.contentOffset.x, 0);
     }
 }
 

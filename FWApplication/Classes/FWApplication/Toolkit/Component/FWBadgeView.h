@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -45,54 +44,54 @@ NS_SWIFT_NAME(BadgeView)
 
 @end
 
-#pragma mark - FWViewWrapper+FWBadge
+#pragma mark - UIView+FWBadge
 
-@interface FWViewWrapper (FWBadge)
+@interface UIView (FWBadge)
 
 /// 显示右上角提醒灯，上右偏移指定距离
-- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
+- (void)fw_showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue NS_REFINED_FOR_SWIFT;
 
 /// 隐藏提醒灯
-- (void)hideBadgeView;
+- (void)fw_hideBadgeView NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWBarItemWrapper+FWBadge
+#pragma mark - UIBarItem+FWBadge
 
-@interface FWBarItemWrapper (FWBadge)
+@interface UIBarItem (FWBadge)
 
 /// 获取UIBarItem(UIBarButtonItem、UITabBarItem)内部的view，通常对于navigationItem和tabBarItem而言，需要在设置为item后并且在bar可见时(例如 viewDidAppear:及之后)获取fwView才有值
-@property (nullable, nonatomic, weak, readonly) UIView *view;
+@property (nullable, nonatomic, weak, readonly) UIView *fw_view NS_REFINED_FOR_SWIFT;
 
 /// 当item内的view生成后就会调用一次这个block，仅对UIBarButtonItem、UITabBarItem有效
-@property (nullable, nonatomic, copy) void (^viewLoadedBlock)(__kindof UIBarItem *item, UIView *view);
+@property (nullable, nonatomic, copy) void (^fw_viewLoadedBlock)(__kindof UIBarItem *item, UIView *view) NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWBarButtonItemWrapper+FWBadge
+#pragma mark - UIBarButtonItem+FWBadge
 
-@interface FWBarButtonItemWrapper (FWBadge)
+@interface UIBarButtonItem (FWBadge)
 
 /// 显示右上角提醒灯，上右偏移指定距离
-- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
+- (void)fw_showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue NS_REFINED_FOR_SWIFT;
 
 /// 隐藏提醒灯
-- (void)hideBadgeView;
+- (void)fw_hideBadgeView NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWTabBarItemWrapper+FWBadge
+#pragma mark - UITabBarItem+FWBadge
 
-@interface FWTabBarItemWrapper (FWBadge)
+@interface UITabBarItem (FWBadge)
 
 /// 获取一个UITabBarItem内显示图标的UIImageView，如果找不到则返回nil
-@property (nullable, nonatomic, weak, readonly) UIImageView *imageView;
+@property (nullable, nonatomic, weak, readonly) UIImageView *fw_imageView NS_REFINED_FOR_SWIFT;
 
 /// 显示右上角提醒灯，上右偏移指定距离
-- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue;
+- (void)fw_showBadgeView:(FWBadgeView *)badgeView badgeValue:(nullable NSString *)badgeValue NS_REFINED_FOR_SWIFT;
 
 /// 隐藏提醒灯
-- (void)hideBadgeView;
+- (void)fw_hideBadgeView NS_REFINED_FOR_SWIFT;
 
 @end
 

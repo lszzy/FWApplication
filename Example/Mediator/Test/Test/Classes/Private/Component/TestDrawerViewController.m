@@ -104,7 +104,7 @@
     CGFloat fromPosition = 0;
     CGFloat toPosition = ViewHeight / 4 * 3;
     FWWeakifySelf();
-    [drawerView.fw drawerView:0
+    [drawerView fw_drawerView:0
                    positions:@[@(toPosition), @(ViewHeight / 4), @(ViewHeight / 2), @(fromPosition)]
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
@@ -155,7 +155,7 @@
     [scrollView addSubview:contentView];
     
     FWWeakifySelf();
-    [scrollView.fw drawerView:UISwipeGestureRecognizerDirectionDown
+    [scrollView fw_drawerView:UISwipeGestureRecognizerDirectionDown
                    positions:@[@(0), @(-ViewHeight / 4), @(-ViewHeight / 2), @(-ViewHeight / 4 * 3)]
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
@@ -203,7 +203,7 @@
     [scrollView addSubview:contentView];
     
     FWWeakifySelf();
-    [scrollView.fw drawerView:UISwipeGestureRecognizerDirectionLeft
+    [scrollView fw_drawerView:UISwipeGestureRecognizerDirectionLeft
                    positions:@[@(FWScreenWidth / 4 * 3), @(0)]
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {
@@ -251,7 +251,7 @@
     [scrollView addSubview:contentView];
     
     FWWeakifySelf();
-    [scrollView.fw drawerView:UISwipeGestureRecognizerDirectionRight
+    [scrollView fw_drawerView:UISwipeGestureRecognizerDirectionRight
                    positions:@[@(0), @(-FWScreenWidth / 4 * 3)]
               kickbackHeight:25
                     callback:^(CGFloat position, BOOL finished) {

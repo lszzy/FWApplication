@@ -6,7 +6,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -43,13 +42,13 @@ NS_SWIFT_NAME(CollectionViewDelegateFlowLayout)
 /**
  通用布局section配置分类
  */
-@interface FWCollectionViewFlowLayoutWrapper (FWCollectionViewSectionConfig)
+@interface UICollectionViewFlowLayout (FWCollectionViewSectionConfig)
 
 /// 初始化布局section配置，在prepareLayout调用即可
-- (void)sectionConfigPrepareLayout;
+- (void)fw_sectionConfigPrepareLayout NS_REFINED_FOR_SWIFT;
 
 /// 获取布局section属性，在layoutAttributesForElementsInRect:调用并添加即可
-- (NSArray<UICollectionViewLayoutAttributes *> *)sectionConfigLayoutAttributesForElementsInRect:(CGRect)rect;
+- (NSArray<UICollectionViewLayoutAttributes *> *)fw_sectionConfigLayoutAttributesForElementsInRect:(CGRect)rect NS_REFINED_FOR_SWIFT;
 
 @end
 
