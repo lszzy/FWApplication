@@ -44,7 +44,7 @@ FWPropertyAssign(NSInteger, count);
     [self.view addSubview:label];
     
     button = [UIButton fw_buttonWithTitle:@"Button1秒内不可重复点击" font:[UIFont fw_fontOfSize:15] titleColor:[Theme textColor]];
-    button.fw.touchEventInterval = 1;
+    button.fw_touchEventInterval = 1;
     button.frame = CGRectMake(25, 105, 200, 30);
     [button fw_addTouchTarget:self action:@selector(onClick5:)];
     [self.view addSubview:button];
@@ -70,7 +70,7 @@ FWPropertyAssign(NSInteger, count);
     [timerButton2 setTitle:@"发送" forState:UIControlStateNormal];
     __block NSTimer *timer1, *timer2;
     [timerButton2  fw_addTouchBlock:^(UIButton *sender) {
-        [timerButton.fw startCountDown:60 title:@"=>" waitTitle:@"%lds"];
+        [timerButton fw_startCountDown:60 title:@"=>" waitTitle:@"%lds"];
         [timer1 invalidate];
         timer1 = [NSTimer fw_commonTimerWithCountDown:60 block:^(NSInteger countDown) {
             NSString *title = countDown > 0 ? [NSString stringWithFormat:@"%lds", countDown] : @"=>";

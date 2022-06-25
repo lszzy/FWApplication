@@ -27,17 +27,17 @@
     NSString *originString = @"FWApplication";
     
     FWLogDebug(@"Original: %@", originString);
-    NSString *publicEncode = [originString.fw_utf8Data.fw RSAEncryptWithPublicKey:publicKey].fw_utf8String;
+    NSString *publicEncode = [originString.fw_utf8Data fw_RSAEncryptWithPublicKey:publicKey].fw_utf8String;
     FWLogDebug(@"Encrypted Public: %@", publicEncode);
-    NSString *privateDecode = [publicEncode.fw_utf8Data.fw RSADecryptWithPrivateKey:privateKey].fw_utf8String;
+    NSString *privateDecode = [publicEncode.fw_utf8Data fw_RSADecryptWithPrivateKey:privateKey].fw_utf8String;
     FWLogDebug(@"Decrypted Private: %@", privateDecode);
     
-    privateDecode = [encodeString.fw_utf8Data.fw RSADecryptWithPrivateKey:privateKey].fw_utf8String;
+    privateDecode = [encodeString.fw_utf8Data fw_RSADecryptWithPrivateKey:privateKey].fw_utf8String;
     FWLogDebug(@"Decrypted Server: %@", privateDecode);
     
-    NSString *privateEncode = [originString.fw_utf8Data.fw RSASignWithPrivateKey:privateKey].fw_utf8String;
+    NSString *privateEncode = [originString.fw_utf8Data fw_RSASignWithPrivateKey:privateKey].fw_utf8String;
     FWLogDebug(@"Sign Private: %@", privateEncode);
-    NSString *publicDecode = [privateEncode.fw_utf8Data.fw RSAVerifyWithPublicKey:publicKey].fw_utf8String;
+    NSString *publicDecode = [privateEncode.fw_utf8Data fw_RSAVerifyWithPublicKey:publicKey].fw_utf8String;
     FWLogDebug(@"Verify Public: %@", publicDecode);
 }
 
@@ -318,7 +318,7 @@
         
         // 操作
         [self fw_lock];
-        NSInteger value = [[dict.fw randomWeightKey] integerValue];
+        NSInteger value = [[dict fw_randomWeightKey] integerValue];
         if (value == 1) {
             count1 += 1;
         } else if (value == 2) {

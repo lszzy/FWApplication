@@ -9,23 +9,23 @@
 
 #import "NSString+FWApplication.h"
 
-@implementation FWStringWrapper (FWApplication)
+@implementation NSString (FWApplication)
 
 #pragma mark - Pinyin
 
-- (NSString *)pinyinString
+- (NSString *)fw_pinyinString
 {
-    if (self.base.length == 0) return self.base;
-    NSMutableString *mutableString = [NSMutableString stringWithString:self.base];
+    if (self.length == 0) return self;
+    NSMutableString *mutableString = [NSMutableString stringWithString:self];
     CFStringTransform((CFMutableStringRef)mutableString, NULL, kCFStringTransformToLatin, false);
     NSString *pinyinStr = (NSMutableString *)[mutableString stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:[NSLocale currentLocale]];
     return [pinyinStr lowercaseString];
 }
 
-- (NSComparisonResult)pinyinCompare:(NSString *)string
+- (NSComparisonResult)fw_pinyinCompare:(NSString *)string
 {
-    NSString *pinyin1 = self.pinyinString;
-    NSString *pinyin2 = string.fw.pinyinString;
+    NSString *pinyin1 = self.fw_pinyinString;
+    NSString *pinyin2 = string.fw_pinyinString;
     
     NSUInteger count = MIN(pinyin1.length, pinyin2.length);
     for (int i = 0; i < count; i++) {
@@ -50,9 +50,9 @@
 
 #pragma mark - Regex
 
-- (NSString *)emojiSubstring:(NSUInteger)index
+- (NSString *)fw_emojiSubstring:(NSUInteger)index
 {
-    NSString *result = self.base;
+    NSString *result = self;
     if (result.length > index) {
         // 获取index处的整个字符range，并截取掉整个字符，防止半个Emoji
         NSRange rangeIndex = [result rangeOfComposedCharacterSequenceAtIndex:index];
@@ -61,26 +61,26 @@
     return result;
 }
 
-- (NSString *)regexSubstring:(NSString *)regex
+- (NSString *)fw_regexSubstring:(NSString *)regex
 {
-    NSRange range = [self.base rangeOfString:regex options:NSRegularExpressionSearch];
+    NSRange range = [self rangeOfString:regex options:NSRegularExpressionSearch];
     if (range.location != NSNotFound) {
-        return [self.base substringWithRange:range];
+        return [self substringWithRange:range];
     } else {
         return nil;
     }
 }
 
-- (NSString *)regexReplace:(NSString *)regex withString:(NSString *)string
+- (NSString *)fw_regexReplace:(NSString *)regex withString:(NSString *)string
 {
     NSRegularExpression *regexObj = [[NSRegularExpression alloc] initWithPattern:regex options:0 error:nil];
-    return [regexObj stringByReplacingMatchesInString:self.base options:0 range:NSMakeRange(0, self.base.length) withTemplate:string];
+    return [regexObj stringByReplacingMatchesInString:self options:0 range:NSMakeRange(0, self.length) withTemplate:string];
 }
 
-- (void)regexMatches:(NSString *)regex withBlock:(void (^)(NSRange))block
+- (void)fw_regexMatches:(NSString *)regex withBlock:(void (^)(NSRange))block
 {
     NSRegularExpression *regexObj = [[NSRegularExpression alloc] initWithPattern:regex options:0 error:nil];
-    NSArray<NSTextCheckingResult *> *matches = [regexObj matchesInString:self.base options:0 range:NSMakeRange(0, self.base.length)];
+    NSArray<NSTextCheckingResult *> *matches = [regexObj matchesInString:self options:0 range:NSMakeRange(0, self.length)];
     int count = (int)matches.count;
     if (count > 0) {
         // 倒序循环，避免replace等越界
@@ -95,14 +95,14 @@
 
 #pragma mark - Html
 
-- (NSString *)escapeHtml
+- (NSString *)fw_escapeHtml
 {
-    NSUInteger len = self.base.length;
-    if (!len) return self.base;
+    NSUInteger len = self.length;
+    if (!len) return self;
     
     unichar *buf = malloc(sizeof(unichar) * len);
-    if (!buf) return self.base;
-    [self.base getCharacters:buf range:NSMakeRange(0, len)];
+    if (!buf) return self;
+    [self getCharacters:buf range:NSMakeRange(0, len)];
     
     NSMutableString *result = [NSMutableString string];
     for (int i = 0; i < len; i++) {
@@ -126,11 +126,7 @@
     return result;
 }
 
-@end
-
-@implementation FWStringClassWrapper (FWApplication)
-
-- (NSString *)UUIDString
++ (NSString *)fw_UUIDString
 {
     CFUUIDRef uuid = CFUUIDCreate(NULL);
     CFStringRef string = CFUUIDCreateString(NULL, uuid);
@@ -140,48 +136,48 @@
 
 @end
 
-#pragma mark - FWStringWrapper+FWFormat
+#pragma mark - NSString+FWFormat
 
-@implementation FWStringWrapper (FWFormat)
+@implementation NSString (FWFormat)
 
-- (BOOL)isFormatRegex:(NSString *)regex
+- (BOOL)fw_isFormatRegex:(NSString *)regex
 {
     NSPredicate *regexPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
-    return [regexPredicate evaluateWithObject:self.base] == YES;
+    return [regexPredicate evaluateWithObject:self] == YES;
 }
 
-- (BOOL)isFormatMobile
+- (BOOL)fw_isFormatMobile
 {
-    return [self isFormatRegex:@"^1\\d{10}$"];
+    return [self fw_isFormatRegex:@"^1\\d{10}$"];
 }
 
-- (BOOL)isFormatTelephone
+- (BOOL)fw_isFormatTelephone
 {
-    return [self isFormatRegex:@"^(\\d{3}\\-)?\\d{8}|(\\d{4}\\-)?\\d{7}$"];
+    return [self fw_isFormatRegex:@"^(\\d{3}\\-)?\\d{8}|(\\d{4}\\-)?\\d{7}$"];
 }
 
-- (BOOL)isFormatInteger
+- (BOOL)fw_isFormatInteger
 {
-    return [self isFormatRegex:@"^\\-?\\d+$"];
+    return [self fw_isFormatRegex:@"^\\-?\\d+$"];
 }
 
-- (BOOL)isFormatNumber
+- (BOOL)fw_isFormatNumber
 {
-    return [self isFormatRegex:@"^\\-?\\d+\\.?\\d*$"];
+    return [self fw_isFormatRegex:@"^\\-?\\d+\\.?\\d*$"];
 }
 
-- (BOOL)isFormatMoney
+- (BOOL)fw_isFormatMoney
 {
-    return [self isFormatRegex:@"^\\d+\\.?\\d{0,2}$"];
+    return [self fw_isFormatRegex:@"^\\d+\\.?\\d{0,2}$"];
 }
 
-- (BOOL)isFormatIdcard
+- (BOOL)fw_isFormatIdcard
 {
     // 简单版本
     // return [self isFormatRegex:@"^[1-9]\\d{5}[1-9]\\d{3}((0\\d)|(1[0-2]))(([0|1|2]\\d)|3[0-1])\\d{3}(\\d|x|X)$"];
     
     // 复杂版本
-    NSString *sPaperId = self.base;
+    NSString *sPaperId = self;
     // 判断位数
     if ([sPaperId length] != 15 && [sPaperId length] != 18) {
         return NO;
@@ -297,12 +293,12 @@
  *  2，将奇位乘积的个十位全部相加，再加上所有偶数位上的数字
  *  3，将加法和加上校验位能被 10 整除。
  */
-- (BOOL)isFormatBankcard
+- (BOOL)fw_isFormatBankcard
 {
     // 取出最后一位
-    NSString *lastNum = [[self.base substringFromIndex:(self.base.length - 1)] copy];
+    NSString *lastNum = [[self substringFromIndex:(self.length - 1)] copy];
     // 前15或18位
-    NSString *forwardNum = [[self.base substringToIndex:(self.base.length - 1)] copy];
+    NSString *forwardNum = [[self substringToIndex:(self.length - 1)] copy];
     
     NSMutableArray *forwardArr = [[NSMutableArray alloc] initWithCapacity:0];
     for (int i = 0; i < forwardNum.length; i++) {
@@ -361,30 +357,30 @@
     return (luhmTotal % 10 == 0) ? YES : NO;
 }
 
-- (BOOL)isFormatCarno
+- (BOOL)fw_isFormatCarno
 {
     // 车牌号:湘K-DE829 香港车牌号码:粤Z-J499港。\u4e00-\u9fa5表示unicode编码中汉字已编码部分，\u9fa5-\u9fff是保留部分
     NSString *regex = @"^[\u4e00-\u9fff]{1}[a-zA-Z]{1}[-][a-zA-Z_0-9]{4}[a-zA-Z_0-9_\u4e00-\u9fff]$";
-    return [self isFormatRegex:regex];
+    return [self fw_isFormatRegex:regex];
 }
 
-- (BOOL)isFormatPostcode
+- (BOOL)fw_isFormatPostcode
 {
-    return [self isFormatRegex:@"^[0-8]\\d{5}(?!\\d)$"];
+    return [self fw_isFormatRegex:@"^[0-8]\\d{5}(?!\\d)$"];
 }
 
-- (BOOL)isFormatTaxno
+- (BOOL)fw_isFormatTaxno
 {
-    return [self isFormatRegex:@"[0-9]\\d{13}([0-9]|X)$"];
+    return [self fw_isFormatRegex:@"[0-9]\\d{13}([0-9]|X)$"];
 }
 
-- (BOOL)isFormatIp
+- (BOOL)fw_isFormatIp
 {
     // 简单版本
-    // return [self isFormatRegex:@"^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"];
+    // return [self fw_isFormatRegex:@"^\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}$"];
     
     // 复杂版本
-    NSArray *components = [self.base componentsSeparatedByString:@"."];
+    NSArray *components = [self componentsSeparatedByString:@"."];
     NSCharacterSet *invalidCharacters = [[NSCharacterSet characterSetWithCharactersInString:@"1234567890"] invertedSet];
     
     if ([components count] == 4) {
@@ -409,39 +405,39 @@
     return NO;
 }
 
-- (BOOL)isFormatUrl
+- (BOOL)fw_isFormatUrl
 {
-    return [self.base.lowercaseString hasPrefix:@"http://"] || [self.base.lowercaseString hasPrefix:@"https://"];
+    return [self.lowercaseString hasPrefix:@"http://"] || [self.lowercaseString hasPrefix:@"https://"];
 }
 
-- (BOOL)isFormatHtml
+- (BOOL)fw_isFormatHtml
 {
-    return [self.base rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch].location != NSNotFound;
+    return [self rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch].location != NSNotFound;
 }
 
-- (BOOL)isFormatEmail
+- (BOOL)fw_isFormatEmail
 {
-    return [self isFormatRegex:@"^[A-Z0-9a-z._\%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"];
+    return [self fw_isFormatRegex:@"^[A-Z0-9a-z._\%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"];
 }
 
-- (BOOL)isFormatChinese
+- (BOOL)fw_isFormatChinese
 {
-    return [self isFormatRegex:@"^[\\x{4e00}-\\x{9fa5}]+$"];
+    return [self fw_isFormatRegex:@"^[\\x{4e00}-\\x{9fa5}]+$"];
 }
 
-- (BOOL)isFormatDatetime
+- (BOOL)fw_isFormatDatetime
 {
-    return [self isFormatRegex:@"^\\d{4}\\-\\d{2}\\-\\d{2}\\s\\d{2}\\:\\d{2}\\:\\d{2}$"];
+    return [self fw_isFormatRegex:@"^\\d{4}\\-\\d{2}\\-\\d{2}\\s\\d{2}\\:\\d{2}\\:\\d{2}$"];
 }
 
-- (BOOL)isFormatTimestamp
+- (BOOL)fw_isFormatTimestamp
 {
-    return [self isFormatRegex:@"^\\d{10}$"];
+    return [self fw_isFormatRegex:@"^\\d{10}$"];
 }
 
-- (BOOL)isFormatCoordinate
+- (BOOL)fw_isFormatCoordinate
 {
-    return [self isFormatRegex:@"^\\-?\\d+\\.?\\d*,\\-?\\d+\\.?\\d*$"];
+    return [self fw_isFormatRegex:@"^\\-?\\d+\\.?\\d*,\\-?\\d+\\.?\\d*$"];
 }
 
 @end

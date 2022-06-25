@@ -10,16 +10,16 @@
 #import <CommonCrypto/CommonCryptor.h>
 #import <Security/Security.h>
 
-@implementation FWDataWrapper (FWApplication)
+@implementation NSData (FWApplication)
 
 #pragma mark - Encrypt
 
-- (NSData *)AESEncryptWithKey:(NSString *)key andIV:(NSData *)iv
+- (NSData *)fw_AESEncryptWithKey:(NSString *)key andIV:(NSData *)iv
 {
     NSData *keyData = [key dataUsingEncoding:NSUTF8StringEncoding];
     
     size_t dataMoved;
-    NSMutableData *encryptedData = [NSMutableData dataWithLength:self.base.length + kCCBlockSizeAES128];
+    NSMutableData *encryptedData = [NSMutableData dataWithLength:self.length + kCCBlockSizeAES128];
     
     CCCryptorStatus status = CCCrypt(kCCEncrypt,                    // kCCEncrypt or kCCDecrypt
                                      kCCAlgorithmAES128,
@@ -27,8 +27,8 @@
                                      keyData.bytes,
                                      keyData.length,
                                      iv.bytes,
-                                     self.base.bytes,
-                                     self.base.length,
+                                     self.bytes,
+                                     self.length,
                                      encryptedData.mutableBytes,    // encrypted data out
                                      encryptedData.length,
                                      &dataMoved);                   // total data moved
@@ -41,12 +41,12 @@
     return nil;
 }
 
-- (NSData *)AESDecryptWithKey:(NSString *)key andIV:(NSData *)iv
+- (NSData *)fw_AESDecryptWithKey:(NSString *)key andIV:(NSData *)iv
 {
     NSData *keyData = [key dataUsingEncoding:NSUTF8StringEncoding];
     
     size_t dataMoved;
-    NSMutableData *decryptedData = [NSMutableData dataWithLength:self.base.length + kCCBlockSizeAES128];
+    NSMutableData *decryptedData = [NSMutableData dataWithLength:self.length + kCCBlockSizeAES128];
     
     CCCryptorStatus result = CCCrypt(kCCDecrypt,                    // kCCEncrypt or kCCDecrypt
                                      kCCAlgorithmAES128,
@@ -54,8 +54,8 @@
                                      keyData.bytes,
                                      keyData.length,
                                      iv.bytes,
-                                     self.base.bytes,
-                                     self.base.length,
+                                     self.bytes,
+                                     self.length,
                                      decryptedData.mutableBytes,    // encrypted data out
                                      decryptedData.length,
                                      &dataMoved);                   // total data moved
@@ -68,12 +68,12 @@
     return nil;
 }
 
-- (NSData *)DES3EncryptWithKey:(NSString *)key andIV:(NSData *)iv
+- (NSData *)fw_DES3EncryptWithKey:(NSString *)key andIV:(NSData *)iv
 {
     NSData *keyData = [key dataUsingEncoding:NSUTF8StringEncoding];
     
     size_t dataMoved;
-    NSMutableData *encryptedData = [NSMutableData dataWithLength:self.base.length + kCCBlockSize3DES];
+    NSMutableData *encryptedData = [NSMutableData dataWithLength:self.length + kCCBlockSize3DES];
     
     CCCryptorStatus result = CCCrypt(kCCEncrypt,                    // kCCEncrypt or kCCDecrypt
                                      kCCAlgorithm3DES,
@@ -81,8 +81,8 @@
                                      keyData.bytes,
                                      keyData.length,
                                      iv.bytes,
-                                     self.base.bytes,
-                                     self.base.length,
+                                     self.bytes,
+                                     self.length,
                                      encryptedData.mutableBytes,    // encrypted data out
                                      encryptedData.length,
                                      &dataMoved);                   // total data moved
@@ -95,12 +95,12 @@
     return nil;
 }
 
-- (NSData *)DES3DecryptWithKey:(NSString *)key andIV:(NSData *)iv
+- (NSData *)fw_DES3DecryptWithKey:(NSString *)key andIV:(NSData *)iv
 {
     NSData *keyData = [key dataUsingEncoding:NSUTF8StringEncoding];
     
     size_t dataMoved;
-    NSMutableData *decryptedData = [NSMutableData dataWithLength:self.base.length + kCCBlockSize3DES];
+    NSMutableData *decryptedData = [NSMutableData dataWithLength:self.length + kCCBlockSize3DES];
     
     CCCryptorStatus result = CCCrypt(kCCDecrypt,                    // kCCEncrypt or kCCDecrypt
                                      kCCAlgorithm3DES,
@@ -108,8 +108,8 @@
                                      keyData.bytes,
                                      keyData.length,
                                      iv.bytes,
-                                     self.base.bytes,
-                                     self.base.length,
+                                     self.bytes,
+                                     self.length,
                                      decryptedData.mutableBytes,    // encrypted data out
                                      decryptedData.length,
                                      &dataMoved);                   // total data moved
@@ -124,83 +124,83 @@
 
 #pragma mark - RSA
 
-- (NSData *)RSAEncryptWithPublicKey:(NSString *)publicKey
+- (NSData *)fw_RSAEncryptWithPublicKey:(NSString *)publicKey
 {
-    return [self RSAEncryptWithPublicKey:publicKey andTag:@"FWRSA_PublicKey" base64Encode:YES];
+    return [self fw_RSAEncryptWithPublicKey:publicKey andTag:@"FWRSA_PublicKey" base64Encode:YES];
 }
 
-- (NSData *)RSAEncryptWithPublicKey:(NSString *)publicKey andTag:(NSString *)tagName base64Encode:(BOOL)base64Encode
+- (NSData *)fw_RSAEncryptWithPublicKey:(NSString *)publicKey andTag:(NSString *)tagName base64Encode:(BOOL)base64Encode
 {
     if (!publicKey) return nil;
     
-    SecKeyRef keyRef = [FWDataWrapper RSAAddPublicKey:publicKey andTag:tagName];
+    SecKeyRef keyRef = [NSData fw_RSAAddPublicKey:publicKey andTag:tagName];
     if (!keyRef) return nil;
     
-    NSData *data = [FWDataWrapper RSAEncryptData:self.base withKeyRef:keyRef isSign:NO];
+    NSData *data = [NSData fw_RSAEncryptData:self withKeyRef:keyRef isSign:NO];
     if (data && base64Encode) {
         data = [data base64EncodedDataWithOptions:0];
     }
     return data;
 }
 
-- (NSData *)RSADecryptWithPrivateKey:(NSString *)privateKey
+- (NSData *)fw_RSADecryptWithPrivateKey:(NSString *)privateKey
 {
-    return [self RSADecryptWithPrivateKey:privateKey andTag:@"FWRSA_PrivateKey" base64Decode:YES];
+    return [self fw_RSADecryptWithPrivateKey:privateKey andTag:@"FWRSA_PrivateKey" base64Decode:YES];
 }
 
-- (NSData *)RSADecryptWithPrivateKey:(NSString *)privateKey andTag:(NSString *)tagName base64Decode:(BOOL)base64Decode
+- (NSData *)fw_RSADecryptWithPrivateKey:(NSString *)privateKey andTag:(NSString *)tagName base64Decode:(BOOL)base64Decode
 {
-    NSData *data = self.base;
+    NSData *data = self;
     if (base64Decode) {
         data = [[NSData alloc] initWithBase64EncodedData:data options:NSDataBase64DecodingIgnoreUnknownCharacters];
     }
     if (!data || !privateKey) return nil;
     
-    SecKeyRef keyRef = [FWDataWrapper RSAAddPrivateKey:privateKey andTag:tagName];
+    SecKeyRef keyRef = [NSData fw_RSAAddPrivateKey:privateKey andTag:tagName];
     if (!keyRef) return nil;
     
-    return [FWDataWrapper RSADecryptData:data withKeyRef:keyRef];
+    return [NSData fw_RSADecryptData:data withKeyRef:keyRef];
 }
 
-- (NSData *)RSASignWithPrivateKey:(NSString *)privateKey
+- (NSData *)fw_RSASignWithPrivateKey:(NSString *)privateKey
 {
-    return [self RSASignWithPrivateKey:privateKey andTag:@"FWRSA_PrivateKey" base64Encode:YES];
+    return [self fw_RSASignWithPrivateKey:privateKey andTag:@"FWRSA_PrivateKey" base64Encode:YES];
 }
 
-- (NSData *)RSASignWithPrivateKey:(NSString *)privateKey andTag:(NSString *)tagName base64Encode:(BOOL)base64Encode
+- (NSData *)fw_RSASignWithPrivateKey:(NSString *)privateKey andTag:(NSString *)tagName base64Encode:(BOOL)base64Encode
 {
     if (!privateKey) return nil;
     
-    SecKeyRef keyRef = [FWDataWrapper RSAAddPrivateKey:privateKey andTag:tagName];
+    SecKeyRef keyRef = [NSData fw_RSAAddPrivateKey:privateKey andTag:tagName];
     if (!keyRef) return nil;
     
-    NSData *data = [FWDataWrapper RSAEncryptData:self.base withKeyRef:keyRef isSign:YES];
+    NSData *data = [NSData fw_RSAEncryptData:self withKeyRef:keyRef isSign:YES];
     if (data && base64Encode) {
         data = [data base64EncodedDataWithOptions:0];
     }
     return data;
 }
 
-- (NSData *)RSAVerifyWithPublicKey:(NSString *)publicKey
+- (NSData *)fw_RSAVerifyWithPublicKey:(NSString *)publicKey
 {
-    return [self RSAVerifyWithPublicKey:publicKey andTag:@"FWRSA_PublicKey" base64Decode:YES];
+    return [self fw_RSAVerifyWithPublicKey:publicKey andTag:@"FWRSA_PublicKey" base64Decode:YES];
 }
 
-- (NSData *)RSAVerifyWithPublicKey:(NSString *)publicKey andTag:(NSString *)tagName base64Decode:(BOOL)base64Decode
+- (NSData *)fw_RSAVerifyWithPublicKey:(NSString *)publicKey andTag:(NSString *)tagName base64Decode:(BOOL)base64Decode
 {
-    NSData *data = self.base;
+    NSData *data = self;
     if (base64Decode) {
         data = [[NSData alloc] initWithBase64EncodedData:data options:NSDataBase64DecodingIgnoreUnknownCharacters];
     }
     if (!data || !publicKey) return nil;
     
-    SecKeyRef keyRef = [FWDataWrapper RSAAddPublicKey:publicKey andTag:tagName];
+    SecKeyRef keyRef = [NSData fw_RSAAddPublicKey:publicKey andTag:tagName];
     if (!keyRef) return nil;
     
-    return [FWDataWrapper RSADecryptData:data withKeyRef:keyRef];
+    return [NSData fw_RSADecryptData:data withKeyRef:keyRef];
 }
 
-+ (NSData *)RSAEncryptData:(NSData *)data withKeyRef:(SecKeyRef) keyRef isSign:(BOOL)isSign
++ (NSData *)fw_RSAEncryptData:(NSData *)data withKeyRef:(SecKeyRef) keyRef isSign:(BOOL)isSign
 {
     const uint8_t *srcbuf = (const uint8_t *)[data bytes];
     size_t srclen = (size_t)data.length;
@@ -249,7 +249,7 @@
     return ret;
 }
 
-+ (NSData *)RSADecryptData:(NSData *)data withKeyRef:(SecKeyRef)keyRef
++ (NSData *)fw_RSADecryptData:(NSData *)data withKeyRef:(SecKeyRef)keyRef
 {
     const uint8_t *srcbuf = (const uint8_t *)[data bytes];
     size_t srclen = (size_t)data.length;
@@ -299,7 +299,7 @@
     return ret;
 }
 
-+ (SecKeyRef)RSAAddPublicKey:(NSString *)key andTag:(NSString *)tagName
++ (SecKeyRef)fw_RSAAddPublicKey:(NSString *)key andTag:(NSString *)tagName
 {
     NSRange spos = [key rangeOfString:@"-----BEGIN PUBLIC KEY-----"];
     NSRange epos = [key rangeOfString:@"-----END PUBLIC KEY-----"];
@@ -315,7 +315,7 @@
     key = [key stringByReplacingOccurrencesOfString:@" "  withString:@""];
     
     NSData *data = [[NSData alloc] initWithBase64EncodedString:key options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    data = [self RSAStripPublicKeyHeader:data];
+    data = [self fw_RSAStripPublicKeyHeader:data];
     if (!data) {
         return nil;
     }
@@ -353,7 +353,7 @@
     return keyRef;
 }
 
-+ (SecKeyRef)RSAAddPrivateKey:(NSString *)key andTag:(NSString *)tagName
++ (SecKeyRef)fw_RSAAddPrivateKey:(NSString *)key andTag:(NSString *)tagName
 {
     NSRange spos;
     NSRange epos;
@@ -376,7 +376,7 @@
     key = [key stringByReplacingOccurrencesOfString:@" "  withString:@""];
 
     NSData *data = [[NSData alloc] initWithBase64EncodedString:key options:NSDataBase64DecodingIgnoreUnknownCharacters];
-    data = [self RSAStripPrivateKeyHeader:data];
+    data = [self fw_RSAStripPrivateKeyHeader:data];
     if (!data) {
         return nil;
     }
@@ -414,7 +414,7 @@
     return keyRef;
 }
 
-+ (NSData *)RSAStripPublicKeyHeader:(NSData *)d_key
++ (NSData *)fw_RSAStripPublicKeyHeader:(NSData *)d_key
 {
     if (d_key == nil) return nil;
     unsigned long len = [d_key length];
@@ -437,7 +437,7 @@
     return([NSData dataWithBytes:&c_key[idx] length:len - idx]);
 }
 
-+ (NSData *)RSAStripPrivateKeyHeader:(NSData *)d_key
++ (NSData *)fw_RSAStripPrivateKeyHeader:(NSData *)d_key
 {
     if (d_key == nil) return nil;
     unsigned long len = [d_key length];

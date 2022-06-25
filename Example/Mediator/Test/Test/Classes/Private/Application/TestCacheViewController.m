@@ -49,7 +49,7 @@
     [cacheButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
-        [self.cache setObject:[NSString.fw UUIDString] forKey:TestCacheKey];
+        [self.cache setObject:[NSString fw_UUIDString] forKey:TestCacheKey];
         [self refreshCache];
     }];
     [self.view addSubview:cacheButton]; {
@@ -62,7 +62,7 @@
     [expireButton fw_addTouchBlock:^(id sender) {
         FWStrongifySelf();
         
-        [self.cache setObject:[NSString.fw UUIDString] forKey:TestCacheKey withExpire:10];
+        [self.cache setObject:[NSString fw_UUIDString] forKey:TestCacheKey withExpire:10];
         [self refreshCache];
     }];
     [self.view addSubview:expireButton]; {

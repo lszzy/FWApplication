@@ -410,7 +410,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
     TestImageCell *cell = [TestImageCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:self.isSDWebImage ? @"SDWebImage" : @"FWWebImage"];
     NSString *fileName = [self.tableData objectAtIndex:indexPath.row];
     cell.nameLabel.text = [[fileName lastPathComponent] stringByAppendingFormat:@"(%@)", [NSData fw_mimeTypeFromExtension:[fileName pathExtension]]];
-    if (!fileName.fw.isFormatUrl) {
+    if (!fileName.fw_isFormatUrl) {
         cell.fw_tempObject = fileName;
         FWDispatchGlobal(^{
             UIImage *image = [TestBundle imageNamed:fileName];

@@ -116,24 +116,24 @@ extension Wrapper where Base: FileManager {
     
     /// 绝对路径缩短为波浪线路径
     public static func abbreviateTildePath(_ path: String) -> String {
-        return Base.__fw.abbreviateTildePath(path)
+        return Base.__fw_abbreviateTildePath(path)
     }
 
     /// 波浪线路径展开为绝对路径
     public static func expandTildePath(_ path: String) -> String {
-        return Base.__fw.expandTildePath(path)
+        return Base.__fw_expandTildePath(path)
     }
     
     // MARK: - Size
 
     /// 获取目录大小，单位：B
     public static func folderSize(_ folderPath: String) -> UInt64 {
-        return Base.__fw.folderSize(folderPath)
+        return Base.__fw_folderSize(folderPath)
     }
 
     /// 获取磁盘可用空间，单位：MB
     public static var availableDiskSize: Double {
-        return Base.__fw.availableDiskSize
+        return Base.__fw_availableDiskSize
     }
 
     // MARK: - Addition
@@ -141,7 +141,7 @@ extension Wrapper where Base: FileManager {
     /// 禁止iCloud备份路径
     @discardableResult
     public static func skipBackup(_ path: String) -> Bool {
-        return Base.__fw.skipBackup(path)
+        return Base.__fw_skipBackup(path)
     }
     
 }

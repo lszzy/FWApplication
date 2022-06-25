@@ -84,7 +84,7 @@
         if (recursive) {
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSInteger index = [array indexOfObject:object];
-                NSDictionary *subdictionary = [((NSDictionary *)object).fw removeNullRecursive:YES];
+                NSDictionary *subdictionary = [((NSDictionary *)object) fw_removeNullRecursive:YES];
                 [array replaceObjectAtIndex:index withObject:subdictionary];
             }
             

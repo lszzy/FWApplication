@@ -10,13 +10,13 @@
 #import "NSDate+FWApplication.h"
 #import <sys/sysctl.h>
 
-@implementation FWDateWrapper (FWApplication)
+@implementation NSDate (FWApplication)
 
 #pragma mark - Convert
 
-- (NSString *)stringSinceDate:(NSDate *)date
+- (NSString *)fw_stringSinceDate:(NSDate *)date
 {
-    double delta = fabs([self.base timeIntervalSinceDate:date]);
+    double delta = fabs([self timeIntervalSinceDate:date]);
     if (delta < 10 * 60) {
         return @"刚刚";
     } else if (delta < 60 * 60) {
@@ -31,48 +31,48 @@
     } else if (delta < 365 * 86400) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MM/dd"];
-        return [dateFormatter stringFromDate:self.base];
+        return [dateFormatter stringFromDate:self];
     } else {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy/MM"];
-        return [dateFormatter stringFromDate:self.base];
+        return [dateFormatter stringFromDate:self];
     }
 }
 
-- (NSTimeInterval)timestampValue
+- (NSTimeInterval)fw_timestampValue
 {
-    return [self.base timeIntervalSince1970];
+    return [self timeIntervalSince1970];
 }
 
 #pragma mark - TimeZone
 
-- (NSDate *)localTimeZoneDate
+- (NSDate *)fw_localTimeZoneDate
 {
-    return [self dateWithTimeZone:[NSTimeZone localTimeZone]];
+    return [self fw_dateWithTimeZone:[NSTimeZone localTimeZone]];
 }
 
-- (NSDate *)utcTimeZoneDate
+- (NSDate *)fw_utcTimeZoneDate
 {
-    return [self dateWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
+    return [self fw_dateWithTimeZone:[NSTimeZone timeZoneForSecondsFromGMT:0]];
 }
 
-- (NSDate *)dateWithTimeZone:(NSTimeZone *)timeZone
+- (NSDate *)fw_dateWithTimeZone:(NSTimeZone *)timeZone
 {
-    NSInteger timeOffset = [timeZone secondsFromGMTForDate:self.base];
-    NSDate *newDate = [self.base dateByAddingTimeInterval:timeOffset];
+    NSInteger timeOffset = [timeZone secondsFromGMTForDate:self];
+    NSDate *newDate = [self dateByAddingTimeInterval:timeOffset];
     return newDate;
 }
 
 #pragma mark - Calendar
 
-- (NSInteger)calendarUnit:(NSCalendarUnit)unit
+- (NSInteger)fw_calendarUnit:(NSCalendarUnit)unit
 {
-    return [[NSCalendar currentCalendar] component:unit fromDate:self.base];
+    return [[NSCalendar currentCalendar] component:unit fromDate:self];
 }
 
-- (BOOL)isLeapYear
+- (BOOL)fw_isLeapYear
 {
-    NSInteger year = [[NSCalendar currentCalendar] component:NSCalendarUnitYear fromDate:self.base];
+    NSInteger year = [[NSCalendar currentCalendar] component:NSCalendarUnitYear fromDate:self];
     if (year % 400 == 0) {
         return YES;
     } else if (year % 100 == 0) {
@@ -83,41 +83,37 @@
     return NO;
 }
 
-- (BOOL)isSameDay:(NSDate *)date
+- (BOOL)fw_isSameDay:(NSDate *)date
 {
     NSDateComponents *components = [[NSCalendar currentCalendar] components:(NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:date];
     NSDate *dateOne = [[NSCalendar currentCalendar] dateFromComponents:components];
     
-    components = [[NSCalendar currentCalendar] components:(NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:self.base];
+    components = [[NSCalendar currentCalendar] components:(NSCalendarUnitEra|NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay) fromDate:self];
     NSDate *dateTwo = [[NSCalendar currentCalendar] dateFromComponents:components];
     
     return [dateOne isEqualToDate:dateTwo];
 }
 
-- (NSDate *)dateByAdding:(NSDateComponents *)components
+- (NSDate *)fw_dateByAdding:(NSDateComponents *)components
 {
-    return [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:self.base options:0];
+    return [[NSCalendar currentCalendar] dateByAddingComponents:components toDate:self options:0];
 }
 
-- (NSInteger)daysFrom:(NSDate *)date
+- (NSInteger)fw_daysFrom:(NSDate *)date
 {
-    NSDate *earliest = [self.base earlierDate:date];
-    NSDate *latest = (earliest == self.base) ? date : self.base;
-    NSInteger multipier = (earliest == self.base) ? -1 : 1;
+    NSDate *earliest = [self earlierDate:date];
+    NSDate *latest = (earliest == self) ? date : self;
+    NSInteger multipier = (earliest == self) ? -1 : 1;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay fromDate:earliest toDate:latest options:0];
     return multipier * components.day;
 }
 
-- (NSTimeInterval)secondsFrom:(NSDate *)date
+- (NSTimeInterval)fw_secondsFrom:(NSDate *)date
 {
-    return [self.base timeIntervalSinceDate:date];
+    return [self timeIntervalSinceDate:date];
 }
 
-@end
-
-@implementation FWDateClassWrapper (FWApplication)
-
-- (NSTimeInterval)systemUptime
++ (NSTimeInterval)fw_systemUptime
 {
     struct timeval bootTime;
     int mib[2] = {CTL_KERN, KERN_BOOTTIME};
@@ -136,7 +132,7 @@
     return uptime;
 }
 
-- (NSTimeInterval)systemBoottime
++ (NSTimeInterval)fw_systemBoottime
 {
     struct timeval bootTime;
     int mib[2] = {CTL_KERN, KERN_BOOTTIME};
@@ -149,7 +145,7 @@
     return 0;
 }
 
-- (NSDate *)dateWithTimestamp:(NSTimeInterval)timestamp
++ (NSDate *)fw_dateWithTimestamp:(NSTimeInterval)timestamp
 {
     return [[NSDate alloc] initWithTimeIntervalSince1970:timestamp];
 }

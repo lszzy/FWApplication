@@ -10,33 +10,33 @@
 #import "NSDictionary+FWApplication.h"
 #import "NSArray+FWApplication.h"
 
-@implementation FWDictionaryWrapper (FWApplication)
+@implementation NSDictionary (FWApplication)
 
-- (id)randomKey
+- (id)fw_randomKey
 {
-    if (self.base.count < 1) return nil;
+    if (self.count < 1) return nil;
     
-    return self.base.allKeys.fw_randomObject;
+    return self.allKeys.fw_randomObject;
 }
 
-- (id)randomObject
+- (id)fw_randomObject
 {
-    if (self.base.count < 1) return nil;
+    if (self.count < 1) return nil;
         
-    return self.base.allValues.fw_randomObject;
+    return self.allValues.fw_randomObject;
 }
 
-- (id)randomWeightKey
+- (id)fw_randomWeightKey
 {
-    if (self.base.count < 1) return nil;
+    if (self.count < 1) return nil;
     
-    return [self.base.allKeys fw_randomObject:self.base.allValues];
+    return [self.allKeys fw_randomObject:self.allValues];
 }
 
-- (BOOL)includeNull
+- (BOOL)fw_includeNull
 {
     __block BOOL includeNull = NO;
-    [self.base enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+    [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         if ([obj isKindOfClass:[NSNull class]]) {
             includeNull = YES;
             *stop = YES;
@@ -45,16 +45,16 @@
     return includeNull;
 }
 
-- (NSDictionary *)removeNull
+- (NSDictionary *)fw_removeNull
 {
-    return [self removeNullRecursive:YES];
+    return [self fw_removeNullRecursive:YES];
 }
 
-- (NSDictionary *)removeNullRecursive:(BOOL)recursive
+- (NSDictionary *)fw_removeNullRecursive:(BOOL)recursive
 {
-    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:self.base];
-    for (id key in [self.base allKeys]) {
-        id object = [self.base objectForKey:key];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:self];
+    for (id key in [self allKeys]) {
+        id object = [self objectForKey:key];
         
         if (object == [NSNull null]) {
             [dictionary removeObjectForKey:key];
@@ -62,7 +62,7 @@
         
         if (recursive) {
             if ([object isKindOfClass:[NSDictionary class]]) {
-                NSDictionary *subdictionary = [((NSDictionary *)object).fw removeNullRecursive:YES];
+                NSDictionary *subdictionary = [((NSDictionary *)object) fw_removeNullRecursive:YES];
                 [dictionary setValue:subdictionary forKey:key];
             }
             

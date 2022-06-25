@@ -140,21 +140,21 @@
     NSNumber *number = [NSNumber numberWithDouble:12345.6789];
     NSMutableString *string = [NSMutableString string];
     [string appendFormat:@"number: %@\n\n", number];
-    [string appendFormat:@"round: %@\n", [number.fw roundString:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilString:2]];
-    [string appendFormat:@"floor: %@\n", [number.fw floorString:2]];
-    [string appendFormat:@"round: %@\n", [number.fw roundNumber:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilNumber:2]];
-    [string appendFormat:@"floor: %@\n\n", [number.fw floorNumber:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundString:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilString:2]];
+    [string appendFormat:@"floor: %@\n", [number fw_floorString:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundNumber:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilNumber:2]];
+    [string appendFormat:@"floor: %@\n\n", [number fw_floorNumber:2]];
     
     number = [NSNumber numberWithDouble:0.6049];
     [string appendFormat:@"number: %@\n\n", number];
-    [string appendFormat:@"round: %@\n", [number.fw roundString:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilString:2]];
-    [string appendFormat:@"floor: %@\n", [number.fw floorString:2]];
-    [string appendFormat:@"round: %@\n", [number.fw roundNumber:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilNumber:2]];
-    [string appendFormat:@"floor: %@\n", [number.fw floorNumber:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundString:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilString:2]];
+    [string appendFormat:@"floor: %@\n", [number fw_floorString:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundNumber:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilNumber:2]];
+    [string appendFormat:@"floor: %@\n", [number fw_floorNumber:2]];
     return string;
 }
 
