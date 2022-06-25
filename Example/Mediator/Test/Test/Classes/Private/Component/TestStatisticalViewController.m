@@ -236,30 +236,30 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     };
     
     // Click
-    self.testView.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_view" object:@"view"];
-    self.testButton.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_button" object:@"button"];
-    self.testSwitch.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_switch" object:@"switch"];
-    self.tableView.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_tableView" object:@"table"];
-    self.bannerView.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_banner" object:@"banner"];
-    self.segmentedControl.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_segment" object:@"segment"];
-    self.tagCollectionView.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_tag" object:@"tag"];
+    self.testView.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_view" object:@"view"];
+    self.testButton.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_button" object:@"button"];
+    self.testSwitch.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_switch" object:@"switch"];
+    self.tableView.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_tableView" object:@"table"];
+    self.bannerView.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_banner" object:@"banner"];
+    self.segmentedControl.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_segment" object:@"segment"];
+    self.tagCollectionView.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_tag" object:@"tag"];
     
     // Exposure
-    self.testView.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_view" object:@"view"];
-    [self configShieldView:self.testView.fw.statisticalExposure];
-    self.testButton.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_button" object:@"button"];
-    self.testButton.fw.statisticalExposure.triggerOnce = YES;
-    [self configShieldView:self.testButton.fw.statisticalExposure];
-    self.testSwitch.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_switch" object:@"switch"];
-    [self configShieldView:self.testSwitch.fw.statisticalExposure];
-    self.tableView.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_tableView" object:@"table"];
-    [self configShieldView:self.tableView.fw.statisticalExposure];
-    self.bannerView.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_banner" object:@"banner"];
-    [self configShieldView:self.bannerView.fw.statisticalExposure];
-    self.segmentedControl.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_segment" object:@"segment"];
-    [self configShieldView:self.segmentedControl.fw.statisticalExposure];
-    self.tagCollectionView.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_tag" object:@"tag"];
-    [self configShieldView:self.tagCollectionView.fw.statisticalExposure];
+    self.testView.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_view" object:@"view"];
+    [self configShieldView:self.testView.fw_statisticalExposure];
+    self.testButton.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_button" object:@"button"];
+    self.testButton.fw_statisticalExposure.triggerOnce = YES;
+    [self configShieldView:self.testButton.fw_statisticalExposure];
+    self.testSwitch.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_switch" object:@"switch"];
+    [self configShieldView:self.testSwitch.fw_statisticalExposure];
+    self.tableView.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_tableView" object:@"table"];
+    [self configShieldView:self.tableView.fw_statisticalExposure];
+    self.bannerView.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_banner" object:@"banner"];
+    [self configShieldView:self.bannerView.fw_statisticalExposure];
+    self.segmentedControl.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_segment" object:@"segment"];
+    [self configShieldView:self.segmentedControl.fw_statisticalExposure];
+    self.tagCollectionView.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_tag" object:@"tag"];
+    [self configShieldView:self.tagCollectionView.fw_statisticalExposure];
 }
 
 - (void)configShieldView:(FWStatisticalObject *)object
@@ -336,10 +336,10 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     TestStatisticalCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"%@", @(indexPath.row)];
     cell.contentView.backgroundColor = UIColor.fw_randomColor;
-    cell.fw.statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_collectionView" object:@"cell"];
-    cell.fw.statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_collectionView" object:@"cell"];
-    cell.fw.statisticalExposure.triggerOnce = YES;
-    [self configShieldView:cell.fw.statisticalExposure];
+    cell.fw_statisticalClick = [[FWStatisticalObject alloc] initWithName:@"click_collectionView" object:@"cell"];
+    cell.fw_statisticalExposure = [[FWStatisticalObject alloc] initWithName:@"exposure_collectionView" object:@"cell"];
+    cell.fw_statisticalExposure.triggerOnce = YES;
+    [self configShieldView:cell.fw_statisticalExposure];
     return cell;
 }
 

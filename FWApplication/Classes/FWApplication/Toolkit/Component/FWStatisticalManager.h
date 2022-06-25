@@ -126,39 +126,39 @@ NS_SWIFT_NAME(StatisticalDelegate)
 
 @end
 
-#pragma mark - FWViewWrapper+FWStatistical
+#pragma mark - UIView+FWStatistical
 
 /**
  Click点击统计
  */
-@interface FWViewWrapper (FWStatistical)
+@interface UIView (FWStatistical)
 
 /// 绑定统计点击事件，触发管理器。view为添加的Tap手势(需先添加手势)，control为TouchUpInside|ValueChanged，tableView|collectionView为Select(需先设置delegate)
-@property (nullable, nonatomic, strong) FWStatisticalObject *statisticalClick;
+@property (nullable, nonatomic, strong) FWStatisticalObject *fw_statisticalClick NS_REFINED_FOR_SWIFT;
 
 /// 绑定统计点击事件，仅触发回调。view为添加的Tap手势(需先添加手势)，control为TouchUpInside|ValueChanged，tableView|collectionView为Select(需先设置delegate)
-@property (nullable, nonatomic, copy) FWStatisticalBlock statisticalClickBlock;
+@property (nullable, nonatomic, copy) FWStatisticalBlock fw_statisticalClickBlock NS_REFINED_FOR_SWIFT;
 
 /// 手工触发统计点击事件，更新点击次数，列表可指定cell和位置，可重复触发
-- (void)statisticalTriggerClick:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath;
+- (void)fw_statisticalTriggerClick:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWViewWrapper+FWExposure
+#pragma mark - UIView+FWExposure
 
 /**
  Exposure曝光统计
  */
-@interface FWViewWrapper (FWExposure)
+@interface UIView (FWExposure)
 
 /// 绑定统计曝光事件，触发管理器。如果对象发生变化(indexPath|name|object)，也会触发
-@property (nullable, nonatomic, strong) FWStatisticalObject *statisticalExposure;
+@property (nullable, nonatomic, strong) FWStatisticalObject *fw_statisticalExposure NS_REFINED_FOR_SWIFT;
 
 /// 绑定统计曝光事件，仅触发回调
-@property (nullable, nonatomic, copy) FWStatisticalBlock statisticalExposureBlock;
+@property (nullable, nonatomic, copy) FWStatisticalBlock fw_statisticalExposureBlock NS_REFINED_FOR_SWIFT;
 
 /// 手工触发统计曝光事件，更新曝光次数和时长，列表可指定cell和位置，duration为单次曝光时长(0表示开始)，可重复触发
-- (void)statisticalTriggerExposure:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath duration:(NSTimeInterval)duration;
+- (void)fw_statisticalTriggerExposure:(nullable UIView *)cell indexPath:(nullable NSIndexPath *)indexPath duration:(NSTimeInterval)duration NS_REFINED_FOR_SWIFT;
 
 @end
 
