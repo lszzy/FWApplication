@@ -71,7 +71,7 @@ static BOOL isExpanded = NO;
         self.fw_maxYViewPadding = 15;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
-        [imageView.fw setContentModeAspectFill];
+        [imageView fw_setContentModeAspectFill];
         [self.contentView addSubview:imageView];
         [imageView fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
             [imageView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
@@ -376,7 +376,7 @@ static BOOL isExpanded = NO;
             [self.collectionData addObject:[self randomObject]];
         }
         [self.collectionView fw_clearSizeCache];
-        [self.collectionView.fw reloadDataWithoutAnimation];
+        [self.collectionView fw_reloadDataWithoutAnimation];
         
         self.collectionView.fw_shouldRefreshing = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView fw_endRefreshing];
@@ -395,7 +395,7 @@ static BOOL isExpanded = NO;
         for (int i = 0; i < 4; i++) {
             [self.collectionData addObject:[self randomObject]];
         }
-        [self.collectionView.fw reloadDataWithoutAnimation];
+        [self.collectionView fw_reloadDataWithoutAnimation];
         
         self.collectionView.fw_shouldLoading = self.collectionData.count < 20 ? YES : NO;
         [self.collectionView fw_endLoading];

@@ -43,7 +43,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fw.separatorInset = UIEdgeInsetsZero;
+        self.fw_separatorInset = UIEdgeInsetsZero;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [Theme backgroundColor];
         

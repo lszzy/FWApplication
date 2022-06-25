@@ -69,7 +69,7 @@
         self.fw_maxYViewPadding = 15;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
-        [imageView.fw setContentModeAspectFill];
+        [imageView fw_setContentModeAspectFill];
         [self.contentView addSubview:imageView];
         [imageView fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
             [imageView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:15];
@@ -196,7 +196,7 @@
         NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
         self.collectionView.fw.delegate.collectionData = @[sectionData];
-        [self.collectionView.fw reloadDataWithoutAnimation];
+        [self.collectionView fw_reloadDataWithoutAnimation];
     }];
 }
 
@@ -215,7 +215,7 @@
         
         self.collectionView.fw.delegate.collectionData = @[@[[self randomObject], [self randomObject]]];
         [self.collectionView fw_clearSizeCache];
-        [self.collectionView.fw reloadDataWithoutAnimation];
+        [self.collectionView fw_reloadDataWithoutAnimation];
         
         [self.collectionView fw_endRefreshing];
     });
@@ -230,7 +230,7 @@
         NSMutableArray *sectionData = self.collectionView.fw.delegate.collectionData[0].mutableCopy;
         [sectionData addObjectsFromArray:@[[self randomObject], [self randomObject]]];
         self.collectionView.fw.delegate.collectionData = @[sectionData];
-        [self.collectionView.fw reloadDataWithoutAnimation];
+        [self.collectionView fw_reloadDataWithoutAnimation];
         
         [self.collectionView fw_endLoading];
     });

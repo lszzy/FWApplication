@@ -303,53 +303,53 @@ extension Wrapper where Base: UITableView {
     
     /// 是否启动高度估算布局，启用后需要子视图布局完整，无需实现heightForRow方法(iOS11默认启用，会先cellForRow再heightForRow)
     public var estimatedLayout: Bool {
-        get { return base.__fw.estimatedLayout }
-        set { base.__fw.estimatedLayout = newValue }
+        get { return base.__fw_estimatedLayout }
+        set { base.__fw_estimatedLayout = newValue }
     }
     
     /// 清空Grouped样式默认多余边距，注意CGFLOAT_MIN才会生效，0不会生效
     public func resetGroupedStyle() {
-        base.__fw.resetGroupedStyle()
+        base.__fw_resetGroupedStyle()
     }
 
     /// 设置Plain样式sectionHeader和Footer跟随滚动(不悬停)，在scrollViewDidScroll:中调用即可(需先禁用内边距适应)
     public func follow(header: CGFloat, footer: CGFloat) {
-        base.__fw.follow(withHeader: header, footer: footer)
+        base.__fw_follow(withHeader: header, footer: footer)
     }
 
     /// reloadData完成回调
     public func reloadData(completion: (() -> Void)?) {
-        base.__fw.reloadData(completion: completion)
+        base.__fw_reloadData(completion: completion)
     }
 
     /// reloadData清空尺寸缓存
     public func reloadDataWithoutCache() {
-        base.__fw.reloadDataWithoutCache()
+        base.__fw_reloadDataWithoutCache()
     }
 
     /// reloadData禁用动画
     public func reloadDataWithoutAnimation() {
-        base.__fw.reloadDataWithoutAnimation()
+        base.__fw_reloadDataWithoutAnimation()
     }
 
     /// reloadSections禁用动画
     public func reloadSectionsWithoutAnimation(_ sections: IndexSet) {
-        base.__fw.reloadSectionsWithoutAnimation(sections)
+        base.__fw_reloadSectionsWithoutAnimation(sections)
     }
 
     /// reloadRows禁用动画
     public func reloadRowsWithoutAnimation(_ indexPaths: [IndexPath]) {
-        base.__fw.reloadRowsWithoutAnimation(indexPaths)
+        base.__fw_reloadRowsWithoutAnimation(indexPaths)
     }
 
     /// 刷新高度等，不触发reload方式
     public func performUpdates(_ updates: (() -> Void)?) {
-        base.__fw.performUpdates(updates)
+        base.__fw_performUpdates(updates)
     }
     
     /// 全局清空TableView默认多余边距
     public static func resetTableStyle() {
-        Base.__fw.resetTableStyle()
+        Base.__fw_resetTableStyle()
     }
     
 }
@@ -358,23 +358,23 @@ extension Wrapper where Base: UITableViewCell {
     
     /// 设置分割线内边距，iOS8+默认15.f，设为UIEdgeInsetsZero可去掉
     public var separatorInset: UIEdgeInsets {
-        get { return base.__fw.separatorInset }
-        set { base.__fw.separatorInset = newValue }
+        get { return base.__fw_separatorInset }
+        set { base.__fw_separatorInset = newValue }
     }
 
     /// 获取当前所属tableView
     public weak var tableView: UITableView? {
-        return base.__fw.tableView
+        return base.__fw_tableView
     }
 
     /// 获取当前显示indexPath
     public var indexPath: IndexPath? {
-        return base.__fw.indexPath
+        return base.__fw_indexPath
     }
     
     /// 延迟加载背景视图，处理section圆角、阴影等。会自动设置backgroundView
     public var backgroundView: TableViewCellBackgroundView {
-        return base.__fw.backgroundView
+        return base.__fw_backgroundView
     }
     
 }

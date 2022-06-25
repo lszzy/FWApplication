@@ -18,7 +18,7 @@
 {
     [super viewDidLoad];
     
-    NSString *deviceText = [NSString stringWithFormat:@"Device UUID: \n%@", [UIDevice.fw deviceUUID]];
+    NSString *deviceText = [NSString stringWithFormat:@"Device UUID: \n%@", [UIDevice fw_deviceUUID]];
     UILabel *textLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor] text:deviceText];
     textLabel.textAlignment = NSTextAlignmentCenter;
     textLabel.numberOfLines = 0;

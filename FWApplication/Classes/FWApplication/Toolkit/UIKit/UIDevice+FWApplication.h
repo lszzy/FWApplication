@@ -11,31 +11,31 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWDeviceClassWrapper (FWApplication)
+@interface UIDevice (FWApplication)
 
 #pragma mark - UUID
 
 /// 获取或设置设备UUID，自动keychain持久化。默认获取IDFV(未使用IDFA，避免额外权限)，失败则随机生成一个
-@property (nonatomic, copy) NSString *deviceUUID;
+@property (class, nonatomic, copy) NSString *fw_deviceUUID NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Jailbroken
 
 // 是否越狱
-@property (nonatomic, assign, readonly) BOOL isJailbroken;
+@property (class, nonatomic, assign, readonly) BOOL fw_isJailbroken NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Network
 
 // 本地IP地址
-@property (nonatomic, copy, readonly, nullable) NSString *ipAddress;
+@property (class, nonatomic, copy, readonly, nullable) NSString *fw_ipAddress NS_REFINED_FOR_SWIFT;
 
 // 本地主机名称
-@property (nonatomic, copy, readonly, nullable) NSString *hostName;
+@property (class, nonatomic, copy, readonly, nullable) NSString *fw_hostName NS_REFINED_FOR_SWIFT;
 
 // 手机运营商名称
-@property (nonatomic, copy, readonly, nullable) NSString *carrierName;
+@property (class, nonatomic, copy, readonly, nullable) NSString *fw_carrierName NS_REFINED_FOR_SWIFT;
 
 // 手机蜂窝网络类型，仅区分2G|3G|4G|5G
-@property (nonatomic, copy, readonly, nullable) NSString *networkType;
+@property (class, nonatomic, copy, readonly, nullable) NSString *fw_networkType NS_REFINED_FOR_SWIFT;
 
 @end
 

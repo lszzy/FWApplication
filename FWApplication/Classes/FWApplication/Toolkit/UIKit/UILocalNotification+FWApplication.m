@@ -9,9 +9,9 @@
 
 #import "UILocalNotification+FWApplication.h"
 
-@implementation FWUserNotificationCenterClassWrapper (FWApplication)
+@implementation UNUserNotificationCenter (FWApplication)
 
-- (UNMutableNotificationContent *)localNotificationWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body userInfo:(NSDictionary *)userInfo category:(NSString *)category badge:(NSNumber *)badge soundName:(NSString *)soundName block:(void (NS_NOESCAPE ^)(UNMutableNotificationContent *))block
++ (UNMutableNotificationContent *)fw_localNotificationWithTitle:(NSString *)title subtitle:(NSString *)subtitle body:(NSString *)body userInfo:(NSDictionary *)userInfo category:(NSString *)category badge:(NSNumber *)badge soundName:(NSString *)soundName block:(void (NS_NOESCAPE ^)(UNMutableNotificationContent *))block
 {
     UNMutableNotificationContent *notification = [[UNMutableNotificationContent alloc] init];
     if (title) notification.title = title;
@@ -25,28 +25,28 @@
     return notification;
 }
 
-- (void)registerLocalNotification:(NSString *)identifier content:(UNNotificationContent *)content trigger:(UNNotificationTrigger *)trigger
++ (void)fw_registerLocalNotification:(NSString *)identifier content:(UNNotificationContent *)content trigger:(UNNotificationTrigger *)trigger
 {
     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier content:content trigger:trigger];
     [[UNUserNotificationCenter currentNotificationCenter] addNotificationRequest:request withCompletionHandler:nil];
 }
 
-- (void)removePendingNotification:(NSArray<NSString *> *)identifiers
++ (void)fw_removePendingNotification:(NSArray<NSString *> *)identifiers
 {
     [[UNUserNotificationCenter currentNotificationCenter] removePendingNotificationRequestsWithIdentifiers:identifiers];
 }
 
-- (void)removeAllPendingNotifications
++ (void)fw_removeAllPendingNotifications
 {
     [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests];
 }
 
-- (void)removeDeliveredNotification:(NSArray<NSString *> *)identifiers
++ (void)fw_removeDeliveredNotification:(NSArray<NSString *> *)identifiers
 {
     [[UNUserNotificationCenter currentNotificationCenter] removeDeliveredNotificationsWithIdentifiers:identifiers];
 }
 
-- (void)removeAllDeliveredNotifications
++ (void)fw_removeAllDeliveredNotifications
 {
     [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
 }

@@ -8,9 +8,9 @@
 
 #import "UIBezierPath+FWApplication.h"
 
-@implementation FWBezierPathWrapper (FWApplication)
+@implementation UIBezierPath (FWApplication)
 
-- (UIImage *)shapeImage:(CGSize)size
+- (UIImage *)fw_shapeImage:(CGSize)size
               strokeWidth:(CGFloat)strokeWidth
               strokeColor:(UIColor *)strokeColor
                 fillColor:(UIColor *)fillColor
@@ -22,12 +22,12 @@
     CGContextSetLineWidth(context, strokeWidth);
     CGContextSetLineCap(context, kCGLineCapRound);
     [strokeColor setStroke];
-    CGContextAddPath(context, self.base.CGPath);
+    CGContextAddPath(context, self.CGPath);
     CGContextStrokePath(context);
     
     if (fillColor) {
         [fillColor setFill];
-        CGContextAddPath(context, self.base.CGPath);
+        CGContextAddPath(context, self.CGPath);
         CGContextFillPath(context);
     }
     
@@ -36,7 +36,7 @@
     return image;
 }
 
-- (CAShapeLayer *)shapeLayer:(CGRect)rect
+- (CAShapeLayer *)fw_shapeLayer:(CGRect)rect
                    strokeWidth:(CGFloat)strokeWidth
                    strokeColor:(UIColor *)strokeColor
                      fillColor:(UIColor *)fillColor
@@ -49,17 +49,13 @@
     if (fillColor) {
         layer.fillColor = fillColor.CGColor;
     }
-    layer.path = self.base.CGPath;
+    layer.path = self.CGPath;
     return layer;
 }
 
-@end
-
-@implementation FWBezierPathClassWrapper (FWApplication)
-
 #pragma mark - Bezier
 
-- (UIBezierPath *)linesWithPoints:(NSArray *)points
++ (UIBezierPath *)fw_linesWithPoints:(NSArray *)points
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     NSValue *value = points[0];
@@ -74,7 +70,7 @@
     return path;
 }
 
-- (UIBezierPath *)quadCurvedPathWithPoints:(NSArray *)points
++ (UIBezierPath *)fw_quadCurvedPathWithPoints:(NSArray *)points
 {
     UIBezierPath *path = [UIBezierPath bezierPath];
     
@@ -93,23 +89,23 @@
         value = points[i];
         CGPoint p2 = [value CGPointValue];
         
-        CGPoint midPoint = [self middlePoint:p1 withPoint:p2];
-        [path addQuadCurveToPoint:midPoint controlPoint:[self controlPoint:midPoint withPoint:p1]];
-        [path addQuadCurveToPoint:p2 controlPoint:[self controlPoint:midPoint withPoint:p2]];
+        CGPoint midPoint = [self fw_middlePoint:p1 withPoint:p2];
+        [path addQuadCurveToPoint:midPoint controlPoint:[self fw_controlPoint:midPoint withPoint:p1]];
+        [path addQuadCurveToPoint:p2 controlPoint:[self fw_controlPoint:midPoint withPoint:p2]];
         
         p1 = p2;
     }
     return path;
 }
 
-- (CGPoint)middlePoint:(CGPoint)p1 withPoint:(CGPoint)p2
++ (CGPoint)fw_middlePoint:(CGPoint)p1 withPoint:(CGPoint)p2
 {
     return CGPointMake((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
 }
 
-- (CGPoint)controlPoint:(CGPoint)p1 withPoint:(CGPoint)p2
++ (CGPoint)fw_controlPoint:(CGPoint)p1 withPoint:(CGPoint)p2
 {
-    CGPoint controlPoint = [self middlePoint:p1 withPoint:p2];
+    CGPoint controlPoint = [self fw_middlePoint:p1 withPoint:p2];
     CGFloat diffY = fabs(p2.y - controlPoint.y);
     
     if (p1.y < p2.y)
@@ -120,17 +116,17 @@
     return controlPoint;
 }
 
-- (CGFloat)radianWithDegree:(CGFloat)degree
++ (CGFloat)fw_radianWithDegree:(CGFloat)degree
 {
     return (M_PI * degree) / 180.f;
 }
 
-- (CGFloat)degreeWithRadian:(CGFloat)radian
++ (CGFloat)fw_degreeWithRadian:(CGFloat)radian
 {
     return (180.f * radian) / M_PI;
 }
 
-- (NSArray<NSValue *> *)linePointsWithRect:(CGRect)rect direction:(UISwipeGestureRecognizerDirection)direction
++ (NSArray<NSValue *> *)fw_linePointsWithRect:(CGRect)rect direction:(UISwipeGestureRecognizerDirection)direction
 {
     CGPoint startPoint;
     CGPoint endPoint;
@@ -166,15 +162,15 @@
 
 #pragma mark - Shape
 
-- (CGRect)innerSquareFrame:(CGRect)frame;
++ (CGRect)fw_innerSquareFrame:(CGRect)frame;
 {
     CGFloat a = MIN(frame.size.width, frame.size.height);
     return CGRectMake(frame.origin.x + frame.size.width / 2 - a / 2, frame.origin.y + frame.size.height / 2 - a / 2, a, a);
 }
 
-- (UIBezierPath *)shapeCircle:(CGRect)aFrame percent:(float)percent degree:(CGFloat)degree
++ (UIBezierPath *)fw_shapeCircle:(CGRect)aFrame percent:(float)percent degree:(CGFloat)degree
 {
-    CGRect frame = [self innerSquareFrame:aFrame];
+    CGRect frame = [self fw_innerSquareFrame:aFrame];
     
     UIBezierPath *bezierPath = [UIBezierPath bezierPathWithArcCenter:CGPointMake(frame.origin.x + frame.size.width / 2.0, frame.origin.y + frame.size.height / 2.0)
                                                               radius:frame.size.width / 2.0
@@ -184,9 +180,9 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeHeart:(CGRect)aFrame
++ (UIBezierPath *)fw_shapeHeart:(CGRect)aFrame
 {
-    CGRect frame = [self innerSquareFrame:aFrame];
+    CGRect frame = [self fw_innerSquareFrame:aFrame];
     
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.74182 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.04948 * CGRectGetHeight(frame))];
@@ -205,9 +201,9 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeStar:(CGRect)aFrame
++ (UIBezierPath *)fw_shapeStar:(CGRect)aFrame
 {
-    CGRect frame = [self innerSquareFrame:aFrame];
+    CGRect frame = [self fw_innerSquareFrame:aFrame];
     
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint: CGPointMake(CGRectGetMinX(frame) + 0.50000 * CGRectGetWidth(frame), CGRectGetMinY(frame) + 0.05000 * CGRectGetHeight(frame))];
@@ -225,21 +221,21 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeStars:(NSUInteger)count frame:(CGRect)aFrame spacing:(CGFloat)spacing
++ (UIBezierPath *)fw_shapeStars:(NSUInteger)count frame:(CGRect)aFrame spacing:(CGFloat)spacing
 {
     CGFloat width = (aFrame.size.width - spacing * (count - 1)) / count;
     CGRect babyFrame = CGRectMake(aFrame.origin.x, aFrame.origin.y, width, aFrame.size.height);
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     
     for (int i = 0; i < count; i++) {
-        UIBezierPath *startPath = [self shapeStar:babyFrame];
+        UIBezierPath *startPath = [self fw_shapeStar:babyFrame];
         [startPath applyTransform:CGAffineTransformTranslate(CGAffineTransformIdentity, i * (width + spacing), 0)];
         [bezierPath appendPath:startPath];
     }
     return bezierPath;
 }
 
-- (UIBezierPath *)shapePlus:(CGRect)frame
++ (UIBezierPath *)fw_shapePlus:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMidY(frame))];
@@ -249,7 +245,7 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeMinus:(CGRect)frame
++ (UIBezierPath *)fw_shapeMinus:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMidY(frame))];
@@ -257,7 +253,7 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeCross:(CGRect)frame
++ (UIBezierPath *)fw_shapeCross:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMinY(frame))];
@@ -267,7 +263,7 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeCheck:(CGRect)frame
++ (UIBezierPath *)fw_shapeCheck:(CGRect)frame
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath moveToPoint:CGPointMake(CGRectGetMinX(frame), CGRectGetMidY(frame))];
@@ -276,7 +272,7 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeFold:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
++ (UIBezierPath *)fw_shapeFold:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     switch (direction) {
@@ -310,7 +306,7 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeArrow:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
++ (UIBezierPath *)fw_shapeArrow:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     switch (direction) {
@@ -352,7 +348,7 @@
     return bezierPath;
 }
 
-- (UIBezierPath *)shapeTriangle:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
++ (UIBezierPath *)fw_shapeTriangle:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction
 {
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     switch (direction) {

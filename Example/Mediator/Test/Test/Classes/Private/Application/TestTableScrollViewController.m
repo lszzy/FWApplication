@@ -40,7 +40,7 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fw.separatorInset = UIEdgeInsetsZero;
+        self.fw_separatorInset = UIEdgeInsetsZero;
         
         UILabel *titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = 0;

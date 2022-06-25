@@ -31,7 +31,7 @@ import FWApplication
         button.setTitle("Save", for: .normal)
         button.fw.addTouch { [weak self] (sender) in
             if let image = self?.signatureView.getSignature(scale: 10) {
-                image.__fw.saveImage()
+                image.__fw_saveImage()
                 self?.signatureView.clear()
             }
         }

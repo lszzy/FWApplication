@@ -64,7 +64,7 @@
     } else if (row == 1) {
         [self fw_showEmptyViewWithText:@"联系人为空" detail:@"请到设置-隐私查看你的联系人权限设置"];
     } else if (row == 2) {
-        [self fw_showEmptyViewWithText:@"暂无数据" detail:nil image:[UIImage.fw imageWithAppIcon]];
+        [self fw_showEmptyViewWithText:@"暂无数据" detail:nil image:[UIImage fw_imageWithAppIcon]];
     } else if (row == 3) {
         FWWeakifySelf();
         [self fw_showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:nil action:@"重试" block:^(id  _Nonnull sender) {
@@ -76,10 +76,10 @@
         [self fw_showEmptyViewLoading];
     } else if (row == 5) {
         FWWeakifySelf();
-        [self fw_showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage.fw imageWithAppIcon] loading:YES actions:@[@"取消", @"重试"] block:^(NSInteger index, id  _Nonnull sender) {
+        [self fw_showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage fw_imageWithAppIcon] loading:YES actions:@[@"取消", @"重试"] block:^(NSInteger index, id  _Nonnull sender) {
             FWStrongifySelf();
             if (index == 0) {
-                [self fw_showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage.fw imageWithAppIcon] loading:YES actions:nil block:nil];
+                [self fw_showEmptyViewWithText:@"请求失败" detail:@"请检查网络连接" image:[UIImage fw_imageWithAppIcon] loading:YES actions:nil block:nil];
             } else {
                 [self fw_hideEmptyView];
                 [self.tableView reloadData];

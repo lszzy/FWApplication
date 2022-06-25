@@ -44,7 +44,7 @@ static BOOL isExpanded = NO;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.fw.separatorInset = UIEdgeInsetsZero;
+        self.fw_separatorInset = UIEdgeInsetsZero;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.contentView.backgroundColor = [Theme cellColor];
         
@@ -76,7 +76,7 @@ static BOOL isExpanded = NO;
         UIImageView *imageView = [UIImageView new];
         self.myImageView = imageView;
         imageView.userInteractionEnabled = YES;
-        [imageView.fw setContentModeAspectFill];
+        [imageView fw_setContentModeAspectFill];
         [imageView fw_addTapGestureWithTarget:self action:@selector(onImageClick:)];
         [self.contentView addSubview:imageView];
         [imageView fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
@@ -171,7 +171,7 @@ static BOOL isExpanded = NO;
     // [self.tableView fwSetTemplateLayout:NO];
     
     FWWeakifySelf();
-    [self.tableView.fw resetGroupedStyle];
+    [self.tableView fw_resetGroupedStyle];
     self.tableView.backgroundColor = [Theme tableColor];
     [self.tableView fw_setRefreshingBlock:^{
         FWStrongifySelf();
@@ -287,7 +287,7 @@ static BOOL isExpanded = NO;
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         [self.tableData removeObjectAtIndex:indexPath.row];
-        [self.tableView.fw reloadDataWithoutCache];
+        [self.tableView fw_reloadDataWithoutCache];
     }
 }
 
@@ -378,7 +378,7 @@ static BOOL isExpanded = NO;
         for (int i = 0; i < 4; i++) {
             [self.tableData addObject:[self randomObject]];
         }
-        [self.tableView.fw reloadDataWithoutCache];
+        [self.tableView fw_reloadDataWithoutCache];
         
         self.tableView.fw_shouldRefreshing = self.tableData.count < 20 ? YES : NO;
         [self.tableView fw_endRefreshing];

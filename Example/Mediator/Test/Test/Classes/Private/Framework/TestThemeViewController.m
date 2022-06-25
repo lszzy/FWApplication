@@ -176,7 +176,7 @@
     UILabel *colorLabel = [UILabel new];
     colorLabel.frame = CGRectMake(0, 440, FWScreenWidth, 25);
     colorLabel.textAlignment = NSTextAlignmentCenter;
-    colorLabel.font = FWFontSize(16).fw.boldFont;
+    colorLabel.font = FWFontSize(16).fw_boldFont;
     colorLabel.textColor = Theme.textColor;
     UIColor *lightColor = [Theme.textColor fw_colorForStyle:FWThemeStyleLight];
     UIColor *darkColor = [Theme.textColor fw_colorForStyle:FWThemeStyleDark];
@@ -186,7 +186,7 @@
     UILabel *themeLabel = [UILabel new];
     themeLabel.frame = CGRectMake(0, 475, FWScreenWidth, 25);
     themeLabel.textAlignment = NSTextAlignmentCenter;
-    themeLabel.attributedText = [NSAttributedString fw_attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw.boldFont textColor:[UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
+    themeLabel.attributedText = [NSAttributedString fw_attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw_boldFont textColor:[UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
     [self.view addSubview:themeLabel];
     
     UIButton *themeButton = [UIButton new];

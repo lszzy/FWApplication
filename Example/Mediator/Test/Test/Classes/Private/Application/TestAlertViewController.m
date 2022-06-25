@@ -257,7 +257,7 @@
                         alertController.preferredAction = alertController.actions[1];
                         alertController.actions[2].enabled = NO;
                         if ([alertController isKindOfClass:[FWAlertController class]]) {
-                            ((FWAlertController *)alertController).image = [UIImage.fw imageWithAppIcon];
+                            ((FWAlertController *)alertController).image = [UIImage fw_imageWithAppIcon];
                         }
                     }];
 }

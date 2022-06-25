@@ -299,32 +299,32 @@ extension Wrapper where Base: UICollectionView {
     
     /// reloadData完成回调
     public func reloadData(completion: (() -> Void)?) {
-        base.__fw.reloadData(completion: completion)
+        base.__fw_reloadData(completion: completion)
     }
 
     /// reloadData清空尺寸缓存
     public func reloadDataWithoutCache() {
-        base.__fw.reloadDataWithoutCache()
+        base.__fw_reloadDataWithoutCache()
     }
 
     /// reloadData禁用动画
     public func reloadDataWithoutAnimation() {
-        base.__fw.reloadDataWithoutAnimation()
+        base.__fw_reloadDataWithoutAnimation()
     }
 
     /// reloadSections禁用动画
     public func reloadSectionsWithoutAnimation(_ sections: IndexSet) {
-        base.__fw.reloadSectionsWithoutAnimation(sections)
+        base.__fw_reloadSectionsWithoutAnimation(sections)
     }
 
     /// reloadItems禁用动画
     public func reloadItemsWithoutAnimation(_ indexPaths: [IndexPath]) {
-        base.__fw.reloadItemsWithoutAnimation(indexPaths)
+        base.__fw_reloadItemsWithoutAnimation(indexPaths)
     }
 
     /// 刷新高度等，不触发reload方式
     public func performUpdates(_ updates: (() -> Void)?) {
-        base.__fw.performUpdates(updates)
+        base.__fw_performUpdates(updates)
     }
     
 }
@@ -333,12 +333,12 @@ extension Wrapper where Base: UICollectionViewCell {
     
     /// 获取当前所属collectionView
     public weak var collectionView: UICollectionView? {
-        return base.__fw.collectionView
+        return base.__fw_collectionView
     }
 
     /// 获取当前显示indexPath
     public var indexPath: IndexPath? {
-        return base.__fw.indexPath
+        return base.__fw_indexPath
     }
     
 }
@@ -348,7 +348,7 @@ extension Wrapper where Base: UICollectionViewFlowLayout {
     
     /// 设置Header和Footer是否悬停，支持iOS9+
     public func hover(header: Bool, footer: Bool) {
-        base.__fw.hover(withHeader: header, footer: footer)
+        base.__fw_hover(withHeader: header, footer: footer)
     }
     
 }

@@ -103,65 +103,65 @@ extension Wrapper where Base: UIApplication {
     // MARK: - App
     /// 读取应用信息字典
     public static func appInfo(_ key: String) -> Any? {
-        return Base.__fw.appInfo(key)
+        return Base.__fw_appInfo(key)
     }
 
     /// 读取应用名称
     public static var appName: String {
-        return Base.__fw.appName
+        return Base.__fw_appName
     }
 
     /// 读取应用显示名称，未配置时读取名称
     public static var appDisplayName: String {
-        return Base.__fw.appDisplayName
+        return Base.__fw_appDisplayName
     }
 
     /// 读取应用主版本号，示例：1.0.0
     public static var appVersion: String {
-        return Base.__fw.appVersion
+        return Base.__fw_appVersion
     }
 
     /// 读取应用构建版本号，示例：1.0.0.1
     public static var appBuildVersion: String {
-        return Base.__fw.appBuildVersion
+        return Base.__fw_appBuildVersion
     }
 
     /// 读取应用标识
     public static var appIdentifier: String {
-        return Base.__fw.appIdentifier
+        return Base.__fw_appIdentifier
     }
 
     // MARK: - Debug
     /// 是否是盗版(不是从AppStore安装)
     public static var isPirated: Bool {
-        return Base.__fw.isPirated
+        return Base.__fw_isPirated
     }
     
     /// 是否是Testflight版本
     public static var isTestflight: Bool {
-        return Base.__fw.isTestflight
+        return Base.__fw_isTestflight
     }
     
     // MARK: - URL
     /// 播放内置声音文件
     @discardableResult
     public static func playAlert(_ file: String) -> SystemSoundID {
-        return Base.__fw.playAlert(file)
+        return Base.__fw_playAlert(file)
     }
 
     /// 停止播放内置声音文件
     public static func stopAlert(_ soundId: SystemSoundID) {
-        return Base.__fw.stopAlert(soundId)
+        return Base.__fw_stopAlert(soundId)
     }
 
     /// 播放内置震动
     public static func playVibrate() {
-        return Base.__fw.playVibrate()
+        return Base.__fw_playVibrate()
     }
 
     /// 语音朗读文字，可指定语言(如zh-CN)
     public static func readText(_ text: String, language: String?) {
-        return Base.__fw.readText(text, withLanguage: language)
+        return Base.__fw_readText(text, withLanguage: language)
     }
     
 }

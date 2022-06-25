@@ -26,7 +26,7 @@
 {
     UIImageView *iconView = [UIImageView new];
     _iconView = iconView;
-    iconView.image = [UIImage.fw imageWithAppIcon];
+    iconView.image = [UIImage fw_imageWithAppIcon];
     [self.contentView addSubview:iconView];
     iconView.fw_layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(50, 50));
     
@@ -61,7 +61,7 @@
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage.fw imageWithAppIcon];
+        iconView.image = [UIImage fw_imageWithAppIcon];
         [self.contentView addSubview:iconView];
         iconView.fw_layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
@@ -99,7 +99,7 @@
         
         UIImageView *iconView = [UIImageView new];
         _iconView = iconView;
-        iconView.image = [UIImage.fw imageWithAppIcon];
+        iconView.image = [UIImage fw_imageWithAppIcon];
         [self.contentView addSubview:iconView];
         iconView.fw_layoutChain.topWithInset(20).leftWithInset(20).size(CGSizeMake(20, 20));
         
@@ -157,7 +157,7 @@
         UIImageView *imageView = [UIImageView new];
         _imageView = imageView;
         imageView.image = [TestBundle imageNamed:@"test_scale"];
-        [imageView.fw setContentModeAspectFill];
+        [imageView fw_setContentModeAspectFill];
         [imageView fw_setCornerRadius:5];
         [self addSubview:imageView];
         imageView.fw_layoutChain.centerXToView(testView)

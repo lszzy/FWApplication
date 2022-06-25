@@ -44,7 +44,7 @@
     button.fw_layoutChain.widthToView(view).heightToView(view).leftToViewRightWithOffset(label, 20).topToViewWithOffset(view, 0);
     
     UIImageView *image = [UIImageView new];
-    image.image = [UIImage.fw imageWithAppIcon];
+    image.image = [UIImage fw_imageWithAppIcon];
     [self.view addSubview:image];
     image.fw_layoutChain.attribute(NSLayoutAttributeWidth, NSLayoutAttributeWidth, view).heightToWidth(1.0).centerYToView(view).attributeWithOffset(NSLayoutAttributeLeft, NSLayoutAttributeRight, button, 20);
     

@@ -10,36 +10,36 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWImageViewWrapper (FWApplication)
+@interface UIImageView (FWApplication)
 
 #pragma mark - Mode
 
 // 设置图片模式为ScaleAspectFill，自动拉伸不变形，超过区域隐藏。可通过appearance统一设置
-- (void)setContentModeAspectFill UI_APPEARANCE_SELECTOR;
+- (void)fw_setContentModeAspectFill UI_APPEARANCE_SELECTOR NS_REFINED_FOR_SWIFT;
 
 // 设置指定图片模式，超过区域隐藏。可通过appearance统一设置
-- (void)setContentMode:(UIViewContentMode)contentMode UI_APPEARANCE_SELECTOR;
+- (void)fw_setContentMode:(UIViewContentMode)contentMode UI_APPEARANCE_SELECTOR NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Face
 
 // 优化图片人脸显示，参考：https://github.com/croath/UIImageView-BetterFace
-- (void)faceAware;
+- (void)fw_faceAware NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Reflect
 
 // 倒影效果
-- (void)reflect;
+- (void)fw_reflect NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Watermark
 
 // 图片水印
-- (void)setImage:(UIImage *)image watermarkImage:(UIImage *)watermarkImage inRect:(CGRect)rect;
+- (void)fw_setImage:(UIImage *)image watermarkImage:(UIImage *)watermarkImage inRect:(CGRect)rect NS_REFINED_FOR_SWIFT;
 
 // 文字水印，指定区域
-- (void)setImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString inRect:(CGRect)rect;
+- (void)fw_setImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString inRect:(CGRect)rect NS_REFINED_FOR_SWIFT;
 
 // 文字水印，指定坐标
-- (void)setImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString atPoint:(CGPoint)point;
+- (void)fw_setImage:(UIImage *)image watermarkString:(NSAttributedString *)watermarkString atPoint:(CGPoint)point NS_REFINED_FOR_SWIFT;
 
 @end
 

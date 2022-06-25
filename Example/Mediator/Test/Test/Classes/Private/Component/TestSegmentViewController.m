@@ -27,7 +27,7 @@
     FWWeakifySelf();
     [self fw_setRightBarItem:@"Save" block:^(id sender) {
         FWStrongifySelf();
-        [self.gifImageView.image.fw saveImageWithCompletion:nil];
+        [self.gifImageView.image fw_saveImageWithCompletion:nil];
     }];
 }
 
@@ -90,7 +90,7 @@
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗体16 " withFont:attrFont]];
     attrFont = [UIFont italicSystemFontOfSize:16];
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"斜体16 " withFont:attrFont]];
-    attrFont = [[UIFont italicSystemFontOfSize:16].fw boldFont];
+    attrFont = [[UIFont italicSystemFontOfSize:16] fw_boldFont];
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗斜体16 " withFont:attrFont]];
     
     attrFont = [UIFont fw_fontOfSize:16 weight:UIFontWeightLight];
@@ -99,9 +99,9 @@
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"常规16 " withFont:attrFont]];
     attrFont = [UIFont fw_fontOfSize:16 weight:UIFontWeightBold];
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗体16 " withFont:attrFont]];
-    attrFont = [[UIFont fw_fontOfSize:16 weight:UIFontWeightRegular].fw italicFont];
+    attrFont = [[UIFont fw_fontOfSize:16 weight:UIFontWeightRegular] fw_italicFont];
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"斜体16 " withFont:attrFont]];
-    attrFont = [[[[[[UIFont fw_fontOfSize:16 weight:UIFontWeightBold].fw italicFont].fw nonBoldFont].fw boldFont].fw nonItalicFont].fw italicFont];
+    attrFont = [[[[[[UIFont fw_fontOfSize:16 weight:UIFontWeightBold] fw_italicFont] fw_nonBoldFont] fw_boldFont] fw_nonItalicFont] fw_italicFont];
     [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗斜体16 " withFont:attrFont]];
     textLabel.attributedText = attrStr;
     

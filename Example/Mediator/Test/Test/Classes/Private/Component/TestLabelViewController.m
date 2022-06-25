@@ -56,7 +56,7 @@
     attrLabel2.numberOfLines = 0;
     attrLabel2.font = [UIFont systemFontOfSize:16];
     attrLabel2.lineBreakMode = kCTLineBreakByCharWrapping;
-    attrLabel2.lineSpacing = 8 - attrLabel.font.fw.spaceHeight;
+    attrLabel2.lineSpacing = 8 - attrLabel.font.fw_spaceHeight;
     [self.view addSubview:attrLabel2];
     attrLabel2.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel, 10);
     
