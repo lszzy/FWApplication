@@ -61,7 +61,7 @@
     FWWeakifySelf();
     [UIWindow.fw_topPresentedController fw_showConfirmWithTitle:@"模拟登录失效" message:nil cancel:nil confirm:nil confirmBlock:^{
         FWStrongifySelf();
-        [UIWindow.fw_mainWindow.fw dismissViewControllers:^{
+        [UIWindow.fw_mainWindow fw_dismissViewControllers:^{
             FWStrongifySelf();
             [Mediator.userModule logout:^{
                 FWStrongifySelf();

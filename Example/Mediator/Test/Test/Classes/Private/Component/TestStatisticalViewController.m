@@ -77,7 +77,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     UIButton *testButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _testButton = testButton;
     [testButton setTitle:@"Button" forState:UIControlStateNormal];
-    [testButton.fw setBackgroundColor:[UIColor fw_randomColor] forState:UIControlStateNormal];
+    [testButton fw_setBackgroundColor:[UIColor fw_randomColor] forState:UIControlStateNormal];
     [headerView addSubview:testButton];
     testButton.fw_layoutChain.width(100).height(30).centerX().topToViewBottomWithOffset(testView, 50);
     
@@ -178,7 +178,7 @@ FWPropertyWeak(FWTextTagCollectionView *, tagCollectionView);
     
     [self.testButton fw_addTouchBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
-        [self.testButton.fw setBackgroundColor:UIColor.fw_randomColor forState:UIControlStateNormal];
+        [self.testButton fw_setBackgroundColor:UIColor.fw_randomColor forState:UIControlStateNormal];
     }];
     
     [self.testSwitch fw_addBlock:^(id  _Nonnull sender) {

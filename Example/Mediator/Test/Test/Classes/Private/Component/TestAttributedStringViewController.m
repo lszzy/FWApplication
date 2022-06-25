@@ -58,7 +58,7 @@
     if (self.count ++ != 0) {
         string = [@"\n" stringByAppendingString:string];
     }
-    return [NSAttributedString.fw attributedString:string withOption:option];
+    return [NSAttributedString fw_attributedString:string withOption:option];
 }
 
 @end

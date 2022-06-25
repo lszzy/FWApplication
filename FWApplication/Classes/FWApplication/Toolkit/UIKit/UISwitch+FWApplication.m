@@ -9,11 +9,11 @@
 
 #import "UISwitch+FWApplication.h"
 
-@implementation FWSwitchWrapper (FWApplication)
+@implementation UISwitch (FWApplication)
 
-- (void)toggle:(BOOL)animated
+- (void)fw_toggle:(BOOL)animated
 {
-    [self.base setOn:!self.base.isOn animated:animated];
+    [self setOn:!self.isOn animated:animated];
 }
 
 @end

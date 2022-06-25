@@ -93,7 +93,7 @@ extension Wrapper where Base == URLRequest {
     
     /// 生成对应curl命令，方便调试和测试
     public func curlCommand() -> String {
-        return (base as NSURLRequest).__fw.curlCommand()
+        return (base as NSURLRequest).__fw_curlCommand()
     }
     
 }

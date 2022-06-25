@@ -8,18 +8,18 @@
 
 #import "NSURLRequest+FWApplication.h"
 
-@implementation FWURLRequestWrapper (FWApplication)
+@implementation NSURLRequest (FWApplication)
 
-- (NSString *)curlCommand {
-    __block NSMutableString *curlCommand = [NSMutableString stringWithFormat:@"curl -v -X %@ ", self.base.HTTPMethod];
+- (NSString *)fw_curlCommand {
+    __block NSMutableString *curlCommand = [NSMutableString stringWithFormat:@"curl -v -X %@ ", self.HTTPMethod];
 
-    [curlCommand appendFormat:@"\'%@\' ", self.base.URL.absoluteString];
+    [curlCommand appendFormat:@"\'%@\' ", self.URL.absoluteString];
 
-    [self.base.allHTTPHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *val, BOOL *stop) {
+    [self.allHTTPHeaderFields enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *val, BOOL *stop) {
         [curlCommand appendFormat:@"-H \'%@: %@\' ", key, val];
     }];
 
-    NSArray<NSHTTPCookie *> *cookies = [NSHTTPCookieStorage.sharedHTTPCookieStorage cookiesForURL:self.base.URL];
+    NSArray<NSHTTPCookie *> *cookies = [NSHTTPCookieStorage.sharedHTTPCookieStorage cookiesForURL:self.URL];
     if (cookies) {
         [curlCommand appendFormat:@"-H \'Cookie:"];
         for (NSHTTPCookie *cookie in cookies) {
@@ -28,8 +28,8 @@
         [curlCommand appendFormat:@"\' "];
     }
 
-    if (self.base.HTTPBody) {
-        NSString *body = [[NSString alloc] initWithData:self.base.HTTPBody encoding:NSUTF8StringEncoding];
+    if (self.HTTPBody) {
+        NSString *body = [[NSString alloc] initWithData:self.HTTPBody encoding:NSUTF8StringEncoding];
         [curlCommand appendFormat:@"-d \'%@\'", body];
     }
 

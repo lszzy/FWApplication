@@ -83,26 +83,26 @@
     
     NSMutableAttributedString *attrStr = [NSMutableAttributedString new];
     UIFont *attrFont = FWFontLight(16);
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"细体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"细体16 " withFont:attrFont]];
     attrFont = FWFontRegular(16);
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"常规16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"常规16 " withFont:attrFont]];
     attrFont = FWFontBold(16);
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗体16 " withFont:attrFont]];
     attrFont = [UIFont italicSystemFontOfSize:16];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"斜体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"斜体16 " withFont:attrFont]];
     attrFont = [[UIFont italicSystemFontOfSize:16].fw boldFont];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗斜体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗斜体16 " withFont:attrFont]];
     
     attrFont = [UIFont fw_fontOfSize:16 weight:UIFontWeightLight];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"\n细体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"\n细体16 " withFont:attrFont]];
     attrFont = [UIFont fw_fontOfSize:16 weight:UIFontWeightRegular];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"常规16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"常规16 " withFont:attrFont]];
     attrFont = [UIFont fw_fontOfSize:16 weight:UIFontWeightBold];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗体16 " withFont:attrFont]];
     attrFont = [[UIFont fw_fontOfSize:16 weight:UIFontWeightRegular].fw italicFont];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"斜体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"斜体16 " withFont:attrFont]];
     attrFont = [[[[[[UIFont fw_fontOfSize:16 weight:UIFontWeightBold].fw italicFont].fw nonBoldFont].fw boldFont].fw nonItalicFont].fw italicFont];
-    [attrStr appendAttributedString:[NSAttributedString.fw attributedString:@"粗斜体16 " withFont:attrFont]];
+    [attrStr appendAttributedString:[NSAttributedString fw_attributedString:@"粗斜体16 " withFont:attrFont]];
     textLabel.attributedText = attrStr;
     
     FWAttributedLabel *label = [FWAttributedLabel new];

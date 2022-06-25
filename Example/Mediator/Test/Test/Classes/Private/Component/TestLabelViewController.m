@@ -101,7 +101,7 @@
     option.paragraphStyle = [NSMutableParagraphStyle new];
     option.paragraphStyle.alignment = NSTextAlignmentLeft;
     option.paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
-    NSAttributedString *attrText = [NSAttributedString.fw attributedString:[self testText] withOption:option];
+    NSAttributedString *attrText = [NSAttributedString fw_attributedString:[self testText] withOption:option];
     return attrText;
 }
 
@@ -111,11 +111,11 @@
     NSMutableString *resultText = [NSMutableString new];
     
     self.label.text = [self testText];
-    size = [self.label.fw textSize];
+    size = [self.label fw_textSize];
     [resultText appendFormat:@"label: %@\n", NSStringFromCGSize(size)];
     
     self.label2.attributedText = [self testAttrText];
-    size = [self.label2.fw attributedTextSize];
+    size = [self.label2 fw_attributedTextSize];
     [resultText appendFormat:@"label2: %@\n", NSStringFromCGSize(size)];
     
     self.attrLabel.text = [self testText];

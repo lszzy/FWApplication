@@ -30,7 +30,7 @@
 {
     if (self.base.count < 1) return nil;
     
-    return [self.base.allKeys.fw randomObject:self.base.allValues];
+    return [self.base.allKeys fw_randomObject:self.base.allValues];
 }
 
 - (BOOL)includeNull
@@ -67,7 +67,7 @@
             }
             
             if ([object isKindOfClass:[NSArray class]]) {
-                NSArray *subarray = [((NSArray *)object).fw removeNullRecursive:YES];
+                NSArray *subarray = [((NSArray *)object) fw_removeNullRecursive:YES];
                 [dictionary setValue:subarray forKey:key];
             }
         }
