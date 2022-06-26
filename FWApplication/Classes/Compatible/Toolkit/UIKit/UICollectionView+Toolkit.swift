@@ -117,8 +117,8 @@ import FWApplication
             return UICollectionViewCell(frame: .zero)
         }
         
-        // 注意：此处必须使用.__fw.创建，否则返回的对象类型不对
-        let cell = clazz.__fw.cell(with: collectionView, indexPath: indexPath)
+        // 注意：此处必须使用.__fw_创建，否则返回的对象类型不对
+        let cell = clazz.__fw_cell(with: collectionView, indexPath: indexPath)
         if let cellBlock = cellConfiguration {
             cellBlock(cell, indexPath)
             return cell
@@ -129,7 +129,7 @@ import FWApplication
            sectionData.count > indexPath.item {
             viewModel = sectionData[indexPath.item]
         }
-        cell.__fw.viewModel = viewModel
+        cell.__fw_viewModel = viewModel
         return cell
     }
     
@@ -171,7 +171,7 @@ import FWApplication
             width = collectionView.frame.size.width - inset.left - inset.right
         }
         return collectionView.fw.size(cellClass: clazz, width: width, cacheBy: indexPath) { (cell) in
-            cell.__fw.viewModel = viewModel
+            cell.__fw_viewModel = viewModel
         }
     }
     
@@ -185,9 +185,9 @@ import FWApplication
             if let view = viewClass as? UICollectionReusableView { return view }
             guard let clazz = viewClass as? UICollectionReusableView.Type else { return UICollectionReusableView() }
             
-            // 注意：此处必须使用.__fw.创建，否则返回的对象类型不对
-            let view = clazz.__fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath)
-            let viewBlock = headerConfiguration ?? { (header, indexPath) in header.__fw.viewModel = nil }
+            // 注意：此处必须使用.__fw_创建，否则返回的对象类型不对
+            let view = clazz.__fw_reusableView(with: collectionView, kind: kind, indexPath: indexPath)
+            let viewBlock = headerConfiguration ?? { (header, indexPath) in header.__fw_viewModel = nil }
             viewBlock(view, indexPath)
             return view
         }
@@ -197,9 +197,9 @@ import FWApplication
             if let view = viewClass as? UICollectionReusableView { return view }
             guard let clazz = viewClass as? UICollectionReusableView.Type else { return UICollectionReusableView() }
             
-            // 注意：此处必须使用.__fw.创建，否则返回的对象类型不对
-            let view = clazz.__fw.reusableView(with: collectionView, kind: kind, indexPath: indexPath)
-            let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.__fw.viewModel = nil }
+            // 注意：此处必须使用.__fw_创建，否则返回的对象类型不对
+            let view = clazz.__fw_reusableView(with: collectionView, kind: kind, indexPath: indexPath)
+            let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.__fw_viewModel = nil }
             viewBlock(view, indexPath)
             return view
         }
@@ -220,7 +220,7 @@ import FWApplication
         if let view = viewClass as? UICollectionReusableView { return view.frame.size }
         guard let clazz = viewClass as? UICollectionReusableView.Type else { return .zero }
         
-        let viewBlock = headerConfiguration ?? { (header, indexPath) in header.__fw.viewModel = nil }
+        let viewBlock = headerConfiguration ?? { (header, indexPath) in header.__fw_viewModel = nil }
         return collectionView.fw.size(reusableViewClass: clazz, kind: UICollectionView.elementKindSectionHeader, cacheBy: section) { (reusableView) in
             viewBlock(reusableView, indexPath)
         }
@@ -239,7 +239,7 @@ import FWApplication
         if let view = viewClass as? UICollectionReusableView { return view.frame.size }
         guard let clazz = viewClass as? UICollectionReusableView.Type else { return .zero }
         
-        let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.__fw.viewModel = nil }
+        let viewBlock = footerConfiguration ?? { (footer, indexPath) in footer.__fw_viewModel = nil }
         return collectionView.fw.size(reusableViewClass: clazz, kind: UICollectionView.elementKindSectionFooter, cacheBy: section) { (reusableView) in
             viewBlock(reusableView, indexPath)
         }
@@ -279,19 +279,20 @@ extension Wrapper where Base: UICollectionView {
     }
 }
 
-@objc extension __FWCollectionViewWrapper {
-    public var delegate: CollectionViewDelegate {
-        return base.fw.delegate
-    }
-}
-
-@objc extension __FWCollectionViewClassWrapper {
-    public func collectionView() -> UICollectionView {
-        return UICollectionView.fw.collectionView()
+@objc extension UICollectionView {
+    @objc(fw_delegate)
+    public var __fw_delegate: CollectionViewDelegate {
+        return fw.delegate
     }
     
-    public func collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
-        return UICollectionView.fw.collectionView(collectionViewLayout)
+    @objc(fw_collectionView)
+    public static func __fw_collectionView() -> UICollectionView {
+        return fw.collectionView()
+    }
+    
+    @objc(fw_collectionView:)
+    public static func __fw_collectionView(_ collectionViewLayout: UICollectionViewLayout) -> UICollectionView {
+        return fw.collectionView(collectionViewLayout)
     }
 }
 
@@ -299,32 +300,32 @@ extension Wrapper where Base: UICollectionView {
     
     /// reloadData完成回调
     public func reloadData(completion: (() -> Void)?) {
-        base.__fw.reloadData(completion: completion)
+        base.__fw_reloadData(completion: completion)
     }
 
     /// reloadData清空尺寸缓存
     public func reloadDataWithoutCache() {
-        base.__fw.reloadDataWithoutCache()
+        base.__fw_reloadDataWithoutCache()
     }
 
     /// reloadData禁用动画
     public func reloadDataWithoutAnimation() {
-        base.__fw.reloadDataWithoutAnimation()
+        base.__fw_reloadDataWithoutAnimation()
     }
 
     /// reloadSections禁用动画
     public func reloadSectionsWithoutAnimation(_ sections: IndexSet) {
-        base.__fw.reloadSectionsWithoutAnimation(sections)
+        base.__fw_reloadSectionsWithoutAnimation(sections)
     }
 
     /// reloadItems禁用动画
     public func reloadItemsWithoutAnimation(_ indexPaths: [IndexPath]) {
-        base.__fw.reloadItemsWithoutAnimation(indexPaths)
+        base.__fw_reloadItemsWithoutAnimation(indexPaths)
     }
 
     /// 刷新高度等，不触发reload方式
     public func performUpdates(_ updates: (() -> Void)?) {
-        base.__fw.performUpdates(updates)
+        base.__fw_performUpdates(updates)
     }
     
 }
@@ -333,12 +334,12 @@ extension Wrapper where Base: UICollectionViewCell {
     
     /// 获取当前所属collectionView
     public weak var collectionView: UICollectionView? {
-        return base.__fw.collectionView
+        return base.__fw_collectionView
     }
 
     /// 获取当前显示indexPath
     public var indexPath: IndexPath? {
-        return base.__fw.indexPath
+        return base.__fw_indexPath
     }
     
 }
@@ -348,7 +349,7 @@ extension Wrapper where Base: UICollectionViewFlowLayout {
     
     /// 设置Header和Footer是否悬停，支持iOS9+
     public func hover(header: Bool, footer: Bool) {
-        base.__fw.hover(withHeader: header, footer: footer)
+        base.__fw_hover(withHeader: header, footer: footer)
     }
     
 }

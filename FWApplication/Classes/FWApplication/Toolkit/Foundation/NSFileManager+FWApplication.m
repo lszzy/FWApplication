@@ -10,69 +10,69 @@
 #import "NSFileManager+FWApplication.h"
 #import <AVFoundation/AVFoundation.h>
 
-@implementation FWFileManagerClassWrapper (FWApplication)
+@implementation NSFileManager (FWApplication)
 
 #pragma mark - Path
 
-- (NSString *)pathSearch:(NSSearchPathDirectory)directory
++ (NSString *)fw_pathSearch:(NSSearchPathDirectory)directory
 {
     NSArray *directories = NSSearchPathForDirectoriesInDomains(directory, NSUserDomainMask, YES);
     return directories.count > 0 ? [directories objectAtIndex:0] : @"";
 }
 
-- (NSString *)pathHome
++ (NSString *)fw_pathHome
 {
     return NSHomeDirectory();
 }
 
-- (NSString *)pathDocument
++ (NSString *)fw_pathDocument
 {
-    return [self pathSearch:NSDocumentDirectory];
+    return [self fw_pathSearch:NSDocumentDirectory];
 }
 
-- (NSString *)pathCaches
++ (NSString *)fw_pathCaches
 {
-    return [self pathSearch:NSCachesDirectory];
+    return [self fw_pathSearch:NSCachesDirectory];
 }
 
-- (NSString *)pathLibrary
++ (NSString *)fw_pathLibrary
 {
-    return [self pathSearch:NSLibraryDirectory];
+    return [self fw_pathSearch:NSLibraryDirectory];
 }
 
-- (NSString *)pathPreference
++ (NSString *)fw_pathPreference
 {
-    return [[self pathLibrary] stringByAppendingPathComponent:@"Preference"];
+    return [[self fw_pathLibrary] stringByAppendingPathComponent:@"Preference"];
 }
 
-- (NSString *)pathTmp
++ (NSString *)fw_pathTmp
 {
     return NSTemporaryDirectory();
 }
 
-- (NSString *)pathBundle
++ (NSString *)fw_pathBundle
 {
     return [[NSBundle mainBundle] bundlePath];
 }
 
-- (NSString *)pathResource
++ (NSString *)fw_pathResource
 {
     return [[NSBundle mainBundle] resourcePath] ?: @"";
 }
 
-- (NSString *)abbreviateTildePath:(NSString *)path
++ (NSString *)fw_abbreviateTildePath:(NSString *)path
 {
     return [path stringByAbbreviatingWithTildeInPath];
 }
 
-- (NSString *)expandTildePath:(NSString *)path
++ (NSString *)fw_expandTildePath:(NSString *)path
 {
     return [path stringByExpandingTildeInPath];
 }
 
 #pragma mark - Size
 
-- (unsigned long long)folderSize:(NSString *)folderPath
++ (unsigned long long)fw_folderSize:(NSString *)folderPath
 {
     NSArray *contents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:folderPath error:nil];
     NSEnumerator *contentsEnumurator = [contents objectEnumerator];
@@ -87,15 +87,15 @@
     return folderSize;
 }
 
-- (double)availableDiskSize
++ (double)fw_availableDiskSize
 {
-    NSDictionary *attributes = [NSFileManager.defaultManager attributesOfFileSystemForPath:[self pathDocument] error:nil];
+    NSDictionary *attributes = [NSFileManager.defaultManager attributesOfFileSystemForPath:[self fw_pathDocument] error:nil];
     return [attributes[NSFileSystemFreeSize] unsignedLongLongValue] / (double)0x100000;
 }
 
 #pragma mark - Addition
 
-- (BOOL)skipBackup:(NSString *)path
++ (BOOL)fw_skipBackup:(NSString *)path
 {
     return [[NSURL.alloc initFileURLWithPath:path] setResourceValue:@(YES) forKey:NSURLIsExcludedFromBackupKey error:nil];
 }

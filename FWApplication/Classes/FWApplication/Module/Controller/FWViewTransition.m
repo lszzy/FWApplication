@@ -248,7 +248,7 @@
 {
     if (operation == UINavigationControllerOperationPush) {
         // push时检查toVC的转场代理
-        FWAnimatedTransition *transition = toVC.fw.viewTransition ?: self;
+        FWAnimatedTransition *transition = toVC.fw_viewTransition ?: self;
         transition.transitionType = FWAnimatedTransitionTypePush;
         // 自动设置和绑定pop交互转场，在pop前设置生效
         if (!transition.isSystem && transition.interactEnabled && !transition.interactBlock) {
@@ -260,7 +260,7 @@
         return !transition.isSystem ? transition : nil;
     } else if (operation == UINavigationControllerOperationPop) {
         // pop时检查fromVC的转场代理
-        FWAnimatedTransition *transition = fromVC.fw.viewTransition ?: self;
+        FWAnimatedTransition *transition = fromVC.fw_viewTransition ?: self;
         transition.transitionType = FWAnimatedTransitionTypePop;
         return !transition.isSystem ? transition : nil;
     }
@@ -610,7 +610,7 @@
         if ((self.rectCorner & UIRectCornerAllCorners) == UIRectCornerAllCorners) {
             self.presentedView.layer.cornerRadius = self.cornerRadius;
         } else {
-            [self.presentedView.fw setCornerLayer:self.rectCorner radius:self.cornerRadius];
+            [self.presentedView fw_setCornerLayer:self.rectCorner radius:self.cornerRadius];
         }
     }
     self.dimmingView.frame = self.containerView.bounds;
@@ -740,9 +740,9 @@
     if (!self.scrollView || !self.scrollView.scrollEnabled) return;
     
     if (self.direction == UISwipeGestureRecognizerDirectionUp || self.direction == UISwipeGestureRecognizerDirectionDown) {
-        if (![self.scrollView.fw canScrollVertical]) return;
+        if (![self.scrollView fw_canScrollVertical]) return;
     } else {
-        if (![self.scrollView.fw canScrollHorizontal]) return;
+        if (![self.scrollView fw_canScrollHorizontal]) return;
     }
 
     if (self.state == UIGestureRecognizerStateFailed) return;
@@ -761,7 +761,7 @@
     BOOL isFailed = NO;
     switch (self.direction) {
         case UISwipeGestureRecognizerDirectionDown: {
-            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeTop].y;
+            CGFloat edgeOffset = [self.scrollView fw_contentOffsetOfEdge:UIRectEdgeTop].y;
             if ((fabs(velocity.x) < fabs(velocity.y)) && (location.y > prevLocation.y) && (self.scrollView.contentOffset.y <= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.y >= edgeOffset) {
@@ -770,7 +770,7 @@
             break;
         }
         case UISwipeGestureRecognizerDirectionUp: {
-            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeBottom].y;
+            CGFloat edgeOffset = [self.scrollView fw_contentOffsetOfEdge:UIRectEdgeBottom].y;
             if ((fabs(velocity.x) < fabs(velocity.y)) && (location.y < prevLocation.y) && (self.scrollView.contentOffset.y >= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.y <= edgeOffset) {
@@ -779,7 +779,7 @@
             break;
         }
         case UISwipeGestureRecognizerDirectionRight: {
-            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeLeft].x;
+            CGFloat edgeOffset = [self.scrollView fw_contentOffsetOfEdge:UIRectEdgeLeft].x;
             if ((fabs(velocity.y) < fabs(velocity.x)) && (location.x > prevLocation.x) && (self.scrollView.contentOffset.x <= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.x >= edgeOffset) {
@@ -788,7 +788,7 @@
             break;
         }
         case UISwipeGestureRecognizerDirectionLeft: {
-            CGFloat edgeOffset = [self.scrollView.fw contentOffsetOfEdge:UIRectEdgeRight].x;
+            CGFloat edgeOffset = [self.scrollView fw_contentOffsetOfEdge:UIRectEdgeRight].x;
             if ((fabs(velocity.y) < fabs(velocity.x)) && (location.x < prevLocation.x) && (self.scrollView.contentOffset.x >= edgeOffset)) {
                 isFailed = NO;
             } else if (self.scrollView.contentOffset.x <= edgeOffset) {
@@ -840,9 +840,9 @@
         if (self.autoDetected) {
             UIScrollView *scrollView = (UIScrollView *)otherGestureRecognizer.view;
             if (self.direction == UISwipeGestureRecognizerDirectionUp || self.direction == UISwipeGestureRecognizerDirectionDown) {
-                if ([scrollView.fw canScrollHorizontal]) return NO;
+                if ([scrollView fw_canScrollHorizontal]) return NO;
             } else {
-                if ([scrollView.fw canScrollVertical]) return NO;
+                if ([scrollView fw_canScrollVertical]) return NO;
             }
             
             if (scrollView != self.scrollView) self.scrollView = scrollView;
@@ -863,9 +863,9 @@
         if (self.autoDetected) {
             UIScrollView *scrollView = (UIScrollView *)otherGestureRecognizer.view;
             if (self.direction == UISwipeGestureRecognizerDirectionUp || self.direction == UISwipeGestureRecognizerDirectionDown) {
-                if ([scrollView.fw canScrollHorizontal]) return NO;
+                if ([scrollView fw_canScrollHorizontal]) return NO;
             } else {
-                if ([scrollView.fw canScrollVertical]) return NO;
+                if ([scrollView fw_canScrollVertical]) return NO;
             }
             
             if (scrollView != self.scrollView) self.scrollView = scrollView;
@@ -926,42 +926,42 @@
 
 - (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController
 {
-    if (presentationController.presentedViewController.fw.presentationDidDismiss) {
-        presentationController.presentedViewController.fw.presentationDidDismiss();
+    if (presentationController.presentedViewController.fw_presentationDidDismiss) {
+        presentationController.presentedViewController.fw_presentationDidDismiss();
     }
 }
 
 @end
 
-#pragma mark - FWViewControllerWrapper+FWTransition
+#pragma mark - UIViewController+FWTransition
 
-@implementation FWViewControllerWrapper (FWTransition)
+@implementation UIViewController (FWTransition)
 
-- (FWAnimatedTransition *)modalTransition
+- (FWAnimatedTransition *)fw_modalTransition
 {
-    return objc_getAssociatedObject(self.base, @selector(modalTransition));
+    return objc_getAssociatedObject(self, @selector(fw_modalTransition));
 }
 
 // 注意：App退出后台时如果弹出页面，整个present动画不会执行。如果需要设置遮罩层等，需要在viewDidAppear中处理兼容
-- (void)setModalTransition:(FWAnimatedTransition *)modalTransition
+- (void)setFw_modalTransition:(FWAnimatedTransition *)modalTransition
 {
     // 设置delegation动画，nil时清除delegate动画
-    self.base.transitioningDelegate = modalTransition;
+    self.transitioningDelegate = modalTransition;
     // 强引用，防止被自动释放，nil时释放引用
-    objc_setAssociatedObject(self.base, @selector(modalTransition), modalTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_modalTransition), modalTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (FWAnimatedTransition *)viewTransition
+- (FWAnimatedTransition *)fw_viewTransition
 {
-    return objc_getAssociatedObject(self.base, @selector(viewTransition));
+    return objc_getAssociatedObject(self, @selector(fw_viewTransition));
 }
 
-- (void)setViewTransition:(FWAnimatedTransition *)viewTransition
+- (void)setFw_viewTransition:(FWAnimatedTransition *)viewTransition
 {
-    objc_setAssociatedObject(self.base, @selector(viewTransition), viewTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_viewTransition), viewTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (FWAnimatedTransition *)setPresentTransition:(void (^)(FWPresentationController *))presentationBlock
+- (FWAnimatedTransition *)fw_setPresentTransition:(void (^)(FWPresentationController *))presentationBlock
 {
     FWSwipeAnimatedTransition *modalTransition = [[FWSwipeAnimatedTransition alloc] init];
     modalTransition.presentationBlock = ^UIPresentationController *(UIViewController *presented, UIViewController *presenting) {
@@ -969,12 +969,12 @@
         if (presentationBlock) presentationBlock(presentationController);
         return presentationController;
     };
-    self.base.modalPresentationStyle = UIModalPresentationCustom;
-    self.modalTransition = modalTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    self.fw_modalTransition = modalTransition;
     return modalTransition;
 }
 
-- (FWAnimatedTransition *)setAlertTransition:(void (^)(FWPresentationController *))presentationBlock
+- (FWAnimatedTransition *)fw_setAlertTransition:(void (^)(FWPresentationController *))presentationBlock
 {
     FWTransformAnimatedTransition *modalTransition = [FWTransformAnimatedTransition transitionWithInTransform:CGAffineTransformMakeScale(1.1, 1.1) outTransform:CGAffineTransformIdentity];
     modalTransition.presentationBlock = ^UIPresentationController *(UIViewController *presented, UIViewController *presenting) {
@@ -982,12 +982,12 @@
         if (presentationBlock) presentationBlock(presentationController);
         return presentationController;
     };
-    self.base.modalPresentationStyle = UIModalPresentationCustom;
-    self.modalTransition = modalTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    self.fw_modalTransition = modalTransition;
     return modalTransition;
 }
 
-- (FWAnimatedTransition *)setFadeTransition:(void (^)(FWPresentationController *))presentationBlock
+- (FWAnimatedTransition *)fw_setFadeTransition:(void (^)(FWPresentationController *))presentationBlock
 {
     FWAnimatedTransition *modalTransition = [[FWAnimatedTransition alloc] init];
     modalTransition.presentationBlock = ^UIPresentationController *(UIViewController *presented, UIViewController *presenting) {
@@ -995,52 +995,52 @@
         if (presentationBlock) presentationBlock(presentationController);
         return presentationController;
     };
-    self.base.modalPresentationStyle = UIModalPresentationCustom;
-    self.modalTransition = modalTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    self.fw_modalTransition = modalTransition;
     return modalTransition;
 }
 
-- (void (^)(void))presentationDidDismiss
+- (void (^)(void))fw_presentationDidDismiss
 {
-    return objc_getAssociatedObject(self.base, @selector(presentationDidDismiss));
+    return objc_getAssociatedObject(self, @selector(fw_presentationDidDismiss));
 }
 
-- (void)setPresentationDidDismiss:(void (^)(void))presentationDidDismiss
+- (void)setFw_presentationDidDismiss:(void (^)(void))presentationDidDismiss
 {
-    objc_setAssociatedObject(self.base, @selector(presentationDidDismiss), presentationDidDismiss, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_presentationDidDismiss), presentationDidDismiss, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (@available(iOS 13.0, *)) {
-        self.base.presentationController.delegate = [self presentationTarget];
+        self.presentationController.delegate = [self fw_presentationTarget];
     }
 }
 
-- (void)setPopoverPresentation:(void (NS_NOESCAPE ^)(UIPopoverPresentationController *))presentationBlock shouldDismiss:(BOOL)shouldDismiss
+- (void)fw_setPopoverPresentation:(void (NS_NOESCAPE ^)(UIPopoverPresentationController *))presentationBlock shouldDismiss:(BOOL)shouldDismiss
 {
-    self.base.modalPresentationStyle = UIModalPresentationPopover;
-    [self presentationTarget].isPopover = YES;
-    [self presentationTarget].shouldDismiss = shouldDismiss;
-    self.base.popoverPresentationController.delegate = [self presentationTarget];
-    if (self.base.popoverPresentationController && presentationBlock) {
-        presentationBlock(self.base.popoverPresentationController);
+    self.modalPresentationStyle = UIModalPresentationPopover;
+    [self fw_presentationTarget].isPopover = YES;
+    [self fw_presentationTarget].shouldDismiss = shouldDismiss;
+    self.popoverPresentationController.delegate = [self fw_presentationTarget];
+    if (self.popoverPresentationController && presentationBlock) {
+        presentationBlock(self.popoverPresentationController);
     }
 }
 
-- (FWPresentationTarget *)presentationTarget
+- (FWPresentationTarget *)fw_presentationTarget
 {
-    FWPresentationTarget *target = objc_getAssociatedObject(self.base, _cmd);
+    FWPresentationTarget *target = objc_getAssociatedObject(self, _cmd);
     if (!target) {
         target = [[FWPresentationTarget alloc] init];
-        objc_setAssociatedObject(self.base, _cmd, target, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, _cmd, target, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return target;
 }
 
 @end
 
-#pragma mark - FWViewWrapper+FWTransition
+#pragma mark - UIView+FWTransition
 
-@implementation FWViewWrapper (FWTransition)
+@implementation UIView (FWTransition)
 
-- (UIView *)transitionToController:(UIViewController *)viewController pinEdges:(BOOL)pinEdges
+- (UIView *)fw_transitionToController:(UIViewController *)viewController pinEdges:(BOOL)pinEdges
 {
     UIView *containerView = nil;
     if (viewController.tabBarController && !viewController.tabBarController.tabBar.hidden) {
@@ -1050,92 +1050,92 @@
     } else {
         containerView = viewController.view;
     }
-    [containerView addSubview:self.base];
+    [containerView addSubview:self];
     if (pinEdges) {
-        [self.base.fw pinEdgesToSuperview];
+        [self fw_pinEdgesToSuperview];
         [containerView setNeedsLayout];
         [containerView layoutIfNeeded];
     }
     return containerView;
 }
 
-- (UIViewController *)wrappedTransitionController:(BOOL)pinEdges
+- (UIViewController *)fw_wrappedTransitionController:(BOOL)pinEdges
 {
     UIViewController *viewController = [[UIViewController alloc] init];
-    [viewController.view addSubview:self.base];
+    [viewController.view addSubview:self];
     if (pinEdges) {
-        [self.base.fw pinEdgesToSuperview];
+        [self fw_pinEdgesToSuperview];
         [viewController.view setNeedsLayout];
         [viewController.view layoutIfNeeded];
     }
     return viewController;
 }
 
-- (void)setPresentTransition:(FWAnimatedTransitionType)transitionType
+- (void)fw_setPresentTransition:(FWAnimatedTransitionType)transitionType
                    contentView:(UIView *)contentView
                     completion:(void (^)(BOOL))completion
 {
     BOOL transitionIn = (transitionType == FWAnimatedTransitionTypePush || transitionType == FWAnimatedTransitionTypePresent);
     if (transitionIn) {
-        self.base.alpha = 0;
+        self.alpha = 0;
         contentView.transform = CGAffineTransformMakeTranslation(0, contentView.frame.size.height);
         [UIView animateWithDuration:0.25 animations:^{
             contentView.transform = CGAffineTransformIdentity;
-            self.base.alpha = 1;
+            self.alpha = 1;
         } completion:^(BOOL finished) {
             if (completion) completion(finished);
         }];
     } else {
         [UIView animateWithDuration:0.25 animations:^{
             contentView.transform = CGAffineTransformMakeTranslation(0, contentView.frame.size.height);
-            self.base.alpha = 0;
+            self.alpha = 0;
         } completion:^(BOOL finished) {
             contentView.transform = CGAffineTransformIdentity;
-            [self.base removeFromSuperview];
+            [self removeFromSuperview];
             if (completion) completion(finished);
         }];
     }
 }
 
-- (void)setAlertTransition:(FWAnimatedTransitionType)transitionType
+- (void)fw_setAlertTransition:(FWAnimatedTransitionType)transitionType
                   completion:(void (^)(BOOL))completion
 {
     BOOL transitionIn = (transitionType == FWAnimatedTransitionTypePush || transitionType == FWAnimatedTransitionTypePresent);
     if (transitionIn) {
-        self.base.alpha = 0;
-        self.base.transform = CGAffineTransformMakeScale(1.1, 1.1);
+        self.alpha = 0;
+        self.transform = CGAffineTransformMakeScale(1.1, 1.1);
         [UIView animateWithDuration:0.25 animations:^{
-            self.base.transform = CGAffineTransformIdentity;
-            self.base.alpha = 1;
+            self.transform = CGAffineTransformIdentity;
+            self.alpha = 1;
         } completion:^(BOOL finished) {
             if (completion) completion(finished);
         }];
     } else {
         [UIView animateWithDuration:0.25 animations:^{
-            self.base.alpha = 0;
+            self.alpha = 0;
         } completion:^(BOOL finished) {
-            [self.base removeFromSuperview];
+            [self removeFromSuperview];
             if (completion) completion(finished);
         }];
     }
 }
 
-- (void)setFadeTransition:(FWAnimatedTransitionType)transitionType
+- (void)fw_setFadeTransition:(FWAnimatedTransitionType)transitionType
                  completion:(void (^)(BOOL))completion
 {
     BOOL transitionIn = (transitionType == FWAnimatedTransitionTypePush || transitionType == FWAnimatedTransitionTypePresent);
     if (transitionIn) {
-        self.base.alpha = 0;
+        self.alpha = 0;
         [UIView animateWithDuration:0.25 animations:^{
-            self.base.alpha = 1;
+            self.alpha = 1;
         } completion:^(BOOL finished) {
             if (completion) completion(finished);
         }];
     } else {
         [UIView animateWithDuration:0.25 animations:^{
-            self.base.alpha = 0;
+            self.alpha = 0;
         } completion:^(BOOL finished) {
-            [self.base removeFromSuperview];
+            [self removeFromSuperview];
             if (completion) completion(finished);
         }];
     }
@@ -1143,21 +1143,21 @@
 
 @end
 
-#pragma mark - FWNavigationControllerWrapper+FWTransition
+#pragma mark - UINavigationController+FWTransition
 
-@implementation FWNavigationControllerWrapper (FWTransition)
+@implementation UINavigationController (FWTransition)
 
-- (FWAnimatedTransition *)navigationTransition
+- (FWAnimatedTransition *)fw_navigationTransition
 {
-    return objc_getAssociatedObject(self.base, @selector(navigationTransition));
+    return objc_getAssociatedObject(self, @selector(fw_navigationTransition));
 }
 
-- (void)setNavigationTransition:(FWAnimatedTransition *)navigationTransition
+- (void)setFw_navigationTransition:(FWAnimatedTransition *)navigationTransition
 {
     // 设置delegate动画，nil时清理delegate动画，无需清理CA动画
-    self.base.delegate = navigationTransition;
+    self.delegate = navigationTransition;
     // 强引用，防止被自动释放，nil时释放引用
-    objc_setAssociatedObject(self.base, @selector(navigationTransition), navigationTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_navigationTransition), navigationTransition, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

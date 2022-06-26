@@ -14,10 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  防重复点击可以手工控制enabled或userInteractionEnabled，如request开始时禁用，结束时启用等
  */
-@interface FWControlWrapper (FWApplication)
+@interface UIControl (FWApplication)
 
 // 设置Touch事件触发间隔，防止短时间多次触发事件，默认0
-@property (nonatomic, assign) NSTimeInterval touchEventInterval UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign) NSTimeInterval fw_touchEventInterval UI_APPEARANCE_SELECTOR NS_REFINED_FOR_SWIFT;
 
 @end
 

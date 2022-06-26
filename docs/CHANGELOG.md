@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.4.0] - 2022-06-26
+
+### Changed
+* Refactored OC version classification API, changed to fw_ prefix, removed Wrapper
+* Added a new closing method for the pop-up plug-in
+* Compatible with FWFramework 3.4.0 version
+
 ## [3.3.2] - 2022-06-20
 
 ### Changed

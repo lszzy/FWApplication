@@ -48,63 +48,120 @@ NS_SWIFT_NAME(ToastPlugin)
 
 @end
 
-#pragma mark - FWToastPluginView
-
-/// 吐司插件视图协议，使用吐司插件
-NS_REFINED_FOR_SWIFT
-@protocol FWToastPluginView <NSObject>
-@required
-
-/// 设置吐司外间距，默认zero
-@property (nonatomic, assign) UIEdgeInsets toastInsets;
-
-/// 显示加载吐司，需手工隐藏，默认文本
-- (void)showLoading;
-
-/// 显示加载吐司，需手工隐藏，支持String和AttributedString
-- (void)showLoadingWithText:(nullable id)text;
-
-/// 隐藏加载吐司
-- (void)hideLoading;
-
-/// 显示进度条吐司，需手工隐藏，支持String和AttributedString
-- (void)showProgressWithText:(nullable id)text progress:(CGFloat)progress;
-
-/// 隐藏进度条吐司
-- (void)hideProgress;
-
-/// 显示默认样式消息吐司，自动隐藏，支持String和AttributedString
-- (void)showMessageWithText:(nullable id)text;
-
-/// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
-- (void)showMessageWithText:(nullable id)text style:(FWToastStyle)style;
-
-/// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-- (void)showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion;
-
-/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-- (void)showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion;
-
-/// 隐藏消息吐司
-- (void)hideMessage;
-
-@end
-
 /// UIView使用吐司插件，全局可使用UIWindow.fw.mainWindow
-@interface FWViewWrapper (FWToastPluginView) <FWToastPluginView>
+@interface UIView (FWToastPlugin)
 
 /// 自定义吐司插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWToastPlugin> toastPlugin;
+@property (nonatomic, strong, nullable) id<FWToastPlugin> fw_toastPlugin NS_REFINED_FOR_SWIFT;
+
+/// 设置吐司外间距，默认zero
+@property (nonatomic, assign) UIEdgeInsets fw_toastInsets NS_REFINED_FOR_SWIFT;
+
+/// 显示加载吐司，需手工隐藏，默认文本
+- (void)fw_showLoading NS_REFINED_FOR_SWIFT;
+
+/// 显示加载吐司，需手工隐藏，支持String和AttributedString
+- (void)fw_showLoadingWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
+
+/// 隐藏加载吐司
+- (void)fw_hideLoading NS_REFINED_FOR_SWIFT;
+
+/// 显示进度条吐司，需手工隐藏，支持String和AttributedString
+- (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress NS_REFINED_FOR_SWIFT;
+
+/// 隐藏进度条吐司
+- (void)fw_hideProgress NS_REFINED_FOR_SWIFT;
+
+/// 显示默认样式消息吐司，自动隐藏，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 隐藏消息吐司
+- (void)fw_hideMessage NS_REFINED_FOR_SWIFT;
 
 @end
 
 /// UIViewController使用吐司插件，内部使用UIViewController.view
-@interface FWViewControllerWrapper (FWToastPluginView) <FWToastPluginView>
+@interface UIViewController (FWToastPlugin)
+
+/// 设置吐司外间距，默认zero
+@property (nonatomic, assign) UIEdgeInsets fw_toastInsets NS_REFINED_FOR_SWIFT;
+
+/// 显示加载吐司，需手工隐藏，默认文本
+- (void)fw_showLoading NS_REFINED_FOR_SWIFT;
+
+/// 显示加载吐司，需手工隐藏，支持String和AttributedString
+- (void)fw_showLoadingWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
+
+/// 隐藏加载吐司
+- (void)fw_hideLoading NS_REFINED_FOR_SWIFT;
+
+/// 显示进度条吐司，需手工隐藏，支持String和AttributedString
+- (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress NS_REFINED_FOR_SWIFT;
+
+/// 隐藏进度条吐司
+- (void)fw_hideProgress NS_REFINED_FOR_SWIFT;
+
+/// 显示默认样式消息吐司，自动隐藏，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 隐藏消息吐司
+- (void)fw_hideMessage NS_REFINED_FOR_SWIFT;
 
 @end
 
 /// UIWindow全局使用吐司插件，内部使用UIWindow.fw.mainWindow
-@interface FWWindowClassWrapper (FWToastPluginView) <FWToastPluginView>
+@interface UIWindow (FWToastPlugin)
+
+/// 设置吐司外间距，默认zero
+@property (class, nonatomic, assign) UIEdgeInsets fw_toastInsets NS_REFINED_FOR_SWIFT;
+
+/// 显示加载吐司，需手工隐藏，默认文本
++ (void)fw_showLoading NS_REFINED_FOR_SWIFT;
+
+/// 显示加载吐司，需手工隐藏，支持String和AttributedString
++ (void)fw_showLoadingWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
+
+/// 隐藏加载吐司
++ (void)fw_hideLoading NS_REFINED_FOR_SWIFT;
+
+/// 显示进度条吐司，需手工隐藏，支持String和AttributedString
++ (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress NS_REFINED_FOR_SWIFT;
+
+/// 隐藏进度条吐司
++ (void)fw_hideProgress NS_REFINED_FOR_SWIFT;
+
+/// 显示默认样式消息吐司，自动隐藏，支持String和AttributedString
++ (void)fw_showMessageWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
++ (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
++ (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
++ (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 隐藏消息吐司
++ (void)fw_hideMessage NS_REFINED_FOR_SWIFT;
 
 @end
 

@@ -17,34 +17,34 @@ extension Wrapper where Base: UIColor {
 
     /// 以指定模式添加混合颜色
     public func addColor(_ color: UIColor, blendMode: CGBlendMode) -> UIColor {
-        return base.__fw.add(color, blendMode: blendMode)
+        return base.__fw_add(color, blendMode: blendMode)
     }
 
     /// 当前颜色的反色。http://stackoverflow.com/questions/5893261/how-to-get-inverse-color-from-uicolor
     public var inverseColor: UIColor {
-        return base.__fw.inverseColor
+        return base.__fw_inverse
     }
     
     /// 判断当前颜色是否为深色。http://stackoverflow.com/questions/19456288/text-color-based-on-background-image
     public var isDarkColor: Bool {
-        return base.__fw.isDarkColor
+        return base.__fw_isDarkColor
     }
     
     /// 当前颜色修改亮度比率的颜色
     public func brightnessColor(_ ratio: CGFloat) -> UIColor {
-        return base.__fw.brightnessColor(ratio)
+        return base.__fw_brightnessColor(ratio)
     }
     
     // MARK: - Image
 
     // 从整个图像初始化UIColor
     public static func color(image: UIImage) -> UIColor {
-        return Base.__fw.color(with: image)
+        return Base.__fw_color(with: image)
     }
 
     // 从图像的某个点初始化UIColor
     public static func color(image: UIImage, point: CGPoint) -> UIColor? {
-        return Base.__fw.color(with: image, point: point)
+        return Base.__fw_color(with: image, point: point)
     }
 
     // MARK: - Gradient
@@ -59,7 +59,7 @@ extension Wrapper where Base: UIColor {
      @return 渐变色
      */
     public static func gradientColor(size: CGSize, colors: [Any], locations: UnsafePointer<CGFloat>?, direction: UISwipeGestureRecognizer.Direction) -> UIColor {
-        return Base.__fw.gradientColor(with: size, colors: colors, locations: locations, direction: direction)
+        return Base.__fw_gradientColor(with: size, colors: colors, locations: locations, direction: direction)
     }
 
     /**
@@ -73,7 +73,7 @@ extension Wrapper where Base: UIColor {
      @return 渐变色
      */
     public static func gradientColor(size: CGSize, colors: [Any], locations: UnsafePointer<CGFloat>?, startPoint: CGPoint, endPoint: CGPoint) -> UIColor {
-        return Base.__fw.gradientColor(with: size, colors: colors, locations: locations, start: startPoint, end: endPoint)
+        return Base.__fw_gradientColor(with: size, colors: colors, locations: locations, start: startPoint, end: endPoint)
     }
     
 }

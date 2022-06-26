@@ -30,10 +30,10 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _textLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+        _textLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_textLabel];
-        [_textLabel.fw pinEdgesToSuperview];
+        [_textLabel fw_pinEdgesToSuperview];
     }
     return self;
 }
@@ -64,7 +64,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (void)renderTableLayout
 {
-    [self.tableView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, self.cart ? CategoryViewWidth : 0, self.cart ? CartViewHeight : 0, 0)];
+    [self.tableView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, self.cart ? CategoryViewWidth : 0, self.cart ? CartViewHeight : 0, 0)];
 }
 
 - (UICollectionViewLayout *)renderCollectionViewLayout
@@ -81,16 +81,16 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self.collectionView.backgroundColor = [Theme backgroundColor];
     [self.collectionView registerClass:[TestNestCollectionCell class] forCellWithReuseIdentifier:kTestNestCollectionCellID];
-    [self.collectionView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, 0, self.cart ? CartViewHeight : 0, 0) excludingEdge:NSLayoutAttributeRight];
-    [self.collectionView.fw setDimension:NSLayoutAttributeWidth toSize:self.cart ? CategoryViewWidth : 0];
+    [self.collectionView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(0, 0, self.cart ? CartViewHeight : 0, 0) excludingEdge:NSLayoutAttributeRight];
+    [self.collectionView fw_setDimension:NSLayoutAttributeWidth toSize:self.cart ? CategoryViewWidth : 0];
 }
 
 - (void)renderView
 {
     if (self.refreshList) {
-        [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+        [self.tableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
     }
-    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
+    [self.tableView fw_setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderData
@@ -104,7 +104,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     }
     [self.collectionView reloadData];
     FWWeakifySelf();
-    [self.tableView.fw reloadDataWithCompletion:^{
+    [self.tableView fw_reloadDataWithCompletion:^{
         FWStrongifySelf();
         [self selectCollectionViewWithOffset:self.tableView.contentOffset.y];
     }];
@@ -113,7 +113,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)onRefreshing
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.fw endRefreshing];
+        [self.tableView fw_endRefreshing];
         if (self.refreshList && self.section && !self.isInserted) {
             self.isInserted = YES;
             for (int i = 0; i < 5; i++) {
@@ -125,7 +125,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         }
         [self.collectionView reloadData];
         FWWeakifySelf();
-        [self.tableView.fw reloadDataWithCompletion:^{
+        [self.tableView fw_reloadDataWithCompletion:^{
             FWStrongifySelf();
             [self selectCollectionViewWithOffset:self.tableView.contentOffset.y];
         }];
@@ -135,7 +135,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (void)onLoading
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.fw endLoading];
+        [self.tableView fw_endLoading];
         NSInteger rows = self.tableData.count;
         for (int i = 0; i < 5; i++) {
             if (self.isRefreshed) {
@@ -146,7 +146,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
         }
         [self.collectionView reloadData];
         FWWeakifySelf();
-        [self.tableView.fw reloadDataWithCompletion:^{
+        [self.tableView fw_reloadDataWithCompletion:^{
             FWStrongifySelf();
             [self selectCollectionViewWithOffset:self.tableView.contentOffset.y];
         }];
@@ -163,7 +163,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TestNestCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kTestNestCollectionCellID forIndexPath:indexPath];
-    cell.textLabel.text = [@(indexPath.row) fw].safeString;
+    cell.textLabel.text = [@(indexPath.row) fw_safeString];
     cell.selected = NO;
     return cell;
 }
@@ -188,7 +188,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSInteger index = indexPath.section * 5 + indexPath.row;
     cell.textLabel.text = [self.tableData objectAtIndex:index];
     return cell;
@@ -204,7 +204,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     UIView *view = [UIView new];
     view.backgroundColor = [Theme cellColor];
     
-    UILabel *headerLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:[NSString stringWithFormat:@"Header%@", @(section)]];
+    UILabel *headerLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor] text:[NSString stringWithFormat:@"Header%@", @(section)]];
     headerLabel.frame = CGRectMake(0, 0, FWScreenWidth, ItemViewHeight);
     [view addSubview:headerLabel];
     return view;
@@ -217,7 +217,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.fw showAlertWithTitle:[NSString stringWithFormat:@"点击%@", @(indexPath.row)] message:nil cancel:nil cancelBlock:nil];
+    [self fw_showAlertWithTitle:[NSString stringWithFormat:@"点击%@", @(indexPath.row)] message:nil cancel:nil cancelBlock:nil];
 }
 
 - (void)selectCollectionViewWithOffset:(CGFloat)contentOffsetY
@@ -283,7 +283,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
 {
     self = [super init];
     if (self) {
-        self.fw.extendedLayoutEdge = UIRectEdgeTop;
+        self.fw_extendedLayoutEdge = UIRectEdgeTop;
     }
     return self;
 }
@@ -293,14 +293,14 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     [super viewDidLoad];
     
     if (!self.refreshList) {
-        [self.pagerView.mainTableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
+        [self.pagerView.mainTableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
         
         FWWeakifySelf();
-        [self.fw setRightBarItem:@"测试" block:^(id  _Nonnull sender) {
+        [self fw_setRightBarItem:@"测试" block:^(id  _Nonnull sender) {
             FWStrongifySelf();
             TestNestScrollViewController *viewController = [TestNestScrollViewController new];
             viewController.refreshList = YES;
-            [self.fw openViewController:viewController animated:YES];
+            [self fw_openViewController:viewController animated:YES];
         }];
     }
 }
@@ -316,7 +316,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.isRefreshed = !self.isRefreshed;
         [self.pagerView reloadData];
-        [self.pagerView.mainTableView.fw endRefreshing];
+        [self.pagerView.mainTableView fw_endRefreshing];
     });
 }
 
@@ -341,7 +341,7 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     if (self.refreshList) {
         FWPagingListRefreshView *pagerView = [[FWPagingListRefreshView alloc] initWithDelegate:self listContainerType:FWPagingListContainerTypeScrollView];
         pagerView.listScrollViewPinContentInsetBlock = ^CGFloat(UIScrollView *scrollView) {
-            TestNestChildController *viewController = scrollView.fw.viewController;
+            TestNestChildController *viewController = scrollView.fw_viewController;
             if (viewController.refreshList && viewController.section && !viewController.isInserted) {
                 return FWScreenHeight;
             }
@@ -353,15 +353,15 @@ static NSString * const kTestNestCollectionCellID = @"kTestNestCollectionCellID"
     }
     self.pagerView.pinSectionHeaderVerticalOffset = FWTopBarHeight;
     [self.view addSubview:self.pagerView];
-    [self.pagerView.fw pinEdgesToSuperview];
+    [self.pagerView fw_pinEdgesToSuperview];
     
     UIView *cartView = [UIView new];
     _cartView = cartView;
     cartView.backgroundColor = [UIColor greenColor];
     [self.view addSubview:cartView];
-    [cartView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-    [cartView.fw setDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
-    UILabel *cartLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[UIColor blackColor] text:@"我是购物车"];
+    [cartView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
+    [cartView fw_setDimension:NSLayoutAttributeHeight toSize:CartViewHeight];
+    UILabel *cartLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[UIColor blackColor] text:@"我是购物车"];
     cartLabel.textAlignment = NSTextAlignmentCenter;
     cartLabel.frame = CGRectMake(0, 0, FWScreenWidth, CartViewHeight);
     [cartView addSubview:cartLabel];

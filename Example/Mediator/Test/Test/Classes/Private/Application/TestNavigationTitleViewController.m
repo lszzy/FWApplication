@@ -21,7 +21,7 @@
 
 - (void)renderInit
 {
-    self.fw.navigationBarHidden = YES;
+    self.fw_navigationBarHidden = YES;
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -58,7 +58,7 @@
         [FWRouter closeViewControllerAnimated:YES];
     }];
     [self.view addSubview:self.navigationView];
-    self.navigationView.fw.layoutChain.left().right().top();
+    self.navigationView.fw_layoutChain.left().right().top();
     
     self.toolbarView = [[FWToolbarView alloc] init];
     self.toolbarView.tintColor = Theme.textColor;
@@ -69,18 +69,18 @@
     self.toolbarView.menuView.leftButton = [FWToolbarButton buttonWithObject:@"取消" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
-        [self.fw showMessageWithText:@"点击了取消"];
+        [self fw_showMessageWithText:@"点击了取消"];
     }];
     self.toolbarView.menuView.rightButton = [FWToolbarButton buttonWithObject:@"确定" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self.toolbarView setToolbarHidden:YES animated:YES];
-        [self.fw showMessageWithText:@"点击了确定"];
+        [self fw_showMessageWithText:@"点击了确定"];
     }];
     [self.view addSubview:self.toolbarView];
-    self.toolbarView.fw.layoutChain.left().right().bottom();
+    self.toolbarView.fw_layoutChain.left().right().bottom();
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, FWScreenWidth, 300)];
-    self.tableView.fw.layoutChain.left().right().topToViewBottom(self.navigationView).bottomToViewTop(self.toolbarView);
+    self.tableView.fw_layoutChain.left().right().topToViewBottom(self.navigationView).bottomToViewTop(self.toolbarView);
 }
 
 - (void)renderData
@@ -109,17 +109,17 @@
 - (BOOL)shouldPopController
 {
     FWWeakifySelf();
-    [self.fw showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
+    [self fw_showConfirmWithTitle:nil message:@"是否关闭" cancel:nil confirm:nil confirmBlock:^{
         FWStrongifySelf();
-        [self.fw closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
     return NO;
 }
 
 - (UIImage *)accessoryImage
 {
-    UIBezierPath *bezierPath = [UIBezierPath.fw shapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
-    UIImage *accessoryImage = [[bezierPath.fw shapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    UIBezierPath *bezierPath = [UIBezierPath fw_shapeTriangle:CGRectMake(0, 0, 8, 5) direction:UISwipeGestureRecognizerDirectionDown];
+    UIImage *accessoryImage = [[bezierPath fw_shapeImage:CGSizeMake(8, 5) strokeWidth:0 strokeColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1] fillColor:[UIColor colorWithRed:1 green:1 blue:1 alpha:1]] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     return accessoryImage;
 }
 
@@ -153,7 +153,7 @@
         case 4:
         {
             FWWeakifySelf();
-            [self.fw showSheetWithTitle:@"水平对齐方式" message:nil cancel:@"取消" actions:@[@"左对齐", @"居中对齐", @"右对齐"] actionBlock:^(NSInteger index) {
+            [self fw_showSheetWithTitle:@"水平对齐方式" message:nil cancel:@"取消" actions:@[@"左对齐", @"居中对齐", @"右对齐"] actionBlock:^(NSInteger index) {
                 FWStrongifySelf();
                 if (index == 0) {
                     self.titleView.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -242,7 +242,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleValue1];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleValue1];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.detailTextLabel.text = nil;
     

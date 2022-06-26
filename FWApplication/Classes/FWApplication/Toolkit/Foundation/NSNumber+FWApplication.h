@@ -16,28 +16,28 @@ NS_ASSUME_NONNULL_BEGIN
 #define FWClamp( min, x, max ) \
     (x < min ? min : (x > max ? max : x))
 
-@interface FWNumberWrapper (FWApplication)
+@interface NSNumber (FWApplication)
 
 /// 转换为CGFloat
-@property (nonatomic, assign, readonly) CGFloat CGFloatValue;
+@property (nonatomic, assign, readonly) CGFloat fw_CGFloatValue NS_REFINED_FOR_SWIFT;
 
 /// 四舍五入，去掉末尾0，最多digit位，小数分隔符为.，分组分隔符为空，示例：12345.6789 => 12345.68
-- (NSString *)roundString:(NSInteger)digit;
+- (NSString *)fw_roundString:(NSInteger)digit NS_REFINED_FOR_SWIFT;
 
 /// 取上整，去掉末尾0，最多digit位，小数分隔符为.，分组分隔符为空，示例：12345.6789 => 12345.68
-- (NSString *)ceilString:(NSInteger)digit;
+- (NSString *)fw_ceilString:(NSInteger)digit NS_REFINED_FOR_SWIFT;
 
 /// 取下整，去掉末尾0，最多digit位，小数分隔符为.，分组分隔符为空，示例：12345.6789 => 12345.67
-- (NSString *)floorString:(NSInteger)digit;
+- (NSString *)fw_floorString:(NSInteger)digit NS_REFINED_FOR_SWIFT;
 
 /// 四舍五入，去掉末尾0，最多digit位，示例：12345.6789 => 12345.68
-- (NSNumber *)roundNumber:(NSUInteger)digit;
+- (NSNumber *)fw_roundNumber:(NSUInteger)digit NS_REFINED_FOR_SWIFT;
 
 /// 取上整，去掉末尾0，最多digit位，示例：12345.6789 => 12345.68
-- (NSNumber *)ceilNumber:(NSUInteger)digit;
+- (NSNumber *)fw_ceilNumber:(NSUInteger)digit NS_REFINED_FOR_SWIFT;
 
 /// 取下整，去掉末尾0，最多digit位，示例：12345.6789 => 12345.67
-- (NSNumber *)floorNumber:(NSUInteger)digit;
+- (NSNumber *)fw_floorNumber:(NSUInteger)digit NS_REFINED_FOR_SWIFT;
 
 @end
 

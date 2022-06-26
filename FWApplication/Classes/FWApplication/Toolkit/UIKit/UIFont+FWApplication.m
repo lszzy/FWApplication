@@ -9,64 +9,64 @@
 
 #import "UIFont+FWApplication.h"
 
-@implementation FWFontWrapper (FWApplication)
+@implementation UIFont (FWApplication)
 
 #pragma mark - Font
 
-- (BOOL)isBold
+- (BOOL)fw_isBold
 {
-    return (self.base.fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) > 0;
+    return (self.fontDescriptor.symbolicTraits & UIFontDescriptorTraitBold) > 0;
 }
 
-- (BOOL)isItalic
+- (BOOL)fw_isItalic
 {
-    return (self.base.fontDescriptor.symbolicTraits & UIFontDescriptorTraitItalic) > 0;
+    return (self.fontDescriptor.symbolicTraits & UIFontDescriptorTraitItalic) > 0;
 }
 
-- (UIFont *)boldFont
+- (UIFont *)fw_boldFont
 {
-    UIFontDescriptorSymbolicTraits symbolicTraits = self.base.fontDescriptor.symbolicTraits | UIFontDescriptorTraitBold;
-    return [UIFont fontWithDescriptor:[self.base.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.base.pointSize];
+    UIFontDescriptorSymbolicTraits symbolicTraits = self.fontDescriptor.symbolicTraits | UIFontDescriptorTraitBold;
+    return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.pointSize];
 }
 
-- (UIFont *)nonBoldFont
+- (UIFont *)fw_nonBoldFont
 {
-    UIFontDescriptorSymbolicTraits symbolicTraits = self.base.fontDescriptor.symbolicTraits ^ UIFontDescriptorTraitBold;
-    return [UIFont fontWithDescriptor:[self.base.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.base.pointSize];
+    UIFontDescriptorSymbolicTraits symbolicTraits = self.fontDescriptor.symbolicTraits ^ UIFontDescriptorTraitBold;
+    return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.pointSize];
 }
 
-- (UIFont *)italicFont
+- (UIFont *)fw_italicFont
 {
-    UIFontDescriptorSymbolicTraits symbolicTraits = self.base.fontDescriptor.symbolicTraits | UIFontDescriptorTraitItalic;
-    return [UIFont fontWithDescriptor:[self.base.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.base.pointSize];
+    UIFontDescriptorSymbolicTraits symbolicTraits = self.fontDescriptor.symbolicTraits | UIFontDescriptorTraitItalic;
+    return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.pointSize];
 }
 
-- (UIFont *)nonItalicFont
+- (UIFont *)fw_nonItalicFont
 {
-    UIFontDescriptorSymbolicTraits symbolicTraits = self.base.fontDescriptor.symbolicTraits ^ UIFontDescriptorTraitItalic;
-    return [UIFont fontWithDescriptor:[self.base.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.base.pointSize];
+    UIFontDescriptorSymbolicTraits symbolicTraits = self.fontDescriptor.symbolicTraits ^ UIFontDescriptorTraitItalic;
+    return [UIFont fontWithDescriptor:[self.fontDescriptor fontDescriptorWithSymbolicTraits:symbolicTraits] size:self.pointSize];
 }
 
 #pragma mark - Height
 
-- (CGFloat)spaceHeight
+- (CGFloat)fw_spaceHeight
 {
-    return self.base.lineHeight - self.base.pointSize;
+    return self.lineHeight - self.pointSize;
 }
 
-- (CGFloat)lineSpacingWithMultiplier:(CGFloat)multiplier
+- (CGFloat)fw_lineSpacingWithMultiplier:(CGFloat)multiplier
 {
-    return self.base.pointSize * multiplier - (self.base.lineHeight - self.base.pointSize);
+    return self.pointSize * multiplier - (self.lineHeight - self.pointSize);
 }
 
-- (CGFloat)lineHeightWithMultiplier:(CGFloat)multiplier
+- (CGFloat)fw_lineHeightWithMultiplier:(CGFloat)multiplier
 {
-    return self.base.pointSize * multiplier;
+    return self.pointSize * multiplier;
 }
 
-- (CGFloat)baselineOffset:(UIFont *)font
+- (CGFloat)fw_baselineOffset:(UIFont *)font
 {
-    return (self.base.lineHeight - font.lineHeight) / 2 + (self.base.descender - font.descender);
+    return (self.lineHeight - font.lineHeight) / 2 + (self.descender - font.descender);
 }
 
 @end

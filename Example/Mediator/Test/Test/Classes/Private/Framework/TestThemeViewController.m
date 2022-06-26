@@ -25,7 +25,7 @@
 
 - (void)renderInit
 {
-    [self.fw observeNotification:FWThemeChangedNotification block:^(NSNotification * _Nonnull notification) {
+    [self fw_observeNotification:FWThemeChangedNotification block:^(NSNotification * _Nonnull notification) {
         NSLog(@"主题改变通知：%@", @(FWThemeManager.sharedInstance.style));
     }];
     
@@ -153,17 +153,17 @@
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 370, 50, 50)];
-    imageView.fw_themeAsset = [UIImageAsset fw_themeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"].fw imageWithTintColor:[UIColor whiteColor]]];
+    imageView.fw_themeAsset = [UIImageAsset fw_themeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"] fw_imageWithTintColor:[UIColor whiteColor]]];
     [self.view addSubview:imageView];
     
     imageView = [[UIImageView alloc] initWithFrame:CGRectMake(90, 370, 50, 50)];
     imageView.fw_themeAsset = [UIImageAsset fw_themeAsset:^UIImage * (FWThemeStyle style) {
-        return style == FWThemeStyleDark ? [[TestBundle imageNamed:@"tabbar_settings"].fw imageWithTintColor:[UIColor yellowColor]] : [TestBundle imageNamed:@"tabbar_settings"];
+        return style == FWThemeStyleDark ? [[TestBundle imageNamed:@"tabbar_settings"] fw_imageWithTintColor:[UIColor yellowColor]] : [TestBundle imageNamed:@"tabbar_settings"];
     }];
     [self.view addSubview:imageView];
     
     UIImageView *imageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(160, 370, 50, 50)];
-    [UIImage fw_setThemeImage:[UIImage fw_themeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"].fw imageWithTintColor:[UIColor redColor]]] forName:@"dynamic_image"];
+    [UIImage fw_setThemeImage:[UIImage fw_themeLight:[TestBundle imageNamed:@"tabbar_settings"] dark:[[TestBundle imageNamed:@"tabbar_settings"] fw_imageWithTintColor:[UIColor redColor]]] forName:@"dynamic_image"];
     UIImage *dynamicImage = [UIImage fw_themeNamed:@"dynamic_image"];
     imageView3.image = [dynamicImage fw_imageForStyle:FWThemeManager.sharedInstance.style];
     FWWeakify(imageView3);
@@ -176,17 +176,17 @@
     UILabel *colorLabel = [UILabel new];
     colorLabel.frame = CGRectMake(0, 440, FWScreenWidth, 25);
     colorLabel.textAlignment = NSTextAlignmentCenter;
-    colorLabel.font = FWFontSize(16).fw.boldFont;
+    colorLabel.font = FWFontSize(16).fw_boldFont;
     colorLabel.textColor = Theme.textColor;
     UIColor *lightColor = [Theme.textColor fw_colorForStyle:FWThemeStyleLight];
     UIColor *darkColor = [Theme.textColor fw_colorForStyle:FWThemeStyleDark];
-    colorLabel.text = [NSString stringWithFormat:@"Light: %@ Dark: %@", lightColor.fw.hexString, darkColor.fw.hexString];
+    colorLabel.text = [NSString stringWithFormat:@"Light: %@ Dark: %@", lightColor.fw_hexString, darkColor.fw_hexString];
     [self.view addSubview:colorLabel];
     
     UILabel *themeLabel = [UILabel new];
     themeLabel.frame = CGRectMake(0, 475, FWScreenWidth, 25);
     themeLabel.textAlignment = NSTextAlignmentCenter;
-    themeLabel.attributedText = [NSAttributedString.fw attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw.boldFont textColor:[UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
+    themeLabel.attributedText = [NSAttributedString fw_attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw_boldFont textColor:[UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]]];
     [self.view addSubview:themeLabel];
     
     UIButton *themeButton = [UIButton new];
@@ -195,7 +195,7 @@
     [themeButton setTitleColor:[UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]] forState:UIControlStateNormal];
     
     UIImage *buttonImage = [UIImage fw_themeLight:(FWThemeManager.sharedInstance.style == FWThemeStyleLight ? nil : [TestBundle imageNamed:@"theme_image_light"]) dark:(FWThemeManager.sharedInstance.style == FWThemeStyleDark ? nil : [TestBundle imageNamed:@"theme_image_dark"])];
-    FWThemeObject<NSAttributedString *> *themeString = [NSAttributedString.fw themeObjectWithHtmlString:@"我是<span style='color:red;'>红色</span>AttributedString" defaultAttributes:@{
+    FWThemeObject<NSAttributedString *> *themeString = [NSAttributedString fw_themeObjectWithHtmlString:@"我是<span style='color:red;'>红色</span>AttributedString" defaultAttributes:@{
         NSFontAttributeName: FWFontBold(16),
         NSForegroundColorAttributeName: [UIColor fw_themeLight:[UIColor blackColor] dark:[UIColor whiteColor]],
     }];
@@ -214,11 +214,11 @@
     FWThemeMode mode = FWThemeManager.sharedInstance.mode;
     NSString *title = mode == FWThemeModeSystem ? @"系统" : (mode == FWThemeModeDark ? @"深色" : @"浅色");
     FWWeakifySelf();
-    [self.fw setRightBarItem:title block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         NSMutableArray *actions = [NSMutableArray arrayWithArray:@[@"系统", @"浅色", @"深色"]];
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:actions actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:actions actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             FWThemeManager.sharedInstance.mode = index;

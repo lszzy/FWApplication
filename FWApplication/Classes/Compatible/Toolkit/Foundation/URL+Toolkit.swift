@@ -24,7 +24,7 @@ extension Wrapper where Base == URL {
      @return NSURL
      */
     public static func appleMapsURL(withAddr addr: String?, options: [AnyHashable : Any]? = nil) -> URL? {
-        return NSURL.__fw.appleMapsURL(withAddr: addr, options: options)
+        return NSURL.__fw_appleMapsURL(withAddr: addr, options: options)
     }
 
     /**
@@ -36,7 +36,7 @@ extension Wrapper where Base == URL {
      @return NSURL
      */
     public static func appleMapsURL(withSaddr saddr: String?, daddr: String?, options: [AnyHashable : Any]? = nil) -> URL? {
-        return NSURL.__fw.appleMapsURL(withSaddr: saddr, daddr: daddr, options: options)
+        return NSURL.__fw_appleMapsURL(withSaddr: saddr, daddr: daddr, options: options)
     }
 
     /**
@@ -47,7 +47,7 @@ extension Wrapper where Base == URL {
      @return NSURL
      */
     public static func googleMapsURL(withAddr addr: String?, options: [AnyHashable : Any]? = nil) -> URL? {
-        return NSURL.__fw.googleMapsURL(withAddr: addr, options: options)
+        return NSURL.__fw_googleMapsURL(withAddr: addr, options: options)
     }
 
     /**
@@ -60,7 +60,7 @@ extension Wrapper where Base == URL {
      @return NSURL
      */
     public static func googleMapsURL(withSaddr saddr: String?, daddr: String?, mode: String?, options: [AnyHashable : Any]? = nil) -> URL? {
-        return NSURL.__fw.googleMapsURL(withSaddr: saddr, daddr: daddr, mode: mode, options: options)
+        return NSURL.__fw_googleMapsURL(withSaddr: saddr, daddr: daddr, mode: mode, options: options)
     }
 
     /**
@@ -71,7 +71,7 @@ extension Wrapper where Base == URL {
      @return NSURL
      */
     public static func baiduMapsURL(withAddr addr: String?, options: [AnyHashable : Any]? = nil) -> URL? {
-        return NSURL.__fw.baiduMapsURL(withAddr: addr, options: options)
+        return NSURL.__fw_baiduMapsURL(withAddr: addr, options: options)
     }
 
     /**
@@ -84,7 +84,7 @@ extension Wrapper where Base == URL {
      @return NSURL
      */
     public static func baiduMapsURL(withSaddr saddr: String?, daddr: String?, mode: String?, options: [AnyHashable : Any]? = nil) -> URL? {
-        return NSURL.__fw.baiduMapsURL(withSaddr: saddr, daddr: daddr, mode: mode, options: options)
+        return NSURL.__fw_baiduMapsURL(withSaddr: saddr, daddr: daddr, mode: mode, options: options)
     }
     
 }
@@ -93,7 +93,7 @@ extension Wrapper where Base == URLRequest {
     
     /// 生成对应curl命令，方便调试和测试
     public func curlCommand() -> String {
-        return (base as NSURLRequest).__fw.curlCommand()
+        return (base as NSURLRequest).__fw_curlCommand()
     }
     
 }

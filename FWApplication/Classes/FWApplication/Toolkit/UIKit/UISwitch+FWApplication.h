@@ -11,12 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWSwitchWrapper (FWApplication)
+@interface UISwitch (FWApplication)
 
 /**
  切换开关状态
  */
-- (void)toggle:(BOOL)animated;
+- (void)fw_toggle:(BOOL)animated NS_REFINED_FOR_SWIFT;
 
 @end
 

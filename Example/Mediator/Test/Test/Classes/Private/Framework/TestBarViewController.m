@@ -19,27 +19,27 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.extendedLayoutEdge = UIRectEdgeAll;
+    self.fw_extendedLayoutEdge = UIRectEdgeAll;
     if (self.index < 1) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
+        self.fw_navigationBarStyle = FWNavigationBarStyleDefault;
     } else if (self.index < 2) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleWhite;
+        self.fw_navigationBarStyle = FWNavigationBarStyleWhite;
     } else if (self.index < 3) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
+        self.fw_navigationBarStyle = FWNavigationBarStyleTransparent;
     } else {
-        self.fw.navigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)].fw randomObject] integerValue];
-        self.fw.navigationBarHidden = self.fw.navigationBarStyle == -1;
+        self.fw_navigationBarStyle = [[@[@(-1), @(FWNavigationBarStyleDefault), @(FWNavigationBarStyleWhite), @(FWNavigationBarStyleTransparent)] fw_randomObject] integerValue];
+        self.fw_navigationBarHidden = self.fw_navigationBarStyle == -1;
     }
-    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fw.navigationBarStyle)];
+    self.navigationItem.title = [NSString stringWithFormat:@"标题:%@ 样式:%@", @(self.index + 1), @(self.fw_navigationBarStyle)];
     
     FWWeakifySelf();
-    [self.fw setRightBarItem:@"打开界面" block:^(id sender) {
+    [self fw_setRightBarItem:@"打开界面" block:^(id sender) {
         FWStrongifySelf();
         TestBarSubViewController *viewController = [TestBarSubViewController new];
         viewController.index = self.index + 1;
         [self.navigationController pushViewController:viewController animated:YES];
     }];
-    [self.view.fw addTapGestureWithBlock:^(id sender) {
+    [self.view fw_addTapGestureWithBlock:^(id sender) {
         FWStrongifySelf();
         TestBarSubViewController *viewController = [TestBarSubViewController new];
         viewController.index = self.index + 1;
@@ -62,15 +62,15 @@ FWPropertyAssign(BOOL, hideToast);
 {
     [super viewDidLoad];
     
-    self.fw.tabBarHidden = YES;
-    [self.fw observeNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
+    self.fw_tabBarHidden = YES;
+    [self fw_observeNotification:UIDeviceOrientationDidChangeNotification target:self action:@selector(refreshBarFrame)];
     
     if (!self.hideToast) {
-        [self.fw setRightBarItem:@"启用" block:^(id sender) {
-            [UINavigationController.fw enableBarTransition];
+        [self fw_setRightBarItem:@"启用" block:^(id sender) {
+            [UINavigationController fw_enableBarTransition];
         }];
     } else {
-        [self.fw setLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {
+        [self fw_setLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {
             [FWRouter closeViewControllerAnimated:YES];
         }];
     }
@@ -81,7 +81,7 @@ FWPropertyAssign(BOOL, hideToast);
     [super viewWillAppear:animated];
     
     if (!self.hideToast) {
-        [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"viewWillAppear:%@", @(animated)]];
+        [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"viewWillAppear:%@", @(animated)]];
     }
 }
 
@@ -90,7 +90,7 @@ FWPropertyAssign(BOOL, hideToast);
     [super viewWillDisappear:animated];
     
     if (!self.hideToast) {
-        [UIWindow.fw showMessageWithText:[NSString stringWithFormat:@"viewWillDisappear:%@", @(animated)]];
+        [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"viewWillDisappear:%@", @(animated)]];
     }
 }
 
@@ -111,15 +111,15 @@ FWPropertyAssign(BOOL, hideToast);
     self.frameLabel = frameLabel;
     frameLabel.numberOfLines = 0;
     frameLabel.textColor = [Theme textColor];
-    frameLabel.font = [UIFont.fw fontOfSize:15];
+    frameLabel.font = [UIFont fw_fontOfSize:15];
     frameLabel.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:frameLabel]; {
-        frameLabel.fw.layoutChain.leftWithInset(10).rightWithInset(10)
+        frameLabel.fw_layoutChain.leftWithInset(10).rightWithInset(10)
             .bottomWithInset(FWTabBarHeight + 10);
     }
     
     self.tableView.backgroundColor = [Theme tableColor];
-    self.tableView.fw.layoutChain.horizontal().top()
+    self.tableView.fw_layoutChain.horizontal().top()
         .bottomToViewTopWithOffset(self.frameLabel, -10);
 }
 
@@ -157,7 +157,7 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -184,12 +184,12 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (BOOL)prefersStatusBarHidden
 {
-    return self.fw.statusBarHidden;
+    return self.fw_statusBarHidden;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    return self.fw.statusBarStyle;
+    return self.fw_statusBarStyle;
 }
 
 #pragma mark - Action
@@ -197,42 +197,42 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)refreshBarFrame
 {
     self.frameLabel.text = [NSString stringWithFormat:@"全局状态栏：%.0f 当前状态栏：%.0f\n全局导航栏：%.0f 当前导航栏：%.0f\n全局顶部栏：%.0f 当前顶部栏：%.0f\n全局标签栏：%.0f 当前标签栏：%.0f\n全局工具栏：%.0f 当前工具栏：%.0f\n全局安全区域：%@",
-                            [UIScreen.fw statusBarHeight], [self.fw statusBarHeight],
-                            [UIScreen.fw navigationBarHeight], [self.fw navigationBarHeight],
-                            [UIScreen.fw topBarHeight], [self.fw topBarHeight],
-                            [UIScreen.fw tabBarHeight], [self.fw tabBarHeight],
-                            [UIScreen.fw toolBarHeight], [self.fw toolBarHeight],
-                            NSStringFromUIEdgeInsets([UIScreen.fw safeAreaInsets])];
+                            [UIScreen fw_statusBarHeight], [self fw_statusBarHeight],
+                            [UIScreen fw_navigationBarHeight], [self fw_navigationBarHeight],
+                            [UIScreen fw_topBarHeight], [self fw_topBarHeight],
+                            [UIScreen fw_tabBarHeight], [self fw_tabBarHeight],
+                            [UIScreen fw_toolBarHeight], [self fw_toolBarHeight],
+                            NSStringFromUIEdgeInsets([UIScreen fw_safeAreaInsets])];
 }
 
 - (void)onStatusBar
 {
-    self.fw.statusBarHidden = !self.fw.statusBarHidden;
+    self.fw_statusBarHidden = !self.fw_statusBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onStatusStyle
 {
-    if (self.fw.statusBarStyle == UIStatusBarStyleDefault) {
-        self.fw.statusBarStyle = UIStatusBarStyleLightContent;
+    if (self.fw_statusBarStyle == UIStatusBarStyleDefault) {
+        self.fw_statusBarStyle = UIStatusBarStyleLightContent;
     } else {
-        self.fw.statusBarStyle = UIStatusBarStyleDefault;
+        self.fw_statusBarStyle = UIStatusBarStyleDefault;
     }
     [self refreshBarFrame];
 }
 
 - (void)onNavigationBar
 {
-    self.fw.navigationBarHidden = !self.fw.navigationBarHidden;
+    self.fw_navigationBarHidden = !self.fw_navigationBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onNavigationStyle
 {
-    if (self.fw.navigationBarStyle == FWNavigationBarStyleDefault) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleWhite;
+    if (self.fw_navigationBarStyle == FWNavigationBarStyleDefault) {
+        self.fw_navigationBarStyle = FWNavigationBarStyleWhite;
     } else {
-        self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
+        self.fw_navigationBarStyle = FWNavigationBarStyleDefault;
     }
     [self refreshBarFrame];
 }
@@ -250,19 +250,19 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onTabBar
 {
-    self.fw.tabBarHidden = !self.fw.tabBarHidden;
+    self.fw_tabBarHidden = !self.fw_tabBarHidden;
     [self refreshBarFrame];
 }
 
 - (void)onToolBar
 {
-    if (self.fw.toolBarHidden) {
-        UIBarButtonItem *item = [UIBarButtonItem.fw itemWithObject:@(UIBarButtonSystemItemCancel) target:self action:@selector(onToolBar)];
-        UIBarButtonItem *item2 = [UIBarButtonItem.fw itemWithObject:@(UIBarButtonSystemItemDone) target:self action:@selector(onPresent)];
+    if (self.fw_toolBarHidden) {
+        UIBarButtonItem *item = [UIBarButtonItem fw_itemWithObject:@(UIBarButtonSystemItemCancel) target:self action:@selector(onToolBar)];
+        UIBarButtonItem *item2 = [UIBarButtonItem fw_itemWithObject:@(UIBarButtonSystemItemDone) target:self action:@selector(onPresent)];
         self.toolbarItems = @[item, item2];
-        self.fw.toolBarHidden = NO;
+        self.fw_toolBarHidden = NO;
     } else {
-        self.fw.toolBarHidden = YES;
+        self.fw_toolBarHidden = YES;
     }
     [self refreshBarFrame];
 }
@@ -270,11 +270,11 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)onPresent
 {
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
-    viewController.fw.presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+    viewController.fw_presentationDidDismiss = ^{
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fw.completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+    viewController.fw_completionHandler = ^(id  _Nullable result) {
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
     [self presentViewController:viewController animated:YES completion:nil];
@@ -291,11 +291,11 @@ FWPropertyAssign(BOOL, hideToast);
 - (void)onPresent3
 {
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
-    viewController.fw.presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+    viewController.fw_presentationDidDismiss = ^{
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fw.completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+    viewController.fw_completionHandler = ^(id  _Nullable result) {
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     viewController.hideToast = YES;
     viewController.modalPresentationStyle = UIModalPresentationPageSheet;
@@ -307,11 +307,11 @@ FWPropertyAssign(BOOL, hideToast);
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
     viewController.hideToast = YES;
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    navController.fw.presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+    navController.fw_presentationDidDismiss = ^{
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
-    navController.fw.completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+    navController.fw_completionHandler = ^(id  _Nullable result) {
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:navController animated:YES completion:nil];
 }
@@ -326,17 +326,17 @@ FWPropertyAssign(BOOL, hideToast);
     TestBarViewController *viewController = [[TestBarViewController alloc] init];
     viewController.hideToast = YES;
     viewController.preferredContentSize = CGSizeMake(FWScreenWidth / 2, FWScreenHeight / 2);
-    [viewController.fw setPopoverPresentation:^(UIPopoverPresentationController *controller) {
+    [viewController fw_setPopoverPresentation:^(UIPopoverPresentationController *controller) {
         controller.barButtonItem = self.navigationItem.rightBarButtonItem;
         controller.permittedArrowDirections = UIPopoverArrowDirectionUp;
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
         controller.passthroughViews = [NSArray arrayWithObjects:cell, nil];
-    } shouldDismiss:[@[@0, @1].fw.randomObject fw].safeBool];
-    viewController.fw.presentationDidDismiss = ^{
-        [UIWindow.fw showMessageWithText:@"fwPresentationDidDismiss"];
+    } shouldDismiss:[@[@0, @1].fw_randomObject fw_safeBool]];
+    viewController.fw_presentationDidDismiss = ^{
+        [UIWindow fw_showMessageWithText:@"fwPresentationDidDismiss"];
     };
-    viewController.fw.completionHandler = ^(id  _Nullable result) {
-        [UIWindow.fw showMessageWithText:@"fwCompletionHandler"];
+    viewController.fw_completionHandler = ^(id  _Nullable result) {
+        [UIWindow fw_showMessageWithText:@"fwCompletionHandler"];
     };
     [self presentViewController:viewController animated:YES completion:nil];
 }
@@ -357,10 +357,10 @@ FWPropertyAssign(BOOL, hideToast);
 
 - (void)onOrientation
 {
-    if ([UIDevice.fw isDeviceLandscape]) {
-        [UIDevice.fw setDeviceOrientation:UIDeviceOrientationPortrait];
+    if ([UIDevice fw_isDeviceLandscape]) {
+        [UIDevice fw_setDeviceOrientation:UIDeviceOrientationPortrait];
     } else {
-        [UIDevice.fw setDeviceOrientation:UIDeviceOrientationLandscapeLeft];
+        [UIDevice fw_setDeviceOrientation:UIDeviceOrientationLandscapeLeft];
     }
     [self refreshBarFrame];
 }

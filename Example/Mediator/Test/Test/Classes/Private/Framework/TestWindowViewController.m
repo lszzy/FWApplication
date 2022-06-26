@@ -24,7 +24,7 @@
     [loginButton addTarget:self action:@selector(onMediator) forControlEvents:UIControlEventTouchUpInside];
     loginButton.frame = CGRectMake(self.view.frame.size.width / 2 - 75, 20, 150, 30);
     [self.view addSubview:loginButton];
-    [self.view.fw addTapGestureWithTarget:self action:@selector(onClose)];
+    [self.view fw_addTapGestureWithTarget:self action:@selector(onClose)];
 }
 
 - (void)renderData {
@@ -38,7 +38,7 @@
 #pragma mark - Action
 
 - (void)onClose {
-    [self.fw closeViewControllerAnimated:YES];
+    [self fw_closeViewControllerAnimated:YES];
 }
 
 - (void)onMediator {
@@ -59,9 +59,9 @@
 
 - (void)onInvalid {
     FWWeakifySelf();
-    [UIWindow.fw.topPresentedController.fw showConfirmWithTitle:@"模拟登录失效" message:nil cancel:nil confirm:nil confirmBlock:^{
+    [UIWindow.fw_topPresentedController fw_showConfirmWithTitle:@"模拟登录失效" message:nil cancel:nil confirm:nil confirmBlock:^{
         FWStrongifySelf();
-        [UIWindow.fw.mainWindow.fw dismissViewControllers:^{
+        [UIWindow.fw_mainWindow fw_dismissViewControllers:^{
             FWStrongifySelf();
             [Mediator.userModule logout:^{
                 FWStrongifySelf();
@@ -108,7 +108,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -130,19 +130,19 @@
 
 - (void)onPush
 {
-    [UIWindow.fw pushViewController:[TestWindowPresentController new] animated:YES];
+    [UIWindow fw_pushViewController:[TestWindowPresentController new] animated:YES];
 }
 
 - (void)onPresent
 {
-    [UIWindow.fw presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
+    [UIWindow fw_presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
 }
 
 - (void)onPush2
 {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[TestWindowPresentController new]];
     [self presentViewController:nav animated:YES completion:^{
-        [UIWindow.fw pushViewController:[TestWindowPresentController new] animated:YES];
+        [UIWindow fw_pushViewController:[TestWindowPresentController new] animated:YES];
     }];
 }
 
@@ -150,32 +150,32 @@
 {
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:[TestWindowPresentController new]];
     [self presentViewController:nav animated:YES completion:^{
-        [UIWindow.fw presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
+        [UIWindow fw_presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
     }];
 }
 
 - (void)onPush3
 {
     [self presentViewController:[TestWindowPresentController new] animated:YES completion:^{
-        [UIWindow.fw pushViewController:[TestWindowPresentController new] animated:YES];
+        [UIWindow fw_pushViewController:[TestWindowPresentController new] animated:YES];
     }];
 }
 
 - (void)onPresent3
 {
     [self presentViewController:[TestWindowPresentController new] animated:YES completion:^{
-        [UIWindow.fw presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
+        [UIWindow fw_presentViewController:[TestWindowPresentController new] animated:YES completion:nil];
     }];
 }
 
 - (void)onReview
 {
-    [UIApplication.fw openAppStoreReview:@"923302754"];
+    [UIApplication fw_openAppStoreReview:@"923302754"];
 }
 
 - (void)onReview2
 {
-    [UIApplication.fw openAppReview];
+    [UIApplication fw_openAppReview];
 }
 
 @end

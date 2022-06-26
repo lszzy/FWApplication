@@ -14,7 +14,7 @@ import FWApplication
 extension Wrapper where Base: CALayer {
     
     public func convertContentToImage(size: CGSize) -> UIImage? {
-        return base.__fw.convertContentToImage(with: size)
+        return base.__fw_convertContentToImage(with: size)
     }
     
 }

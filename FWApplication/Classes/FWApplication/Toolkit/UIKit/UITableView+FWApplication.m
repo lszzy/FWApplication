@@ -9,55 +9,55 @@
 #import "UITableView+FWApplication.h"
 #import <objc/runtime.h>
 
-@implementation FWTableViewWrapper (FWApplication)
+@implementation UITableView (FWApplication)
 
-- (BOOL)estimatedLayout
+- (BOOL)fw_estimatedLayout
 {
-    return self.base.estimatedRowHeight == UITableViewAutomaticDimension;
+    return self.estimatedRowHeight == UITableViewAutomaticDimension;
 }
 
-- (void)setEstimatedLayout:(BOOL)enabled
+- (void)setFw_estimatedLayout:(BOOL)enabled
 {
     if (enabled) {
-        self.base.estimatedRowHeight = UITableViewAutomaticDimension;
-        self.base.estimatedSectionHeaderHeight = UITableViewAutomaticDimension;
-        self.base.estimatedSectionFooterHeight = UITableViewAutomaticDimension;
+        self.estimatedRowHeight = UITableViewAutomaticDimension;
+        self.estimatedSectionHeaderHeight = UITableViewAutomaticDimension;
+        self.estimatedSectionFooterHeight = UITableViewAutomaticDimension;
     } else {
-        self.base.estimatedRowHeight = 0.f;
-        self.base.estimatedSectionHeaderHeight = 0.f;
-        self.base.estimatedSectionFooterHeight = 0.f;
+        self.estimatedRowHeight = 0.f;
+        self.estimatedSectionHeaderHeight = 0.f;
+        self.estimatedSectionFooterHeight = 0.f;
     }
 }
 
-- (void)resetGroupedStyle
+- (void)fw_resetGroupedStyle
 {
-    self.base.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
-    self.base.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
-    self.base.sectionHeaderHeight = 0;
-    self.base.sectionFooterHeight = 0;
+    self.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    self.tableFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, CGFLOAT_MIN)];
+    self.sectionHeaderHeight = 0;
+    self.sectionFooterHeight = 0;
 #if __IPHONE_15_0
     if (@available(iOS 15.0, *)) {
-        self.base.sectionHeaderTopPadding = 0;
+        self.sectionHeaderTopPadding = 0;
     }
 #endif
 }
 
-- (void)followWithHeader:(CGFloat)headerHeight footer:(CGFloat)footerHeight
+- (void)fw_followWithHeader:(CGFloat)headerHeight footer:(CGFloat)footerHeight
 {
-    CGFloat offsetY = self.base.contentOffset.y;
+    CGFloat offsetY = self.contentOffset.y;
     if (offsetY >= 0 && offsetY <= headerHeight) {
-        self.base.contentInset = UIEdgeInsetsMake(-offsetY, 0, -footerHeight, 0);
-    } else if (offsetY >= headerHeight && offsetY <= self.base.contentSize.height - self.base.frame.size.height - footerHeight) {
-        self.base.contentInset = UIEdgeInsetsMake(-headerHeight, 0, -footerHeight, 0);
-    } else if (offsetY >= self.base.contentSize.height - self.base.frame.size.height - footerHeight && offsetY <= self.base.contentSize.height - self.base.frame.size.height) {
-        self.base.contentInset = UIEdgeInsetsMake(-offsetY, 0, -(self.base.contentSize.height - self.base.frame.size.height - footerHeight), 0);
+        self.contentInset = UIEdgeInsetsMake(-offsetY, 0, -footerHeight, 0);
+    } else if (offsetY >= headerHeight && offsetY <= self.contentSize.height - self.frame.size.height - footerHeight) {
+        self.contentInset = UIEdgeInsetsMake(-headerHeight, 0, -footerHeight, 0);
+    } else if (offsetY >= self.contentSize.height - self.frame.size.height - footerHeight && offsetY <= self.contentSize.height - self.frame.size.height) {
+        self.contentInset = UIEdgeInsetsMake(-offsetY, 0, -(self.contentSize.height - self.frame.size.height - footerHeight), 0);
     }
 }
 
-- (void)reloadDataWithCompletion:(void (^)(void))completion
+- (void)fw_reloadDataWithCompletion:(void (^)(void))completion
 {
     [UIView animateWithDuration:0 animations:^{
-        [self.base reloadData];
+        [self reloadData];
     } completion:^(BOOL finished) {
         if (completion) {
             completion();
@@ -65,43 +65,39 @@
     }];
 }
 
-- (void)reloadDataWithoutCache
+- (void)fw_reloadDataWithoutCache
 {
-    [self clearHeightCache];
-    [self.base reloadData];
+    [self fw_clearHeightCache];
+    [self reloadData];
 }
 
-- (void)reloadDataWithoutAnimation
+- (void)fw_reloadDataWithoutAnimation
 {
     [UIView performWithoutAnimation:^{
-        [self.base reloadData];
+        [self reloadData];
     }];
 }
 
-- (void)reloadSectionsWithoutAnimation:(NSIndexSet *)sections
+- (void)fw_reloadSectionsWithoutAnimation:(NSIndexSet *)sections
 {
     [UIView performWithoutAnimation:^{
-        [self.base reloadSections:sections withRowAnimation:UITableViewRowAnimationNone];
+        [self reloadSections:sections withRowAnimation:UITableViewRowAnimationNone];
     }];
 }
 
-- (void)reloadRowsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths
+- (void)fw_reloadRowsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths
 {
     [UIView performWithoutAnimation:^{
-        [self.base reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
+        [self reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationNone];
     }];
 }
 
-- (void)performUpdates:(void (NS_NOESCAPE ^)(void))updates
+- (void)fw_performUpdates:(void (NS_NOESCAPE ^)(void))updates
 {
-    [self.base performBatchUpdates:updates completion:nil];
+    [self performBatchUpdates:updates completion:nil];
 }
 
-@end
-
-@implementation FWTableViewClassWrapper (FWApplication)
-
-- (void)resetTableStyle
++ (void)fw_resetTableStyle
 {
 #if __IPHONE_15_0
     if (@available(iOS 15.0, *)) {
@@ -112,28 +108,28 @@
 
 @end
 
-@implementation FWTableViewCellWrapper (FWApplication)
+@implementation UITableViewCell (FWApplication)
 
-- (UIEdgeInsets)separatorInset
+- (UIEdgeInsets)fw_separatorInset
 {
-    return self.base.separatorInset;
+    return self.separatorInset;
 }
 
-- (void)setSeparatorInset:(UIEdgeInsets)separatorInset
+- (void)setFw_separatorInset:(UIEdgeInsets)separatorInset
 {
-    self.base.separatorInset = separatorInset;
+    self.separatorInset = separatorInset;
     
-    if ([self.base respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-        [self.base setPreservesSuperviewLayoutMargins:NO];
+    if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [self setPreservesSuperviewLayoutMargins:NO];
     }
-    if ([self.base respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self.base setLayoutMargins:separatorInset];
+    if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self setLayoutMargins:separatorInset];
     }
 }
 
-- (UITableView *)tableView
+- (UITableView *)fw_tableView
 {
-    UIView *superview = self.base.superview;
+    UIView *superview = self.superview;
     while (superview) {
         if ([superview isKindOfClass:[UITableView class]]) {
             return (UITableView *)superview;
@@ -143,9 +139,9 @@
     return nil;
 }
 
-- (NSIndexPath *)indexPath
+- (NSIndexPath *)fw_indexPath
 {
-    return [[self tableView] indexPathForCell:self.base];
+    return [[self fw_tableView] indexPathForCell:self];
 }
 
 @end
@@ -162,7 +158,7 @@
         _contentView = [[UIView alloc] initWithFrame:CGRectZero];
         _contentView.layer.masksToBounds = NO;
         [self addSubview:_contentView];
-        [_contentView.fw pinEdgesToSuperview];
+        [_contentView fw_pinEdgesToSuperview];
     }
     return self;
 }
@@ -171,7 +167,7 @@
 {
     _contentInset = contentInset;
     
-    [self.contentView.fw pinEdgesToSuperviewWithInsets:contentInset];
+    [self.contentView fw_pinEdgesToSuperviewWithInsets:contentInset];
 }
 
 - (void)setSectionContentInset:(UIEdgeInsets)contentInset tableView:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath
@@ -192,18 +188,18 @@
 
 @end
 
-@implementation FWTableViewCellWrapper (FWBackgroundView)
+@implementation UITableViewCell (FWBackgroundView)
 
-- (FWTableViewCellBackgroundView *)backgroundView
+- (FWTableViewCellBackgroundView *)fw_backgroundView
 {
-    FWTableViewCellBackgroundView *backgroundView = objc_getAssociatedObject(self.base, _cmd);
+    FWTableViewCellBackgroundView *backgroundView = objc_getAssociatedObject(self, _cmd);
     if (!backgroundView) {
         backgroundView = [[FWTableViewCellBackgroundView alloc] initWithFrame:CGRectZero];
-        objc_setAssociatedObject(self.base, _cmd, backgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, _cmd, backgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
         // 需设置cell背景色为透明
-        self.base.backgroundColor = [UIColor clearColor];
-        self.base.backgroundView = backgroundView;
+        self.backgroundColor = [UIColor clearColor];
+        self.backgroundView = backgroundView;
     }
     return backgroundView;
 }

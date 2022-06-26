@@ -23,42 +23,42 @@ extension Wrapper where Base: UIViewController {
 
     /// 获取当前显示的子控制器，解决不能触发viewWillAppear等的bug
     public func childViewController() -> UIViewController? {
-        return base.__fw.childViewController()
+        return base.__fw_childViewController()
     }
 
     /// 设置当前显示的子控制器，解决不能触发viewWillAppear等的bug
     public func setChildViewController(_ viewController: UIViewController) {
-        base.__fw.setChildViewController(viewController)
+        base.__fw_setChildViewController(viewController)
     }
 
     /// 移除子控制器，解决不能触发viewWillAppear等的bug
     public func removeChildViewController(_ viewController: UIViewController) {
-        base.__fw.removeChildViewController(viewController)
+        base.__fw_removeChildViewController(viewController)
     }
 
     /// 添加子控制器到当前视图，解决不能触发viewWillAppear等的bug
     public func addChildViewController(_ viewController: UIViewController) {
-        base.__fw.addChildViewController(viewController)
+        base.__fw_addChildViewController(viewController)
     }
 
     /// 添加子控制器到指定视图，解决不能触发viewWillAppear等的bug
     public func addChildViewController(_ viewController: UIViewController, in view: UIView) {
-        base.__fw.addChildViewController(viewController, in: view)
+        base.__fw_addChildViewController(viewController, in: view)
     }
 
     // MARK: - Previous
 
     /// 获取和自身处于同一个UINavigationController里的上一个UIViewController
     public weak var previousViewController: UIViewController? {
-        return base.__fw.previousViewController
+        return base.__fw_previousViewController
     }
     
     // MARK: - Style
     
     /// 全局适配iOS13默认present样式(系统Automatic)，仅当未自定义modalPresentationStyle时生效
     public static var defaultModalPresentationStyle: UIModalPresentationStyle {
-        get { return Base.__fw.defaultModalPresentationStyle }
-        set { Base.__fw.defaultModalPresentationStyle = newValue }
+        get { return Base.__fw_defaultModalPresentationStyle }
+        set { Base.__fw_defaultModalPresentationStyle = newValue }
     }
     
 }

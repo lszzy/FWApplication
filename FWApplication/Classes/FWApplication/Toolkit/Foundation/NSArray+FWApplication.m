@@ -10,27 +10,27 @@
 #import "NSArray+FWApplication.h"
 #import "NSDictionary+FWApplication.h"
 
-@implementation FWArrayWrapper (FWApplication)
+@implementation NSArray (FWApplication)
 
-- (id)randomObject:(NSArray *)weights
+- (id)fw_randomObject:(NSArray *)weights
 {
-    NSInteger count = self.base.count;
+    NSInteger count = self.count;
     if (count < 1) return nil;
     
     __block NSInteger sum = 0;
     [weights enumerateObjectsUsingBlock:^(NSObject *obj, NSUInteger idx, BOOL *stop) {
-        NSInteger val = [obj.fw safeInteger];
+        NSInteger val = [obj fw_safeInteger];
         if (val > 0 && idx < count) {
             sum += val;
         }
     }];
-    if (sum < 1) return self.randomObject;
+    if (sum < 1) return self.fw_randomObject;
     
     __block NSInteger index = -1;
     __block NSInteger weight = 0;
     NSInteger random = arc4random_uniform((u_int32_t)sum);
     [weights enumerateObjectsUsingBlock:^(NSObject *obj, NSUInteger idx, BOOL *stop) {
-        NSInteger val = [obj.fw safeInteger];
+        NSInteger val = [obj fw_safeInteger];
         if (val > 0 && idx < count) {
             weight += val;
             if (weight > random) {
@@ -39,27 +39,27 @@
             }
         }
     }];
-    return index >= 0 && index < count ? [self.base objectAtIndex:index] : self.randomObject;
+    return index >= 0 && index < count ? [self objectAtIndex:index] : self.fw_randomObject;
 }
 
-- (NSArray *)reverseArray
+- (NSArray *)fw_reverseArray
 {
-    NSMutableArray *reverseArray = [NSMutableArray arrayWithArray:self.base];
-    [reverseArray.fw reverse];
+    NSMutableArray *reverseArray = [NSMutableArray arrayWithArray:self];
+    [reverseArray fw_reverse];
     return [reverseArray copy];
 }
 
-- (NSArray *)shuffleArray
+- (NSArray *)fw_shuffleArray
 {
-    NSMutableArray *shuffleArray = [NSMutableArray arrayWithArray:self.base];
-    [shuffleArray.fw shuffle];
+    NSMutableArray *shuffleArray = [NSMutableArray arrayWithArray:self];
+    [shuffleArray fw_shuffle];
     return [shuffleArray copy];
 }
 
-- (BOOL)includeNull
+- (BOOL)fw_includeNull
 {
     __block BOOL includeNull = NO;
-    [self.base enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([obj isKindOfClass:[NSNull class]]) {
             includeNull = YES;
             *stop = YES;
@@ -68,15 +68,15 @@
     return includeNull;
 }
 
-- (NSArray *)removeNull
+- (NSArray *)fw_removeNull
 {
-    return [self removeNullRecursive:YES];
+    return [self fw_removeNullRecursive:YES];
 }
 
-- (NSArray *)removeNullRecursive:(BOOL)recursive
+- (NSArray *)fw_removeNullRecursive:(BOOL)recursive
 {
-    NSMutableArray *array = [self.base mutableCopy];
-    for (id object in self.base) {
+    NSMutableArray *array = [self mutableCopy];
+    for (id object in self) {
         if (object == [NSNull null]) {
             [array removeObject:object];
         }
@@ -84,13 +84,13 @@
         if (recursive) {
             if ([object isKindOfClass:[NSDictionary class]]) {
                 NSInteger index = [array indexOfObject:object];
-                NSDictionary *subdictionary = [((NSDictionary *)object).fw removeNullRecursive:YES];
+                NSDictionary *subdictionary = [((NSDictionary *)object) fw_removeNullRecursive:YES];
                 [array replaceObjectAtIndex:index withObject:subdictionary];
             }
             
             if ([object isKindOfClass:[NSArray class]]) {
                 NSInteger index = [array indexOfObject:object];
-                NSArray *subarray = [((NSArray *)object).fw removeNullRecursive:YES];
+                NSArray *subarray = [((NSArray *)object) fw_removeNullRecursive:YES];
                 [array replaceObjectAtIndex:index withObject:subarray];
             }
         }
@@ -100,23 +100,23 @@
 
 @end
 
-#pragma mark - FWMutableArrayWrapper+FWApplication
+#pragma mark - NSMutableArray+FWApplication
 
-@implementation FWMutableArrayWrapper (FWApplication)
+@implementation NSMutableArray (FWApplication)
 
-- (void)reverse
+- (void)fw_reverse
 {
-    NSUInteger count = self.base.count;
+    NSUInteger count = self.count;
     int mid = floor(count / 2.0);
     for (NSUInteger i = 0; i < mid; i++) {
-        [self.base exchangeObjectAtIndex:i withObjectAtIndex:(count - (i + 1))];
+        [self exchangeObjectAtIndex:i withObjectAtIndex:(count - (i + 1))];
     }
 }
 
-- (void)shuffle
+- (void)fw_shuffle
 {
-    for (NSUInteger i = self.base.count; i > 1; i--) {
-        [self.base exchangeObjectAtIndex:(i - 1)
+    for (NSUInteger i = self.count; i > 1; i--) {
+        [self exchangeObjectAtIndex:(i - 1)
                   withObjectAtIndex:arc4random_uniform((u_int32_t)i)];
     }
 }

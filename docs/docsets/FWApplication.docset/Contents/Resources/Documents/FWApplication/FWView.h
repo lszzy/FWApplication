@@ -67,30 +67,30 @@ NS_SWIFT_NAME(ViewDelegate)
 
 @end
 
-@interface FWViewWrapper (FWView)
+@interface UIView (FWView)
 
 /// 通用视图绑定数据，改变时自动触发viewModelChanged和FWView.renderData
-@property (nullable, nonatomic, strong) id viewModel;
+@property (nullable, nonatomic, strong) id fw_viewModel NS_REFINED_FOR_SWIFT;
 
 /// 通用视图数据改变句柄钩子，viewData改变时自动调用
-@property (nullable, nonatomic, copy) void (^viewModelChanged)(__kindof UIView *view);
+@property (nullable, nonatomic, copy) void (^fw_viewModelChanged)(__kindof UIView *view) NS_REFINED_FOR_SWIFT;
 
 /// 通用事件接收代理，弱引用，Delegate方式
-@property (nonatomic, weak, nullable) id<FWViewDelegate> viewDelegate;
+@property (nonatomic, weak, nullable) id<FWViewDelegate> fw_viewDelegate NS_REFINED_FOR_SWIFT;
 
 /// 通用事件接收句柄，Block方式
-@property (nonatomic, copy, nullable) void (^eventReceived)(__kindof UIView *view, NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^fw_eventReceived)(__kindof UIView *view, NSNotification *notification) NS_REFINED_FOR_SWIFT;
 
 /// 通用事件完成回调句柄，Block方式
-@property (nonatomic, copy, nullable) void (^eventFinished)(__kindof UIView *view, NSNotification *notification);
+@property (nonatomic, copy, nullable) void (^fw_eventFinished)(__kindof UIView *view, NSNotification *notification) NS_REFINED_FOR_SWIFT;
 
 /// 发送指定事件，通知代理，支持附带对象和用户信息
-- (void)sendEvent:(NSString *)name;
-- (void)sendEvent:(NSString *)name object:(nullable id)object;
-- (void)sendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo;
+- (void)fw_sendEvent:(NSString *)name NS_REFINED_FOR_SWIFT;
+- (void)fw_sendEvent:(NSString *)name object:(nullable id)object NS_REFINED_FOR_SWIFT;
+- (void)fw_sendEvent:(NSString *)name object:(nullable id)object userInfo:(nullable NSDictionary *)userInfo NS_REFINED_FOR_SWIFT;
 
 /// 通知事件完成，自动调用eventFinished句柄和FWView.renderEvent钩子
-- (void)finishEvent:(NSNotification *)notification;
+- (void)fw_finishEvent:(NSNotification *)notification NS_REFINED_FOR_SWIFT;
 
 @end
 

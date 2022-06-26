@@ -92,7 +92,7 @@
 - (void)innerRenderCollectionLayout
 {
     UICollectionView *collectionView = [(id<FWCollectionViewController>)self collectionView];
-    [collectionView.fw pinEdgesToSuperview];
+    [collectionView fw_pinEdgesToSuperview];
 }
 
 @end

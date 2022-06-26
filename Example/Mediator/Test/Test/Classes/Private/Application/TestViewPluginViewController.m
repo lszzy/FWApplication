@@ -42,9 +42,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
-    NSInteger rowData = [sectionData[indexPath.row] fw].safeInteger;
+    NSInteger rowData = [sectionData[indexPath.row] fw_safeInteger];
     if (indexPath.section == 0) {
-        UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
+        UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell1"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         FWProgressView *view = [cell viewWithTag:100];
         if (!view) {
@@ -52,7 +52,7 @@
             view.tag = 100;
             view.color = Theme.textColor;
             [cell.contentView addSubview:view];
-            view.fw.layoutChain.center();
+            view.fw_layoutChain.center();
         }
         view.annular = rowData == 0 ? YES : NO;
         [self mockProgress:^(double progress, BOOL finished) {
@@ -61,7 +61,7 @@
         return cell;
     }
     
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell2"];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FWIndicatorView *view = [cell viewWithTag:100];
     if (!view) {
@@ -69,7 +69,7 @@
         view.tag = 100;
         view.color = Theme.textColor;
         [cell.contentView addSubview:view];
-        view.fw.layoutChain.center();
+        view.fw_layoutChain.center();
     }
     view.type = (FWIndicatorViewAnimationType)rowData;
     [view startAnimating];
@@ -84,7 +84,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     FWWeakifySelf();
-    [self.fw showAlertWithTitle:@"请选择" message:nil cancel:nil actions:@[@"预览", @"设置全局样式"] actionBlock:^(NSInteger index) {
+    [self fw_showAlertWithTitle:@"请选择" message:nil style:FWAlertStyleDefault cancel:nil actions:@[@"预览", @"设置全局样式"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         if (index == 0) {
             [self onPreview:indexPath];
@@ -108,7 +108,7 @@
     }
     
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
-    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw].safeInteger;
+    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw_safeInteger];
     FWToastPluginImpl *toastPlugin = [[FWToastPluginImpl alloc] init];
     toastPlugin.customBlock = ^(FWToastView * _Nonnull toastView) {
         toastView.indicatorView = [[FWIndicatorView alloc] initWithType:type];
@@ -137,7 +137,7 @@
     }
     
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
-    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw].safeInteger;
+    FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw_safeInteger];
     FWViewPluginImpl.sharedInstance.customIndicatorView = ^UIView<FWIndicatorViewPlugin> * _Nonnull(FWIndicatorViewStyle style) {
         return [[FWIndicatorView alloc] initWithType:type];
     };

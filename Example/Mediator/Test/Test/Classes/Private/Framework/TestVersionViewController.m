@@ -18,13 +18,13 @@
 {
     [super viewDidLoad];
     
-    NSString *deviceText = [NSString stringWithFormat:@"Device UUID: \n%@", [UIDevice.fw deviceUUID]];
-    UILabel *textLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor] text:deviceText];
+    NSString *deviceText = [NSString stringWithFormat:@"Device UUID: \n%@", [UIDevice fw_deviceUUID]];
+    UILabel *textLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor] text:deviceText];
     textLabel.textAlignment = NSTextAlignmentCenter;
     textLabel.numberOfLines = 0;
     [self.view addSubview:textLabel];
-    [textLabel.fw alignCenterToSuperview];
-    [textLabel.fw pinHorizontalToSuperview];
+    [textLabel fw_alignCenterToSuperview];
+    [textLabel fw_pinHorizontalToSuperview];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -36,18 +36,18 @@
     [[FWVersionManager sharedInstance] checkDataVersion:@"1.2.1" migrator:^{
         FWStrongifySelf();
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.fw showAlertWithTitle:nil message:@"数据更新至1.2.1版本" cancel:nil cancelBlock:nil];
+            [self fw_showAlertWithTitle:nil message:@"数据更新至1.2.1版本" cancel:nil cancelBlock:nil];
         });
     }];
     [[FWVersionManager sharedInstance] checkDataVersion:@"1.0.0" migrator:^{
         FWStrongifySelf();
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.fw showAlertWithTitle:nil message:@"数据更新至1.0.0版本" cancel:nil cancelBlock:nil];
+            [self fw_showAlertWithTitle:nil message:@"数据更新至1.0.0版本" cancel:nil cancelBlock:nil];
         });
     }];
     [[FWVersionManager sharedInstance] migrateData:^{
         FWStrongifySelf();
-        [self.fw showAlertWithTitle:nil message:@"数据更新完毕" cancel:nil cancelBlock:nil];
+        [self fw_showAlertWithTitle:nil message:@"数据更新完毕" cancel:nil cancelBlock:nil];
     }];
     
     // 版本更新
@@ -58,15 +58,15 @@
         NSLog(@"version status: %@", @([FWVersionManager sharedInstance].status));
         
         if ([FWVersionManager sharedInstance].status == FWVersionStatusAuditing) {
-            [self.fw showAlertWithTitle:nil message:@"当前版本正在审核中" cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
+            [self fw_showAlertWithTitle:nil message:@"当前版本正在审核中" style:FWAlertStyleDefault cancel:nil actions:nil actionBlock:nil cancelBlock:nil];
         } else if ([FWVersionManager sharedInstance].status == FWVersionStatusUpdating) {
             BOOL isForce = NO;
             if (isForce) {
                 // 强制更新
                 NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"微信", [FWVersionManager sharedInstance].latestVersion];
-                [self.fw showAlertWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"更新" actions:nil actionBlock:nil cancelBlock:^{
+                [self fw_showAlertWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes style:FWAlertStyleDefault cancel:@"更新" actions:nil actionBlock:nil cancelBlock:^{
                     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://apps.apple.com/app/id%@", [FWVersionManager sharedInstance].appId]];
-                    [UIApplication.fw openURL:url completionHandler:^(BOOL success) {
+                    [UIApplication fw_openURL:url completionHandler:^(BOOL success) {
                         if (success) {
                             exit(EXIT_SUCCESS);
                         }
@@ -75,7 +75,7 @@
             } else {
                 // 非强制更新
                 NSString *title = [NSString stringWithFormat:@"%@的新版本可用。请立即更新到%@版本。", @"微信", [FWVersionManager sharedInstance].latestVersion];
-                [self.fw showConfirmWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"取消" confirm:@"更新" confirmBlock:^{
+                [self fw_showConfirmWithTitle:title message:[FWVersionManager sharedInstance].releaseNotes cancel:@"取消" confirm:@"更新" confirmBlock:^{
                     [[FWVersionManager sharedInstance] openAppStore];
                 } cancelBlock:nil];
             }

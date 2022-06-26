@@ -10,16 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWWindowWrapper (FWApplication)
+@interface UIWindow (FWApplication)
 
 // 关闭所有弹出控制器，完成时回调。如果没有present控制器，直接回调
-- (void)dismissViewControllers:(nullable void (^)(void))completion;
+- (void)fw_dismissViewControllers:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 // 选中并获取指定类TabBar根视图控制器，适用于Tabbar包含多个Navigation结构，找不到返回nil
-- (nullable __kindof UIViewController *)selectTabBarController:(Class)viewController;
+- (nullable __kindof UIViewController *)fw_selectTabBarController:(Class)viewController NS_REFINED_FOR_SWIFT;
 
 // 选中并获取指定索引TabBar根视图控制器，适用于Tabbar包含多个Navigation结构，找不到返回nil
-- (nullable __kindof UIViewController *)selectTabBarIndex:(NSUInteger)index;
+- (nullable __kindof UIViewController *)fw_selectTabBarIndex:(NSUInteger)index NS_REFINED_FOR_SWIFT;
 
 @end
 

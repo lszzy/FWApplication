@@ -27,17 +27,17 @@
     NSString *originString = @"FWApplication";
     
     FWLogDebug(@"Original: %@", originString);
-    NSString *publicEncode = [originString.fw.utf8Data.fw RSAEncryptWithPublicKey:publicKey].fw.utf8String;
+    NSString *publicEncode = [originString.fw_utf8Data fw_RSAEncryptWithPublicKey:publicKey].fw_utf8String;
     FWLogDebug(@"Encrypted Public: %@", publicEncode);
-    NSString *privateDecode = [publicEncode.fw.utf8Data.fw RSADecryptWithPrivateKey:privateKey].fw.utf8String;
+    NSString *privateDecode = [publicEncode.fw_utf8Data fw_RSADecryptWithPrivateKey:privateKey].fw_utf8String;
     FWLogDebug(@"Decrypted Private: %@", privateDecode);
     
-    privateDecode = [encodeString.fw.utf8Data.fw RSADecryptWithPrivateKey:privateKey].fw.utf8String;
+    privateDecode = [encodeString.fw_utf8Data fw_RSADecryptWithPrivateKey:privateKey].fw_utf8String;
     FWLogDebug(@"Decrypted Server: %@", privateDecode);
     
-    NSString *privateEncode = [originString.fw.utf8Data.fw RSASignWithPrivateKey:privateKey].fw.utf8String;
+    NSString *privateEncode = [originString.fw_utf8Data fw_RSASignWithPrivateKey:privateKey].fw_utf8String;
     FWLogDebug(@"Sign Private: %@", privateEncode);
-    NSString *publicDecode = [privateEncode.fw.utf8Data.fw RSAVerifyWithPublicKey:publicKey].fw.utf8String;
+    NSString *publicDecode = [privateEncode.fw_utf8Data fw_RSAVerifyWithPublicKey:publicKey].fw_utf8String;
     FWLogDebug(@"Verify Public: %@", publicDecode);
 }
 
@@ -67,7 +67,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     NSArray *rowData = [self.tableData objectAtIndex:indexPath.row];
     cell.textLabel.text = [rowData objectAtIndex:0];
     return cell;
@@ -106,7 +106,7 @@
 
 - (void)onResult:(NSInteger)count
 {
-    [self.fw showAlertWithTitle:@"结果" message:[NSString stringWithFormat:@"期望：%@\n实际：%@", @([self queueCount]), @(count)] cancel:nil cancelBlock:nil];
+    [self fw_showAlertWithTitle:@"结果" message:[NSString stringWithFormat:@"期望：%@\n实际：%@", @([self queueCount]), @(count)] cancel:nil cancelBlock:nil];
 }
 
 - (void)onLock1
@@ -142,11 +142,11 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         NSInteger value = [objc_getAssociatedObject(self, _cmd) integerValue];
         value++;
         objc_setAssociatedObject(self, _cmd, @(value), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
@@ -168,14 +168,14 @@
         
         // 操作
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
+            obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [array.firstObject.fw.tempObject integerValue];
+        NSInteger value = [array.firstObject.fw_tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -191,14 +191,14 @@
         
         // 操作
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
+            obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [array.firstObject.fw.tempObject integerValue];
+        NSInteger value = [array.firstObject.fw_tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -214,17 +214,17 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         [array enumerateObjectsUsingBlock:^(NSObject * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
+            obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [array.firstObject.fw.tempObject integerValue];
+        NSInteger value = [array.firstObject.fw_tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -240,14 +240,14 @@
         
         // 操作
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
-            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
+            obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [dict[@"object"].fw.tempObject integerValue];
+        NSInteger value = [dict[@"object"].fw_tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -263,14 +263,14 @@
         
         // 操作
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
-            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
+            obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [dict[@"object"].fw.tempObject integerValue];
+        NSInteger value = [dict[@"object"].fw_tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -286,17 +286,17 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, NSObject *  _Nonnull obj, BOOL * _Nonnull stop) {
-            obj.fw.tempObject = @([obj.fw.tempObject integerValue] + 1);
+            obj.fw_tempObject = @([obj.fw_tempObject integerValue] + 1);
         }];
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
         
         // 结果
-        NSInteger value = [dict[@"object"].fw.tempObject integerValue];
+        NSInteger value = [dict[@"object"].fw_tempObject integerValue];
         [self onResult:value];
     }];
 }
@@ -317,8 +317,8 @@
         FWStrongifySelf();
         
         // 操作
-        [self.fw lock];
-        NSInteger value = [[dict.fw randomWeightKey] integerValue];
+        [self fw_lock];
+        NSInteger value = [[dict fw_randomWeightKey] integerValue];
         if (value == 1) {
             count1 += 1;
         } else if (value == 2) {
@@ -328,7 +328,7 @@
         } else {
             count4 += 1;
         }
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();
@@ -371,11 +371,11 @@
     [self onQueue:^{
 
         // 操作
-        [self.fw lock];
+        [self fw_lock];
         NSInteger value = [[[FWCacheMemory sharedInstance] objectForKey:@"cache"] integerValue];
         value++;
         [[FWCacheMemory sharedInstance] setObject:@(value) forKey:@"cache"];
-        [self.fw unlock];
+        [self fw_unlock];
         
     } completion:^{
         FWStrongifySelf();

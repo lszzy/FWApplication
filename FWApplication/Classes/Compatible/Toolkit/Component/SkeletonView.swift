@@ -1012,59 +1012,69 @@ extension Wrapper where Base: UIViewController {
 // MARK: - UIKit+SkeletonLayout
 
 /// 视图显示骨架屏扩展
-@objc extension __FWViewWrapper {
+@objc extension UIView {
     
     /// 显示骨架屏，指定布局代理
-    open func showSkeleton(delegate: SkeletonViewDelegate?) {
-        base.fw.showSkeleton(delegate: delegate)
+    @objc(fw_showSkeletonWithDelegate:)
+    open func __fw_showSkeleton(delegate: SkeletonViewDelegate?) {
+        fw.showSkeleton(delegate: delegate)
     }
     
     /// 显示骨架屏，指定布局句柄
-    open func showSkeleton(block: ((SkeletonLayout) -> Void)?) {
-        base.fw.showSkeleton(block: block)
+    @objc(fw_showSkeletonWithBlock:)
+    open func __fw_showSkeleton(block: ((SkeletonLayout) -> Void)?) {
+        fw.showSkeleton(block: block)
     }
     
     /// 显示骨架屏，默认布局代理为self
-    open func showSkeleton() {
-        base.fw.showSkeleton()
+    @objc(fw_showSkeleton)
+    open func __fw_showSkeleton() {
+        fw.showSkeleton()
     }
     
     /// 隐藏骨架屏
-    open func hideSkeleton() {
-        base.fw.hideSkeleton()
+    @objc(fw_hideSkeleton)
+    open func __fw_hideSkeleton() {
+        fw.hideSkeleton()
     }
     
     /// 是否正在显示骨架屏
-    open var hasSkeleton: Bool {
-        return base.fw.hasSkeleton
+    @objc(fw_hasSkeleton)
+    open var __fw_hasSkeleton: Bool {
+        return fw.hasSkeleton
     }
 }
 
 /// 控制器显示骨架屏扩展
-@objc extension __FWViewControllerWrapper {
+@objc extension UIViewController {
     /// 显示view骨架屏，指定布局代理
-    open func showSkeleton(delegate: SkeletonViewDelegate?) {
-        base.fw.showSkeleton(delegate: delegate)
+    @objc(fw_showSkeletonWithDelegate:)
+    open func __fw_showSkeleton(delegate: SkeletonViewDelegate?) {
+        fw.showSkeleton(delegate: delegate)
     }
     
     /// 显示view骨架屏，指定布局句柄
-    open func showSkeleton(block: ((SkeletonLayout) -> Void)?) {
-        base.fw.showSkeleton(block: block)
+    @objc(fw_showSkeletonWithBlock:)
+    open func __fw_showSkeleton(block: ((SkeletonLayout) -> Void)?) {
+        fw.showSkeleton(block: block)
     }
     
     /// 显示view骨架屏，默认布局代理为self
-    open func showSkeleton() {
-        base.fw.showSkeleton()
+    @objc(fw_showSkeleton)
+    open func __fw_showSkeleton() {
+        fw.showSkeleton()
     }
     
     /// 隐藏view骨架屏
-    open func hideSkeleton() {
-        base.fw.hideSkeleton()
+    @objc(fw_hideSkeleton)
+    open func __fw_hideSkeleton() {
+        fw.hideSkeleton()
     }
     
     /// 是否正在显示view骨架屏
-    open var hasSkeleton: Bool {
-        return base.fw.hasSkeleton
+    @objc(fw_hasSkeleton)
+    open var __fw_hasSkeleton: Bool {
+        return fw.hasSkeleton
     }
 }
 

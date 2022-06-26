@@ -70,96 +70,92 @@ NS_SWIFT_NAME(ImagePlugin)
 
 @end
 
-#pragma mark - FWImageClassWrapper+FWImagePlugin
+#pragma mark - UIImage+FWImagePlugin
 
 /// 根据名称加载UIImage，优先加载图片文件(无缓存)，文件不存在时尝试系统imageNamed方式(有缓存)
 FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name) NS_SWIFT_UNAVAILABLE("");
 
-@interface FWImageClassWrapper (FWImagePlugin)
+@interface UIImage (FWImagePlugin)
 
 /// 根据名称加载UIImage，优先加载图片文件(无缓存)，文件不存在时尝试系统imageNamed方式(有缓存)
-- (nullable UIImage *)imageNamed:(NSString *)name;
++ (nullable UIImage *)fw_imageNamed:(NSString *)name NS_REFINED_FOR_SWIFT;
 
 /// 根据名称从指定bundle加载UIImage，优先加载图片文件(无缓存)，文件不存在时尝试系统imageNamed方式(有缓存)
-- (nullable UIImage *)imageNamed:(NSString *)name bundle:(nullable NSBundle *)bundle;
++ (nullable UIImage *)fw_imageNamed:(NSString *)name bundle:(nullable NSBundle *)bundle NS_REFINED_FOR_SWIFT;
 
 /// 根据名称从指定bundle加载UIImage，优先加载图片文件(无缓存)，文件不存在时尝试系统imageNamed方式(有缓存)。支持设置图片解码选项
-- (nullable UIImage *)imageNamed:(NSString *)name bundle:(nullable NSBundle *)bundle options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
++ (nullable UIImage *)fw_imageNamed:(NSString *)name bundle:(nullable NSBundle *)bundle options:(nullable NSDictionary<FWImageCoderOptions, id> *)options NS_REFINED_FOR_SWIFT;
 
 /// 从图片文件路径解码创建UIImage，自动识别scale，支持动图
-- (nullable UIImage *)imageWithContentsOfFile:(NSString *)path;
++ (nullable UIImage *)fw_imageWithContentsOfFile:(NSString *)path NS_REFINED_FOR_SWIFT;
 
 /// 从图片数据解码创建UIImage，scale为1，支持动图
-- (nullable UIImage *)imageWithData:(nullable NSData *)data;
++ (nullable UIImage *)fw_imageWithData:(nullable NSData *)data NS_REFINED_FOR_SWIFT;
 
 /// 从图片数据解码创建UIImage，指定scale，支持动图
-- (nullable UIImage *)imageWithData:(nullable NSData *)data scale:(CGFloat)scale;
++ (nullable UIImage *)fw_imageWithData:(nullable NSData *)data scale:(CGFloat)scale NS_REFINED_FOR_SWIFT;
 
 /// 从图片数据解码创建UIImage，指定scale，支持动图。支持设置图片解码选项
-- (nullable UIImage *)imageWithData:(nullable NSData *)data scale:(CGFloat)scale options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
++ (nullable UIImage *)fw_imageWithData:(nullable NSData *)data scale:(CGFloat)scale options:(nullable NSDictionary<FWImageCoderOptions, id> *)options NS_REFINED_FOR_SWIFT;
 
 /// 从UIImage编码创建图片数据，支持动图
-- (nullable NSData *)dataWithImage:(nullable UIImage *)image;
++ (nullable NSData *)fw_dataWithImage:(nullable UIImage *)image NS_REFINED_FOR_SWIFT;
 
 /// 从UIImage编码创建图片数据，支持动图。支持设置图片编码选项
-- (nullable NSData *)dataWithImage:(nullable UIImage *)image options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
++ (nullable NSData *)fw_dataWithImage:(nullable UIImage *)image options:(nullable NSDictionary<FWImageCoderOptions, id> *)options NS_REFINED_FOR_SWIFT;
 
 /// 下载网络图片并返回下载凭据
-- (nullable id)downloadImage:(nullable id)url
++ (nullable id)fw_downloadImage:(nullable id)url
                     completion:(void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
-                      progress:(nullable void (^)(double progress))progress;
+                      progress:(nullable void (^)(double progress))progress NS_REFINED_FOR_SWIFT;
 
 /// 下载网络图片并返回下载凭据，指定option
-- (nullable id)downloadImage:(nullable id)url
++ (nullable id)fw_downloadImage:(nullable id)url
                        options:(FWWebImageOptions)options
                        context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                     completion:(void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
-                      progress:(nullable void (^)(double progress))progress;
+                      progress:(nullable void (^)(double progress))progress NS_REFINED_FOR_SWIFT;
 
 /// 指定下载凭据取消网络图片下载
-- (void)cancelImageDownload:(nullable id)receipt;
++ (void)fw_cancelImageDownload:(nullable id)receipt NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWImageViewWrapper+FWImagePlugin
+#pragma mark - UIImageView+FWImagePlugin
 
-@interface FWImageViewWrapper (FWImagePlugin)
+@interface UIImageView (FWImagePlugin)
 
 /// 自定义图片插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWImagePlugin> imagePlugin;
+@property (nonatomic, strong, nullable) id<FWImagePlugin> fw_imagePlugin NS_REFINED_FOR_SWIFT;
 
 /// 当前正在加载的网络图片URL
-@property (nonatomic, copy, readonly, nullable) NSURL *imageURL;
+@property (nonatomic, copy, readonly, nullable) NSURL *fw_imageURL NS_REFINED_FOR_SWIFT;
 
 /// 加载网络图片，优先加载插件，默认使用框架网络库
-- (void)setImageWithURL:(nullable id)url;
+- (void)fw_setImageWithURL:(nullable id)url NS_REFINED_FOR_SWIFT;
 
 /// 加载网络图片，支持占位，优先加载插件，默认使用框架网络库
-- (void)setImageWithURL:(nullable id)url
-         placeholderImage:(nullable UIImage *)placeholderImage;
+- (void)fw_setImageWithURL:(nullable id)url
+         placeholderImage:(nullable UIImage *)placeholderImage NS_REFINED_FOR_SWIFT;
 
 /// 加载网络图片，支持占位和回调，优先加载插件，默认使用框架网络库
-- (void)setImageWithURL:(nullable id)url
+- (void)fw_setImageWithURL:(nullable id)url
          placeholderImage:(nullable UIImage *)placeholderImage
-               completion:(nullable void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion;
+               completion:(nullable void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion NS_REFINED_FOR_SWIFT;
 
 /// 加载网络图片，支持占位、选项、回调和进度，优先加载插件，默认使用框架网络库
-- (void)setImageWithURL:(nullable id)url
+- (void)fw_setImageWithURL:(nullable id)url
          placeholderImage:(nullable UIImage *)placeholderImage
                   options:(FWWebImageOptions)options
                   context:(nullable NSDictionary<FWImageCoderOptions, id> *)context
                completion:(nullable void (^)(UIImage * _Nullable image, NSError * _Nullable error))completion
-                 progress:(nullable void (^)(double progress))progress;
+                 progress:(nullable void (^)(double progress))progress NS_REFINED_FOR_SWIFT;
 
 /// 取消加载网络图片请求
-- (void)cancelImageRequest;
-
-@end
-
-@interface FWImageViewClassWrapper (FWImagePlugin)
+- (void)fw_cancelImageRequest NS_REFINED_FOR_SWIFT;
 
 /// 动画ImageView视图类，优先加载插件，默认UIImageView
-@property (nonatomic, unsafe_unretained) Class imageViewAnimatedClass;
+@property (class, nonatomic, unsafe_unretained) Class fw_imageViewAnimatedClass NS_REFINED_FOR_SWIFT;
 
 @end
 

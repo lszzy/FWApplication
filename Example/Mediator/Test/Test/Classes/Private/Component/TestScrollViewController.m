@@ -43,15 +43,15 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.index == 0) {
-        [self.tableView.fw followWithHeader:0 footer:0];
+        [self.tableView fw_followWithHeader:0 footer:0];
     } else if (self.index == 1) {
-        [self.tableView.fw followWithHeader:50 footer:0];
+        [self.tableView fw_followWithHeader:50 footer:0];
     } else if (self.index == 2) {
-        [self.tableView.fw followWithHeader:0 footer:0];
+        [self.tableView fw_followWithHeader:0 footer:0];
     } else if (self.index == 3) {
-        [self.tableView.fw followWithHeader:0 footer:50];
+        [self.tableView fw_followWithHeader:0 footer:50];
     } else if (self.index == 4) {
-        [self.tableView.fw followWithHeader:50 footer:50];
+        [self.tableView fw_followWithHeader:50 footer:50];
     }
 }
 
@@ -59,19 +59,19 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell.fw cellWithTableView:tableView];
+    UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView];
     cell.textLabel.text = [self.tableData objectAtIndex:indexPath.row];
     
     if (indexPath.section % 2 == 0) {
-        cell.fw.backgroundView.contentView.backgroundColor = [Theme cellColor];
-        cell.fw.backgroundView.contentView.layer.cornerRadius = 10;
-        [cell.fw.backgroundView.contentView.fw setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:10];
-        cell.fw.backgroundView.contentInset = UIEdgeInsetsMake(15, 15, 15, 15);
+        cell.fw_backgroundView.contentView.backgroundColor = [Theme cellColor];
+        cell.fw_backgroundView.contentView.layer.cornerRadius = 10;
+        [cell.fw_backgroundView.contentView fw_setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:10];
+        cell.fw_backgroundView.contentInset = UIEdgeInsetsMake(15, 15, 15, 15);
     } else {
-        cell.fw.backgroundView.contentView.backgroundColor = [Theme cellColor];
-        cell.fw.backgroundView.contentView.layer.cornerRadius = 10;
-        [cell.fw.backgroundView.contentView.fw setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:10];
-        [cell.fw.backgroundView setSectionContentInset:UIEdgeInsetsMake(15, 15, 15, 15) tableView:self.tableView atIndexPath:indexPath];
+        cell.fw_backgroundView.contentView.backgroundColor = [Theme cellColor];
+        cell.fw_backgroundView.contentView.layer.cornerRadius = 10;
+        [cell.fw_backgroundView.contentView fw_setShadowColor:[UIColor grayColor] offset:CGSizeMake(0, 0) radius:10];
+        [cell.fw_backgroundView setSectionContentInset:UIEdgeInsetsMake(15, 15, 15, 15) tableView:self.tableView atIndexPath:indexPath];
     }
     return cell;
 }

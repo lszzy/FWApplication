@@ -14,7 +14,6 @@
 #import "FWAppConfig.h"
 #import "FWAppDelegate.h"
 #import "FWApplication.h"
-#import "FWAppWrapper.h"
 #import "FWSceneDelegate.h"
 #import "FWCollectionViewController.h"
 #import "FWNavigationController.h"
@@ -139,7 +138,7 @@
 #import "UIView+FWApplication.h"
 #import "UIViewController+FWApplication.h"
 #import "UIWindow+FWApplication.h"
-#import "FWSDWebImagePlugin.h"
+#import "FWSDWebImageImpl.h"
 
 FOUNDATION_EXPORT double FWApplicationVersionNumber;
 FOUNDATION_EXPORT const unsigned char FWApplicationVersionString[];

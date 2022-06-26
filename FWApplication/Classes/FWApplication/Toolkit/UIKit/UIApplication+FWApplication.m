@@ -10,49 +10,49 @@
 #import "UIApplication+FWApplication.h"
 #import <AVFoundation/AVFoundation.h>
 
-#pragma mark - FWApplicationClassWrapper+FWApplication
+#pragma mark - UIApplication+FWApplication
 
-@implementation FWApplicationClassWrapper (FWApplication)
+@implementation UIApplication (FWApplication)
 
 #pragma mark - App
 
-- (id)appInfo:(NSString *)key
++ (id)fw_appInfo:(NSString *)key
 {
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:key];
 }
 
-- (NSString *)appName
++ (NSString *)fw_appName
 {
-    return [self appInfo:@"CFBundleName"];
+    return [self fw_appInfo:@"CFBundleName"];
 }
 
-- (NSString *)appDisplayName
++ (NSString *)fw_appDisplayName
 {
-    NSString *displayName = [self appInfo:@"CFBundleDisplayName"];
+    NSString *displayName = [self fw_appInfo:@"CFBundleDisplayName"];
     if (!displayName) {
-        displayName = [self appName];
+        displayName = [self fw_appName];
     }
     return displayName;
 }
 
-- (NSString *)appVersion
++ (NSString *)fw_appVersion
 {
-    return [self appInfo:@"CFBundleShortVersionString"];
+    return [self fw_appInfo:@"CFBundleShortVersionString"];
 }
 
-- (NSString *)appBuildVersion
++ (NSString *)fw_appBuildVersion
 {
-    return [self appInfo:@"CFBundleVersion"];
+    return [self fw_appInfo:@"CFBundleVersion"];
 }
 
-- (NSString *)appIdentifier
++ (NSString *)fw_appIdentifier
 {
-    return [self appInfo:@"CFBundleIdentifier"];
+    return [self fw_appInfo:@"CFBundleIdentifier"];
 }
 
 #pragma mark - Debug
 
-- (BOOL)isPirated
++ (BOOL)fw_isPirated
 {
 #if TARGET_OS_SIMULATOR
     return YES;
@@ -82,14 +82,14 @@
 #endif
 }
 
-- (BOOL)isTestflight
++ (BOOL)fw_isTestflight
 {
     return [[NSBundle mainBundle].appStoreReceiptURL.path containsString:@"sandboxReceipt"];
 }
 
 #pragma mark - URL
 
-- (SystemSoundID)playAlert:(NSString *)file
++ (SystemSoundID)fw_playAlert:(NSString *)file
 {
     // 参数是否正确
     if (file.length < 1) {
@@ -118,7 +118,7 @@
     return soundId;
 }
 
-- (void)stopAlert:(SystemSoundID)soundId
++ (void)fw_stopAlert:(SystemSoundID)soundId
 {
     if (soundId == 0) {
         return;
@@ -130,12 +130,12 @@
     AudioServicesDisposeSystemSoundID(soundId);
 }
 
-- (void)playVibrate
++ (void)fw_playVibrate
 {
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 }
 
-- (void)readText:(NSString *)text withLanguage:(nullable NSString *)languageCode
++ (void)fw_readText:(NSString *)text withLanguage:(nullable NSString *)languageCode
 {
     AVSpeechUtterance *speechUtterance = [[AVSpeechUtterance alloc] initWithString:text];
     speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate;

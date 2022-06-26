@@ -10,13 +10,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FWAlertControllerPlugin
+#pragma mark - FWAlertControllerImpl
 
-NS_SWIFT_NAME(AlertControllerPlugin)
-@interface FWAlertControllerPlugin : NSObject <FWAlertPlugin>
+NS_SWIFT_NAME(AlertControllerImpl)
+@interface FWAlertControllerImpl : NSObject <FWAlertPlugin>
 
 /** 单例模式 */
-@property (class, nonatomic, readonly) FWAlertControllerPlugin *sharedInstance;
+@property (class, nonatomic, readonly) FWAlertControllerImpl *sharedInstance;
 
 /// 自定义Alert弹窗样式，nil时使用单例
 @property (nonatomic, strong, nullable) FWAlertControllerAppearance *customAlertAppearance;
@@ -29,12 +29,13 @@ NS_SWIFT_NAME(AlertControllerPlugin)
 
 /// 显示自定义视图弹窗，无默认按钮
 - (void)viewController:(UIViewController *)viewController
- showAlertWithHeaderView:(UIView *)headerView
-                  cancel:(nullable id)cancel
-                 actions:(nullable NSArray *)actions
-             actionBlock:(nullable void (^)(NSInteger index))actionBlock
-             cancelBlock:(nullable void (^)(void))cancelBlock
-             customBlock:(nullable void (^)(id alertController))customBlock;
+    showAlertWithStyle:(UIAlertControllerStyle)style
+            headerView:(UIView *)headerView
+                cancel:(nullable id)cancel
+               actions:(nullable NSArray *)actions
+           actionBlock:(nullable void (^)(NSInteger index))actionBlock
+           cancelBlock:(nullable void (^)(void))cancelBlock
+           customBlock:(nullable void (^)(id alertController))customBlock;
 
 @end
 

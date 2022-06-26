@@ -15,33 +15,29 @@
  
  @see https://github.com/Tencent/QMUI_iOS
  */
-@interface FWNavigationControllerWrapper (FWApplication)
+@interface UINavigationController (FWApplication)
 
 @end
 
-@interface FWNavigationBarWrapper (FWApplication)
+@interface UINavigationBar (FWApplication)
 
 /// 导航栏内容视图，iOS11+才存在，显示item和titleView等
-@property (nonatomic, readonly, nullable) UIView *contentView;
+@property (nonatomic, readonly, nullable) UIView *fw_contentView NS_REFINED_FOR_SWIFT;
 
 /// 导航栏大标题视图，显示时才有值。如果要设置背景色，可使用fwBackgroundView.backgroundColor
-@property (nonatomic, readonly, nullable) UIView *largeTitleView;
-
-@end
-
-@interface FWNavigationBarClassWrapper (FWApplication)
+@property (nonatomic, readonly, nullable) UIView *fw_largeTitleView NS_REFINED_FOR_SWIFT;
 
 /// 导航栏大标题高度，与是否隐藏无关
-@property (nonatomic, readonly, assign) CGFloat largeTitleHeight;
+@property (class, nonatomic, readonly, assign) CGFloat fw_largeTitleHeight NS_REFINED_FOR_SWIFT;
 
 @end
 
-@interface FWToolbarWrapper (FWApplication)
+@interface UIToolbar (FWApplication)
 
 /// 工具栏内容视图，iOS11+才存在，显示item等
-@property (nonatomic, readonly, nullable) UIView *contentView;
+@property (nonatomic, readonly, nullable) UIView *fw_contentView NS_REFINED_FOR_SWIFT;
 
 /// 工具栏背景视图，显示背景色和背景图片等。如果标签栏同时显示，背景视图高度也会包含标签栏高度
-@property (nonatomic, readonly, nullable) UIView *backgroundView;
+@property (nonatomic, readonly, nullable) UIView *fw_backgroundView NS_REFINED_FOR_SWIFT;
 
 @end

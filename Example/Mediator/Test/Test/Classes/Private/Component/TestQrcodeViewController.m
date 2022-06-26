@@ -24,15 +24,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
-    self.fw.extendedLayoutEdge = UIRectEdgeTop;
+    self.fw_navigationBarStyle = FWNavigationBarStyleTransparent;
+    self.fw_extendedLayoutEdge = UIRectEdgeTop;
     self.navigationItem.title = @"扫一扫";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"相册" style:UIBarButtonItemStyleDone target:self action:@selector(onPhotoLibrary)];
     
     // 相机授权
     [[FWAuthorizeManager managerWithType:FWAuthorizeTypeCamera] authorize:^(FWAuthorizeStatus status) {
         if (status != FWAuthorizeStatusAuthorized) {
-            [self.fw showAlertWithTitle:(status == FWAuthorizeStatusRestricted ? @"未检测到您的摄像头" : @"未打开摄像头权限") message:nil cancel:nil cancelBlock:NULL];
+            [self fw_showAlertWithTitle:(status == FWAuthorizeStatusRestricted ? @"未检测到您的摄像头" : @"未打开摄像头权限") message:nil cancel:nil cancelBlock:NULL];
         } else {
             [self setupScanManager];
             [self.view addSubview:self.scanView];
@@ -113,7 +113,7 @@
     self.scanManager.scanResultBlock = ^(NSString *result) {
         FWStrongifySelf();
         if (result) {
-            [UIApplication.fw playAlert:[TestBundle resourcePath:@"QrcodeSound.caf"]];
+            [UIApplication fw_playAlert:[TestBundle resourcePath:@"QrcodeSound.caf"]];
             [self stopScanManager];
             
             [self onScanResult:result];
@@ -181,10 +181,10 @@
     [self stopScanManager];
     
     FWWeakifySelf();
-    [self.fw showImagePickerWithFilterType:FWImagePickerFilterTypeImage selectionLimit:1 allowsEditing:NO customBlock:^(UIViewController *imagePicker) {
+    [self fw_showImagePickerWithFilterType:FWImagePickerFilterTypeImage selectionLimit:1 allowsEditing:NO customBlock:^(UIViewController *imagePicker) {
         FWStrongifySelf();
         if ([imagePicker isKindOfClass:[UIViewController class]]) {
-            imagePicker.fw.presentationDidDismiss = ^{
+            imagePicker.fw_presentationDidDismiss = ^{
                 FWStrongifySelf();
                 [self startScanManager];
             };
@@ -195,8 +195,8 @@
             [self startScanManager];
         } else {
             UIImage *image = objects.firstObject;
-            image = [image.fw compressImageWithMaxWidth:1200];
-            image = [image.fw compressImageWithMaxLength:300 * 1024];
+            image = [image fw_compressImageWithMaxWidth:1200];
+            image = [image fw_compressImageWithMaxLength:300 * 1024];
             NSString *result = [FWQrcodeScanManager scanQrcodeWithImage:image];
             
             [self onScanResult:result];
@@ -207,7 +207,7 @@
 - (void)onScanResult:(NSString *)result
 {
     FWWeakifySelf();
-    [self.fw showAlertWithTitle:@"扫描结果" message:FWSafeString(result) cancel:nil cancelBlock:^{
+    [self fw_showAlertWithTitle:@"扫描结果" message:FWSafeString(result) cancel:nil cancelBlock:^{
         FWStrongifySelf();
         [self startScanManager];
     }];

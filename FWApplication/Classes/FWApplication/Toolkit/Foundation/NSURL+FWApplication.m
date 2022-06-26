@@ -10,11 +10,11 @@
 #import "NSURL+FWApplication.h"
 #import "NSString+FWApplication.h"
 
-@implementation FWURLClassWrapper (FWApplication)
+@implementation NSURL (FWApplication)
 
 #pragma mark - Map
 
-- (NSURL *)mapsURLWithString:(NSString *)string params:(NSDictionary *)params
++ (NSURL *)fw_mapsURLWithString:(NSString *)string params:(NSDictionary *)params
 {
     NSMutableString *urlString = [[NSMutableString alloc] initWithString:string];
     [urlString appendString:@"?"];
@@ -25,16 +25,16 @@
     return [NSURL URLWithString:[urlString substringToIndex:urlString.length - 1]];
 }
 
-- (NSURL *)appleMapsURLWithAddr:(NSString *)addr options:(NSDictionary *)options
++ (NSURL *)fw_appleMapsURLWithAddr:(NSString *)addr options:(NSDictionary *)options
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:options];
     if (addr.length > 0) {
         [params setObject:addr forKey:@"q"];
     }
-    return [self mapsURLWithString:@"http://maps.apple.com/" params:params];
+    return [self fw_mapsURLWithString:@"http://maps.apple.com/" params:params];
 }
 
-- (NSURL *)appleMapsURLWithSaddr:(NSString *)saddr daddr:(NSString *)daddr options:(NSDictionary *)options
++ (NSURL *)fw_appleMapsURLWithSaddr:(NSString *)saddr daddr:(NSString *)daddr options:(NSDictionary *)options
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:options];
     if (saddr.length > 0) {
@@ -43,19 +43,19 @@
     if (daddr.length > 0) {
         [params setObject:daddr forKey:@"daddr"];
     }
-    return [self mapsURLWithString:@"http://maps.apple.com/" params:params];
+    return [self fw_mapsURLWithString:@"http://maps.apple.com/" params:params];
 }
 
-- (NSURL *)googleMapsURLWithAddr:(NSString *)addr options:(NSDictionary *)options
++ (NSURL *)fw_googleMapsURLWithAddr:(NSString *)addr options:(NSDictionary *)options
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:options];
     if (addr.length > 0) {
         [params setObject:addr forKey:@"q"];
     }
-    return [self mapsURLWithString:@"comgooglemaps://" params:params];
+    return [self fw_mapsURLWithString:@"comgooglemaps://" params:params];
 }
 
-- (NSURL *)googleMapsURLWithSaddr:(NSString *)saddr daddr:(NSString *)daddr mode:(NSString *)mode options:(NSDictionary *)options
++ (NSURL *)fw_googleMapsURLWithSaddr:(NSString *)saddr daddr:(NSString *)daddr mode:(NSString *)mode options:(NSDictionary *)options
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:options];
     if (saddr.length > 0) {
@@ -65,14 +65,14 @@
         [params setObject:daddr forKey:@"daddr"];
     }
     [params setObject:(mode.length > 0 ? mode : @"driving") forKey:@"directionsmode"];
-    return [self mapsURLWithString:@"comgooglemaps://" params:params];
+    return [self fw_mapsURLWithString:@"comgooglemaps://" params:params];
 }
 
-- (NSURL *)baiduMapsURLWithAddr:(NSString *)addr options:(NSDictionary *)options
++ (NSURL *)fw_baiduMapsURLWithAddr:(NSString *)addr options:(NSDictionary *)options
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:options];
     if (addr.length > 0) {
-        if ([addr.fw isFormatCoordinate]) {
+        if ([addr fw_isFormatCoordinate]) {
             [params setObject:addr forKey:@"location"];
         } else {
             [params setObject:addr forKey:@"address"];
@@ -84,10 +84,10 @@
     if (![params objectForKey:@"src"]) {
         [params setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] forKey:@"src"];
     }
-    return [self mapsURLWithString:@"baidumap://map/geocoder" params:params];
+    return [self fw_mapsURLWithString:@"baidumap://map/geocoder" params:params];
 }
 
-- (NSURL *)baiduMapsURLWithSaddr:(NSString *)saddr daddr:(NSString *)daddr mode:(NSString *)mode options:(NSDictionary *)options
++ (NSURL *)fw_baiduMapsURLWithSaddr:(NSString *)saddr daddr:(NSString *)daddr mode:(NSString *)mode options:(NSDictionary *)options
 {
     NSMutableDictionary *params = [[NSMutableDictionary alloc] initWithDictionary:options];
     if (saddr.length > 0) {
@@ -103,7 +103,7 @@
     if (![params objectForKey:@"src"]) {
         [params setObject:[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleIdentifier"] forKey:@"src"];
     }
-    return [self mapsURLWithString:@"baidumap://map/direction" params:params];
+    return [self fw_mapsURLWithString:@"baidumap://map/direction" params:params];
 }
 
 @end

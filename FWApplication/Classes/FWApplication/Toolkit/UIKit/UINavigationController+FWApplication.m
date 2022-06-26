@@ -10,25 +10,17 @@
 #import "UINavigationController+FWApplication.h"
 #import <objc/runtime.h>
 
-@interface UINavigationController (FWApplication)
-
-@end
-
 @implementation UINavigationController (FWApplication)
 
-- (BOOL)innerShouldBottomBarBeHidden
+- (BOOL)fw_shouldBottomBarBeHidden
 {
-    return [objc_getAssociatedObject(self, @selector(innerShouldBottomBarBeHidden)) boolValue];
+    return [objc_getAssociatedObject(self, @selector(fw_shouldBottomBarBeHidden)) boolValue];
 }
 
-- (void)setInnerShouldBottomBarBeHidden:(BOOL)hidden
+- (void)setFw_shouldBottomBarBeHidden:(BOOL)hidden
 {
-    objc_setAssociatedObject(self, @selector(innerShouldBottomBarBeHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_shouldBottomBarBeHidden), @(hidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
-
-@end
-
-@implementation FWNavigationControllerWrapper (FWApplication)
 
 + (void)load
 {
@@ -48,22 +40,22 @@
                             }
                         }
                         if (!systemShouldHideTabBar) {
-                            selfObject.innerShouldBottomBarBeHidden = YES;
+                            selfObject.fw_shouldBottomBarBeHidden = YES;
                         }
                     }
                 }
                 
                 NSArray<UIViewController *> *result = FWSwizzleOriginal(viewController, animated);
-                selfObject.innerShouldBottomBarBeHidden = NO;
+                selfObject.fw_shouldBottomBarBeHidden = NO;
                 return result;
             }));
             FWSwizzleClass(UINavigationController, @selector(popToRootViewControllerAnimated:), FWSwizzleReturn(NSArray<UIViewController *> *), FWSwizzleArgs(BOOL animated), FWSwizzleCode({
                 if (animated && selfObject.tabBarController && !selfObject.viewControllers.firstObject.hidesBottomBarWhenPushed && selfObject.viewControllers.count > 2) {
-                    selfObject.innerShouldBottomBarBeHidden = YES;
+                    selfObject.fw_shouldBottomBarBeHidden = YES;
                 }
                 
                 NSArray<UIViewController *> *result = FWSwizzleOriginal(animated);
-                selfObject.innerShouldBottomBarBeHidden = NO;
+                selfObject.fw_shouldBottomBarBeHidden = NO;
                 return result;
             }));
             FWSwizzleClass(UINavigationController, @selector(setViewControllers:animated:), FWSwizzleReturn(void), FWSwizzleArgs(NSArray<UIViewController *> *viewControllers, BOOL animated), FWSwizzleCode({
@@ -76,16 +68,16 @@
                         }
                     }
                     if (!systemShouldHideTabBar) {
-                        selfObject.innerShouldBottomBarBeHidden = YES;
+                        selfObject.fw_shouldBottomBarBeHidden = YES;
                     }
                 }
                 
                 FWSwizzleOriginal(viewControllers, animated);
-                selfObject.innerShouldBottomBarBeHidden = NO;
+                selfObject.fw_shouldBottomBarBeHidden = NO;
             }));
             FWSwizzleClass(UINavigationController, NSSelectorFromString(@"_shouldBottomBarBeHidden"), FWSwizzleReturn(BOOL), FWSwizzleArgs(), FWSwizzleCode({
                 BOOL result = FWSwizzleOriginal();
-                if (selfObject.innerShouldBottomBarBeHidden) {
+                if (selfObject.fw_shouldBottomBarBeHidden) {
                     result = NO;
                 }
                 return result;
@@ -96,48 +88,44 @@
 
 @end
 
-@implementation FWNavigationBarWrapper (FWApplication)
+@implementation UINavigationBar (FWApplication)
 
-- (UIView *)contentView
+- (UIView *)fw_contentView
 {
-    for (UIView *subview in self.base.subviews) {
+    for (UIView *subview in self.subviews) {
         if ([NSStringFromClass(subview.class) hasSuffix:@"ContentView"]) return subview;
     }
     return nil;
 }
 
-- (UIView *)largeTitleView
+- (UIView *)fw_largeTitleView
 {
-    for (UIView *subview in self.base.subviews) {
+    for (UIView *subview in self.subviews) {
         if ([NSStringFromClass(subview.class) hasSuffix:@"LargeTitleView"]) return subview;
     }
     return nil;
 }
 
-@end
-
-@implementation FWNavigationBarClassWrapper (FWApplication)
-
-- (CGFloat)largeTitleHeight
++ (CGFloat)fw_largeTitleHeight
 {
     return 52;
 }
 
 @end
 
-@implementation FWToolbarWrapper (FWApplication)
+@implementation UIToolbar (FWApplication)
 
-- (UIView *)contentView
+- (UIView *)fw_contentView
 {
-    for (UIView *subview in self.base.subviews) {
+    for (UIView *subview in self.subviews) {
         if ([NSStringFromClass(subview.class) hasSuffix:@"ContentView"]) return subview;
     }
     return nil;
 }
 
-- (UIView *)backgroundView
+- (UIView *)fw_backgroundView
 {
-    return [self invokeGetter:@"_backgroundView"];
+    return [self fw_invokeGetter:@"_backgroundView"];
 }
 
 @end

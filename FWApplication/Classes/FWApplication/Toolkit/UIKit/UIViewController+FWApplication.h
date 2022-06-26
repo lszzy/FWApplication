@@ -16,38 +16,34 @@ NS_ASSUME_NONNULL_BEGIN
  三、modalPresentationCapturesStatusBarAppearance：弹出非UIModalPresentationFullScreen控制器时，该控制器是否控制状态栏样式。默认NO，不控制。
  四、如果ScrollView占不满导航栏，iOS11则需要设置contentInsetAdjustmentBehavior为UIScrollViewContentInsetAdjustmentNever
  */
-@interface FWViewControllerWrapper (FWApplication)
+@interface UIViewController (FWApplication)
 
 #pragma mark - Child
 
 /// 获取当前显示的子控制器，解决不能触发viewWillAppear等的bug
-- (nullable UIViewController *)childViewController;
+- (nullable UIViewController *)fw_childViewController NS_SWIFT_NAME(__fw_childViewController()) NS_REFINED_FOR_SWIFT;
 
 /// 设置当前显示的子控制器，解决不能触发viewWillAppear等的bug
-- (void)setChildViewController:(UIViewController *)viewController;
+- (void)fw_setChildViewController:(UIViewController *)viewController NS_REFINED_FOR_SWIFT;
 
 /// 移除子控制器，解决不能触发viewWillAppear等的bug
-- (void)removeChildViewController:(UIViewController *)viewController;
+- (void)fw_removeChildViewController:(UIViewController *)viewController NS_REFINED_FOR_SWIFT;
 
 /// 添加子控制器到当前视图，解决不能触发viewWillAppear等的bug
-- (void)addChildViewController:(UIViewController *)viewController;
+- (void)fw_addChildViewController:(UIViewController *)viewController NS_REFINED_FOR_SWIFT;
 
 /// 添加子控制器到指定视图，解决不能触发viewWillAppear等的bug
-- (void)addChildViewController:(UIViewController *)viewController inView:(UIView *)view;
+- (void)fw_addChildViewController:(UIViewController *)viewController inView:(UIView *)view NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Previous
 
 /// 获取和自身处于同一个UINavigationController里的上一个UIViewController
-@property(nullable, nonatomic, weak, readonly) UIViewController *previousViewController;
-
-@end
-
-@interface FWViewControllerClassWrapper (FWApplication)
+@property(nullable, nonatomic, weak, readonly) UIViewController *fw_previousViewController NS_SWIFT_NAME(__fw_previousViewController) NS_REFINED_FOR_SWIFT;
 
 /**
  全局适配iOS13默认present样式(系统Automatic)，仅当未自定义modalPresentationStyle时生效
  */
-@property (nonatomic, assign) UIModalPresentationStyle defaultModalPresentationStyle;
+@property (class, nonatomic, assign) UIModalPresentationStyle fw_defaultModalPresentationStyle NS_REFINED_FOR_SWIFT;
 
 @end
 

@@ -19,19 +19,19 @@
 
 - (void)renderView
 {
-    UILabel *label = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+    UILabel *label = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
     _label = label;
     label.backgroundColor = [Theme cellColor];
     label.numberOfLines = 0;
     [self.view addSubview:label];
-    [label.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(15, 15, 15, 15) excludingEdge:NSLayoutAttributeBottom];
+    [label fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsMake(15, 15, 15, 15) excludingEdge:NSLayoutAttributeBottom];
 }
 
 - (void)renderData
 {
     FWAttributedOption *appearance = [FWAttributedOption appearance];
     appearance.lineHeightMultiplier = 1.5;
-    appearance.font = [UIFont.fw fontOfSize:16];
+    appearance.font = [UIFont fw_fontOfSize:16];
     appearance.paragraphStyle = [NSMutableParagraphStyle new];
     
     NSMutableAttributedString *attrString = [NSMutableAttributedString new];
@@ -58,7 +58,7 @@
     if (self.count ++ != 0) {
         string = [@"\n" stringByAppendingString:string];
     }
-    return [NSAttributedString.fw attributedString:string withOption:option];
+    return [NSAttributedString fw_attributedString:string withOption:option];
 }
 
 @end

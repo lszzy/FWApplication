@@ -23,14 +23,14 @@ import FWApplication
     }
     
     private func loadAlbums() {
-        __fw.showLoading()
+        fw.showLoading()
         DispatchQueue.global().async {
             AssetManager.sharedInstance.enumerateAllAlbums(with: .all) { [weak self] group in
                 if let album = group {
                     self?.albums.append(album)
                 } else {
                     DispatchQueue.main.async {
-                        self?.__fw.hideLoading()
+                        self?.fw.hideLoading()
                         self?.tableView.reloadData()
                     }
                 }
@@ -39,14 +39,14 @@ import FWApplication
     }
     
     private func loadPhotos() {
-        __fw.showLoading()
+        fw.showLoading()
         DispatchQueue.global().async { [weak self] in
             self?.album.enumerateAssets(withOptions: .reverse, using: { asset in
                 if let photo = asset {
                     self?.photos.append(photo)
                 } else {
                     DispatchQueue.main.async {
-                        self?.__fw.hideLoading()
+                        self?.fw.hideLoading()
                         self?.tableView.reloadData()
                     }
                 }
@@ -112,7 +112,7 @@ import FWApplication
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isAlbum {
-            __fw.showImagePreview(withImageURLs: photos, imageInfos:nil, currentIndex: indexPath.row) { [weak self] index in
+            fw.showImagePreview(imageURLs: photos, imageInfos:nil, currentIndex: indexPath.row) { [weak self] index in
                 let cell = self?.tableView.cellForRow(at: IndexPath(row: index, section: 0))
                 return cell?.imageView
             } placeholderImage: { index in
@@ -124,7 +124,7 @@ import FWApplication
                         zoomImageView.progress = 0.01
                         photo.requestImageData { data, info, _, _ in
                             zoomImageView.progress = 1
-                            zoomImageView.image = UIImage.__fw.image(with:data)
+                            zoomImageView.image = UIImage.fw.image(data: data)
                         }
                     } else if photo.assetSubType == .livePhoto {
                         zoomImageView.progress = 0.01

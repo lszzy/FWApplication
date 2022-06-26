@@ -76,29 +76,25 @@ NS_SWIFT_NAME(ViewPlugin)
 
 @end
 
-#pragma mark - FWViewWrapper+FWViewPlugin
+#pragma mark - UIView+FWViewPlugin
 
 /// UIView视图插件分类
-@interface FWViewWrapper (FWViewPlugin)
+@interface UIView (FWViewPlugin)
 
 /// 自定义视图插件，未设置时自动从插件池加载
-@property (nonatomic, strong, nullable) id<FWViewPlugin> viewPlugin;
+@property (nonatomic, strong, nullable) id<FWViewPlugin> fw_viewPlugin NS_REFINED_FOR_SWIFT;
 
 /// 统一进度视图工厂方法
-- (UIView<FWProgressViewPlugin> *)progressViewWithStyle:(FWProgressViewStyle)style;
+- (UIView<FWProgressViewPlugin> *)fw_progressViewWithStyle:(FWProgressViewStyle)style NS_REFINED_FOR_SWIFT;
 
 /// 统一指示器视图工厂方法
-- (UIView<FWIndicatorViewPlugin> *)indicatorViewWithStyle:(FWIndicatorViewStyle)style;
-
-@end
-
-@interface FWViewClassWrapper (FWViewPlugin)
+- (UIView<FWIndicatorViewPlugin> *)fw_indicatorViewWithStyle:(FWIndicatorViewStyle)style NS_REFINED_FOR_SWIFT;
 
 /// 统一进度视图工厂方法
-- (UIView<FWProgressViewPlugin> *)progressViewWithStyle:(FWProgressViewStyle)style;
++ (UIView<FWProgressViewPlugin> *)fw_progressViewWithStyle:(FWProgressViewStyle)style NS_REFINED_FOR_SWIFT;
 
 /// 统一指示器视图工厂方法
-- (UIView<FWIndicatorViewPlugin> *)indicatorViewWithStyle:(FWIndicatorViewStyle)style;
++ (UIView<FWIndicatorViewPlugin> *)fw_indicatorViewWithStyle:(FWIndicatorViewStyle)style NS_REFINED_FOR_SWIFT;
 
 @end
 

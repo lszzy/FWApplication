@@ -25,8 +25,8 @@
     _isTop = isTop;
     
     if (isTop) {
-        self.fw.navigationBarStyle = FWNavigationBarStyleTransparent;
-        self.fw.extendedLayoutEdge = UIRectEdgeTop;
+        self.fw_navigationBarStyle = FWNavigationBarStyleTransparent;
+        self.fw_extendedLayoutEdge = UIRectEdgeTop;
     }
 }
 
@@ -35,18 +35,18 @@
     [super viewDidLoad];
     
     FWWeakifySelf();
-    [self.fw setRightBarItem:@"切换" block:^(id sender) {
+    [self fw_setRightBarItem:@"切换" block:^(id sender) {
         FWStrongifySelf();
         
         TestControllerViewController *viewController = [TestControllerViewController new];
         viewController.isTop = !self.isTop;
-        [self.fw openViewController:viewController animated:YES];
+        [self fw_openViewController:viewController animated:YES];
     }];
 }
 
 - (void)renderInit
 {
-    self.fw.navigationBarStyle = FWNavigationBarStyleDefault;
+    self.fw_navigationBarStyle = FWNavigationBarStyleDefault;
 }
 
 - (void)renderView
@@ -56,34 +56,34 @@
     UIImageView *imageView = [UIImageView new];
     imageView.image = [TestBundle imageNamed:@"public_picture"];
     [self.contentView addSubview:imageView]; {
-        [imageView.fw setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
-        [imageView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
-        [imageView.fw setDimension:NSLayoutAttributeHeight toSize:150];
+        [imageView fw_setDimension:NSLayoutAttributeWidth toSize:FWScreenWidth];
+        [imageView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeBottom];
+        [imageView fw_setDimension:NSLayoutAttributeHeight toSize:150];
     }
     
     UIView *redView = [UIView new];
     _redView = redView;
     redView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:redView]; {
-        [redView.fw pinEdgeToSuperview:NSLayoutAttributeLeft];
-        [redView.fw pinEdgeToSuperview:NSLayoutAttributeRight];
-        [redView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:imageView];
-        [redView.fw setDimension:NSLayoutAttributeHeight toSize:50];
+        [redView fw_pinEdgeToSuperview:NSLayoutAttributeLeft];
+        [redView fw_pinEdgeToSuperview:NSLayoutAttributeRight];
+        [redView fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:imageView];
+        [redView fw_setDimension:NSLayoutAttributeHeight toSize:50];
     }
     
     UIView *hoverView = [UIView new];
     _hoverView = hoverView;
     hoverView.backgroundColor = [UIColor redColor];
     [redView addSubview:hoverView]; {
-        [hoverView.fw pinEdgesToSuperview];
+        [hoverView fw_pinEdgesToSuperview];
     }
     
     UIView *blueView = [UIView new];
     blueView.backgroundColor = [UIColor blueColor];
     [self.contentView addSubview:blueView]; {
-        [blueView.fw pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
-        [blueView.fw pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:redView];
-        [blueView.fw setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
+        [blueView fw_pinEdgesToSuperviewWithInsets:UIEdgeInsetsZero excludingEdge:NSLayoutAttributeTop];
+        [blueView fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:redView];
+        [blueView fw_setDimension:NSLayoutAttributeHeight toSize:FWScreenHeight];
     }
 }
 
@@ -92,14 +92,14 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if (self.isTop) {
-        CGFloat distance = [scrollView.fw hoverView:self.hoverView fromSuperview:self.redView toSuperview:self.view toPosition:FWTopBarHeight];
+        CGFloat distance = [scrollView fw_hoverView:self.hoverView fromSuperview:self.redView toSuperview:self.view toPosition:FWTopBarHeight];
         if (distance <= 0) {
             self.navigationController.navigationBar.fw_backgroundColor = [UIColor whiteColor];
         } else if (distance <= FWTopBarHeight) {
             self.navigationController.navigationBar.fw_backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:1 - distance / FWTopBarHeight];
         }
     } else {
-        [scrollView.fw hoverView:self.hoverView fromSuperview:self.redView toSuperview:self.view toPosition:0];
+        [scrollView fw_hoverView:self.hoverView fromSuperview:self.redView toSuperview:self.view toPosition:0];
     }
 }
 

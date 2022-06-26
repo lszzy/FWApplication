@@ -48,7 +48,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
         } else if (style == FWThemeStyleLight) {
             return [TestBundle imageNamed:@"theme_image_light"];
         } else {
-            return [[TestBundle imageNamed:@"theme_image_dark"].fw imageWithTintColor:[UIColor redColor]];
+            return [[TestBundle imageNamed:@"theme_image_dark"] fw_imageWithTintColor:[UIColor redColor]];
         }
     }];
     [self.view addSubview:imageView];
@@ -60,7 +60,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
         } else if (style == FWThemeStyleLight) {
             return [TestBundle imageNamed:@"theme_image_light"];
         } else {
-            return [[TestBundle imageNamed:@"theme_image_dark"].fw imageWithTintColor:[UIColor redColor]];
+            return [[TestBundle imageNamed:@"theme_image_dark"] fw_imageWithTintColor:[UIColor redColor]];
         }
     }];
     [self.view addSubview:assetView];
@@ -90,7 +90,7 @@ static const FWThemeStyle FWThemeStyleRed = 3;
             return [UIColor redColor];
         }
     }];
-    themeLabel.attributedText = [NSAttributedString.fw attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw.boldFont textColor:textColor];
+    themeLabel.attributedText = [NSAttributedString fw_attributedString:@"我是AttributedString" withFont:FWFontSize(16).fw_boldFont textColor:textColor];
     [self.view addSubview:themeLabel];
 }
 
@@ -101,10 +101,10 @@ static const FWThemeStyle FWThemeStyleRed = 3;
     NSString *title = mode < themes.count ? [themes objectAtIndex:mode] : @"红色";
     [themes addObject:@"红色"];
     FWWeakifySelf();
-    [self.fw setRightBarItem:title block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:title block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
-        [self.fw showSheetWithTitle:nil message:nil cancel:@"取消" actions:themes actionBlock:^(NSInteger index) {
+        [self fw_showSheetWithTitle:nil message:nil cancel:@"取消" actions:themes actionBlock:^(NSInteger index) {
             FWStrongifySelf();
             
             FWThemeManager.sharedInstance.mode = (index == themes.count - 1) ? FWThemeStyleRed : index;

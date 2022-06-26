@@ -8,6 +8,7 @@
 
 #import "FWBadgeView.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWBadgeView
 
@@ -36,7 +37,7 @@
                 self.userInteractionEnabled = NO;
                 self.backgroundColor = [UIColor redColor];
                 self.layer.cornerRadius = badgeHeight / 2.0;
-                [self.fw setDimensionsToSize:CGSizeMake(badgeHeight, badgeHeight)];
+                [self fw_setDimensionsToSize:CGSizeMake(badgeHeight, badgeHeight)];
                 break;
             }
         }
@@ -60,42 +61,42 @@
     self.userInteractionEnabled = NO;
     self.backgroundColor = [UIColor redColor];
     self.layer.cornerRadius = badgeHeight / 2.0;
-    [self.fw setDimension:NSLayoutAttributeHeight toSize:badgeHeight];
-    [self.fw setDimension:NSLayoutAttributeWidth toSize:badgeHeight relation:NSLayoutRelationGreaterThanOrEqual];
+    [self fw_setDimension:NSLayoutAttributeHeight toSize:badgeHeight];
+    [self fw_setDimension:NSLayoutAttributeWidth toSize:badgeHeight relation:NSLayoutRelationGreaterThanOrEqual];
     
     _badgeLabel = [[UILabel alloc] init];
     _badgeLabel.textColor = [UIColor whiteColor];
     _badgeLabel.font = [UIFont systemFontOfSize:fontSize];
     _badgeLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:_badgeLabel];
-    [_badgeLabel.fw alignCenterToSuperview];
-    [_badgeLabel.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
-    [_badgeLabel.fw pinEdgeToSuperview:NSLayoutAttributeLeft withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
+    [_badgeLabel fw_alignCenterToSuperview];
+    [_badgeLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
+    [_badgeLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:textInset relation:NSLayoutRelationGreaterThanOrEqual];
 }
 
 @end
 
-#pragma mark - FWViewWrapper+FWBadge
+#pragma mark - UIView+FWBadge
 
-@implementation FWViewWrapper (FWBadge)
+@implementation UIView (FWBadge)
 
-- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(NSString *)badgeValue
+- (void)fw_showBadgeView:(FWBadgeView *)badgeView badgeValue:(NSString *)badgeValue
 {
-    [self hideBadgeView];
+    [self fw_hideBadgeView];
     
     badgeView.badgeLabel.text = badgeValue;
     badgeView.tag = 2041;
-    [self.base addSubview:badgeView];
-    [self.base bringSubviewToFront:badgeView];
+    [self addSubview:badgeView];
+    [self bringSubviewToFront:badgeView];
     
     // 默认偏移
-    [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:-badgeView.badgeOffset.y];
-    [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:-badgeView.badgeOffset.x];
+    [badgeView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:-badgeView.badgeOffset.y];
+    [badgeView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:-badgeView.badgeOffset.x];
 }
 
-- (void)hideBadgeView
+- (void)fw_hideBadgeView
 {
-    UIView *badgeView = [self.base viewWithTag:2041];
+    UIView *badgeView = [self viewWithTag:2041];
     if (badgeView) {
         [badgeView removeFromSuperview];
     }
@@ -103,44 +104,44 @@
 
 @end
 
-#pragma mark - FWBarItemWrapper+FWBadge
+#pragma mark - UIBarItem+FWBadge
 
-@implementation FWBarItemWrapper (FWBadge)
+@implementation UIBarItem (FWBadge)
 
-- (UIView *)view
+- (UIView *)fw_view
 {
-    if ([self.base isKindOfClass:[UIBarButtonItem class]]) {
-        if (((UIBarButtonItem *)self.base).customView != nil) {
-            return ((UIBarButtonItem *)self.base).customView;
+    if ([self isKindOfClass:[UIBarButtonItem class]]) {
+        if (((UIBarButtonItem *)self).customView != nil) {
+            return ((UIBarButtonItem *)self).customView;
         }
     }
     
-    if ([self.base respondsToSelector:@selector(view)]) {
-        return [self invokeGetter:@"view"];
+    if ([self respondsToSelector:@selector(view)]) {
+        return [self fw_invokeGetter:@"view"];
     }
     return nil;
 }
 
-- (void (^)(__kindof UIBarItem *, UIView *))viewLoadedBlock
+- (void (^)(__kindof UIBarItem *, UIView *))fw_viewLoadedBlock
 {
-    return objc_getAssociatedObject(self.base, @selector(viewLoadedBlock));
+    return objc_getAssociatedObject(self, @selector(fw_viewLoadedBlock));
 }
 
-- (void)setViewLoadedBlock:(void (^)(__kindof UIBarItem *, UIView *))block
+- (void)setFw_viewLoadedBlock:(void (^)(__kindof UIBarItem *, UIView *))block
 {
-    objc_setAssociatedObject(self.base, @selector(viewLoadedBlock), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_viewLoadedBlock), block, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
-    UIView *view = [self view];
+    UIView *view = [self fw_view];
     if (view) {
-        block(self.base, view);
+        block(self, view);
     } else {
-        [self observeProperty:@"view" block:^(UIBarItem *object, NSDictionary *change) {
+        [self fw_observeProperty:@"view" block:^(UIBarItem *object, NSDictionary *change) {
             if (![change objectForKey:NSKeyValueChangeNewKey]) return;
-            [object.fw unobserveProperty:@"view"];
+            [object fw_unobserveProperty:@"view"];
             
-            UIView *view = [object.fw view];
-            if (view && object.fw.viewLoadedBlock) {
-                object.fw.viewLoadedBlock(object, view);
+            UIView *view = [object fw_view];
+            if (view && object.fw_viewLoadedBlock) {
+                object.fw_viewLoadedBlock(object, view);
             }
         }];
     }
@@ -148,30 +149,30 @@
 
 @end
 
-#pragma mark - FWBarButtonItemWrapper+FWBadge
+#pragma mark - UIBarButtonItem+FWBadge
 
-@implementation FWBarButtonItemWrapper (FWBadge)
+@implementation UIBarButtonItem (FWBadge)
 
-- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(NSString *)badgeValue
+- (void)fw_showBadgeView:(FWBadgeView *)badgeView badgeValue:(NSString *)badgeValue
 {
-    [self hideBadgeView];
+    [self fw_hideBadgeView];
     
     // 查找内部视图，由于view只有显示到页面后才存在，所以使用回调存在后才添加
-    self.viewLoadedBlock = ^(UIBarButtonItem *item, UIView *view) {
+    self.fw_viewLoadedBlock = ^(UIBarButtonItem *item, UIView *view) {
         badgeView.badgeLabel.text = badgeValue;
         badgeView.tag = 2041;
         [view addSubview:badgeView];
         [view bringSubviewToFront:badgeView];
         
         // 自定义视图时默认偏移，否则固定偏移
-        [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 0];
-        [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeRight withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : 0];
+        [badgeView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 0];
+        [badgeView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : 0];
     };
 }
 
-- (void)hideBadgeView
+- (void)fw_hideBadgeView
 {
-    UIView *superview = [self view];
+    UIView *superview = [self fw_view];
     if (superview) {
         UIView *badgeView = [superview viewWithTag:2041];
         if (badgeView) {
@@ -182,9 +183,9 @@
 
 @end
 
-#pragma mark - FWTabBarItemWrapper+FWBadege
+#pragma mark - UITabBarItem+FWBadege
 
-@implementation FWTabBarItemWrapper (FWBadge)
+@implementation UITabBarItem (FWBadge)
 
 + (void)load
 {
@@ -201,8 +202,8 @@
                     
                     // 解决iOS13因为磨砂层切换导致的badgeView位置不对问题
                     if (@available(iOS 13.0, *)) {
-                        UIView *imageView = [FWTabBarItemWrapper imageView:selfObject];
-                        if (imageView) [badgeView.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
+                        UIView *imageView = [UITabBarItem fw_imageView:selfObject];
+                        if (imageView) [badgeView fw_pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
                     }
                     break;
                 }
@@ -211,7 +212,7 @@
     });
 }
 
-+ (UIImageView *)imageView:(UIView *)tabBarButton
++ (UIImageView *)fw_imageView:(UIView *)tabBarButton
 {
     if (!tabBarButton) return nil;
     
@@ -232,33 +233,33 @@
     return nil;
 }
 
-- (UIImageView *)imageView
+- (UIImageView *)fw_imageView
 {
-    UIView *tabBarButton = [self view];
-    return [FWTabBarItemWrapper imageView:tabBarButton];
+    UIView *tabBarButton = [self fw_view];
+    return [UITabBarItem fw_imageView:tabBarButton];
 }
 
-- (void)showBadgeView:(FWBadgeView *)badgeView badgeValue:(NSString *)badgeValue
+- (void)fw_showBadgeView:(FWBadgeView *)badgeView badgeValue:(NSString *)badgeValue
 {
-    [self hideBadgeView];
+    [self fw_hideBadgeView];
     
     // 查找内部视图，由于view只有显示到页面后才存在，所以使用回调存在后才添加
-    self.viewLoadedBlock = ^(UITabBarItem *item, UIView *view) {
-        UIView *imageView = item.fw.imageView;
+    self.fw_viewLoadedBlock = ^(UITabBarItem *item, UIView *view) {
+        UIView *imageView = item.fw_imageView;
         if (!imageView) return;
         
         badgeView.badgeLabel.text = badgeValue;
         badgeView.tag = 2041;
         [view addSubview:badgeView];
         [view bringSubviewToFront:badgeView];
-        [badgeView.fw pinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 2.f];
-        [badgeView.fw pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
+        [badgeView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.y : 2.f];
+        [badgeView fw_pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:imageView withOffset:badgeView.badgeStyle == 0 ? -badgeView.badgeOffset.x : -badgeView.badgeOffset.x];
     };
 }
 
-- (void)hideBadgeView
+- (void)fw_hideBadgeView
 {
-    UIView *superview = [self view];
+    UIView *superview = [self fw_view];
     if (superview) {
         UIView *badgeView = [superview viewWithTag:2041];
         if (badgeView) {

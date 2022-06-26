@@ -20,10 +20,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        UILabel *titleLabel = [UILabel.fw labelWithFont:[UIFont.fw fontOfSize:15] textColor:[Theme textColor]];
+        UILabel *titleLabel = [UILabel fw_labelWithFont:[UIFont fw_fontOfSize:15] textColor:[Theme textColor]];
         _titleLabel = titleLabel;
         [self.contentView addSubview:titleLabel];
-        titleLabel.fw.layoutChain.centerY().leftWithInset(15).rightWithInset(15);
+        titleLabel.fw_layoutChain.centerY().leftWithInset(15).rightWithInset(15);
     }
     return self;
 }
@@ -58,7 +58,7 @@
 - (void)setupItem
 {
     FWWeakifySelf();
-    [self.fw setRightBarItem:self.timer ? FWIcon.stopImage : FWIcon.playImage block:^(id  _Nonnull sender) {
+    [self fw_setRightBarItem:self.timer ? FWIcon.stopImage : FWIcon.playImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         
         if (self.timer) {
@@ -73,7 +73,7 @@
 - (void)startTimer
 {
     FWWeakifySelf();
-    self.timer = [NSTimer.fw commonTimerWithTimeInterval:10 block:^(NSTimer * _Nonnull timer) {
+    self.timer = [NSTimer fw_commonTimerWithTimeInterval:10 block:^(NSTimer * _Nonnull timer) {
         FWStrongifySelf();
         self.isTimer = YES;
         [self onRefreshing];
@@ -94,15 +94,15 @@
 
 - (void)renderView
 {
-    self.tableView.fw.pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw.safeAreaInsets.top;
-    [self.tableView.fw setRefreshingTarget:self action:@selector(onRefreshing)];
-    self.tableView.fw.infiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw.safeAreaInsets.bottom;
-    [self.tableView.fw setLoadingTarget:self action:@selector(onLoading)];
+    self.tableView.fw_pullRefreshHeight = FWPullRefreshView.height + UIScreen.fw_safeAreaInsets.top;
+    [self.tableView fw_setRefreshingTarget:self action:@selector(onRefreshing)];
+    self.tableView.fw_infiniteScrollHeight = FWInfiniteScrollView.height + UIScreen.fw_safeAreaInsets.bottom;
+    [self.tableView fw_setLoadingTarget:self action:@selector(onLoading)];
 }
 
 - (void)renderData
 {
-    [self.tableView.fw beginRefreshing];
+    [self.tableView fw_beginRefreshing];
 }
 
 #pragma mark - TableView
@@ -151,7 +151,7 @@
         for (int i = 0; i < 10; i++) {
             [self.tableData addObject:[NSString stringWithFormat:@"我是数据 %@", @(self.tableData.count + self.count + 1)]];
         }
-        [self.tableView.fw endRefreshing];
+        [self.tableView fw_endRefreshing];
         [self.tableView reloadData];
         self.count++;
     });
@@ -166,7 +166,7 @@
         for (int i = 0; i < 10; i++) {
             [self.tableData addObject:[NSString stringWithFormat:@"我是数据 %@", @(self.tableData.count + 1)]];
         }
-        [self.tableView.fw endLoading];
+        [self.tableView fw_endLoading];
         [self.tableView reloadData];
     });
 }

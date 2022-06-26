@@ -31,7 +31,7 @@
     label.font = [UIFont systemFontOfSize:16];
     label.numberOfLines = 0;
     [self.view addSubview:label];
-    label.fw.layoutChain.leftWithInset(10).rightWithInset(10).topWithInset(10);
+    label.fw_layoutChain.leftWithInset(10).rightWithInset(10).topWithInset(10);
     
     UILabel *label2 = [UILabel new];
     _label2 = label2;
@@ -39,7 +39,7 @@
     label2.font = [UIFont systemFontOfSize:16];
     label2.numberOfLines = 0;
     [self.view addSubview:label2];
-    label2.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(label, 10);
+    label2.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(label, 10);
     
     FWAttributedLabel *attrLabel = [FWAttributedLabel new];
     _attrLabel = attrLabel;
@@ -47,7 +47,7 @@
     attrLabel.font = [UIFont systemFontOfSize:16];
     attrLabel.textColor = Theme.textColor;
     [self.view addSubview:attrLabel];
-    attrLabel.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(label2, 10);
+    attrLabel.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(label2, 10);
     
     FWAttributedLabel *attrLabel2 = [FWAttributedLabel new];
     _attrLabel2 = attrLabel2;
@@ -56,9 +56,9 @@
     attrLabel2.numberOfLines = 0;
     attrLabel2.font = [UIFont systemFontOfSize:16];
     attrLabel2.lineBreakMode = kCTLineBreakByCharWrapping;
-    attrLabel2.lineSpacing = 8 - attrLabel.font.fw.spaceHeight;
+    attrLabel2.lineSpacing = 8 - attrLabel.font.fw_spaceHeight;
     [self.view addSubview:attrLabel2];
-    attrLabel2.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel, 10);
+    attrLabel2.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel, 10);
     
     UITextView *textView = [UITextView new];
     _textView = textView;
@@ -66,7 +66,7 @@
     textView.backgroundColor = [Theme cellColor];
     textView.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:textView];
-    textView.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel2, 10).height(120);
+    textView.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(attrLabel2, 10).height(120);
     
     UITextView *textView2 = [UITextView new];
     _textView2 = textView2;
@@ -75,7 +75,7 @@
     textView2.textColor = Theme.textColor;
     textView2.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:textView2];
-    textView2.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(textView, 10).height(120);
+    textView2.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(textView, 10).height(120);
     
     UILabel *resultLabel = [UILabel new];
     _resultLabel = resultLabel;
@@ -83,7 +83,7 @@
     resultLabel.numberOfLines = 0;
     resultLabel.font = [UIFont systemFontOfSize:16];
     [self.view addSubview:resultLabel];
-    resultLabel.fw.layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(textView2, 10);
+    resultLabel.fw_layoutChain.leftToView(label).rightToView(label).topToViewBottomWithOffset(textView2, 10);
 }
 
 - (NSString *)testText
@@ -101,7 +101,7 @@
     option.paragraphStyle = [NSMutableParagraphStyle new];
     option.paragraphStyle.alignment = NSTextAlignmentLeft;
     option.paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
-    NSAttributedString *attrText = [NSAttributedString.fw attributedString:[self testText] withOption:option];
+    NSAttributedString *attrText = [NSAttributedString fw_attributedString:[self testText] withOption:option];
     return attrText;
 }
 
@@ -111,30 +111,30 @@
     NSMutableString *resultText = [NSMutableString new];
     
     self.label.text = [self testText];
-    size = [self.label.fw textSize];
+    size = [self.label fw_textSize];
     [resultText appendFormat:@"label: %@\n", NSStringFromCGSize(size)];
     
     self.label2.attributedText = [self testAttrText];
-    size = [self.label2.fw attributedTextSize];
+    size = [self.label2 fw_attributedTextSize];
     [resultText appendFormat:@"label2: %@\n", NSStringFromCGSize(size)];
     
     self.attrLabel.text = [self testText];
-    size = [self.attrLabel.fw fitSize];
+    size = [self.attrLabel fw_fitSize];
     [resultText appendFormat:@"attrLabel: %@\n", NSStringFromCGSize(size)];
     
     self.attrLabel2.attributedText = [self testAttrText];
-    size = [self.attrLabel2.fw fitSize];
+    size = [self.attrLabel2 fw_fitSize];
     [resultText appendFormat:@"attrLabel2: %@\n", NSStringFromCGSize(size)];
     
     self.textView.text = [self testText];
-    size = [self.textView.fw textSize];
+    size = [self.textView fw_textSize];
     [resultText appendFormat:@"textView: %@\n", NSStringFromCGSize(size)];
-    self.textView.fw.layoutChain.height(size.height);
+    self.textView.fw_layoutChain.height(size.height);
     
     self.textView2.attributedText = [self testAttrText];
-    size = [self.textView2.fw attributedTextSize];
+    size = [self.textView2 fw_attributedTextSize];
     [resultText appendFormat:@"textView2: %@", NSStringFromCGSize(size)];
-    self.textView2.fw.layoutChain.height(size.height);
+    self.textView2.fw_layoutChain.height(size.height);
     
     self.resultLabel.text = resultText;
 }

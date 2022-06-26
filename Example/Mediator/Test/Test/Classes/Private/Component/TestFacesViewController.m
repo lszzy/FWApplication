@@ -50,7 +50,7 @@
 - (UIImageView *)addImageView:(CGRect)frame
 {
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
-    [imageView.fw setCornerRadius:5];
+    [imageView fw_setCornerRadius:5];
     imageView.backgroundColor = [Theme backgroundColor];
     [self.view addSubview:imageView];
     return imageView;
@@ -69,43 +69,43 @@
     
     imageView4_.contentMode = UIViewContentModeScaleToFill;
     imageView4_.image = [TestBundle imageNamed:@"public_face"];
-    [imageView4_.fw faceAware];
+    [imageView4_ fw_faceAware];
     
     imageView5_.contentMode = UIViewContentModeScaleAspectFit;
     imageView5_.image = [TestBundle imageNamed:@"public_face"];
-    [imageView5_.fw faceAware];
+    [imageView5_ fw_faceAware];
     
     imageView6_.contentMode = UIViewContentModeScaleAspectFill;
     imageView6_.image = [TestBundle imageNamed:@"public_face"];
-    [imageView6_.fw faceAware];
+    [imageView6_ fw_faceAware];
     
     imageView11_.contentMode = UIViewContentModeScaleToFill;
-    [imageView11_.fw setImage:[TestBundle imageNamed:@"public_test"] watermarkImage:[TestBundle imageNamed:@"public_icon"] inRect:CGRectMake(50, 50, 20, 20)];
+    [imageView11_ fw_setImage:[TestBundle imageNamed:@"public_test"] watermarkImage:[TestBundle imageNamed:@"public_icon"] inRect:CGRectMake(50, 50, 20, 20)];
     
     imageView12_.contentMode = UIViewContentModeScaleAspectFit;
     NSAttributedString *watermark = [[NSAttributedString alloc] initWithString:@"水印" attributes:@{
-                                                                                                  NSFontAttributeName: [UIFont.fw fontOfSize:10],
+                                                                                                  NSFontAttributeName: [UIFont fw_fontOfSize:10],
                                                                                                   NSForegroundColorAttributeName: [UIColor whiteColor],
                                                                                                   }];
-    [imageView12_.fw setImage:[TestBundle imageNamed:@"public_test"] watermarkString:watermark inRect:CGRectMake(50, 58, 30, 22)];
+    [imageView12_ fw_setImage:[TestBundle imageNamed:@"public_test"] watermarkString:watermark inRect:CGRectMake(50, 58, 30, 22)];
     
     imageView13_.contentMode = UIViewContentModeScaleAspectFill;
     imageView13_.image = [TestBundle imageNamed:@"public_test"];
     
     imageView14_.contentMode = UIViewContentModeScaleToFill;
     imageView14_.image = [TestBundle imageNamed:@"public_test"];
-    [imageView14_.fw faceAware];
-    [imageView14_.fw reflect];
+    [imageView14_ fw_faceAware];
+    [imageView14_ fw_reflect];
     
     imageView15_.contentMode = UIViewContentModeScaleAspectFit;
     imageView15_.image = [TestBundle imageNamed:@"public_test"];
-    [imageView15_.fw faceAware];
-    [imageView15_.fw reflect];
+    [imageView15_ fw_faceAware];
+    [imageView15_ fw_reflect];
     
     imageView16_.contentMode = UIViewContentModeScaleAspectFill;
     imageView16_.image = [TestBundle imageNamed:@"public_test"];
-    [imageView16_.fw faceAware];
-    [imageView16_.fw reflect];
+    [imageView16_ fw_faceAware];
+    [imageView16_ fw_reflect];
 }
 
 @end

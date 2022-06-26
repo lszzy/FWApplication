@@ -11,17 +11,214 @@
 #import "UIBezierPath+FWApplication.h"
 #import <objc/runtime.h>
 
-@interface UIView (FWApplication)
-
-@end
-
 @implementation UIView (FWApplication)
 
-- (void)innerDragHandler:(UIPanGestureRecognizer *)sender
+#pragma mark - Transform
+
+- (CGFloat)fw_scaleX
+{
+    return self.transform.a;
+}
+
+- (CGFloat)fw_scaleY
+{
+    return self.transform.d;
+}
+
+- (CGFloat)fw_translationX
+{
+    return self.transform.tx;
+}
+
+- (CGFloat)fw_translationY
+{
+    return self.transform.ty;
+}
+
+#pragma mark - Subview
+
+- (void)fw_removeAllSubviews
+{
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+}
+
+- (UIView *)fw_subviewOfClass:(Class)clazz
+{
+    return [self fw_subviewOfBlock:^BOOL(UIView *view) {
+        return [view isKindOfClass:clazz];
+    }];
+}
+
+- (UIView *)fw_subviewOfBlock:(BOOL (^)(UIView *view))block
+{
+    if (block(self)) {
+        return self;
+    }
+    
+    /* 如果需要顺序查找所有子视图，失败后再递归查找，参考此代码即可
+    for (UIView *subview in self.subviews) {
+        if (block(subview)) {
+            return subview;
+        }
+    } */
+    
+    for (UIView *subview in self.subviews) {
+        UIView *resultView = [subview fw_subviewOfBlock:block];
+        if (resultView) {
+            return resultView;
+        }
+    }
+    
+    return nil;
+}
+
+- (void)fw_moveToSuperview:(UIView *)view
+{
+    if (view) {
+        [view addSubview:self];
+    } else {
+        [self removeFromSuperview];
+    }
+}
+
+#pragma mark - Snapshot
+
+- (UIImage *)fw_snapshotImage
+{
+    return [UIImage fw_imageWithView:self];
+}
+
+- (NSData *)fw_snapshotPdf
+{
+    CGRect bounds = self.bounds;
+    NSMutableData *data = [NSMutableData data];
+    CGDataConsumerRef consumer = CGDataConsumerCreateWithCFData((__bridge CFMutableDataRef)data);
+    CGContextRef context = CGPDFContextCreate(consumer, &bounds, NULL);
+    CGDataConsumerRelease(consumer);
+    if (!context) return nil;
+    CGPDFContextBeginPage(context, NULL);
+    CGContextTranslateCTM(context, 0, bounds.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    [self.layer renderInContext:context];
+    CGPDFContextEndPage(context);
+    CGPDFContextClose(context);
+    CGContextRelease(context);
+    return data;
+}
+
+#pragma mark - Drag
+
+- (BOOL)fw_dragEnabled
+{
+    return self.fw_dragGesture.enabled;
+}
+
+- (void)setFw_dragEnabled:(BOOL)dragEnabled
+{
+    self.fw_dragGesture.enabled = dragEnabled;
+}
+
+- (CGRect)fw_dragLimit
+{
+    return [objc_getAssociatedObject(self, @selector(fw_dragLimit)) CGRectValue];
+}
+
+- (void)setFw_dragLimit:(CGRect)dragLimit
+{
+    if (CGRectEqualToRect(dragLimit, CGRectZero) ||
+        CGRectContainsRect(dragLimit, self.frame)) {
+        objc_setAssociatedObject(self, @selector(fw_dragLimit), [NSValue valueWithCGRect:dragLimit], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (CGRect)fw_dragArea
+{
+    return [objc_getAssociatedObject(self, @selector(fw_dragArea)) CGRectValue];
+}
+
+- (void)setFw_dragArea:(CGRect)dragArea
+{
+    CGRect relativeFrame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    if (CGRectContainsRect(relativeFrame, dragArea)) {
+        objc_setAssociatedObject(self, @selector(fw_dragArea), [NSValue valueWithCGRect:dragArea], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+}
+
+- (BOOL)fw_dragVertical
+{
+    NSNumber *value = objc_getAssociatedObject(self, @selector(fw_dragVertical));
+    return value ? [value boolValue] : YES;
+}
+
+- (void)setFw_dragVertical:(BOOL)dragVertical
+{
+    objc_setAssociatedObject(self, @selector(fw_dragVertical), [NSNumber numberWithBool:dragVertical], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (BOOL)fw_dragHorizontal
+{
+    NSNumber *value = objc_getAssociatedObject(self, @selector(fw_dragHorizontal));
+    return value ? [value boolValue] : YES;
+}
+
+- (void)setFw_dragHorizontal:(BOOL)dragHorizontal
+{
+    objc_setAssociatedObject(self, @selector(fw_dragHorizontal), [NSNumber numberWithBool:dragHorizontal], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void (^)(UIView *))fw_dragStartedBlock
+{
+    return objc_getAssociatedObject(self, @selector(fw_dragStartedBlock));
+}
+
+- (void)setFw_dragStartedBlock:(void (^)(UIView *))dragStartedBlock
+{
+    objc_setAssociatedObject(self, @selector(fw_dragStartedBlock), dragStartedBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (void (^)(UIView *))fw_dragMovedBlock
+{
+    return objc_getAssociatedObject(self, @selector(fw_dragMovedBlock));
+}
+
+- (void)setFw_dragMovedBlock:(void (^)(UIView *))dragMovedBlock
+{
+    objc_setAssociatedObject(self, @selector(fw_dragMovedBlock), dragMovedBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (void (^)(UIView *))fw_dragEndedBlock
+{
+    return objc_getAssociatedObject(self, @selector(fw_dragEndedBlock));
+}
+
+- (void)setFw_dragEndedBlock:(void (^)(UIView *))dragEndedBlock
+{
+    objc_setAssociatedObject(self, @selector(fw_dragEndedBlock), dragEndedBlock, OBJC_ASSOCIATION_COPY);
+}
+
+- (UIPanGestureRecognizer *)fw_dragGesture
+{
+    UIPanGestureRecognizer *gesture = objc_getAssociatedObject(self, _cmd);
+    if (!gesture) {
+        // 初始化拖动手势，默认禁用
+        gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(fw_innerDragHandler:)];
+        gesture.maximumNumberOfTouches = 1;
+        gesture.minimumNumberOfTouches = 1;
+        gesture.cancelsTouchesInView = NO;
+        gesture.enabled = NO;
+        self.fw_dragArea = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        [self addGestureRecognizer:gesture];
+        
+        objc_setAssociatedObject(self, _cmd, gesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return gesture;
+}
+
+- (void)fw_innerDragHandler:(UIPanGestureRecognizer *)sender
 {
     // 检查是否能够在拖动区域拖动
     CGPoint locationInView = [sender locationInView:self];
-    if (!CGRectContainsPoint(self.fw.dragArea, locationInView) &&
+    if (!CGRectContainsPoint(self.fw_dragArea, locationInView) &&
         sender.state == UIGestureRecognizerStateBegan) {
         return;
     }
@@ -34,24 +231,24 @@
         self.center = locationInSuperview;
     }
     
-    if (sender.state == UIGestureRecognizerStateBegan && self.fw.dragStartedBlock) {
-        self.fw.dragStartedBlock(self);
+    if (sender.state == UIGestureRecognizerStateBegan && self.fw_dragStartedBlock) {
+        self.fw_dragStartedBlock(self);
     }
     
-    if (sender.state == UIGestureRecognizerStateChanged && self.fw.dragMovedBlock) {
-        self.fw.dragMovedBlock(self);
+    if (sender.state == UIGestureRecognizerStateChanged && self.fw_dragMovedBlock) {
+        self.fw_dragMovedBlock(self);
     }
     
-    if (sender.state == UIGestureRecognizerStateEnded && self.fw.dragEndedBlock) {
-        self.fw.dragEndedBlock(self);
+    if (sender.state == UIGestureRecognizerStateEnded && self.fw_dragEndedBlock) {
+        self.fw_dragEndedBlock(self);
     }
     
     CGPoint translation = [sender translationInView:[self superview]];
     
-    CGFloat newXOrigin = CGRectGetMinX(self.frame) + (([self.fw dragHorizontal]) ? translation.x : 0);
-    CGFloat newYOrigin = CGRectGetMinY(self.frame) + (([self.fw dragVertical]) ? translation.y : 0);
+    CGFloat newXOrigin = CGRectGetMinX(self.frame) + (([self fw_dragHorizontal]) ? translation.x : 0);
+    CGFloat newYOrigin = CGRectGetMinY(self.frame) + (([self fw_dragVertical]) ? translation.y : 0);
     
-    CGRect cagingArea = self.fw.dragLimit;
+    CGRect cagingArea = self.fw_dragLimit;
     
     CGFloat cagingAreaOriginX = CGRectGetMinX(cagingArea);
     CGFloat cagingAreaOriginY = CGRectGetMinY(cagingArea);
@@ -80,9 +277,9 @@
     [sender setTranslation:(CGPoint){0, 0} inView:[self superview]];
 }
 
-- (void)innerAnimationDidStop:(NSString *)animationId finished:(NSNumber *)finished context:(void *)context
+- (void)fw_innerAnimationDidStop:(NSString *)animationId finished:(NSNumber *)finished context:(void *)context
 {
-    void (^completion)(BOOL finished) = objc_getAssociatedObject(self, @selector(innerAnimationDidStop:finished:context:));
+    void (^completion)(BOOL finished) = objc_getAssociatedObject(self, @selector(fw_innerAnimationDidStop:finished:context:));
     if (completion) {
         completion([finished boolValue]);
     }
@@ -90,218 +287,13 @@
 
 @end
 
-@implementation FWViewWrapper (FWApplication)
+#pragma mark - UIView+FWAnimation
 
-#pragma mark - Transform
-
-- (CGFloat)scaleX
-{
-    return self.base.transform.a;
-}
-
-- (CGFloat)scaleY
-{
-    return self.base.transform.d;
-}
-
-- (CGFloat)translationX
-{
-    return self.base.transform.tx;
-}
-
-- (CGFloat)translationY
-{
-    return self.base.transform.ty;
-}
-
-#pragma mark - Subview
-
-- (void)removeAllSubviews
-{
-    [self.base.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-}
-
-- (UIView *)subviewOfClass:(Class)clazz
-{
-    return [self subviewOfBlock:^BOOL(UIView *view) {
-        return [view isKindOfClass:clazz];
-    }];
-}
-
-- (UIView *)subviewOfBlock:(BOOL (^)(UIView *view))block
-{
-    if (block(self.base)) {
-        return self.base;
-    }
-    
-    /* 如果需要顺序查找所有子视图，失败后再递归查找，参考此代码即可
-    for (UIView *subview in self.base.subviews) {
-        if (block(subview)) {
-            return subview;
-        }
-    } */
-    
-    for (UIView *subview in self.base.subviews) {
-        UIView *resultView = [subview.fw subviewOfBlock:block];
-        if (resultView) {
-            return resultView;
-        }
-    }
-    
-    return nil;
-}
-
-- (void)moveToSuperview:(UIView *)view
-{
-    if (view) {
-        [view addSubview:self.base];
-    } else {
-        [self.base removeFromSuperview];
-    }
-}
-
-#pragma mark - Snapshot
-
-- (UIImage *)snapshotImage
-{
-    return [UIImage.fw imageWithView:self.base];
-}
-
-- (NSData *)snapshotPdf
-{
-    CGRect bounds = self.base.bounds;
-    NSMutableData *data = [NSMutableData data];
-    CGDataConsumerRef consumer = CGDataConsumerCreateWithCFData((__bridge CFMutableDataRef)data);
-    CGContextRef context = CGPDFContextCreate(consumer, &bounds, NULL);
-    CGDataConsumerRelease(consumer);
-    if (!context) return nil;
-    CGPDFContextBeginPage(context, NULL);
-    CGContextTranslateCTM(context, 0, bounds.size.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
-    [self.base.layer renderInContext:context];
-    CGPDFContextEndPage(context);
-    CGPDFContextClose(context);
-    CGContextRelease(context);
-    return data;
-}
-
-#pragma mark - Drag
-
-- (BOOL)dragEnabled
-{
-    return self.dragGesture.enabled;
-}
-
-- (void)setDragEnabled:(BOOL)dragEnabled
-{
-    self.dragGesture.enabled = dragEnabled;
-}
-
-- (CGRect)dragLimit
-{
-    return [objc_getAssociatedObject(self.base, @selector(dragLimit)) CGRectValue];
-}
-
-- (void)setDragLimit:(CGRect)dragLimit
-{
-    if (CGRectEqualToRect(dragLimit, CGRectZero) ||
-        CGRectContainsRect(dragLimit, self.base.frame)) {
-        objc_setAssociatedObject(self.base, @selector(dragLimit), [NSValue valueWithCGRect:dragLimit], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-}
-
-- (CGRect)dragArea
-{
-    return [objc_getAssociatedObject(self.base, @selector(dragArea)) CGRectValue];
-}
-
-- (void)setDragArea:(CGRect)dragArea
-{
-    CGRect relativeFrame = CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height);
-    if (CGRectContainsRect(relativeFrame, dragArea)) {
-        objc_setAssociatedObject(self.base, @selector(dragArea), [NSValue valueWithCGRect:dragArea], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-}
-
-- (BOOL)dragVertical
-{
-    NSNumber *value = objc_getAssociatedObject(self.base, @selector(dragVertical));
-    return value ? [value boolValue] : YES;
-}
-
-- (void)setDragVertical:(BOOL)dragVertical
-{
-    objc_setAssociatedObject(self.base, @selector(dragVertical), [NSNumber numberWithBool:dragVertical], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)dragHorizontal
-{
-    NSNumber *value = objc_getAssociatedObject(self.base, @selector(dragHorizontal));
-    return value ? [value boolValue] : YES;
-}
-
-- (void)setDragHorizontal:(BOOL)dragHorizontal
-{
-    objc_setAssociatedObject(self.base, @selector(dragHorizontal), [NSNumber numberWithBool:dragHorizontal], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (void (^)(UIView *))dragStartedBlock
-{
-    return objc_getAssociatedObject(self.base, @selector(dragStartedBlock));
-}
-
-- (void)setDragStartedBlock:(void (^)(UIView *))dragStartedBlock
-{
-    objc_setAssociatedObject(self.base, @selector(dragStartedBlock), dragStartedBlock, OBJC_ASSOCIATION_COPY);
-}
-
-- (void (^)(UIView *))dragMovedBlock
-{
-    return objc_getAssociatedObject(self.base, @selector(dragMovedBlock));
-}
-
-- (void)setDragMovedBlock:(void (^)(UIView *))dragMovedBlock
-{
-    objc_setAssociatedObject(self.base, @selector(dragMovedBlock), dragMovedBlock, OBJC_ASSOCIATION_COPY);
-}
-
-- (void (^)(UIView *))dragEndedBlock
-{
-    return objc_getAssociatedObject(self.base, @selector(dragEndedBlock));
-}
-
-- (void)setDragEndedBlock:(void (^)(UIView *))dragEndedBlock
-{
-    objc_setAssociatedObject(self.base, @selector(dragEndedBlock), dragEndedBlock, OBJC_ASSOCIATION_COPY);
-}
-
-- (UIPanGestureRecognizer *)dragGesture
-{
-    UIPanGestureRecognizer *gesture = objc_getAssociatedObject(self.base, _cmd);
-    if (!gesture) {
-        // 初始化拖动手势，默认禁用
-        gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self.base action:@selector(innerDragHandler:)];
-        gesture.maximumNumberOfTouches = 1;
-        gesture.minimumNumberOfTouches = 1;
-        gesture.cancelsTouchesInView = NO;
-        gesture.enabled = NO;
-        self.dragArea = CGRectMake(0, 0, self.base.frame.size.width, self.base.frame.size.height);
-        [self.base addGestureRecognizer:gesture];
-        
-        objc_setAssociatedObject(self.base, _cmd, gesture, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return gesture;
-}
-
-@end
-
-#pragma mark - FWViewWrapper+FWAnimation
-
-@implementation FWViewWrapper (FWAnimation)
+@implementation UIView (FWAnimation)
 
 #pragma mark - Animation
 
-- (void)addAnimationWithBlock:(void (^)(void))block
+- (void)fw_addAnimationWithBlock:(void (^)(void))block
                      completion:(void (^)(BOOL finished))completion
 {
     [UIView animateWithDuration:0.25
@@ -311,7 +303,7 @@
                      completion:completion];
 }
 
-- (void)addAnimationWithBlock:(void (^)(void))block
+- (void)fw_addAnimationWithBlock:(void (^)(void))block
                        duration:(NSTimeInterval)duration
                      completion:(void (^)(BOOL finished))completion
 {
@@ -321,7 +313,7 @@
                      completion:completion];
 }
 
-- (void)addAnimationWithCurve:(UIViewAnimationCurve)curve
+- (void)fw_addAnimationWithCurve:(UIViewAnimationCurve)curve
                      transition:(UIViewAnimationTransition)transition
                        duration:(NSTimeInterval)duration
                      completion:(void (^)(BOOL finished))completion
@@ -330,19 +322,19 @@
     [UIView setAnimationCurve:curve];
     // 默认值0.2
     [UIView setAnimationDuration:duration];
-    [UIView setAnimationTransition:transition forView:self.base cache:NO];
+    [UIView setAnimationTransition:transition forView:self cache:NO];
     
     // 设置完成事件
     if (completion) {
-        [UIView setAnimationDelegate:self.base];
-        [UIView setAnimationDidStopSelector:@selector(innerAnimationDidStop:finished:context:)];
-        objc_setAssociatedObject(self.base, @selector(innerAnimationDidStop:finished:context:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
+        [UIView setAnimationDelegate:self];
+        [UIView setAnimationDidStopSelector:@selector(fw_innerAnimationDidStop:finished:context:)];
+        objc_setAssociatedObject(self, @selector(fw_innerAnimationDidStop:finished:context:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     }
     
     [UIView commitAnimations];
 }
 
-- (CABasicAnimation *)addAnimationWithKeyPath:(NSString *)keyPath
+- (CABasicAnimation *)fw_addAnimationWithKeyPath:(NSString *)keyPath
                                       fromValue:(id)fromValue
                                         toValue:(id)toValue
                                        duration:(CFTimeInterval)duration
@@ -360,34 +352,34 @@
     
     // 设置完成事件，需要在add之前设置才能生效，因为add时会copy动画对象
     if (completion) {
-        animation.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
+        animation.fw_stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
     
-    [self.base.layer addAnimation:animation forKey:@"FWAnimation"];
+    [self.layer addAnimation:animation forKey:@"FWAnimation"];
     return animation;
 }
 
-- (void)addTransitionWithOption:(UIViewAnimationOptions)option
+- (void)fw_addTransitionWithOption:(UIViewAnimationOptions)option
                             block:(void (^)(void))block
                          duration:(NSTimeInterval)duration
                        completion:(void (^)(BOOL finished))completion
 {
-    [UIView transitionWithView:self.base
+    [UIView transitionWithView:self
                       duration:duration
                        options:option
                     animations:block
                     completion:completion];
 }
 
-- (void)addTransitionWithOption:(UIViewAnimationOptions)option
+- (void)fw_addTransitionWithOption:(UIViewAnimationOptions)option
                             block:(void (^)(void))block
                          duration:(NSTimeInterval)duration
                 animationsEnabled:(BOOL)animationsEnabled
                        completion:(void (^)(BOOL finished))completion
 {
-    [UIView transitionWithView:self.base
+    [UIView transitionWithView:self
                       duration:duration
                        options:option
                     animations:^{
@@ -399,19 +391,19 @@
                     completion:completion];
 }
 
-- (void)addTransitionToView:(UIView *)toView
+- (void)fw_addTransitionToView:(UIView *)toView
                    withOption:(UIViewAnimationOptions)option
                      duration:(NSTimeInterval)duration
                    completion:(void (^)(BOOL finished))completion
 {
-    [UIView transitionFromView:self.base
+    [UIView transitionFromView:self
                         toView:toView
                       duration:duration
                        options:option
                     completion:completion];
 }
 
-- (CATransition *)addTransitionWithType:(NSString *)type
+- (CATransition *)fw_addTransitionWithType:(NSString *)type
                                   subtype:(NSString *)subtype
                            timingFunction:(NSString *)timingFunction
                                  duration:(CFTimeInterval)duration
@@ -484,29 +476,29 @@
     
     // 设置完成事件
     if (completion) {
-        transition.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
+        transition.fw_stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
     
     // 所有核心动画和特效都是基于CAAnimation(作用于CALayer)
-    [self.base.layer addAnimation:transition forKey:@"FWAnimation"];
+    [self.layer addAnimation:transition forKey:@"FWAnimation"];
     return transition;
 }
 
-- (void)removeAnimation
+- (void)fw_removeAnimation
 {
-    [self.base.layer removeAnimationForKey:@"FWAnimation"];
+    [self.layer removeAnimationForKey:@"FWAnimation"];
 }
 
-- (void)removeAllAnimations
+- (void)fw_removeAllAnimations
 {
-    [self.base.layer removeAllAnimations];
+    [self.layer removeAllAnimations];
 }
 
 #pragma mark - Custom
 
-- (CABasicAnimation *)strokeWithLayer:(CAShapeLayer *)layer
+- (CABasicAnimation *)fw_strokeWithLayer:(CAShapeLayer *)layer
                                duration:(NSTimeInterval)duration
                              completion:(void (^)(BOOL finished))completion
 {
@@ -520,7 +512,7 @@
     
     // 设置完成事件
     if (completion) {
-        animation.fw.stopBlock = ^(CAAnimation *animation, BOOL finished) {
+        animation.fw_stopBlock = ^(CAAnimation *animation, BOOL finished) {
             completion(finished);
         };
     }
@@ -529,12 +521,12 @@
     return animation;
 }
 
-- (void)shakeWithTimes:(NSInteger)times
+- (void)fw_shakeWithTimes:(NSInteger)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
               completion:(void (^)(BOOL finished))completion
 {
-    [self shakeWithTimes:(times > 0 ? times : 10)
+    [self fw_shakeWithTimes:(times > 0 ? times : 10)
                      delta:(delta > 0 ? delta : 5)
                   duration:(duration > 0 ? duration : 0.03)
                  direction:1
@@ -542,7 +534,7 @@
                 completion:completion];
 }
 
-- (void)shakeWithTimes:(NSInteger)times
+- (void)fw_shakeWithTimes:(NSInteger)times
                    delta:(CGFloat)delta
                 duration:(NSTimeInterval)duration
                direction:(NSInteger)direction
@@ -550,27 +542,27 @@
               completion:(void (^)(BOOL finished))completion
 {
     // 是否是文本输入框
-    BOOL isTextField = [self.base isKindOfClass:[UITextField class]];
+    BOOL isTextField = [self isKindOfClass:[UITextField class]];
     
     [UIView animateWithDuration:duration animations:^{
         if (isTextField) {
             // 水平摇摆
-            self.base.transform = CGAffineTransformMakeTranslation(delta * direction, 0);
+            self.transform = CGAffineTransformMakeTranslation(delta * direction, 0);
             // 垂直摇摆
-            // self.base.transform = CGAffineTransformMakeTranslation(0, delta * direction);
+            // self.transform = CGAffineTransformMakeTranslation(0, delta * direction);
         } else {
             // 水平摇摆
-            self.base.layer.affineTransform = CGAffineTransformMakeTranslation(delta * direction, 0);
+            self.layer.affineTransform = CGAffineTransformMakeTranslation(delta * direction, 0);
             // 垂直摇摆
-            // self.base.layer.affineTransform = CGAffineTransformMakeTranslation(0, delta * direction);
+            // self.layer.affineTransform = CGAffineTransformMakeTranslation(0, delta * direction);
         }
     } completion:^(BOOL finished) {
         if (currentTimes >= times) {
             [UIView animateWithDuration:duration animations:^{
                 if (isTextField) {
-                    self.base.transform = CGAffineTransformIdentity;
+                    self.transform = CGAffineTransformIdentity;
                 } else {
-                    self.base.layer.affineTransform = CGAffineTransformIdentity;
+                    self.layer.affineTransform = CGAffineTransformIdentity;
                 }
             } completion:^(BOOL finished) {
                 if (completion) {
@@ -579,7 +571,7 @@
             }];
             return;
         }
-        [self shakeWithTimes:(times - 1)
+        [self fw_shakeWithTimes:(times - 1)
                          delta:delta
                       duration:duration
                      direction:direction * -1
@@ -588,7 +580,7 @@
     }];
 }
 
-- (void)fadeWithAlpha:(float)alpha
+- (void)fw_fadeWithAlpha:(float)alpha
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL finished))completion
 {
@@ -596,23 +588,23 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.base.alpha = alpha;
+                         self.alpha = alpha;
                      }
                      completion:completion];
 }
 
-- (void)fadeWithBlock:(void (^)(void))block
+- (void)fw_fadeWithBlock:(void (^)(void))block
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL))completion
 {
-    [UIView transitionWithView:self.base
+    [UIView transitionWithView:self
                       duration:duration
                        options:UIViewAnimationOptionTransitionCrossDissolve | UIViewAnimationOptionAllowUserInteraction
                     animations:block
                     completion:completion];
 }
 
-- (void)rotateWithDegree:(CGFloat)degree
+- (void)fw_rotateWithDegree:(CGFloat)degree
                   duration:(NSTimeInterval)duration
                 completion:(void (^)(BOOL finished))completion
 {
@@ -620,12 +612,12 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.base.transform = CGAffineTransformRotate(self.base.transform, (degree * M_PI / 180.f));
+                         self.transform = CGAffineTransformRotate(self.transform, (degree * M_PI / 180.f));
                      }
                      completion:completion];
 }
 
-- (void)scaleWithScaleX:(float)scaleX
+- (void)fw_scaleWithScaleX:(float)scaleX
                    scaleY:(float)scaleY
                  duration:(NSTimeInterval)duration
                completion:(void (^)(BOOL finished))completion
@@ -634,11 +626,11 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.base.transform = CGAffineTransformScale(self.base.transform, scaleX, scaleY);
+                         self.transform = CGAffineTransformScale(self.transform, scaleX, scaleY);
                      } completion:completion];
 }
 
-- (void)moveWithPoint:(CGPoint)point
+- (void)fw_moveWithPoint:(CGPoint)point
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL finished))completion
 {
@@ -646,11 +638,11 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.base.frame = CGRectMake(point.x, point.y, self.base.frame.size.width, self.base.frame.size.height);
+                         self.frame = CGRectMake(point.x, point.y, self.frame.size.width, self.frame.size.height);
                      } completion:completion];
 }
 
-- (void)moveWithFrame:(CGRect)frame
+- (void)fw_moveWithFrame:(CGRect)frame
                duration:(NSTimeInterval)duration
              completion:(void (^)(BOOL finished))completion
 {
@@ -658,22 +650,18 @@
                           delay:0.0
                         options:UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.base.frame = frame;
+                         self.frame = frame;
                      } completion:completion];
 }
-
-@end
-
-@implementation FWViewClassWrapper (FWAnimation)
 
 #pragma mark - Block
 
-- (void)animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block
++ (void)fw_animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block
 {
     [UIView performWithoutAnimation:block];
 }
 
-- (void)animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
++ (void)fw_animateNoneWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
 {
     [UIView animateWithDuration:0 animations:block completion:^(BOOL finished) {
         if (completion) {
@@ -682,7 +670,7 @@
     }];
 }
 
-- (void)animateWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
++ (void)fw_animateWithBlock:(nonnull __attribute__((noescape)) void (^)(void))block completion:(nullable __attribute__((noescape)) void (^)(void))completion
 {
     if (!block) {
         return;
@@ -773,27 +761,27 @@
 
 @end
 
-#pragma mark - FWLayerWrapper+FWLayer
+#pragma mark - CALayer+FWLayer
 
-@implementation FWLayerWrapper (FWLayer)
+@implementation CALayer (FWLayer)
 
-- (void)setShadowColor:(UIColor *)color
+- (void)fw_setShadowColor:(UIColor *)color
                   offset:(CGSize)offset
                   radius:(CGFloat)radius
 {
-    self.base.shadowColor = color.CGColor;
-    self.base.shadowOffset = offset;
-    self.base.shadowRadius = radius;
-    self.base.shadowOpacity = 1.0;
+    self.shadowColor = color.CGColor;
+    self.shadowOffset = offset;
+    self.shadowRadius = radius;
+    self.shadowOpacity = 1.0;
 }
 
 @end
 
-#pragma mark - FWGradientLayerClassWrapper+FWLayer
+#pragma mark - CAGradientLayer+FWLayer
 
-@implementation FWGradientLayerClassWrapper (FWLayer)
+@implementation CAGradientLayer (FWLayer)
 
-- (CAGradientLayer *)gradientLayer:(CGRect)frame
++ (CAGradientLayer *)fw_gradientLayer:(CGRect)frame
                               colors:(NSArray *)colors
                            locations:(NSArray<NSNumber *> *)locations
                           startPoint:(CGPoint)startPoint
@@ -814,16 +802,16 @@
 
 @end
 
-#pragma mark - FWViewWrapper+FWLayer
+#pragma mark - UIView+FWLayer
 
-@implementation FWViewWrapper (FWLayer)
+@implementation UIView (FWLayer)
 
 #pragma mark - Effect
 
-- (UIVisualEffectView *)setBlurEffect:(UIBlurEffectStyle)style
+- (UIVisualEffectView *)fw_setBlurEffect:(UIBlurEffectStyle)style
 {
     // 移除旧毛玻璃视图
-    for (UIView *subview in self.base.subviews) {
+    for (UIView *subview in self.subviews) {
         if ([subview isKindOfClass:[UIVisualEffectView class]]) {
             [subview removeFromSuperview];
         }
@@ -833,8 +821,8 @@
     if (((NSInteger)style) > -1) {
         UIBlurEffect *effect = [UIBlurEffect effectWithStyle:style];
         UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
-        [self.base addSubview:effectView];
-        [effectView.fw pinEdgesToSuperview];
+        [self addSubview:effectView];
+        [effectView fw_pinEdgesToSuperview];
         return effectView;
     }
     return nil;
@@ -842,7 +830,7 @@
 
 #pragma mark - Bezier
 
-- (void)drawBezierPath:(UIBezierPath *)bezierPath
+- (void)fw_drawBezierPath:(UIBezierPath *)bezierPath
              strokeWidth:(CGFloat)strokeWidth
              strokeColor:(UIColor *)strokeColor
                fillColor:(UIColor *)fillColor
@@ -867,18 +855,18 @@
 
 #pragma mark - Gradient
 
-- (void)drawLinearGradient:(CGRect)rect
+- (void)fw_drawLinearGradient:(CGRect)rect
                       colors:(NSArray *)colors
                    locations:(const CGFloat *)locations
                    direction:(UISwipeGestureRecognizerDirection)direction
 {
-    NSArray<NSValue *> *linePoints = [UIBezierPath.fw linePointsWithRect:rect direction:direction];
+    NSArray<NSValue *> *linePoints = [UIBezierPath fw_linePointsWithRect:rect direction:direction];
     CGPoint startPoint = [linePoints.firstObject CGPointValue];
     CGPoint endPoint = [linePoints.lastObject CGPointValue];
-    [self drawLinearGradient:rect colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
+    [self fw_drawLinearGradient:rect colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
 }
 
-- (void)drawLinearGradient:(CGRect)rect
+- (void)fw_drawLinearGradient:(CGRect)rect
                       colors:(NSArray *)colors
                    locations:(const CGFloat *)locations
                   startPoint:(CGPoint)startPoint
@@ -898,7 +886,7 @@
     CGContextRestoreGState(ctx);
 }
 
-- (CAGradientLayer *)addGradientLayer:(CGRect)frame
+- (CAGradientLayer *)fw_addGradientLayer:(CGRect)frame
                                  colors:(NSArray *)colors
                               locations:(NSArray<NSNumber *> *)locations
                              startPoint:(CGPoint)startPoint
@@ -915,13 +903,13 @@
     gradientLayer.startPoint = startPoint;
     gradientLayer.endPoint = endPoint;
     
-    [self.base.layer addSublayer:gradientLayer];
+    [self.layer addSublayer:gradientLayer];
     return gradientLayer;
 }
 
 #pragma mark - Circle
 
-- (CAShapeLayer *)addCircleLayer:(CGRect)rect
+- (CAShapeLayer *)fw_addCircleLayer:(CGRect)rect
                             degree:(CGFloat)degree
                           progress:(CGFloat)progress
                        strokeColor:(UIColor *)strokeColor
@@ -946,11 +934,11 @@
     // path决定layer将被渲染成何种形状
     layer.path = path.CGPath;
     
-    [self.base.layer addSublayer:layer];
+    [self.layer addSublayer:layer];
     return layer;
 }
 
-- (CAShapeLayer *)addCircleLayer:(CGRect)rect
+- (CAShapeLayer *)fw_addCircleLayer:(CGRect)rect
                             degree:(CGFloat)degree
                           progress:(CGFloat)progress
                      progressColor:(UIColor *)progressColor
@@ -958,14 +946,14 @@
                        strokeWidth:(CGFloat)strokeWidth
 {
     // 绘制底色圆
-    [self addCircleLayer:rect degree:degree progress:1.0 strokeColor:strokeColor strokeWidth:strokeWidth];
+    [self fw_addCircleLayer:rect degree:degree progress:1.0 strokeColor:strokeColor strokeWidth:strokeWidth];
     
     // 绘制进度圆
-    CAShapeLayer *layer = [self addCircleLayer:rect degree:degree progress:progress strokeColor:progressColor strokeWidth:strokeWidth];
+    CAShapeLayer *layer = [self fw_addCircleLayer:rect degree:degree progress:progress strokeColor:progressColor strokeWidth:strokeWidth];
     return layer;
 }
 
-- (CALayer *)addCircleLayer:(CGRect)rect
+- (CALayer *)fw_addCircleLayer:(CGRect)rect
                        degree:(CGFloat)degree
                      progress:(CGFloat)progress
                 gradientBlock:(void (^)(CALayer *layer))gradientBlock
@@ -975,7 +963,7 @@
     // 添加渐变容器层
     CALayer *gradientLayer = [CALayer layer];
     gradientLayer.frame = rect;
-    [self.base.layer addSublayer:gradientLayer];
+    [self.layer addSublayer:gradientLayer];
     
     // 创建渐变子层，可单个渐变，左右区域，上下区域等
     if (gradientBlock) {
@@ -1018,7 +1006,7 @@
 
 #pragma mark - Dash
 
-- (CALayer *)addDashLayer:(CGRect)rect
+- (CALayer *)fw_addDashLayer:(CGRect)rect
                  lineLength:(CGFloat)lineLength
                 lineSpacing:(CGFloat)lineSpacing
                   lineColor:(UIColor *)lineColor
@@ -1044,7 +1032,7 @@
         [path addLineToPoint:CGPointMake(CGRectGetWidth(rect), CGRectGetHeight(rect) / 2)];
     }
     dashLayer.path = path.CGPath;
-    [self.base.layer addSublayer:dashLayer];
+    [self.layer addSublayer:dashLayer];
     return dashLayer;
 }
 

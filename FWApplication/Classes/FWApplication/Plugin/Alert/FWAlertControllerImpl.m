@@ -45,14 +45,14 @@
 
 @end
 
-@implementation FWAlertControllerPlugin
+@implementation FWAlertControllerImpl
 
-+ (FWAlertControllerPlugin *)sharedInstance
++ (FWAlertControllerImpl *)sharedInstance
 {
-    static FWAlertControllerPlugin *instance = nil;
+    static FWAlertControllerImpl *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[FWAlertControllerPlugin alloc] init];
+        instance = [[FWAlertControllerImpl alloc] init];
     });
     return instance;
 }
@@ -60,6 +60,7 @@
 - (void)viewController:(UIViewController *)viewController
       showAlertWithTitle:(id)title
                  message:(id)message
+                   style:(FWAlertStyle)style
                   cancel:(id)cancel
                  actions:(NSArray *)actions
              promptCount:(NSInteger)promptCount
@@ -74,6 +75,7 @@
                                                                 message:message
                                                          preferredStyle:FWAlertControllerStyleAlert
                                                              appearance:customAppearance];
+    alertController.alertStyle = style;
     
     // 添加输入框
     for (NSInteger promptIndex = 0; promptIndex < promptCount; promptIndex++) {
@@ -258,7 +260,7 @@
         alertController.attributedMessage = [[NSAttributedString alloc] initWithString:alertController.message attributes:messageAttributes];
     }
     
-    [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
+    [alertController fw_observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
             if (obj.isPreferred) obj.isPreferred = NO;
         }];
@@ -276,7 +278,7 @@
                                                                                      appearance:appearance];
     alertController.tapBackgroundViewDismiss = (preferredStyle == FWAlertControllerStyleActionSheet);
     
-    [alertController.fw observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
+    [alertController fw_observeProperty:@"preferredAction" block:^(FWAlertController *object, NSDictionary *change) {
         [object.actions enumerateObjectsUsingBlock:^(FWAlertAction *obj, NSUInteger idx, BOOL *stop) {
             if (obj.isPreferred) obj.isPreferred = NO;
         }];
@@ -300,7 +302,7 @@
         alertAction.isPreferred = NO;
     }
     
-    [alertAction.fw observeProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
+    [alertAction fw_observeProperty:@"enabled" block:^(FWAlertAction *object, NSDictionary *change) {
         object.isPreferred = object.isPreferred;
     }];
     

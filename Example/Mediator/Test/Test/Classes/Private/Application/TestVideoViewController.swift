@@ -109,7 +109,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
         tapGestureRecognizer.numberOfTapsRequired = 1
         self.player.view.addGestureRecognizer(tapGestureRecognizer)
         
-        __fw.showLoading()
+        fw.showLoading()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -122,7 +122,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     }
     
     override func renderModel() {
-        __fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
+        fw.setRightBarItem(cacheEnabled ? "禁用缓存" : "启用缓存") { [weak self] sender in
             guard let strongSelf = self else { return }
             strongSelf.cacheEnabled = !strongSelf.cacheEnabled
             strongSelf.playVideo()
@@ -161,7 +161,7 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     func playerReady(_ player: VideoPlayer) {
         print("\(#function) ready")
         
-        __fw.hideLoading()
+        fw.hideLoading()
     }
     
     func playerPlaybackStateDidChange(_ player: VideoPlayer) {
@@ -171,6 +171,6 @@ class TestPlayerView: VideoPlayerView, VideoPlayerDelegate {
     func player(_ player: VideoPlayer, didFailWithError error: Error?) {
         print("\(#function) error.description")
         
-        __fw.hideLoading()
+        fw.hideLoading()
     }
 }

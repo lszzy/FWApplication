@@ -9,7 +9,6 @@
 
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
-#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -324,7 +323,7 @@ NS_SWIFT_NAME(AssetManager)
 @end
 
 /// 通用相册：[PHPhotoLibrary sharedPhotoLibrary]
-@interface FWPhotoLibraryWrapper (FWAssetManager)
+@interface PHPhotoLibrary (FWAssetManager)
 
 /**
  *  保存图片或视频到指定的相册
@@ -333,15 +332,11 @@ NS_SWIFT_NAME(AssetManager)
  *           原因请参考 FWAssetManager 对象的保存图片和视频方法的注释。
  *  @warning 无法通过该方法把图片保存到“智能相册”，“智能相册”只能由系统控制资源的增删。
  */
-- (void)addImageToAlbum:(CGImageRef)imageRef albumAssetCollection:(PHAssetCollection *)albumAssetCollection orientation:(UIImageOrientation)orientation completionHandler:(nullable void(^)(BOOL success, NSDate * _Nullable creationDate, NSError * _Nullable error))completionHandler;
+- (void)fw_addImageToAlbum:(CGImageRef)imageRef albumAssetCollection:(PHAssetCollection *)albumAssetCollection orientation:(UIImageOrientation)orientation completionHandler:(nullable void(^)(BOOL success, NSDate * _Nullable creationDate, NSError * _Nullable error))completionHandler NS_REFINED_FOR_SWIFT;
 
-- (void)addImageToAlbum:(NSURL *)imagePathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(nullable void(^)(BOOL success, NSDate * _Nullable creationDate, NSError * _Nullable error))completionHandler;
+- (void)fw_addImageToAlbum:(NSURL *)imagePathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(nullable void(^)(BOOL success, NSDate * _Nullable creationDate, NSError * _Nullable error))completionHandler NS_REFINED_FOR_SWIFT;
 
-- (void)addVideoToAlbum:(NSURL *)videoPathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(nullable void(^)(BOOL success, NSDate * _Nullable creationDate, NSError * _Nullable error))completionHandler;
-
-@end
-
-@interface FWPhotoLibraryClassWrapper (FWAssetManager)
+- (void)fw_addVideoToAlbum:(NSURL *)videoPathURL albumAssetCollection:(PHAssetCollection *)albumAssetCollection completionHandler:(nullable void(^)(BOOL success, NSDate * _Nullable creationDate, NSError * _Nullable error))completionHandler NS_REFINED_FOR_SWIFT;
 
 /**
  *  根据 contentType 的值产生一个合适的 PHFetchOptions，并把内容以资源创建日期排序，创建日期较新的资源排在前面
@@ -350,7 +345,7 @@ NS_SWIFT_NAME(AssetManager)
  *
  *  @return 返回一个合适的 PHFetchOptions
  */
-- (PHFetchOptions *)createFetchOptionsWithAlbumContentType:(FWAlbumContentType)contentType;
++ (PHFetchOptions *)fw_createFetchOptionsWithAlbumContentType:(FWAlbumContentType)contentType NS_REFINED_FOR_SWIFT;
 
 /**
  *  获取所有相册
@@ -361,10 +356,10 @@ NS_SWIFT_NAME(AssetManager)
  *
  *  @return 返回包含所有合适相册的数组
  */
-- (NSArray<PHAssetCollection *> *)fetchAllAlbumsWithAlbumContentType:(FWAlbumContentType)contentType showEmptyAlbum:(BOOL)showEmptyAlbum showSmartAlbum:(BOOL)showSmartAlbum;
++ (NSArray<PHAssetCollection *> *)fw_fetchAllAlbumsWithAlbumContentType:(FWAlbumContentType)contentType showEmptyAlbum:(BOOL)showEmptyAlbum showSmartAlbum:(BOOL)showSmartAlbum NS_REFINED_FOR_SWIFT;
 
 /// 获取一个 PHAssetCollection 中创建日期最新的资源
-- (nullable PHAsset *)fetchLatestAssetWithAssetCollection:(PHAssetCollection *)assetCollection;
++ (nullable PHAsset *)fw_fetchLatestAssetWithAssetCollection:(PHAssetCollection *)assetCollection NS_REFINED_FOR_SWIFT;
 
 @end
 

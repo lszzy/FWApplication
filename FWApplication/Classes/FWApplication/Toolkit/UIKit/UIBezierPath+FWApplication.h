@@ -10,81 +10,77 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWBezierPathWrapper (FWApplication)
+@interface UIBezierPath (FWApplication)
 
 // 绘制形状图片，自定义画笔宽度、画笔颜色、填充颜色，填充颜色为nil时不执行填充
-- (nullable UIImage *)shapeImage:(CGSize)size
+- (nullable UIImage *)fw_shapeImage:(CGSize)size
                      strokeWidth:(CGFloat)strokeWidth
                      strokeColor:(UIColor *)strokeColor
-                       fillColor:(nullable UIColor *)fillColor;
+                       fillColor:(nullable UIColor *)fillColor NS_REFINED_FOR_SWIFT;
 
 // 绘制形状Layer，自定义画笔宽度、画笔颜色、填充颜色，填充颜色为nil时不执行填充
-- (CAShapeLayer *)shapeLayer:(CGRect)rect
+- (CAShapeLayer *)fw_shapeLayer:(CGRect)rect
                  strokeWidth:(CGFloat)strokeWidth
                  strokeColor:(UIColor *)strokeColor
-                   fillColor:(nullable UIColor *)fillColor;
-
-@end
-
-@interface FWBezierPathClassWrapper (FWApplication)
+                   fillColor:(nullable UIColor *)fillColor NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Bezier
 
 // 根据点计算折线路径(NSValue点)
-- (UIBezierPath *)linesWithPoints:(NSArray *)points;
++ (UIBezierPath *)fw_linesWithPoints:(NSArray *)points NS_REFINED_FOR_SWIFT;
 
 // 根据点计算贝塞尔曲线路径
-- (UIBezierPath *)quadCurvedPathWithPoints:(NSArray *)points;
++ (UIBezierPath *)fw_quadCurvedPathWithPoints:(NSArray *)points NS_REFINED_FOR_SWIFT;
 
 // 计算两点的中心点
-- (CGPoint)middlePoint:(CGPoint)p1 withPoint:(CGPoint)p2;
++ (CGPoint)fw_middlePoint:(CGPoint)p1 withPoint:(CGPoint)p2 NS_REFINED_FOR_SWIFT;
 
 // 计算两点的贝塞尔曲线控制点
-- (CGPoint)controlPoint:(CGPoint)p1 withPoint:(CGPoint)p2;
++ (CGPoint)fw_controlPoint:(CGPoint)p1 withPoint:(CGPoint)p2 NS_REFINED_FOR_SWIFT;
 
 // 将角度(0~360)转换为弧度，周长为2*M_PI*r
-- (CGFloat)radianWithDegree:(CGFloat)degree;
++ (CGFloat)fw_radianWithDegree:(CGFloat)degree NS_REFINED_FOR_SWIFT;
 
 // 将弧度转换为角度(0~360)
-- (CGFloat)degreeWithRadian:(CGFloat)radian;
++ (CGFloat)fw_degreeWithRadian:(CGFloat)radian NS_REFINED_FOR_SWIFT;
 
 // 根据滑动方向计算rect的线段起点、终点中心点坐标数组(示范：田)。默认从上到下滑动
-- (NSArray<NSValue *> *)linePointsWithRect:(CGRect)rect direction:(UISwipeGestureRecognizerDirection)direction;
++ (NSArray<NSValue *> *)fw_linePointsWithRect:(CGRect)rect direction:(UISwipeGestureRecognizerDirection)direction NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Shape
 
 // "🔴" 圆的形状，0~1，degree为起始角度，如-90度
-- (UIBezierPath *)shapeCircle:(CGRect)frame percent:(float)percent degree:(CGFloat)degree;
++ (UIBezierPath *)fw_shapeCircle:(CGRect)frame percent:(float)percent degree:(CGFloat)degree NS_REFINED_FOR_SWIFT;
 
 // "❤️" 心的形状
-- (UIBezierPath *)shapeHeart:(CGRect)frame;
++ (UIBezierPath *)fw_shapeHeart:(CGRect)frame NS_REFINED_FOR_SWIFT;
 
 // "⭐" 星星的形状
-- (UIBezierPath *)shapeStar:(CGRect)frame;
++ (UIBezierPath *)fw_shapeStar:(CGRect)frame NS_REFINED_FOR_SWIFT;
 
 // "⭐⭐⭐⭐⭐" 几颗星星的形状
-- (UIBezierPath *)shapeStars:(NSUInteger)count frame:(CGRect)frame spacing:(CGFloat)spacing;
++ (UIBezierPath *)fw_shapeStars:(NSUInteger)count frame:(CGRect)frame spacing:(CGFloat)spacing NS_REFINED_FOR_SWIFT;
 
 // "➕" 加号形状
-- (UIBezierPath *)shapePlus:(CGRect)frame;
++ (UIBezierPath *)fw_shapePlus:(CGRect)frame NS_REFINED_FOR_SWIFT;
 
 // "➖" 减号形状
-- (UIBezierPath *)shapeMinus:(CGRect)frame;
++ (UIBezierPath *)fw_shapeMinus:(CGRect)frame NS_REFINED_FOR_SWIFT;
 
 // "✖" 叉叉形状(错误)
-- (UIBezierPath *)shapeCross:(CGRect)frame;
++ (UIBezierPath *)fw_shapeCross:(CGRect)frame NS_REFINED_FOR_SWIFT;
 
 // "✔" 检查形状(正确)
-- (UIBezierPath *)shapeCheck:(CGRect)frame;
++ (UIBezierPath *)fw_shapeCheck:(CGRect)frame NS_REFINED_FOR_SWIFT;
 
 // "<" 折叠形状，可指定方向
-- (UIBezierPath *)shapeFold:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction;
++ (UIBezierPath *)fw_shapeFold:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction NS_REFINED_FOR_SWIFT;
 
 // "⬅" 箭头形状，可指定方向
-- (UIBezierPath *)shapeArrow:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction;
++ (UIBezierPath *)fw_shapeArrow:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction NS_REFINED_FOR_SWIFT;
 
 // "🔺" 三角形形状，可指定方向
-- (UIBezierPath *)shapeTriangle:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction;
++ (UIBezierPath *)fw_shapeTriangle:(CGRect)frame direction:(UISwipeGestureRecognizerDirection)direction NS_REFINED_FOR_SWIFT;
 
 @end
 

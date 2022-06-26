@@ -90,7 +90,7 @@
 - (void)innerRenderTableLayout
 {
     UITableView *tableView = [(id<FWTableViewController>)self tableView];
-    [tableView.fw pinEdgesToSuperview];
+    [tableView fw_pinEdgesToSuperview];
 }
 
 @end

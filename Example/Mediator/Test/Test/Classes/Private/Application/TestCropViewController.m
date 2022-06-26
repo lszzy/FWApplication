@@ -31,10 +31,10 @@
     cropController.rotateButtonsHidden = YES;
     //cropController.toolbarHeight = 56.f;
     //cropController.toolbar.buttonInsetPadding = 12;
-    cropController.toolbar.backgroundView.backgroundColor = [UIColor.fw colorWithHex:0x121212];
-    [cropController.toolbar.cancelTextButton.fw setImage:FWIconImage(@"ion-android-close", 22)];
+    cropController.toolbar.backgroundView.backgroundColor = [UIColor fw_colorWithHex:0x121212];
+    [cropController.toolbar.cancelTextButton fw_setImage:FWIconImage(@"ion-android-close", 22)];
     [cropController.toolbar.cancelTextButton setTitle:nil forState:UIControlStateNormal];
-    [cropController.toolbar.doneTextButton.fw setImage:FWIconImage(@"ion-android-done", 22)];
+    [cropController.toolbar.doneTextButton fw_setImage:FWIconImage(@"ion-android-done", 22)];
     [cropController.toolbar.doneTextButton setTitle:nil forState:UIControlStateNormal];
     //[cropController.toolbar.resetButton fwSetImage:nil];
     //[cropController.toolbar.resetButton setTitle:@"撤销" forState:UIControlStateNormal];
@@ -105,10 +105,10 @@
 - (void)showCropViewController
 {
     FWWeakifySelf();
-    [self.fw showSheetWithTitle:nil message:nil cancel:nil actions:@[@"Crop Image", @"Make Profile"] actionBlock:^(NSInteger index) {
+    [self fw_showSheetWithTitle:nil message:nil cancel:nil actions:@[@"Crop Image", @"Make Profile"] actionBlock:^(NSInteger index) {
         FWStrongifySelf();
         self.croppingStyle = index == 0 ? FWImageCropCroppingStyleDefault : FWImageCropCroppingStyleCircular;
-        [self.fw showImagePickerWithAllowsEditing:NO completion:^(UIImage * _Nullable image, BOOL cancel) {
+        [self fw_showImagePickerWithAllowsEditing:NO completion:^(UIImage * _Nullable image, BOOL cancel) {
             FWStrongifySelf();
             if (image) {
                 self.image = image;
@@ -136,8 +136,8 @@
     
     self.navigationController.navigationBar.translucent = NO;
     
-    [self.fw addRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.addImage] target:self action:@selector(showCropViewController)];
-    [self.fw addRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.actionImage] target:self action:@selector(sharePhoto:)];
+    [self fw_addRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.addImage] target:self action:@selector(showCropViewController)];
+    [self fw_addRightBarItem:[[FWToolbarButton alloc] initWithImage:FWIcon.actionImage] target:self action:@selector(sharePhoto:)];
     
     self.imageView = [[UIImageView alloc] init];
     self.imageView.userInteractionEnabled = YES;

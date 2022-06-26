@@ -6,16 +6,16 @@
  @updated    2022/03/21
  */
 
-@import FWFramework;
+#import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWURLRequestWrapper (FWApplication)
+@interface NSURLRequest (FWApplication)
 
 /**
  生成对应curl命令，方便调试和测试
  */
-- (NSString *)curlCommand;
+- (NSString *)fw_curlCommand NS_REFINED_FOR_SWIFT;
 
 @end
 

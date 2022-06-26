@@ -39,7 +39,7 @@
     [viewController.view addSubview:webView];
     
     __weak __typeof(viewController) weakController = viewController;
-    [webView.fw observeProperty:@"title" block:^(WKWebView *webView, NSDictionary *change) {
+    [webView fw_observeProperty:@"title" block:^(WKWebView *webView, NSDictionary *change) {
         weakController.navigationItem.title = webView.title;
     }];
     
@@ -59,7 +59,7 @@
         id<WKNavigationDelegate> delegate = webView.navigationDelegate;
         FWWebViewJsBridge *bridge = [FWWebViewJsBridge bridgeForWebView:webView];
         [bridge setWebViewDelegate:delegate];
-        webView.fw.jsBridge = bridge;
+        webView.fw_jsBridge = bridge;
         
         [viewController renderWebBridge:bridge];
     }
@@ -81,7 +81,7 @@
             [leftItems addObject:webItem];
         } else {
             if (i == 0) {
-                UIBarButtonItem *leftItem = [UIBarButtonItem.fw itemWithObject:webItem block:^(id sender) {
+                UIBarButtonItem *leftItem = [UIBarButtonItem fw_itemWithObject:webItem block:^(id sender) {
                     if (weakController.webView.canGoBack) {
                         [weakController.webView goBack];
                     } else {
@@ -90,7 +90,7 @@
                 }];
                 [leftItems addObject:leftItem];
             } else {
-                UIBarButtonItem *leftItem = [UIBarButtonItem.fw itemWithObject:webItem block:^(id sender) {
+                UIBarButtonItem *leftItem = [UIBarButtonItem fw_itemWithObject:webItem block:^(id sender) {
                     [weakController onWebClose];
                 }];
                 [leftItems addObject:leftItem];
@@ -104,10 +104,10 @@
         showClose = NO;
     }
     viewController.navigationItem.leftBarButtonItems = [NSArray arrayWithObjects:showClose ? leftItems.firstObject : nil, nil];
-    viewController.fw.allowsPopGesture = ^BOOL{
+    viewController.fw_allowsPopGesture = ^BOOL{
         return !weakController.webView.canGoBack;
     };
-    [viewController.webView.fw observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary *change) {
+    [viewController.webView fw_observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary *change) {
         if (webView.canGoBack) {
             weakController.navigationItem.leftBarButtonItems = [leftItems copy];
         } else {
@@ -182,7 +182,7 @@
 - (void)innerRenderWebLayout
 {
     FWWebView *webView = [(id<FWWebViewController>)self webView];
-    [webView.fw pinEdgesToSuperview];
+    [webView fw_pinEdgesToSuperview];
 }
 
 @end

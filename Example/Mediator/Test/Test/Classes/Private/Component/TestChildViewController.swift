@@ -20,7 +20,7 @@ import FWApplication
         label.fw.layoutChain.center()
         
         let childController = TestChildSubViewController()
-        __fw.addChildViewController(childController)
+        fw.addChildViewController(childController)
     }
     
     override func viewWillAppear(_ animated: Bool) {

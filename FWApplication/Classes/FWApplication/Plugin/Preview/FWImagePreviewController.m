@@ -29,7 +29,7 @@
         self.zoomImageView = [[FWZoomImageView alloc] init];
         [self.contentView addSubview:self.zoomImageView];
         self.contentViewBounds = self.contentView.bounds;
-        self.zoomImageView.fw.frameApplyTransform = self.contentView.bounds;
+        self.zoomImageView.fw_frameApplyTransform = self.contentView.bounds;
     }
     return self;
 }
@@ -38,7 +38,7 @@
     [super layoutSubviews];
     if (!CGRectEqualToRect(self.contentView.bounds, self.contentViewBounds)) {
         self.contentViewBounds = self.contentView.bounds;
-        self.zoomImageView.fw.frameApplyTransform = self.contentView.bounds;
+        self.zoomImageView.fw_frameApplyTransform = self.contentView.bounds;
     }
 }
 
@@ -414,18 +414,18 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    self.imagePreviewView.fw.frameApplyTransform = self.view.bounds;
+    self.imagePreviewView.fw_frameApplyTransform = self.view.bounds;
     
     if (self.pageLabel.text.length < 1 && self.imagePreviewView.imageCount > 0) {
         [self updatePageLabel];
     }
-    CGPoint pageLabelCenter = self.pageLabelCenter ? self.pageLabelCenter() : CGPointMake(FWScreenWidth / 2, FWScreenHeight - (UIScreen.fw.safeAreaInsets.bottom + 18));
+    CGPoint pageLabelCenter = self.pageLabelCenter ? self.pageLabelCenter() : CGPointMake(FWScreenWidth / 2, FWScreenHeight - (UIScreen.fw_safeAreaInsets.bottom + 18));
     self.pageLabel.center = pageLabelCenter;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.fw.isPresented) {
+    if (self.fw_isPresented) {
         [self initObjectsForZoomStyleIfNeeded];
     }
     [self.imagePreviewView.collectionView reloadData];
@@ -434,7 +434,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (self.fw.isPresented) {
+    if (self.fw_isPresented) {
         self.statusBarHidden = YES;
     }
     [self setNeedsStatusBarAppearanceUpdate];
@@ -463,7 +463,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 }
 
 - (BOOL)prefersStatusBarHidden {
-    if (self.fw.visibleState < FWViewControllerVisibleStateDidAppear || self.fw.visibleState >= FWViewControllerVisibleStateDidDisappear) {
+    if (self.fw_visibleState < FWViewControllerVisibleStateDidAppear || self.fw_visibleState >= FWViewControllerVisibleStateDidDisappear) {
         // 在 present/dismiss 动画过程中，都使用原界面的状态栏显隐状态
         if (self.presentingViewController) {
             BOOL statusBarHidden = NO;
@@ -604,7 +604,7 @@ const CGFloat FWImagePreviewCornerRadiusAutomaticDimension = -1;
 }
 
 - (void)dismissingWhenTapped:(FWZoomImageView *)zoomImageView {
-    if (!self.fw.isPresented) return;
+    if (!self.fw_isPresented) return;
     
     BOOL shouldDismiss = NO;
     if (zoomImageView.videoPlayerItem) {

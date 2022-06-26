@@ -19,12 +19,12 @@ extension Wrapper where Base: UILabel {
 
     // 计算当前文本所占尺寸，需frame或者宽度布局完整
     public var textSize: CGSize {
-        return base.__fw.textSize
+        return base.__fw_textSize
     }
 
     // 计算当前属性文本所占尺寸，需frame或者宽度布局完整，attributedText需指定字体
     public var attributedTextSize: CGSize {
-        return base.__fw.attributedTextSize
+        return base.__fw_attributedTextSize
     }
     
 }

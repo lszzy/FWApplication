@@ -11,21 +11,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWStringWrapper (FWApplication)
+@interface NSString (FWApplication)
 
 #pragma mark - Pinyin
 
 /**
  中文转拼音
  */
-@property (nonatomic, copy, readonly) NSString *pinyinString;
+@property (nonatomic, copy, readonly) NSString *fw_pinyinString NS_REFINED_FOR_SWIFT;
 
 /**
  *  中文转拼音并进行比较
  *
  *  @param string 中文字符串
  */
-- (NSComparisonResult)pinyinCompare:(NSString *)string;
+- (NSComparisonResult)fw_pinyinCompare:(NSString *)string NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Regex
 
@@ -34,14 +34,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param index 目标索引
  */
-- (NSString *)emojiSubstring:(NSUInteger)index;
+- (NSString *)fw_emojiSubstring:(NSUInteger)index NS_REFINED_FOR_SWIFT;
 
 /**
  *  正则搜索子串
  *
  *  @param regex 正则表达式
  */
-- (nullable NSString *)regexSubstring:(NSString *)regex;
+- (nullable NSString *)fw_regexSubstring:(NSString *)regex NS_REFINED_FOR_SWIFT;
 
 /**
  *  正则替换字符串
@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return 替换后的字符串
  */
-- (NSString *)regexReplace:(NSString *)regex withString:(NSString *)string;
+- (NSString *)fw_regexReplace:(NSString *)regex withString:(NSString *)string NS_REFINED_FOR_SWIFT;
 
 /**
  *  正则匹配回调
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param regex 正则表达式
  *  @param block 回调句柄。range从大至小，方便replace
  */
-- (void)regexMatches:(NSString *)regex withBlock:(void (^)(NSRange range))block;
+- (void)fw_regexMatches:(NSString *)regex withBlock:(void (^)(NSRange range))block NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Html
 
@@ -68,18 +68,14 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return 转义后的字符串
  */
-@property (nonatomic, copy, readonly) NSString *escapeHtml;
-
-@end
-
-@interface FWStringClassWrapper (FWApplication)
+@property (nonatomic, copy, readonly) NSString *fw_escapeHtml NS_REFINED_FOR_SWIFT;
 
 // 创建一个UUID字符串，示例："D1178E50-2A4D-4F1F-9BD3-F6AAB00E06B1"。也可调用NSUUID.UUID.UUIDString
-@property (nonatomic, copy, readonly) NSString *UUIDString;
+@property (class, nonatomic, copy, readonly) NSString *fw_UUIDString NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWStringWrapper+FWFormat
+#pragma mark - NSString+FWFormat
 
 /**
  *  正则表达式简单说明
@@ -152,7 +148,7 @@ NS_ASSUME_NONNULL_BEGIN
  *  首先是一个转义字符\(,它能出现0次或1次(?),然后是一个0，后面跟着2个数字(\d{2})，然后是)或-或空格中的一个，它出现1次或不出现(?)，
  *  最后是8个数字(\d{8})
  */
-@interface FWStringWrapper (FWFormat)
+@interface NSString (FWFormat)
 
 /**
  *  是否符合正则表达式
@@ -162,97 +158,97 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @param regex 正则表达式
  */
-- (BOOL)isFormatRegex:(NSString *)regex;
+- (BOOL)fw_isFormatRegex:(NSString *)regex NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是手机号
  */
-- (BOOL)isFormatMobile;
+- (BOOL)fw_isFormatMobile NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是座机号
  */
-- (BOOL)isFormatTelephone;
+- (BOOL)fw_isFormatTelephone NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是整数
  */
-- (BOOL)isFormatInteger;
+- (BOOL)fw_isFormatInteger NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是数字
  */
-- (BOOL)isFormatNumber;
+- (BOOL)fw_isFormatNumber NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是合法金额，两位小数点
  */
-- (BOOL)isFormatMoney;
+- (BOOL)fw_isFormatMoney NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是身份证号
  */
-- (BOOL)isFormatIdcard;
+- (BOOL)fw_isFormatIdcard NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是银行卡号
  */
-- (BOOL)isFormatBankcard;
+- (BOOL)fw_isFormatBankcard NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是车牌号
  */
-- (BOOL)isFormatCarno;
+- (BOOL)fw_isFormatCarno NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是邮政编码
  */
-- (BOOL)isFormatPostcode;
+- (BOOL)fw_isFormatPostcode NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是工商税号
  */
-- (BOOL)isFormatTaxno;
+- (BOOL)fw_isFormatTaxno NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是邮箱
  */
-- (BOOL)isFormatEmail;
+- (BOOL)fw_isFormatEmail NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是URL
  */
-- (BOOL)isFormatUrl;
+- (BOOL)fw_isFormatUrl NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是HTML
  */
-- (BOOL)isFormatHtml;
+- (BOOL)fw_isFormatHtml NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是IP
  */
-- (BOOL)isFormatIp;
+- (BOOL)fw_isFormatIp NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否全是中文
  */
-- (BOOL)isFormatChinese;
+- (BOOL)fw_isFormatChinese NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是合法时间，格式：yyyy-MM-dd HH:mm:ss
  */
-- (BOOL)isFormatDatetime;
+- (BOOL)fw_isFormatDatetime NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是合法时间戳，格式：1301234567
  */
-- (BOOL)isFormatTimestamp;
+- (BOOL)fw_isFormatTimestamp NS_REFINED_FOR_SWIFT;
 
 /**
  *  是否是坐标点字符串，格式：latitude,longitude
  */
-- (BOOL)isFormatCoordinate;
+- (BOOL)fw_isFormatCoordinate NS_REFINED_FOR_SWIFT;
 
 @end
 

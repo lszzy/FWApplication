@@ -10,7 +10,6 @@
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 #import <Foundation/Foundation.h>
-#import "FWAppWrapper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -156,21 +155,21 @@ NS_SWIFT_NAME(AttributedLabelAttachment)
 
 @end
 
-#pragma mark - FWMutableAttributedStringWrapper+FWAttributedLabel
+#pragma mark - NSMutableAttributedString+FWAttributedLabel
 
-@interface FWMutableAttributedStringWrapper (FWAttributedLabel)
+@interface NSMutableAttributedString (FWAttributedLabel)
 
-@property (nonatomic, strong, nullable) UIColor *textColor;
-- (void)setTextColor:(UIColor*)color range:(NSRange)range;
+@property (nonatomic, strong, nullable) UIColor *fw_textColor NS_REFINED_FOR_SWIFT;
+- (void)fw_setTextColor:(UIColor*)color range:(NSRange)range NS_REFINED_FOR_SWIFT;
 
-@property (nonatomic, strong, nullable) UIFont *font;
-- (void)setFont:(UIFont*)font range:(NSRange)range;
+@property (nonatomic, strong, nullable) UIFont *fw_font NS_REFINED_FOR_SWIFT;
+- (void)fw_setFont:(UIFont*)font range:(NSRange)range NS_REFINED_FOR_SWIFT;
 
-- (void)setUnderlineStyle:(CTUnderlineStyle)style
-                   modifier:(CTUnderlineStyleModifiers)modifier;
-- (void)setUnderlineStyle:(CTUnderlineStyle)style
+- (void)fw_setUnderlineStyle:(CTUnderlineStyle)style
+                   modifier:(CTUnderlineStyleModifiers)modifier NS_REFINED_FOR_SWIFT;
+- (void)fw_setUnderlineStyle:(CTUnderlineStyle)style
                    modifier:(CTUnderlineStyleModifiers)modifier
-                      range:(NSRange)range;
+                      range:(NSRange)range NS_REFINED_FOR_SWIFT;
 
 @end
 

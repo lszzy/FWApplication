@@ -23,17 +23,17 @@
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = Theme.textColor;
     [self.view addSubview:view];
-    view.fw.layoutChain.remake().topWithInset(20).leftWithInset(20).size(CGSizeMake(100, 100)).width(50).height(50);
+    view.fw_layoutChain.remake().topWithInset(20).leftWithInset(20).size(CGSizeMake(100, 100)).width(50).height(50);
     
     UILabel *label = [[UILabel alloc] init];
     label.text = @"text";
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = Theme.textColor;
     label.backgroundColor = Theme.backgroundColor;
-    label.fw.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    [label.fw setCornerRadius:5];
+    label.fw_contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    [label fw_setCornerRadius:5];
     [self.view addSubview:label];
-    [label.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [label fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.widthToView(view).centerYToView(view).leftToViewRightWithOffset(view, 20);
     }];
     
@@ -41,16 +41,16 @@
     [button setTitleColor:[Theme textColor] forState:UIControlStateNormal];
     [button setTitle:@"btn" forState:UIControlStateNormal];
     [self.view addSubview:button];
-    button.fw.layoutChain.widthToView(view).heightToView(view).leftToViewRightWithOffset(label, 20).topToViewWithOffset(view, 0);
+    button.fw_layoutChain.widthToView(view).heightToView(view).leftToViewRightWithOffset(label, 20).topToViewWithOffset(view, 0);
     
     UIImageView *image = [UIImageView new];
-    image.image = [UIImage.fw imageWithAppIcon];
+    image.image = [UIImage fw_imageWithAppIcon];
     [self.view addSubview:image];
-    image.fw.layoutChain.attribute(NSLayoutAttributeWidth, NSLayoutAttributeWidth, view).heightToWidth(1.0).centerYToView(view).attributeWithOffset(NSLayoutAttributeLeft, NSLayoutAttributeRight, button, 20);
+    image.fw_layoutChain.attribute(NSLayoutAttributeWidth, NSLayoutAttributeWidth, view).heightToWidth(1.0).centerYToView(view).attributeWithOffset(NSLayoutAttributeLeft, NSLayoutAttributeRight, button, 20);
     
     CGFloat lineHeight = ceil(FWFontRegular(16).lineHeight);
     NSString *moreText = @"点击展开";
-    self.buttonWidth = [moreText.fw sizeWithFont:FWFontRegular(16)].width + 20;
+    self.buttonWidth = [moreText fw_sizeWithFont:FWFontRegular(16)].width + 20;
     FWAttributedLabel *attr = [[FWAttributedLabel alloc] init];
     _attributedLabel = attr;
     attr.clipsToBounds = YES;
@@ -62,15 +62,15 @@
     attr.textColor = Theme.textColor;
     attr.textAlignment = kCTTextAlignmentLeft;
     [self.view addSubview:attr];
-    attr.fw.layoutChain.leftWithInset(20).rightWithInset(20).topToViewBottomWithOffset(view, 20);
+    attr.fw_layoutChain.leftWithInset(20).rightWithInset(20).topToViewBottomWithOffset(view, 20);
     
     [self.attributedLabel setText:@"我是非常长的文本，要多长有多长，我会自动截断，再附加视图，不信你看嘛，我是显示不下了的文本，我是更多文本，我是更多更多的文本，我又要换行了"];
-    UILabel *collapseLabel = [UILabel.fw labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
+    UILabel *collapseLabel = [UILabel fw_labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:@"点击收起"];
     collapseLabel.textAlignment = NSTextAlignmentCenter;
     collapseLabel.frame = CGRectMake(0, 0, self.buttonWidth, ceil(FWFontRegular(16).lineHeight));
     collapseLabel.userInteractionEnabled = YES;
     FWWeakifySelf();
-    [collapseLabel.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [collapseLabel fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.attributedLabel.lineTruncatingSpacing = self.buttonWidth;
         self.attributedLabel.numberOfLines = 2;
@@ -78,11 +78,11 @@
     }];
     [self.attributedLabel appendView:collapseLabel];
     
-    UILabel *expandLabel = [UILabel.fw labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:moreText];
+    UILabel *expandLabel = [UILabel fw_labelWithFont:FWFontRegular(16) textColor:UIColor.blueColor text:moreText];
     expandLabel.textAlignment = NSTextAlignmentCenter;
     expandLabel.frame = CGRectMake(0, 0, self.buttonWidth, lineHeight);
     expandLabel.userInteractionEnabled = YES;
-    [expandLabel.fw addTapGestureWithBlock:^(id  _Nonnull sender) {
+    [expandLabel fw_addTapGestureWithBlock:^(id  _Nonnull sender) {
         FWStrongifySelf();
         self.attributedLabel.lineTruncatingSpacing = 0;
         self.attributedLabel.numberOfLines = 0;
@@ -95,7 +95,7 @@
     emptyLabel.textColor = Theme.textColor;
     emptyLabel.backgroundColor = Theme.backgroundColor;
     [self.view addSubview:emptyLabel];
-    [emptyLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [emptyLabel fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.topToViewBottomWithOffset(attr, 20);
         make.leftWithInset(20);
     }];
@@ -104,9 +104,9 @@
     emptyLabel2.textAlignment = NSTextAlignmentCenter;
     emptyLabel2.textColor = Theme.textColor;
     emptyLabel2.backgroundColor = Theme.backgroundColor;
-    emptyLabel2.fw.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    emptyLabel2.fw_contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
     [self.view addSubview:emptyLabel2];
-    [emptyLabel2.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [emptyLabel2 fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftToViewRightWithOffset(emptyLabel, 20);
         make.centerYToView(emptyLabel);
     }];
@@ -118,7 +118,7 @@
     resultLabel.textAlignment = NSTextAlignmentCenter;
     resultLabel.textColor = Theme.textColor;
     [self.view addSubview:resultLabel];
-    [resultLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [resultLabel fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.centerX();
         make.centerYToView(emptyLabel2);
     }];
@@ -129,7 +129,7 @@
     numberLabel.textColor = Theme.textColor;
     numberLabel.text = [self numberString];
     [self.view addSubview:numberLabel];
-    [numberLabel.fw layoutMaker:^(FWLayoutChain * _Nonnull make) {
+    [numberLabel fw_layoutMaker:^(FWLayoutChain * _Nonnull make) {
         make.leftWithInset(20).rightWithInset(20)
             .topToViewBottomWithOffset(attr, 50);
     }];
@@ -140,21 +140,21 @@
     NSNumber *number = [NSNumber numberWithDouble:12345.6789];
     NSMutableString *string = [NSMutableString string];
     [string appendFormat:@"number: %@\n\n", number];
-    [string appendFormat:@"round: %@\n", [number.fw roundString:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilString:2]];
-    [string appendFormat:@"floor: %@\n", [number.fw floorString:2]];
-    [string appendFormat:@"round: %@\n", [number.fw roundNumber:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilNumber:2]];
-    [string appendFormat:@"floor: %@\n\n", [number.fw floorNumber:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundString:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilString:2]];
+    [string appendFormat:@"floor: %@\n", [number fw_floorString:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundNumber:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilNumber:2]];
+    [string appendFormat:@"floor: %@\n\n", [number fw_floorNumber:2]];
     
     number = [NSNumber numberWithDouble:0.6049];
     [string appendFormat:@"number: %@\n\n", number];
-    [string appendFormat:@"round: %@\n", [number.fw roundString:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilString:2]];
-    [string appendFormat:@"floor: %@\n", [number.fw floorString:2]];
-    [string appendFormat:@"round: %@\n", [number.fw roundNumber:2]];
-    [string appendFormat:@"ceil: %@\n", [number.fw ceilNumber:2]];
-    [string appendFormat:@"floor: %@\n", [number.fw floorNumber:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundString:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilString:2]];
+    [string appendFormat:@"floor: %@\n", [number fw_floorString:2]];
+    [string appendFormat:@"round: %@\n", [number fw_roundNumber:2]];
+    [string appendFormat:@"ceil: %@\n", [number fw_ceilNumber:2]];
+    [string appendFormat:@"floor: %@\n", [number fw_floorNumber:2]];
     return string;
 }
 

@@ -11,290 +11,284 @@
 #import "FWEmptyPluginImpl.h"
 #import <objc/runtime.h>
 
-#pragma mark - FWEmptyPluginView
+#pragma mark - UIView+FWEmptyPlugin
 
-@implementation FWViewWrapper (FWEmptyPluginView)
+@implementation UIView (FWEmptyPlugin)
 
-- (id<FWEmptyPlugin>)emptyPlugin
+- (id<FWEmptyPlugin>)fw_emptyPlugin
 {
-    id<FWEmptyPlugin> emptyPlugin = objc_getAssociatedObject(self.base, @selector(emptyPlugin));
+    id<FWEmptyPlugin> emptyPlugin = objc_getAssociatedObject(self, @selector(fw_emptyPlugin));
     if (!emptyPlugin) emptyPlugin = [FWPluginManager loadPlugin:@protocol(FWEmptyPlugin)];
     if (!emptyPlugin) emptyPlugin = FWEmptyPluginImpl.sharedInstance;
     return emptyPlugin;
 }
 
-- (void)setEmptyPlugin:(id<FWEmptyPlugin>)emptyPlugin
+- (void)setFw_emptyPlugin:(id<FWEmptyPlugin>)emptyPlugin
 {
-    objc_setAssociatedObject(self.base, @selector(emptyPlugin), emptyPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_emptyPlugin), emptyPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (UIEdgeInsets)emptyInsets
+- (UIEdgeInsets)fw_emptyInsets
 {
-    NSValue *insets = objc_getAssociatedObject(self.base, @selector(emptyInsets));
+    NSValue *insets = objc_getAssociatedObject(self, @selector(fw_emptyInsets));
     return insets ? [insets UIEdgeInsetsValue] : UIEdgeInsetsZero;
 }
 
-- (void)setEmptyInsets:(UIEdgeInsets)emptyInsets
+- (void)setFw_emptyInsets:(UIEdgeInsets)emptyInsets
 {
-    objc_setAssociatedObject(self.base, @selector(emptyInsets), [NSValue valueWithUIEdgeInsets:emptyInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_emptyInsets), [NSValue valueWithUIEdgeInsets:emptyInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)showEmptyView
+- (void)fw_showEmptyView
 {
-    [self showEmptyViewWithText:nil];
+    [self fw_showEmptyViewWithText:nil];
 }
 
-- (void)showEmptyViewLoading
+- (void)fw_showEmptyViewLoading
 {
-    [self showEmptyViewWithText:nil detail:nil image:nil loading:YES action:nil block:nil];
+    [self fw_showEmptyViewWithText:nil detail:nil image:nil loading:YES action:nil block:nil];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text
+- (void)fw_showEmptyViewWithText:(NSString *)text
 {
-    [self showEmptyViewWithText:text detail:nil];
+    [self fw_showEmptyViewWithText:text detail:nil];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail
 {
-    [self showEmptyViewWithText:text detail:detail image:nil];
+    [self fw_showEmptyViewWithText:text detail:detail image:nil];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image
 {
-    [self showEmptyViewWithText:text detail:detail image:image action:nil block:nil];
+    [self fw_showEmptyViewWithText:text detail:detail image:image action:nil block:nil];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image action:(NSString *)action block:(void (^)(id _Nonnull))block
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    [self showEmptyViewWithText:text detail:detail image:image loading:NO action:action block:block];
+    [self fw_showEmptyViewWithText:text detail:detail image:image loading:NO action:action block:block];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    [self showEmptyViewWithText:text detail:detail image:image loading:loading actions:action ? @[action] : nil block:block ? ^(NSInteger index, id  _Nonnull sender) { if (block) block(sender); } : nil];
+    [self fw_showEmptyViewWithText:text detail:detail image:image loading:loading actions:action ? @[action] : nil block:block ? ^(NSInteger index, id  _Nonnull sender) { if (block) block(sender); } : nil];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id _Nonnull))block
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id _Nonnull))block
 {
-    id<FWEmptyPlugin> plugin = self.emptyPlugin;
+    id<FWEmptyPlugin> plugin = self.fw_emptyPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(showEmptyViewWithText:detail:image:loading:actions:block:inView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
     
-    if ([self.base isKindOfClass:[UIScrollView class]]) {
-        UIScrollView *scrollView = (UIScrollView *)self.base;
-        [scrollView.fw showOverlayView];
-        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block inView:scrollView.fw.overlayView];
+    if ([self isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self;
+        [scrollView fw_showOverlayView];
+        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block inView:scrollView.fw_overlayView];
     } else {
-        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block inView:self.base];
+        [plugin showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block inView:self];
     }
 }
 
-- (void)hideEmptyView
+- (void)fw_hideEmptyView
 {
-    id<FWEmptyPlugin> plugin = self.emptyPlugin;
+    id<FWEmptyPlugin> plugin = self.fw_emptyPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(hideEmptyView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
     
-    if ([self.base isKindOfClass:[UIScrollView class]]) {
-        UIScrollView *scrollView = (UIScrollView *)self.base;
-        [plugin hideEmptyView:scrollView.fw.overlayView];
-        [scrollView.fw hideOverlayView];
+    if ([self isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self;
+        [plugin hideEmptyView:scrollView.fw_overlayView];
+        [scrollView fw_hideOverlayView];
     } else {
-        [plugin hideEmptyView:self.base];
+        [plugin hideEmptyView:self];
     }
 }
 
-- (BOOL)hasEmptyView
+- (BOOL)fw_hasEmptyView
 {
-    id<FWEmptyPlugin> plugin = self.emptyPlugin;
+    id<FWEmptyPlugin> plugin = self.fw_emptyPlugin;
     if (!plugin || ![plugin respondsToSelector:@selector(hasEmptyView:)]) {
         plugin = FWEmptyPluginImpl.sharedInstance;
     }
     
-    if ([self.base isKindOfClass:[UIScrollView class]]) {
-        UIScrollView *scrollView = (UIScrollView *)self.base;
-        return scrollView.fw.hasOverlayView && [plugin hasEmptyView:scrollView.fw.overlayView];;
+    if ([self isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self;
+        return scrollView.fw_hasOverlayView && [plugin hasEmptyView:scrollView.fw_overlayView];;
     } else {
-        return [plugin hasEmptyView:self.base];
+        return [plugin hasEmptyView:self];
     }
 }
 
 @end
 
-@implementation FWViewControllerWrapper (FWEmptyPluginView)
+#pragma mark - UIViewController+FWEmptyPlugin
 
-- (UIEdgeInsets)emptyInsets
+@implementation UIViewController (FWEmptyPlugin)
+
+- (UIEdgeInsets)fw_emptyInsets
 {
-    return self.base.view.fw.emptyInsets;
+    return self.view.fw_emptyInsets;
 }
 
-- (void)setEmptyInsets:(UIEdgeInsets)emptyInsets
+- (void)setFw_emptyInsets:(UIEdgeInsets)emptyInsets
 {
-    self.base.view.fw.emptyInsets = emptyInsets;
+    self.view.fw_emptyInsets = emptyInsets;
 }
 
-- (void)showEmptyView
+- (void)fw_showEmptyView
 {
-    [self.base.view.fw showEmptyView];
+    [self.view fw_showEmptyView];
 }
 
-- (void)showEmptyViewLoading
+- (void)fw_showEmptyViewLoading
 {
-    [self.base.view.fw showEmptyViewLoading];
+    [self.view fw_showEmptyViewLoading];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text
+- (void)fw_showEmptyViewWithText:(NSString *)text
 {
-    [self.base.view.fw showEmptyViewWithText:text];
+    [self.view fw_showEmptyViewWithText:text];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail
 {
-    [self.base.view.fw showEmptyViewWithText:text detail:detail];
+    [self.view fw_showEmptyViewWithText:text detail:detail];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image
 {
-    [self.base.view.fw showEmptyViewWithText:text detail:detail image:image];
+    [self.view fw_showEmptyViewWithText:text detail:detail image:image];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image action:(NSString *)action block:(void (^)(id _Nonnull))block
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    [self.base.view.fw showEmptyViewWithText:text detail:detail image:image action:action block:block];
+    [self.view fw_showEmptyViewWithText:text detail:detail image:image action:action block:block];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading action:(NSString *)action block:(void (^)(id _Nonnull))block
 {
-    [self.base.view.fw showEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block];
+    [self.view fw_showEmptyViewWithText:text detail:detail image:image loading:loading action:action block:block];
 }
 
-- (void)showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id _Nonnull))block
+- (void)fw_showEmptyViewWithText:(NSString *)text detail:(NSString *)detail image:(UIImage *)image loading:(BOOL)loading actions:(NSArray<NSString *> *)actions block:(void (^)(NSInteger, id _Nonnull))block
 {
-    [self.base.view.fw showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block];
+    [self.view fw_showEmptyViewWithText:text detail:detail image:image loading:loading actions:actions block:block];
 }
 
-- (void)hideEmptyView
+- (void)fw_hideEmptyView
 {
-    [self.base.view.fw hideEmptyView];
+    [self.view fw_hideEmptyView];
 }
 
-- (BOOL)hasEmptyView
+- (BOOL)fw_hasEmptyView
 {
-    return [self.base.view.fw hasEmptyView];
+    return [self.view fw_hasEmptyView];
 }
 
 @end
 
-#pragma mark - FWScrollViewWrapper+FWEmptyPlugin
+#pragma mark - UIScrollView+FWEmptyPlugin
 
-@interface FWScrollViewClassWrapper (FWEmptyPlugin)
+@implementation UIScrollView (FWEmptyPlugin)
 
-@end
-
-@implementation FWScrollViewClassWrapper (FWEmptyPlugin)
-
-- (void)enableEmptyPlugin
++ (void)fw_enableEmptyPlugin
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         FWSwizzleClass(UITableView, @selector(reloadData), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            [selfObject.fw reloadEmptyView];
+            [selfObject fw_reloadEmptyView];
             FWSwizzleOriginal();
         }));
         
         FWSwizzleClass(UITableView, @selector(endUpdates), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            [selfObject.fw reloadEmptyView];
+            [selfObject fw_reloadEmptyView];
             FWSwizzleOriginal();
         }));
         
         FWSwizzleClass(UICollectionView, @selector(reloadData), FWSwizzleReturn(void), FWSwizzleArgs(), FWSwizzleCode({
-            [selfObject.fw reloadEmptyView];
+            [selfObject fw_reloadEmptyView];
             FWSwizzleOriginal();
         }));
     });
 }
 
-@end
-
-@implementation FWScrollViewWrapper (FWEmptyPlugin)
-
-- (id<FWEmptyViewDelegate>)emptyViewDelegate
+- (id<FWEmptyViewDelegate>)fw_emptyViewDelegate
 {
-    FWWeakObject *value = objc_getAssociatedObject(self.base, @selector(emptyViewDelegate));
+    FWWeakObject *value = objc_getAssociatedObject(self, @selector(fw_emptyViewDelegate));
     return value.object;
 }
 
-- (void)setEmptyViewDelegate:(id<FWEmptyViewDelegate>)delegate
+- (void)setFw_emptyViewDelegate:(id<FWEmptyViewDelegate>)delegate
 {
-    if (!delegate) [self invalidateEmptyView];
-    objc_setAssociatedObject(self.base, @selector(emptyViewDelegate), [[FWWeakObject alloc] initWithObject:delegate], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (!delegate) [self fw_invalidateEmptyView];
+    objc_setAssociatedObject(self, @selector(fw_emptyViewDelegate), [[FWWeakObject alloc] initWithObject:delegate], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    [UIScrollView.fw enableEmptyPlugin];
+    [UIScrollView fw_enableEmptyPlugin];
 }
 
-- (void)reloadEmptyView
+- (void)fw_reloadEmptyView
 {
-    if (!self.emptyViewDelegate) return;
+    if (!self.fw_emptyViewDelegate) return;
     
     BOOL shouldDisplay = NO;
-    if ([self.emptyViewDelegate respondsToSelector:@selector(emptyViewForceDisplay:)]) {
-        shouldDisplay = [self.emptyViewDelegate emptyViewForceDisplay:self.base];
+    if ([self.fw_emptyViewDelegate respondsToSelector:@selector(emptyViewForceDisplay:)]) {
+        shouldDisplay = [self.fw_emptyViewDelegate emptyViewForceDisplay:self];
     }
     if (!shouldDisplay) {
-        if ([self.emptyViewDelegate respondsToSelector:@selector(emptyViewShouldDisplay:)]) {
-            shouldDisplay = [self.emptyViewDelegate emptyViewShouldDisplay:self.base] && [self emptyItemsCount] == 0;
+        if ([self.fw_emptyViewDelegate respondsToSelector:@selector(emptyViewShouldDisplay:)]) {
+            shouldDisplay = [self.fw_emptyViewDelegate emptyViewShouldDisplay:self] && [self fw_emptyItemsCount] == 0;
         } else {
-            shouldDisplay = [self emptyItemsCount] == 0;
+            shouldDisplay = [self fw_emptyItemsCount] == 0;
         }
     }
     
-    BOOL hideSuccess = [self invalidateEmptyView];
+    BOOL hideSuccess = [self fw_invalidateEmptyView];
     if (shouldDisplay) {
-        objc_setAssociatedObject(self.base, @selector(invalidateEmptyView), @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, @selector(fw_invalidateEmptyView), @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
-        if ([self.emptyViewDelegate respondsToSelector:@selector(emptyViewShouldScroll:)]) {
-            self.base.scrollEnabled = [self.emptyViewDelegate emptyViewShouldScroll:self.base];
+        if ([self.fw_emptyViewDelegate respondsToSelector:@selector(emptyViewShouldScroll:)]) {
+            self.scrollEnabled = [self.fw_emptyViewDelegate emptyViewShouldScroll:self];
         } else {
-            self.base.scrollEnabled = NO;
+            self.scrollEnabled = NO;
         }
         
         BOOL fadeAnimated = FWEmptyPluginImpl.sharedInstance.fadeAnimated;
         FWEmptyPluginImpl.sharedInstance.fadeAnimated = hideSuccess ? NO : fadeAnimated;
-        if ([self.emptyViewDelegate respondsToSelector:@selector(showEmptyView:)]) {
-            [self.emptyViewDelegate showEmptyView:self.base];
+        if ([self.fw_emptyViewDelegate respondsToSelector:@selector(showEmptyView:)]) {
+            [self.fw_emptyViewDelegate showEmptyView:self];
         } else {
-            [self showEmptyView];
+            [self fw_showEmptyView];
         }
         FWEmptyPluginImpl.sharedInstance.fadeAnimated = fadeAnimated;
     }
 }
 
-- (BOOL)invalidateEmptyView
+- (BOOL)fw_invalidateEmptyView
 {
-    if (![objc_getAssociatedObject(self.base, @selector(invalidateEmptyView)) boolValue]) return NO;
-    objc_setAssociatedObject(self.base, @selector(invalidateEmptyView), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (![objc_getAssociatedObject(self, @selector(fw_invalidateEmptyView)) boolValue]) return NO;
+    objc_setAssociatedObject(self, @selector(fw_invalidateEmptyView), nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    self.base.scrollEnabled = YES;
+    self.scrollEnabled = YES;
     
-    if ([self.emptyViewDelegate respondsToSelector:@selector(hideEmptyView:)]) {
-        [self.emptyViewDelegate hideEmptyView:self.base];
+    if ([self.fw_emptyViewDelegate respondsToSelector:@selector(hideEmptyView:)]) {
+        [self.fw_emptyViewDelegate hideEmptyView:self];
     } else {
-        [self hideEmptyView];
+        [self fw_hideEmptyView];
     }
     return YES;
 }
 
-- (NSInteger)emptyItemsCount
+- (NSInteger)fw_emptyItemsCount
 {
     NSInteger items = 0;
-    if (![self.base respondsToSelector:@selector(dataSource)]) {
+    if (![self respondsToSelector:@selector(dataSource)]) {
         return items;
     }
     
-    if ([self.base isKindOfClass:[UITableView class]]) {
-        UITableView *tableView = (UITableView *)self.base;
+    if ([self isKindOfClass:[UITableView class]]) {
+        UITableView *tableView = (UITableView *)self;
         id<UITableViewDataSource> dataSource = tableView.dataSource;
         
         NSInteger sections = 1;
@@ -307,8 +301,8 @@
                 items += [dataSource tableView:tableView numberOfRowsInSection:section];
             }
         }
-    } else if ([self.base isKindOfClass:[UICollectionView class]]) {
-        UICollectionView *collectionView = (UICollectionView *)self.base;
+    } else if ([self isKindOfClass:[UICollectionView class]]) {
+        UICollectionView *collectionView = (UICollectionView *)self;
         id<UICollectionViewDataSource> dataSource = collectionView.dataSource;
         
         NSInteger sections = 1;

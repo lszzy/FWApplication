@@ -32,7 +32,7 @@
         return nil;
     } else {
         return @[
-            [UIBarButtonItem.fw itemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
+            [UIBarButtonItem fw_itemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
             FWIcon.closeImage,
         ];
     }
@@ -53,7 +53,7 @@
     
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    self.isExtendedBottom = [@[@YES, @NO].fw.randomObject fw].safeBool;
+    self.isExtendedBottom = [@[@YES, @NO].fw_randomObject fw_safeBool];
     if (self.isExtendedBottom) {
         self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame
@@ -68,11 +68,11 @@
 - (void)viewDidLayoutSubviews
 {
     [super viewDidLayoutSubviews];
-    if (self.isExtendedBottom || !self.fw.isLoaded) return;
+    if (self.isExtendedBottom || !self.fw_isLoaded) return;
     
     // 顶部延伸时，不需要减顶部栏高度
-    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw.topBarHeight;
-    self.view.fw.height = FWScreenHeight - topHeight - self.fw.bottomBarHeight;
+    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw_topBarHeight;
+    self.view.fw_height = FWScreenHeight - topHeight - self.fw_bottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -92,29 +92,29 @@
 - (void)renderToolbar
 {
     FWWeakifySelf();
-    UIBarButtonItem *backItem = [UIBarButtonItem.fw itemWithObject:FWIconImage(@"ion-ios-arrow-back", 24) block:^(id  _Nonnull sender) {
+    UIBarButtonItem *backItem = [UIBarButtonItem fw_itemWithObject:FWIconImage(@"ion-ios-arrow-back", 24) block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if ([self.webView canGoBack]) [self.webView goBack];
     }];
     backItem.enabled = NO;
-    [self.webView.fw observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
+    [self.webView fw_observeProperty:@"canGoBack" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         backItem.enabled = webView.canGoBack;
         [self reloadToolbar:NO];
     }];
     
-    UIBarButtonItem *forwardItem = [UIBarButtonItem.fw itemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
+    UIBarButtonItem *forwardItem = [UIBarButtonItem fw_itemWithObject:FWIconImage(@"ion-ios-arrow-forward", 24) block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if ([self.webView canGoForward]) [self.webView goForward];
     }];
     forwardItem.enabled = NO;
-    [self.webView.fw observeProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
+    [self.webView fw_observeProperty:@"canGoForward" block:^(WKWebView *webView, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         forwardItem.enabled = webView.canGoForward;
         [self reloadToolbar:NO];
     }];
     
-    [self.webView.fw observeProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
+    [self.webView fw_observeProperty:@"isLoading" block:^(id  _Nonnull object, NSDictionary * _Nonnull change) {
         FWStrongifySelf();
         [self reloadToolbar:NO];
     }];
@@ -124,7 +124,7 @@
     spaceItem.width = 79;
     self.toolbarItems = @[flexibleItem, backItem, spaceItem, forwardItem, flexibleItem];
     
-    self.navigationController.toolbar.fw_shadowImage = [UIImage.fw imageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
+    self.navigationController.toolbar.fw_shadowImage = [UIImage fw_imageWithColor:Theme.borderColor size:CGSizeMake(self.view.bounds.size.width, 0.5)];
     self.navigationController.toolbar.fw_backgroundColor = Theme.barColor;
     self.navigationController.toolbar.fw_foregroundColor = Theme.textColor;
 }
@@ -132,11 +132,11 @@
 - (void)reloadToolbar:(BOOL)animated
 {
     if (self.webView.canGoBack || self.webView.canGoForward) {
-        if (self.fw.toolBarHidden) {
+        if (self.fw_toolBarHidden) {
             [self.navigationController setToolbarHidden:NO animated:animated];
         }
     } else {
-        if (!self.fw.toolBarHidden) {
+        if (!self.fw_toolBarHidden) {
             [self.navigationController setToolbarHidden:YES animated:animated];
         }
     }
@@ -144,7 +144,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (!scrollView.isDragging || !scrollView.fw.canScrollVertical) return;
+    if (!scrollView.isDragging || !scrollView.fw_canScrollVertical) return;
     
     CGPoint transition = [scrollView.panGestureRecognizer translationInView:scrollView.panGestureRecognizer.view];
     if (transition.y > 10.0f) {
@@ -156,12 +156,12 @@
 
 - (void)shareRequestUrl
 {
-    [UIApplication.fw openActivityItems:@[FWSafeURL(self.requestUrl)] excludedTypes:nil];
+    [UIApplication fw_openActivityItems:@[FWSafeURL(self.requestUrl)] excludedTypes:nil];
 }
 
 - (void)loadRequestUrl
 {
-    [self.fw hideEmptyView];
+    [self fw_hideEmptyView];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.requestUrl]];
     urlRequest.timeoutInterval = 30;
@@ -171,20 +171,20 @@
 
 - (void)webViewFinishLoad
 {
-    if (self.fw.isLoaded) return;
-    self.fw.isLoaded = YES;
+    if (self.fw_isLoaded) return;
+    self.fw_isLoaded = YES;
     
-    [self.fw setRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
+    [self fw_setRightBarItem:FWIcon.actionImage target:self action:@selector(shareRequestUrl)];
 }
 
 - (void)webViewFailLoad:(NSError *)error
 {
-    if (self.fw.isLoaded) return;
+    if (self.fw_isLoaded) return;
     
-    [self.fw setRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
+    [self fw_setRightBarItem:FWIcon.refreshImage target:self action:@selector(loadRequestUrl)];
     
     FWWeakifySelf();
-    [self.fw showEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {
+    [self fw_showEmptyViewWithText:error.localizedDescription detail:nil image:nil action:@"点击重试" block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         [self loadRequestUrl];
     }];
@@ -198,8 +198,8 @@
         return;
     }
     
-    if ([UIApplication.fw isSystemURL:navigationAction.request.URL]) {
-        [UIApplication.fw openURL:navigationAction.request.URL];
+    if ([UIApplication fw_isSystemURL:navigationAction.request.URL]) {
+        [UIApplication fw_openURL:navigationAction.request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
@@ -211,7 +211,7 @@
     }
     
     if ([navigationAction.request.URL.scheme isEqualToString:@"https"]) {
-        [UIApplication.fw openUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
+        [UIApplication fw_openUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
             if (success) {
                 decisionHandler(WKNavigationActionPolicyCancel);
             } else {

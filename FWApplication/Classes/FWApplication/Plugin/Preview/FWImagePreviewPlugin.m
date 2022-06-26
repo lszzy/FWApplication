@@ -11,29 +11,29 @@
 #import "FWImagePreviewPluginImpl.h"
 #import <objc/runtime.h>
 
-#pragma mark - FWImagePreviewPluginController
+#pragma mark - UIViewController+FWImagePreviewPlugin
 
-@implementation FWViewControllerWrapper (FWImagePreviewPluginController)
+@implementation UIViewController (FWImagePreviewPlugin)
 
-- (id<FWImagePreviewPlugin>)imagePreviewPlugin
+- (id<FWImagePreviewPlugin>)fw_imagePreviewPlugin
 {
-    id<FWImagePreviewPlugin> previewPlugin = objc_getAssociatedObject(self.base, @selector(imagePreviewPlugin));
+    id<FWImagePreviewPlugin> previewPlugin = objc_getAssociatedObject(self, @selector(fw_imagePreviewPlugin));
     if (!previewPlugin) previewPlugin = [FWPluginManager loadPlugin:@protocol(FWImagePreviewPlugin)];
     if (!previewPlugin) previewPlugin = FWImagePreviewPluginImpl.sharedInstance;
     return previewPlugin;
 }
 
-- (void)setImagePreviewPlugin:(id<FWImagePreviewPlugin>)imagePreviewPlugin
+- (void)setFw_imagePreviewPlugin:(id<FWImagePreviewPlugin>)imagePreviewPlugin
 {
-    objc_setAssociatedObject(self.base, @selector(imagePreviewPlugin), imagePreviewPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_imagePreviewPlugin), imagePreviewPlugin, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)showImagePreviewWithImageURLs:(NSArray *)imageURLs
+- (void)fw_showImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(NSArray *)imageInfos
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(id  _Nullable (^)(NSInteger))sourceView
 {
-    [self showImagePreviewWithImageURLs:imageURLs
+    [self fw_showImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos
                              currentIndex:currentIndex
                                sourceView:sourceView
@@ -42,7 +42,7 @@
                               customBlock:nil];
 }
 
-- (void)showImagePreviewWithImageURLs:(NSArray *)imageURLs
+- (void)fw_showImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(NSArray *)imageInfos
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(id  _Nullable (^)(NSInteger))sourceView
@@ -51,33 +51,33 @@
                             customBlock:(void (^)(id _Nonnull))customBlock
 {
     // 优先调用插件，不存在时使用默认
-    id<FWImagePreviewPlugin> imagePreviewPlugin = self.imagePreviewPlugin;
+    id<FWImagePreviewPlugin> imagePreviewPlugin = self.fw_imagePreviewPlugin;
     if (!imagePreviewPlugin || ![imagePreviewPlugin respondsToSelector:@selector(viewController:showImagePreview:imageInfos:currentIndex:sourceView:placeholderImage:renderBlock:customBlock:)]) {
         imagePreviewPlugin = FWImagePreviewPluginImpl.sharedInstance;
     }
-    [imagePreviewPlugin viewController:self.base showImagePreview:imageURLs imageInfos:imageInfos currentIndex:currentIndex sourceView:sourceView placeholderImage:placeholderImage renderBlock:renderBlock customBlock:customBlock];
+    [imagePreviewPlugin viewController:self showImagePreview:imageURLs imageInfos:imageInfos currentIndex:currentIndex sourceView:sourceView placeholderImage:placeholderImage renderBlock:renderBlock customBlock:customBlock];
 }
 
 @end
 
-@implementation FWViewWrapper (FWImagePreviewPluginController)
+@implementation UIView (FWImagePreviewPlugin)
 
-- (void)showImagePreviewWithImageURLs:(NSArray *)imageURLs
+- (void)fw_showImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(NSArray *)imageInfos
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(id  _Nullable (^)(NSInteger))sourceView
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
-    [ctrl.fw showImagePreviewWithImageURLs:imageURLs
+    [ctrl fw_showImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos
                              currentIndex:currentIndex
                                sourceView:sourceView];
 }
 
-- (void)showImagePreviewWithImageURLs:(NSArray *)imageURLs
+- (void)fw_showImagePreviewWithImageURLs:(NSArray *)imageURLs
                              imageInfos:(NSArray *)imageInfos
                            currentIndex:(NSInteger)currentIndex
                              sourceView:(id  _Nullable (^)(NSInteger))sourceView
@@ -85,11 +85,11 @@
                             renderBlock:(void (^)(__kindof UIView * _Nonnull, NSInteger))renderBlock
                             customBlock:(void (^)(id _Nonnull))customBlock
 {
-    UIViewController *ctrl = self.base.fw.viewController;
+    UIViewController *ctrl = self.fw_viewController;
     if (!ctrl || ctrl.presentedViewController) {
-        ctrl = UIWindow.fw.topPresentedController;
+        ctrl = UIWindow.fw_topPresentedController;
     }
-    [ctrl.fw showImagePreviewWithImageURLs:imageURLs
+    [ctrl fw_showImagePreviewWithImageURLs:imageURLs
                                imageInfos:imageInfos
                              currentIndex:currentIndex
                                sourceView:sourceView

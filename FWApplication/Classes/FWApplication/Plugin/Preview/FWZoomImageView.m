@@ -118,7 +118,7 @@
     }
     if (_videoCloseButton) {
         [_videoCloseButton sizeToFit];
-        CGPoint videoCloseButtonCenter = self.videoCloseButtonCenter ? self.videoCloseButtonCenter() : CGPointMake(UIScreen.fw.safeAreaInsets.left + 24, FWStatusBarHeight + FWNavigationBarHeight / 2);
+        CGPoint videoCloseButtonCenter = self.videoCloseButtonCenter ? self.videoCloseButtonCenter() : CGPointMake(UIScreen.fw_safeAreaInsets.left + 24, FWStatusBarHeight + FWNavigationBarHeight / 2);
         _videoCloseButton.center = videoCloseButtonCenter;
     }
     
@@ -153,7 +153,7 @@
 
 - (void)initImageViewIfNeeded {
     if (_imageView) return;
-    Class imageClass = [UIImageView.fw imageViewAnimatedClass];
+    Class imageClass = [UIImageView fw_imageViewAnimatedClass];
     _imageView = [[imageClass alloc] init];
     [self.scrollView addSubview:_imageView];
 }
@@ -175,7 +175,7 @@
     self.imageView.image = image;
     
     // 更新 imageView 的大小时，imageView 可能已经被缩放过，所以要应用当前的缩放
-    self.imageView.fw.frameApplyTransform = CGRectMake(0, 0, image.size.width, image.size.height);
+    self.imageView.fw_frameApplyTransform = CGRectMake(0, 0, image.size.width, image.size.height);
     
     [self hideViews];
     self.imageView.hidden = NO;
@@ -214,7 +214,7 @@
     _livePhotoView.hidden = NO;
     
     // 更新 livePhotoView 的大小时，livePhotoView 可能已经被缩放过，所以要应用当前的缩放
-    _livePhotoView.fw.frameApplyTransform = CGRectMake(0, 0, livePhoto.size.width, livePhoto.size.height);
+    _livePhotoView.fw_frameApplyTransform = CGRectMake(0, 0, livePhoto.size.width, livePhoto.size.height);
     
     [self revertZooming];
     
@@ -342,7 +342,7 @@
     self.scrollView.pinchGestureRecognizer.enabled = enabledZoomImageView;
     self.scrollView.minimumZoomScale = minimumZoomScale;
     self.scrollView.maximumZoomScale = maximumZoomScale;
-    self.contentView.fw.origin = CGPointMake(0, 0);
+    self.contentView.fw_origin = CGPointMake(0, 0);
     [self setZoomScale:zoomScale animated:NO];
     
     // 只有前后的 zoomScale 不相等，才会触发 UIScrollViewDelegate scrollViewDidZoom:，因此对于相等的情况要自己手动触发
@@ -474,7 +474,7 @@
     [self initVideoRelatedViewsIfNeeded];
     _videoPlayerLayer.player = self.videoPlayer;
     // 更新 videoPlayerView 的大小时，videoView 可能已经被缩放过，所以要应用当前的缩放
-    self.videoPlayerView.fw.frameApplyTransform = CGRectMake(0, 0, self.videoSize.width, self.videoSize.height);
+    self.videoPlayerView.fw_frameApplyTransform = CGRectMake(0, 0, self.videoSize.width, self.videoSize.height);
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleVideoPlayToEndEvent) name:AVPlayerItemDidPlayToEndTimeNotification object:videoPlayerItem];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
@@ -496,8 +496,8 @@
 }
 
 - (void)handleCloseButton:(UIButton *)button {
-    UIViewController *viewController = self.fw.viewController;
-    if (viewController && viewController.fw.isPresented) {
+    UIViewController *viewController = self.fw_viewController;
+    if (viewController && viewController.fw_isPresented) {
         [viewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -684,7 +684,7 @@
     
     _videoPlayButton = ({
         UIButton *playButton = [[UIButton alloc] init];
-        playButton.fw.touchInsets = UIEdgeInsetsMake(60, 60, 60, 60);
+        playButton.fw_touchInsets = UIEdgeInsetsMake(60, 60, 60, 60);
         playButton.tag = 1;
         [playButton setImage:self.videoPlayButtonImage forState:UIControlStateNormal];
         [playButton addTarget:self action:@selector(handlePlayButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -699,7 +699,7 @@
     
     _videoCloseButton = ({
         UIButton *closeButton = [[UIButton alloc] init];
-        closeButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        closeButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [closeButton setImage:self.videoCloseButtonImage forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(handleCloseButton:) forControlEvents:UIControlEventTouchUpInside];
         closeButton.hidden = YES;
@@ -773,10 +773,10 @@
 
 - (UIView<FWProgressViewPlugin> *)progressView {
     if (!_progressView) {
-        _progressView = [UIView.fw progressViewWithStyle:FWProgressViewStyleDefault];
+        _progressView = [UIView fw_progressViewWithStyle:FWProgressViewStyleDefault];
         _progressView.hidden = YES;
         [self addSubview:_progressView];
-        [_progressView.fw alignCenterToSuperview];
+        [_progressView fw_alignCenterToSuperview];
     }
     return _progressView;
 }
@@ -786,7 +786,7 @@
     _progressView = progressView;
     _progressView.hidden = YES;
     [self addSubview:_progressView];
-    [_progressView.fw alignCenterToSuperview];
+    [_progressView fw_alignCenterToSuperview];
 }
 
 - (CGFloat)progress {
@@ -813,7 +813,7 @@
         if ([imageURL isAbsolutePath]) {
             imageURL = [NSURL fileURLWithPath:imageURL];
         } else {
-            imageURL = [NSURL.fw urlWithString:imageURL];
+            imageURL = [NSURL fw_urlWithString:imageURL];
         }
     }
     if ([imageURL isKindOfClass:[NSURL class]]) {
@@ -823,11 +823,11 @@
         if (isVideo) imageURL = [AVPlayerItem playerItemWithURL:imageURL];
     }
 
-    [self.imageView.fw cancelImageRequest];
+    [self.imageView fw_cancelImageRequest];
     if ([imageURL isKindOfClass:[NSURL class]]) {
         self.progress = 0.01;
         __weak __typeof__(self) self_weak_ = self;
-        [self.imageView.fw setImageWithURL:imageURL placeholderImage:placeholderImage options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+        [self.imageView fw_setImageWithURL:imageURL placeholderImage:placeholderImage options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
             __typeof__(self) self = self_weak_;
             self.progress = 1;
             if (image) self.image = image;
@@ -990,21 +990,21 @@
     if (self = [super initWithFrame:frame]) {
         
         _playButton = [[UIButton alloc] init];
-        self.playButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        self.playButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [self.playButton setImage:self.playButtonImage forState:UIControlStateNormal];
         [self addSubview:self.playButton];
         
         _pauseButton = [[UIButton alloc] init];
         self.pauseButton.hidden = YES;
-        self.pauseButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+        self.pauseButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
         [self.pauseButton setImage:self.pauseButtonImage forState:UIControlStateNormal];
         [self addSubview:self.pauseButton];
         
         _slider = [[UISlider alloc] init];
         self.slider.minimumTrackTintColor = [UIColor colorWithRed:195/255.f green:195/255.f blue:195/255.f alpha:1];
         self.slider.maximumTrackTintColor = [UIColor colorWithRed:95/255.f green:95/255.f blue:95/255.f alpha:1];
-        self.slider.fw.thumbSize = CGSizeMake(12, 12);
-        self.slider.fw.thumbColor = UIColor.whiteColor;
+        self.slider.fw_thumbSize = CGSizeMake(12, 12);
+        self.slider.fw_thumbColor = UIColor.whiteColor;
         [self addSubview:self.slider];
         
         _sliderLeftLabel = [[UILabel alloc] init];
@@ -1091,22 +1091,22 @@
 
 @end
 
-#pragma mark - FWViewWrapper+FWZoomImageView
+#pragma mark - UIView+FWZoomImageView
 
-@implementation FWViewWrapper (FWZoomImageView)
+@implementation UIView (FWZoomImageView)
 
-- (CGRect)frameApplyTransform
+- (CGRect)fw_frameApplyTransform
 {
-    return self.base.frame;
+    return self.frame;
 }
 
-- (void)setFrameApplyTransform:(CGRect)frameApplyTransform
+- (void)setFw_frameApplyTransform:(CGRect)frameApplyTransform
 {
-    self.base.frame = [FWViewWrapper rectApplyTransform:frameApplyTransform transform:self.base.transform anchorPoint:self.base.layer.anchorPoint];
+    self.frame = [UIView fw_rectApplyTransform:frameApplyTransform transform:self.transform anchorPoint:self.layer.anchorPoint];
 }
 
 /// 计算目标点 targetPoint 围绕坐标点 coordinatePoint 通过 transform 之后此点的坐标。@see https://github.com/Tencent/QMUI_iOS
-+ (CGPoint)pointApplyTransform:(CGPoint)coordinatePoint targetPoint:(CGPoint)targetPoint transform:(CGAffineTransform)transform
++ (CGPoint)fw_pointApplyTransform:(CGPoint)coordinatePoint targetPoint:(CGPoint)targetPoint transform:(CGAffineTransform)transform
 {
     CGPoint p;
     p.x = (targetPoint.x - coordinatePoint.x) * transform.a + (targetPoint.y - coordinatePoint.y) * transform.c + coordinatePoint.x;
@@ -1117,15 +1117,15 @@
 }
 
 /// 系统的 CGRectApplyAffineTransform 只会按照 anchorPoint 为 (0, 0) 的方式去计算，但通常情况下我们面对的是 UIView/CALayer，它们默认的 anchorPoint 为 (.5, .5)，所以增加这个函数，在计算 transform 时可以考虑上 anchorPoint 的影响。@see https://github.com/Tencent/QMUI_iOS
-+ (CGRect)rectApplyTransform:(CGRect)rect transform:(CGAffineTransform)transform anchorPoint:(CGPoint)anchorPoint
++ (CGRect)fw_rectApplyTransform:(CGRect)rect transform:(CGAffineTransform)transform anchorPoint:(CGPoint)anchorPoint
 {
     CGFloat width = CGRectGetWidth(rect);
     CGFloat height = CGRectGetHeight(rect);
     CGPoint oPoint = CGPointMake(rect.origin.x + width * anchorPoint.x, rect.origin.y + height * anchorPoint.y);
-    CGPoint top_left = [self pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x, rect.origin.y) transform:transform];
-    CGPoint bottom_left = [self pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x, rect.origin.y + height) transform:transform];
-    CGPoint top_right = [self pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x + width, rect.origin.y) transform:transform];
-    CGPoint bottom_right = [self pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x + width, rect.origin.y + height) transform:transform];
+    CGPoint top_left = [self fw_pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x, rect.origin.y) transform:transform];
+    CGPoint bottom_left = [self fw_pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x, rect.origin.y + height) transform:transform];
+    CGPoint top_right = [self fw_pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x + width, rect.origin.y) transform:transform];
+    CGPoint bottom_right = [self fw_pointApplyTransform:oPoint targetPoint:CGPointMake(rect.origin.x + width, rect.origin.y + height) transform:transform];
     CGFloat minX = MIN(MIN(MIN(top_left.x, bottom_left.x), top_right.x), bottom_right.x);
     CGFloat maxX = MAX(MAX(MAX(top_left.x, bottom_left.x), top_right.x), bottom_right.x);
     CGFloat minY = MIN(MIN(MIN(top_left.y, bottom_left.y), top_right.y), bottom_right.y);

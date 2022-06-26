@@ -19,14 +19,14 @@
 
 static NSString *fwStaticDeviceUUID = nil;
 
-@implementation FWDeviceClassWrapper (FWApplication)
+@implementation UIDevice (FWApplication)
 
 #pragma mark - UUID
 
-- (NSString *)deviceUUID
++ (NSString *)fw_deviceUUID
 {
     if (!fwStaticDeviceUUID) {
-        @synchronized (self.base) {
+        @synchronized (self) {
             NSString *deviceUUID = [[FWKeychainManager sharedInstance] passwordForService:@"FWDeviceUUID" account:NSBundle.mainBundle.bundleIdentifier];
             if (deviceUUID.length > 0) {
                 fwStaticDeviceUUID = deviceUUID;
@@ -35,7 +35,7 @@ static NSString *fwStaticDeviceUUID = nil;
                 if (deviceUUID.length < 1) {
                     deviceUUID = [[NSUUID UUID] UUIDString];
                 }
-                [self setDeviceUUID:deviceUUID];
+                [self setFw_deviceUUID:deviceUUID];
             }
         }
     }
@@ -43,7 +43,7 @@ static NSString *fwStaticDeviceUUID = nil;
     return fwStaticDeviceUUID;
 }
 
-- (void)setDeviceUUID:(NSString *)deviceUUID
++ (void)setFw_deviceUUID:(NSString *)deviceUUID
 {
     fwStaticDeviceUUID = deviceUUID;
     
@@ -52,7 +52,7 @@ static NSString *fwStaticDeviceUUID = nil;
 
 #pragma mark - Jailbroken
 
-- (BOOL)isJailbroken
++ (BOOL)fw_isJailbroken
 {
 #if TARGET_OS_SIMULATOR
     return NO;
@@ -92,7 +92,7 @@ static NSString *fwStaticDeviceUUID = nil;
 
 #pragma mark - Network
 
-- (NSString *)ipAddress
++ (NSString *)fw_ipAddress
 {
     NSString *ipAddr = nil;
     struct ifaddrs *addrs = NULL;
@@ -116,7 +116,7 @@ static NSString *fwStaticDeviceUUID = nil;
     return ipAddr;
 }
 
-- (NSString *)hostName
++ (NSString *)fw_hostName
 {
     char hostName[256];
     int success = gethostname(hostName, 255);
@@ -130,7 +130,7 @@ static NSString *fwStaticDeviceUUID = nil;
 #endif
 }
 
-- (CTTelephonyNetworkInfo *)networkInfo
++ (CTTelephonyNetworkInfo *)fw_networkInfo
 {
     static CTTelephonyNetworkInfo *networkInfo = nil;
     static dispatch_once_t onceToken;
@@ -140,15 +140,15 @@ static NSString *fwStaticDeviceUUID = nil;
     return networkInfo;
 }
 
-- (NSString *)carrierName
++ (NSString *)fw_carrierName
 {
-    return [self networkInfo].subscriberCellularProvider.carrierName;
+    return [self fw_networkInfo].subscriberCellularProvider.carrierName;
 }
 
-- (NSString *)networkType
++ (NSString *)fw_networkType
 {
     NSString *networkType = nil;
-    NSString *accessTechnology = [self networkInfo].currentRadioAccessTechnology;
+    NSString *accessTechnology = [self fw_networkInfo].currentRadioAccessTechnology;
     if (!accessTechnology) return networkType;
     
     NSArray *types2G = @[CTRadioAccessTechnologyGPRS,

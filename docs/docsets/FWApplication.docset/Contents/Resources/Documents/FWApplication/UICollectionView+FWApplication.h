@@ -7,47 +7,47 @@
  @updated    2019/5/31
  */
 
-#import "FWAppWrapper.h"
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FWCollectionViewWrapper (FWApplication)
+@interface UICollectionView (FWApplication)
 
 /// reloadData完成回调
-- (void)reloadDataWithCompletion:(nullable void (^)(void))completion;
+- (void)fw_reloadDataWithCompletion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 /// reloadData清空尺寸缓存
-- (void)reloadDataWithoutCache;
+- (void)fw_reloadDataWithoutCache NS_REFINED_FOR_SWIFT;
 
 /// reloadData禁用动画
-- (void)reloadDataWithoutAnimation;
+- (void)fw_reloadDataWithoutAnimation NS_REFINED_FOR_SWIFT;
 
 /// reloadSections禁用动画
-- (void)reloadSectionsWithoutAnimation:(NSIndexSet *)sections;
+- (void)fw_reloadSectionsWithoutAnimation:(NSIndexSet *)sections NS_REFINED_FOR_SWIFT;
 
 /// reloadItems禁用动画
-- (void)reloadItemsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths;
+- (void)fw_reloadItemsWithoutAnimation:(NSArray<NSIndexPath *> *)indexPaths NS_REFINED_FOR_SWIFT;
 
 /// 刷新高度等，不触发reload方式
-- (void)performUpdates:(void (NS_NOESCAPE ^ _Nullable)(void))updates;
+- (void)fw_performUpdates:(void (NS_NOESCAPE ^ _Nullable)(void))updates NS_REFINED_FOR_SWIFT;
 
 @end
 
-@interface FWCollectionViewCellWrapper (FWApplication)
+@interface UICollectionViewCell (FWApplication)
 
 /// 获取当前所属collectionView
-@property (nonatomic, weak, readonly, nullable) UICollectionView *collectionView;
+@property (nonatomic, weak, readonly, nullable) UICollectionView *fw_collectionView NS_REFINED_FOR_SWIFT;
 
 /// 获取当前显示indexPath
-@property (nonatomic, readonly, nullable) NSIndexPath *indexPath;
+@property (nonatomic, readonly, nullable) NSIndexPath *fw_indexPath NS_REFINED_FOR_SWIFT;
 
 @end
 
 // iOS9+可通过UICollectionViewFlowLayout调用sectionHeadersPinToVisibleBounds实现Header悬停效果
-@interface FWCollectionViewFlowLayoutWrapper (FWApplication)
+@interface UICollectionViewFlowLayout (FWApplication)
 
 /// 设置Header和Footer是否悬停，支持iOS9+
-- (void)hoverWithHeader:(BOOL)header footer:(BOOL)footer;
+- (void)fw_hoverWithHeader:(BOOL)header footer:(BOOL)footer NS_REFINED_FOR_SWIFT;
 
 @end
 

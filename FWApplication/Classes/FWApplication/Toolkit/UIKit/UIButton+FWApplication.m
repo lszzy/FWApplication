@@ -8,9 +8,9 @@
 
 #import "UIButton+FWApplication.h"
 
-@implementation FWButtonWrapper (FWApplication)
+@implementation UIButton (FWApplication)
 
-- (void)setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state
+- (void)fw_setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state
 {
     UIImage *image = nil;
     if (backgroundColor) {
@@ -25,13 +25,13 @@
         UIGraphicsEndImageContext();
     }
     
-    [self.base setBackgroundImage:image forState:state];
+    [self setBackgroundImage:image forState:state];
 }
 
-- (dispatch_source_t)startCountDown:(NSInteger)seconds title:(NSString *)title waitTitle:(NSString *)waitTitle
+- (dispatch_source_t)fw_startCountDown:(NSInteger)seconds title:(NSString *)title waitTitle:(NSString *)waitTitle
 {
-    __weak UIButton *weakBase = self.base;
-    return [self startCountDown:seconds block:^(NSInteger countDown) {
+    __weak UIButton *weakBase = self;
+    return [self fw_startCountDown:seconds block:^(NSInteger countDown) {
         // 先设置titleLabel，再设置title，防止闪烁
         if (countDown <= 0) {
             weakBase.titleLabel.text = title;

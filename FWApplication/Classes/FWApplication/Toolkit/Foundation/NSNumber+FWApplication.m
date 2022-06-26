@@ -8,33 +8,33 @@
 
 #import "NSNumber+FWApplication.h"
 
-@implementation FWNumberWrapper (FWApplication)
+@implementation NSNumber (FWApplication)
 
-- (CGFloat)CGFloatValue
+- (CGFloat)fw_CGFloatValue
 {
 #if CGFLOAT_IS_DOUBLE
-    return [self.base doubleValue];
+    return [self doubleValue];
 #else
-    return [self.base floatValue];
+    return [self floatValue];
 #endif
 }
 
-- (NSString *)roundString:(NSInteger)digit
+- (NSString *)fw_roundString:(NSInteger)digit
 {
-    return [self formatString:digit roundingMode:NSNumberFormatterRoundHalfUp];
+    return [self fw_formatString:digit roundingMode:NSNumberFormatterRoundHalfUp];
 }
 
-- (NSString *)ceilString:(NSInteger)digit
+- (NSString *)fw_ceilString:(NSInteger)digit
 {
-    return [self formatString:digit roundingMode:NSNumberFormatterRoundCeiling];
+    return [self fw_formatString:digit roundingMode:NSNumberFormatterRoundCeiling];
 }
 
-- (NSString *)floorString:(NSInteger)digit
+- (NSString *)fw_floorString:(NSInteger)digit
 {
-    return [self formatString:digit roundingMode:NSNumberFormatterRoundFloor];
+    return [self fw_formatString:digit roundingMode:NSNumberFormatterRoundFloor];
 }
 
-- (NSString *)formatString:(NSInteger)digit
+- (NSString *)fw_formatString:(NSInteger)digit
               roundingMode:(NSNumberFormatterRoundingMode)roundingMode
 {
     NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
@@ -47,29 +47,29 @@
     formatter.usesGroupingSeparator = NO;
     formatter.currencyDecimalSeparator = @".";
     formatter.currencyGroupingSeparator = @"";
-    NSString *result = [formatter stringFromNumber:self.base];
+    NSString *result = [formatter stringFromNumber:self];
     return result ?: @"";
 }
 
-- (NSNumber *)roundNumber:(NSUInteger)digit
+- (NSNumber *)fw_roundNumber:(NSUInteger)digit
 {
-    return [self formatNumber:digit roundingMode:NSNumberFormatterRoundHalfUp];
+    return [self fw_formatNumber:digit roundingMode:NSNumberFormatterRoundHalfUp];
 }
 
-- (NSNumber *)ceilNumber:(NSUInteger)digit
+- (NSNumber *)fw_ceilNumber:(NSUInteger)digit
 {
-    return [self formatNumber:digit roundingMode:NSNumberFormatterRoundCeiling];
+    return [self fw_formatNumber:digit roundingMode:NSNumberFormatterRoundCeiling];
 }
 
-- (NSNumber *)floorNumber:(NSUInteger)digit
+- (NSNumber *)fw_floorNumber:(NSUInteger)digit
 {
-    return [self formatNumber:digit roundingMode:NSNumberFormatterRoundFloor];
+    return [self fw_formatNumber:digit roundingMode:NSNumberFormatterRoundFloor];
 }
 
-- (NSNumber *)formatNumber:(NSUInteger)digit
+- (NSNumber *)fw_formatNumber:(NSUInteger)digit
               roundingMode:(NSNumberFormatterRoundingMode)roundingMode
 {
-    NSString *string = [self formatString:digit roundingMode:roundingMode];
+    NSString *string = [self fw_formatString:digit roundingMode:roundingMode];
     return [NSNumber numberWithDouble:[string doubleValue]];
 }
 

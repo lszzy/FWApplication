@@ -35,6 +35,10 @@
         _titleMessageSpacing = 8.0;
         _textFieldHeight = 30.0;
         _sheetContainerInsets = UIEdgeInsetsZero;
+        _alertCornerRadius = 6.0;
+        _alertEdgeDistance = (MIN(FWScreenWidth, FWScreenHeight) - 275) / 2.0;
+        _sheetEdgeDistance = 70;
+        _sheetCornerRadius = 13.0;
         
         _normalColor = [FWAlertControllerAppearance colorPairsWithDynamicLightColor:[[UIColor whiteColor] colorWithAlphaComponent:0.7]
                                                            darkColor:[UIColor colorWithRed:44.0 / 255.0 green:44.0 / 255.0 blue:44.0 / 255.0 alpha:1.0]];
@@ -1225,11 +1229,11 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
     }
     _animationType = animationType;
     if (preferredStyle == FWAlertControllerStyleAlert) {
-        _minDistanceToEdges = (MIN(FWScreenWidth, FWScreenHeight) - 275) / 2.0;
-        _cornerRadius = 6.0;
+        _minDistanceToEdges = self.alertAppearance.alertEdgeDistance;
+        _cornerRadius = self.alertAppearance.alertCornerRadius;
     } else {
-        _minDistanceToEdges = 70;
-        _cornerRadius = 13.0;
+        _minDistanceToEdges = self.alertAppearance.sheetEdgeDistance;
+        _cornerRadius = self.alertAppearance.sheetCornerRadius;
     }
     if (preferredStyle == FWAlertControllerStyleAlert) {
         _actionAxis = UILayoutConstraintAxisHorizontal;
@@ -1980,7 +1984,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
         }
         [self.alertControllerView addSubview:containerView];
         if (_preferredStyle == FWAlertControllerStyleActionSheet && self.alertAppearance.sheetContainerTransparent) {
-            [containerView.fw pinEdgesToSuperviewWithInsets:self.alertAppearance.sheetContainerInsets];
+            [containerView fw_pinEdgesToSuperviewWithInsets:self.alertAppearance.sheetContainerInsets];
         } else {
             containerView.frame = self.alertControllerView.bounds;
             containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;

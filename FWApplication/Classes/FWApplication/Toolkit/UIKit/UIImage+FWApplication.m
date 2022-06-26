@@ -13,40 +13,32 @@
 #import <Accelerate/Accelerate.h>
 #import <objc/runtime.h>
 
-@interface UIImage (FWApplication)
-
-@end
-
 @implementation UIImage (FWApplication)
 
-- (void)innerImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+- (void)fw_innerImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveImageWithCompletion:));
-    objc_setAssociatedObject(self, @selector(saveImageWithCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(fw_saveImageWithCompletion:));
+    objc_setAssociatedObject(self, @selector(fw_saveImageWithCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (block) {
         block(error);
     }
 }
 
-+ (void)innerVideo:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
++ (void)fw_innerVideo:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(saveVideo:withCompletion:));
-    objc_setAssociatedObject(self, @selector(saveVideo:withCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(fw_saveVideo:withCompletion:));
+    objc_setAssociatedObject(self, @selector(fw_saveVideo:withCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (block) {
         block(error);
     }
 }
-
-@end
-
-@implementation FWImageWrapper (FWApplication)
 
 #pragma mark - Color
 
-- (UIImage *)grayImage
+- (UIImage *)fw_grayImage
 {
-    int width = self.base.size.width;
-    int height = self.base.size.height;
+    int width = self.size.width;
+    int height = self.size.height;
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
     CGContextRef context = CGBitmapContextCreate(nil, width, height, 8, 0, colorSpace, kCGImageAlphaNone);
@@ -55,7 +47,7 @@
         return nil;
     }
     
-    CGContextDrawImage(context,CGRectMake(0, 0, width, height), self.base.CGImage);
+    CGContextDrawImage(context,CGRectMake(0, 0, width, height), self.CGImage);
     CGImageRef contextRef = CGBitmapContextCreateImage(context);
     UIImage *grayImage = [UIImage imageWithCGImage:contextRef];
     CGContextRelease(context);
@@ -64,11 +56,11 @@
     return grayImage;
 }
 
-- (UIColor *)colorAtPoint:(CGPoint)point
+- (UIColor *)fw_colorAtPoint:(CGPoint)point
 {
     if (point.x < 0 || point.y < 0) return nil;
     
-    CGImageRef imageRef = self.base.CGImage;
+    CGImageRef imageRef = self.CGImage;
     NSUInteger width = CGImageGetWidth(imageRef);
     NSUInteger height = CGImageGetHeight(imageRef);
     if (point.x >= width || point.y >= height) return nil;
@@ -108,10 +100,10 @@
     return result;
 }
 
-- (UIColor *)colorAtPixel:(CGPoint)point
+- (UIColor *)fw_colorAtPixel:(CGPoint)point
 {
     // 点是否在范围内
-    if (!CGRectContainsPoint(CGRectMake(0.0f, 0.0f, self.base.size.width, self.base.size.height), point)) {
+    if (!CGRectContainsPoint(CGRectMake(0.0f, 0.0f, self.size.width, self.size.height), point)) {
         return nil;
     }
     
@@ -119,9 +111,9 @@
     // 参考: http://stackoverflow.com/questions/1042830/retrieving-a-pixel-alpha-value-for-a-uiimage
     NSInteger pointX = trunc(point.x);
     NSInteger pointY = trunc(point.y);
-    CGImageRef cgImage = self.base.CGImage;
-    NSUInteger width = self.base.size.width;
-    NSUInteger height = self.base.size.height;
+    CGImageRef cgImage = self.CGImage;
+    NSUInteger width = self.size.width;
+    NSUInteger height = self.size.height;
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     int bytesPerPixel = 4;
     int bytesPerRow = bytesPerPixel * 1;
@@ -150,13 +142,13 @@
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
-- (UIColor *)averageColor
+- (UIColor *)fw_averageColor
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     unsigned char rgba[4];
     CGContextRef context = CGBitmapContextCreate(rgba, 1, 1, 8, 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     
-    CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), self.base.CGImage);
+    CGContextDrawImage(context, CGRectMake(0, 0, 1, 1), self.CGImage);
     CGColorSpaceRelease(colorSpace);
     CGContextRelease(context);
     
@@ -177,7 +169,7 @@
 
 #pragma mark - Effect
 
-- (UIImage *)imageWithReflectScale:(CGFloat)scale
+- (UIImage *)fw_imageWithReflectScale:(CGFloat)scale
 {
     // 创建渐变mask
     static CGImageRef sharedMask = NULL;
@@ -199,8 +191,8 @@
     });
     
     // 获取反射尺寸
-    CGFloat height = ceil(self.base.size.height * scale);
-    CGSize size = CGSizeMake(self.base.size.width, height);
+    CGFloat height = ceil(self.size.height * scale);
+    CGSize size = CGSizeMake(self.size.width, height);
     CGRect bounds = CGRectMake(0.0f, 0.0f, size.width, size.height);
     
     // 创建上下文
@@ -212,8 +204,8 @@
     
     // 绘制反射图片
     CGContextScaleCTM(context, 1.0f, -1.0f);
-    CGContextTranslateCTM(context, 0.0f, -self.base.size.height);
-    [self.base drawInRect:CGRectMake(0.0f, 0.0f, self.base.size.width, self.base.size.height)];
+    CGContextTranslateCTM(context, 0.0f, -self.size.height);
+    [self drawInRect:CGRectMake(0.0f, 0.0f, self.size.width, self.size.height)];
     
     // 捕获目标图片
     UIImage *reflection = UIGraphicsGetImageFromCurrentImageContext();
@@ -221,20 +213,20 @@
     return reflection;
 }
 
-- (UIImage *)imageWithReflectScale:(CGFloat)scale gap:(CGFloat)gap alpha:(CGFloat)alpha
+- (UIImage *)fw_imageWithReflectScale:(CGFloat)scale gap:(CGFloat)gap alpha:(CGFloat)alpha
 {
     // 生成反射图片
-    UIImage *reflection = [self imageWithReflectScale:scale];
+    UIImage *reflection = [self fw_imageWithReflectScale:scale];
     CGFloat reflectionOffset = reflection.size.height + gap;
     
     // 创建上下文
-    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.base.size.width, self.base.size.height + reflectionOffset * 2.0f), NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(self.size.width, self.size.height + reflectionOffset * 2.0f), NO, 0.0f);
     
     // 绘制反射
-    [reflection drawAtPoint:CGPointMake(0.0f, reflectionOffset + self.base.size.height + gap) blendMode:kCGBlendModeNormal alpha:alpha];
+    [reflection drawAtPoint:CGPointMake(0.0f, reflectionOffset + self.size.height + gap) blendMode:kCGBlendModeNormal alpha:alpha];
     
     // 绘制图片
-    [self.base drawAtPoint:CGPointMake(0.0f, reflectionOffset)];
+    [self drawAtPoint:CGPointMake(0.0f, reflectionOffset)];
     
     // 获取结果图片
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -242,11 +234,11 @@
     return image;
 }
 
-- (UIImage *)imageWithShadowColor:(UIColor *)color offset:(CGSize)offset blur:(CGFloat)blur
+- (UIImage *)fw_imageWithShadowColor:(UIColor *)color offset:(CGSize)offset blur:(CGFloat)blur
 {
     // 计算尺寸
     CGSize border = CGSizeMake(fabs(offset.width) + blur, fabs(offset.height) + blur);
-    CGSize size = CGSizeMake(self.base.size.width + border.width * 2.0f, self.base.size.height + border.height * 2.0f);
+    CGSize size = CGSizeMake(self.size.width + border.width * 2.0f, self.size.height + border.height * 2.0f);
     
     // 创建上下文
     UIGraphicsBeginImageContextWithOptions(size, NO, 0.0f);
@@ -255,7 +247,7 @@
     // 设置阴影
     CGContextSetShadowWithColor(context, offset, blur, color.CGColor);
     // 绘制阴影
-    [self.base drawAtPoint:CGPointMake(border.width, border.height)];
+    [self drawAtPoint:CGPointMake(border.width, border.height)];
     
     // 获取图片
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -263,17 +255,17 @@
     return image;
 }
 
-- (UIImage *)maskImage
+- (UIImage *)fw_maskImage
 {
     // 获取尺寸
-    NSInteger width = CGImageGetWidth(self.base.CGImage);
-    NSInteger height = CGImageGetHeight(self.base.CGImage);
+    NSInteger width = CGImageGetWidth(self.CGImage);
+    NSInteger height = CGImageGetHeight(self.CGImage);
     
     // 创建透明图片
     NSInteger bytesPerRow = ((width + 3) / 4) * 4;
     void *data = calloc(bytesPerRow * height, sizeof(unsigned char *));
     CGContextRef context = CGBitmapContextCreate(data, width, height, 8, bytesPerRow, NULL, kCGImageAlphaOnly);
-    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), self.base.CGImage);
+    CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, width, height), self.CGImage);
     
     // 颠倒透明像素
     for (int y = 0; y < height; y++) {
@@ -293,29 +285,29 @@
     return mask;
 }
 
-- (UIImage *)imageWithBlurRadius:(CGFloat)blurRadius saturationDelta:(CGFloat)saturationDelta tintColor:(UIColor *)tintColor maskImage:(UIImage *)maskImage
+- (UIImage *)fw_imageWithBlurRadius:(CGFloat)blurRadius saturationDelta:(CGFloat)saturationDelta tintColor:(UIColor *)tintColor maskImage:(UIImage *)maskImage
 {
-    if (self.base.size.width < 1 || self.base.size.height < 1) {
+    if (self.size.width < 1 || self.size.height < 1) {
         return nil;
     }
-    if (!self.base.CGImage) {
+    if (!self.CGImage) {
         return nil;
     }
     if (maskImage && !maskImage.CGImage) {
         return nil;
     }
     
-    CGRect imageRect = { CGPointZero, self.base.size };
-    UIImage *effectImage = self.base;
+    CGRect imageRect = { CGPointZero, self.size };
+    UIImage *effectImage = self;
     
     BOOL hasBlur = blurRadius > __FLT_EPSILON__;
     BOOL hasSaturationChange = fabs(saturationDelta - 1.) > __FLT_EPSILON__;
     if (hasBlur || hasSaturationChange) {
-        UIGraphicsBeginImageContextWithOptions(self.base.size, NO, 0.0f);
+        UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
         CGContextRef effectInContext = UIGraphicsGetCurrentContext();
         CGContextScaleCTM(effectInContext, 1.0, -1.0);
-        CGContextTranslateCTM(effectInContext, 0, -self.base.size.height);
-        CGContextDrawImage(effectInContext, imageRect, self.base.CGImage);
+        CGContextTranslateCTM(effectInContext, 0, -self.size.height);
+        CGContextDrawImage(effectInContext, imageRect, self.CGImage);
         
         vImage_Buffer effectInBuffer;
         effectInBuffer.data     = CGBitmapContextGetData(effectInContext);
@@ -323,7 +315,7 @@
         effectInBuffer.height   = CGBitmapContextGetHeight(effectInContext);
         effectInBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectInContext);
         
-        UIGraphicsBeginImageContextWithOptions(self.base.size, NO, 0.0f);
+        UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
         CGContextRef effectOutContext = UIGraphicsGetCurrentContext();
         vImage_Buffer effectOutBuffer;
         effectOutBuffer.data     = CGBitmapContextGetData(effectOutContext);
@@ -374,11 +366,11 @@
         UIGraphicsEndImageContext();
     }
     
-    UIGraphicsBeginImageContextWithOptions(self.base.size, NO, 0.0f);
+    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
     CGContextRef outputContext = UIGraphicsGetCurrentContext();
     CGContextScaleCTM(outputContext, 1.0, -1.0);
-    CGContextTranslateCTM(outputContext, 0, -self.base.size.height);
-    CGContextDrawImage(outputContext, imageRect, self.base.CGImage);
+    CGContextTranslateCTM(outputContext, 0, -self.size.height);
+    CGContextDrawImage(outputContext, imageRect, self.CGImage);
     
     if (hasBlur) {
         CGContextSaveGState(outputContext);
@@ -403,13 +395,13 @@
 
 #pragma mark - Alpha
 
-- (UIImage *)alphaImage
+- (UIImage *)fw_alphaImage
 {
-    if ([self hasAlpha]) {
-        return self.base;
+    if ([self fw_hasAlpha]) {
+        return self;
     }
     
-    CGImageRef imageRef = self.base.CGImage;
+    CGImageRef imageRef = self.CGImage;
     size_t width = CGImageGetWidth(imageRef);
     size_t height = CGImageGetHeight(imageRef);
     
@@ -435,19 +427,15 @@
 
 #pragma mark - Album
 
-- (void)saveImageWithCompletion:(void (^)(NSError * _Nullable))completion
+- (void)fw_saveImageWithCompletion:(void (^)(NSError * _Nullable))completion
 {
-    objc_setAssociatedObject(self.base, @selector(saveImageWithCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    UIImageWriteToSavedPhotosAlbum(self.base, self.base, @selector(innerImage:didFinishSavingWithError:contextInfo:), NULL);
+    objc_setAssociatedObject(self, @selector(fw_saveImageWithCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    UIImageWriteToSavedPhotosAlbum(self, self, @selector(fw_innerImage:didFinishSavingWithError:contextInfo:), NULL);
 }
-
-@end
-
-@implementation FWImageClassWrapper (FWApplication)
 
 #pragma mark - View
 
-- (UIImage *)imageWithView:(UIView *)view limitWidth:(CGFloat)limitWidth
++ (UIImage *)fw_imageWithView:(UIView *)view limitWidth:(CGFloat)limitWidth
 {
     if (!view) return nil;
     
@@ -493,7 +481,7 @@
 
 #pragma mark - Icon
 
-- (UIImage *)imageWithAppIcon
++ (UIImage *)fw_imageWithAppIcon
 {
     // 获取最后一张图片
     NSDictionary *infoPlist = [[NSBundle mainBundle] infoDictionary];
@@ -501,7 +489,7 @@
     return [UIImage imageNamed:iconName];
 }
 
-- (UIImage *)imageWithAppIcon:(CGSize)size
++ (UIImage *)fw_imageWithAppIcon:(CGSize)size
 {
     NSString *iconName = [NSString stringWithFormat:@"AppIcon%.0fx%.0f", size.width, size.height];
     return [UIImage imageNamed:iconName];
@@ -509,12 +497,12 @@
 
 #pragma mark - Pdf
 
-- (UIImage *)imageWithPdf:(id)path
++ (UIImage *)fw_imageWithPdf:(id)path
 {
-    return [self imageWithPdf:path size:CGSizeZero];
+    return [self fw_imageWithPdf:path size:CGSizeZero];
 }
 
-- (UIImage *)imageWithPdf:(id)path size:(CGSize)size
++ (UIImage *)fw_imageWithPdf:(id)path size:(CGSize)size
 {
     CGPDFDocumentRef pdf = NULL;
     if ([path isKindOfClass:[NSData class]]) {
@@ -559,7 +547,7 @@
 
 #pragma mark - Emoji
 
-- (UIImage *)imageWithEmoji:(NSString *)emoji size:(CGFloat)size
++ (UIImage *)fw_imageWithEmoji:(NSString *)emoji size:(CGFloat)size
 {
     if (emoji.length == 0) return nil;
     if (size < 1) return nil;
@@ -590,18 +578,18 @@
 
 #pragma mark - Gradient
 
-- (UIImage *)gradientImageWithSize:(CGSize)size
++ (UIImage *)fw_gradientImageWithSize:(CGSize)size
                               colors:(NSArray *)colors
                            locations:(const CGFloat *)locations
                            direction:(UISwipeGestureRecognizerDirection)direction
 {
-    NSArray<NSValue *> *linePoints = [UIBezierPath.fw linePointsWithRect:CGRectMake(0, 0, size.width, size.height) direction:direction];
+    NSArray<NSValue *> *linePoints = [UIBezierPath fw_linePointsWithRect:CGRectMake(0, 0, size.width, size.height) direction:direction];
     CGPoint startPoint = [linePoints.firstObject CGPointValue];
     CGPoint endPoint = [linePoints.lastObject CGPointValue];
-    return [self gradientImageWithSize:size colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
+    return [self fw_gradientImageWithSize:size colors:colors locations:locations startPoint:startPoint endPoint:endPoint];
 }
 
-- (UIImage *)gradientImageWithSize:(CGSize)size
++ (UIImage *)fw_gradientImageWithSize:(CGSize)size
                               colors:(NSArray *)colors
                            locations:(const CGFloat *)locations
                           startPoint:(CGPoint)startPoint
@@ -627,11 +615,11 @@
 
 #pragma mark - Album
 
-- (void)saveVideo:(NSString *)videoPath withCompletion:(nullable void (^)(NSError * _Nullable))completion
++ (void)fw_saveVideo:(NSString *)videoPath withCompletion:(nullable void (^)(NSError * _Nullable))completion
 {
-    objc_setAssociatedObject(self.base, @selector(saveVideo:withCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_saveVideo:withCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoPath)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(videoPath, self.base, @selector(innerVideo:didFinishSavingWithError:contextInfo:), NULL);
+        UISaveVideoAtPathToSavedPhotosAlbum(videoPath, self, @selector(fw_innerVideo:didFinishSavingWithError:contextInfo:), NULL);
     }
 }
 

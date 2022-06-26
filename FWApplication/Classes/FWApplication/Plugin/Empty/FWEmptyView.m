@@ -77,7 +77,7 @@
     _contentView = [[UIView alloc] init];
     [self.scrollView addSubview:self.contentView];
     
-    _loadingView = [UIView.fw indicatorViewWithStyle:FWIndicatorViewStyleDefault];
+    _loadingView = [UIView fw_indicatorViewWithStyle:FWIndicatorViewStyleDefault];
     [self.contentView addSubview:self.loadingView];
     
     _imageView = [[UIImageView alloc] init];
@@ -95,13 +95,13 @@
     [self.contentView addSubview:self.detailTextLabel];
     
     UIButton *actionButton = [[UIButton alloc] init];
-    actionButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    actionButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
     _actionButton = actionButton;
     [self.contentView addSubview:self.actionButton];
     
     UIButton *moreActionButton = [[UIButton alloc] init];
     moreActionButton.hidden = YES;
-    moreActionButton.fw.touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
+    moreActionButton.fw_touchInsets = UIEdgeInsetsMake(10, 10, 10, 10);
     _moreActionButton = moreActionButton;
     [self.contentView addSubview:self.moreActionButton];
 }
@@ -369,7 +369,7 @@
 
 @end
 
-#pragma mark - FWScrollViewWrapper+FWScrollOverlayView
+#pragma mark - UIScrollView+FWScrollOverlayView
 
 @interface FWScrollOverlayView ()
 
@@ -397,11 +397,11 @@
 
 @end
 
-@implementation FWScrollViewWrapper (FWScrollOverlayView)
+@implementation UIScrollView (FWScrollOverlayView)
 
-- (UIView *)overlayView
+- (UIView *)fw_overlayView
 {
-    UIView *overlayView = objc_getAssociatedObject(self.base, @selector(overlayView));
+    UIView *overlayView = objc_getAssociatedObject(self, @selector(fw_overlayView));
     if (!overlayView) {
         overlayView = [[FWScrollOverlayView alloc] init];
         overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -409,38 +409,38 @@
         overlayView.backgroundColor = UIColor.clearColor;
         overlayView.clipsToBounds = YES;
         
-        objc_setAssociatedObject(self.base, @selector(overlayView), overlayView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, @selector(fw_overlayView), overlayView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return overlayView;
 }
 
-- (BOOL)hasOverlayView
+- (BOOL)fw_hasOverlayView
 {
-    UIView *overlayView = objc_getAssociatedObject(self.base, @selector(overlayView));
+    UIView *overlayView = objc_getAssociatedObject(self, @selector(fw_overlayView));
     return overlayView && overlayView.superview;
 }
 
-- (void)showOverlayView
+- (void)fw_showOverlayView
 {
-    [self showOverlayViewAnimated:NO];
+    [self fw_showOverlayViewAnimated:NO];
 }
 
-- (void)showOverlayViewAnimated:(BOOL)animated
+- (void)fw_showOverlayViewAnimated:(BOOL)animated
 {
-    FWScrollOverlayView *overlayView = (FWScrollOverlayView *)self.overlayView;
+    FWScrollOverlayView *overlayView = (FWScrollOverlayView *)self.fw_overlayView;
     if (!overlayView.superview) {
         overlayView.fadeAnimated = animated;
-        if (([self.base isKindOfClass:[UITableView class]] || [self.base isKindOfClass:[UICollectionView class]]) && self.base.subviews.count > 1) {
-            [self.base insertSubview:overlayView atIndex:0];
+        if (([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]]) && self.subviews.count > 1) {
+            [self insertSubview:overlayView atIndex:0];
         } else {
-            [self.base addSubview:overlayView];
+            [self addSubview:overlayView];
         }
     }
 }
 
-- (void)hideOverlayView
+- (void)fw_hideOverlayView
 {
-    UIView *overlayView = objc_getAssociatedObject(self.base, @selector(overlayView));
+    UIView *overlayView = objc_getAssociatedObject(self, @selector(fw_overlayView));
     if (overlayView && overlayView.superview) {
         [overlayView removeFromSuperview];
     }

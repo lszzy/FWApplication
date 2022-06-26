@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#pragma mark - FWNavigationControllerWrapper+FWBarTransition
+#pragma mark - UINavigationController+FWBarTransition
 
 /**
  优化导航栏转场动画闪烁的问题，默认关闭。全局启用后各个ViewController管理自己的导航栏样式，在viewDidLoad或viewViewAppear中设置即可
@@ -20,17 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
  @see https://github.com/MoZhouqi/KMNavigationBarTransition
  @see https://github.com/Tencent/QMUI_iOS
  */
-@interface FWNavigationControllerWrapper (FWBarTransition)
+@interface UINavigationController (FWBarTransition)
 
 /// 自定义转场过程中containerView的背景色，默认透明
-@property (nonatomic, strong) UIColor *containerBackgroundColor;
-
-@end
-
-@interface FWNavigationControllerClassWrapper (FWBarTransition)
+@property (nonatomic, strong) UIColor *fw_containerBackgroundColor NS_REFINED_FOR_SWIFT;
 
 /// 全局启用NavigationBar转场。启用后各个ViewController管理自己的导航栏样式，在viewDidLoad或viewViewAppear中设置即可
-- (void)enableBarTransition;
++ (void)fw_enableBarTransition NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -38,56 +34,52 @@ NS_ASSUME_NONNULL_BEGIN
  视图控制器导航栏转场分类。可设置部分界面不需要自定义转场
  @note 如果导航栏push/pop存在黑影(tab.nav.push|present.nav.push|nav.push)，可在对应控制器的viewDidLoad设置视图背景色为白色(tab.view|present.nav.view|vc.view)。
  */
-@interface FWViewControllerWrapper (FWBarTransition)
+@interface UIViewController (FWBarTransition)
 
 /// 转场动画自定义判断标识，不相等才会启用转场。默认nil启用转场。可重写或者push前设置生效
-@property (nullable, nonatomic, strong) id barTransitionIdentifier;
+@property (nullable, nonatomic, strong) id fw_barTransitionIdentifier NS_REFINED_FOR_SWIFT;
 
 @end
 
 /**
  导航栏转场分类
  */
-@interface FWNavigationBarWrapper (FWBarTransition)
+@interface UINavigationBar (FWBarTransition)
 
 /// 导航栏背景视图，显示背景色和背景图片等
-@property (nonatomic, readonly, nullable) UIView *backgroundView;
+@property (nonatomic, readonly, nullable) UIView *fw_backgroundView NS_REFINED_FOR_SWIFT;
 
 @end
 
-#pragma mark - FWNavigationControllerWrapper+FWFullscreenPopGesture
+#pragma mark - UINavigationController+FWFullscreenPopGesture
 
 /**
  导航栏全屏返回手势分类，兼容shouldPopController返回拦截方法
  @see https://github.com/forkingdog/FDFullscreenPopGesture
  */
-@interface FWNavigationControllerWrapper (FWFullscreenPopGesture)
+@interface UINavigationController (FWFullscreenPopGesture)
 
 /// 是否启用导航栏全屏返回手势，默认NO。启用时系统返回手势失效，禁用时还原系统手势。如果只禁用系统手势，设置interactivePopGestureRecognizer.enabled即可
-@property (nonatomic, assign) BOOL fullscreenPopGestureEnabled;
+@property (nonatomic, assign) BOOL fw_fullscreenPopGestureEnabled NS_REFINED_FOR_SWIFT;
 
 /// 导航栏全屏返回手势对象
-@property (nonatomic, strong, readonly) UIPanGestureRecognizer *fullscreenPopGestureRecognizer;
-
-@end
-
-@interface FWNavigationControllerClassWrapper (FWFullscreenPopGesture)
+@property (nonatomic, strong, readonly) UIPanGestureRecognizer *fw_fullscreenPopGestureRecognizer NS_REFINED_FOR_SWIFT;
 
 /// 判断手势是否是全局返回手势对象
-- (BOOL)isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer;
++ (BOOL)fw_isFullscreenPopGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer NS_REFINED_FOR_SWIFT;
 
 @end
 
 /**
  控制器全屏返回手势分类，兼容shouldPopController返回拦截方法
  */
-@interface FWViewControllerWrapper (FWFullscreenPopGesture)
+@interface UIViewController (FWFullscreenPopGesture)
 
 /// 视图控制器是否禁用全屏返回手势，默认NO
-@property (nonatomic, assign) BOOL fullscreenPopGestureDisabled;
+@property (nonatomic, assign) BOOL fw_fullscreenPopGestureDisabled NS_REFINED_FOR_SWIFT;
 
 /// 视图控制器全屏手势距离左侧最大距离，默认0，无限制
-@property (nonatomic, assign) CGFloat fullscreenPopGestureDistance;
+@property (nonatomic, assign) CGFloat fw_fullscreenPopGestureDistance NS_REFINED_FOR_SWIFT;
 
 @end
 

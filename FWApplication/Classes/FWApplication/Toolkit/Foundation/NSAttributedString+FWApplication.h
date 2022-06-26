@@ -100,41 +100,41 @@ NS_SWIFT_NAME(AttributedOption)
 
 @end
 
-#pragma mark - FWAttributedStringClassWrapper+FWApplication
+#pragma mark - NSAttributedString+FWApplication
 
 @class FWThemeObject<__covariant ObjectType>;
 
 /**
  注意iOS在后台运行时，如果调用NSAttributedString解析html会导致崩溃(如动态切换深色模式时在后台解析html)。解决方法是提前在前台解析好或者后台异步到下一个主线程RunLoop
  */
-@interface FWAttributedStringClassWrapper (FWApplication)
+@interface NSAttributedString (FWApplication)
 
 #pragma mark - Convert
 
 /// 快速创建NSAttributedString，自定义字体
-- (__kindof NSAttributedString *)attributedString:(NSString *)string withFont:(nullable UIFont *)font;
++ (instancetype)fw_attributedString:(NSString *)string withFont:(nullable UIFont *)font NS_REFINED_FOR_SWIFT;
 
 /// 快速创建NSAttributedString，自定义字体和颜色
-- (__kindof NSAttributedString *)attributedString:(NSString *)string withFont:(nullable UIFont *)font textColor:(nullable UIColor *)textColor;
++ (instancetype)fw_attributedString:(NSString *)string withFont:(nullable UIFont *)font textColor:(nullable UIColor *)textColor NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Html
 
 /// html字符串转换为NSAttributedString对象，可设置默认系统字体和颜色(附加CSS方式)
-- (nullable __kindof NSAttributedString *)attributedStringWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)attributes;
++ (nullable instancetype)fw_attributedStringWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)attributes NS_REFINED_FOR_SWIFT;
 
 /// html字符串转换为NSAttributedString主题对象，可设置默认系统字体和动态颜色，详见FWThemeObject
-- (FWThemeObject<NSAttributedString *> *)themeObjectWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)attributes;
++ (FWThemeObject<NSAttributedString *> *)fw_themeObjectWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey, id> *)attributes NS_REFINED_FOR_SWIFT;
 
 // 获取颜色对应CSS字符串(rgb|rgba格式)
-- (NSString *)CSSStringWithColor:(UIColor *)color;
++ (NSString *)fw_CSSStringWithColor:(UIColor *)color NS_REFINED_FOR_SWIFT;
 
 // 获取系统字体对应CSS字符串(family|style|weight|size)
-- (NSString *)CSSStringWithFont:(UIFont *)font;
++ (NSString *)fw_CSSStringWithFont:(UIFont *)font NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Option
 
 // 快速创建NSAttributedString，自定义选项
-- (__kindof NSAttributedString *)attributedString:(NSString *)string withOption:(nullable FWAttributedOption *)option;
++ (instancetype)fw_attributedString:(NSString *)string withOption:(nullable FWAttributedOption *)option NS_REFINED_FOR_SWIFT;
 
 @end
 

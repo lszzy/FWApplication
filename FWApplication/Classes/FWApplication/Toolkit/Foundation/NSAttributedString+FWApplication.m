@@ -28,7 +28,7 @@
 {
     self = [super init];
     if (self) {
-        [self.fw applyAppearance];
+        [self fw_applyAppearance];
     }
     return self;
 }
@@ -115,16 +115,16 @@
 
 @end
 
-@implementation FWAttributedStringClassWrapper (FWApplication)
+@implementation NSAttributedString (FWApplication)
 
 #pragma mark - Convert
 
-- (__kindof NSAttributedString *)attributedString:(NSString *)string withFont:(UIFont *)font
++ (instancetype)fw_attributedString:(NSString *)string withFont:(UIFont *)font
 {
-    return [self attributedString:string withFont:font textColor:nil];
+    return [self fw_attributedString:string withFont:font textColor:nil];
 }
 
-- (__kindof NSAttributedString *)attributedString:(NSString *)string withFont:(UIFont *)font textColor:(UIColor *)textColor
++ (instancetype)fw_attributedString:(NSString *)string withFont:(UIFont *)font textColor:(UIColor *)textColor
 {
     NSMutableDictionary *attr = [[NSMutableDictionary alloc] init];
     if (font) {
@@ -133,12 +133,12 @@
     if (textColor) {
         attr[NSForegroundColorAttributeName] = textColor;
     }
-    return [[self.base alloc] initWithString:string attributes:attr];
+    return [[self alloc] initWithString:string attributes:attr];
 }
 
 #pragma mark - Html
 
-- (__kindof NSAttributedString *)attributedStringWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey,id> *)attributes
++ (instancetype)fw_attributedStringWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey,id> *)attributes
 {
     if (!htmlString || htmlString.length < 1) return nil;
     
@@ -146,21 +146,21 @@
         NSString *cssString = @"";
         UIColor *textColor = attributes[NSForegroundColorAttributeName];
         if (textColor != nil) {
-            cssString = [cssString stringByAppendingFormat:@"color:%@;", [self CSSStringWithColor:textColor]];
+            cssString = [cssString stringByAppendingFormat:@"color:%@;", [self fw_CSSStringWithColor:textColor]];
         }
         UIFont *font = attributes[NSFontAttributeName];
         if (font != nil) {
-            cssString = [cssString stringByAppendingString:[self CSSStringWithFont:font]];
+            cssString = [cssString stringByAppendingString:[self fw_CSSStringWithFont:font]];
         }
         if (cssString.length > 0) {
             htmlString = [NSString stringWithFormat:@"<style type='text/css'>html{%@}</style>%@", cssString, htmlString];
         }
     }
     
-    return [self attributedStringWithHtmlString:htmlString];
+    return [self fw_attributedStringWithHtmlString:htmlString];
 }
 
-- (FWThemeObject<NSAttributedString *> *)themeObjectWithHtmlString:(NSString *)htmlString defaultAttributes:(NSDictionary<NSAttributedStringKey,id> *)attributes
++ (FWThemeObject<NSAttributedString *> *)fw_themeObjectWithHtmlString:(NSString *)htmlString defaultAttributes:(NSDictionary<NSAttributedStringKey,id> *)attributes
 {
     NSMutableDictionary *lightAttributes = [NSMutableDictionary dictionary];
     NSMutableDictionary *darkAttributes = [NSMutableDictionary dictionary];
@@ -177,12 +177,12 @@
         }
     }
     
-    NSAttributedString *lightObject = [self attributedStringWithHtmlString:htmlString defaultAttributes:lightAttributes];
-    NSAttributedString *darkObject = [self attributedStringWithHtmlString:htmlString defaultAttributes:darkAttributes];
+    NSAttributedString *lightObject = [self fw_attributedStringWithHtmlString:htmlString defaultAttributes:lightAttributes];
+    NSAttributedString *darkObject = [self fw_attributedStringWithHtmlString:htmlString defaultAttributes:darkAttributes];
     return [FWThemeObject objectWithLight:lightObject dark:darkObject];
 }
 
-- (NSString *)CSSStringWithColor:(UIColor *)color
++ (NSString *)fw_CSSStringWithColor:(UIColor *)color
 {
     CGFloat r = 0, g = 0, b = 0, a = 0;
     if (![color getRed:&r green:&g blue:&b alpha:&a]) {
@@ -198,7 +198,7 @@
     }
 }
 
-- (NSString *)CSSStringWithFont:(UIFont *)font
++ (NSString *)fw_CSSStringWithFont:(UIFont *)font
 {
     static NSDictionary *fontWeights = nil;
     static dispatch_once_t onceToken;
@@ -240,9 +240,9 @@
 
 #pragma mark - Option
 
-- (__kindof NSAttributedString *)attributedString:(NSString *)string withOption:(FWAttributedOption *)option
++ (instancetype)fw_attributedString:(NSString *)string withOption:(FWAttributedOption *)option
 {
-    return [[self.base alloc] initWithString:string attributes:[option toDictionary]];
+    return [[self alloc] initWithString:string attributes:[option toDictionary]];
 }
 
 @end
