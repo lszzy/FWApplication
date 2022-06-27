@@ -43,7 +43,7 @@
     if (self.webView.canGoBack) {
         [self.webView goBack];
     } else {
-        [self onWebClose];
+        [self fw_closeViewControllerAnimated:YES];
     }
 }
 

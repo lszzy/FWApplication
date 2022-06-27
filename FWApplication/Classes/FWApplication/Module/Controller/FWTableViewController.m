@@ -20,10 +20,10 @@
     FWViewControllerIntercepter *intercepter = [[FWViewControllerIntercepter alloc] init];
     intercepter.loadViewIntercepter = @selector(tableViewControllerLoadView:);
     intercepter.forwardSelectors = @{
-        @"tableView" : @"innerTableView",
-        @"tableData" : @"innerTableData",
-        @"renderTableStyle" : @"innerRenderTableStyle",
-        @"renderTableLayout" : @"innerRenderTableLayout",
+        @"tableView" : @"fw_innerTableView",
+        @"tableData" : @"fw_innerTableData",
+        @"renderTableStyle" : @"fw_innerRenderTableStyle",
+        @"renderTableLayout" : @"fw_innerRenderTableLayout",
     };
     [[FWViewControllerManager sharedInstance] registerProtocol:@protocol(FWTableViewController) withIntercepter:intercepter];
 }
@@ -58,7 +58,7 @@
 
 @implementation UIViewController (FWTableViewController)
 
-- (UITableView *)innerTableView
+- (UITableView *)fw_innerTableView
 {
     UITableView *tableView = objc_getAssociatedObject(self, _cmd);
     if (!tableView) {
@@ -72,7 +72,7 @@
     return tableView;
 }
 
-- (NSMutableArray *)innerTableData
+- (NSMutableArray *)fw_innerTableData
 {
     NSMutableArray *tableData = objc_getAssociatedObject(self, _cmd);
     if (!tableData) {
@@ -82,12 +82,12 @@
     return tableData;
 }
 
-- (UITableViewStyle)innerRenderTableStyle
+- (UITableViewStyle)fw_innerRenderTableStyle
 {
     return UITableViewStylePlain;
 }
 
-- (void)innerRenderTableLayout
+- (void)fw_innerRenderTableLayout
 {
     UITableView *tableView = [(id<FWTableViewController>)self tableView];
     [tableView fw_pinEdgesToSuperview];

@@ -25,7 +25,7 @@ NS_SWIFT_NAME(WebViewControllerProtocol)
 @property (nonatomic, readonly) FWWebView *webView NS_SWIFT_UNAVAILABLE("");
 
 /// 左侧按钮组，依次为返回|关闭，支持UIBarButtonItem|UIImage|NSString|NSNumber等。可覆写，默认nil
-@property (nullable, nonatomic, readonly) NSArray *webItems NS_SWIFT_UNAVAILABLE("");
+@property (nullable, nonatomic, copy) NSArray *webItems NS_SWIFT_UNAVAILABLE("");
 
 /// 网页请求，设置后会自动加载，支持NSString|NSURL|NSURLRequest。默认nil
 @property (nullable, nonatomic, strong) id webRequest NS_SWIFT_UNAVAILABLE("");
@@ -41,9 +41,6 @@ NS_SWIFT_NAME(WebViewControllerProtocol)
 
 /// 渲染网页桥接，renderView之前调用，默认未实现
 - (void)renderWebBridge:(FWWebViewJsBridge *)bridge;
-
-/// 点击关闭按钮(不含手势返回)，可用来拦截关闭时二次确认等，默认直接关闭
-- (void)onWebClose;
 
 @end
 

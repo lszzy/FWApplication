@@ -22,12 +22,12 @@
     intercepter.loadViewIntercepter = @selector(webViewControllerLoadView:);
     intercepter.viewDidLoadIntercepter = @selector(webViewControllerViewDidLoad:);
     intercepter.forwardSelectors = @{
-        @"webView" : @"innerWebView",
-        @"webItems" : @"innerWebItems",
-        @"webRequest" : @"innerWebRequest",
-        @"setWebRequest:" : @"innerSetWebRequest:",
-        @"renderWebLayout" : @"innerRenderWebLayout",
-        @"onWebClose": @"innerOnWebClose",
+        @"webView" : @"fw_innerWebView",
+        @"webItems" : @"fw_innerWebItems",
+        @"setWebItems:" : @"fw_innerSetWebItems:",
+        @"webRequest" : @"fw_innerWebRequest",
+        @"setWebRequest:" : @"fw_innerSetWebRequest:",
+        @"renderWebLayout" : @"fw_innerRenderWebLayout",
     };
     [[FWViewControllerManager sharedInstance] registerProtocol:@protocol(FWWebViewController) withIntercepter:intercepter];
 }
@@ -85,13 +85,35 @@
                     if (weakController.webView.canGoBack) {
                         [weakController.webView goBack];
                     } else {
-                        [weakController onWebClose];
+                        if (weakController.navigationController) {
+                            if ([weakController.navigationController popViewControllerAnimated:YES]) return;
+                        }
+                        if (weakController.presentingViewController) {
+                            [weakController dismissViewControllerAnimated:YES completion:nil];
+                            return;
+                        }
+                        
+                        WKBackForwardListItem *firstItem = weakController.webView.backForwardList.backList.firstObject;
+                        if (firstItem != nil) {
+                            [weakController.webView goToBackForwardListItem:firstItem];
+                        }
                     }
                 }];
                 [leftItems addObject:leftItem];
             } else {
                 UIBarButtonItem *leftItem = [UIBarButtonItem fw_itemWithObject:webItem block:^(id sender) {
-                    [weakController onWebClose];
+                    if (weakController.navigationController) {
+                        if ([weakController.navigationController popViewControllerAnimated:YES]) return;
+                    }
+                    if (weakController.presentingViewController) {
+                        [weakController dismissViewControllerAnimated:YES completion:nil];
+                        return;
+                    }
+                    
+                    WKBackForwardListItem *firstItem = weakController.webView.backForwardList.backList.firstObject;
+                    if (firstItem != nil) {
+                        [weakController.webView goToBackForwardListItem:firstItem];
+                    }
                 }];
                 [leftItems addObject:leftItem];
             }
@@ -128,7 +150,7 @@
 
 @implementation UIViewController (FWWebViewController)
 
-- (FWWebView *)innerWebView
+- (FWWebView *)fw_innerWebView
 {
     FWWebView *webView = objc_getAssociatedObject(self, _cmd);
     if (!webView) {
@@ -142,36 +164,24 @@
     return webView;
 }
 
-- (NSArray *)innerWebItems
+- (NSArray *)fw_innerWebItems
 {
-    return nil;
+    return objc_getAssociatedObject(self, @selector(fw_innerWebItems));
 }
 
-- (void)innerOnWebClose
+- (void)fw_innerSetWebItems:(NSArray *)webItems
 {
-    if (self.navigationController) {
-        if ([self.navigationController popViewControllerAnimated:YES]) return;
-    }
-    if (self.presentingViewController) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-        return;
-    }
-    
-    FWWebView *webView = [(id<FWWebViewController>)self webView];
-    WKBackForwardListItem *firstItem = webView.backForwardList.backList.firstObject;
-    if (firstItem != nil) {
-        [webView goToBackForwardListItem:firstItem];
-    }
+    objc_setAssociatedObject(self, @selector(fw_innerWebItems), webItems, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (id)innerWebRequest
+- (id)fw_innerWebRequest
 {
-    return objc_getAssociatedObject(self, @selector(innerWebRequest));
+    return objc_getAssociatedObject(self, @selector(fw_innerWebRequest));
 }
 
-- (void)innerSetWebRequest:(id)webRequest
+- (void)fw_innerSetWebRequest:(id)webRequest
 {
-    objc_setAssociatedObject(self, @selector(innerWebRequest), webRequest, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fw_innerWebRequest), webRequest, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     if (self.isViewLoaded) {
         FWWebView *webView = [(id<FWWebViewController>)self webView];
@@ -179,7 +189,7 @@
     }
 }
 
-- (void)innerRenderWebLayout
+- (void)fw_innerRenderWebLayout
 {
     FWWebView *webView = [(id<FWWebViewController>)self webView];
     [webView fw_pinEdgesToSuperview];
