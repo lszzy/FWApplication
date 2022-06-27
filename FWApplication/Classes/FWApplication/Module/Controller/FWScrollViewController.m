@@ -20,9 +20,9 @@
     FWViewControllerIntercepter *intercepter = [[FWViewControllerIntercepter alloc] init];
     intercepter.loadViewIntercepter = @selector(scrollViewControllerLoadView:);
     intercepter.forwardSelectors = @{
-        @"scrollView" : @"innerScrollView",
-        @"contentView" : @"innerContentView",
-        @"renderScrollLayout" : @"innerRenderScrollLayout",
+        @"scrollView" : @"fw_innerScrollView",
+        @"contentView" : @"fw_innerContentView",
+        @"renderScrollLayout" : @"fw_innerRenderScrollLayout",
     };
     [[FWViewControllerManager sharedInstance] registerProtocol:@protocol(FWScrollViewController) withIntercepter:intercepter];
 }
@@ -59,7 +59,7 @@
 
 @implementation UIViewController (FWScrollViewController)
 
-- (UIScrollView *)innerScrollView
+- (UIScrollView *)fw_innerScrollView
 {
     UIScrollView *scrollView = objc_getAssociatedObject(self, _cmd);
     if (!scrollView) {
@@ -71,7 +71,7 @@
     return scrollView;
 }
 
-- (UIView *)innerContentView
+- (UIView *)fw_innerContentView
 {
     UIView *contentView = objc_getAssociatedObject(self, _cmd);
     if (!contentView) {
@@ -81,7 +81,7 @@
     return contentView;
 }
 
-- (void)innerRenderScrollLayout
+- (void)fw_innerRenderScrollLayout
 {
     UIScrollView *scrollView = [(id<FWScrollViewController>)self scrollView];
     [scrollView fw_pinEdgesToSuperview];

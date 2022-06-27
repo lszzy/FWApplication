@@ -20,10 +20,10 @@
     FWViewControllerIntercepter *intercepter = [[FWViewControllerIntercepter alloc] init];
     intercepter.loadViewIntercepter = @selector(collectionViewControllerLoadView:);
     intercepter.forwardSelectors = @{
-        @"collectionView" : @"innerCollectionView",
-        @"collectionData" : @"innerCollectionData",
-        @"renderCollectionViewLayout" : @"innerRenderCollectionViewLayout",
-        @"renderCollectionLayout" : @"innerRenderCollectionLayout",
+        @"collectionView" : @"fw_innerCollectionView",
+        @"collectionData" : @"fw_innerCollectionData",
+        @"renderCollectionViewLayout" : @"fw_innerRenderCollectionViewLayout",
+        @"renderCollectionLayout" : @"fw_innerRenderCollectionLayout",
     };
     [[FWViewControllerManager sharedInstance] registerProtocol:@protocol(FWCollectionViewController) withIntercepter:intercepter];
 }
@@ -58,7 +58,7 @@
 
 @implementation UIViewController (FWCollectionViewController)
 
-- (UICollectionView *)innerCollectionView
+- (UICollectionView *)fw_innerCollectionView
 {
     UICollectionView *collectionView = objc_getAssociatedObject(self, _cmd);
     if (!collectionView) {
@@ -71,7 +71,7 @@
     return collectionView;
 }
 
-- (NSMutableArray *)innerCollectionData
+- (NSMutableArray *)fw_innerCollectionData
 {
     NSMutableArray *collectionData = objc_getAssociatedObject(self, _cmd);
     if (!collectionData) {
@@ -81,7 +81,7 @@
     return collectionData;
 }
 
-- (UICollectionViewLayout *)innerRenderCollectionViewLayout
+- (UICollectionViewLayout *)fw_innerRenderCollectionViewLayout
 {
     UICollectionViewFlowLayout *viewLayout = [[UICollectionViewFlowLayout alloc] init];
     viewLayout.minimumLineSpacing = 0;
@@ -89,7 +89,7 @@
     return viewLayout;
 }
 
-- (void)innerRenderCollectionLayout
+- (void)fw_innerRenderCollectionLayout
 {
     UICollectionView *collectionView = [(id<FWCollectionViewController>)self collectionView];
     [collectionView fw_pinEdgesToSuperview];

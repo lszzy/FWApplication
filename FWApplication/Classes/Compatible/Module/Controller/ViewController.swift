@@ -98,7 +98,12 @@ extension WebViewControllerProtocol where Self: UIViewController {
     
     /// 左侧按钮组，依次为返回|关闭，支持UIBarButtonItem|UIImage|NSString|NSNumber等。可覆写，默认nil
     @nonobjc public var webItems: NSArray? {
-        return ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webItems"), withObject: self) as? NSArray
+        get {
+            return ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("webItems"), withObject: self) as? NSArray
+        }
+        set {
+            ViewControllerManager.sharedInstance.performIntercepter(NSSelectorFromString("setWebItems:"), withObject: self, parameter: newValue)
+        }
     }
     
     /// 网页请求，设置后会自动加载，支持NSString|NSURL|NSURLRequest。默认nil
