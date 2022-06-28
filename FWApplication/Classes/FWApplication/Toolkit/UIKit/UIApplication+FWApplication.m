@@ -52,7 +52,11 @@
 
 + (NSString *)fw_appExecutable
 {
-    return [self fw_appInfo:(__bridge NSString *)kCFBundleExecutableKey];
+    NSString *appExecutable = [self fw_appInfo:(__bridge NSString *)kCFBundleExecutableKey];
+    if (!appExecutable) {
+        appExecutable = [self fw_appIdentifier];
+    }
+    return appExecutable;
 }
 
 #pragma mark - Debug
