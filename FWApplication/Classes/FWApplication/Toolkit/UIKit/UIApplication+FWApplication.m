@@ -47,7 +47,12 @@
 
 + (NSString *)fw_appIdentifier
 {
-    return [self fw_appInfo:@"CFBundleIdentifier"];
+    return [self fw_appInfo:(__bridge NSString *)kCFBundleIdentifierKey];
+}
+
++ (NSString *)fw_appExecutable
+{
+    return [self fw_appInfo:(__bridge NSString *)kCFBundleExecutableKey];
 }
 
 #pragma mark - Debug

@@ -35,6 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 // 读取应用标识
 @property (class, nonatomic, copy, readonly) NSString *fw_appIdentifier NS_REFINED_FOR_SWIFT;
 
+// 读取应用可执行程序
+@property (class, nonatomic, copy, readonly) NSString *fw_appExecutable NS_REFINED_FOR_SWIFT;
+
 #pragma mark - Debug
 
 // 是否是盗版(不是从AppStore安装)

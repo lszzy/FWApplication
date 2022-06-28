@@ -130,6 +130,11 @@ extension Wrapper where Base: UIApplication {
     public static var appIdentifier: String {
         return Base.__fw_appIdentifier
     }
+    
+    /// 读取应用可执行程序
+    public static var appExecutable: String {
+        return Base.__fw_appExecutable
+    }
 
     // MARK: - Debug
     /// 是否是盗版(不是从AppStore安装)
