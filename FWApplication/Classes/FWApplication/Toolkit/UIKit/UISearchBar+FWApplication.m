@@ -35,7 +35,7 @@
                     }
                 }
                 
-                NSValue *contentInsetValue = objc_getAssociatedObject(selfObject, @selector(contentInset));
+                NSValue *contentInsetValue = objc_getAssociatedObject(selfObject, @selector(fw_contentInset));
                 if (contentInsetValue) {
                     UIEdgeInsets contentInset = [contentInsetValue UIEdgeInsetsValue];
                     UITextField *textField = [selfObject fw_textField];
@@ -82,7 +82,7 @@
                         }
                     }
                     
-                    NSValue *contentInsetValue = objc_getAssociatedObject(searchBar, @selector(contentInset));
+                    NSValue *contentInsetValue = objc_getAssociatedObject(searchBar, @selector(fw_contentInset));
                     if (contentInsetValue) {
                         UIEdgeInsets contentInset = [contentInsetValue UIEdgeInsetsValue];
                         frame = CGRectMake(contentInset.left, contentInset.top, textFieldMaxX - contentInset.left - contentInset.right, searchBar.bounds.size.height - contentInset.top - contentInset.bottom);
