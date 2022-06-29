@@ -23,7 +23,8 @@
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
-    if ([webView isKindOfClass:[FWWebView class]] && ((FWWebView *)webView).cookieEnabled &&
+    if ([webView isKindOfClass:[FWWebView class]] &&
+        ((FWWebView *)webView).cookieEnabled &&
         [navigationAction.request isKindOfClass:NSMutableURLRequest.class]) {
         [FWWebViewCookieManager syncRequestCookie:(NSMutableURLRequest *)navigationAction.request];
     }
@@ -38,17 +39,29 @@
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
+    
     if ([UIApplication fw_isSystemURL:navigationAction.request.URL]) {
         [UIApplication fw_openURL:navigationAction.request.URL];
         decisionHandler(WKNavigationActionPolicyCancel);
         return;
     }
+    
+    if ([webView isKindOfClass:[FWWebView class]] &&
+        ((FWWebView *)webView).allowsUniversalLinks &&
+        [navigationAction.request.URL.scheme isEqualToString:@"https"]) {
+        [UIApplication fw_openUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
+            decisionHandler(success ? WKNavigationActionPolicyCancel : WKNavigationActionPolicyAllow);
+        }];
+        return;
+    }
+    
     decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler
 {
-    if ([webView isKindOfClass:[FWWebView class]] && ((FWWebView *)webView).cookieEnabled) {
+    if ([webView isKindOfClass:[FWWebView class]] &&
+        ((FWWebView *)webView).cookieEnabled) {
         [FWWebViewCookieManager copyWebViewCookie:webView completion:nil];
     }
     

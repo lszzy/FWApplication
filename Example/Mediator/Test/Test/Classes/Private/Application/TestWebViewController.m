@@ -57,6 +57,7 @@
 - (void)renderWebView
 {
     self.view.backgroundColor = [Theme tableColor];
+    self.webView.allowsUniversalLinks = YES;
     self.webView.scrollView.delegate = self;
     self.webView.scrollView.showsVerticalScrollIndicator = NO;
     self.webView.scrollView.showsHorizontalScrollIndicator = NO;
@@ -163,38 +164,14 @@
     }];
 }
 
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
+- (BOOL)webViewShouldLoad:(WKNavigationAction *)navigationAction
 {
-    if ([self respondsToSelector:@selector(webViewShouldLoad:)] &&
-        ![self webViewShouldLoad:navigationAction]) {
-        decisionHandler(WKNavigationActionPolicyCancel);
-        return;
-    }
-    
-    if ([UIApplication fw_isSystemURL:navigationAction.request.URL]) {
-        [UIApplication fw_openURL:navigationAction.request.URL];
-        decisionHandler(WKNavigationActionPolicyCancel);
-        return;
-    }
-    
     if ([navigationAction.request.URL.scheme isEqualToString:@"app"]) {
         [FWRouter openURL:navigationAction.request.URL.absoluteString];
-        decisionHandler(WKNavigationActionPolicyCancel);
-        return;
+        return NO;
     }
     
-    if ([navigationAction.request.URL.scheme isEqualToString:@"https"]) {
-        [UIApplication fw_openUniversalLinks:navigationAction.request.URL completionHandler:^(BOOL success) {
-            if (success) {
-                decisionHandler(WKNavigationActionPolicyCancel);
-            } else {
-                decisionHandler(WKNavigationActionPolicyAllow);
-            }
-        }];
-        return;
-    }
-    
-    decisionHandler(WKNavigationActionPolicyAllow);
+    return YES;
 }
 
 @end

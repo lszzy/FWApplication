@@ -47,6 +47,9 @@ NS_SWIFT_NAME(WebView)
 /// 进度视图，默认trackTintColor为clear
 @property (nonatomic, readonly) UIProgressView *progressView;
 
+/// 是否允许打开通用链接，默认NO
+@property (nonatomic, assign) BOOL allowsUniversalLinks;
+
 /// 网页请求，设置后会自动加载，支持NSString|NSURL|NSURLRequest。默认nil
 @property (nonatomic, strong, nullable) id webRequest;
 
