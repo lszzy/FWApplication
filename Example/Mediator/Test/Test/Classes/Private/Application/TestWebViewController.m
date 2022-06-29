@@ -11,6 +11,8 @@
 // 如果需要隐藏导航栏，可以加载时显示导航栏，WebView延伸到导航栏下面，加载完成时隐藏导航栏即可
 @interface TestWebViewController () <UIScrollViewDelegate>
 
+@property (nonatomic, assign) BOOL toolbarHidden;
+
 @end
 
 @implementation TestWebViewController
@@ -43,14 +45,22 @@
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
     self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
+    self.toolbarHidden = YES;
     
     [self renderToolbar];
     [self loadRequestUrl];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.navigationController.toolbarHidden = self.toolbarHidden;
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    self.toolbarHidden = self.navigationController.toolbarHidden;
     self.navigationController.toolbarHidden = YES;
 }
 
