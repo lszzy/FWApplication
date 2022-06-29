@@ -11,8 +11,6 @@
 // 如果需要隐藏导航栏，可以加载时显示导航栏，WebView延伸到导航栏下面，加载完成时隐藏导航栏即可
 @interface TestWebViewController () <UIScrollViewDelegate>
 
-@property (nonatomic, assign) BOOL isExtendedBottom;
-
 @end
 
 @implementation TestWebViewController
@@ -32,18 +30,9 @@
         return nil;
     } else {
         return @[
-            [UIBarButtonItem fw_itemWithObject:FWIcon.backImage target:self action:@selector(onWebBack)],
+            FWIcon.backImage,
             FWIcon.closeImage,
         ];
-    }
-}
-
-- (void)onWebBack
-{
-    if (self.webView.canGoBack) {
-        [self.webView goBack];
-    } else {
-        [self fw_closeViewControllerAnimated:YES];
     }
 }
 
@@ -53,26 +42,10 @@
     
     // 底部延伸时设置scrollView边距自适应，无需处理frame
     self.webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
-    self.isExtendedBottom = [@[@YES, @NO].fw_randomObject fw_safeBool];
-    if (self.isExtendedBottom) {
-        self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
-    // 底部不延伸时如果显示工具栏，且hidesBottomBarWhenPushed为YES，工具栏顶部会显示空白，需处理frame
-    } else {
-        self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeTop : UIRectEdgeNone;
-    }
+    self.edgesForExtendedLayout = Theme.isBarTranslucent ? UIRectEdgeAll : UIRectEdgeBottom;
     
     [self renderToolbar];
     [self loadRequestUrl];
-}
-
-- (void)viewDidLayoutSubviews
-{
-    [super viewDidLayoutSubviews];
-    if (self.isExtendedBottom || !self.fw_isLoaded) return;
-    
-    // 顶部延伸时，不需要减顶部栏高度
-    CGFloat topHeight = (self.edgesForExtendedLayout & UIRectEdgeTop) ? 0 : self.fw_topBarHeight;
-    self.view.fw_height = FWScreenHeight - topHeight - self.fw_bottomBarHeight;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
