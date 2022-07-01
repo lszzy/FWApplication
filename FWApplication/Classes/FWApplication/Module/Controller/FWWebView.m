@@ -732,6 +732,57 @@ static int logMaxLength = 500;
     [_base sendData:data responseCallback:responseCallback handlerName:handlerName];
 }
 
+- (void)registerClass:(id)clazz package:(NSString *)package withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    NSDictionary<NSString *,NSString *> *bridges = [self bridgeClass:clazz withMapper:mapper];
+    [bridges enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *name = package.length > 0 ? [package stringByAppendingString:key] : key;
+        [self registerHandler:name handler:^(id  _Nonnull data, FWJsBridgeResponseCallback  _Nonnull responseCallback) {
+            [clazz performSelector:NSSelectorFromString(obj) withObject:data withObject:responseCallback];
+        }];
+    }];
+#pragma clang diagnostic pop
+}
+
+- (void)unregisterClass:(id)clazz package:(NSString *)package withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    NSDictionary<NSString *,NSString *> *bridges = [self bridgeClass:clazz withMapper:mapper];
+    [bridges enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString *name = package.length > 0 ? [package stringByAppendingString:key] : key;
+        [self removeHandler:name];
+    }];
+#pragma clang diagnostic pop
+}
+
+- (NSDictionary<NSString *,NSString *> *)bridgeClass:(id)clazz withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
+{
+    Class metaClass;
+    if (object_isClass(clazz)) {
+        metaClass = objc_getMetaClass(NSStringFromClass(clazz).UTF8String);
+    } else {
+        metaClass = object_getClass(clazz);
+    }
+    if (!metaClass) return @{};
+    
+    NSArray<NSString *> *methods = [NSObject fw_classMethods:metaClass superclass:NO];
+    if (mapper) {
+        return mapper(methods);
+    }
+    
+    NSMutableDictionary *bridges = [NSMutableDictionary dictionary];
+    for (NSString *method in methods) {
+        if (![method hasSuffix:@":callback:"]) continue;
+        
+        NSString *name = [method stringByReplacingOccurrencesOfString:@":callback:" withString:@""];
+        bridges[name] = method;
+    }
+    return bridges;
+}
+
 - (void)registerHandler:(NSString *)handlerName handler:(FWJsBridgeHandler)handler {
     _base.messageHandlers[handlerName] = [handler copy];
 }
