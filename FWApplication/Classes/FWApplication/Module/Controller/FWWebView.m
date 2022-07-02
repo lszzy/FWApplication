@@ -955,6 +955,7 @@ NSString * FWWebViewJsBridge_js() {
     }
     window.WebViewJavascriptBridge = {
         registerHandler: registerHandler,
+        removeHandler: removeHandler,
         getRegisteredHandlers: getRegisteredHandlers,
         setErrorHandler: setErrorHandler,
         setFilterHandler: setFilterHandler,
@@ -979,6 +980,10 @@ NSString * FWWebViewJsBridge_js() {
 
     function registerHandler(handlerName, handler) {
         messageHandlers[handlerName] = handler;
+    }
+    
+    function removeHandler(handlerName) {
+        delete messageHandlers[handlerName];
     }
     
     function getRegisteredHandlers() {
