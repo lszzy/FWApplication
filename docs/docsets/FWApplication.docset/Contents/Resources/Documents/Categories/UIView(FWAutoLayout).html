@@ -17,7 +17,7 @@
     <a title="UIView(FWAutoLayout) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.4.0 Docs</a> (67% documented)</p>
+        <p><a href="../index.html">FWApplication 3.5.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -58,6 +58,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CALayer%28FWQuartzCore%29.html">CALayer(FWQuartzCore)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
@@ -142,9 +145,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWApplication%29.html">NSObject(FWApplication)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/NSObject%28FWDebugger%29.html">NSObject(FWDebugger)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWFoundation%29.html">NSObject(FWFoundation)</a>
@@ -327,7 +327,7 @@
                 <a href="../Categories/UIImageView%28FWTheme%29.html">UIImageView(FWTheme)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Categories/UILabel%28FWDebugger%29.html">UILabel(FWDebugger)</a>
+                <a href="../Categories/UILabel%28FWUIKit%29.html">UILabel(FWUIKit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationBar%28FWApplication%29.html">UINavigationBar(FWApplication)</a>
@@ -345,13 +345,13 @@
                 <a href="../Categories/UINavigationController%28FWFullscreenPopGesture%29.html">UINavigationController(FWFullscreenPopGesture)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Categories/UINavigationController%28FWNavigation%29.html">UINavigationController(FWNavigation)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWToolkit%29.html">UINavigationController(FWToolkit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWTransition%29.html">UINavigationController(FWTransition)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/UINavigationController%28FWWorkflow%29.html">UINavigationController(FWWorkflow)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UIPageControl%28FWUIKit%29.html">UIPageControl(FWUIKit)</a>
@@ -1420,6 +1420,12 @@
                 <a href="../Constants.html#/c:@FWRequestValidationErrorDomain">FWRequestValidationErrorDomain</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterNavigationOptionsKey">FWRouterNavigationOptionsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterSourceKey">FWRouterSourceKey</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Constants.html#/c:FWAdaptive.h@FWScreenInch35">FWScreenInch35</a>
               </li>
               <li class="nav-group-task">
@@ -1657,6 +1663,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWLogType.html">FWLogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FWNavigationOptions.html">FWNavigationOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWNetworkReachabilityStatus.html">FWNetworkReachabilityStatus</a>
@@ -2095,6 +2104,9 @@
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockInt">FWBlockInt</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockIntParam">FWBlockIntParam</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockParam">FWBlockParam</a>
               </li>
               <li class="nav-group-task">
@@ -2180,6 +2192,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterHandler">FWRouterHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterUserInfoKey">FWRouterUserInfoKey</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWAdaptive.h@T@FWScreenInch">FWScreenInch</a>
@@ -2356,6 +2371,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWStringFromNetworkReachabilityStatus">FWStringFromNetworkReachabilityStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@FWSynchronized">FWSynchronized</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWWebViewJsBridge_js">FWWebViewJsBridge_js</a>
@@ -7249,141 +7267,6 @@
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
                           <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">fw_removeAllTapGestures</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)UIView(py)fw_viewInfo"></a>
-                    <a name="//apple_ref/swift/Property/fw_viewInfo" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)UIView(py)fw_viewInfo">fw_viewInfo</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>获取当前 UIView 层级树信息</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_viewInfo</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)UIView(py)fw_showDebugColor"></a>
-                    <a name="//apple_ref/swift/Property/fw_showDebugColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)UIView(py)fw_showDebugColor">fw_showDebugColor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>是否需要添加debug背景色，默认NO</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fw_showDebugColor</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)UIView(py)fw_randomDebugColor"></a>
-                    <a name="//apple_ref/swift/Property/fw_randomDebugColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)UIView(py)fw_randomDebugColor">fw_randomDebugColor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>是否每个view的背景色随机，如果不随机则统一使用半透明红色，默认NO</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fw_randomDebugColor</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)UIView(py)fw_showDebugBorder"></a>
-                    <a name="//apple_ref/swift/Property/fw_showDebugBorder" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)UIView(py)fw_showDebugBorder">fw_showDebugBorder</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>是否需要添加debug边框，默认NO</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fw_showDebugBorder</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:objc(cs)UIView(py)fw_debugBorderColor"></a>
-                    <a name="//apple_ref/swift/Property/fw_debugBorderColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:objc(cs)UIView(py)fw_debugBorderColor">fw_debugBorderColor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>指定debug边框的颜色，默认半透明红色</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">fw_debugBorderColor</span><span class="p">;</span></code></pre>
 
                         </div>
                       </div>
@@ -14833,6 +14716,154 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/UIView%2BFWDebugger"></a>
+                <a name="//apple_ref/swift/Section/UIView+FWDebugger" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/UIView%2BFWDebugger"></a>
+                  <h3 class="section-name"><span>UIView+FWDebugger</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIView(py)fw_viewInfo"></a>
+                    <a name="//apple_ref/swift/Property/fw_viewInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIView(py)fw_viewInfo">fw_viewInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前 UIView 层级树信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_viewInfo</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIView(py)fw_showDebugColor"></a>
+                    <a name="//apple_ref/swift/Property/fw_showDebugColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIView(py)fw_showDebugColor">fw_showDebugColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否需要添加debug背景色，默认NO</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fw_showDebugColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIView(py)fw_randomDebugColor"></a>
+                    <a name="//apple_ref/swift/Property/fw_randomDebugColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIView(py)fw_randomDebugColor">fw_randomDebugColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否每个view的背景色随机，如果不随机则统一使用半透明红色，默认NO</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fw_randomDebugColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIView(py)fw_showDebugBorder"></a>
+                    <a name="//apple_ref/swift/Property/fw_showDebugBorder" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIView(py)fw_showDebugBorder">fw_showDebugBorder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否需要添加debug边框，默认NO</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">)</span> <span class="n">BOOL</span> <span class="n">fw_showDebugBorder</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)UIView(py)fw_debugBorderColor"></a>
+                    <a name="//apple_ref/swift/Property/fw_debugBorderColor" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIView(py)fw_debugBorderColor">fw_debugBorderColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>指定debug边框的颜色，默认半透明红色</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">strong</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">UIColor</span> <span class="o">*</span><span class="n">fw_debugBorderColor</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/UIKit%2BSkeletonLayout"></a>
                 <a name="//apple_ref/swift/Section/UIKit+SkeletonLayout" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -14987,7 +15018,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-04)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

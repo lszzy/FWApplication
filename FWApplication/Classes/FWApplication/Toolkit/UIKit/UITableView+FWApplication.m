@@ -108,44 +108,6 @@
 
 @end
 
-@implementation UITableViewCell (FWApplication)
-
-- (UIEdgeInsets)fw_separatorInset
-{
-    return self.separatorInset;
-}
-
-- (void)setFw_separatorInset:(UIEdgeInsets)separatorInset
-{
-    self.separatorInset = separatorInset;
-    
-    if ([self respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
-        [self setPreservesSuperviewLayoutMargins:NO];
-    }
-    if ([self respondsToSelector:@selector(setLayoutMargins:)]) {
-        [self setLayoutMargins:separatorInset];
-    }
-}
-
-- (UITableView *)fw_tableView
-{
-    UIView *superview = self.superview;
-    while (superview) {
-        if ([superview isKindOfClass:[UITableView class]]) {
-            return (UITableView *)superview;
-        }
-        superview = superview.superview;
-    }
-    return nil;
-}
-
-- (NSIndexPath *)fw_indexPath
-{
-    return [[self fw_tableView] indexPathForCell:self];
-}
-
-@end
-
 @implementation FWTableViewCellBackgroundView
 
 - (instancetype)initWithFrame:(CGRect)frame

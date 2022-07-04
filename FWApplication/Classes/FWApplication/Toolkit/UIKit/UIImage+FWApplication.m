@@ -15,24 +15,6 @@
 
 @implementation UIImage (FWApplication)
 
-- (void)fw_innerImage:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(fw_saveImageWithCompletion:));
-    objc_setAssociatedObject(self, @selector(fw_saveImageWithCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (block) {
-        block(error);
-    }
-}
-
-+ (void)fw_innerVideo:(NSString *)videoPath didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    void (^block)(NSError *error) = objc_getAssociatedObject(self, @selector(fw_saveVideo:withCompletion:));
-    objc_setAssociatedObject(self, @selector(fw_saveVideo:withCompletion:), nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (block) {
-        block(error);
-    }
-}
-
 #pragma mark - Color
 
 - (UIImage *)fw_grayImage
@@ -425,14 +407,6 @@
     return imageWithAlpha;
 }
 
-#pragma mark - Album
-
-- (void)fw_saveImageWithCompletion:(void (^)(NSError * _Nullable))completion
-{
-    objc_setAssociatedObject(self, @selector(fw_saveImageWithCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    UIImageWriteToSavedPhotosAlbum(self, self, @selector(fw_innerImage:didFinishSavingWithError:contextInfo:), NULL);
-}
-
 #pragma mark - View
 
 + (UIImage *)fw_imageWithView:(UIView *)view limitWidth:(CGFloat)limitWidth
@@ -611,16 +585,6 @@
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
-}
-
-#pragma mark - Album
-
-+ (void)fw_saveVideo:(NSString *)videoPath withCompletion:(nullable void (^)(NSError * _Nullable))completion
-{
-    objc_setAssociatedObject(self, @selector(fw_saveVideo:withCompletion:), completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
-    if (UIVideoAtPathIsCompatibleWithSavedPhotosAlbum(videoPath)) {
-        UISaveVideoAtPathToSavedPhotosAlbum(videoPath, self, @selector(fw_innerVideo:didFinishSavingWithError:contextInfo:), NULL);
-    }
 }
 
 @end

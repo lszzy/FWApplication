@@ -13,15 +13,6 @@
 
 #pragma mark - Pinyin
 
-- (NSString *)fw_pinyinString
-{
-    if (self.length == 0) return self;
-    NSMutableString *mutableString = [NSMutableString stringWithString:self];
-    CFStringTransform((CFMutableStringRef)mutableString, NULL, kCFStringTransformToLatin, false);
-    NSString *pinyinStr = (NSMutableString *)[mutableString stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:[NSLocale currentLocale]];
-    return [pinyinStr lowercaseString];
-}
-
 - (NSComparisonResult)fw_pinyinCompare:(NSString *)string
 {
     NSString *pinyin1 = self.fw_pinyinString;

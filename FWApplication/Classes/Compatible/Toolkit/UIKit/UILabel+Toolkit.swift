@@ -28,3 +28,24 @@ extension Wrapper where Base: UILabel {
     }
     
 }
+
+extension Wrapper where Base: UILabel {
+    
+    /**
+     调试功能，打开后会在 label 第一行文字里把 descender、xHeight、capHeight、lineHeight 所在的位置以线条的形式标记出来。
+     对这些属性的解释可以看这篇文章 https://www.rightpoint.com/rplabs/ios-tracking-typography
+     */
+    public var showPrincipalLines: Bool {
+        get { return base.__fw_showPrincipalLines }
+        set { base.__fw_showPrincipalLines = newValue }
+    }
+
+    /**
+     当打开 showPrincipalLines 时，通过这个属性控制线条的颜色，默认为 半透明红色
+     */
+    public var principalLineColor: UIColor {
+        get { return base.__fw_principalLineColor }
+        set { base.__fw_principalLineColor = newValue }
+    }
+    
+}

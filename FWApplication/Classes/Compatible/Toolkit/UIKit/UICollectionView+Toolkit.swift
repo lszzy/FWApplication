@@ -330,20 +330,6 @@ extension Wrapper where Base: UICollectionView {
     
 }
 
-extension Wrapper where Base: UICollectionViewCell {
-    
-    /// 获取当前所属collectionView
-    public weak var collectionView: UICollectionView? {
-        return base.__fw_collectionView
-    }
-
-    /// 获取当前显示indexPath
-    public var indexPath: IndexPath? {
-        return base.__fw_indexPath
-    }
-    
-}
-
 /// iOS9+可通过UICollectionViewFlowLayout调用sectionHeadersPinToVisibleBounds实现Header悬停效果
 extension Wrapper where Base: UICollectionViewFlowLayout {
     

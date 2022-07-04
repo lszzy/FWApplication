@@ -33,16 +33,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface UICollectionViewCell (FWApplication)
-
-/// 获取当前所属collectionView
-@property (nonatomic, weak, readonly, nullable) UICollectionView *fw_collectionView NS_REFINED_FOR_SWIFT;
-
-/// 获取当前显示indexPath
-@property (nonatomic, readonly, nullable) NSIndexPath *fw_indexPath NS_REFINED_FOR_SWIFT;
-
-@end
-
 // iOS9+可通过UICollectionViewFlowLayout调用sectionHeadersPinToVisibleBounds实现Header悬停效果
 @interface UICollectionViewFlowLayout (FWApplication)
 

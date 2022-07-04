@@ -505,3 +505,36 @@ extension Wrapper where Base: UIView {
     }
     
 }
+
+extension Wrapper where Base: UIView {
+    
+    /// 获取当前 UIView 层级树信息
+    public var viewInfo: String {
+        return base.__fw_viewInfo
+    }
+
+    /// 是否需要添加debug背景色，默认NO
+    public var showDebugColor: Bool {
+        get { return base.__fw_showDebugColor }
+        set { base.__fw_showDebugColor = newValue }
+    }
+
+    /// 是否每个view的背景色随机，如果不随机则统一使用半透明红色，默认NO
+    public var randomDebugColor: Bool {
+        get { return base.__fw_randomDebugColor }
+        set { base.__fw_randomDebugColor = newValue }
+    }
+
+    /// 是否需要添加debug边框，默认NO
+    public var showDebugBorder: Bool {
+        get { return base.__fw_showDebugBorder }
+        set { base.__fw_showDebugBorder = newValue }
+    }
+
+    /// 指定debug边框的颜色，默认半透明红色
+    public var debugBorderColor: UIColor {
+        get { return base.__fw_debugBorderColor }
+        set { base.__fw_debugBorderColor = newValue }
+    }
+    
+}

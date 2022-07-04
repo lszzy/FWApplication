@@ -20,21 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 读取应用信息字典
 + (nullable id)fw_appInfo:(NSString *)key NS_REFINED_FOR_SWIFT;
 
-// 读取应用名称
-@property (class, nonatomic, copy, readonly) NSString *fw_appName NS_REFINED_FOR_SWIFT;
-
-// 读取应用显示名称，未配置时读取名称
-@property (class, nonatomic, copy, readonly) NSString *fw_appDisplayName NS_REFINED_FOR_SWIFT;
-
-// 读取应用主版本号，示例：1.0.0
-@property (class, nonatomic, copy, readonly) NSString *fw_appVersion NS_REFINED_FOR_SWIFT;
-
-// 读取应用构建版本号，示例：1.0.0.1
-@property (class, nonatomic, copy, readonly) NSString *fw_appBuildVersion NS_REFINED_FOR_SWIFT;
-
-// 读取应用标识
-@property (class, nonatomic, copy, readonly) NSString *fw_appIdentifier NS_REFINED_FOR_SWIFT;
-
 #pragma mark - Debug
 
 // 是否是盗版(不是从AppStore安装)

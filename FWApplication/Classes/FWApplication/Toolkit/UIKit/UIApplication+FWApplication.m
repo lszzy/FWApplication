@@ -21,35 +21,6 @@
     return [[NSBundle mainBundle] objectForInfoDictionaryKey:key];
 }
 
-+ (NSString *)fw_appName
-{
-    return [self fw_appInfo:@"CFBundleName"];
-}
-
-+ (NSString *)fw_appDisplayName
-{
-    NSString *displayName = [self fw_appInfo:@"CFBundleDisplayName"];
-    if (!displayName) {
-        displayName = [self fw_appName];
-    }
-    return displayName;
-}
-
-+ (NSString *)fw_appVersion
-{
-    return [self fw_appInfo:@"CFBundleShortVersionString"];
-}
-
-+ (NSString *)fw_appBuildVersion
-{
-    return [self fw_appInfo:@"CFBundleVersion"];
-}
-
-+ (NSString *)fw_appIdentifier
-{
-    return [self fw_appInfo:@"CFBundleIdentifier"];
-}
-
 #pragma mark - Debug
 
 + (BOOL)fw_isPirated

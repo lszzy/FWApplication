@@ -69,13 +69,6 @@ extension Wrapper where Base: UIImage {
     public var alphaImage: UIImage {
         return base.__fw_alpha
     }
-
-    // MARK: - Album
-
-    /// 保存图片到相册，保存成功时error为nil
-    public func saveImage(completion: ((Error?) -> Void)? = nil) {
-        base.__fw_saveImage(completion: completion)
-    }
     
     // MARK: - View
 
@@ -137,13 +130,6 @@ extension Wrapper where Base: UIImage {
      */
     public static func gradientImage(size: CGSize, colors: [Any], locations: UnsafePointer<CGFloat>?, startPoint: CGPoint, endPoint: CGPoint) -> UIImage? {
         return Base.__fw_gradientImage(with: size, colors: colors, locations: locations, start: startPoint, end: endPoint)
-    }
-
-    // MARK: - Album
-
-    /// 保存视频到相册，保存成功时error为nil。如果视频地址为NSURL，需使用NSURL.path
-    public static func saveVideo(_ videoPath: String, completion: ((Error?) -> Void)? = nil) {
-        Base.__fw_saveVideo(videoPath, withCompletion: completion)
     }
     
 }

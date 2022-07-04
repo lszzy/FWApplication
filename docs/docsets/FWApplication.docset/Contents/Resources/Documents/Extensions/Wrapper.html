@@ -17,7 +17,7 @@
     <a title="Wrapper Extension Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.4.0 Docs</a> (67% documented)</p>
+        <p><a href="../index.html">FWApplication 3.5.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -58,6 +58,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CALayer%28FWQuartzCore%29.html">CALayer(FWQuartzCore)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
@@ -142,9 +145,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWApplication%29.html">NSObject(FWApplication)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/NSObject%28FWDebugger%29.html">NSObject(FWDebugger)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWFoundation%29.html">NSObject(FWFoundation)</a>
@@ -327,7 +327,7 @@
                 <a href="../Categories/UIImageView%28FWTheme%29.html">UIImageView(FWTheme)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Categories/UILabel%28FWDebugger%29.html">UILabel(FWDebugger)</a>
+                <a href="../Categories/UILabel%28FWUIKit%29.html">UILabel(FWUIKit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationBar%28FWApplication%29.html">UINavigationBar(FWApplication)</a>
@@ -345,13 +345,13 @@
                 <a href="../Categories/UINavigationController%28FWFullscreenPopGesture%29.html">UINavigationController(FWFullscreenPopGesture)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Categories/UINavigationController%28FWNavigation%29.html">UINavigationController(FWNavigation)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWToolkit%29.html">UINavigationController(FWToolkit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWTransition%29.html">UINavigationController(FWTransition)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/UINavigationController%28FWWorkflow%29.html">UINavigationController(FWWorkflow)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UIPageControl%28FWUIKit%29.html">UIPageControl(FWUIKit)</a>
@@ -1420,6 +1420,12 @@
                 <a href="../Constants.html#/c:@FWRequestValidationErrorDomain">FWRequestValidationErrorDomain</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterNavigationOptionsKey">FWRouterNavigationOptionsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterSourceKey">FWRouterSourceKey</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Constants.html#/c:FWAdaptive.h@FWScreenInch35">FWScreenInch35</a>
               </li>
               <li class="nav-group-task">
@@ -1657,6 +1663,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWLogType.html">FWLogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FWNavigationOptions.html">FWNavigationOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWNetworkReachabilityStatus.html">FWNetworkReachabilityStatus</a>
@@ -2095,6 +2104,9 @@
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockInt">FWBlockInt</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockIntParam">FWBlockIntParam</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockParam">FWBlockParam</a>
               </li>
               <li class="nav-group-task">
@@ -2180,6 +2192,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterHandler">FWRouterHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterUserInfoKey">FWRouterUserInfoKey</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWAdaptive.h@T@FWScreenInch">FWScreenInch</a>
@@ -2358,6 +2373,9 @@
                 <a href="../Functions.html#/c:@F@FWStringFromNetworkReachabilityStatus">FWStringFromNetworkReachabilityStatus</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@FWSynchronized">FWSynchronized</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWWebViewJsBridge_js">FWWebViewJsBridge_js</a>
               </li>
               <li class="nav-group-task">
@@ -2467,7 +2485,6 @@
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UIButton</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UISwitch</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UICollectionView</span></code></pre>
-<pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UICollectionViewCell</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UIColor</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UIDevice</span></code></pre>
 <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Wrapper</span> <span class="k">where</span> <span class="kt">Base</span><span class="p">:</span> <span class="kt">UIFont</span></code></pre>
@@ -15023,46 +15040,6 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Convert2"></a>
-                <a name="//apple_ref/swift/Section/Convert" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Convert2"></a>
-                  <h3 class="section-name"><span>Convert</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo18NSAttributedStringCRbzlE010attributedE0_4font9textColorxSS_So6UIFontCSgSo7UIColorCSgtFZ"></a>
-                    <a name="//apple_ref/swift/Method/attributedString(_:font:textColor:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo18NSAttributedStringCRbzlE010attributedE0_4font9textColorxSS_So6UIFontCSgSo7UIColorCSgtFZ">attributedString(_:<wbr>font:<wbr>textColor:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>快速创建NSAttributedString，自定义字体和颜色</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">attributedString</span><span class="p">(</span><span class="n">_</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">font</span><span class="p">:</span> <span class="kt">UIFont</span><span class="p">?,</span> <span class="nv">textColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Base</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
                 <a name="/Html"></a>
                 <a name="//apple_ref/swift/Section/Html" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -15935,6 +15912,100 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/Debug"></a>
+                <a name="//apple_ref/swift/Section/Debug" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Debug"></a>
+                  <h3 class="section-name"><span>Debug</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo8NSObjectCRbzlE10methodListSSvp"></a>
+                    <a name="//apple_ref/swift/Property/methodList" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo8NSObjectCRbzlE10methodListSSvp">methodList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前对象的所有 @property、方法，父类的方法也会分别列出</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">methodList</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo8NSObjectCRbzlE15shortMethodListSSvp"></a>
+                    <a name="//apple_ref/swift/Property/shortMethodList" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo8NSObjectCRbzlE15shortMethodListSSvp">shortMethodList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前对象的所有 @property、方法，不包含父类的</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shortMethodList</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo8NSObjectCRbzlE8ivarListSSvp"></a>
+                    <a name="//apple_ref/swift/Property/ivarList" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo8NSObjectCRbzlE8ivarListSSvp">ivarList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>当前对象的所有 Ivar 变量</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">ivarList</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/Pinyin"></a>
                 <a name="//apple_ref/swift/Section/Pinyin" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -15944,33 +16015,6 @@
                 </div>
               </div>
               <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSSRszlE12pinyinStringSSvp"></a>
-                    <a name="//apple_ref/swift/Property/pinyinString" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSSRszlE12pinyinStringSSvp">pinyinString</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>中文转拼音</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">pinyinString</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -17069,149 +17113,14 @@
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE7appNameSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/appName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE7appNameSSvpZ">appName</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>读取应用名称</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">appName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE14appDisplayNameSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/appDisplayName" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE14appDisplayNameSSvpZ">appDisplayName</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>读取应用显示名称，未配置时读取名称</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">appDisplayName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE10appVersionSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/appVersion" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE10appVersionSSvpZ">appVersion</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>读取应用主版本号，示例：1.0.0</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">appVersion</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE15appBuildVersionSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/appBuildVersion" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE15appBuildVersionSSvpZ">appBuildVersion</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>读取应用构建版本号，示例：1.0.0.1</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">appBuildVersion</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE13appIdentifierSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/appIdentifier" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo13UIApplicationCRbzlE13appIdentifierSSvpZ">appIdentifier</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>读取应用标识</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">appIdentifier</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Debug"></a>
+                <a name="/Debug2"></a>
                 <a name="//apple_ref/swift/Section/Debug" class="dashAnchor"></a>
                 <div class="section-name-container">
-                  <a class="section-name-link" href="#/Debug"></a>
+                  <a class="section-name-link" href="#/Debug2"></a>
                   <h3 class="section-name"><span>Debug</span>
 </h3>
                 </div>
@@ -18028,33 +17937,6 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo8UIButtonCRbzlE18setBackgroundColor_3forySo7UIColorCSg_So14UIControlStateVtF"></a>
-                    <a name="//apple_ref/swift/Method/setBackgroundColor(_:for:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo8UIButtonCRbzlE18setBackgroundColor_3forySo7UIColorCSg_So14UIControlStateVtF">setBackgroundColor(_:<wbr>for:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>设置背景色</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setBackgroundColor</span><span class="p">(</span><span class="n">_</span> <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?,</span> <span class="k">for</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">UIControl</span><span class="o">.</span><span class="kt">State</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
                     <a name="/s:11FWFramework7WrapperC13FWApplicationSo8UIButtonCRbzlE14startCountDown_5title9waitTitleSo18OS_dispatch_sourceCSi_S2StF"></a>
                     <a name="//apple_ref/swift/Method/startCountDown(_:title:waitTitle:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo8UIButtonCRbzlE14startCountDown_5title9waitTitleSo18OS_dispatch_sourceCSi_S2StF">startCountDown(_:<wbr>title:<wbr>waitTitle:<wbr>)</a>
@@ -18380,73 +18262,6 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Available%20where%20%60Base%60%3A%20%60UICollectionViewCell%60"></a>
-                <a name="//apple_ref/swift/Section/Available where `Base`: `UICollectionViewCell`" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Available%20where%20%60Base%60%3A%20%60UICollectionViewCell%60"></a>
-                  <h3 class="section-name"><span>Available where <code>Base</code>: <code>UICollectionViewCell</code></span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo20UICollectionViewCellCRbzlE010collectionE0So0dE0CSgvp"></a>
-                    <a name="//apple_ref/swift/Property/collectionView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo20UICollectionViewCellCRbzlE010collectionE0So0dE0CSgvp">collectionView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>获取当前所属collectionView</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">collectionView</span><span class="p">:</span> <span class="kt">UICollectionView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo20UICollectionViewCellCRbzlE9indexPath10Foundation05IndexH0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/indexPath" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo20UICollectionViewCellCRbzlE9indexPath10Foundation05IndexH0VSgvp">indexPath</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>获取当前显示indexPath</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
                 <a name="/Available%20where%20%60Base%60%3A%20%60UICollectionViewFlowLayout%602"></a>
                 <a name="//apple_ref/swift/Section/Available where `Base`: `UICollectionViewFlowLayout`" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -18745,46 +18560,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">gradientColor</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">colors</span><span class="p">:</span> <span class="p">[</span><span class="kt">Any</span><span class="p">],</span> <span class="nv">locations</span><span class="p">:</span> <span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">CGFloat</span><span class="o">&gt;</span><span class="p">?,</span> <span class="nv">startPoint</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="nv">endPoint</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIColor</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/UUID2"></a>
-                <a name="//apple_ref/swift/Section/UUID" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/UUID2"></a>
-                  <h3 class="section-name"><span>UUID</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo8UIDeviceCRbzlE10deviceUUIDSSvpZ"></a>
-                    <a name="//apple_ref/swift/Variable/deviceUUID" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo8UIDeviceCRbzlE10deviceUUIDSSvpZ">deviceUUID</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>获取或设置设备UUID，自动keychain持久化。默认获取IDFV(未使用IDFA，避免额外权限)，失败则随机生成一个</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">deviceUUID</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -19561,46 +19336,6 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Album"></a>
-                <a name="//apple_ref/swift/Section/Album" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Album"></a>
-                  <h3 class="section-name"><span>Album</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo7UIImageCRbzlE9saveImage10completionyys5Error_pSgcSg_tF"></a>
-                    <a name="//apple_ref/swift/Method/saveImage(completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo7UIImageCRbzlE9saveImage10completionyys5Error_pSgcSg_tF">saveImage(completion:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>保存图片到相册，保存成功时error为nil</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">saveImage</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
                 <a name="/View"></a>
                 <a name="//apple_ref/swift/Section/View" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -19858,46 +19593,6 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">gradientImage</span><span class="p">(</span><span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">,</span> <span class="nv">colors</span><span class="p">:</span> <span class="p">[</span><span class="kt">Any</span><span class="p">],</span> <span class="nv">locations</span><span class="p">:</span> <span class="kt">UnsafePointer</span><span class="o">&lt;</span><span class="kt">CGFloat</span><span class="o">&gt;</span><span class="p">?,</span> <span class="nv">startPoint</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">,</span> <span class="nv">endPoint</span><span class="p">:</span> <span class="kt">CGPoint</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UIImage</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Album2"></a>
-                <a name="//apple_ref/swift/Section/Album" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/Album2"></a>
-                  <h3 class="section-name"><span>Album</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo7UIImageCRbzlE9saveVideo_10completionySS_ys5Error_pSgcSgtFZ"></a>
-                    <a name="//apple_ref/swift/Method/saveVideo(_:completion:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo7UIImageCRbzlE9saveVideo_10completionySS_ys5Error_pSgcSgtFZ">saveVideo(_:<wbr>completion:<wbr>)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>保存视频到相册，保存成功时error为nil。如果视频地址为NSURL，需使用NSURL.path</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">saveVideo</span><span class="p">(</span><span class="n">_</span> <span class="nv">videoPath</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -20206,6 +19901,74 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">attributedTextSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60Base%60%3A%20%60UILabel%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `Base`: `UILabel`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60Base%60%3A%20%60UILabel%60"></a>
+                  <h3 class="section-name"><span>Available where <code>Base</code>: <code>UILabel</code></span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo7UILabelCRbzlE18showPrincipalLinesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/showPrincipalLines" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo7UILabelCRbzlE18showPrincipalLinesSbvp">showPrincipalLines</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>调试功能，打开后会在 label 第一行文字里把 descender、xHeight、capHeight、lineHeight 所在的位置以线条的形式标记出来。
+对这些属性的解释可以看这篇文章 <a href="https://www.rightpoint.com/rplabs/ios-tracking-typography">https://www.rightpoint.com/rplabs/ios-tracking-typography</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showPrincipalLines</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo7UILabelCRbzlE18principalLineColorSo7UIColorCvp"></a>
+                    <a name="//apple_ref/swift/Property/principalLineColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo7UILabelCRbzlE18principalLineColorSo7UIColorCvp">principalLineColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>当打开 showPrincipalLines 时，通过这个属性控制线条的颜色，默认为 半透明红色</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">principalLineColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -21966,87 +21729,6 @@
                 </div>
               </div>
               <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo15UITableViewCellCRbzlE14separatorInsetSo12UIEdgeInsetsVvp"></a>
-                    <a name="//apple_ref/swift/Property/separatorInset" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo15UITableViewCellCRbzlE14separatorInsetSo12UIEdgeInsetsVvp">separatorInset</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>设置分割线内边距，iOS8+默认15.f，设为UIEdgeInsetsZero可去掉</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">separatorInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo15UITableViewCellCRbzlE05tableE0So0dE0CSgvp"></a>
-                    <a name="//apple_ref/swift/Property/tableView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo15UITableViewCellCRbzlE05tableE0So0dE0CSgvp">tableView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>获取当前所属tableView</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo15UITableViewCellCRbzlE9indexPath10Foundation05IndexH0VSgvp"></a>
-                    <a name="//apple_ref/swift/Property/indexPath" class="dashAnchor"></a>
-                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo15UITableViewCellCRbzlE9indexPath10Foundation05IndexH0VSgvp">indexPath</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>获取当前显示indexPath</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -24191,6 +23873,154 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/Available%20where%20%60Base%60%3A%20%60UIView%6013"></a>
+                <a name="//apple_ref/swift/Section/Available where `Base`: `UIView`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60Base%60%3A%20%60UIView%6013"></a>
+                  <h3 class="section-name"><span>Available where <code>Base</code>: <code>UIView</code></span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE8viewInfoSSvp"></a>
+                    <a name="//apple_ref/swift/Property/viewInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE8viewInfoSSvp">viewInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前 UIView 层级树信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">viewInfo</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE14showDebugColorSbvp"></a>
+                    <a name="//apple_ref/swift/Property/showDebugColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE14showDebugColorSbvp">showDebugColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否需要添加debug背景色，默认NO</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showDebugColor</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE16randomDebugColorSbvp"></a>
+                    <a name="//apple_ref/swift/Property/randomDebugColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE16randomDebugColorSbvp">randomDebugColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否每个view的背景色随机，如果不随机则统一使用半透明红色，默认NO</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">randomDebugColor</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE15showDebugBorderSbvp"></a>
+                    <a name="//apple_ref/swift/Property/showDebugBorder" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE15showDebugBorderSbvp">showDebugBorder</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>是否需要添加debug边框，默认NO</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">showDebugBorder</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE16debugBorderColorSo7UIColorCvp"></a>
+                    <a name="//apple_ref/swift/Property/debugBorderColor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:11FWFramework7WrapperC13FWApplicationSo6UIViewCRbzlE16debugBorderColorSo7UIColorCvp">debugBorderColor</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>指定debug边框的颜色，默认半透明红色</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">debugBorderColor</span><span class="p">:</span> <span class="kt">UIColor</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/Child"></a>
                 <a name="//apple_ref/swift/Section/Child" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -24514,7 +24344,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-04)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

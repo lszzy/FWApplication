@@ -13,42 +13,8 @@
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <net/if.h>
-#if FWMacroSPM
-@import FWFrameworkCompatible;
-#endif
-
-static NSString *fwStaticDeviceUUID = nil;
 
 @implementation UIDevice (FWApplication)
-
-#pragma mark - UUID
-
-+ (NSString *)fw_deviceUUID
-{
-    if (!fwStaticDeviceUUID) {
-        @synchronized (self) {
-            NSString *deviceUUID = [[FWKeychainManager sharedInstance] passwordForService:@"FWDeviceUUID" account:NSBundle.mainBundle.bundleIdentifier];
-            if (deviceUUID.length > 0) {
-                fwStaticDeviceUUID = deviceUUID;
-            } else {
-                deviceUUID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-                if (deviceUUID.length < 1) {
-                    deviceUUID = [[NSUUID UUID] UUIDString];
-                }
-                [self setFw_deviceUUID:deviceUUID];
-            }
-        }
-    }
-    
-    return fwStaticDeviceUUID;
-}
-
-+ (void)setFw_deviceUUID:(NSString *)deviceUUID
-{
-    fwStaticDeviceUUID = deviceUUID;
-    
-    [[FWKeychainManager sharedInstance] setPassword:deviceUUID forService:@"FWDeviceUUID" account:NSBundle.mainBundle.bundleIdentifier];
-}
 
 #pragma mark - Jailbroken
 

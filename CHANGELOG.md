@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.0] - 2022-07-04
+
+### Added
+* Added batch registration WebView bridge class method
+* Migrate some common methods to FWFramework
+* Compatible with FWFramework 3.5.0 version
+
 ## [3.4.0] - 2022-06-26
 
 ### Changed

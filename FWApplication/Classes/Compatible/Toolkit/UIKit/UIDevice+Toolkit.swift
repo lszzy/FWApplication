@@ -12,14 +12,6 @@ import FWApplication
 #endif
 
 extension Wrapper where Base: UIDevice {
-    
-    // MARK: - UUID
-
-    /// 获取或设置设备UUID，自动keychain持久化。默认获取IDFV(未使用IDFA，避免额外权限)，失败则随机生成一个
-    public static var deviceUUID: String {
-        get { return Base.__fw_deviceUUID }
-        set { Base.__fw_deviceUUID = newValue }
-    }
 
     // MARK: - Jailbroken
 

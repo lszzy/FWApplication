@@ -288,6 +288,8 @@ FWDealloc();
 {
     [super viewWillAppear:animated];
     self.fw_navigationBarHidden = NO;
+    
+    [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"viewWillAppear:%@", @(animated)]];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -295,6 +297,13 @@ FWDealloc();
     [super viewDidAppear:animated];
     // 自动还原动画
     self.navigationController.fw_navigationTransition = nil;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [UIWindow fw_showMessageWithText:[NSString stringWithFormat:@"viewWillDisappear:%@", @(animated)]];
 }
 
 - (UITableViewStyle)renderTableStyle
@@ -306,6 +315,7 @@ FWDealloc();
 {
     [self.tableData addObjectsFromArray:@[
                                           @[@"默认Present", @"onPresent"],
+                                          @[@"全屏Present", @"onPresentFullScreen"],
                                           @[@"转场present", @"onPresentTransition"],
                                           @[@"自定义present", @"onPresentAnimation"],
                                           @[@"swipe present", @"onPresentSwipe"],
@@ -358,6 +368,14 @@ FWDealloc();
 {
     TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
     vc.canScroll = YES;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (void)onPresentFullScreen
+{
+    TestFullScreenViewController *vc = [[TestFullScreenViewController alloc] init];
+    vc.canScroll = YES;
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
     [self presentViewController:vc animated:YES completion:nil];
 }
 

@@ -503,4 +503,25 @@ NS_SWIFT_NAME(GradientView)
 
 @end
 
+#pragma mark - UIView+FWDebugger
+
+@interface UIView (FWDebugger)
+
+/// 获取当前 UIView 层级树信息
+@property (nonatomic, copy, readonly) NSString *fw_viewInfo NS_REFINED_FOR_SWIFT;
+
+/// 是否需要添加debug背景色，默认NO
+@property (nonatomic, assign) BOOL fw_showDebugColor NS_REFINED_FOR_SWIFT;
+
+/// 是否每个view的背景色随机，如果不随机则统一使用半透明红色，默认NO
+@property (nonatomic, assign) BOOL fw_randomDebugColor NS_REFINED_FOR_SWIFT;
+
+/// 是否需要添加debug边框，默认NO
+@property (nonatomic, assign) BOOL fw_showDebugBorder NS_REFINED_FOR_SWIFT;
+
+/// 指定debug边框的颜色，默认半透明红色
+@property (nonatomic, strong) UIColor *fw_debugBorderColor NS_REFINED_FOR_SWIFT;
+
+@end
+
 NS_ASSUME_NONNULL_END

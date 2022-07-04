@@ -9,6 +9,20 @@
 
 #import "TestJavascriptBridgeViewController.h"
 
+@interface TestJavascriptBridge : NSObject
+
+@end
+
+@implementation TestJavascriptBridge
+
++ (void)testObjcCallback:(id)data callback:(FWJsBridgeResponseCallback)callback
+{
+    NSLog(@"TestJavascriptBridge.testObjcCallback called: %@", data);
+    callback(@"Response from TestJavascriptBridge.testObjcCallback");
+}
+
+@end
+
 @implementation TestJavascriptBridgeViewController
 
 - (void)renderWebBridge:(FWWebViewJsBridge *)bridge {
@@ -31,6 +45,7 @@
         NSLog(@"testObjcCallback called: %@", data);
         responseCallback(@"Response from testObjcCallback");
     }];
+    [bridge registerClass:[TestJavascriptBridge class] package:nil withMapper:nil];
     
     NSLog(@"registeredHandlers: %@", [bridge getRegisteredHandlers]);
     [bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];

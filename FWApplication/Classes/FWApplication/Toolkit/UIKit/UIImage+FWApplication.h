@@ -52,11 +52,6 @@ NS_ASSUME_NONNULL_BEGIN
 // 如果没有透明通道，增加透明通道
 @property (nonatomic, readonly) UIImage *fw_alphaImage NS_REFINED_FOR_SWIFT;
 
-#pragma mark - Album
-
-// 保存图片到相册，保存成功时error为nil
-- (void)fw_saveImageWithCompletion:(nullable void (^)(NSError * _Nullable error))completion NS_SWIFT_NAME(__fw_saveImage(completion:)) NS_REFINED_FOR_SWIFT;
-
 #pragma mark - View
 
 // 截取View所有视图，包括旋转缩放效果
@@ -114,11 +109,6 @@ NS_ASSUME_NONNULL_BEGIN
                                     locations:(nullable const CGFloat *)locations
                                    startPoint:(CGPoint)startPoint
                                      endPoint:(CGPoint)endPoint NS_REFINED_FOR_SWIFT;
-
-#pragma mark - Album
-
-// 保存视频到相册，保存成功时error为nil。如果视频地址为NSURL，需使用NSURL.path
-+ (void)fw_saveVideo:(NSString *)videoPath withCompletion:(nullable void (^)(NSError * _Nullable error))completion NS_REFINED_FOR_SWIFT;
 
 @end
 

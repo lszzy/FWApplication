@@ -10,24 +10,6 @@
 
 @implementation UIButton (FWApplication)
 
-- (void)fw_setBackgroundColor:(UIColor *)backgroundColor forState:(UIControlState)state
-{
-    UIImage *image = nil;
-    if (backgroundColor) {
-        CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
-        UIGraphicsBeginImageContextWithOptions(rect.size, NO, 0);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        
-        CGContextSetFillColorWithColor(context, [backgroundColor CGColor]);
-        CGContextFillRect(context, rect);
-        
-        image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-    }
-    
-    [self setBackgroundImage:image forState:state];
-}
-
 - (dispatch_source_t)fw_startCountDown:(NSInteger)seconds title:(NSString *)title waitTitle:(NSString *)waitTitle
 {
     __weak UIButton *weakBase = self;
