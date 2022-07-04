@@ -14,12 +14,6 @@ import FWApplication
 /// 注意iOS在后台运行时，如果调用NSAttributedString解析html会导致崩溃(如动态切换深色模式时在后台解析html)。解决方法是提前在前台解析好或者后台异步到下一个主线程RunLoop
 extension Wrapper where Base: NSAttributedString {
     
-    // MARK: - Convert
-    /// 快速创建NSAttributedString，自定义字体和颜色
-    public static func attributedString(_ string: String, font: UIFont?, textColor: UIColor? = nil) -> Base {
-        return Base.__fw_attributedString(string, with: font, textColor: textColor)
-    }
-    
     // MARK: - Html
     /// html字符串转换为NSAttributedString对象，可设置默认系统字体和颜色(附加CSS方式)
     public static func attributedString(htmlString: String, defaultAttributes: [NSAttributedString.Key: Any]?) -> Base? {

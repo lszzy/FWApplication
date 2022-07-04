@@ -16,11 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Pinyin
 
 /**
- 中文转拼音
- */
-@property (nonatomic, copy, readonly) NSString *fw_pinyinString NS_REFINED_FOR_SWIFT;
-
-/**
  *  中文转拼音并进行比较
  *
  *  @param string 中文字符串

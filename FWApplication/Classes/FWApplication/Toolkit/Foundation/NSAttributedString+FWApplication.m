@@ -117,25 +117,6 @@
 
 @implementation NSAttributedString (FWApplication)
 
-#pragma mark - Convert
-
-+ (instancetype)fw_attributedString:(NSString *)string withFont:(UIFont *)font
-{
-    return [self fw_attributedString:string withFont:font textColor:nil];
-}
-
-+ (instancetype)fw_attributedString:(NSString *)string withFont:(UIFont *)font textColor:(UIColor *)textColor
-{
-    NSMutableDictionary *attr = [[NSMutableDictionary alloc] init];
-    if (font) {
-        attr[NSFontAttributeName] = font;
-    }
-    if (textColor) {
-        attr[NSForegroundColorAttributeName] = textColor;
-    }
-    return [[self alloc] initWithString:string attributes:attr];
-}
-
 #pragma mark - Html
 
 + (instancetype)fw_attributedStringWithHtmlString:(NSString *)htmlString defaultAttributes:(nullable NSDictionary<NSAttributedStringKey,id> *)attributes

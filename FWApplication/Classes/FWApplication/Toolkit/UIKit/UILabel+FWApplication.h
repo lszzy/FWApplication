@@ -27,4 +27,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - UILabel+FWDebugger
+
+@interface UILabel (FWDebugger)
+
+/**
+ 调试功能，打开后会在 label 第一行文字里把 descender、xHeight、capHeight、lineHeight 所在的位置以线条的形式标记出来。
+ 对这些属性的解释可以看这篇文章 https://www.rightpoint.com/rplabs/ios-tracking-typography
+ */
+@property (nonatomic, assign) BOOL fw_showPrincipalLines NS_REFINED_FOR_SWIFT;
+
+/**
+ 当打开 showPrincipalLines 时，通过这个属性控制线条的颜色，默认为 半透明红色
+ */
+@property (nonatomic, strong) UIColor *fw_principalLineColor NS_REFINED_FOR_SWIFT;
+
+@end
+
 NS_ASSUME_NONNULL_END

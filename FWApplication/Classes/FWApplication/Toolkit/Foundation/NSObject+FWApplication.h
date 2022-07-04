@@ -498,6 +498,17 @@ NS_ASSUME_NONNULL_BEGIN
 /// 指定任务Id取消轮询任务
 + (void)fw_cancelTask:(NSString *)taskId NS_REFINED_FOR_SWIFT;
 
+#pragma mark - Debug
+
+/// 获取当前对象的所有 @property、方法，父类的方法也会分别列出
+@property (nonatomic, copy, readonly) NSString *fw_methodList NS_REFINED_FOR_SWIFT;
+
+/// 获取当前对象的所有 @property、方法，不包含父类的
+@property (nonatomic, copy, readonly) NSString *fw_shortMethodList NS_REFINED_FOR_SWIFT;
+
+/// 当前对象的所有 Ivar 变量
+@property (nonatomic, copy, readonly) NSString *fw_ivarList NS_REFINED_FOR_SWIFT;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -222,4 +222,21 @@ static dispatch_semaphore_t fwStaticSemaphore;
     dispatch_semaphore_signal(fwStaticSemaphore);
 }
 
+#pragma mark - Debug
+
+- (NSString *)fw_methodList {
+    id methodList = [self fw_invokeGetter:@"_methodDescription"];
+    return [methodList isKindOfClass:[NSString class]] ? methodList : @"";
+}
+
+- (NSString *)fw_shortMethodList {
+    id shortMethodList = [self fw_invokeGetter:@"_shortMethodDescription"];
+    return [shortMethodList isKindOfClass:[NSString class]] ? shortMethodList : @"";
+}
+
+- (NSString *)fw_ivarList {
+    id ivarList = [self fw_invokeGetter:@"_ivarDescription"];
+    return [ivarList isKindOfClass:[NSString class]] ? ivarList : @"";
+}
+
 @end

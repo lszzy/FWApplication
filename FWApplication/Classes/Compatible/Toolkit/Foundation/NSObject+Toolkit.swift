@@ -150,4 +150,20 @@ extension Wrapper where Base: NSObject {
         Base.__fw_cancelTask(taskId)
     }
     
+    // MARK: - Debug
+    /// 获取当前对象的所有 @property、方法，父类的方法也会分别列出
+    public var methodList: String {
+        return base.__fw_methodList
+    }
+    
+    /// 获取当前对象的所有 @property、方法，不包含父类的
+    public var shortMethodList: String {
+        return base.__fw_shortMethodList
+    }
+    
+    /// 当前对象的所有 Ivar 变量
+    public var ivarList: String {
+        return base.__fw_ivarList
+    }
+    
 }

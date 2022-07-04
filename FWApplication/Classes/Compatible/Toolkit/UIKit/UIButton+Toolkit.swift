@@ -23,11 +23,6 @@ extension Wrapper where Base: UIControl {
 }
 
 extension Wrapper where Base: UIButton {
-    
-    /// 设置背景色
-    public func setBackgroundColor(_ backgroundColor: UIColor?, for state: UIControl.State) {
-        base.__fw_setBackgroundColor(backgroundColor, for: state)
-    }
 
     /// 设置按钮倒计时，从window移除时自动取消。等待时按钮disabled，非等待时enabled。时间支持格式化，示例：重新获取(%lds)
     @discardableResult

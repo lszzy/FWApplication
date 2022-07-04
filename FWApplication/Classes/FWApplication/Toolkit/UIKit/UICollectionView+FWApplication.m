@@ -58,27 +58,6 @@
 
 @end
 
-@implementation UICollectionViewCell (FWApplication)
-
-- (UICollectionView *)fw_collectionView
-{
-    UIView *superview = self.superview;
-    while (superview) {
-        if ([superview isKindOfClass:[UICollectionView class]]) {
-            return (UICollectionView *)superview;
-        }
-        superview = superview.superview;
-    }
-    return nil;
-}
-
-- (NSIndexPath *)fw_indexPath
-{
-    return [[self fw_collectionView] indexPathForCell:self];
-}
-
-@end
-
 @implementation UICollectionViewFlowLayout (FWApplication)
 
 - (void)fw_hoverWithHeader:(BOOL)header footer:(BOOL)footer

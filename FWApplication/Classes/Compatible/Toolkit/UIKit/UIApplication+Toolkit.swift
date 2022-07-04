@@ -106,36 +106,6 @@ extension Wrapper where Base: UIApplication {
         return Base.__fw_appInfo(key)
     }
 
-    /// 读取应用名称
-    public static var appName: String {
-        return Base.__fw_appName
-    }
-
-    /// 读取应用显示名称，未配置时读取名称
-    public static var appDisplayName: String {
-        return Base.__fw_appDisplayName
-    }
-
-    /// 读取应用主版本号，示例：1.0.0
-    public static var appVersion: String {
-        return Base.__fw_appVersion
-    }
-
-    /// 读取应用构建版本号，示例：1.0.0.1
-    public static var appBuildVersion: String {
-        return Base.__fw_appBuildVersion
-    }
-
-    /// 读取应用标识
-    public static var appIdentifier: String {
-        return Base.__fw_appIdentifier
-    }
-    
-    /// 读取应用可执行程序
-    public static var appExecutable: String {
-        return Base.__fw_appExecutable
-    }
-
     // MARK: - Debug
     /// 是否是盗版(不是从AppStore安装)
     public static var isPirated: Bool {

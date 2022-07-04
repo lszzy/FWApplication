@@ -15,11 +15,6 @@ extension Wrapper where Base == String {
     
     // MARK: - Pinyin
 
-    /// 中文转拼音
-    public var pinyinString: String {
-        return (base as NSString).__fw_pinyin
-    }
-
     /**
      *  中文转拼音并进行比较
      *
