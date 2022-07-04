@@ -2305,35 +2305,35 @@
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/UIKit/UIDevice+Toolkit.swift",
-      "line": 27,
+      "line": 19,
       "symbol": "Wrapper.isJailbroken",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/UIKit/UIDevice+Toolkit.swift",
-      "line": 34,
+      "line": 26,
       "symbol": "Wrapper.ipAddress",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/UIKit/UIDevice+Toolkit.swift",
-      "line": 39,
+      "line": 31,
       "symbol": "Wrapper.hostName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/UIKit/UIDevice+Toolkit.swift",
-      "line": 44,
+      "line": 36,
       "symbol": "Wrapper.carrierName",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/UIKit/UIDevice+Toolkit.swift",
-      "line": 49,
+      "line": 41,
       "symbol": "Wrapper.networkType",
       "symbol_kind": "source.lang.swift.decl.var.static",
       "warning": "undocumented"
@@ -3390,43 +3390,29 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWBlock.h",
-      "line": 59,
+      "line": 72,
       "symbol": "NSTimer(FWBlock)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWBlock.h",
-      "line": 126,
+      "line": 139,
       "symbol": "UIGestureRecognizer(FWBlock)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWBlock.h",
-      "line": 144,
+      "line": 157,
       "symbol": "UIView(FWBlock)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWBlock.h",
-      "line": 162,
+      "line": 175,
       "symbol": "UIControl(FWBlock)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDebugger.h",
-      "line": 26,
-      "symbol": "UIView(FWDebugger)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWDebugger.h",
-      "line": 45,
-      "symbol": "UILabel(FWDebugger)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
@@ -3551,63 +3537,63 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 200,
+      "line": 205,
       "symbol": "NSData(FWEncode)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 248,
+      "line": 253,
       "symbol": "NSURL(FWEncode)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 292,
+      "line": 297,
       "symbol": "NSObject(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 396,
+      "line": 401,
       "symbol": "NSString(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 426,
+      "line": 431,
       "symbol": "NSArray(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 448,
+      "line": 453,
       "symbol": "NSMutableArray(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 499,
+      "line": 504,
       "symbol": "NSMutableSet(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 519,
+      "line": 524,
       "symbol": "NSDictionary(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWEncode.h",
-      "line": 533,
+      "line": 538,
       "symbol": "NSMutableDictionary(FWSafeType)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -3621,42 +3607,42 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFoundation.h",
-      "line": 60,
+      "line": 66,
       "symbol": "NSData(FWFoundation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFoundation.h",
-      "line": 78,
+      "line": 84,
       "symbol": "NSDate(FWFoundation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFoundation.h",
-      "line": 111,
+      "line": 117,
       "symbol": "NSDictionary(FWFoundation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFoundation.h",
-      "line": 126,
+      "line": 132,
       "symbol": "NSObject(FWFoundation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFoundation.h",
-      "line": 138,
+      "line": 144,
       "symbol": "NSString(FWFoundation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFoundation.h",
-      "line": 159,
+      "line": 165,
       "symbol": "NSUserDefaults(FWFoundation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -3761,175 +3747,189 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 237,
+      "line": 238,
       "symbol": "FWABConditionalTest.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 238,
+      "line": 239,
       "symbol": "FWABConditionalTest.+new",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 259,
+      "line": 260,
       "symbol": "FWABDefaultRepository.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 296,
+      "line": 297,
       "symbol": "FWABSplitTest.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 297,
+      "line": 298,
       "symbol": "FWABSplitTest.+new",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 309,
+      "line": 310,
       "symbol": "FWABVersion.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 310,
+      "line": 311,
       "symbol": "FWABVersion.+new",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 326,
+      "line": 327,
       "symbol": "FWAuthorizeManager.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 382,
+      "line": 383,
       "symbol": "CM(FWFramework)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 390,
+      "line": 391,
       "symbol": "CM(FWFramework)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 407,
+      "line": 408,
       "symbol": "FWBenchmark.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 419,
+      "line": 420,
       "symbol": "FWKeychainManager.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 453,
+      "line": 454,
       "symbol": "FWNotificationManager.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 481,
+      "line": 482,
       "symbol": "FWNotificationManager.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 489,
+      "line": 490,
       "symbol": "FWPromise.completionQueue",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 493,
+      "line": 494,
       "symbol": "FWPromise.defaultError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 497,
+      "line": 498,
       "symbol": "FWPromise.validationError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 501,
+      "line": 502,
       "symbol": "FWPromise.timeoutError",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 514,
+      "line": 515,
       "symbol": "FWPromise.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 515,
+      "line": 516,
       "symbol": "FWPromise.+new",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 520,
+      "line": 521,
       "symbol": "CM(FWFramework)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 559,
+      "line": 555,
+      "symbol": "CM(FWFramework)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
+      "line": 557,
+      "symbol": "CM(FWFramework).fw_deviceUUID",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
+      "line": 568,
       "symbol": "FWVersionManager.sharedInstance",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-Swift.h",
-      "line": 577,
+      "line": 586,
       "symbol": "FWVersionManager.-init",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-umbrella.h",
-      "line": 48,
+      "line": 47,
       "symbol": "FWFrameworkVersionNumber",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWFramework-umbrella.h",
-      "line": 49,
+      "line": 48,
       "symbol": "FWFrameworkVersionString",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.constant",
       "warning": "undocumented"
@@ -4070,28 +4070,77 @@
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
       "line": 16,
+      "symbol": "FWNavigationOptions.FWNavigationOptionAutomatic",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 17,
+      "symbol": "FWNavigationOptions.FWNavigationOptionPush",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 18,
+      "symbol": "FWNavigationOptions.FWNavigationOptionPresent",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 20,
+      "symbol": "FWNavigationOptions.FWNavigationOptionNavigation",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 22,
+      "symbol": "FWNavigationOptions.FWNavigationOptionPopTop",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 23,
+      "symbol": "FWNavigationOptions.FWNavigationOptionPopToRoot",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 25,
+      "symbol": "FWNavigationOptions.FWNavigationOptionPageSheet",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 26,
+      "symbol": "FWNavigationOptions.FWNavigationOptionFullScreen",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
+      "line": 31,
       "symbol": "UIWindow(FWNavigation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 70,
+      "line": 97,
       "symbol": "UIViewController(FWNavigation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 82,
-      "symbol": "UIViewController(FWWorkflow)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 91,
-      "symbol": "UINavigationController(FWWorkflow)",
+      "line": 125,
+      "symbol": "UINavigationController(FWNavigation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
@@ -4118,7 +4167,7 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWRouter.h",
-      "line": 40,
+      "line": 47,
       "symbol": "FWRouterContext.isOpening",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
@@ -4146,35 +4195,42 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 102,
+      "line": 120,
       "symbol": "UIColor(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 164,
+      "line": 182,
       "symbol": "UIFont(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 192,
+      "line": 210,
       "symbol": "UIImage(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 285,
+      "line": 303,
+      "symbol": "UIImage(FWToolkit).+fw_saveVideo:withCompletion:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
+      "line": 309,
       "symbol": "UIView(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 343,
+      "line": 367,
       "symbol": "UIViewController(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -4209,49 +4265,63 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 163,
+      "line": 166,
       "symbol": "UIScrollView(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 199,
+      "line": 202,
       "symbol": "UIPageControl(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 208,
+      "line": 211,
       "symbol": "UISlider(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 220,
+      "line": 223,
       "symbol": "UISwitch(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 229,
+      "line": 232,
       "symbol": "UITextField(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 256,
+      "line": 259,
       "symbol": "UITextView(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 283,
+      "line": 286,
+      "symbol": "UITableViewCell(FWUIKit)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
+      "line": 301,
+      "symbol": "UICollectionViewCell(FWUIKit)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
+      "warning": "undocumented"
+    },
+    {
+      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
+      "line": 313,
       "symbol": "UIViewController(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -13330,301 +13400,315 @@
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 55,
+      "line": 58,
       "symbol": "UIProgressView(FWWebView)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 97,
+      "line": 100,
       "symbol": "FWJsBridgeResponseCallback",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 98,
+      "line": 101,
       "symbol": "FWJsBridgeHandler",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 99,
+      "line": 102,
       "symbol": "FWJsBridgeErrorHandler",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 100,
+      "line": 103,
       "symbol": "FWJsBridgeFilterHandler",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 101,
+      "line": 104,
       "symbol": "FWJsBridgeMessage",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 104,
+      "line": 107,
       "symbol": "FWWebViewJsBridgeDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 105,
+      "line": 108,
       "symbol": "FWWebViewJsBridgeDelegate.-_evaluateJavascript:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 109,
+      "line": 112,
       "symbol": "FWWebViewJsBridgeBase",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 111,
+      "line": 114,
       "symbol": "FWWebViewJsBridgeBase.delegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 112,
+      "line": 115,
       "symbol": "FWWebViewJsBridgeBase.startupMessageQueue",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 113,
+      "line": 116,
       "symbol": "FWWebViewJsBridgeBase.responseCallbacks",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 114,
+      "line": 117,
       "symbol": "FWWebViewJsBridgeBase.messageHandlers",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 115,
+      "line": 118,
       "symbol": "FWWebViewJsBridgeBase.errorHandler",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 116,
+      "line": 119,
       "symbol": "FWWebViewJsBridgeBase.filterHandler",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 118,
+      "line": 121,
       "symbol": "FWWebViewJsBridgeBase.+enableLogging",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 119,
+      "line": 122,
       "symbol": "FWWebViewJsBridgeBase.+setLogMaxLength:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 120,
+      "line": 123,
       "symbol": "FWWebViewJsBridgeBase.-reset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 121,
+      "line": 124,
       "symbol": "FWWebViewJsBridgeBase.-sendData:responseCallback:handlerName:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 122,
+      "line": 125,
       "symbol": "FWWebViewJsBridgeBase.-flushMessageQueue:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 123,
+      "line": 126,
       "symbol": "FWWebViewJsBridgeBase.-injectJavascriptFile",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 124,
+      "line": 127,
       "symbol": "FWWebViewJsBridgeBase.-isWebViewJavascriptBridgeURL:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 125,
+      "line": 128,
       "symbol": "FWWebViewJsBridgeBase.-isQueueMessageURL:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 126,
+      "line": 129,
       "symbol": "FWWebViewJsBridgeBase.-isBridgeLoadedURL:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 127,
+      "line": 130,
       "symbol": "FWWebViewJsBridgeBase.-logUnkownMessage:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 128,
+      "line": 131,
       "symbol": "FWWebViewJsBridgeBase.-webViewJavascriptCheckCommand",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 129,
+      "line": 132,
       "symbol": "FWWebViewJsBridgeBase.-webViewJavascriptFetchQueyCommand",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 130,
+      "line": 133,
       "symbol": "FWWebViewJsBridgeBase.-disableJavscriptAlertBoxSafetyTimeout",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 142,
+      "line": 145,
       "symbol": "FWWebViewJsBridge.+bridgeForWebView:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 143,
+      "line": 146,
       "symbol": "FWWebViewJsBridge.+enableLogging",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 145,
-      "symbol": "FWWebViewJsBridge.-registerHandler:handler:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWWebView.h",
-      "line": 146,
-      "symbol": "FWWebViewJsBridge.-removeHandler:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWWebView.h",
-      "line": 147,
-      "symbol": "FWWebViewJsBridge.-getRegisteredHandlers",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWWebView.h",
       "line": 148,
-      "symbol": "FWWebViewJsBridge.-setErrorHandler:",
+      "symbol": "FWWebViewJsBridge.-registerClass:package:withMapper:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 149,
-      "symbol": "FWWebViewJsBridge.-setFilterHandler:",
+      "symbol": "FWWebViewJsBridge.-unregisterClass:package:withMapper:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 150,
-      "symbol": "FWWebViewJsBridge.-callHandler:",
+      "symbol": "FWWebViewJsBridge.-registerHandler:handler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 151,
-      "symbol": "FWWebViewJsBridge.-callHandler:data:",
+      "symbol": "FWWebViewJsBridge.-removeHandler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 152,
-      "symbol": "FWWebViewJsBridge.-callHandler:data:responseCallback:",
+      "symbol": "FWWebViewJsBridge.-getRegisteredHandlers",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 153,
-      "symbol": "FWWebViewJsBridge.-reset",
+      "symbol": "FWWebViewJsBridge.-setErrorHandler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 154,
-      "symbol": "FWWebViewJsBridge.-setWebViewDelegate:",
+      "symbol": "FWWebViewJsBridge.-setFilterHandler:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 155,
-      "symbol": "FWWebViewJsBridge.-disableJavscriptAlertBoxSafetyTimeout",
+      "symbol": "FWWebViewJsBridge.-callHandler:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWWebView.h",
+      "line": 156,
+      "symbol": "FWWebViewJsBridge.-callHandler:data:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWWebView.h",
+      "line": 157,
+      "symbol": "FWWebViewJsBridge.-callHandler:data:responseCallback:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWWebView.h",
+      "line": 158,
+      "symbol": "FWWebViewJsBridge.-reset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 159,
+      "symbol": "FWWebViewJsBridge.-setWebViewDelegate:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWWebView.h",
+      "line": 160,
+      "symbol": "FWWebViewJsBridge.-disableJavscriptAlertBoxSafetyTimeout",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWWebView.h",
+      "line": 164,
       "symbol": "FWWebViewJsBridge_js",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.function",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWWebView.h",
-      "line": 161,
+      "line": 166,
       "symbol": "WKWebView(FWWebViewBridge)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -13967,21 +14051,21 @@
     },
     {
       "file": "docs/FWApplication/NSAttributedString+FWApplication.h",
-      "line": 129,
+      "line": 121,
       "symbol": "NSAttributedString(FWApplication).+fw_CSSStringWithColor:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/NSAttributedString+FWApplication.h",
-      "line": 132,
+      "line": 124,
       "symbol": "NSAttributedString(FWApplication).+fw_CSSStringWithFont:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/NSAttributedString+FWApplication.h",
-      "line": 137,
+      "line": 129,
       "symbol": "NSAttributedString(FWApplication).+fw_attributedString:withOption:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
@@ -14198,7 +14282,7 @@
     },
     {
       "file": "docs/FWApplication/NSString+FWApplication.h",
-      "line": 74,
+      "line": 69,
       "symbol": "NSString(FWApplication).fw_UUIDString",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
@@ -14226,77 +14310,42 @@
     },
     {
       "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 24,
-      "symbol": "UIApplication(FWAdaptive).fw_appName",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 27,
-      "symbol": "UIApplication(FWAdaptive).fw_appDisplayName",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 30,
-      "symbol": "UIApplication(FWAdaptive).fw_appVersion",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 33,
-      "symbol": "UIApplication(FWAdaptive).fw_appBuildVersion",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 36,
-      "symbol": "UIApplication(FWAdaptive).fw_appIdentifier",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 41,
+      "line": 26,
       "symbol": "UIApplication(FWAdaptive).fw_isPirated",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 44,
+      "line": 29,
       "symbol": "UIApplication(FWAdaptive).fw_isTestflight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 49,
+      "line": 34,
       "symbol": "UIApplication(FWAdaptive).+fw_playAlert:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 52,
+      "line": 37,
       "symbol": "UIApplication(FWAdaptive).+fw_stopAlert:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 55,
+      "line": 40,
       "symbol": "UIApplication(FWAdaptive).+fw_playVibrate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIApplication+FWApplication.h",
-      "line": 58,
+      "line": 43,
       "symbol": "UIApplication(FWAdaptive).+fw_readText:withLanguage:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
@@ -14464,14 +14513,7 @@
     },
     {
       "file": "docs/FWApplication/UICollectionView+FWApplication.h",
-      "line": 36,
-      "symbol": "UICollectionViewCell(FWApplication)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UICollectionView+FWApplication.h",
-      "line": 47,
+      "line": 37,
       "symbol": "UICollectionViewFlowLayout(FWApplication)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -14541,35 +14583,35 @@
     },
     {
       "file": "docs/FWApplication/UIDevice+FWApplication.h",
-      "line": 24,
+      "line": 19,
       "symbol": "UIDevice(FWApplication).fw_isJailbroken",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIDevice+FWApplication.h",
-      "line": 29,
+      "line": 24,
       "symbol": "UIDevice(FWApplication).fw_ipAddress",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIDevice+FWApplication.h",
-      "line": 32,
+      "line": 27,
       "symbol": "UIDevice(FWApplication).fw_hostName",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIDevice+FWApplication.h",
-      "line": 35,
+      "line": 30,
       "symbol": "UIDevice(FWApplication).fw_carrierName",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIDevice+FWApplication.h",
-      "line": 38,
+      "line": 33,
       "symbol": "UIDevice(FWApplication).fw_networkType",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
@@ -14675,56 +14717,42 @@
     {
       "file": "docs/FWApplication/UIImage+FWApplication.h",
       "line": 58,
-      "symbol": "UIImage(FWApplication).-fw_saveImageWithCompletion:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 63,
       "symbol": "UIImage(FWApplication).+fw_imageWithView:limitWidth:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 68,
+      "line": 63,
       "symbol": "UIImage(FWApplication).+fw_imageWithAppIcon",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 71,
+      "line": 66,
       "symbol": "UIImage(FWApplication).+fw_imageWithAppIcon:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 76,
+      "line": 71,
       "symbol": "UIImage(FWApplication).+fw_imageWithPdf:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 79,
+      "line": 74,
       "symbol": "UIImage(FWApplication).+fw_imageWithPdf:size:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 84,
+      "line": 79,
       "symbol": "UIImage(FWApplication).+fw_imageWithEmoji:size:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIImage+FWApplication.h",
-      "line": 121,
-      "symbol": "UIImage(FWApplication).+fw_saveVideo:withCompletion:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
@@ -14787,15 +14815,22 @@
     {
       "file": "docs/FWApplication/UILabel+FWApplication.h",
       "line": 23,
-      "symbol": "UILabel(FWDebugger).fw_textSize",
+      "symbol": "UILabel(FWUIKit).fw_textSize",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UILabel+FWApplication.h",
       "line": 26,
-      "symbol": "UILabel(FWDebugger).fw_attributedTextSize",
+      "symbol": "UILabel(FWUIKit).fw_attributedTextSize",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/UILabel+FWApplication.h",
+      "line": 32,
+      "symbol": "UILabel(FWDebugger)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
@@ -15087,35 +15122,28 @@
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 48,
-      "symbol": "UITableViewCell(FWApplication)",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 68,
+      "line": 55,
       "symbol": "FWTableViewCellBackgroundView.contentView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 71,
+      "line": 58,
       "symbol": "FWTableViewCellBackgroundView.contentInset",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 74,
+      "line": 61,
       "symbol": "FWTableViewCellBackgroundView.-setSectionContentInset:tableView:atIndexPath:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/UITableView+FWApplication.h",
-      "line": 84,
+      "line": 71,
       "symbol": "UITableViewCell(FWDynamicLayout).fw_backgroundView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
@@ -15468,6 +15496,13 @@
       "line": 481,
       "symbol": "UIView(FWAutoLayout).-fw_addCircleLayer:degree:progress:gradientBlock:strokeColor:strokeWidth:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/UIView+FWApplication.h",
+      "line": 508,
+      "symbol": "UIView(FWDebugger)",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {

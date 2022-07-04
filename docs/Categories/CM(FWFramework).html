@@ -17,7 +17,7 @@
     <a title="CM(FWFramework) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.4.0 Docs</a> (67% documented)</p>
+        <p><a href="../index.html">FWApplication 3.5.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -58,6 +58,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CALayer%28FWQuartzCore%29.html">CALayer(FWQuartzCore)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
@@ -142,9 +145,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWApplication%29.html">NSObject(FWApplication)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/NSObject%28FWDebugger%29.html">NSObject(FWDebugger)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWFoundation%29.html">NSObject(FWFoundation)</a>
@@ -327,7 +327,7 @@
                 <a href="../Categories/UIImageView%28FWTheme%29.html">UIImageView(FWTheme)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Categories/UILabel%28FWDebugger%29.html">UILabel(FWDebugger)</a>
+                <a href="../Categories/UILabel%28FWUIKit%29.html">UILabel(FWUIKit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationBar%28FWApplication%29.html">UINavigationBar(FWApplication)</a>
@@ -345,13 +345,13 @@
                 <a href="../Categories/UINavigationController%28FWFullscreenPopGesture%29.html">UINavigationController(FWFullscreenPopGesture)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Categories/UINavigationController%28FWNavigation%29.html">UINavigationController(FWNavigation)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWToolkit%29.html">UINavigationController(FWToolkit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWTransition%29.html">UINavigationController(FWTransition)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/UINavigationController%28FWWorkflow%29.html">UINavigationController(FWWorkflow)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UIPageControl%28FWUIKit%29.html">UIPageControl(FWUIKit)</a>
@@ -1420,6 +1420,12 @@
                 <a href="../Constants.html#/c:@FWRequestValidationErrorDomain">FWRequestValidationErrorDomain</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterNavigationOptionsKey">FWRouterNavigationOptionsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterSourceKey">FWRouterSourceKey</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Constants.html#/c:FWAdaptive.h@FWScreenInch35">FWScreenInch35</a>
               </li>
               <li class="nav-group-task">
@@ -1657,6 +1663,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWLogType.html">FWLogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FWNavigationOptions.html">FWNavigationOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWNetworkReachabilityStatus.html">FWNetworkReachabilityStatus</a>
@@ -2095,6 +2104,9 @@
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockInt">FWBlockInt</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockIntParam">FWBlockIntParam</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockParam">FWBlockParam</a>
               </li>
               <li class="nav-group-task">
@@ -2180,6 +2192,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterHandler">FWRouterHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterUserInfoKey">FWRouterUserInfoKey</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWAdaptive.h@T@FWScreenInch">FWScreenInch</a>
@@ -2358,6 +2373,9 @@
                 <a href="../Functions.html#/c:@F@FWStringFromNetworkReachabilityStatus">FWStringFromNetworkReachabilityStatus</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@FWSynchronized">FWSynchronized</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWWebViewJsBridge_js">FWWebViewJsBridge_js</a>
               </li>
               <li class="nav-group-task">
@@ -2429,7 +2447,12 @@
               <div class="declaration">
                 <div class="language">
                   
-                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="p">(</span><span class="nl">FWFramework_Swift_520</span><span class="p">)</span></code></pre>
+                  <pre class="highlight objective_c"><code><span class="k">@interface</span> <span class="nc">UIDevice</span> <span class="p">(</span><span class="n">SWIFT_EXTENSION</span><span class="p">(</span><span class="n">FWFramework</span><span class="p">))</span>
+<span class="c1">/// 获取或设置设备UUID，自动keychain持久化。默认获取IDFV(未使用IDFA，避免额外权限)，失败则随机生成一个</span>
+<span class="n">SWIFT_CLASS_PROPERTY</span><span class="p">(</span><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">class</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span> <span class="n">fw_deviceUUID</span><span class="p">;)</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="n">fw_deviceUUID</span> <span class="n">SWIFT_WARN_UNUSED_RESULT</span><span class="p">;</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">setFw_deviceUUID</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span><span class="p">)</span><span class="nv">newValue</span><span class="p">;</span>
+<span class="k">@end</span></code></pre>
 
                 </div>
               </div>
@@ -2442,9 +2465,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(cm)all:"></a>
-                    <a name="//apple_ref/swift/Method/+all:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(cm)all:">+all:<wbr></a>
+                    <a name="/c:@CM@FWFramework@@objc(cs)UIDevice(cpy)fw_deviceUUID"></a>
+                    <a name="//apple_ref/swift/Property/fw_deviceUUID" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@FWFramework@@objc(cs)UIDevice(cpy)fw_deviceUUID">fw_deviceUUID</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2452,410 +2475,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>全部约定，所有约定成功才返回约定结果合集；如果某一个失败了，则返回该错误信息；约定进度为所有约定总进度</p>
+                        <p>Undocumented</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">all</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">promises</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(cm)any:"></a>
-                    <a name="//apple_ref/swift/Method/+any:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(cm)any:">+any:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>某个约定，返回最先成功的约定结果；如果都失败了，返回最后一个错误信息；约定进度为最先成功的约定进度</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">any</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">promises</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(cm)race:"></a>
-                    <a name="//apple_ref/swift/Method/+race:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(cm)race:">+race:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>约定竞速，返回最先结束的约定结果，不管成功或失败；约定进度为最先结束的约定进度</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">race</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*&gt;</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">promises</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(cm)delay:"></a>
-                    <a name="//apple_ref/swift/Method/+delay:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(cm)delay:">+delay:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>延时约定，延时完成时必定成功</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">delay</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">time</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(cm)retry:delay:block:"></a>
-                    <a name="//apple_ref/swift/Method/+retry:delay:block:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(cm)retry:delay:block:">+retry:<wbr>delay:<wbr>block:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>约定重试，block需返回新创建的约定，该约定失败时延迟指定时间后重新创建并执行，直至成功或达到最大重试次数(总次数retry+1)</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">+</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">retry</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">times</span>
-                       <span class="nf">delay</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">delay</span>
-                       <span class="nf">block</span><span class="p">:(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span>
-                                 <span class="n">block</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)done:"></a>
-                    <a name="//apple_ref/swift/Method/-done:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)done:">-done:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>执行约定并回调完成句柄</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">done</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">completion</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)done:catch:finally:"></a>
-                    <a name="//apple_ref/swift/Method/-done:catch:finally:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)done:catch:finally:">-done:<wbr>catch:<wbr>finally:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>执行约定并分别回调成功、失败句柄，统一回调收尾句柄</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">done</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">done</span>
-       <span class="nf">catch</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">catch_</span>
-     <span class="nf">finally</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">finally</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)done:catch:progress:finally:"></a>
-                    <a name="//apple_ref/swift/Method/-done:catch:progress:finally:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)done:catch:progress:finally:">-done:<wbr>catch:<wbr>progress:<wbr>finally:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>执行约定并分别回调成功、失败句柄、进度句柄，统一回调收尾句柄</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">done</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">done</span>
-       <span class="nf">catch</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">catch_</span>
-    <span class="nf">progress</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">)(</span><span class="kt">double</span><span class="p">))</span><span class="nv">progress</span>
-     <span class="nf">finally</span><span class="p">:(</span><span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">finally</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)then:"></a>
-                    <a name="//apple_ref/swift/Method/-then:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)then:">-then:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>执行当前约定，成功时调用句柄处理结果或者返回下一个约定</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">then</span><span class="p">:</span>
-    <span class="p">(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">block</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)recover:"></a>
-                    <a name="//apple_ref/swift/Method/-recover:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)recover:">-recover:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>执行当前约定，失败时调用句柄恢复结果或者返回下一个约定</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">recover</span><span class="p">:</span>
-    <span class="p">(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">block</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)validate:"></a>
-                    <a name="//apple_ref/swift/Method/-validate:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)validate:">-validate:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>验证约定，当前约定成功时验证结果，可返回Bool或Error?；验证通过时返回结果，验证失败时返回验证错误</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">validate</span><span class="p">:</span>
-    <span class="p">(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">))</span><span class="nv">block</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)reduce:reducer:"></a>
-                    <a name="//apple_ref/swift/Method/-reduce:reducer:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)reduce:reducer:">-reduce:<wbr>reducer:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>减少约定，当前约定结果作为初始值value，顺序使用value和数组值item调用reducer，产生新的value继续循环直至结束，类似数组reduce方法</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span>
-     <span class="nf">reduce</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nv">items</span>
-    <span class="nf">reducer</span><span class="p">:(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="n">id</span> <span class="n">_Nullable</span> <span class="n">__strong</span><span class="p">,</span>
-                                               <span class="n">id</span> <span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">))</span><span class="n">reducer</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)delay:force:"></a>
-                    <a name="//apple_ref/swift/Method/-delay:force:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)delay:force:">-delay:<wbr>force:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>约定延时，当前约定成功时延时返回结果；默认失败时不延时，可设置force强制失败时也延时</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">delay</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">time</span> <span class="nf">force</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">force</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)timeout:error:"></a>
-                    <a name="//apple_ref/swift/Method/-timeout:error:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)timeout:error:">-timeout:<wbr>error:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>约定超时，当前约定未超时时返回结果；否则返回超时错误信息</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">timeout</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">time</span>
-                         <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">_Nullable</span><span class="p">)</span><span class="nv">error</span><span class="p">;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/c:@CM@FWFramework@objc(cs)FWPromise(im)retry:delay:block:"></a>
-                    <a name="//apple_ref/swift/Method/-retry:delay:block:" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@CM@FWFramework@objc(cs)FWPromise(im)retry:delay:block:">-retry:<wbr>delay:<wbr>block:<wbr></a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>约定重试，block需返回新创建的约定，当前约定失败时延迟指定时间后调用block创建约定并执行，直至成功或达到最大重试次数</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Objective-C</p>
-                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span><span class="p">)</span><span class="nf">retry</span><span class="p">:(</span><span class="n">NSInteger</span><span class="p">)</span><span class="nv">times</span>
-                       <span class="nf">delay</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="nv">delay</span>
-                       <span class="nf">block</span><span class="p">:(</span><span class="n"><a href="../Classes/FWPromise.html">FWPromise</a></span> <span class="o">*</span><span class="n">_Nonnull</span> <span class="p">(</span><span class="o">^</span><span class="n">_Nonnull</span> <span class="n">__strong</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span>
-                                 <span class="n">block</span><span class="p">;</span></code></pre>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">class</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span> <span class="n">_Nonnull</span> <span class="n">fw_deviceUUID</span></code></pre>
 
                         </div>
                       </div>
@@ -2867,7 +2494,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-04)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

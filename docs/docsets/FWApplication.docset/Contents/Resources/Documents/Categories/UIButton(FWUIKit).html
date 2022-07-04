@@ -17,7 +17,7 @@
     <a title="UIButton(FWUIKit) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.4.0 Docs</a> (67% documented)</p>
+        <p><a href="../index.html">FWApplication 3.5.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -58,6 +58,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CALayer%28FWQuartzCore%29.html">CALayer(FWQuartzCore)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
@@ -142,9 +145,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWApplication%29.html">NSObject(FWApplication)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/NSObject%28FWDebugger%29.html">NSObject(FWDebugger)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWFoundation%29.html">NSObject(FWFoundation)</a>
@@ -327,7 +327,7 @@
                 <a href="../Categories/UIImageView%28FWTheme%29.html">UIImageView(FWTheme)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Categories/UILabel%28FWDebugger%29.html">UILabel(FWDebugger)</a>
+                <a href="../Categories/UILabel%28FWUIKit%29.html">UILabel(FWUIKit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationBar%28FWApplication%29.html">UINavigationBar(FWApplication)</a>
@@ -345,13 +345,13 @@
                 <a href="../Categories/UINavigationController%28FWFullscreenPopGesture%29.html">UINavigationController(FWFullscreenPopGesture)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Categories/UINavigationController%28FWNavigation%29.html">UINavigationController(FWNavigation)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWToolkit%29.html">UINavigationController(FWToolkit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWTransition%29.html">UINavigationController(FWTransition)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/UINavigationController%28FWWorkflow%29.html">UINavigationController(FWWorkflow)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UIPageControl%28FWUIKit%29.html">UIPageControl(FWUIKit)</a>
@@ -1420,6 +1420,12 @@
                 <a href="../Constants.html#/c:@FWRequestValidationErrorDomain">FWRequestValidationErrorDomain</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterNavigationOptionsKey">FWRouterNavigationOptionsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterSourceKey">FWRouterSourceKey</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Constants.html#/c:FWAdaptive.h@FWScreenInch35">FWScreenInch35</a>
               </li>
               <li class="nav-group-task">
@@ -1657,6 +1663,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWLogType.html">FWLogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FWNavigationOptions.html">FWNavigationOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWNetworkReachabilityStatus.html">FWNetworkReachabilityStatus</a>
@@ -2095,6 +2104,9 @@
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockInt">FWBlockInt</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockIntParam">FWBlockIntParam</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockParam">FWBlockParam</a>
               </li>
               <li class="nav-group-task">
@@ -2180,6 +2192,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterHandler">FWRouterHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterUserInfoKey">FWRouterUserInfoKey</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWAdaptive.h@T@FWScreenInch">FWScreenInch</a>
@@ -2358,6 +2373,9 @@
                 <a href="../Functions.html#/c:@F@FWStringFromNetworkReachabilityStatus">FWStringFromNetworkReachabilityStatus</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@FWSynchronized">FWSynchronized</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWWebViewJsBridge_js">FWWebViewJsBridge_js</a>
               </li>
               <li class="nav-group-task">
@@ -2451,6 +2469,9 @@
 <span class="c1">/// imageEdgeInsets: 仅有image时相对于button，都有时上左下相对于button，右相对于title</span>
 <span class="c1">/// titleEdgeInsets: 仅有title时相对于button，都有时上右下相对于button，左相对于image</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_setImageEdge</span><span class="p">:(</span><span class="n">UIRectEdge</span><span class="p">)</span><span class="nv">edge</span> <span class="nf">spacing</span><span class="p">:(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nv">spacing</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">/// 设置状态背景色</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_setBackgroundColor</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIColor</span> <span class="o">*</span><span class="p">)</span><span class="nv">backgroundColor</span> <span class="nf">forState</span><span class="p">:(</span><span class="n">UIControlState</span><span class="p">)</span><span class="nv">state</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="c1">/// 快速创建文本按钮</span>
 <span class="k">+</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">fw_buttonWithTitle</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">title</span> <span class="nf">font</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIFont</span> <span class="o">*</span><span class="p">)</span><span class="nv">font</span> <span class="nf">titleColor</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIColor</span> <span class="o">*</span><span class="p">)</span><span class="nv">titleColor</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
@@ -2638,6 +2659,34 @@ titleEdgeInsets: 仅有title时相对于button，都有时上右下相对于butt
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:objc(cs)UIButton(im)fw_setBackgroundColor:forState:"></a>
+                    <a name="//apple_ref/swift/Method/-fw_setBackgroundColor:forState:" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)UIButton(im)fw_setBackgroundColor:forState:">-fw_setBackgroundColor:<wbr>forState:<wbr></a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>设置状态背景色</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_setBackgroundColor</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">UIColor</span> <span class="o">*</span><span class="p">)</span><span class="nv">backgroundColor</span>
+                     <span class="nf">forState</span><span class="p">:(</span><span class="n">UIControlState</span><span class="p">)</span><span class="nv">state</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:objc(cs)UIButton(cm)fw_buttonWithTitle:font:titleColor:"></a>
                     <a name="//apple_ref/swift/Method/+fw_buttonWithTitle:font:titleColor:" class="dashAnchor"></a>
                     <a class="token" href="#/c:objc(cs)UIButton(cm)fw_buttonWithTitle:font:titleColor:">+fw_buttonWithTitle:<wbr>font:<wbr>titleColor:<wbr></a>
@@ -2696,7 +2745,7 @@ titleEdgeInsets: 仅有title时相对于button，都有时上右下相对于butt
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-04)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

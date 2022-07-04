@@ -80,7 +80,7 @@ NS_SWIFT_NAME(AnimatedTransition)
 /// 是否启用默认展示控制器，启用后自动设置presentationBlock返回FWPresentationController，默认NO
 @property (nonatomic, assign) BOOL presentationEnabled;
 
-/// 设置展示控制器创建句柄，自定义弹出效果。present时建议设置modalPresentationStyle为UIModalPresentationCustom
+/// 设置展示控制器创建句柄，自定义弹出效果。present时建议设置modalPresentationStyle为Custom
 @property (nullable, nonatomic, copy) UIPresentationController *(^presentationBlock)(UIViewController *presented, UIViewController *presenting);
 
 #pragma mark - Animate
@@ -209,7 +209,7 @@ NS_SWIFT_NAME(PanGestureRecognizer)
 
 #pragma mark - UIViewController+FWTransition
 
-/// 视图控制器转场分类，如需半透明，请在init中设置modalPresentationStyle为UIModalPresentationCustom
+/// 视图控制器转场分类，如需半透明，请在init中设置modalPresentationStyle为UIModalPresentationCustom(注意不会触发原控制器viewWillDisappear:)
 @interface UIViewController (FWTransition)
 
 /// 视图控制器present|dismiss转场。注意会修改transitioningDelegate，且会强引用之；如需weak引用，请直接设置transitioningDelegate

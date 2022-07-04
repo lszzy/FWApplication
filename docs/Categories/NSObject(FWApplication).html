@@ -17,7 +17,7 @@
     <a title="NSObject(FWApplication) Category Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.4.0 Docs</a> (67% documented)</p>
+        <p><a href="../index.html">FWApplication 3.5.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -58,6 +58,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CALayer%28FWQuartzCore%29.html">CALayer(FWQuartzCore)</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/CM%28FWFramework%29.html">CM(FWFramework)</a>
@@ -142,9 +145,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWApplication%29.html">NSObject(FWApplication)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/NSObject%28FWDebugger%29.html">NSObject(FWDebugger)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/NSObject%28FWFoundation%29.html">NSObject(FWFoundation)</a>
@@ -327,7 +327,7 @@
                 <a href="../Categories/UIImageView%28FWTheme%29.html">UIImageView(FWTheme)</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Categories/UILabel%28FWDebugger%29.html">UILabel(FWDebugger)</a>
+                <a href="../Categories/UILabel%28FWUIKit%29.html">UILabel(FWUIKit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationBar%28FWApplication%29.html">UINavigationBar(FWApplication)</a>
@@ -345,13 +345,13 @@
                 <a href="../Categories/UINavigationController%28FWFullscreenPopGesture%29.html">UINavigationController(FWFullscreenPopGesture)</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Categories/UINavigationController%28FWNavigation%29.html">UINavigationController(FWNavigation)</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWToolkit%29.html">UINavigationController(FWToolkit)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UINavigationController%28FWTransition%29.html">UINavigationController(FWTransition)</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Categories/UINavigationController%28FWWorkflow%29.html">UINavigationController(FWWorkflow)</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Categories/UIPageControl%28FWUIKit%29.html">UIPageControl(FWUIKit)</a>
@@ -1420,6 +1420,12 @@
                 <a href="../Constants.html#/c:@FWRequestValidationErrorDomain">FWRequestValidationErrorDomain</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterNavigationOptionsKey">FWRouterNavigationOptionsKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Constants.html#/c:@FWRouterSourceKey">FWRouterSourceKey</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Constants.html#/c:FWAdaptive.h@FWScreenInch35">FWScreenInch35</a>
               </li>
               <li class="nav-group-task">
@@ -1657,6 +1663,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWLogType.html">FWLogType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FWNavigationOptions.html">FWNavigationOptions</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/FWNetworkReachabilityStatus.html">FWNetworkReachabilityStatus</a>
@@ -2095,6 +2104,9 @@
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockInt">FWBlockInt</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockIntParam">FWBlockIntParam</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWBlock.h@T@FWBlockParam">FWBlockParam</a>
               </li>
               <li class="nav-group-task">
@@ -2180,6 +2192,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterHandler">FWRouterHandler</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Type%20Definitions.html#/c:FWRouter.h@T@FWRouterUserInfoKey">FWRouterUserInfoKey</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Type%20Definitions.html#/c:FWAdaptive.h@T@FWScreenInch">FWScreenInch</a>
@@ -2356,6 +2371,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWStringFromNetworkReachabilityStatus">FWStringFromNetworkReachabilityStatus</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Functions.html#/c:@F@FWSynchronized">FWSynchronized</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Functions.html#/c:@F@FWWebViewJsBridge_js">FWWebViewJsBridge_js</a>
@@ -2929,10 +2947,104 @@
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Debug"></a>
+                <a name="//apple_ref/swift/Section/Debug" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Debug"></a>
+                  <h3 class="section-name"><span>Debug</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)NSObject(py)fw_methodList"></a>
+                    <a name="//apple_ref/swift/Property/fw_methodList" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)NSObject(py)fw_methodList">fw_methodList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前对象的所有 @property、方法，父类的方法也会分别列出</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_methodList</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)NSObject(py)fw_shortMethodList"></a>
+                    <a name="//apple_ref/swift/Property/fw_shortMethodList" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)NSObject(py)fw_shortMethodList">fw_shortMethodList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前对象的所有 @property、方法，不包含父类的</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_shortMethodList</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:objc(cs)NSObject(py)fw_ivarList"></a>
+                    <a name="//apple_ref/swift/Property/fw_ivarList" class="dashAnchor"></a>
+                    <a class="token" href="#/c:objc(cs)NSObject(py)fw_ivarList">fw_ivarList</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>当前对象的所有 Ivar 变量</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Objective-C</p>
+                          <pre class="highlight objective_c"><code><span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NS_REFINED_FOR_SWIFT</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_ivarList</span><span class="p">;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-06-26)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-04)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
