@@ -15,7 +15,7 @@
 
 @implementation TestJavascriptBridge
 
-+ (void)testObjcCallback:(id)data callback:(FWJsBridgeResponseCallback)callback
++ (void)testObjcCallback:(WKWebView *)webView data:(id)data callback:(FWJsBridgeResponseCallback)callback
 {
     NSLog(@"TestJavascriptBridge.testObjcCallback called: %@", data);
     callback(@"Response from TestJavascriptBridge.testObjcCallback");
@@ -45,7 +45,7 @@
         NSLog(@"testObjcCallback called: %@", data);
         responseCallback(@"Response from testObjcCallback");
     }];
-    [bridge registerClass:[TestJavascriptBridge class] package:nil withMapper:nil];
+    [bridge registerClass:[TestJavascriptBridge class] package:nil context:nil withMapper:nil];
     
     NSLog(@"registeredHandlers: %@", [bridge getRegisteredHandlers]);
     [bridge callHandler:@"testJavascriptHandler" data:@{ @"foo":@"before ready" }];

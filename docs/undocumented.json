@@ -13611,7 +13611,7 @@
     {
       "file": "docs/FWApplication/FWWebView.h",
       "line": 148,
-      "symbol": "FWWebViewJsBridge.-registerClass:package:withMapper:",
+      "symbol": "FWWebViewJsBridge.-registerClass:package:context:withMapper:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
