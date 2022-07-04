@@ -778,6 +778,7 @@ static int logMaxLength = 500;
     NSMutableDictionary *bridges = [NSMutableDictionary dictionary];
     for (NSString *method in methods) {
         if (![method hasSuffix:@":data:callback:"]) continue;
+        if ([method componentsSeparatedByString:@":"].count != 4) continue;
         
         NSString *name = [method stringByReplacingOccurrencesOfString:@":data:callback:" withString:@""];
         bridges[name] = method;
