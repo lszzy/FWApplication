@@ -10,6 +10,7 @@
 #import "FWWebView.h"
 #import "FWAlertPlugin.h"
 #import <objc/runtime.h>
+@import FWFramework;
 
 #pragma mark - FWWebView
 
@@ -732,15 +733,16 @@ static int logMaxLength = 500;
     [_base sendData:data responseCallback:responseCallback handlerName:handlerName];
 }
 
-- (void)registerClass:(id)clazz package:(NSString *)package withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
+- (void)registerClass:(id)clazz package:(NSString *)package context:(nullable id)context withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    if (!context) context = _webView;
     NSDictionary<NSString *,NSString *> *bridges = [self bridgeClass:clazz withMapper:mapper];
-    [bridges enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+    [bridges enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
         NSString *name = package.length > 0 ? [package stringByAppendingString:key] : key;
         [self registerHandler:name handler:^(id  _Nonnull data, FWJsBridgeResponseCallback  _Nonnull responseCallback) {
-            [clazz performSelector:NSSelectorFromString(obj) withObject:data withObject:responseCallback];
+            if (context) [clazz fw_invokeMethod:NSSelectorFromString(obj) withObjects:[NSArray arrayWithObjects:context, data, responseCallback, nil]];
         }];
     }];
 #pragma clang diagnostic pop
@@ -751,7 +753,7 @@ static int logMaxLength = 500;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     NSDictionary<NSString *,NSString *> *bridges = [self bridgeClass:clazz withMapper:mapper];
-    [bridges enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+    [bridges enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSString *obj, BOOL *stop) {
         NSString *name = package.length > 0 ? [package stringByAppendingString:key] : key;
         [self removeHandler:name];
     }];
@@ -775,9 +777,9 @@ static int logMaxLength = 500;
     
     NSMutableDictionary *bridges = [NSMutableDictionary dictionary];
     for (NSString *method in methods) {
-        if (![method hasSuffix:@":callback:"]) continue;
+        if (![method hasSuffix:@":data:callback:"]) continue;
         
-        NSString *name = [method stringByReplacingOccurrencesOfString:@":callback:" withString:@""];
+        NSString *name = [method stringByReplacingOccurrencesOfString:@":data:callback:" withString:@""];
         bridges[name] = method;
     }
     return bridges;
