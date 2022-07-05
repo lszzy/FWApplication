@@ -566,19 +566,19 @@ static int logMaxLength = 500;
             }
             
             if (self.filterHandler) {
-                BOOL filterResult = self.filterHandler(message[@"handlerName"], message[@"data"], responseCallback);
+                BOOL filterResult = self.filterHandler(message[@"handlerName"], message[@"data"] ?: @{}, responseCallback);
                 if (!filterResult) continue;
             }
             
             FWJsBridgeHandler handler = self.messageHandlers[message[@"handlerName"]];
             if (handler) {
-                handler(message[@"data"], responseCallback);
+                handler(message[@"data"] ?: @{}, responseCallback);
                 continue;
             }
             
             NSLog(@"WVJBNoHandlerException, No handler for message from JS: %@", message);
             if (self.errorHandler) {
-                self.errorHandler(message[@"handlerName"], message[@"data"], responseCallback);
+                self.errorHandler(message[@"handlerName"], message[@"data"] ?: @{}, responseCallback);
             }
         }
     }
