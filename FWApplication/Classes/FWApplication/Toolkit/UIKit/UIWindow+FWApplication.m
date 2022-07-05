@@ -19,7 +19,21 @@
     }
 }
 
-- (UIViewController *)fw_selectTabBarController:(Class)viewController
+- (__kindof UIViewController *)fw_selectTabBarIndex:(NSUInteger)index
+{
+    if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
+    
+    UINavigationController *targetNavigation = nil;
+    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
+    if (tabbarController.viewControllers.count > index) {
+        targetNavigation = tabbarController.viewControllers[index];
+    }
+    if (!targetNavigation) return nil;
+    
+    return [self fw_selectTabBarNavigation:targetNavigation];
+}
+
+- (__kindof UIViewController *)fw_selectTabBarController:(Class)viewController
 {
     if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
     
@@ -38,14 +52,21 @@
     return [self fw_selectTabBarNavigation:targetNavigation];
 }
 
-- (UIViewController *)fw_selectTabBarIndex:(NSUInteger)index
+- (__kindof UIViewController *)fw_selectTabBarBlock:(__attribute__((noescape)) BOOL (^)(__kindof UIViewController *))block
 {
     if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
     
     UINavigationController *targetNavigation = nil;
     UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
-    if (tabbarController.viewControllers.count > index) {
-        targetNavigation = tabbarController.viewControllers[index];
+    for (UINavigationController *navigationController in tabbarController.viewControllers) {
+        UIViewController *viewController = navigationController;
+        if ([navigationController isKindOfClass:[UINavigationController class]]) {
+            viewController = navigationController.viewControllers.firstObject;
+        }
+        if (viewController && block(viewController)) {
+            targetNavigation = navigationController;
+            break;
+        }
     }
     if (!targetNavigation) return nil;
     
