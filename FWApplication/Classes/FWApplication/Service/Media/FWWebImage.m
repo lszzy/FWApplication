@@ -379,7 +379,7 @@
                                                  success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse  * _Nullable response, UIImage *responseObject))success
                                                  failure:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse * _Nullable response, NSError *error))failure
                                                 progress:(nullable void (^)(NSProgress * _Nonnull))progress {
-    NSURLRequest *request = [self urlRequestWithURL:url];
+    NSURLRequest *request = [self urlRequestWithURL:url options:options];
     __block NSURLSessionDataTask *task = nil;
     dispatch_sync(self.synchronizationQueue, ^{
         NSString *URLIdentifier = request.URL.absoluteString;
@@ -407,7 +407,8 @@
             case NSURLRequestUseProtocolCachePolicy:
             case NSURLRequestReturnCacheDataElseLoad:
             case NSURLRequestReturnCacheDataDontLoad: {
-                if (!(options & FWWebImageOptionRefreshCached)) {
+                if (!(options & FWWebImageOptionRefreshCached) &&
+                    !(options & FWWebImageOptionIgnoreCache)) {
                     UIImage *cachedImage = [self.imageCache imageforRequest:request withAdditionalIdentifier:nil];
                     if (cachedImage != nil) {
                         if (success) {
@@ -541,7 +542,7 @@
     });
 }
 
-- (NSURLRequest *)urlRequestWithURL:(id)url {
+- (NSURLRequest *)urlRequestWithURL:(id)url options:(FWWebImageOptions)options {
     NSURLRequest *urlRequest = nil;
     if ([url isKindOfClass:[NSURLRequest class]]) {
         urlRequest = url;
@@ -557,8 +558,12 @@
         }
         
         if (nsurl != nil) {
-            urlRequest = [NSMutableURLRequest requestWithURL:nsurl];
-            [(NSMutableURLRequest *)urlRequest addValue:@"image/*,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
+            NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:nsurl];
+            [mutableRequest addValue:@"image/*,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
+            if (!!(options & FWWebImageOptionIgnoreCache)) {
+                mutableRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+            }
+            urlRequest = mutableRequest;
         }
     }
     return urlRequest;
@@ -690,7 +695,7 @@
                       progress:(void (^)(double))progress
 {
     if (!object) return;
-    NSURLRequest *urlRequest = [self urlRequestWithURL:url];
+    NSURLRequest *urlRequest = [self urlRequestWithURL:url options:options];
     [self setImageOperationKey:NSStringFromClass([object class]) forObject:object];
     FWImageDownloadReceipt *activeReceipt = [self activeImageDownloadReceipt:object];
     if (activeReceipt != nil) {
@@ -711,7 +716,8 @@
     }
 
     UIImage *cachedImage = nil;
-    if (!(options & FWWebImageOptionRefreshCached)) {
+    if (!(options & FWWebImageOptionRefreshCached) &&
+        !(options & FWWebImageOptionIgnoreCache)) {
         id<FWImageRequestCache> imageCache = self.imageCache;
         cachedImage = [imageCache imageforRequest:urlRequest withAdditionalIdentifier:nil];
     }
