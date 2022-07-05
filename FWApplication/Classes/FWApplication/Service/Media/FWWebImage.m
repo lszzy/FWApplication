@@ -558,12 +558,16 @@
         }
         
         if (nsurl != nil) {
-            NSMutableURLRequest *mutableRequest = [NSMutableURLRequest requestWithURL:nsurl];
-            [mutableRequest addValue:@"image/*,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:nsurl];
             if (!!(options & FWWebImageOptionIgnoreCache)) {
-                mutableRequest.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+                if (@available(iOS 13.0, *)) {
+                    request.cachePolicy = NSURLRequestReloadIgnoringLocalAndRemoteCacheData;
+                } else {
+                    request.cachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+                }
             }
-            urlRequest = mutableRequest;
+            [request addValue:@"image/*,*/*;q=0.8" forHTTPHeaderField:@"Accept"];
+            urlRequest = request;
         }
     }
     return urlRequest;
