@@ -26,6 +26,8 @@ typedef NS_OPTIONS(NSUInteger, FWWebImageOptions) {
     FWWebImageOptionRefreshCached = 1 << 3,
     /// 禁止调用imageView.setImage:显示图片
     FWWebImageOptionAvoidSetImage = 1 << 10,
+    /// 忽略图片缓存，始终重新请求
+    FWWebImageOptionIgnoreCache = 1 << 16,
 } NS_SWIFT_NAME(WebImageOptions);
 
 /// 图片插件协议，应用可自定义图片插件

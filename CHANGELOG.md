@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.5.1] - 2022-07-06
+
+### Fixed
+* Image plugin supports ignore cache option
+* Fix the problem that the empty interface occasionally displays abnormally
+* Fix Tabbar controller loading remote image issue
+
 ## [3.5.0] - 2022-07-04
 
 ### Added

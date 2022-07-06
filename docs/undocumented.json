@@ -184,98 +184,98 @@
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 942,
+      "line": 943,
       "symbol": "TabBarItemContentView.updateLayout()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1101,
+      "line": 1102,
       "symbol": "TabBarItemContentView.selectAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1105,
+      "line": 1106,
       "symbol": "TabBarItemContentView.deselectAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1109,
+      "line": 1110,
       "symbol": "TabBarItemContentView.reselectAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1113,
+      "line": 1114,
       "symbol": "TabBarItemContentView.highlightAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1117,
+      "line": 1118,
       "symbol": "TabBarItemContentView.dehighlightAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1121,
+      "line": 1122,
       "symbol": "TabBarItemContentView.badgeChangedAnimation(animated:completion:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1129,
+      "line": 1130,
       "symbol": "TabBarItemMoreContentView",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1131,
+      "line": 1132,
       "symbol": "TabBarItemMoreContentView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1138,
+      "line": 1139,
       "symbol": "TabBarItemMoreContentView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1142,
+      "line": 1143,
       "symbol": "TabBarItemMoreContentView.systemMore(highlighted:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1224,
+      "line": 1225,
       "symbol": "TabBarItemBadgeView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1231,
+      "line": 1232,
       "symbol": "TabBarItemBadgeView.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Module/Controller/TabBarController.swift",
-      "line": 1256,
+      "line": 1257,
       "symbol": "TabBarItemBadgeView.sizeThatFits(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -4069,77 +4069,70 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 16,
-      "symbol": "FWNavigationOptions.FWNavigationOptionAutomatic",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
-      "warning": "undocumented"
-    },
-    {
-      "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 17,
+      "line": 27,
       "symbol": "FWNavigationOptions.FWNavigationOptionPush",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 18,
+      "line": 28,
       "symbol": "FWNavigationOptions.FWNavigationOptionPresent",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 20,
+      "line": 30,
       "symbol": "FWNavigationOptions.FWNavigationOptionNavigation",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 22,
+      "line": 32,
       "symbol": "FWNavigationOptions.FWNavigationOptionPopTop",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 23,
+      "line": 33,
       "symbol": "FWNavigationOptions.FWNavigationOptionPopToRoot",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 25,
+      "line": 35,
       "symbol": "FWNavigationOptions.FWNavigationOptionPageSheet",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 26,
+      "line": 36,
       "symbol": "FWNavigationOptions.FWNavigationOptionFullScreen",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 31,
+      "line": 41,
       "symbol": "UIWindow(FWNavigation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 97,
+      "line": 107,
       "symbol": "UIViewController(FWNavigation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWNavigation.h",
-      "line": 125,
+      "line": 135,
       "symbol": "UINavigationController(FWNavigation)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -4167,7 +4160,7 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWRouter.h",
-      "line": 47,
+      "line": 49,
       "symbol": "FWRouterContext.isOpening",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
@@ -9312,14 +9305,14 @@
     },
     {
       "file": "docs/FWApplication/FWImagePlugin.h",
-      "line": 78,
+      "line": 80,
       "symbol": "UIImage(FWImagePlugin)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWImagePlugin.h",
-      "line": 126,
+      "line": 128,
       "symbol": "UIImageView(FWImagePlugin)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -15510,27 +15503,6 @@
       "line": 13,
       "symbol": "UIWindow(FWApplication)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIWindow+FWApplication.h",
-      "line": 16,
-      "symbol": "UIWindow(FWApplication).-fw_dismissViewControllers:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIWindow+FWApplication.h",
-      "line": 19,
-      "symbol": "UIWindow(FWApplication).-fw_selectTabBarController:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/UIWindow+FWApplication.h",
-      "line": 22,
-      "symbol": "UIWindow(FWApplication).-fw_selectTabBarIndex:",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     }
   ],

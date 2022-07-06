@@ -48,13 +48,11 @@
     [progressView fw_setDimensionsToSize:CGSizeMake(40, 40)];
     [progressView fw_alignCenterToSuperview];
     
-    BOOL useTimestamp = YES;
-    NSString *timestampStr = useTimestamp ? [NSString stringWithFormat:@"?t=%@", @(NSDate.fw_currentTime)] : @"";
-    NSString *gifImageUrl = [NSString stringWithFormat:@"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif%@", timestampStr];
+    NSString *gifImageUrl = @"http://ww2.sinaimg.cn/bmiddle/642beb18gw1ep3629gfm0g206o050b2a.gif";
     progressView.progress = 0;
     progressView.hidden = NO;
     FWWeakifySelf();
-    [imageView fw_setImageWithURL:gifImageUrl placeholderImage:nil options:0 context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
+    [imageView fw_setImageWithURL:gifImageUrl placeholderImage:nil options:FWWebImageOptionIgnoreCache context:nil completion:^(UIImage * _Nullable image, NSError * _Nullable error) {
         FWStrongifySelf();
         progressView.hidden = YES;
         if (image) {

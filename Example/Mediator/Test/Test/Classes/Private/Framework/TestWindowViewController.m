@@ -170,7 +170,7 @@
 
 - (void)onReview
 {
-    [UIApplication fw_openAppStoreReview:@"923302754"];
+    [UIApplication fw_openAppStoreReview:@"923302754" completionHandler:nil];
 }
 
 - (void)onReview2
