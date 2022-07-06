@@ -930,6 +930,7 @@ public enum TabBarItemContentMode : Int {
                     renderImage = UIImage(cgImage: cgImage, scale: UIScreen.main.scale, orientation: renderImage.imageOrientation)
                 }
                 self?.imageView.image = renderImage.withRenderingMode(self?.renderingMode ?? .alwaysTemplate)
+                self?.updateLayout()
             }, progress: nil)
         } else {
             imageView.image = currentImage
