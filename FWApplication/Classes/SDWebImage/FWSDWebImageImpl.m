@@ -40,9 +40,9 @@
     return instance;
 }
 
-- (Class)imageViewAnimatedClass
+- (UIImageView *)animatedImageView
 {
-    return [SDAnimatedImageView class];
+    return [[SDAnimatedImageView alloc] init];
 }
 
 - (UIImage *)imageDecode:(NSData *)data scale:(CGFloat)scale options:(NSDictionary<FWImageCoderOptions,id> *)options

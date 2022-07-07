@@ -153,8 +153,7 @@
 
 - (void)initImageViewIfNeeded {
     if (_imageView) return;
-    Class imageClass = [UIImageView fw_imageViewAnimatedClass];
-    _imageView = [[imageClass alloc] init];
+    _imageView = [UIImageView fw_animatedImageView];
     [self.scrollView addSubview:_imageView];
 }
 

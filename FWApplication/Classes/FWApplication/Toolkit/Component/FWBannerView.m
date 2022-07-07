@@ -1027,8 +1027,7 @@ NSString * const FWBannerViewCellID = @"FWBannerViewCell";
 
 - (void)setupImageView
 {
-    Class imageClass = [UIImageView fw_imageViewAnimatedClass];
-    UIImageView *imageView = [[imageClass alloc] init];
+    UIImageView *imageView = [UIImageView fw_animatedImageView];
     _imageView = imageView;
     imageView.layer.masksToBounds = YES;
     [_insetView addSubview:imageView];

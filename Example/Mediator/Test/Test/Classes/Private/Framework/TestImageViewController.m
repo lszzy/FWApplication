@@ -289,7 +289,7 @@ static inline NSString *SDBase64DecodedString(NSString *base64String) {
         [self.contentView addSubview:_systemView];
         _systemView.fw_layoutChain.leftWithInset(10).topToViewBottomWithOffset(_nameLabel, 10).bottomWithInset(10).width(100);
         
-        _animatedView = [[UIImageView fw_imageViewAnimatedClass] new];
+        _animatedView = [UIImageView fw_animatedImageView];
         [self.contentView addSubview:_animatedView];
         _animatedView.fw_layoutChain.leftToViewRightWithOffset(_systemView, 60).topToView(_systemView).bottomToView(_systemView).widthToView(_systemView);
     }
