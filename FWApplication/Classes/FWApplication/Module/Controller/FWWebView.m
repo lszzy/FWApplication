@@ -1144,4 +1144,13 @@ NSString * FWWebViewJsBridge_js() {
     return userAgent;
 }
 
++ (void)fw_clearCache:(void (^)(void))completion
+{
+    NSSet<NSString *> *dataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+    NSDate *sinceDate = [NSDate dateWithTimeIntervalSince1970:0];
+    [WKWebsiteDataStore.defaultDataStore removeDataOfTypes:dataTypes modifiedSince:sinceDate completionHandler:^{
+        if (completion) completion();
+    }];
+}
+
 @end
