@@ -31,11 +31,11 @@ class HomeViewController: UIViewController, ViewControllerProtocol {
     }
     
     func renderData() {
-        #if APP_PRODUCTION
+        #if RELEASE
         let envTitle = FW.localized("envProduction")
-        #elseif APP_STAGING
+        #elseif STAGING
         let envTitle = FW.localized("envStaging")
-        #elseif APP_TESTING
+        #elseif TESTING
         let envTitle = FW.localized("envTesting")
         #else
         let envTitle = FW.localized("envDevelopment")

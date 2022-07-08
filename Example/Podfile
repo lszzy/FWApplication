@@ -2,14 +2,17 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.0'
 use_frameworks!
 
-target "Example" do
-  project 'FWApplication', 'Release-Testing' => :release, 'Release-Staging' => :release, 'Release-Production' => :release, 'Debug-Testing' => :debug, 'Debug-Staging' => :debug, 'Debug-Production' => :debug
+workspace 'FWApplication'
+abstract_target "AbstractExample" do
+  project 'FWApplication', 'Testing' => :release, 'Staging' => :release
 
   pod 'FWApplication', :path => '../', :subspecs => ['FWApplication', 'Compatible', 'SDWebImage']
   pod 'FWFramework', :git => 'https://github.com/lszzy/FWFramework.git', :branch => 'develop', :subspecs => ['FWFramework', 'Compatible', 'Contacts', 'Microphone', 'Calendar', 'AppleMusic', 'Tracking']
-  pod 'FWDebug', :configurations => ['Debug', 'Debug-Testing', 'Debug-Staging', 'Debug-Production']
+  pod 'FWDebug', :configurations => ['Debug', 'Testing']
   pod 'Mediator', :path => 'Mediator/Mediator/'
   pod 'Core', :path => 'Mediator/Core/'
   pod 'User', :path => 'Mediator/User/'
   pod 'Test', :path => 'Mediator/Test/'
+  
+  target "Example"
 end
