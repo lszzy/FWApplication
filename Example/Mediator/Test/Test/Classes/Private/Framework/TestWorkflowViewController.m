@@ -44,12 +44,12 @@
 
 - (void)onExit
 {
-    [self.navigationController fw_popWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController fw_popWorkflows:@[@"workflow"] animated:YES completion:nil];
 }
 
 - (void)onOpen
 {
-    [self.navigationController fw_pushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES];
+    [self.navigationController fw_pushViewController:[[TestWorkflowViewController alloc] init] popWorkflows:@[@"workflow"] animated:YES completion:nil];
 }
 
 @end

@@ -57,7 +57,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     [FWRouter setRouteHandler:^id _Nullable(FWRouterContext * _Nonnull context, id  _Nonnull object) {
         if (context.isOpening) {
             if ([object isKindOfClass:[UIViewController class]]) {
-                [FWRouter openViewController:object animated:YES];
+                [FWRouter openViewController:object animated:YES options:0 completion:nil];
             } else {
                 [UIWindow.fw_topPresentedController fw_showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             }
