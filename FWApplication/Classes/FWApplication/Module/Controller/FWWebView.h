@@ -145,7 +145,7 @@ NS_SWIFT_NAME(WebViewJsBridge)
 + (instancetype)bridgeForWebView:(WKWebView *)webView;
 + (void)enableLogging;
 
-- (void)registerClass:(id)clazz package:(nullable NSString *)package context:(nullable id)context withMapper:(nullable NSDictionary<NSString *, NSString *> * (^)(NSArray<NSString *> *methods))mapper;
+- (void)registerClass:(id)clazz package:(nullable NSString *)package context:(nullable __weak id)context withMapper:(nullable NSDictionary<NSString *, NSString *> * (^)(NSArray<NSString *> *methods))mapper;
 - (void)unregisterClass:(id)clazz package:(nullable NSString *)package withMapper:(nullable NSDictionary<NSString *, NSString *> * (^)(NSArray<NSString *> *methods))mapper;
 - (void)registerHandler:(NSString *)handlerName handler:(FWJsBridgeHandler)handler;
 - (void)removeHandler:(NSString *)handlerName;

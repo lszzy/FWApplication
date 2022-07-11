@@ -733,7 +733,7 @@ static int logMaxLength = 500;
     [_base sendData:data responseCallback:responseCallback handlerName:handlerName];
 }
 
-- (void)registerClass:(id)clazz package:(NSString *)package context:(nullable id)context withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
+- (void)registerClass:(id)clazz package:(NSString *)package context:(nullable __weak id)context withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
