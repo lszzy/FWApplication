@@ -733,7 +733,7 @@ static int logMaxLength = 500;
     [_base sendData:data responseCallback:responseCallback handlerName:handlerName];
 }
 
-- (void)registerClass:(id)clazz package:(NSString *)package context:(nullable id)context withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
+- (void)registerClass:(id)clazz package:(NSString *)package context:(nullable __weak id)context withMapper:(NSDictionary<NSString *,NSString *> * (^)(NSArray<NSString *> *))mapper
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
@@ -1142,6 +1142,15 @@ NSString * FWWebViewJsBridge_js() {
 {
     NSString *userAgent = [NSString stringWithFormat:@"%@/%@ (%@; iOS %@; Scale/%0.2f)", [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleExecutableKey] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleIdentifierKey], [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"] ?: [[NSBundle mainBundle] infoDictionary][(__bridge NSString *)kCFBundleVersionKey], [[UIDevice currentDevice] model], [[UIDevice currentDevice] systemVersion], [[UIScreen mainScreen] scale]];
     return userAgent;
+}
+
++ (void)fw_clearCache:(void (^)(void))completion
+{
+    NSSet<NSString *> *dataTypes = [WKWebsiteDataStore allWebsiteDataTypes];
+    NSDate *sinceDate = [NSDate dateWithTimeIntervalSince1970:0];
+    [WKWebsiteDataStore.defaultDataStore removeDataOfTypes:dataTypes modifiedSince:sinceDate completionHandler:^{
+        if (completion) completion();
+    }];
 }
 
 @end

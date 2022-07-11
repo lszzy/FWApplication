@@ -45,17 +45,17 @@
     self.navigationView.menuView.leftButton = [FWToolbarButton buttonWithObject:FWIcon.backImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (!self.shouldPopController) return;
-        [FWRouter closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
     self.navigationView.menuView.rightButton = [FWToolbarButton buttonWithObject:FWIcon.refreshImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (!self.shouldPopController) return;
-        [FWRouter closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
     self.navigationView.menuView.rightMoreButton = [FWToolbarButton buttonWithObject:FWIcon.actionImage block:^(id  _Nonnull sender) {
         FWStrongifySelf();
         if (!self.shouldPopController) return;
-        [FWRouter closeViewControllerAnimated:YES];
+        [self fw_closeViewControllerAnimated:YES];
     }];
     [self.view addSubview:self.navigationView];
     self.navigationView.fw_layoutChain.left().right().top();

@@ -15,7 +15,7 @@ FWStaticString(ROUTE_WILDCARD);
 FWStaticString(ROUTE_OBJECT);
 FWStaticString(ROUTE_OBJECT_UNMATCH);
 FWStaticString(ROUTE_LOADER);
-FWStaticString(ROUTE_CONTROLLER);
+FWStaticString(ROUTE_ITEM);
 FWStaticString(ROUTE_JAVASCRIPT);
 FWStaticString(ROUTE_HOME);
 FWStaticString(ROUTE_HOME_TEST);

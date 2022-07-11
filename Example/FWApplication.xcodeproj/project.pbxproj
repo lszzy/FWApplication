@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C18E5A84B7D2A5EDB24DF6E /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027459ABC308013A8B85ABC9 /* Pods_Example.framework */; };
 		2F0AC3EF25B3486B0090CFF5 /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0AC3EE25B3486B0090CFF5 /* AppConfig.swift */; };
 		2F2E15F22604D253003CB99E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E15F12604D253003CB99E /* SceneDelegate.swift */; };
 		2F2E15F62604D3CA003CB99E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2E15F52604D3CA003CB99E /* AppDelegate.swift */; };
@@ -19,10 +18,11 @@
 		2FF8D9EE24C88C86006A83B5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF8D9DA24C88C86006A83B5 /* LaunchScreen.storyboard */; };
 		2FF8D9F124C88D3B006A83B5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF8D9F324C88D3B006A83B5 /* InfoPlist.strings */; };
 		2FF8D9F724C88D6A006A83B5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FF8D9F924C88D6A006A83B5 /* Localizable.strings */; };
+		DEA36707C1F4C1696D07FB5F /* Pods_AbstractExample_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F21FC987F18669A81621CF /* Pods_AbstractExample_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		027459ABC308013A8B85ABC9 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		04BE9D8981501E87977A2810 /* Pods-AbstractExample-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AbstractExample-Example.debug.xcconfig"; path = "Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		15A22739CCE0C109B02001A2 /* Pods-Example.debug-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug-production.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug-production.xcconfig"; sourceTree = "<group>"; };
 		2F0AC3EE25B3486B0090CFF5 /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		2F2E15F12604D253003CB99E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,11 +41,15 @@
 		2FF8D9FA24C88D6B006A83B5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		44631DA59E312FBD7346F3FB /* Pods-Example.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release-production.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release-production.xcconfig"; sourceTree = "<group>"; };
 		5688CF67CD192BBE88228446 /* Pods-Example.debug-staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug-staging.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug-staging.xcconfig"; sourceTree = "<group>"; };
+		77BAEB7F70E4492F25160904 /* Pods-AbstractExample-Example.testing.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AbstractExample-Example.testing.xcconfig"; path = "Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example.testing.xcconfig"; sourceTree = "<group>"; };
 		91E21474090130E38DD1CF57 /* Pods-Example.release-staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release-staging.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release-staging.xcconfig"; sourceTree = "<group>"; };
 		B19C633EF10386D14D173C6A /* Pods-Example.release-testing.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release-testing.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release-testing.xcconfig"; sourceTree = "<group>"; };
 		B4BAA06B2DF878F043EBA54F /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		B5F21FC987F18669A81621CF /* Pods_AbstractExample_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AbstractExample_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9AA2132F90A1DAF3883842B /* Pods-AbstractExample-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AbstractExample-Example.release.xcconfig"; path = "Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example.release.xcconfig"; sourceTree = "<group>"; };
 		C62FDA1B552B03D414FC1A58 /* Pods-Example.debug-testing.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug-testing.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug-testing.xcconfig"; sourceTree = "<group>"; };
 		DB055C82FC6CC339287B2D34 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		E991B1F3F212B602F7BF5FC3 /* Pods-AbstractExample-Example.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AbstractExample-Example.staging.xcconfig"; path = "Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C18E5A84B7D2A5EDB24DF6E /* Pods_Example.framework in Frameworks */,
+				DEA36707C1F4C1696D07FB5F /* Pods_AbstractExample_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -188,6 +192,10 @@
 				44631DA59E312FBD7346F3FB /* Pods-Example.release-production.xcconfig */,
 				5688CF67CD192BBE88228446 /* Pods-Example.debug-staging.xcconfig */,
 				91E21474090130E38DD1CF57 /* Pods-Example.release-staging.xcconfig */,
+				04BE9D8981501E87977A2810 /* Pods-AbstractExample-Example.debug.xcconfig */,
+				B9AA2132F90A1DAF3883842B /* Pods-AbstractExample-Example.release.xcconfig */,
+				77BAEB7F70E4492F25160904 /* Pods-AbstractExample-Example.testing.xcconfig */,
+				E991B1F3F212B602F7BF5FC3 /* Pods-AbstractExample-Example.staging.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -195,7 +203,7 @@
 		DB539000495F785F4F8A26DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				027459ABC308013A8B85ABC9 /* Pods_Example.framework */,
+				B5F21FC987F18669A81621CF /* Pods_AbstractExample_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -286,7 +294,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-AbstractExample-Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -299,15 +307,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Example/Pods-Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AbstractExample-Example/Pods-AbstractExample-Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -351,118 +359,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		2F3F49C025B7F588002BD598 /* Debug-Production */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					"APP_PRODUCTION=1",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APP_PRODUCTION";
-			};
-			name = "Debug-Production";
-		};
-		2F3F49C125B7F588002BD598 /* Debug-Production */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 15A22739CCE0C109B02001A2 /* Pods-Example.debug-production.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3SPQYAJQY3;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"APP_TARGET=1",
-				);
-				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-l\"c++\"",
-					"-l\"sqlite3\"",
-					"-l\"xml2\"",
-					"-l\"z\"",
-					"-framework",
-					"\"FWDebug\"",
-					"-framework",
-					"\"FWApplication\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"UIKit\"",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = site.wuyong.FWApplication.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-Production";
-		};
-		2F3F49C325B7F598002BD598 /* Release-Production */ = {
+		2F3F49C925B7F5B4002BD598 /* Testing */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -504,7 +401,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"APP_PRODUCTION=1",
+					"TESTING=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -516,15 +413,15 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = APP_PRODUCTION;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = TESTING;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = "Release-Production";
+			name = Testing;
 		};
-		2F3F49C425B7F598002BD598 /* Release-Production */ = {
+		2F3F49CA25B7F5B4002BD598 /* Testing */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 44631DA59E312FBD7346F3FB /* Pods-Example.release-production.xcconfig */;
+			baseConfigurationReference = 77BAEB7F70E4492F25160904 /* Pods-AbstractExample-Example.testing.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -535,7 +432,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"APP_TARGET=1",
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -564,120 +460,9 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = "Release-Production";
+			name = Testing;
 		};
-		2F3F49C625B7F5A9002BD598 /* Debug-Testing */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					"APP_TESTING=1",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APP_TESTING";
-			};
-			name = "Debug-Testing";
-		};
-		2F3F49C725B7F5A9002BD598 /* Debug-Testing */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C62FDA1B552B03D414FC1A58 /* Pods-Example.debug-testing.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3SPQYAJQY3;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"APP_TARGET=1",
-				);
-				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-l\"c++\"",
-					"-l\"sqlite3\"",
-					"-l\"xml2\"",
-					"-l\"z\"",
-					"-framework",
-					"\"FWDebug\"",
-					"-framework",
-					"\"FWApplication\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"UIKit\"",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = site.wuyong.FWApplication.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-Testing";
-		};
-		2F3F49C925B7F5B4002BD598 /* Release-Testing */ = {
+		2F5F1FD426B457460088FDD0 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -719,7 +504,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					"APP_TESTING=1",
+					"STAGING=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -731,15 +516,15 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = APP_TESTING;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = STAGING;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
-			name = "Release-Testing";
+			name = Staging;
 		};
-		2F3F49CA25B7F5B4002BD598 /* Release-Testing */ = {
+		2F5F1FD526B457460088FDD0 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B19C633EF10386D14D173C6A /* Pods-Example.release-testing.xcconfig */;
+			baseConfigurationReference = E991B1F3F212B602F7BF5FC3 /* Pods-AbstractExample-Example.staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -750,7 +535,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"APP_TARGET=1",
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -779,222 +563,7 @@
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = "Release-Testing";
-		};
-		2F5F1FD226B4572F0088FDD0 /* Debug-Staging */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-					"APP_STAGING=1",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG APP_STAGING";
-			};
-			name = "Debug-Staging";
-		};
-		2F5F1FD326B4572F0088FDD0 /* Debug-Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5688CF67CD192BBE88228446 /* Pods-Example.debug-staging.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3SPQYAJQY3;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"APP_TARGET=1",
-				);
-				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-l\"c++\"",
-					"-l\"sqlite3\"",
-					"-l\"xml2\"",
-					"-l\"z\"",
-					"-framework",
-					"\"FWDebug\"",
-					"-framework",
-					"\"FWApplication\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"UIKit\"",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = site.wuyong.FWApplication.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-Staging";
-		};
-		2F5F1FD426B457460088FDD0 /* Release-Staging */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"APP_STAGING=1",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = APP_STAGING;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-Staging";
-		};
-		2F5F1FD526B457460088FDD0 /* Release-Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 91E21474090130E38DD1CF57 /* Pods-Example.release-staging.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3SPQYAJQY3;
-				GCC_PREFIX_HEADER = "";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"APP_TARGET=1",
-				);
-				INFOPLIST_FILE = Example/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-l\"sqlite3\"",
-					"-framework",
-					"\"FWApplication\"",
-					"-framework",
-					"\"Foundation\"",
-					"-framework",
-					"\"ImageIO\"",
-					"-framework",
-					"\"UIKit\"",
-					"-ObjC",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = site.wuyong.FWApplication.Example;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
-				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Release-Staging";
+			name = Staging;
 		};
 		2FF8D88D24C886EE006A83B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1097,7 +666,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"RELEASE=1",
+				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1108,7 +680,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1116,7 +688,7 @@
 		};
 		2FF8D89024C886EE006A83B5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4BAA06B2DF878F043EBA54F /* Pods-Example.debug.xcconfig */;
+			baseConfigurationReference = 04BE9D8981501E87977A2810 /* Pods-AbstractExample-Example.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1127,7 +699,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"APP_TARGET=1",
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1165,7 +736,7 @@
 		};
 		2FF8D89124C886EE006A83B5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB055C82FC6CC339287B2D34 /* Pods-Example.release.xcconfig */;
+			baseConfigurationReference = B9AA2132F90A1DAF3883842B /* Pods-AbstractExample-Example.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1176,7 +747,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
-					"APP_TARGET=1",
 				);
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1214,13 +784,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FF8D88D24C886EE006A83B5 /* Debug */,
-				2F3F49C625B7F5A9002BD598 /* Debug-Testing */,
-				2F5F1FD226B4572F0088FDD0 /* Debug-Staging */,
-				2F3F49C025B7F588002BD598 /* Debug-Production */,
 				2FF8D88E24C886EE006A83B5 /* Release */,
-				2F3F49C925B7F5B4002BD598 /* Release-Testing */,
-				2F5F1FD426B457460088FDD0 /* Release-Staging */,
-				2F3F49C325B7F598002BD598 /* Release-Production */,
+				2F3F49C925B7F5B4002BD598 /* Testing */,
+				2F5F1FD426B457460088FDD0 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1229,13 +795,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FF8D89024C886EE006A83B5 /* Debug */,
-				2F3F49C725B7F5A9002BD598 /* Debug-Testing */,
-				2F5F1FD326B4572F0088FDD0 /* Debug-Staging */,
-				2F3F49C125B7F588002BD598 /* Debug-Production */,
 				2FF8D89124C886EE006A83B5 /* Release */,
-				2F3F49CA25B7F5B4002BD598 /* Release-Testing */,
-				2F5F1FD526B457460088FDD0 /* Release-Staging */,
-				2F3F49C425B7F598002BD598 /* Release-Production */,
+				2F3F49CA25B7F5B4002BD598 /* Testing */,
+				2F5F1FD526B457460088FDD0 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

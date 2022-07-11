@@ -17,7 +17,7 @@ FWDefStaticString(ROUTE_WILDCARD, @"wildcard://test1");
 FWDefStaticString(ROUTE_OBJECT, @"object://test2");
 FWDefStaticString(ROUTE_OBJECT_UNMATCH, @"object://test");
 FWDefStaticString(ROUTE_LOADER, @"app://loader");
-FWDefStaticString(ROUTE_CONTROLLER, @"app://controller/:id");
+FWDefStaticString(ROUTE_ITEM, @"app://shops/:id/items/:itemId");
 FWDefStaticString(ROUTE_JAVASCRIPT, @"app://javascript");
 FWDefStaticString(ROUTE_HOME, @"app://home");
 FWDefStaticString(ROUTE_HOME_TEST, @"app://home/test");
@@ -57,7 +57,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     [FWRouter setRouteHandler:^id _Nullable(FWRouterContext * _Nonnull context, id  _Nonnull object) {
         if (context.isOpening) {
             if ([object isKindOfClass:[UIViewController class]]) {
-                [FWRouter openViewController:object animated:YES];
+                [FWRouter openViewController:object animated:YES options:0 completion:nil];
             } else {
                 [UIWindow.fw_topPresentedController fw_showAlertWithTitle:[NSString stringWithFormat:@"url not supported\nurl: %@\nparameters: %@", context.URL, context.parameters] message:nil cancel:nil cancelBlock:nil];
             }
@@ -105,7 +105,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
         return nil;
     }];
     
-    [FWRouter registerURL:TestRouter.ROUTE_CONTROLLER withHandler:^id(FWRouterContext * _Nonnull context) {
+    [FWRouter registerURL:TestRouter.ROUTE_ITEM withHandler:^id(FWRouterContext * _Nonnull context) {
         TestRouterResultViewController *viewController = [TestRouterResultViewController new];
         viewController.context = context;
         [FWRouter pushViewController:viewController animated:YES];
@@ -362,7 +362,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)onOpenController
 {
-    [FWRouter openURL:[FWRouter generateURL:TestRouter.ROUTE_CONTROLLER parameters:@1]];
+    [FWRouter openURL:[FWRouter generateURL:TestRouter.ROUTE_ITEM parameters:@[@1, @2]]];
 }
 
 - (void)onOpenCallback

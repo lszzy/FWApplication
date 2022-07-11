@@ -17,7 +17,7 @@
     <a title="Categories  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 3.5.1 Docs</a> (67% documented)</p>
+        <p><a href="index.html">FWApplication 3.6.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -5772,20 +5772,17 @@
 <span class="c1">/// 使用最顶部的导航栏控制器打开控制器</span>
 <span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
+<span class="c1">/// 使用最顶部的导航栏控制器打开控制器，同时pop指定数量控制器</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">pop</span><span class="p">:(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">count</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
 <span class="c1">/// 使用最顶部的显示控制器弹出控制器，建议present导航栏控制器(可用来push)</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_presentViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
-<span class="c1">/// 使用最顶部的视图控制器打开控制器，自动判断push|present</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_openViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
 <span class="c1">/// 使用最顶部的视图控制器打开控制器，自动判断push|present，完成时回调</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_openViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="c1">/// 关闭最顶部的视图控制器，自动判断pop|dismiss，返回是否成功</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_closeViewControllerAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_openViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">options</span><span class="p">:(</span><span class="n"><a href="Enums/FWNavigationOptions.html">FWNavigationOptions</a></span><span class="p">)</span><span class="nv">options</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="c1">/// 关闭最顶部的视图控制器，自动判断pop|dismiss，返回是否成功，完成时回调</span>
-<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_closeViewControllerAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_closeViewControllerAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">options</span><span class="p">:(</span><span class="n"><a href="Enums/FWNavigationOptions.html">FWNavigationOptions</a></span><span class="p">)</span><span class="nv">options</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="c1">/// 获取当前主window</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">UIWindow</span> <span class="o">*</span><span class="n">fw_mainWindow</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
@@ -5805,20 +5802,17 @@
 <span class="c1">/// 使用最顶部的导航栏控制器打开控制器</span>
 <span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
+<span class="c1">/// 使用最顶部的导航栏控制器打开控制器，同时pop指定数量控制器</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">pop</span><span class="p">:(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">count</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
 <span class="c1">/// 使用最顶部的显示控制器弹出控制器，建议present导航栏控制器(可用来push)</span>
 <span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_presentViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
-<span class="c1">/// 使用最顶部的视图控制器打开控制器，自动判断push|present</span>
-<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_openViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
 <span class="c1">/// 使用最顶部的视图控制器打开控制器，自动判断push|present，完成时回调</span>
-<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_openViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="c1">/// 关闭最顶部的视图控制器，自动判断pop|dismiss，返回是否成功</span>
-<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_closeViewControllerAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_openViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">options</span><span class="p">:(</span><span class="n"><a href="Enums/FWNavigationOptions.html">FWNavigationOptions</a></span><span class="p">)</span><span class="nv">options</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="c1">/// 关闭最顶部的视图控制器，自动判断pop|dismiss，返回是否成功，完成时回调</span>
-<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_closeViewControllerAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">BOOL</span><span class="p">)</span><span class="nf">fw_closeViewControllerAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">options</span><span class="p">:(</span><span class="n"><a href="Enums/FWNavigationOptions.html">FWNavigationOptions</a></span><span class="p">)</span><span class="nv">options</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="k">@end</span></code></pre>
 
@@ -5880,6 +5874,12 @@
 <span class="c1">/// 设置界面数组，完成时回调</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_setViewControllers</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">UIViewController</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewControllers</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
+<span class="c1">/// push新界面，同时pop指定数量界面，至少保留一个根控制器，完成时回调</span>
+<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">pop</span><span class="p">:(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">count</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">/// pop指定数量界面，0不会pop，至少保留一个根控制器，完成时回调</span>
+<span class="k">-</span> <span class="p">(</span><span class="n">nullable</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">__kindof</span> <span class="n">UIViewController</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nf">fw_popViewControllers</span><span class="p">:(</span><span class="n">NSUInteger</span><span class="p">)</span><span class="nv">count</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
 <span class="cp">#pragma mark - Workflow
 </span>
 <span class="cm">/**
@@ -5888,15 +5888,6 @@
  @return 工作流名称
  */</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">,</span> <span class="n">nullable</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_topWorkflowName</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="cm">/**
- push控制器，并清理最外层工作流（不属于工作流则不清理）
- @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、（2、3）、4、（5、6）、9
- 
- @param viewController push的控制器
- @param animated 是否执行动画
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">popTopWorkflowAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="cm">/**
  push控制器，并清理最外层工作流（不属于工作流则不清理），完成时回调
@@ -5908,15 +5899,6 @@
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">popTopWorkflowAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="cm">/**
- push控制器，并清理非根控制器（只保留根控制器）
- @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、9
- 
- @param viewController push的控制器
- @param animated 是否执行动画
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">popToRootWorkflowAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="cm">/**
  push控制器，并清理非根控制器（只保留根控制器），完成时回调
  @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、9
  
@@ -5924,16 +5906,6 @@
  @param animated 是否执行动画
  */</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">popToRootWorkflowAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="cm">/**
- push控制器，并从外到内清理指定工作流，直到遇到不属于指定工作流的控制器停止
- @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、（2、3）、4、9
- 
- @param viewController push的控制器
- @param workflows 指定工作流
- @param animated 是否执行动画
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">popWorkflows</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">workflows</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="cm">/**
  push控制器，并从外到内清理指定工作流，直到遇到不属于指定工作流的控制器停止，完成时回调
@@ -5946,29 +5918,12 @@
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_pushViewController</span><span class="p">:(</span><span class="n">UIViewController</span> <span class="o">*</span><span class="p">)</span><span class="nv">viewController</span> <span class="nf">popWorkflows</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">workflows</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="cm">/**
- pop方式清理最外层工作流，至少保留一个根控制器（不属于工作流则不清理）
- @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、（2、3）、4、（5、6）
- 
- @param animated 是否执行动画
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_popTopWorkflowAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="cm">/**
  pop方式清理最外层工作流，至少保留一个根控制器（不属于工作流则不清理），完成时回调
  @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、（2、3）、4、（5、6）
  
  @param animated 是否执行动画
  */</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_popTopWorkflowAnimated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="nf">completion</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
-
-<span class="cm">/**
- pop方式从外到内清理指定工作流，直到遇到不属于指定工作流的控制器停止，至少保留一个根控制器
- @note 示例：1、（2、3）、4、（5、6）、（7、8），操作后为1、（2、3）、4
- 
- @param workflows 指定工作流
- @param animated  是否执行动画
- */</span>
-<span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_popWorkflows</span><span class="p">:(</span><span class="n">nullable</span> <span class="n">NSArray</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">workflows</span> <span class="nf">animated</span><span class="p">:(</span><span class="n">BOOL</span><span class="p">)</span><span class="nv">animated</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="cm">/**
  pop方式从外到内清理指定工作流，直到遇到不属于指定工作流的控制器停止，至少保留一个根控制器，完成时回调
@@ -8306,8 +8261,8 @@
 <span class="c1">/// 取消加载网络图片请求</span>
 <span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">fw_cancelImageRequest</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
-<span class="c1">/// 动画ImageView视图类，优先加载插件，默认UIImageView</span>
-<span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">unsafe_unretained</span><span class="p">)</span> <span class="n">Class</span> <span class="n">fw_imageViewAnimatedClass</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+<span class="c1">/// 创建动画ImageView视图，优先加载插件，默认UIImageView</span>
+<span class="k">+</span> <span class="p">(</span><span class="n">UIImageView</span> <span class="o">*</span><span class="p">)</span><span class="n">fw_animatedImageView</span> <span class="n">NS_SWIFT_NAME</span><span class="p">(</span><span class="n">__fw_animatedImageView</span><span class="p">())</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="k">@end</span></code></pre>
 
@@ -8829,6 +8784,9 @@
 
 <span class="c1">/// 获取默认请求UserAgent，可用于网络请求，示例：Example/1.0.0 (iPhone; iOS 14.2; Scale/3.00)</span>
 <span class="k">@property</span> <span class="p">(</span><span class="n">class</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">,</span> <span class="n">copy</span><span class="p">,</span> <span class="n">readonly</span><span class="p">)</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">fw_requestUserAgent</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
+
+<span class="c1">/// 清空网页缓存，完成后回调。单个网页请求指定URLRequest.cachePolicy即可</span>
+<span class="k">+</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">fw_clearCache</span><span class="p">:(</span><span class="n">nullable</span> <span class="kt">void</span> <span class="p">(</span><span class="o">^</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="nv">completion</span> <span class="n">NS_REFINED_FOR_SWIFT</span><span class="p">;</span>
 
 <span class="k">@end</span></code></pre>
 
@@ -10587,7 +10545,7 @@ shouldBeRequiredToFailByGestureRecognizer：在otherGestureRecognizer识别其�
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-06)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-11)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

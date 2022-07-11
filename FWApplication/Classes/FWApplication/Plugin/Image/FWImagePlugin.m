@@ -271,19 +271,14 @@ static CGFloat FWInnerStringPathScale(NSString *string) {
     }
 }
 
-+ (Class)fw_imageViewAnimatedClass
++ (UIImageView *)fw_animatedImageView
 {
     id<FWImagePlugin> imagePlugin = [FWPluginManager loadPlugin:@protocol(FWImagePlugin)];
-    if (imagePlugin && [imagePlugin respondsToSelector:@selector(imageViewAnimatedClass)]) {
-        return [imagePlugin imageViewAnimatedClass];
+    if (imagePlugin && [imagePlugin respondsToSelector:@selector(animatedImageView)]) {
+        return [imagePlugin animatedImageView];
     }
     
-    return objc_getAssociatedObject([UIImageView class], @selector(fw_imageViewAnimatedClass)) ?: [UIImageView class];
-}
-
-+ (void)setFw_imageViewAnimatedClass:(Class)animatedClass
-{
-    objc_setAssociatedObject([UIImageView class], @selector(fw_imageViewAnimatedClass), animatedClass, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return [[UIImageView alloc] init];
 }
 
 @end

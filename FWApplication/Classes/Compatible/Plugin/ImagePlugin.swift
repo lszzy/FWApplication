@@ -102,10 +102,9 @@ extension Wrapper where Base: UIImageView {
         base.__fw_cancelImageRequest()
     }
     
-    /// 动画ImageView视图类，优先加载插件，默认UIImageView
-    public static var imageViewAnimatedClass: AnyClass {
-        get { return Base.__fw_imageViewAnimatedClass }
-        set { Base.__fw_imageViewAnimatedClass = newValue }
+    /// 创建动画ImageView视图，优先加载插件，默认UIImageView
+    public static func animatedImageView() -> UIImageView {
+        return Base.__fw_animatedImageView()
     }
     
 }

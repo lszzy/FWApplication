@@ -49,4 +49,9 @@ extension Wrapper where Base: WKWebView {
         return Base.__fw_requestUserAgent
     }
     
+    /// 清空网页缓存，完成后回调。单个网页请求指定URLRequest.cachePolicy即可
+    public static func fw_clearCache(_ completion: (() -> Void)? = nil) {
+        Base.__fw_clearCache(completion)
+    }
+    
 }

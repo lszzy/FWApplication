@@ -70,8 +70,10 @@ FWPropertyAssign(BOOL, hideToast);
             [UINavigationController fw_enableBarTransition];
         }];
     } else {
+        FWWeakifySelf();
         [self fw_setLeftBarItem:FWIcon.closeImage block:^(id  _Nonnull sender) {
-            [FWRouter closeViewControllerAnimated:YES];
+            FWStrongifySelf();
+            [self fw_closeViewControllerAnimated:YES];
         }];
     }
 }

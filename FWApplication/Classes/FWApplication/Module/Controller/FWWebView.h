@@ -145,7 +145,7 @@ NS_SWIFT_NAME(WebViewJsBridge)
 + (instancetype)bridgeForWebView:(WKWebView *)webView;
 + (void)enableLogging;
 
-- (void)registerClass:(id)clazz package:(nullable NSString *)package context:(nullable id)context withMapper:(nullable NSDictionary<NSString *, NSString *> * (^)(NSArray<NSString *> *methods))mapper;
+- (void)registerClass:(id)clazz package:(nullable NSString *)package context:(nullable __weak id)context withMapper:(nullable NSDictionary<NSString *, NSString *> * (^)(NSArray<NSString *> *methods))mapper;
 - (void)unregisterClass:(id)clazz package:(nullable NSString *)package withMapper:(nullable NSDictionary<NSString *, NSString *> * (^)(NSArray<NSString *> *methods))mapper;
 - (void)registerHandler:(NSString *)handlerName handler:(FWJsBridgeHandler)handler;
 - (void)removeHandler:(NSString *)handlerName;
@@ -179,6 +179,9 @@ NSString * FWWebViewJsBridge_js(void) NS_SWIFT_NAME(WebViewJsBridge_js());
 
 /// 获取默认请求UserAgent，可用于网络请求，示例：Example/1.0.0 (iPhone; iOS 14.2; Scale/3.00)
 @property (class, nonatomic, copy, readonly) NSString *fw_requestUserAgent NS_REFINED_FOR_SWIFT;
+
+/// 清空网页缓存，完成后回调。单个网页请求指定URLRequest.cachePolicy即可
++ (void)fw_clearCache:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 @end
 
