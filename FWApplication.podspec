@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'FWApplication'
-  s.version               = '3.5.1'
+  s.version               = '3.6.0'
   s.summary               = 'ios application framework'
   s.homepage              = 'http://wuyong.site'
   s.license               = 'MIT'
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
     # ss.resource_bundles = { 'FWApplication' => ['FWApplication/Assets/**/*.*'] }
     ss.source_files = 'FWApplication/Classes/FWApplication/**/*.{h,m}'
     ss.library = 'sqlite3'
-    ss.dependency 'FWFramework', "~> 3.5.0"
+    ss.dependency 'FWFramework', "~> 3.6.0"
   end
 
   s.subspec 'Compatible' do |ss|
