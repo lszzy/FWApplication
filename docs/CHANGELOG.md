@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.6.0] - 2022-07-11
+
+### Changed
+* Refactor the image plugin to create a view method
+* Modify the WebView bridge parameter context to weak reference
+* Compatible with FWFramework 3.6.0 version
+
 ## [3.5.1] - 2022-07-06
 
 ### Fixed

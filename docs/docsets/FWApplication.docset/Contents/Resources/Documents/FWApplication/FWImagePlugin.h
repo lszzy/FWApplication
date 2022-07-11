@@ -61,8 +61,8 @@ NS_SWIFT_NAME(ImagePlugin)
 /// image取消下载网络图片插件方法，指定下载凭据
 - (void)cancelImageDownload:(nullable id)receipt;
 
-/// imageView动画视图类插件方法，默认使用UIImageView
-- (Class)imageViewAnimatedClass;
+/// 创建动画视图插件方法，默认使用UIImageView
+- (UIImageView *)animatedImageView;
 
 /// image本地解码插件方法，默认使用系统方法
 - (nullable UIImage *)imageDecode:(NSData *)data scale:(CGFloat)scale options:(nullable NSDictionary<FWImageCoderOptions, id> *)options;
@@ -156,8 +156,8 @@ FOUNDATION_EXPORT UIImage * _Nullable FWImageNamed(NSString *name) NS_SWIFT_UNAV
 /// 取消加载网络图片请求
 - (void)fw_cancelImageRequest NS_REFINED_FOR_SWIFT;
 
-/// 动画ImageView视图类，优先加载插件，默认UIImageView
-@property (class, nonatomic, unsafe_unretained) Class fw_imageViewAnimatedClass NS_REFINED_FOR_SWIFT;
+/// 创建动画ImageView视图，优先加载插件，默认UIImageView
++ (UIImageView *)fw_animatedImageView NS_SWIFT_NAME(__fw_animatedImageView()) NS_REFINED_FOR_SWIFT;
 
 @end
 
