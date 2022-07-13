@@ -92,6 +92,9 @@ NS_SWIFT_NAME(ToastPlugin)
 /// UIViewController使用吐司插件，内部使用UIViewController.view
 @interface UIViewController (FWToastPlugin)
 
+/// 设置吐司是否显示在window上，默认NO，显示到view上
+@property (nonatomic, assign) BOOL fw_toastInWindow NS_REFINED_FOR_SWIFT;
+
 /// 设置吐司外间距，默认zero
 @property (nonatomic, assign) UIEdgeInsets fw_toastInsets NS_REFINED_FOR_SWIFT;
 

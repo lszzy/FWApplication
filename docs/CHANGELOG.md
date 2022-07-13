@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.6.1] - 2022-07-13
+
+### Changed
+* Toast plugin supports controller configuration displayed in the window
+
 ## [3.6.0] - 2022-07-11
 
 ### Changed
