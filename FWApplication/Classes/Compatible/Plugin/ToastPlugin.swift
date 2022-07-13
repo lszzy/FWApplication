@@ -69,6 +69,12 @@ extension Wrapper where Base: UIView {
 
 extension Wrapper where Base: UIViewController {
     
+    /// 设置吐司是否显示在window上，默认NO，显示到view上
+    public var toastInWindow: Bool {
+        get { return base.__fw_toastInWindow }
+        set { base.__fw_toastInWindow = newValue }
+    }
+    
     /// 设置吐司外间距，默认zero
     public var toastInsets: UIEdgeInsets {
         get { return base.__fw_toastInsets }
