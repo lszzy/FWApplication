@@ -127,6 +127,7 @@ NS_SWIFT_NAME(TextTagConfig)
 @interface FWTextTagConfig : NSObject;
 // Text font
 @property (strong, nonatomic) UIFont *textFont;
+@property (strong, nonatomic, nullable) UIFont *selectedTextFont;
 
 // Text color
 @property (strong, nonatomic) UIColor *textColor;

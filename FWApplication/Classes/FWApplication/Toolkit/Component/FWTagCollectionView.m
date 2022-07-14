@@ -587,6 +587,7 @@
 - (instancetype)copyWithZone:(NSZone *)zone {
     FWTextTagConfig *newConfig = [FWTextTagConfig new];
     newConfig.textFont = [_textFont copyWithZone:zone];
+    newConfig.selectedTextFont = _selectedTextFont ? [_selectedTextFont copyWithZone:zone] : nil;
     
     newConfig.textColor = [_textColor copyWithZone:zone];
     newConfig.selectedTextColor = [_selectedTextColor copyWithZone:zone];
@@ -705,7 +706,7 @@
 
 - (void)updateContentStyle {
     // Text style
-    _label.font = _config.textFont;
+    _label.font = _selected && _config.selectedTextFont ? _config.selectedTextFont : _config.textFont;
     _label.textColor = _selected ? _config.selectedTextColor : _config.textColor;
     
     // Normal background
