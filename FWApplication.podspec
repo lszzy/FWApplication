@@ -33,6 +33,12 @@ Pod::Spec.new do |s|
     ss.dependency 'SDWebImage'
     ss.dependency 'FWApplication/FWApplication'
   end
+  
+  s.subspec 'Lottie' do |ss|
+    ss.source_files = 'FWApplication/Classes/Lottie/**/*.{h,m,swift}'
+    ss.dependency 'lottie-ios'
+    ss.dependency 'FWApplication/FWApplication'
+  end
 
   s.subspec 'SQLCipher' do |ss|
     ss.dependency 'SQLCipher'
