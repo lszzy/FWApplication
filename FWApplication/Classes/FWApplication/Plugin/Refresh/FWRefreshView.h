@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
 } NS_SWIFT_NAME(PullRefreshState);
 
 @protocol FWIndicatorViewPlugin;
+@protocol FWProgressViewPlugin;
 
 /**
  下拉刷新视图，默认高度60
@@ -48,6 +49,7 @@ NS_SWIFT_NAME(PullRefreshView)
 - (void)setTitle:(nullable NSString *)title forState:(FWPullRefreshState)state;
 - (void)setSubtitle:(nullable NSString *)subtitle forState:(FWPullRefreshState)state;
 - (void)setCustomView:(nullable UIView *)view forState:(FWPullRefreshState)state;
+- (void)setAnimationView:(nullable UIView<FWProgressViewPlugin, FWIndicatorViewPlugin> *)animationView;
 
 - (void)startAnimating;
 - (void)stopAnimating;
@@ -100,6 +102,7 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @property (nullable, nonatomic, copy) void (^progressBlock)(FWInfiniteScrollView *view, CGFloat progress);
 
 - (void)setCustomView:(nullable UIView *)view forState:(FWInfiniteScrollState)state;
+- (void)setAnimationView:(nullable UIView<FWProgressViewPlugin, FWIndicatorViewPlugin> *)animationView;
 
 - (void)startAnimating;
 - (void)stopAnimating;

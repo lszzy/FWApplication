@@ -469,6 +469,21 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
     [self layoutIfNeeded];
 }
 
+- (void)setAnimationView:(UIView<FWProgressViewPlugin,FWIndicatorViewPlugin> *)animationView {
+    [self setCustomView:animationView forState:FWPullRefreshStateAll];
+    [self setProgressBlock:^(FWPullRefreshView *view, CGFloat progress) {
+        if (view.state == FWPullRefreshStateLoading) return;
+        animationView.progress = progress;
+    }];
+    [self setStateBlock:^(FWPullRefreshView *view, FWPullRefreshState state) {
+        if (state == FWPullRefreshStateStopped) {
+            [animationView stopAnimating];
+        } else if (state == FWPullRefreshStateLoading) {
+            [animationView startAnimating];
+        }
+    }];
+}
+
 - (void)setShowsTitleLabel:(BOOL)showsTitleLabel {
     _showsTitleLabel = showsTitleLabel;
     
@@ -854,6 +869,21 @@ static char UIScrollViewFWPullRefreshView;
         [self.viewForState replaceObjectAtIndex:state withObject:viewPlaceholder];
     
     self.state = self.state;
+}
+
+- (void)setAnimationView:(UIView<FWProgressViewPlugin,FWIndicatorViewPlugin> *)animationView {
+    [self setCustomView:animationView forState:FWInfiniteScrollStateAll];
+    [self setProgressBlock:^(FWInfiniteScrollView *view, CGFloat progress) {
+        if (view.state == FWInfiniteScrollStateLoading) return;
+        animationView.progress = progress;
+    }];
+    [self setStateBlock:^(FWInfiniteScrollView *view, FWInfiniteScrollState state) {
+        if (state == FWInfiniteScrollStateStopped) {
+            [animationView stopAnimating];
+        } else if (state == FWInfiniteScrollStateLoading) {
+            [animationView startAnimating];
+        }
+    }];
 }
 
 - (void)setIndicatorView:(UIView<FWIndicatorViewPlugin> *)indicatorView {
