@@ -172,7 +172,7 @@
                 @"fw.pickerEmpty": @"无照片",
                 @"fw.pickerDenied": @"请在iPhone的\"设置-隐私-照片\"选项中，允许%@访问你的照片",
                 @"fw.pickerExceed": @"最多只能选择%@张图片",
-                @"fw.refreshStopped": @"下拉可以刷新   ",
+                @"fw.refreshIdle": @"下拉可以刷新   ",
                 @"fw.refreshTriggered": @"松开立即刷新   ",
                 @"fw.refreshLoading": @"正在刷新数据...",
                 @"fw.refreshFinished": @"已经全部加载完毕",
@@ -190,7 +190,7 @@
                 @"fw.pickerEmpty": @"無照片",
                 @"fw.pickerDenied": @"請在iPhone的\"設置-隱私-相冊\"選項中，允許%@訪問你的照片",
                 @"fw.pickerExceed": @"最多只能選擇%@張圖片",
-                @"fw.refreshStopped": @"下拉可以刷新   ",
+                @"fw.refreshIdle": @"下拉可以刷新   ",
                 @"fw.refreshTriggered": @"鬆開立即刷新   ",
                 @"fw.refreshLoading": @"正在刷新數據...",
                 @"fw.refreshFinished": @"已經全部加載完畢",
@@ -208,7 +208,7 @@
                 @"fw.pickerEmpty": @"No Photo",
                 @"fw.pickerDenied": @"Please allow %@ to access your album in \"Settings\"->\"Privacy\"->\"Photos\"",
                 @"fw.pickerExceed": @"Max count for selection: %@",
-                @"fw.refreshStopped": @"Pull down to refresh",
+                @"fw.refreshIdle": @"Pull down to refresh",
                 @"fw.refreshTriggered": @"Release to refresh",
                 @"fw.refreshLoading": @"Loading...",
                 @"fw.refreshFinished": @"No more data",
@@ -320,9 +320,9 @@
     return [self localizedString:@"fw.pickerExceed"];
 }
 
-+ (NSString *)refreshStoppedTitle
++ (NSString *)refreshIdleTitle
 {
-    return [self localizedString:@"fw.refreshStopped"];
+    return [self localizedString:@"fw.refreshIdle"];
 }
 
 + (NSString *)refreshTriggeredTitle

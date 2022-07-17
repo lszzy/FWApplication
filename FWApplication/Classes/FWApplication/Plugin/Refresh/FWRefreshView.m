@@ -136,10 +136,10 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
         self.showsTitleLabel = [self.indicatorView isKindOfClass:[UIActivityIndicatorView class]];
         self.showsArrowView = self.showsTitleLabel;
         self.shouldChangeAlpha = YES;
-        self.state = FWPullRefreshStateStopped;
+        self.state = FWPullRefreshStateIdle;
         self.pullingPercent = 0;
         
-        self.titles = [NSMutableArray arrayWithObjects:FWAppBundle.refreshStoppedTitle,
+        self.titles = [NSMutableArray arrayWithObjects:FWAppBundle.refreshIdleTitle,
                        FWAppBundle.refreshTriggeredTitle,
                        FWAppBundle.refreshLoadingTitle,
                        nil];
@@ -194,7 +194,7 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
     else {
         switch (self.state) {
             case FWPullRefreshStateAll:
-            case FWPullRefreshStateStopped: {
+            case FWPullRefreshStateIdle: {
                 [self.indicatorView stopAnimating];
                 if (self.showsArrowView) {
                     [self rotateArrow:0 hide:NO];
@@ -326,8 +326,8 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
         CGPoint contentOffset = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
         if (self.scrollView.fw_infiniteScrollView.isActive || contentOffset.y > 0) {
             if (self.pullingPercent > 0) self.pullingPercent = 0;
-            if (self.state != FWPullRefreshStateStopped) {
-                self.state = FWPullRefreshStateStopped;
+            if (self.state != FWPullRefreshStateIdle) {
+                self.state = FWPullRefreshStateIdle;
             }
         } else {
             [self scrollViewDidScroll:contentOffset];
@@ -358,12 +358,12 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
         CGFloat scrollOffsetThreshold = self.frame.origin.y - self.originalTopInset;
         if(!self.scrollView.isDragging && self.state == FWPullRefreshStateTriggered)
             self.state = FWPullRefreshStateLoading;
-        else if(contentOffset.y < scrollOffsetThreshold && self.scrollView.isDragging && self.state == FWPullRefreshStateStopped) {
+        else if(contentOffset.y < scrollOffsetThreshold && self.scrollView.isDragging && self.state == FWPullRefreshStateIdle) {
             self.state = FWPullRefreshStateTriggered;
             self.userTriggered = YES;
-        } else if(contentOffset.y >= scrollOffsetThreshold && self.state != FWPullRefreshStateStopped)
-            self.state = FWPullRefreshStateStopped;
-        else if(contentOffset.y >= scrollOffsetThreshold && self.state == FWPullRefreshStateStopped)
+        } else if(contentOffset.y >= scrollOffsetThreshold && self.state != FWPullRefreshStateIdle)
+            self.state = FWPullRefreshStateIdle;
+        else if(contentOffset.y >= scrollOffsetThreshold && self.state == FWPullRefreshStateIdle)
             self.pullingPercent = MAX(MIN(1.f - (self.scrollView.fw_pullRefreshHeight + contentOffset.y) / self.scrollView.fw_pullRefreshHeight, 1.f), 0.f);
     } else {
         UIEdgeInsets currentInset = self.scrollView.contentInset;
@@ -481,7 +481,7 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
         animationView.progress = progress;
     }];
     [self setAnimationStateBlock:^(FWPullRefreshView *view, FWPullRefreshState state) {
-        if (state == FWPullRefreshStateStopped) {
+        if (state == FWPullRefreshStateIdle) {
             [animationView stopAnimating];
         } else if (state == FWPullRefreshStateLoading) {
             [animationView startAnimating];
@@ -558,13 +558,13 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
 - (void)stopAnimating {
     if (!self.isAnimating) return;
     
-    self.state = FWPullRefreshStateStopped;
+    self.state = FWPullRefreshStateIdle;
     
     [self.scrollView setContentOffset:CGPointMake(self.scrollView.contentOffset.x, -self.originalTopInset) animated:YES];
 }
 
 - (BOOL)isAnimating {
-    return self.state != FWPullRefreshStateStopped;
+    return self.state != FWPullRefreshStateIdle;
 }
 
 - (void)setState:(FWPullRefreshState)newState {
@@ -580,7 +580,7 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
     
     switch (newState) {
         case FWPullRefreshStateAll:
-        case FWPullRefreshStateStopped:
+        case FWPullRefreshStateIdle:
             [self resetScrollViewContentInset];
             break;
             
@@ -731,7 +731,7 @@ static char UIScrollViewFWPullRefreshView;
         
         // default styling values
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.state = FWInfiniteScrollStateStopped;
+        self.state = FWInfiniteScrollStateIdle;
         self.enabled = YES;
         
         self.viewForState = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", nil];
@@ -806,8 +806,8 @@ static char UIScrollViewFWPullRefreshView;
         
         CGPoint contentOffset = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
         if (self.scrollView.fw_pullRefreshView.isActive || contentOffset.y < 0) {
-            if (self.state != FWInfiniteScrollStateStopped) {
-                self.state = FWInfiniteScrollStateStopped;
+            if (self.state != FWInfiniteScrollStateIdle) {
+                self.state = FWInfiniteScrollStateIdle;
             }
         } else {
             [self scrollViewDidScroll:contentOffset];
@@ -829,7 +829,7 @@ static char UIScrollViewFWPullRefreshView;
         if (self.scrollView.contentOffset.y >= 0) {
             self.state = FWInfiniteScrollStateLoading;
         } else {
-            self.state = FWInfiniteScrollStateStopped;
+            self.state = FWInfiniteScrollStateIdle;
         }
     }
 }
@@ -846,11 +846,11 @@ static char UIScrollViewFWPullRefreshView;
         CGFloat scrollOffsetThreshold = MAX(self.scrollView.contentSize.height - self.scrollView.bounds.size.height - self.preloadHeight, 0);
         if(!self.scrollView.isDragging && self.state == FWInfiniteScrollStateTriggered)
             self.state = FWInfiniteScrollStateLoading;
-        else if(contentOffset.y > scrollOffsetThreshold && self.state == FWInfiniteScrollStateStopped && self.scrollView.isDragging) {
+        else if(contentOffset.y > scrollOffsetThreshold && self.state == FWInfiniteScrollStateIdle && self.scrollView.isDragging) {
             self.state = FWInfiniteScrollStateTriggered;
             self.userTriggered = YES;
-        } else if(contentOffset.y < scrollOffsetThreshold && self.state != FWInfiniteScrollStateStopped)
-            self.state = FWInfiniteScrollStateStopped;
+        } else if(contentOffset.y < scrollOffsetThreshold && self.state != FWInfiniteScrollStateIdle)
+            self.state = FWInfiniteScrollStateIdle;
     }
 }
 
@@ -913,7 +913,7 @@ static char UIScrollViewFWPullRefreshView;
         animationView.progress = progress;
     }];
     [self setAnimationStateBlock:^(FWInfiniteScrollView *view, FWInfiniteScrollState state) {
-        if (state == FWInfiniteScrollStateStopped) {
+        if (state == FWInfiniteScrollStateIdle) {
             [animationView stopAnimating];
         } else if (state == FWInfiniteScrollStateLoading) {
             [animationView startAnimating];
@@ -968,11 +968,11 @@ static char UIScrollViewFWPullRefreshView;
 }
 
 - (void)stopAnimating {
-    self.state = FWInfiniteScrollStateStopped;
+    self.state = FWInfiniteScrollStateIdle;
 }
 
 - (BOOL)isAnimating {
-    return self.state != FWInfiniteScrollStateStopped;
+    return self.state != FWInfiniteScrollStateIdle;
 }
 
 - (void)setState:(FWInfiniteScrollState)newState {
@@ -1001,7 +1001,7 @@ static char UIScrollViewFWPullRefreshView;
         [customView setFrame:CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)];
         
         switch (newState) {
-            case FWInfiniteScrollStateStopped:
+            case FWInfiniteScrollStateIdle:
                 // remove current custom view if not changed
                 if (!customViewChanged) {
                     [self.currentCustomView removeFromSuperview];
@@ -1022,7 +1022,7 @@ static char UIScrollViewFWPullRefreshView;
         [self.indicatorView setFrame:CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)];
         
         switch (newState) {
-            case FWInfiniteScrollStateStopped:
+            case FWInfiniteScrollStateIdle:
                 [self.indicatorView stopAnimating];
                 break;
                 

@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - UIScrollView+FWPullRefresh
 
 typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
-    FWPullRefreshStateStopped = 0,
+    FWPullRefreshStateIdle = 0,
     FWPullRefreshStateTriggered,
     FWPullRefreshStateLoading,
     FWPullRefreshStateAll = 10
@@ -77,7 +77,7 @@ NS_SWIFT_NAME(PullRefreshView)
 #pragma mark - UIScrollView+FWInfiniteScroll
 
 typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
-    FWInfiniteScrollStateStopped = 0,
+    FWInfiniteScrollStateIdle = 0,
     FWInfiniteScrollStateTriggered,
     FWInfiniteScrollStateLoading,
     FWInfiniteScrollStateAll = 10

@@ -64,8 +64,8 @@ NS_SWIFT_NAME(AppBundle)
 /// 多语言，超出数量，fw.pickerExceed
 @property (class, nonatomic, copy, readonly) NSString *pickerExceedTitle;
 
-/// 多语言，下拉可以刷新，fw.refreshStopped
-@property (class, nonatomic, copy, readonly) NSString *refreshStoppedTitle;
+/// 多语言，下拉可以刷新，fw.refreshIdle
+@property (class, nonatomic, copy, readonly) NSString *refreshIdleTitle;
 /// 多语言，松开立即刷新，fw.refreshTriggered
 @property (class, nonatomic, copy, readonly) NSString *refreshTriggeredTitle;
 /// 多语言，正在刷新数据，fw.refreshLoading
