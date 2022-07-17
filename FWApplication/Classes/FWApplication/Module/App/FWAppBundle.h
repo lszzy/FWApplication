@@ -46,6 +46,8 @@ NS_SWIFT_NAME(AppBundle)
 @property (class, nonatomic, copy, readonly) NSString *closeButton;
 /// 多语言，完成，fw.done
 @property (class, nonatomic, copy, readonly) NSString *doneButton;
+/// 多语言，更多，fw.more
+@property (class, nonatomic, copy, readonly) NSString *moreButton;
 /// 多语言，编辑，fw.edit
 @property (class, nonatomic, copy, readonly) NSString *editButton;
 /// 多语言，预览，fw.preview
@@ -61,6 +63,15 @@ NS_SWIFT_NAME(AppBundle)
 @property (class, nonatomic, copy, readonly) NSString *pickerDeniedTitle;
 /// 多语言，超出数量，fw.pickerExceed
 @property (class, nonatomic, copy, readonly) NSString *pickerExceedTitle;
+
+/// 多语言，下拉可以刷新，fw.refreshStopped
+@property (class, nonatomic, copy, readonly) NSString *refreshStoppedTitle;
+/// 多语言，松开立即刷新，fw.refreshTriggered
+@property (class, nonatomic, copy, readonly) NSString *refreshTriggeredTitle;
+/// 多语言，正在刷新数据，fw.refreshLoading
+@property (class, nonatomic, copy, readonly) NSString *refreshLoadingTitle;
+/// 多语言，已经全部加载完毕，fw.refreshFinished
+@property (class, nonatomic, copy, readonly) NSString *refreshFinishedTitle;
 
 @end
 

@@ -164,6 +164,7 @@
                 @"fw.close": @"关闭",
                 @"fw.confirm": @"确定",
                 @"fw.cancel": @"取消",
+                @"fw.more": @"更多",
                 @"fw.original": @"原图",
                 @"fw.edit": @"编辑",
                 @"fw.preview": @"预览",
@@ -171,12 +172,17 @@
                 @"fw.pickerEmpty": @"无照片",
                 @"fw.pickerDenied": @"请在iPhone的\"设置-隐私-照片\"选项中，允许%@访问你的照片",
                 @"fw.pickerExceed": @"最多只能选择%@张图片",
+                @"fw.refreshStopped": @"下拉可以刷新   ",
+                @"fw.refreshTriggered": @"松开立即刷新   ",
+                @"fw.refreshLoading": @"正在刷新数据...",
+                @"fw.refreshFinished": @"已经全部加载完毕",
             },
             @"zh-Hant": @{
                 @"fw.done": @"完成",
                 @"fw.close": @"關閉",
                 @"fw.confirm": @"確定",
                 @"fw.cancel": @"取消",
+                @"fw.more": @"更多",
                 @"fw.original": @"原圖",
                 @"fw.edit": @"編輯",
                 @"fw.preview": @"預覽",
@@ -184,12 +190,17 @@
                 @"fw.pickerEmpty": @"無照片",
                 @"fw.pickerDenied": @"請在iPhone的\"設置-隱私-相冊\"選項中，允許%@訪問你的照片",
                 @"fw.pickerExceed": @"最多只能選擇%@張圖片",
+                @"fw.refreshStopped": @"下拉可以刷新   ",
+                @"fw.refreshTriggered": @"鬆開立即刷新   ",
+                @"fw.refreshLoading": @"正在刷新數據...",
+                @"fw.refreshFinished": @"已經全部加載完畢",
             },
             @"en": @{
                 @"fw.done": @"Done",
                 @"fw.close": @"OK",
                 @"fw.confirm": @"Yes",
                 @"fw.cancel": @"Cancel",
+                @"fw.more": @"More",
                 @"fw.original": @"Original",
                 @"fw.edit": @"Edit",
                 @"fw.preview": @"Preview",
@@ -197,32 +208,10 @@
                 @"fw.pickerEmpty": @"No Photo",
                 @"fw.pickerDenied": @"Please allow %@ to access your album in \"Settings\"->\"Privacy\"->\"Photos\"",
                 @"fw.pickerExceed": @"Max count for selection: %@",
-            },
-            @"ja": @{
-                @"fw.done": @"完了",
-                @"fw.close": @"閉める",
-                @"fw.confirm": @"確認",
-                @"fw.cancel": @"戻る",
-                @"fw.original": @"原図",
-                @"fw.edit": @"編集",
-                @"fw.preview": @"プレビュー",
-                @"fw.pickerAlbum": @"アルバム",
-                @"fw.pickerEmpty": @"写真でない",
-                @"fw.pickerDenied": @"%@があなたのアルバムにアクセスするには「設定」->「プライバシー」->「写真」",
-                @"fw.pickerExceed": @"最大選択数: %@",
-            },
-            @"ms": @{
-                @"fw.done": @"Selesai",
-                @"fw.close": @"OK",
-                @"fw.confirm": @"Ya",
-                @"fw.cancel": @"Batal",
-                @"fw.original": @"Asal",
-                @"fw.edit": @"Edit",
-                @"fw.preview": @"Pratonton",
-                @"fw.pickerAlbum": @"Imej",
-                @"fw.pickerEmpty": @"Tiada gambar",
-                @"fw.pickerDenied": @"Izinkan %@ mengakses album anda di \"Tetapan\" -> \"Privasi\" -> \"Foto\"",
-                @"fw.pickerExceed": @"Kiraan maksimum untuk pemilihan: %@",
+                @"fw.refreshStopped": @"Pull down to refresh",
+                @"fw.refreshTriggered": @"Release to refresh",
+                @"fw.refreshLoading": @"Loading...",
+                @"fw.refreshFinished": @"No more data",
             },
         };
     });
@@ -286,6 +275,11 @@
     return [self localizedString:@"fw.done"];
 }
 
++ (NSString *)moreButton
+{
+    return [self localizedString:@"fw.more"];
+}
+
 + (NSString *)closeButton
 {
     return [self localizedString:@"fw.close"];
@@ -324,6 +318,26 @@
 + (NSString *)pickerExceedTitle
 {
     return [self localizedString:@"fw.pickerExceed"];
+}
+
++ (NSString *)refreshStoppedTitle
+{
+    return [self localizedString:@"fw.refreshStopped"];
+}
+
++ (NSString *)refreshTriggeredTitle
+{
+    return [self localizedString:@"fw.refreshTriggered"];
+}
+
++ (NSString *)refreshLoadingTitle
+{
+    return [self localizedString:@"fw.refreshLoading"];
+}
+
++ (NSString *)refreshFinishedTitle
+{
+    return [self localizedString:@"fw.refreshFinished"];
 }
 
 @end

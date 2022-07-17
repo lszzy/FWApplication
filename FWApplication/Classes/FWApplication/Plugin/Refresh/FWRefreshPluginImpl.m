@@ -68,6 +68,14 @@
     scrollView.fw_showInfiniteScroll = shouldLoading;
 }
 
+- (BOOL)loadingFinished:(UIScrollView *)scrollView {
+    return scrollView.fw_infiniteScrollFinished;
+}
+
+- (void)setLoadingFinished:(BOOL)loadingFinished scrollView:(UIScrollView *)scrollView {
+    scrollView.fw_infiniteScrollFinished = loadingFinished;
+}
+
 - (void)setLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView {
     [scrollView fw_addInfiniteScrollWithBlock:block];
     if (self.infiniteScrollBlock) self.infiniteScrollBlock(scrollView.fw_infiniteScrollView);

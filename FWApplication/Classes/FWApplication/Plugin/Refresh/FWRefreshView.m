@@ -9,6 +9,7 @@
 
 #import "FWRefreshView.h"
 #import "FWViewPlugin.h"
+#import "FWAppBundle.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
@@ -138,9 +139,9 @@ static CGFloat FWInfiniteScrollViewHeight = 60;
         self.state = FWPullRefreshStateStopped;
         self.pullingPercent = 0;
         
-        self.titles = [NSMutableArray arrayWithObjects:NSLocalizedString(@"下拉可以刷新   ",),
-                       NSLocalizedString(@"松开立即刷新   ",),
-                       NSLocalizedString(@"正在刷新数据...",),
+        self.titles = [NSMutableArray arrayWithObjects:FWAppBundle.refreshStoppedTitle,
+                       FWAppBundle.refreshTriggeredTitle,
+                       FWAppBundle.refreshLoadingTitle,
                        nil];
         self.subtitles = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", nil];
         self.viewForState = [NSMutableArray arrayWithObjects:@"", @"", @"", @"", nil];
@@ -720,6 +721,8 @@ static char UIScrollViewFWPullRefreshView;
 @synthesize state = _state;
 @synthesize scrollView = _scrollView;
 @synthesize indicatorView = _indicatorView;
+@synthesize finishedLabel = _finishedLabel;
+@synthesize finishedView = _finishedView;
 
 #pragma mark - Lifecycle
 
@@ -756,6 +759,9 @@ static char UIScrollViewFWPullRefreshView;
     
     CGPoint indicatorOrigin = CGPointMake(self.bounds.size.width / 2 - self.indicatorView.bounds.size.width / 2, self.indicatorPadding > 0 ? self.indicatorPadding : (self.bounds.size.height / 2 - self.indicatorView.bounds.size.height / 2));
     self.indicatorView.frame = CGRectMake(indicatorOrigin.x, indicatorOrigin.y, self.indicatorView.bounds.size.width, self.indicatorView.bounds.size.height);
+    
+    CGPoint finishedOrigin = CGPointMake(self.bounds.size.width / 2 - self.finishedView.bounds.size.width / 2, self.finishedPadding > 0 ? self.finishedPadding : (self.bounds.size.height / 2 - self.finishedView.bounds.size.height / 2));
+    self.finishedView.frame = CGRectMake(finishedOrigin.x, finishedOrigin.y, self.finishedView.bounds.size.width, self.finishedView.bounds.size.height);
 }
 
 #pragma mark - Static
@@ -796,6 +802,8 @@ static char UIScrollViewFWPullRefreshView;
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if([keyPath isEqualToString:@"contentOffset"]) {
+        if (self.finished) return;
+        
         CGPoint contentOffset = [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue];
         if (self.scrollView.fw_pullRefreshView.isActive || contentOffset.y < 0) {
             if (self.state != FWInfiniteScrollStateStopped) {
@@ -811,6 +819,8 @@ static char UIScrollViewFWPullRefreshView;
 }
 
 - (void)gestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer stateChanged:(NSDictionary *)change {
+    if (self.finished) return;
+    
     UIGestureRecognizerState state = [[change valueForKey:NSKeyValueChangeNewKey] integerValue];
     if (state == UIGestureRecognizerStateBegan) {
         self.isActive = NO;
@@ -857,6 +867,27 @@ static char UIScrollViewFWPullRefreshView;
 
 - (UIColor *)indicatorColor {
     return self.indicatorView.color;
+}
+
+- (UILabel *)finishedLabel {
+    if (!_finishedLabel) {
+        _finishedLabel = [[UILabel alloc] init];
+        _finishedLabel.font = [UIFont systemFontOfSize:14];
+        _finishedLabel.textAlignment = NSTextAlignmentCenter;
+        _finishedLabel.textColor = [UIColor grayColor];
+        _finishedLabel.text = FWAppBundle.refreshFinishedTitle;
+        [_finishedLabel sizeToFit];
+    }
+    return _finishedLabel;
+}
+
+- (UIView *)finishedView {
+    if (!_finishedView) {
+        _finishedView = self.finishedLabel;
+        _finishedView.hidden = YES;
+        [self addSubview:_finishedView];
+    }
+    return _finishedView;
 }
 
 #pragma mark - Setters
@@ -908,6 +939,26 @@ static char UIScrollViewFWPullRefreshView;
 - (void)setIndicatorPadding:(CGFloat)indicatorPadding {
     _indicatorPadding = indicatorPadding;
     [self setNeedsLayout];
+}
+
+- (void)setFinishedView:(UIView *)finishedView {
+    [_finishedView removeFromSuperview];
+    _finishedView = finishedView;
+    _finishedView.hidden = YES;
+    [self addSubview:_finishedView];
+    
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
+}
+
+- (void)setFinishedPadding:(CGFloat)finishedPadding {
+    _finishedPadding = finishedPadding;
+    [self setNeedsLayout];
+}
+
+- (void)setFinished:(BOOL)finished {
+    _finished = finished;
+    self.finishedView.hidden = !finished;
 }
 
 #pragma mark -
@@ -1097,6 +1148,14 @@ static char UIScrollViewFWInfiniteScrollView;
 
 - (BOOL)fw_showInfiniteScroll {
     return !self.fw_infiniteScrollView.hidden;
+}
+
+- (void)setFw_infiniteScrollFinished:(BOOL)finished {
+    self.fw_infiniteScrollView.finished = finished;
+}
+
+- (BOOL)fw_infiniteScrollFinished {
+    return self.fw_infiniteScrollView.finished;
 }
 
 @end

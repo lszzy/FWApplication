@@ -322,7 +322,7 @@
         }
         [self.tableView reloadData];
         
-        self.tableView.fw_shouldLoading = self.tableData.count < 20 ? YES : NO;
+        self.tableView.fw_loadingFinished = self.tableData.count >= 20 ? YES : NO;
         [self.tableView fw_endLoading];
     });
 }

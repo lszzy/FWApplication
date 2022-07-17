@@ -397,7 +397,7 @@ static BOOL isExpanded = NO;
         }
         [self.collectionView fw_reloadDataWithoutAnimation];
         
-        self.collectionView.fw_shouldLoading = self.collectionData.count < 20 ? YES : NO;
+        self.collectionView.fw_loadingFinished = self.collectionData.count >= 20 ? YES : NO;
         [self.collectionView fw_endLoading];
     });
 }

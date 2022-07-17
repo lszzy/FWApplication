@@ -95,6 +95,10 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @property (nonatomic, strong) UIView<FWIndicatorViewPlugin> *indicatorView;
 @property (nullable, nonatomic, strong) UIColor *indicatorColor;
 @property (nonatomic, assign) CGFloat indicatorPadding;
+@property (nonatomic, assign) BOOL finished;
+@property (nonatomic, strong, readonly) UILabel *finishedLabel;
+@property (nonatomic, strong) UIView *finishedView;
+@property (nonatomic, assign) CGFloat finishedPadding;
 
 @property (nonatomic, readonly) FWInfiniteScrollState state;
 @property (nonatomic, assign, readonly) BOOL userTriggered;
@@ -124,6 +128,7 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @property (nullable, nonatomic, strong, readonly) FWInfiniteScrollView *fw_infiniteScrollView NS_REFINED_FOR_SWIFT;
 @property (nonatomic, assign) CGFloat fw_infiniteScrollHeight NS_REFINED_FOR_SWIFT;
 @property (nonatomic, assign) BOOL fw_showInfiniteScroll NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) BOOL fw_infiniteScrollFinished NS_REFINED_FOR_SWIFT;
 
 @end
 

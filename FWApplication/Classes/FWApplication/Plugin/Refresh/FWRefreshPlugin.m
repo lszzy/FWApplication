@@ -111,6 +111,22 @@
     [refreshPlugin setShouldLoading:shouldLoading scrollView:self];
 }
 
+- (BOOL)fw_loadingFinished {
+    id<FWRefreshPlugin> refreshPlugin = self.fw_refreshPlugin;
+    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(loadingFinished:)]) {
+        refreshPlugin = FWRefreshPluginImpl.sharedInstance;
+    }
+    return [refreshPlugin loadingFinished:self];
+}
+
+- (void)setFw_loadingFinished:(BOOL)loadingFinished {
+    id<FWRefreshPlugin> refreshPlugin = self.fw_refreshPlugin;
+    if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(setLoadingFinished:scrollView:)]) {
+        refreshPlugin = FWRefreshPluginImpl.sharedInstance;
+    }
+    [refreshPlugin setLoadingFinished:loadingFinished scrollView:self];
+}
+
 - (void)fw_setLoadingBlock:(void (^)(void))block {
     id<FWRefreshPlugin> refreshPlugin = self.fw_refreshPlugin;
     if (!refreshPlugin || ![refreshPlugin respondsToSelector:@selector(setLoadingBlock:scrollView:)]) {
