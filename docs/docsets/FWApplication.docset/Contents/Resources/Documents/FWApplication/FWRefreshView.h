@@ -13,13 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - UIScrollView+FWPullRefresh
 
 typedef NS_ENUM(NSUInteger, FWPullRefreshState) {
-    FWPullRefreshStateStopped = 0,
+    FWPullRefreshStateIdle = 0,
     FWPullRefreshStateTriggered,
     FWPullRefreshStateLoading,
     FWPullRefreshStateAll = 10
 } NS_SWIFT_NAME(PullRefreshState);
 
 @protocol FWIndicatorViewPlugin;
+@protocol FWProgressViewPlugin;
 
 /**
  下拉刷新视图，默认高度60
@@ -48,6 +49,7 @@ NS_SWIFT_NAME(PullRefreshView)
 - (void)setTitle:(nullable NSString *)title forState:(FWPullRefreshState)state;
 - (void)setSubtitle:(nullable NSString *)subtitle forState:(FWPullRefreshState)state;
 - (void)setCustomView:(nullable UIView *)view forState:(FWPullRefreshState)state;
+- (void)setAnimationView:(nullable UIView<FWProgressViewPlugin, FWIndicatorViewPlugin> *)animationView;
 
 - (void)startAnimating;
 - (void)stopAnimating;
@@ -75,7 +77,7 @@ NS_SWIFT_NAME(PullRefreshView)
 #pragma mark - UIScrollView+FWInfiniteScroll
 
 typedef NS_ENUM(NSUInteger, FWInfiniteScrollState) {
-    FWInfiniteScrollStateStopped = 0,
+    FWInfiniteScrollStateIdle = 0,
     FWInfiniteScrollStateTriggered,
     FWInfiniteScrollStateLoading,
     FWInfiniteScrollStateAll = 10
@@ -93,6 +95,10 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @property (nonatomic, strong) UIView<FWIndicatorViewPlugin> *indicatorView;
 @property (nullable, nonatomic, strong) UIColor *indicatorColor;
 @property (nonatomic, assign) CGFloat indicatorPadding;
+@property (nonatomic, assign) BOOL finished;
+@property (nonatomic, strong, readonly) UILabel *finishedLabel;
+@property (nonatomic, strong) UIView *finishedView;
+@property (nonatomic, assign) CGFloat finishedPadding;
 
 @property (nonatomic, readonly) FWInfiniteScrollState state;
 @property (nonatomic, assign, readonly) BOOL userTriggered;
@@ -100,6 +106,7 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @property (nullable, nonatomic, copy) void (^progressBlock)(FWInfiniteScrollView *view, CGFloat progress);
 
 - (void)setCustomView:(nullable UIView *)view forState:(FWInfiniteScrollState)state;
+- (void)setAnimationView:(nullable UIView<FWProgressViewPlugin, FWIndicatorViewPlugin> *)animationView;
 
 - (void)startAnimating;
 - (void)stopAnimating;
@@ -121,6 +128,7 @@ NS_SWIFT_NAME(InfiniteScrollView)
 @property (nullable, nonatomic, strong, readonly) FWInfiniteScrollView *fw_infiniteScrollView NS_REFINED_FOR_SWIFT;
 @property (nonatomic, assign) CGFloat fw_infiniteScrollHeight NS_REFINED_FOR_SWIFT;
 @property (nonatomic, assign) BOOL fw_showInfiniteScroll NS_REFINED_FOR_SWIFT;
+@property (nonatomic, assign) BOOL fw_infiniteScrollFinished NS_REFINED_FOR_SWIFT;
 
 @end
 

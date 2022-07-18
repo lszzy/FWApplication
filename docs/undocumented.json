@@ -303,85 +303,92 @@
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 92,
+      "line": 98,
       "symbol": "Wrapper.addPullRefresh(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 96,
+      "line": 102,
       "symbol": "Wrapper.addPullRefresh(target:action:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 100,
+      "line": 106,
       "symbol": "Wrapper.triggerPullRefresh()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 104,
+      "line": 110,
       "symbol": "Wrapper.pullRefreshView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 108,
+      "line": 114,
       "symbol": "Wrapper.pullRefreshHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 113,
+      "line": 119,
       "symbol": "Wrapper.showPullRefresh",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 118,
+      "line": 124,
       "symbol": "Wrapper.addInfiniteScroll(block:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 122,
+      "line": 128,
       "symbol": "Wrapper.addInfiniteScroll(target:action:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 126,
+      "line": 132,
       "symbol": "Wrapper.triggerInfiniteScroll()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 130,
+      "line": 136,
       "symbol": "Wrapper.infiniteScrollView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 134,
+      "line": 140,
       "symbol": "Wrapper.infiniteScrollHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
-      "line": 139,
+      "line": 145,
       "symbol": "Wrapper.showInfiniteScroll",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/RefreshPlugin.swift",
+      "line": 150,
+      "symbol": "Wrapper.infiniteScrollFinished",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
@@ -2580,6 +2587,62 @@
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Toolkit/UIKit/UIView+Toolkit.swift",
       "line": 371,
       "symbol": "Wrapper.setShadowColor(_:offset:radius:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 67,
+      "symbol": "LottieView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 72,
+      "symbol": "LottieView.init(frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 77,
+      "symbol": "LottieView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 136,
+      "symbol": "LottieView.frame",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 140,
+      "symbol": "LottieView.bounds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 144,
+      "symbol": "LottieView.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 149,
+      "symbol": "LottieView.intrinsicContentSize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Lottie/LottiePluginImpl.swift",
+      "line": 153,
+      "symbol": "LottieView.sizeThatFits(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -11357,7 +11420,7 @@
     {
       "file": "docs/FWApplication/FWRefreshView.h",
       "line": 16,
-      "symbol": "FWPullRefreshState.FWPullRefreshStateStopped",
+      "symbol": "FWPullRefreshState.FWPullRefreshStateIdle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
@@ -11384,126 +11447,126 @@
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 31,
+      "line": 32,
       "symbol": "FWPullRefreshView.height",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 32,
+      "line": 33,
       "symbol": "FWPullRefreshView.arrowColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 33,
+      "line": 34,
       "symbol": "FWPullRefreshView.textColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 34,
+      "line": 35,
       "symbol": "FWPullRefreshView.titleLabel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 35,
+      "line": 36,
       "symbol": "FWPullRefreshView.subtitleLabel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 36,
+      "line": 37,
       "symbol": "FWPullRefreshView.indicatorView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 37,
+      "line": 38,
       "symbol": "FWPullRefreshView.indicatorColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 38,
+      "line": 39,
       "symbol": "FWPullRefreshView.indicatorPadding",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 39,
+      "line": 40,
       "symbol": "FWPullRefreshView.showsTitleLabel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 40,
+      "line": 41,
       "symbol": "FWPullRefreshView.showsArrowView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 41,
+      "line": 42,
       "symbol": "FWPullRefreshView.shouldChangeAlpha",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 43,
+      "line": 44,
       "symbol": "FWPullRefreshView.state",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 44,
+      "line": 45,
       "symbol": "FWPullRefreshView.userTriggered",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 45,
+      "line": 46,
       "symbol": "FWPullRefreshView.stateBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 46,
+      "line": 47,
       "symbol": "FWPullRefreshView.progressBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 48,
+      "line": 49,
       "symbol": "FWPullRefreshView.-setTitle:forState:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 49,
+      "line": 50,
       "symbol": "FWPullRefreshView.-setSubtitle:forState:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 50,
+      "line": 51,
       "symbol": "FWPullRefreshView.-setCustomView:forState:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
@@ -11511,245 +11574,294 @@
     {
       "file": "docs/FWApplication/FWRefreshView.h",
       "line": 52,
-      "symbol": "FWPullRefreshView.-startAnimating",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 53,
-      "symbol": "FWPullRefreshView.-stopAnimating",
+      "symbol": "FWPullRefreshView.-setAnimationView:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
       "line": 54,
+      "symbol": "FWPullRefreshView.-startAnimating",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 55,
+      "symbol": "FWPullRefreshView.-stopAnimating",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 56,
       "symbol": "FWPullRefreshView.-isAnimating",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 65,
+      "line": 67,
       "symbol": "UIScrollView(FWPullRefresh).-fw_addPullRefreshWithBlock:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 66,
+      "line": 68,
       "symbol": "UIScrollView(FWPullRefresh).-fw_addPullRefreshWithTarget:action:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 67,
+      "line": 69,
       "symbol": "UIScrollView(FWPullRefresh).-fw_triggerPullRefresh",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 69,
+      "line": 71,
       "symbol": "UIScrollView(FWPullRefresh).fw_pullRefreshView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 70,
+      "line": 72,
       "symbol": "UIScrollView(FWPullRefresh).fw_pullRefreshHeight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 71,
+      "line": 73,
       "symbol": "UIScrollView(FWPullRefresh).fw_showPullRefresh",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 77,
+      "line": 79,
       "symbol": "FWInfiniteScrollState",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enum",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 77,
+      "line": 79,
       "symbol": "FWInfiniteScrollState",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.typedef",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 78,
-      "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateStopped",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 79,
-      "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateTriggered",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWRefreshView.h",
       "line": 80,
-      "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateLoading",
+      "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateIdle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
       "line": 81,
+      "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateTriggered",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 82,
+      "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateLoading",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 83,
       "symbol": "FWInfiniteScrollState.FWInfiniteScrollStateAll",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.enumcase",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 90,
+      "line": 92,
       "symbol": "FWInfiniteScrollView.height",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 91,
+      "line": 93,
       "symbol": "FWInfiniteScrollView.enabled",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 92,
+      "line": 94,
       "symbol": "FWInfiniteScrollView.preloadHeight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 93,
+      "line": 95,
       "symbol": "FWInfiniteScrollView.indicatorView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 94,
+      "line": 96,
       "symbol": "FWInfiniteScrollView.indicatorColor",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 95,
+      "line": 97,
       "symbol": "FWInfiniteScrollView.indicatorPadding",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 97,
-      "symbol": "FWInfiniteScrollView.state",
-      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
-      "warning": "undocumented"
-    },
-    {
-      "file": "docs/FWApplication/FWRefreshView.h",
       "line": 98,
-      "symbol": "FWInfiniteScrollView.userTriggered",
+      "symbol": "FWInfiniteScrollView.finished",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
       "line": 99,
-      "symbol": "FWInfiniteScrollView.stateBlock",
+      "symbol": "FWInfiniteScrollView.finishedLabel",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
       "line": 100,
+      "symbol": "FWInfiniteScrollView.finishedView",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 101,
+      "symbol": "FWInfiniteScrollView.finishedPadding",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 103,
+      "symbol": "FWInfiniteScrollView.state",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 104,
+      "symbol": "FWInfiniteScrollView.userTriggered",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 105,
+      "symbol": "FWInfiniteScrollView.stateBlock",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 106,
       "symbol": "FWInfiniteScrollView.progressBlock",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 102,
+      "line": 108,
       "symbol": "FWInfiniteScrollView.-setCustomView:forState:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 104,
+      "line": 109,
+      "symbol": "FWInfiniteScrollView.-setAnimationView:",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 111,
       "symbol": "FWInfiniteScrollView.-startAnimating",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 105,
+      "line": 112,
       "symbol": "FWInfiniteScrollView.-stopAnimating",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 106,
+      "line": 113,
       "symbol": "FWInfiniteScrollView.-isAnimating",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 117,
+      "line": 124,
       "symbol": "UIScrollView(FWInfiniteScroll).-fw_addInfiniteScrollWithBlock:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 118,
+      "line": 125,
       "symbol": "UIScrollView(FWInfiniteScroll).-fw_addInfiniteScrollWithTarget:action:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 119,
+      "line": 126,
       "symbol": "UIScrollView(FWInfiniteScroll).-fw_triggerInfiniteScroll",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 121,
+      "line": 128,
       "symbol": "UIScrollView(FWInfiniteScroll).fw_infiniteScrollView",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 122,
+      "line": 129,
       "symbol": "UIScrollView(FWInfiniteScroll).fw_infiniteScrollHeight",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWRefreshView.h",
-      "line": 123,
+      "line": 130,
       "symbol": "UIScrollView(FWInfiniteScroll).fw_showInfiniteScroll",
+      "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
+      "warning": "undocumented"
+    },
+    {
+      "file": "docs/FWApplication/FWRefreshView.h",
+      "line": 131,
+      "symbol": "UIScrollView(FWInfiniteScroll).fw_infiniteScrollFinished",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
