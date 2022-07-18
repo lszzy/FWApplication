@@ -1,10 +1,11 @@
 # Changelog
 
-## [3.6.3] - 2022-07-16
+## [3.6.3] - 2022-07-18
 
 ### Added
 * Added optional Lottie plugin to load Lottie animations
-* The refresh plugin supports the progress bar effect when dragging
+* Pull-down refresh plugin supports progress bar effect when dragging
+* Pull-up additional plug-in support shows that there are no more views
 * The shortcut jump TabBar is compatible with the case where the root controller is the navigation controller
 
 ## [3.6.2] - 2022-07-14
