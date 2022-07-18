@@ -16,11 +16,15 @@ let package = Package(
             targets: ["FWApplication", "FWApplicationCompatible"]),
         .library(
             name: "FWApplicationSDWebImage",
-            targets: ["FWApplication", "FWApplicationSDWebImage"])
+            targets: ["FWApplication", "FWApplicationSDWebImage"]),
+        .library(
+            name: "FWApplicationLottie",
+            targets: ["FWApplication", "FWApplicationLottie"]),
     ],
     dependencies: [
         .package(url: "https://github.com/lszzy/FWFramework.git", from: "3.6.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.9.0"),
+        .package(url: "https://github.com/airbnb/lottie-ios.git", from: "3.2.0"),
     ],
     targets: [
         .target(
@@ -81,6 +85,19 @@ let package = Package(
             name: "FWApplicationSDWebImage",
             dependencies: ["FWApplication", "SDWebImage"],
             path: "FWApplication/Classes/SDWebImage",
+            cSettings: [
+                .define("FWMacroSPM", to: "1")
+            ],
+            swiftSettings: [
+                .define("FWMacroSPM")
+            ]),
+        .target(
+            name: "FWApplicationLottie",
+            dependencies: [
+                "FWApplication",
+                .product(name: "Lottie", package: "lottie-ios")
+            ],
+            path: "FWApplication/Classes/Lottie",
             cSettings: [
                 .define("FWMacroSPM", to: "1")
             ],

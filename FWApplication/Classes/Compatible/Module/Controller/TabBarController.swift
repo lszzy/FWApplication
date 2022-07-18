@@ -532,7 +532,7 @@ internal extension TabBar {
                     accessibilityTitle = item.accessibilityLabel ?? item.title ?? ""
                 }
                 if self.isMoreItem(idx) {
-                    accessibilityTitle = NSLocalizedString("More", comment: "")
+                    accessibilityTitle = AppBundle.moreButton
                 }
                 container.accessibilityLabel = accessibilityTitle
             }
@@ -1131,7 +1131,7 @@ public enum TabBarItemContentMode : Int {
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.title = NSLocalizedString("More", comment: "")
+        self.title = AppBundle.moreButton
         self.image = systemMore(highlighted: false)
         self.selectedImage = systemMore(highlighted: true)
     }

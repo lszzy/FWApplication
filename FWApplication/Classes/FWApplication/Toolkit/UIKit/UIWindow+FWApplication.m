@@ -21,24 +21,24 @@
 
 - (__kindof UIViewController *)fw_selectTabBarIndex:(NSUInteger)index
 {
-    if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
+    UITabBarController *tabbarController = [self fw_rootTabBarController];
+    if (!tabbarController) return nil;
     
     UINavigationController *targetNavigation = nil;
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
     if (tabbarController.viewControllers.count > index) {
         targetNavigation = tabbarController.viewControllers[index];
     }
     if (!targetNavigation) return nil;
     
-    return [self fw_selectTabBarNavigation:targetNavigation];
+    return [self fw_selectTabBar:tabbarController navigation:targetNavigation];
 }
 
 - (__kindof UIViewController *)fw_selectTabBarController:(Class)viewController
 {
-    if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
+    UITabBarController *tabbarController = [self fw_rootTabBarController];
+    if (!tabbarController) return nil;
     
     UINavigationController *targetNavigation = nil;
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
     for (UINavigationController *navigationController in tabbarController.viewControllers) {
         if ([navigationController isKindOfClass:viewController] ||
             ([navigationController isKindOfClass:[UINavigationController class]] &&
@@ -49,15 +49,15 @@
     }
     if (!targetNavigation) return nil;
     
-    return [self fw_selectTabBarNavigation:targetNavigation];
+    return [self fw_selectTabBar:tabbarController navigation:targetNavigation];
 }
 
 - (__kindof UIViewController *)fw_selectTabBarBlock:(__attribute__((noescape)) BOOL (^)(__kindof UIViewController *))block
 {
-    if (![self.rootViewController isKindOfClass:[UITabBarController class]]) return nil;
+    UITabBarController *tabbarController = [self fw_rootTabBarController];
+    if (!tabbarController) return nil;
     
     UINavigationController *targetNavigation = nil;
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
     for (UINavigationController *navigationController in tabbarController.viewControllers) {
         UIViewController *viewController = navigationController;
         if ([navigationController isKindOfClass:[UINavigationController class]]) {
@@ -70,12 +70,27 @@
     }
     if (!targetNavigation) return nil;
     
-    return [self fw_selectTabBarNavigation:targetNavigation];
+    return [self fw_selectTabBar:tabbarController navigation:targetNavigation];
 }
 
-- (UIViewController *)fw_selectTabBarNavigation:(UINavigationController *)targetNavigation
+- (UITabBarController *)fw_rootTabBarController
 {
-    UITabBarController *tabbarController = (UITabBarController *)self.rootViewController;
+    if ([self.rootViewController isKindOfClass:[UITabBarController class]]) {
+        return (UITabBarController *)self.rootViewController;
+    }
+    
+    if ([self.rootViewController isKindOfClass:[UINavigationController class]]) {
+        UIViewController *firstController = ((UINavigationController *)self.rootViewController).viewControllers.firstObject;
+        if ([firstController isKindOfClass:[UITabBarController class]]) {
+            return (UITabBarController *)firstController;
+        }
+    }
+    
+    return nil;
+}
+
+- (UIViewController *)fw_selectTabBar:(UITabBarController *)tabbarController navigation:(UINavigationController *)targetNavigation
+{
     UINavigationController *currentNavigation = tabbarController.selectedViewController;
     if (currentNavigation != targetNavigation) {
         if ([currentNavigation isKindOfClass:[UINavigationController class]] &&

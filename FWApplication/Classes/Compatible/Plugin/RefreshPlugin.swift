@@ -64,6 +64,12 @@ extension Wrapper where Base: UIScrollView {
         get { return base.__fw_shouldLoading }
         set { base.__fw_shouldLoading = newValue }
     }
+    
+    /// 是否已加载完成，不能继续追加
+    public var loadingFinished: Bool {
+        get { return base.__fw_loadingFinished }
+        set { base.__fw_loadingFinished = newValue }
+    }
 
     /// 配置上拉追加句柄
     public func setLoading(block: @escaping () -> Void) {
@@ -139,6 +145,11 @@ extension Wrapper where Base: UIScrollView {
     public var showInfiniteScroll: Bool {
         get { return base.__fw_showInfiniteScroll }
         set { base.__fw_showInfiniteScroll = newValue }
+    }
+    
+    public var infiniteScrollFinished: Bool {
+        get { return base.__fw_infiniteScrollFinished }
+        set { base.__fw_infiniteScrollFinished = newValue }
     }
     
 }

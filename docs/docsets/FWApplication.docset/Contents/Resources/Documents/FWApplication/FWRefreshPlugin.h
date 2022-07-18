@@ -52,6 +52,12 @@ NS_SWIFT_NAME(RefreshPlugin)
 /// 设置是否显示追加组件
 - (void)setShouldLoading:(BOOL)shouldLoading scrollView:(UIScrollView *)scrollView;
 
+/// 是否已追加完成，不能继续追加
+- (BOOL)loadingFinished:(UIScrollView *)scrollView;
+
+/// 设置是否已追加完成，不能继续追加
+- (void)setLoadingFinished:(BOOL)loadingFinished scrollView:(UIScrollView *)scrollView;
+
 /// 配置上拉追加句柄
 - (void)setLoadingBlock:(void (^)(void))block scrollView:(UIScrollView *)scrollView;
 
@@ -101,6 +107,9 @@ NS_SWIFT_NAME(RefreshPlugin)
 
 /// 是否显示追加组件
 @property (nonatomic, assign) BOOL fw_shouldLoading NS_REFINED_FOR_SWIFT;
+
+/// 是否已加载完成，不能继续追加
+@property (nonatomic, assign) BOOL fw_loadingFinished NS_REFINED_FOR_SWIFT;
 
 /// 配置上拉追加句柄
 - (void)fw_setLoadingBlock:(void (^)(void))block NS_REFINED_FOR_SWIFT;

@@ -238,6 +238,9 @@
 - (BOOL)hide
 {
     if (self.superview != nil) {
+        if (self.firstView && [self.firstView respondsToSelector:@selector(stopAnimating)]) {
+            [(UIView<FWIndicatorViewPlugin> *)self.firstView stopAnimating];
+        }
         [self removeFromSuperview];
         [self invalidateTimer];
         

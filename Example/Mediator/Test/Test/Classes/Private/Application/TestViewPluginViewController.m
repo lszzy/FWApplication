@@ -23,6 +23,7 @@
 {
     [self.tableData addObject:@[@0, @1]];
     [self.tableData addObject:@[@0, @1, @2, @3, @4, @5, @6]];
+    [self.tableData addObject:@[@0]];
     [self.tableView reloadData];
 }
 
@@ -58,6 +59,22 @@
         [self mockProgress:^(double progress, BOOL finished) {
             view.progress = progress;
         }];
+        return cell;
+    }
+    
+    if (indexPath.section == 2) {
+        UITableViewCell *cell = [UITableViewCell fw_cellWithTableView:tableView style:UITableViewCellStyleDefault reuseIdentifier:@"cell3"];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        FWLottieView *view = [cell viewWithTag:100];
+        if (!view) {
+            view = [[FWLottieView alloc] init];
+            [view setAnimationWithName:@"LottieAnimation" bundle:[TestBundle bundle]];
+            view.tag = 100;
+            view.color = Theme.textColor;
+            [cell.contentView addSubview:view];
+            view.fw_layoutChain.center();
+        }
+        [view startAnimating];
         return cell;
     }
     
@@ -107,6 +124,25 @@
         return;
     }
     
+    if (indexPath.section == 2) {
+        FWToastPluginImpl *toastPlugin = [[FWToastPluginImpl alloc] init];
+        toastPlugin.customBlock = ^(FWToastView * _Nonnull toastView) {
+            FWLottieView *view = [[FWLottieView alloc] init];
+            [view setAnimationWithName:@"LottieAnimation" bundle:[TestBundle bundle]];
+            toastView.indicatorView = view;
+        };
+        self.tableView.hidden = YES;
+        [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] inView:self.view];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] inView:self.view];
+        });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [toastPlugin hideLoading:self.view];
+            self.tableView.hidden = NO;
+        });
+        return;
+    }
+    
     NSArray *sectionData = [self.tableData objectAtIndex:indexPath.section];
     FWIndicatorViewAnimationType type = [sectionData[indexPath.row] fw_safeInteger];
     FWToastPluginImpl *toastPlugin = [[FWToastPluginImpl alloc] init];
@@ -133,6 +169,38 @@
             progressView.annular = annular;
             return progressView;
         };
+        FWRefreshPluginImpl.sharedInstance.pullRefreshBlock = nil;
+        FWRefreshPluginImpl.sharedInstance.infiniteScrollBlock = nil;
+        return;
+    }
+    
+    if (indexPath.section == 2) {
+        FWViewPluginImpl.sharedInstance.customIndicatorView = ^UIView<FWIndicatorViewPlugin> * _Nonnull(FWIndicatorViewStyle style) {
+            FWLottieView *lottieView = [[FWLottieView alloc] init];
+            [lottieView setAnimationWithName:@"LottieAnimation" bundle:[TestBundle bundle]];
+            return lottieView;
+        };
+        // FWLottieView也支持进度显示
+        FWViewPluginImpl.sharedInstance.customProgressView = ^UIView<FWProgressViewPlugin> * _Nonnull(FWProgressViewStyle style) {
+            FWLottieView *lottieView = [[FWLottieView alloc] init];
+            [lottieView setAnimationWithName:@"LottieAnimation" bundle:[TestBundle bundle]];
+            lottieView.hidesWhenStopped = NO;
+            return lottieView;
+        };
+        // FWLottieView支持下拉进度显示
+        FWRefreshPluginImpl.sharedInstance.pullRefreshBlock = ^(FWPullRefreshView * _Nonnull pullRefreshView) {
+            FWLottieView *lottieView = [[FWLottieView alloc] initWithFrame:CGRectMake(0, 0, 54, 54)];
+            lottieView.contentInset = UIEdgeInsetsMake(5, 5, 5, 5);
+            [lottieView setAnimationWithName:@"LottieAnimation" bundle:[TestBundle bundle]];
+            lottieView.hidesWhenStopped = NO;
+            [pullRefreshView setAnimationView:lottieView];
+        };
+        FWRefreshPluginImpl.sharedInstance.infiniteScrollBlock = ^(FWInfiniteScrollView * _Nonnull infiniteScrollView) {
+            FWLottieView *lottieView = [[FWLottieView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+            [lottieView setAnimationWithName:@"LottieAnimation" bundle:[TestBundle bundle]];
+            lottieView.hidesWhenStopped = NO;
+            [infiniteScrollView setAnimationView:lottieView];
+        };
         return;
     }
     
@@ -147,6 +215,8 @@
         indicatorView.hidesWhenStopped = NO;
         return indicatorView;
     };
+    FWRefreshPluginImpl.sharedInstance.pullRefreshBlock = nil;
+    FWRefreshPluginImpl.sharedInstance.infiniteScrollBlock = nil;
 }
 
 @end
