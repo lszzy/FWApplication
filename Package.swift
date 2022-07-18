@@ -93,7 +93,10 @@ let package = Package(
             ]),
         .target(
             name: "FWApplicationLottie",
-            dependencies: ["FWApplication", "Lottie"],
+            dependencies: [
+                "FWApplication",
+                .product(name: "Lottie", package: "lottie-ios")
+            ],
             path: "FWApplication/Classes/Lottie",
             cSettings: [
                 .define("FWMacroSPM", to: "1")
