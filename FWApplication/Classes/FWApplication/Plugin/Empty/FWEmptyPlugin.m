@@ -30,13 +30,21 @@
 
 - (UIEdgeInsets)fw_emptyInsets
 {
-    NSValue *insets = objc_getAssociatedObject(self, @selector(fw_emptyInsets));
+    UIView *view = self;
+    if ([self isKindOfClass:[UIScrollView class]]) {
+        view = ((UIScrollView *)self).fw_overlayView;
+    }
+    NSValue *insets = objc_getAssociatedObject(view, @selector(fw_emptyInsets));
     return insets ? [insets UIEdgeInsetsValue] : UIEdgeInsetsZero;
 }
 
 - (void)setFw_emptyInsets:(UIEdgeInsets)emptyInsets
 {
-    objc_setAssociatedObject(self, @selector(fw_emptyInsets), [NSValue valueWithUIEdgeInsets:emptyInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    UIView *view = self;
+    if ([self isKindOfClass:[UIScrollView class]]) {
+        view = ((UIScrollView *)self).fw_overlayView;
+    }
+    objc_setAssociatedObject(view, @selector(fw_emptyInsets), [NSValue valueWithUIEdgeInsets:emptyInsets], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)fw_showEmptyView
