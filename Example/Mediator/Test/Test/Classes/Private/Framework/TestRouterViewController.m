@@ -483,7 +483,7 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 
 - (void)onOpenHttp3
 {
-    [FWRouter openURL:@"http://username:password@localhost:8000"];
+    [FWRouter openURL:@"http://username:password@localhost:8000/test:8001/directory%202/index.html?param=value#anchor"];
 }
 
 - (void)onOpenCookie
