@@ -1239,12 +1239,11 @@ typedef enum {
             [mutableRequest setValue:value forHTTPHeaderField:field];
         }
     }];
+    if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
+        [mutableRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    }
 
     if (parameters) {
-        if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
-            [mutableRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        }
-
         if (![NSJSONSerialization isValidJSONObject:parameters]) {
             if (error) {
                 NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey: NSLocalizedStringFromTable(@"The `parameters` argument is not valid JSON.", @"AFNetworking", nil)};
@@ -1332,12 +1331,11 @@ typedef enum {
             [mutableRequest setValue:value forHTTPHeaderField:field];
         }
     }];
-
+    if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
+        [mutableRequest setValue:@"application/x-plist" forHTTPHeaderField:@"Content-Type"];
+    }
+    
     if (parameters) {
-        if (![mutableRequest valueForHTTPHeaderField:@"Content-Type"]) {
-            [mutableRequest setValue:@"application/x-plist" forHTTPHeaderField:@"Content-Type"];
-        }
-
         NSData *plistData = [NSPropertyListSerialization dataWithPropertyList:parameters format:self.format options:self.writeOptions error:error];
         
         if (!plistData) {
