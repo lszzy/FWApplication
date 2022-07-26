@@ -28,10 +28,16 @@ struct TestSwiftUIView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
-            WebImage("http://kvm.wuyong.site/images/images/test.gif")
-                .resizable()
-                .clipped()
-                .frame(width: 100, height: 100)
+            HStack(alignment: .center, spacing: 50) {
+                ImageWrapper(url: "http://kvm.wuyong.site/images/images/test.gif")
+                    .contentMode(.scaleAspectFill)
+                    .frame(width: 100, height: 100)
+                
+                WebImage("http://kvm.wuyong.site/images/images/animation.png")
+                    .resizable()
+                    .clipped()
+                    .frame(width: 100, height: 100)
+            }
             
             Text("Hello world")
             

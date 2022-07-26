@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-/// SwiftUI加载网络图片
+/// SwiftUI加载网络静态图片
 @available(iOS 13.0, *)
 public struct WebImage: View {
     @ObservedObject public private(set) var binder: ImageBinder
@@ -26,13 +26,13 @@ public struct WebImage: View {
     
     public var body: some View {
         Group {
-            if binder.image != nil {
-                configurations.reduce(Image(uiImage: binder.image!)) { current, config in
+            if let uiImage = binder.image {
+                configurations.reduce(Image(uiImage: uiImage)) { current, config in
                     config(current)
                 }
             } else {
                 Group {
-                    if placeholder != nil {
+                    if let placeholder = placeholder {
                         placeholder
                     } else {
                         Image(uiImage: .init())
@@ -124,7 +124,7 @@ extension WebImage {
             receipt = UIImage.fw.downloadImage(url, completion: { [weak self] (image, error) in
                 guard let self = self else { return }
                 
-                if image != nil {
+                if let image = image {
                     self.image = image
                     self.isLoaded.wrappedValue = true
                     self.completionBlock?(image, error)
