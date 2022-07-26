@@ -15,6 +15,9 @@ let package = Package(
             name: "FWApplicationCompatible",
             targets: ["FWApplication", "FWApplicationCompatible"]),
         .library(
+            name: "FWApplicationSwiftUI",
+            targets: ["FWApplication", "FWApplicationSwiftUI"]),
+        .library(
             name: "FWApplicationSDWebImage",
             targets: ["FWApplication", "FWApplicationSDWebImage"]),
         .library(
@@ -74,6 +77,17 @@ let package = Package(
             name: "FWApplicationCompatible",
             dependencies: ["FWApplication"],
             path: "FWApplication/Classes/Compatible",
+            cSettings: [
+                .define("FWMacroSPM", to: "1")
+            ],
+            swiftSettings: [
+                .define("DEBUG", .when(platforms: [.iOS], configuration: .debug)),
+                .define("FWMacroSPM")
+            ]),
+        .target(
+            name: "FWApplicationSwiftUI",
+            dependencies: ["FWApplication"],
+            path: "FWApplication/Classes/SwiftUI",
             cSettings: [
                 .define("FWMacroSPM", to: "1")
             ],

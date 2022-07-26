@@ -30,6 +30,7 @@
 		2F2E15FD2604DBF3003CB99E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2F2E16012604DE5D003CB99E /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2F2E16042604DE8B003CB99E /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		2F347D7D288FD08E002A1338 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2F7A0B2225D122FB008E588D /* AppMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMediator.swift; sourceTree = "<group>"; };
 		2FF8D87624C886EC006A83B5 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FF8D88A24C886EE006A83B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 		DB539000495F785F4F8A26DA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2F347D7D288FD08E002A1338 /* SwiftUI.framework */,
 				B5F21FC987F18669A81621CF /* Pods_AbstractExample_Example.framework */,
 			);
 			name = Frameworks;
@@ -423,7 +425,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 77BAEB7F70E4492F25160904 /* Pods-AbstractExample-Example.testing.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -526,7 +527,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E991B1F3F212B602F7BF5FC3 /* Pods-AbstractExample-Example.staging.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -690,7 +690,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04BE9D8981501E87977A2810 /* Pods-AbstractExample-Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
@@ -738,7 +737,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B9AA2132F90A1DAF3883842B /* Pods-AbstractExample-Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_STYLE = Automatic;
