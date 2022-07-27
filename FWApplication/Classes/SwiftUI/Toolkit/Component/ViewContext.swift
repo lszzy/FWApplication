@@ -52,6 +52,25 @@ extension View {
         return environment(\.viewContext, ViewContext(viewController, userInfo: userInfo))
     }
     
+    /// 快速创建视图上下文控制器
+    public func contextController(userInfo: [AnyHashable: Any]? = nil) -> UIHostingController<AnyView> {
+        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        hostingController.rootView = AnyView(viewContext(hostingController, userInfo: userInfo))
+        return hostingController
+    }
+    
+}
+
+@available(iOS 13.0, *)
+extension UIHostingController where Content == AnyView {
+    
+    /// 快速创建视图上下文控制器
+    public static func contextController<T: View>(@ViewBuilder _ builder: () -> T) -> UIHostingController<AnyView> {
+        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        hostingController.rootView = AnyView(builder().viewContext(hostingController))
+        return hostingController
+    }
+    
 }
 
 #endif

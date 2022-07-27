@@ -13,10 +13,18 @@ import FWApplication
 class TestSwiftUIViewController: TestViewController {
     
     override func renderView() {
-        let rootView = TestSwiftUIView()
-            .viewContext(self)
-        let childVC = UIHostingController(rootView: rootView)
-        fw.addChildViewController(childVC)
+        let childVC = UIHostingController.contextController {
+            TestSwiftUIView()
+        }
+        fw.addChildViewController(childVC) { view in
+            view.fw.layoutChain
+                .edges(excludingEdge: .top)
+                .top(toSafeArea: .zero)
+        }
+    }
+    
+    override func renderNavbar() {
+        navigationItem.title = "SwiftUIViewController"
     }
     
 }
@@ -51,6 +59,14 @@ struct TestSwiftUIView: View {
                 
                 Button("Open SwiftUI") {
                     let viewController = TestSwiftUIViewController()
+                    Router.push(viewController, animated: true)
+                }
+                
+                Button("Open HostingController") {
+                    // 可设置导航栏样式或隐藏导航栏自己绘制
+                    let viewController = TestSwiftUIView()
+                        .navigationBarHidden([true, false].randomElement()!)
+                        .contextController()
                     Router.push(viewController, animated: true)
                 }
                 

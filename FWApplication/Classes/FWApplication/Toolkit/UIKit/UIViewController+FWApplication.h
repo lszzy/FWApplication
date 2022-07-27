@@ -32,8 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// 添加子控制器到当前视图，解决不能触发viewWillAppear等的bug
 - (void)fw_addChildViewController:(UIViewController *)viewController NS_REFINED_FOR_SWIFT;
 
-/// 添加子控制器到指定视图，解决不能触发viewWillAppear等的bug
-- (void)fw_addChildViewController:(UIViewController *)viewController inView:(UIView *)view NS_REFINED_FOR_SWIFT;
+/// 添加子控制器到指定视图，可自定义布局，解决不能触发viewWillAppear等的bug
+- (void)fw_addChildViewController:(UIViewController *)viewController inView:(nullable UIView *)view layout:(nullable void (NS_NOESCAPE ^)(UIView *view))layout NS_REFINED_FOR_SWIFT;
 
 #pragma mark - Previous
 
