@@ -31,10 +31,7 @@ Pod::Spec.new do |s|
   s.subspec 'SwiftUI' do |ss|
     ss.weak_frameworks = 'SwiftUI', 'Combine'
     ss.source_files = 'FWApplication/Classes/SwiftUI/**/*.swift'
-    ss.dependency 'FWApplication/FWApplication'
-    ss.pod_target_xcconfig = {
-      'SWIFT_ACTIVE_COMPILATION_CONDITIONS' => '$(inherited)'
-    }
+    ss.dependency 'FWApplication/Compatible'
   end
 
   s.subspec 'SDWebImage' do |ss|
