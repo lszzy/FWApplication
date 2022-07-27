@@ -1,5 +1,11 @@
 # Changelog
 
+## [3.7.0] - 2022-07-27
+
+### Added
+* Added SwiftUI web image, wrapper, toolkit components
+* Compatible with FWFramework 3.7.0 version
+
 ## [3.6.3] - 2022-07-18
 
 ### Added

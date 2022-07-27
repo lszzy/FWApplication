@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 3.6.3 Docs</a> (67% documented)</p>
+        <p><a href="index.html">FWApplication 3.7.0 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1091,6 +1091,15 @@
                 <a href="Classes/FWZoomImageView.html">FWZoomImageView</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/ImageViewWrapper.html">ImageViewWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/c:@M@FWApplication@objc(cs)IntrospectionUIView">IntrospectionUIView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/c:@M@FWApplication@objc(cs)IntrospectionUIViewController">IntrospectionUIViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/LottieView.html">LottieView</a>
               </li>
               <li class="nav-group-task">
@@ -1773,6 +1782,9 @@
                 <a href="Enums/FWWebImageOptions.html">FWWebImageOptions</a>
               </li>
               <li class="nav-group-task">
+                <a href="Enums/Introspect.html">Introspect</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/PagingListContainerType.html">PagingListContainerType</a>
               </li>
               <li class="nav-group-task">
@@ -1786,6 +1798,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Enums/TabBarItemPositioning.html">TabBarItemPositioning</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/TargetViewSelector.html">TargetViewSelector</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/VideoPlayerBufferingState.html">VideoPlayerBufferingState</a>
@@ -2405,13 +2420,25 @@
                 <a href="Extensions/CollectionViewControllerProtocol.html">CollectionViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
+                <a href="Extensions.html#/s:7SwiftUI5ColorV">Color</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/EnvironmentValues.html">EnvironmentValues</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Extensions/FW.html">FW</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions.html#/s:7SwiftUI4FontV">Font</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/ScrollViewControllerProtocol.html">ScrollViewControllerProtocol</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/TableViewControllerProtocol.html">TableViewControllerProtocol</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/View.html">View</a>
               </li>
               <li class="nav-group-task">
                 <a href="Extensions/WebViewControllerProtocol.html">WebViewControllerProtocol</a>
@@ -2424,6 +2451,12 @@
           <li class="nav-group-name">
             <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/ImageView.html">ImageView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/LineShape.html">LineShape</a>
+              </li>
               <li class="nav-group-task">
                 <a href="Structs/NetworkMock.html">NetworkMock</a>
               </li>
@@ -2441,6 +2474,33 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/NetworkMocker/Mode.html">– Mode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/RoundedCornerShape.html">RoundedCornerShape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/UIKitIntrospectionView.html">UIKitIntrospectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/UIKitIntrospectionViewController.html">UIKitIntrospectionViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ViewContext.html">ViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ViewContextKey.html">ViewContextKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ViewControllerWrapper.html">ViewControllerWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/ViewWrapper.html">ViewWrapper</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/WebImage.html">WebImage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/WebImage/ImageBinder.html">– ImageBinder</a>
               </li>
             </ul>
           </li>
@@ -12773,12 +12833,123 @@ MARK: UITabBarItem properties
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@FWApplication@objc(cs)ImageViewWrapper"></a>
+                    <a name="//apple_ref/swift/Class/ImageViewWrapper" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(cs)ImageViewWrapper">ImageViewWrapper</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>图片视图包装器，解决frame尺寸变为图片尺寸问题</p>
+
+                        <a href="Classes/ImageViewWrapper.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">ImageViewWrapper</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UIKitIntrospectionViewController"></a>
+                <a name="//apple_ref/swift/Section/UIKitIntrospectionViewController" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/UIKitIntrospectionViewController"></a>
+                  <h3 class="section-name"><span>UIKitIntrospectionViewController</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@FWApplication@objc(cs)IntrospectionUIViewController"></a>
+                    <a name="//apple_ref/swift/Class/IntrospectionUIViewController" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(cs)IntrospectionUIViewController">IntrospectionUIViewController</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Introspection UIViewController that is inserted alongside the target view controller.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="n">tvOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="n">macOS</span> <span class="mf">10.15</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">IntrospectionUIViewController</span> <span class="p">:</span> <span class="kt">UIViewController</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UIKitIntrospectionView"></a>
+                <a name="//apple_ref/swift/Section/UIKitIntrospectionView" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/UIKitIntrospectionView"></a>
+                  <h3 class="section-name"><span>UIKitIntrospectionView</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@FWApplication@objc(cs)IntrospectionUIView"></a>
+                    <a name="//apple_ref/swift/Class/IntrospectionUIView" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@FWApplication@objc(cs)IntrospectionUIView">IntrospectionUIView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Introspection UIView that is inserted alongside the target view.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">IntrospectionUIView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-18)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-07-27)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

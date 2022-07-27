@@ -6,7 +6,7 @@ workspace 'FWApplication'
 abstract_target "AbstractExample" do
   project 'FWApplication', 'Testing' => :release, 'Staging' => :release
 
-  pod 'FWApplication', :path => '../', :subspecs => ['FWApplication', 'Compatible', 'SDWebImage', 'Lottie']
+  pod 'FWApplication', :path => '../', :subspecs => ['FWApplication', 'Compatible', 'SwiftUI', 'SDWebImage', 'Lottie']
   pod 'FWFramework', :git => 'https://github.com/lszzy/FWFramework.git', :branch => 'develop', :subspecs => ['FWFramework', 'Compatible', 'Contacts', 'Microphone', 'Calendar', 'AppleMusic', 'Tracking']
   pod 'FWDebug', :configurations => ['Debug', 'Testing']
   pod 'Mediator', :path => 'Mediator/Mediator/'

@@ -266,6 +266,8 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
     
     [self.tableData addObjectsFromArray:@[
                                          @[@"打开Web", @"onOpenHttp"],
+                                         @[@"打开完整Web", @"onOpenHttp2"],
+                                         @[@"打开异常Web", @"onOpenHttp3"],
                                          @[@"测试Cookie", @"onOpenCookie"],
                                          @[@"Url编码", @"onOpenEncode"],
                                          @[@"Url未编码", @"onOpenImage"],
@@ -472,6 +474,16 @@ FWDefStaticString(ROUTE_CLOSE, @"app://close");
 - (void)onOpenHttp
 {
     [FWRouter openURL:@"http://kvm.wuyong.site/test.php#anchor"];
+}
+
+- (void)onOpenHttp2
+{
+    [FWRouter openURL:@"http://www.baidu.com/test/directory%202/index.html?param=value#anchor"];
+}
+
+- (void)onOpenHttp3
+{
+    [FWRouter openURL:@"http://username:password@localhost:8000/test:8001/directory%202/index.html?param=value#anchor"];
 }
 
 - (void)onOpenCookie

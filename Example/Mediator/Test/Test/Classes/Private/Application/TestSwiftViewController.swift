@@ -24,6 +24,10 @@ import FWApplication
             "FWTableViewController",
             "FWWebViewController",
         ])
+        
+        if #available(iOS 13.0, *) {
+            tableData.add("SwiftUIViewController")
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -51,7 +55,15 @@ import FWApplication
         case 4:
             viewController = SwiftTestWebViewController()
         default:
-            viewController = SwiftTestViewController()
+            if #available(iOS 13.0, *) {
+                if indexPath.row == 5 {
+                    viewController = TestSwiftUIViewController()
+                } else {
+                    viewController = SwiftTestViewController()
+                }
+            } else {
+                viewController = SwiftTestViewController()
+            }
         }
         viewController?.navigationItem.title = tableData.object(at: indexPath.row) as? String
         navigationController?.pushViewController(viewController!, animated: true)
