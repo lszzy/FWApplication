@@ -85,8 +85,8 @@ public struct ImageView: UIViewRepresentable {
 @available(iOS 13.0, *)
 public class ImageViewWrapper : UIView {
     
-    var wrapped = UIImageView.fw.animatedImageView()
-    var resizable = true
+    public var wrapped = UIImageView.fw.animatedImageView()
+    public var resizable = true
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
