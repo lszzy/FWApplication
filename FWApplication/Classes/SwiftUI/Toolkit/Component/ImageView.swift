@@ -11,6 +11,7 @@ import FWFramework
 #if FWMacroSPM
 import FWFrameworkCompatible
 import FWApplication
+import FWApplicationCompatible
 #endif
 
 /// 图片视图，支持网络图片和动图
@@ -66,7 +67,7 @@ public struct ImageView: UIViewRepresentable {
     public func makeUIView(context: Context) -> ImageViewWrapper {
         let imageView = ImageViewWrapper()
         imageView.wrapped.contentMode = contentMode
-        imageView.wrapped.fw.setImage(url: url, placeholderImage: placeholder, options: options)
+        imageView.wrapped.fw.setImage(url: url, placeholderImage: placeholder, options: options, context: nil, completion: nil)
         return imageView
     }
     

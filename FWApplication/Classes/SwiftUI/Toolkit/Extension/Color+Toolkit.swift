@@ -8,6 +8,10 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import FWFramework
+#if FWMacroSPM
+import FWFrameworkCompatible
+import FWApplication
+#endif
 
 @available(iOS 13.0, *)
 extension Color: WrapperCompatible {}

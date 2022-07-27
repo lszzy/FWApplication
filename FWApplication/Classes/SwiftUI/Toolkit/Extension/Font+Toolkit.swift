@@ -8,6 +8,9 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import FWFramework
+#if FWMacroSPM
+import FWFrameworkCompatible
+#endif
 
 @available(iOS 13.0, *)
 extension Font: WrapperCompatible {}
