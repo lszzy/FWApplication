@@ -9,7 +9,7 @@
 import SwiftUI
 
 // MARK: - ViewWrapper
-/// SwiftUI通用UIView包装器
+/// 通用UIView包装器
 @available(iOS 13.0, *)
 public struct ViewWrapper<T: UIView>: UIViewRepresentable {
     
@@ -60,7 +60,7 @@ public struct ViewWrapper<T: UIView>: UIViewRepresentable {
 }
 
 // MARK: - ViewControllerWrapper
-/// SwiftUI通用UIViewController包装器
+/// 通用UIViewController包装器
 @available(iOS 13.0, *)
 public struct ViewControllerWrapper<T: UIViewController>: UIViewControllerRepresentable {
     

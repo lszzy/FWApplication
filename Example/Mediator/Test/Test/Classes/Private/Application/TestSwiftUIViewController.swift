@@ -29,8 +29,11 @@ struct TestSwiftUIView: View {
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
             HStack(alignment: .center, spacing: 50) {
-                ImageWrapper(url: "http://kvm.wuyong.site/images/images/test.gif")
+                ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+                    .placeholder(TestBundle.imageNamed("test.gif"))
                     .contentMode(.scaleAspectFill)
+                    .clipped()
+                    .cornerRadius(50)
                     .frame(width: 100, height: 100)
                 
                 WebImage("http://kvm.wuyong.site/images/images/animation.png")

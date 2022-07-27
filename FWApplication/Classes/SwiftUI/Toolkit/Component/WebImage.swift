@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-/// SwiftUI加载网络静态图片
+/// 网络图片视图，仅支持静态图
 @available(iOS 13.0, *)
 public struct WebImage: View {
     @ObservedObject public private(set) var binder: ImageBinder

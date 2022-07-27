@@ -52,13 +52,13 @@ extension Wrapper where Base: UIImage {
 
     /// 下载网络图片并返回下载凭据
     @discardableResult
-    public static func downloadImage(_ url: Any?, completion: @escaping (UIImage?, Error?) -> Void, progress: ((Double) -> Void)?) -> Any? {
+    public static func downloadImage(_ url: Any?, completion: @escaping (UIImage?, Error?) -> Void, progress: ((Double) -> Void)? = nil) -> Any? {
         return Base.__fw_downloadImage(url, completion: completion, progress: progress)
     }
 
     /// 下载网络图片并返回下载凭据，指定option
     @discardableResult
-    public static func downloadImage(_ url: Any?, options: WebImageOptions, context: [ImageCoderOptions: Any]?, completion: @escaping (UIImage?, Error?) -> Void, progress: ((Double) -> Void)?) -> Any? {
+    public static func downloadImage(_ url: Any?, options: WebImageOptions, context: [ImageCoderOptions: Any]?, completion: @escaping (UIImage?, Error?) -> Void, progress: ((Double) -> Void)? = nil) -> Any? {
         return Base.__fw_downloadImage(url, options: options, context: context, completion: completion, progress: progress)
     }
 
@@ -93,7 +93,7 @@ extension Wrapper where Base: UIImageView {
     }
 
     /// 加载网络图片，支持占位、选项、回调和进度，优先加载插件，默认使用框架网络库
-    public func setImage(url: Any?, placeholderImage: UIImage?, options: WebImageOptions, context: [ImageCoderOptions: Any]?, completion: ((UIImage?, Error?) -> Void)?, progress: ((Double) -> Void)? = nil) {
+    public func setImage(url: Any?, placeholderImage: UIImage?, options: WebImageOptions, context: [ImageCoderOptions: Any]? = nil, completion: ((UIImage?, Error?) -> Void)? = nil, progress: ((Double) -> Void)? = nil) {
         base.__fw_setImage(withURL: url, placeholderImage: placeholderImage, options: options, context: context, completion: completion, progress: progress)
     }
 
