@@ -24,6 +24,9 @@ NS_SWIFT_NAME(AlertControllerImpl)
 /// 自定义ActionSheet弹窗样式，nil时使用单例
 @property (nonatomic, strong, nullable) FWAlertControllerAppearance *customSheetAppearance;
 
+/// 点击暗色背景关闭时是否触发cancelBlock，默认NO
+@property (nonatomic, assign) BOOL dimmingTriggerCancel;
+
 /// 弹窗自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(FWAlertController *alertController);
 
