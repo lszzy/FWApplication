@@ -190,9 +190,9 @@
     // 处理取消按钮，Alert多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
         if (actions.count > 0) {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton(UIAlertControllerStyleAlert) : FWAppBundle.cancelButton;
         } else {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton(UIAlertControllerStyleAlert) : FWAppBundle.closeButton;
         }
     }
     
@@ -265,9 +265,9 @@
     // 处理取消按钮，Sheet多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
         if (actions.count > 0) {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton(UIAlertControllerStyleActionSheet) : FWAppBundle.cancelButton;
         } else {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton(UIAlertControllerStyleActionSheet) : FWAppBundle.closeButton;
         }
     }
     

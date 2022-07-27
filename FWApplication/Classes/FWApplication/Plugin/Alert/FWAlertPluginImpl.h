@@ -122,10 +122,10 @@ NS_SWIFT_NAME(AlertPluginImpl)
 /// 弹窗自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(UIAlertController *alertController);
 
-/// 默认close按钮文本句柄，仅alert单按钮生效。未设置时为关闭
-@property (nonatomic, copy, nullable) NSString * _Nullable (^defaultCloseButton)(void);
+/// 默认close按钮文本句柄，alert单按钮或sheet单取消生效。未设置时为关闭
+@property (nonatomic, copy, nullable) NSString * _Nullable (^defaultCloseButton)(UIAlertControllerStyle style);
 /// 默认cancel按钮文本句柄，alert多按钮或sheet生效。未设置时为取消
-@property (nonatomic, copy, nullable) NSString * _Nullable (^defaultCancelButton)(void);
+@property (nonatomic, copy, nullable) NSString * _Nullable (^defaultCancelButton)(UIAlertControllerStyle style);
 /// 默认confirm按钮文本句柄，alert多按钮生效。未设置时为确定
 @property (nonatomic, copy, nullable) NSString * _Nullable (^defaultConfirmButton)(void);
 
