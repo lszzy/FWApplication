@@ -86,7 +86,7 @@ let package = Package(
             ]),
         .target(
             name: "FWApplicationSwiftUI",
-            dependencies: ["FWApplication"],
+            dependencies: ["FWApplicationCompatible"],
             path: "FWApplication/Classes/SwiftUI",
             cSettings: [
                 .define("FWMacroSPM", to: "1")
