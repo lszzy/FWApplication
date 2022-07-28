@@ -48,16 +48,15 @@ static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresenta
 - (void)fw_addChildViewController:(UIViewController *)viewController inView:(UIView *)view layout:(__attribute__((noescape)) void (^)(UIView *))layout
 {
     [self addChildViewController:viewController];
-    [viewController didMoveToParentViewController:self];
     UIView *superview = view ?: self.view;
     [superview addSubview:viewController.view];
-    
     if (layout != nil) {
         layout(viewController.view);
     } else {
         // viewController.view.frame = superview.bounds;
         [viewController.view fw_pinEdgesToSuperview];
     }
+    [viewController didMoveToParentViewController:self];
 }
 
 #pragma mark - Previous
