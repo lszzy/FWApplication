@@ -80,7 +80,19 @@ open class HostingView<Content: View>: UIView {
         contentHostingController._navigationController = viewController?.navigationController ?? (viewController as? UINavigationController)
     }
     
+    open override var frame: CGRect {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+    
+    open override var bounds: CGRect {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+    
     override open var intrinsicContentSize: CGSize {
+        contentHostingController.view.intrinsicContentSize
+    }
+    
+    open override func sizeThatFits(_ size: CGSize) -> CGSize {
         contentHostingController.view.intrinsicContentSize
     }
     

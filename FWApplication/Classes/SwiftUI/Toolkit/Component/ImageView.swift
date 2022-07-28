@@ -14,6 +14,7 @@ import FWApplication
 import FWApplicationCompatible
 #endif
 
+// MARK: - ImageView
 /// 图片视图，支持网络图片和动图
 @available(iOS 13.0, *)
 public struct ImageView: UIViewRepresentable {
@@ -81,6 +82,7 @@ public struct ImageView: UIViewRepresentable {
     
 }
 
+// MARK: - ResizableView
 /// 可调整大小的视图包装器，解决frame尺寸变为图片尺寸等问题
 @available(iOS 13.0, *)
 public class ResizableView<Content: UIView>: UIView {
@@ -103,12 +105,20 @@ public class ResizableView<Content: UIView>: UIView {
         content.frame = self.bounds
     }
     
+    public override var frame: CGRect {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+    
+    public override var bounds: CGRect {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+    
     public override var intrinsicContentSize: CGSize {
-        if resizable {
-            return super.intrinsicContentSize
-        } else {
-            return content.intrinsicContentSize
-        }
+        return resizable ? super.intrinsicContentSize : content.intrinsicContentSize
+    }
+    
+    public override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return resizable ? super.intrinsicContentSize : content.intrinsicContentSize
     }
     
 }
