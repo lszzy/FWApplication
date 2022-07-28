@@ -10,6 +10,41 @@ import SwiftUI
 import FWApplication
 
 @available(iOS 13.0, *)
+class SwiftUIViewController: UIHostingController<AnyView> {
+    
+    // MARK: - Lifecyecle
+    init() {
+        super.init(rootView: AnyView(EmptyView()))
+        hidesBottomBarWhenPushed = true
+        extendedLayoutIncludesOpaqueBars = true
+        
+        setupSubviews()
+    }
+    
+    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder, rootView: AnyView(EmptyView()))
+        hidesBottomBarWhenPushed = true
+        extendedLayoutIncludesOpaqueBars = true
+        
+        setupSubviews()
+    }
+    
+    deinit {
+        NSLog("%@ did dealloc", NSStringFromClass(self.classForCoder))
+    }
+    
+    // MARK: - Subviews
+    func setupSubviews() {
+        rootView = AnyView(
+            TestSwiftUIView()
+                .viewContext(self)
+                .navigationBarHidden([true, false].randomElement()!)
+        )
+    }
+    
+}
+
+@available(iOS 13.0, *)
 class TestSwiftUIViewController: TestViewController {
     
     override func renderView() {
@@ -63,10 +98,7 @@ struct TestSwiftUIView: View {
                 }
                 
                 Button("Open HostingController") {
-                    // 可设置导航栏样式或隐藏导航栏自己绘制
-                    let viewController = TestSwiftUIView()
-                        .navigationBarHidden([true, false].randomElement()!)
-                        .contextController()
+                    let viewController = SwiftUIViewController()
                     Router.push(viewController, animated: true)
                 }
                 
