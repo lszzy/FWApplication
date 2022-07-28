@@ -21,6 +21,14 @@ class SwiftUIViewController: HostingController {
             .eraseToAnyView()
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        if (navigationController?.children.count ?? 0) > 1 {
+            fw.leftBarItem = Icon.backImage
+        }
+    }
+    
 }
 
 @available(iOS 13.0, *)
@@ -115,11 +123,10 @@ struct TestSwiftUINav: View {
     
     var body: some View {
         TestSwiftUIView()
+            .navigationBarBackButtonHidden(true)
             .navigationBarHidden([true, false].randomElement()!)
             .navigationBarTitle("SwiftUIViewController")
-            .introspectNavigationBar(customize: { navigationBar in
-                navigationBar.fw.applyBarStyle(.default)
-            })
+            .navigationBarStyle(.default)
     }
     
 }

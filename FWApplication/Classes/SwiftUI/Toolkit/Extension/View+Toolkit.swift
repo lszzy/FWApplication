@@ -8,6 +8,10 @@
 
 #if canImport(SwiftUI)
 import SwiftUI
+#if FWMacroSPM
+import FWApplication
+import FWApplicationCompatible
+#endif
 
 // MARK: - LineShape
 /// 线条形状，用于分割线、虚线等。自定义路径形状：Path { (path) in ... }
@@ -47,6 +51,20 @@ extension View {
     /// 设置不规则圆角效果
     public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCornerShape(radius: radius, corners: corners))
+    }
+    
+    /// 快捷应用导航栏配置
+    public func navigationBarAppearance(_ block: @escaping () -> NavigationBarAppearance) -> some View {
+        return introspectNavigationBar { navigationBar in
+            navigationBar.fw.applyBarAppearance(block())
+        }
+    }
+    
+    /// 快捷应用导航栏样式
+    public func navigationBarStyle(_ style: NavigationBarStyle) -> some View {
+        return introspectNavigationBar { navigationBar in
+            navigationBar.fw.applyBarStyle(style)
+        }
     }
     
     /// 转换为AnyView
