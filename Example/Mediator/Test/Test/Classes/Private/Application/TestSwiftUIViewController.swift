@@ -10,31 +10,12 @@ import SwiftUI
 import FWApplication
 
 @available(iOS 13.0, *)
-class SwiftUIViewController: UIHostingController<AnyView> {
+class SwiftUIViewController: HostingController {
     
-    // MARK: - Lifecyecle
-    init() {
-        super.init(rootView: AnyView(EmptyView()))
+    override func setupSubviews() {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
         
-        setupSubviews()
-    }
-    
-    @MainActor required dynamic init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder, rootView: AnyView(EmptyView()))
-        hidesBottomBarWhenPushed = true
-        extendedLayoutIncludesOpaqueBars = true
-        
-        setupSubviews()
-    }
-    
-    deinit {
-        NSLog("%@ did dealloc", NSStringFromClass(self.classForCoder))
-    }
-    
-    // MARK: - Subviews
-    func setupSubviews() {
         rootView = AnyView(
             TestSwiftUINav()
                 .viewContext(self)
@@ -47,18 +28,15 @@ class SwiftUIViewController: UIHostingController<AnyView> {
 class TestSwiftUIViewController: TestViewController {
     
     override func renderView() {
-        let childVC = UIHostingController.contextController {
-            TestSwiftUIView()
-        }
-        fw.addChildViewController(childVC) { view in
-            view.fw.layoutChain
-                .edges(excludingEdge: .top)
-                .top(toSafeArea: .zero)
-        }
-    }
-    
-    override func renderNavbar() {
         navigationItem.title = "TestSwiftUIViewController"
+        fw.navigationBarHidden = [true, false].randomElement()!
+        
+        let hostingView = HostingView(
+            rootView: TestSwiftUIView()
+                .viewContext(self)
+        )
+        view.addSubview(hostingView)
+        hostingView.fw.layoutChain.edges()
     }
     
 }
