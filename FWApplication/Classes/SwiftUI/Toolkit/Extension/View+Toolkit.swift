@@ -44,6 +44,21 @@ public struct RoundedCornerShape: Shape {
     }
 }
 
+// MARK: - VisibilityModifier
+/// 切换视图可见性修改器
+@available(iOS 13.0, *)
+public struct VisibilityModifier: ViewModifier {
+    let isVisible: Bool
+    
+    init(isVisible: Bool) {
+        self.isVisible = isVisible
+    }
+    
+    public func body(content: Content) -> some View {
+        content.opacity(isVisible ? 1 : 0)
+    }
+}
+
 // MARK: - View+Toolkit
 @available(iOS 13.0, *)
 extension View {
@@ -51,6 +66,11 @@ extension View {
     /// 设置不规则圆角效果
     public func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCornerShape(radius: radius, corners: corners))
+    }
+    
+    /// 切换视图可见性
+    public func visible(_ isVisible: Bool = true) -> some View {
+        modifier(VisibilityModifier(isVisible: isVisible))
     }
     
     /// 快捷应用导航栏配置
