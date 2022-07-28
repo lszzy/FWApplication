@@ -144,6 +144,16 @@
     }
 }
 
+- (BOOL)fw_allowsChildNavigation
+{
+    return [objc_getAssociatedObject(self, @selector(fw_allowsChildNavigation)) boolValue];
+}
+
+- (void)setFw_allowsChildNavigation:(BOOL)allowsChildNavigation
+{
+    objc_setAssociatedObject(self, @selector(fw_allowsChildNavigation), @(allowsChildNavigation), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (FWNavigationBarAppearance *)fw_currentNavigationBarAppearance
 {
     // 1. 检查VC是否自定义appearance
@@ -168,9 +178,9 @@
 
 - (void)fw_updateNavigationBarStyle:(BOOL)animated
 {
-    // 含有导航栏且不是child控制器且不是导航栏控制器时才处理
-    if (!self.navigationController || self.fw_isChild ||
-        [self isKindOfClass:[UINavigationController class]]) return;
+    // 含有导航栏且不是导航栏控制器，如果是child控制器且允许修改时才处理
+    if (!self.navigationController || [self isKindOfClass:[UINavigationController class]]) return;
+    if (self.fw_isChild && !self.fw_allowsChildNavigation) return;
     
     // fwNavigationBarHidden设置即生效，动态切换导航栏不突兀，一般在viewWillAppear:中调用
     NSNumber *hidden = objc_getAssociatedObject(self, @selector(fw_navigationBarHidden));

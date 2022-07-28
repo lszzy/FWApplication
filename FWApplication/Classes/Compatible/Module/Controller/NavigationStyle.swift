@@ -47,6 +47,12 @@ extension Wrapper where Base: UIViewController {
     public func setNavigationBarHidden(_ hidden: Bool, animated: Bool) {
         base.__fw_setNavigationBarHidden(hidden, animated: animated)
     }
+    
+    /// 是否允许child控制器修改导航栏样式，默认false
+    public var allowsChildNavigation: Bool {
+        get { return base.__fw_allowsChildNavigation }
+        set { base.__fw_allowsChildNavigation = newValue }
+    }
 
     /// 标签栏是否隐藏，默认为NO，立即生效。如果tabBar一直存在，则用tabBar包裹navBar；如果tabBar只存在主界面，则用navBar包裹tabBar
     public var tabBarHidden: Bool {
