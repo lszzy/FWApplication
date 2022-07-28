@@ -16,10 +16,9 @@ class SwiftUIViewController: HostingController {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
         
-        rootView = AnyView(
-            TestSwiftUINav()
-                .viewContext(self)
-        )
+        rootView = TestSwiftUINav()
+            .viewContext(self)
+            .eraseToAnyView()
     }
     
 }
@@ -31,10 +30,9 @@ class TestSwiftUIViewController: TestViewController {
         navigationItem.title = "TestSwiftUIViewController"
         fw.navigationBarHidden = [true, false].randomElement()!
         
-        let hostingView = HostingView(
-            rootView: TestSwiftUIView()
-                .viewContext(self)
-        )
+        let hostingView = TestSwiftUIView()
+            .viewContext(self)
+            .hostingView()
         view.addSubview(hostingView)
         hostingView.fw.layoutChain.edges()
     }

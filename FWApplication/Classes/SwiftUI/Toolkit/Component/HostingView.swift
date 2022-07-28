@@ -115,4 +115,15 @@ open class HostingController: UIHostingController<AnyView> {
     
 }
 
+// MARK: - View+HostingView
+@available(iOS 13.0, *)
+extension View {
+    
+    /// 快速创建HostingView
+    public func hostingView() -> HostingView<AnyView> {
+        return HostingView(rootView: AnyView(self))
+    }
+    
+}
+
 #endif
