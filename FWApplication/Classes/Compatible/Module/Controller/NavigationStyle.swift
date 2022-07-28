@@ -9,7 +9,17 @@ import UIKit
 #if FWMacroSPM
 import FWFrameworkCompatible
 import FWApplication
+import FWFramework
 #endif
+
+extension Wrapper where Base: UINavigationBar {
+    
+    /// 应用导航栏样式配置
+    public func applyAppearance(_ appearance: NavigationBarAppearance) {
+        base.__fw_apply(appearance)
+    }
+    
+}
 
 extension Wrapper where Base: UIViewController {
     

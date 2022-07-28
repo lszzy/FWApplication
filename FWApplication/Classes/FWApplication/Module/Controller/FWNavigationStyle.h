@@ -51,6 +51,18 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 
 @end
 
+#pragma mark - UINavigationBar+FWStyle
+
+/**
+ 导航栏应用样式配置分类
+ */
+@interface UINavigationBar (FWStyle)
+
+/// 应用导航栏样式配置
+- (void)fw_applyAppearance:(FWNavigationBarAppearance *)appearance NS_REFINED_FOR_SWIFT;
+
+@end
+
 #pragma mark - UIViewController+FWStyle
 
 /**

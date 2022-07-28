@@ -40,6 +40,37 @@
 
 @end
 
+#pragma mark - UINavigationBar+FWStyle
+
+@implementation UINavigationBar (FWStyle)
+
+- (void)fw_applyAppearance:(FWNavigationBarAppearance *)appearance
+{
+    if (appearance.isTranslucent != self.fw_isTranslucent) {
+        self.fw_isTranslucent = appearance.isTranslucent;
+    }
+    if (appearance.backgroundTransparent) {
+        self.fw_backgroundTransparent = appearance.backgroundTransparent;
+    } else if (appearance.backgroundImage) {
+        self.fw_backgroundImage = appearance.backgroundImage;
+    } else if (appearance.backgroundColor) {
+        self.fw_backgroundColor = appearance.backgroundColor;
+    }
+    if (appearance.shadowImage) {
+        self.fw_shadowImage = appearance.shadowImage;
+    } else if (appearance.shadowColor) {
+        self.fw_shadowColor = appearance.shadowColor;
+    } else {
+        self.fw_shadowColor = nil;
+    }
+    if (appearance.foregroundColor) self.fw_foregroundColor = appearance.foregroundColor;
+    if (appearance.titleAttributes) self.fw_titleAttributes = appearance.titleAttributes;
+    if (appearance.buttonAttributes) self.fw_buttonAttributes = appearance.buttonAttributes;
+    if (appearance.appearanceBlock) appearance.appearanceBlock(self);
+}
+
+@end
+
 #pragma mark - UIViewController+FWStyle
 
 @implementation UIViewController (FWStyle)
@@ -190,29 +221,7 @@
     
     // 获取当前用于显示的appearance
     FWNavigationBarAppearance *appearance = [self fw_currentNavigationBarAppearance];
-    if (!appearance) return;
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    if (appearance.isTranslucent != navigationBar.fw_isTranslucent) {
-        navigationBar.fw_isTranslucent = appearance.isTranslucent;
-    }
-    if (appearance.backgroundTransparent) {
-        navigationBar.fw_backgroundTransparent = appearance.backgroundTransparent;
-    } else if (appearance.backgroundImage) {
-        navigationBar.fw_backgroundImage = appearance.backgroundImage;
-    } else if (appearance.backgroundColor) {
-        navigationBar.fw_backgroundColor = appearance.backgroundColor;
-    }
-    if (appearance.shadowImage) {
-        navigationBar.fw_shadowImage = appearance.shadowImage;
-    } else if (appearance.shadowColor) {
-        navigationBar.fw_shadowColor = appearance.shadowColor;
-    } else {
-        navigationBar.fw_shadowColor = nil;
-    }
-    if (appearance.foregroundColor) navigationBar.fw_foregroundColor = appearance.foregroundColor;
-    if (appearance.titleAttributes) navigationBar.fw_titleAttributes = appearance.titleAttributes;
-    if (appearance.buttonAttributes) navigationBar.fw_buttonAttributes = appearance.buttonAttributes;
-    if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
+    if (appearance) [self.navigationController.navigationBar fw_applyAppearance:appearance];
 }
 
 - (BOOL)fw_tabBarHidden
