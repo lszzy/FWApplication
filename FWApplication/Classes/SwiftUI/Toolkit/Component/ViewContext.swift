@@ -23,18 +23,15 @@ public struct ViewContext {
     
 }
 
-/// 视图上下文Key
-@available(iOS 13.0, *)
-public struct ViewContextKey: EnvironmentKey {
-    
-    public static var defaultValue: ViewContext {
-        return ViewContext(nil)
-    }
-    
-}
-
 @available(iOS 13.0, *)
 extension EnvironmentValues {
+    
+    /// 视图上下文Key
+    private struct ViewContextKey: EnvironmentKey {
+        static var defaultValue: ViewContext {
+            return ViewContext(nil)
+        }
+    }
     
     /// 访问视图上下文
     public var viewContext: ViewContext {

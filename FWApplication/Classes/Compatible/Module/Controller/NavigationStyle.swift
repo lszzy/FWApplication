@@ -14,9 +14,14 @@ import FWFramework
 
 extension Wrapper where Base: UINavigationBar {
     
-    /// 应用导航栏样式配置
-    public func applyAppearance(_ appearance: NavigationBarAppearance) {
+    /// 应用指定导航栏配置
+    public func applyBarAppearance(_ appearance: NavigationBarAppearance) {
         base.__fw_apply(appearance)
+    }
+    
+    /// 应用指定导航栏样式
+    public func applyBarStyle(_ style: NavigationBarStyle) {
+        base.__fw_applyBarStyle(style)
     }
     
 }

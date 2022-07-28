@@ -58,8 +58,11 @@ NS_SWIFT_NAME(NavigationBarAppearance)
  */
 @interface UINavigationBar (FWStyle)
 
-/// 应用导航栏样式配置
-- (void)fw_applyAppearance:(FWNavigationBarAppearance *)appearance NS_REFINED_FOR_SWIFT;
+/// 应用指定导航栏配置
+- (void)fw_applyBarAppearance:(FWNavigationBarAppearance *)appearance NS_REFINED_FOR_SWIFT;
+
+/// 应用指定导航栏样式
+- (void)fw_applyBarStyle:(FWNavigationBarStyle)style NS_REFINED_FOR_SWIFT;
 
 @end
 

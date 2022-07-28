@@ -538,6 +538,13 @@ extension View {
         ))
     }
     
+    /// Finds a `UINavigationBar` from any view embedded in a `SwiftUI.NavigationView`.
+    public func introspectNavigationBar(customize: @escaping (UINavigationBar) -> ()) -> some View {
+        return introspectNavigationController { navigationController in
+            customize(navigationController.navigationBar)
+        }
+    }
+    
     /// Finds a `UITableView` from a `SwiftUI.List`, or `SwiftUI.List` child.
     public func introspectTableView(customize: @escaping (UITableView) -> ()) -> some View {
         introspect(selector: TargetViewSelector.ancestorOrSiblingContaining, customize: customize)

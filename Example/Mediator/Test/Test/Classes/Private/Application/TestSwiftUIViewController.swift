@@ -36,9 +36,8 @@ class SwiftUIViewController: UIHostingController<AnyView> {
     // MARK: - Subviews
     func setupSubviews() {
         rootView = AnyView(
-            TestSwiftUIView()
+            TestSwiftUINav()
                 .viewContext(self)
-                .navigationBarHidden([true, false].randomElement()!)
         )
     }
     
@@ -59,7 +58,7 @@ class TestSwiftUIViewController: TestViewController {
     }
     
     override func renderNavbar() {
-        navigationItem.title = "SwiftUIViewController"
+        navigationItem.title = "TestSwiftUIViewController"
     }
     
 }
@@ -129,6 +128,22 @@ struct TestSwiftUIView: View {
                 }
             }
         }
+    }
+    
+}
+
+@available(iOS 13.0, *)
+struct TestSwiftUINav: View {
+    
+    @Environment(\.viewContext) var viewContext: ViewContext
+    
+    var body: some View {
+        TestSwiftUIView()
+            .navigationBarHidden([true, false].randomElement()!)
+            .navigationBarTitle("SwiftUIViewController")
+            .introspectNavigationBar(customize: { navigationBar in
+                navigationBar.fw.applyBarStyle(.default)
+            })
     }
     
 }

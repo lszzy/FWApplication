@@ -44,7 +44,7 @@
 
 @implementation UINavigationBar (FWStyle)
 
-- (void)fw_applyAppearance:(FWNavigationBarAppearance *)appearance
+- (void)fw_applyBarAppearance:(FWNavigationBarAppearance *)appearance
 {
     if (appearance.isTranslucent != self.fw_isTranslucent) {
         self.fw_isTranslucent = appearance.isTranslucent;
@@ -67,6 +67,12 @@
     if (appearance.titleAttributes) self.fw_titleAttributes = appearance.titleAttributes;
     if (appearance.buttonAttributes) self.fw_buttonAttributes = appearance.buttonAttributes;
     if (appearance.appearanceBlock) appearance.appearanceBlock(self);
+}
+
+- (void)fw_applyBarStyle:(FWNavigationBarStyle)style
+{
+    FWNavigationBarAppearance *appearance = [FWNavigationBarAppearance appearanceForStyle:style];
+    if (appearance) [self fw_applyBarAppearance:appearance];
 }
 
 @end
@@ -221,7 +227,7 @@
     
     // 获取当前用于显示的appearance
     FWNavigationBarAppearance *appearance = [self fw_currentNavigationBarAppearance];
-    if (appearance) [self.navigationController.navigationBar fw_applyAppearance:appearance];
+    if (appearance) [self.navigationController.navigationBar fw_applyBarAppearance:appearance];
 }
 
 - (BOOL)fw_tabBarHidden
