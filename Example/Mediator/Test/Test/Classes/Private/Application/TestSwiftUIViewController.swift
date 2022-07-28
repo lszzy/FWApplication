@@ -8,6 +8,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 import FWApplication
+import Core
 
 @available(iOS 13.0, *)
 class SwiftUIViewController: HostingController {
@@ -19,14 +20,6 @@ class SwiftUIViewController: HostingController {
         rootView = TestSwiftUINav()
             .viewContext(self)
             .eraseToAnyView()
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if (navigationController?.children.count ?? 0) > 1 {
-            fw.leftBarItem = Icon.backImage
-        }
     }
     
 }
@@ -126,6 +119,11 @@ struct TestSwiftUINav: View {
             .navigationBarBackButtonHidden(true)
             .navigationBarHidden([true, false].randomElement()!)
             .navigationBarTitle("SwiftUIViewController")
+            .navigationBarItems(leading: Button(action: {
+                viewContext.viewController?.fw.close()
+            }, label: {
+                Image("back", bundle: CoreBundle.bundle())
+            }))
             .navigationBarStyle(.default)
     }
     
