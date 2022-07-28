@@ -110,6 +110,9 @@ NS_SWIFT_NAME(BatchRequest)
 - (void)startWithCompletionBlockWithSuccess:(nullable void (^)(FWBatchRequest *batchRequest))success
                                     failure:(nullable void (^)(FWBatchRequest *batchRequest))failure;
 
+///  Convenience method to start the batch request with completion block.
+- (void)startWithCompletion:(nullable void (^)(FWBatchRequest *batchRequest))completion;
+
 ///  Whether all response data is from local cache.
 - (BOOL)isDataFromCache;
 

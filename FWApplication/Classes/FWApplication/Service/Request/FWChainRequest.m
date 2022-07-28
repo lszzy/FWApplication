@@ -79,6 +79,10 @@
     [self start];
 }
 
+- (void)startWithCompletion:(void (^)(FWChainRequest *))completion {
+    [self startWithCompletionBlockWithSuccess:completion failure:completion];
+}
+
 - (void)setCompletionBlockWithSuccess:(void (^)(FWChainRequest *chainRequest))success
                               failure:(void (^)(FWChainRequest *chainRequest))failure {
     self.successCompletionBlock = success;
