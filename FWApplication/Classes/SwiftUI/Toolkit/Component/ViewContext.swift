@@ -49,8 +49,8 @@ extension View {
         return environment(\.viewContext, ViewContext(viewController, userInfo: userInfo))
     }
     
-    /// 快速创建视图上下文控制器
-    public func contextController(userInfo: [AnyHashable: Any]? = nil) -> UIHostingController<AnyView> {
+    /// 快速包装视图到上下文控制器
+    public func wrappedContextController(userInfo: [AnyHashable: Any]? = nil) -> UIHostingController<AnyView> {
         let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
         hostingController.rootView = AnyView(viewContext(hostingController, userInfo: userInfo))
         return hostingController

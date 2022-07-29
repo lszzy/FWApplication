@@ -131,8 +131,8 @@ open class HostingController: UIHostingController<AnyView> {
 @available(iOS 13.0, *)
 extension View {
     
-    /// 快速创建HostingView
-    public func hostingView() -> HostingView<AnyView> {
+    /// 快速包装到HostingView
+    public func wrappedHostingView() -> HostingView<AnyView> {
         return HostingView(rootView: AnyView(self))
     }
     

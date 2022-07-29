@@ -1,5 +1,5 @@
 //
-//  WebImage.swift
+//  WebImageView.swift
 //  FWApplication
 //
 //  Created by wuyong on 2022/7/26.
@@ -11,7 +11,7 @@ import Combine
 
 /// 网络图片视图，仅支持静态图
 @available(iOS 13.0, *)
-public struct WebImage: View {
+public struct WebImageView: View {
     @ObservedObject public private(set) var binder: ImageBinder
     
     var placeholder: AnyView?
@@ -54,53 +54,53 @@ public struct WebImage: View {
         }
     }
     
-    public func placeholder<Content: View>(@ViewBuilder _ builder: () -> Content) -> WebImage {
+    public func placeholder<Content: View>(@ViewBuilder _ builder: () -> Content) -> WebImageView {
         var result = self
         result.placeholder = AnyView(builder())
         return result
     }
     
-    public func cancelOnDisappear(_ flag: Bool) -> WebImage {
+    public func cancelOnDisappear(_ flag: Bool) -> WebImageView {
         var result = self
         result.cancelOnDisappear = flag
         return result
     }
     
-    public func configure(_ block: @escaping (Image) -> Image) -> WebImage {
+    public func configure(_ block: @escaping (Image) -> Image) -> WebImageView {
         var result = self
         result.configurations.append(block)
         return result
     }
     
-    public func resizable(capInsets: EdgeInsets = EdgeInsets(), resizingMode: Image.ResizingMode = .stretch) -> WebImage {
+    public func resizable(capInsets: EdgeInsets = EdgeInsets(), resizingMode: Image.ResizingMode = .stretch) -> WebImageView {
         configure { $0.resizable(capInsets: capInsets, resizingMode: resizingMode) }
     }
     
-    public func renderingMode(_ renderingMode: Image.TemplateRenderingMode?) -> WebImage {
+    public func renderingMode(_ renderingMode: Image.TemplateRenderingMode?) -> WebImageView {
         configure { $0.renderingMode(renderingMode) }
     }
     
-    public func interpolation(_ interpolation: Image.Interpolation) -> WebImage {
+    public func interpolation(_ interpolation: Image.Interpolation) -> WebImageView {
         configure { $0.interpolation(interpolation) }
     }
     
-    public func antialiased(_ isAntialiased: Bool) -> WebImage {
+    public func antialiased(_ isAntialiased: Bool) -> WebImageView {
         configure { $0.antialiased(isAntialiased) }
     }
     
-    public func onCompletion(perform action: ((UIImage?, Error?) -> Void)?) -> WebImage {
+    public func onCompletion(perform action: ((UIImage?, Error?) -> Void)?) -> WebImageView {
         binder.onCompletion(perform: action)
         return self
     }
     
-    public func onProgress(perform action: ((Double) -> Void)?) -> WebImage {
+    public func onProgress(perform action: ((Double) -> Void)?) -> WebImageView {
         binder.onProgress(perform: action)
         return self
     }
 }
 
 @available(iOS 13.0, *)
-extension WebImage {
+extension WebImageView {
     public class ImageBinder: ObservableObject {
         @Published var image: UIImage?
         

@@ -288,7 +288,7 @@ extension Refresh.Modifier: ViewModifier {
                 .environment(\.refreshHeaderUpdate, self.headerUpdate)
                 .environment(\.refreshFooterUpdate, self.footerUpdate)
                 .padding(.top, self.headerPadding)
-                .clipped(proxy.safeAreaInsets == .zero)
+                .clipped(proxy.safeAreaInsets == .init(top: 0, leading: 0, bottom: 0, trailing: 0))
                 .backgroundPreferenceValue(Refresh.HeaderAnchorKey.self) { v -> Color in
                     DispatchQueue.main.async { self.update(proxy: proxy, value: v) }
                     return Color.clear
@@ -351,27 +351,6 @@ extension Refresh.Modifier: ViewModifier {
         }
         
         footerUpdate = update
-    }
-}
-
-// MARK: - Utilities
-@available(iOS 13.0, *)
-extension View {
-    
-    func clipped(_ value: Bool) -> some View {
-        if value {
-            return AnyView(self.clipped())
-        } else {
-            return AnyView(self)
-        }
-    }
-}
-
-@available(iOS 13.0, *)
-extension EdgeInsets {
-    
-    static var zero: EdgeInsets {
-        .init(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
 }
 

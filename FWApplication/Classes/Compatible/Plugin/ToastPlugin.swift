@@ -36,7 +36,7 @@ extension Wrapper where Base: UIView {
     }
 
     /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
-    public func showProgress(_ progress: CGFloat, text: String? = nil) {
+    public func showProgress(_ progress: CGFloat, text: Any? = nil) {
         base.__fw_showProgress(withText: text, progress: progress)
     }
 
@@ -92,7 +92,7 @@ extension Wrapper where Base: UIViewController {
     }
 
     /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
-    public func showProgress(_ progress: CGFloat, text: String? = nil) {
+    public func showProgress(_ progress: CGFloat, text: Any? = nil) {
         base.__fw_showProgress(withText: text, progress: progress)
     }
 
@@ -142,7 +142,7 @@ extension Wrapper where Base: UIWindow {
     }
 
     /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
-    public static func showProgress(_ progress: CGFloat, text: String? = nil) {
+    public static func showProgress(_ progress: CGFloat, text: Any? = nil) {
         Base.__fw_showProgress(withText: text, progress: progress)
     }
 
