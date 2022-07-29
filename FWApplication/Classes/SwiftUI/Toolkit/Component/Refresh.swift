@@ -63,7 +63,7 @@ extension Refresh.Header: View {
                 EmptyView()
             }
         }
-        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .listRowInsets(.zero)
         .anchorPreference(key: Refresh.HeaderAnchorKey.self, value: .bounds) {
             [.init(bounds: $0, refreshing: self.refreshing)]
         }
@@ -187,7 +187,7 @@ extension Refresh.Footer: View {
                 EmptyView()
             }
         }
-        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .listRowInsets(.zero)
         .anchorPreference(key: Refresh.FooterAnchorKey.self, value: .bounds) {
             if self.noMore || self.refreshing {
                 return []
@@ -288,7 +288,7 @@ extension Refresh.Modifier: ViewModifier {
                 .environment(\.refreshHeaderUpdate, self.headerUpdate)
                 .environment(\.refreshFooterUpdate, self.footerUpdate)
                 .padding(.top, self.headerPadding)
-                .clipped(proxy.safeAreaInsets == .init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .clipped(proxy.safeAreaInsets == .zero)
                 .backgroundPreferenceValue(Refresh.HeaderAnchorKey.self) { v -> Color in
                     DispatchQueue.main.async { self.update(proxy: proxy, value: v) }
                     return Color.clear
