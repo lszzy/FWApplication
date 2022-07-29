@@ -18,6 +18,8 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
         var leading: Leading?
         var center: Center?
         var trailing: Trailing?
+        var background: Any?
+        var configuration: ((UIViewController) -> Void)?
         
         private var movedToParent: Bool = false
         
@@ -96,21 +98,37 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
             parent.navigationItem.leftBarButtonItem?.customView?.sizeToFit()
             parent.navigationItem.titleView?.sizeToFit()
             parent.navigationItem.rightBarButtonItem?.customView?.sizeToFit()
+            
+            var uiColor = background as? UIColor
+            if let color = background as? Color {
+                uiColor = color.toUIColor()
+            }
+            if let uiColor = uiColor {
+                parent.navigationController?.navigationBar.fw.backgroundColor = uiColor
+            }
+            
+            configuration?(parent)
         }
     }
     
     let leading: Leading
     let center: Center
     let trailing: Trailing
+    let background: Any?
+    let configuration: ((UIViewController) -> Void)?
     
     init(
         leading: Leading,
         center: Center,
-        trailing: Trailing
+        trailing: Trailing,
+        background: Any?,
+        configuration: ((UIViewController) -> Void)?
     ) {
         self.leading = leading
         self.center = center
         self.trailing = trailing
+        self.background = background
+        self.configuration = configuration
     }
     
     func makeUIViewController(context: Context) -> UIViewControllerType {
@@ -121,6 +139,8 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
         viewController.leading = leading
         viewController.center = center
         viewController.trailing = trailing
+        viewController.background = background
+        viewController.configuration = configuration
         
         viewController.updateNavigationBar(viewController: viewController.navigationController?.topViewController)
     }
@@ -134,61 +154,65 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
 @available(iOS 13.0, *)
 extension View {
     
-    public func navigationBarAppearance(_ block: @escaping () -> NavigationBarAppearance) -> some View {
-        return introspectNavigationBar { navigationBar in
-            navigationBar.fw.applyBarAppearance(block())
-        }
-    }
-    
-    public func navigationBarStyle(_ style: NavigationBarStyle) -> some View {
-        return introspectNavigationBar { navigationBar in
-            navigationBar.fw.applyBarStyle(style)
-        }
-    }
-    
     public func navigationBarItems<Leading: View, Center: View, Trailing: View>(
         leading: Leading,
         center: Center,
-        trailing: Trailing
+        trailing: Trailing,
+        background color: Any? = nil,
+        configuration: ((UIViewController) -> Void)? = nil
     ) -> some View {
         background(
             NavigationBarConfigurator(
                 leading: leading,
                 center: center,
-                trailing: trailing
+                trailing: trailing,
+                background: color,
+                configuration: configuration
             )
         )
     }
         
     public func navigationBarItems<Leading: View, Center: View>(
         leading: Leading,
-        center: Center
+        center: Center,
+        background color: Any? = nil,
+        configuration: ((UIViewController) -> Void)? = nil
     ) -> some View {
         navigationBarItems(
             leading: leading,
             center: center,
-            trailing: EmptyView()
+            trailing: EmptyView(),
+            background: color,
+            configuration: configuration
         )
     }
     
     public func navigationBarTitleView<V: View>(
-        _ center: V
+        _ center: V,
+        background color: Any? = nil,
+        configuration: ((UIViewController) -> Void)? = nil
     ) -> some View {
         navigationBarItems(
             leading: EmptyView(),
             center: center,
-            trailing: EmptyView()
+            trailing: EmptyView(),
+            background: color,
+            configuration: configuration
         )
     }
     
     public func navigationBarItems<Center: View, Trailing: View>(
         center: Center,
-        trailing: Trailing
+        trailing: Trailing,
+        background color: Any? = nil,
+        configuration: ((UIViewController) -> Void)? = nil
     ) -> some View {
         navigationBarItems(
             leading: EmptyView(),
             center: center,
-            trailing: trailing
+            trailing: trailing,
+            background: color,
+            configuration: configuration
         )
     }
     

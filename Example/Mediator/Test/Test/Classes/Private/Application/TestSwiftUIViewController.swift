@@ -18,21 +18,25 @@ class SwiftUIViewController: HostingController {
     override func setupSubviews() {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
+        fw.navigationBarHidden = true
         
         rootView = TestSwiftUIView()
             .viewContext(self, userInfo: ["hidesNavbar": hidesNavbar])
             .navigationBarHidden(hidesNavbar)
             .navigationBarBackButtonHidden(true)
-            .navigationBarStyle(.default)
-            .navigationBarItems(leading: Button(action: {
-                UIWindow.fw.close()
-            }, label: {
-                HStack {
-                    Spacer()
-                    Image(uiImage: Icon.backImage?.fw.image(tintColor: Theme.textColor) ?? UIImage())
-                    Spacer()
-                }
-            }), center: Text("SwiftUIViewController"))
+            .navigationBarItems(
+                leading: Button(action: {
+                    UIWindow.fw.close()
+                }, label: {
+                    HStack {
+                        Spacer()
+                        Image(uiImage: Icon.backImage?.fw.image(tintColor: Theme.textColor) ?? UIImage())
+                        Spacer()
+                    }
+                }),
+                center: Text("SwiftUIViewController"),
+                background: Color(UIColor.fw.randomColor)
+            )
             .eraseToAnyView()
     }
     
@@ -48,15 +52,18 @@ class TestSwiftUIViewController: TestViewController {
         
         let hostingView = TestSwiftUIView()
             .viewContext(self, userInfo: ["hidesNavbar": hidesNavbar])
-            .navigationBarItems(leading: Button(action: { [weak self] in
-                self?.fw.close()
-            }, label: {
-                HStack {
-                    Spacer()
-                    Image(uiImage: Icon.backImage?.fw.image(tintColor: Theme.textColor) ?? UIImage())
-                    Spacer()
-                }
-            }), center: Text("TestSwiftUIViewController"))
+            .navigationBarItems(
+                leading: Button(action: { [weak self] in
+                    self?.fw.close()
+                }, label: {
+                    HStack {
+                        Spacer()
+                        Image(uiImage: Icon.backImage?.fw.image(tintColor: Theme.textColor) ?? UIImage())
+                        Spacer()
+                    }
+                }),
+                center: Text("TestSwiftUIViewController")
+            )
             .wrappedHostingView()
         view.addSubview(hostingView)
         hostingView.fw.layoutChain.edges()

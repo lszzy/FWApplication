@@ -10,14 +10,10 @@ import SwiftUI
 import FWFramework
 #if FWMacroSPM
 import FWFrameworkCompatible
-import FWApplication
 #endif
 
 @available(iOS 13.0, *)
-extension Color: WrapperCompatible {}
-
-@available(iOS 13.0, *)
-extension Wrapper where Base == Color {
+extension Color {
     
     /// 从16进制创建Color
     /// - Parameters:
@@ -46,6 +42,100 @@ extension Wrapper where Base == Color {
     /// - Returns: Color
     public static func color(_ hexString: String, _ alpha: Double = 1) -> Color {
         return Color(UIColor.fw.color(hexString: hexString, alpha: alpha))
+    }
+    
+    // MARK: - UIColor
+    /// Color转换为UIColor，失败时返回clear
+    /// - Returns: UIColor
+    public func toUIColor() -> UIColor {
+        if let cachedResult = Self.colorCaches[self] {
+            return cachedResult
+        } else {
+            var result: UIColor
+            if #available(iOS 14.0, *) {
+                result = UIColor(self)
+            } else {
+                result = toUIColor1() ?? toUIColor2() ?? .clear
+            }
+            Self.colorCaches[self] = result
+            return result
+        }
+    }
+    
+    private static var colorCaches: [Color: UIColor] = [:]
+    
+    private func toUIColor1() -> UIColor? {
+        switch self {
+            case .clear:
+                return UIColor.clear
+            case .black:
+                return UIColor.black
+            case .white:
+                return UIColor.white
+            case .gray:
+                return UIColor.systemGray
+            case .red:
+                return UIColor.systemRed
+            case .green:
+                return UIColor.systemGreen
+            case .blue:
+                return UIColor.systemBlue
+            case .orange:
+                return UIColor.systemOrange
+            case .yellow:
+                return UIColor.systemYellow
+            case .pink:
+                return UIColor.systemPink
+            case .purple:
+                return UIColor.systemPurple
+            case .primary:
+                return UIColor.label
+            case .secondary:
+                return UIColor.secondaryLabel
+            default:
+                return nil
+        }
+    }
+    
+    private func toUIColor2() -> UIColor? {
+        let children = Mirror(reflecting: self).children
+        let _provider = children.filter { $0.label == "provider" }.first
+        guard let provider = _provider?.value else {
+            return nil
+        }
+        
+        let providerChildren = Mirror(reflecting: provider).children
+        let _base = providerChildren.filter { $0.label == "base" }.first
+        guard let base = _base?.value else {
+            return nil
+        }
+        
+        if String(describing: type(of: base)) == "NamedColor" {
+            let baseMirror = Mirror(reflecting: base)
+            if let name = baseMirror.descendant("name") as? String {
+                let bundle = baseMirror.descendant("bundle") as? Bundle
+                if let color = UIColor(named: name, in: bundle, compatibleWith: nil) {
+                    return color
+                }
+            }
+        }
+        
+        if String(describing: type(of: base)) == "OpacityColor" {
+            let baseOpacity = Mirror(reflecting: base)
+            if let opacity = baseOpacity.descendant("opacity") as? Double,
+               let colorBase = baseOpacity.descendant("base") as? Color {
+                return colorBase.toUIColor().withAlphaComponent(CGFloat(opacity))
+            }
+        }
+        
+        var baseValue: String = ""
+        dump(base, to: &baseValue)
+        guard let firstLine = baseValue.split(separator: "\n").first,
+              let hexString = firstLine.split(separator: " ")[1] as Substring? else {
+            return nil
+        }
+        
+        return UIColor.fw.color(hexString: hexString.trimmingCharacters(in: .newlines))
     }
     
 }
