@@ -124,50 +124,6 @@ extension View {
         AnyView(self)
     }
     
-    // MARK: - NavigationBar
-    /// 快捷应用导航栏配置
-    public func navigationBarAppearance(_ block: @escaping () -> NavigationBarAppearance) -> some View {
-        return introspectNavigationBar { navigationBar in
-            navigationBar.fw.applyBarAppearance(block())
-        }
-    }
-    
-    /// 快捷应用导航栏样式
-    public func navigationBarStyle(_ style: NavigationBarStyle) -> some View {
-        return introspectNavigationBar { navigationBar in
-            navigationBar.fw.applyBarStyle(style)
-        }
-    }
-    
-    /// 快捷设置导航栏左侧按钮，默认返回
-    public func navigationBarButton<T: View>(@ViewBuilder leading: () -> T, action: (() -> Void)? = nil) -> some View {
-        self.navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: Button(action: {
-                if let action = action {
-                    action()
-                } else {
-                    UIWindow.fw.close()
-                }
-            }, label: {
-                HStack {
-                    Spacer()
-                    leading()
-                    Spacer()
-                }
-            }))
-    }
-    
-    /// 快捷设置导航栏右侧按钮
-    public func navigationBarButton<T: View>(@ViewBuilder trailing: () -> T, action: @escaping () -> Void) -> some View {
-        self.navigationBarItems(trailing: Button(action: action, label: {
-                HStack {
-                    Spacer()
-                    trailing()
-                    Spacer()
-                }
-            }))
-    }
-    
 }
 
 #endif

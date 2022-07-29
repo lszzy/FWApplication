@@ -1,5 +1,5 @@
 //
-//  NavigationConfigurator.swift
+//  NavigationBar.swift
 //  FWApplication
 //
 //  Created by wuyong on 2022/7/29.
@@ -8,11 +8,12 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
+// MARK: - NavigationBarConfigurator
 /// 导航栏样式配置
 ///
 /// [SwiftUIX](https://github.com/SwiftUIX/SwiftUIX)
 @available(iOS 13.0, *)
-struct NavigationConfigurator<Leading: View, Center: View, Trailing: View>: UIViewControllerRepresentable {
+struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: UIViewControllerRepresentable {
     class UIViewControllerType: UIViewController {
         var leading: Leading?
         var center: Center?
@@ -155,8 +156,21 @@ struct NavigationConfigurator<Leading: View, Center: View, Trailing: View>: UIVi
     }
 }
 
+// MARK: - View+NavigationBar
 @available(iOS 13.0, *)
 extension View {
+    
+    public func navigationBarAppearance(_ block: @escaping () -> NavigationBarAppearance) -> some View {
+        return introspectNavigationBar { navigationBar in
+            navigationBar.fw.applyBarAppearance(block())
+        }
+    }
+    
+    public func navigationBarStyle(_ style: NavigationBarStyle) -> some View {
+        return introspectNavigationBar { navigationBar in
+            navigationBar.fw.applyBarStyle(style)
+        }
+    }
     
     public func navigationBarItems<Leading: View, Center: View, Trailing: View>(
         leading: Leading,
@@ -165,7 +179,7 @@ extension View {
         displayMode: NavigationBarItem.TitleDisplayMode? = .automatic
     ) -> some View {
         background(
-            NavigationConfigurator(
+            NavigationBarConfigurator(
                 leading: leading,
                 center: center,
                 trailing: trailing,
