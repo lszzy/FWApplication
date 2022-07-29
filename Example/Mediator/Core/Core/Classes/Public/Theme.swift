@@ -57,13 +57,16 @@ import UIKit
         defaultAppearance.foregroundColor = Theme.textColor
         defaultAppearance.backgroundColor = Theme.isBarTranslucent ? Theme.barColor.fw.color(alpha: 0.5) : Theme.barColor
         defaultAppearance.isTranslucent = Theme.isBarTranslucent
+        defaultAppearance.leftBackImage = Icon.backImage
         let whiteAppearance = NavigationBarAppearance()
         whiteAppearance.foregroundColor = .black
         whiteAppearance.backgroundColor = Theme.isBarTranslucent ? .white.fw.color(alpha: 0.5) : .white
         whiteAppearance.isTranslucent = Theme.isBarTranslucent
+        whiteAppearance.leftBackImage = Icon.backImage
         let transparentAppearance = NavigationBarAppearance()
         transparentAppearance.foregroundColor = Theme.textColor
         transparentAppearance.backgroundTransparent = true
+        transparentAppearance.leftBackImage = Icon.backImage
         NavigationBarAppearance.setAppearance(defaultAppearance, forStyle: .default)
         NavigationBarAppearance.setAppearance(whiteAppearance, forStyle: .white)
         NavigationBarAppearance.setAppearance(transparentAppearance, forStyle: .transparent)
@@ -99,9 +102,9 @@ extension Theme {
             // 长按返回按钮会弹出返回菜单
             // viewController.fw.backBarItem = Icon.backImage
             // 无返回按钮，不会弹出返回菜单
-            if (viewController.navigationController?.children.count ?? 0) > 1 {
-                viewController.fw.leftBarItem = Icon.backImage
-            }
+            // if (viewController.navigationController?.children.count ?? 0) > 1 {
+            //     viewController.fw.leftBarItem = Icon.backImage
+            // }
             viewController.navigationController?.navigationBar.prefersLargeTitles = Theme.isLargeTitles
         }
         ViewControllerManager.sharedInstance.hookTableViewController = { viewController in

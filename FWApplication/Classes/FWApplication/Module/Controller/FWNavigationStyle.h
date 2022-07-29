@@ -42,6 +42,8 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 @property (nullable, nonatomic, strong) UIImage *shadowImage;
 /// 返回按钮图片，自动配合VC导航栏样式生效，默认nil
 @property (nullable, nonatomic, strong) UIImage *backImage;
+/// 左侧返回按钮图片，自动配合VC导航栏样式生效，默认nil
+@property (nullable, nonatomic, strong) UIImage *leftBackImage;
 
 /// 自定义句柄，最后调用，可自定义样式，默认nil
 @property (nullable, nonatomic, copy) void (^appearanceBlock)(UINavigationBar *navigationBar);

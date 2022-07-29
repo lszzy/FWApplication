@@ -226,10 +226,21 @@
         [self.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
     }
     
-    // 获取当前用于显示的appearance
+    // 获取当前用于显示的appearance，未设置时不处理
     FWNavigationBarAppearance *appearance = [self fw_currentNavigationBarAppearance];
+    if (!appearance) return;
+    
+    // 配合导航栏appearance初始化返回按钮或左侧按钮
     if (appearance.backImage) self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
-    if (appearance) [self.navigationController.navigationBar fw_applyBarAppearance:appearance];
+    if (appearance.leftBackImage && objc_getAssociatedObject(self, _cmd) == nil) {
+        objc_setAssociatedObject(self, _cmd, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (self.navigationController.childViewControllers.count > 1) {
+            self.fw_leftBarItem = appearance.leftBackImage;
+        }
+    }
+    
+    // 应用当前导航栏appearance
+    [self.navigationController.navigationBar fw_applyBarAppearance:appearance];
 }
 
 - (BOOL)fw_tabBarHidden
