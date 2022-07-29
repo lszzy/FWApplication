@@ -66,6 +66,7 @@
     if (appearance.foregroundColor) self.fw_foregroundColor = appearance.foregroundColor;
     if (appearance.titleAttributes) self.fw_titleAttributes = appearance.titleAttributes;
     if (appearance.buttonAttributes) self.fw_buttonAttributes = appearance.buttonAttributes;
+    if (appearance.backImage) self.fw_backImage = appearance.backImage;
     if (appearance.appearanceBlock) appearance.appearanceBlock(self);
 }
 
@@ -227,6 +228,7 @@
     
     // 获取当前用于显示的appearance
     FWNavigationBarAppearance *appearance = [self fw_currentNavigationBarAppearance];
+    if (appearance.backImage) self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
     if (appearance) [self.navigationController.navigationBar fw_applyBarAppearance:appearance];
 }
 
