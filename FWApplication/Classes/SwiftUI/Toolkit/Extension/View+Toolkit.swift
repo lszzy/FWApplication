@@ -55,8 +55,10 @@ public struct RemovableModifier: ViewModifier {
     }
     
     public func body(content: Content) -> some View {
-        if !removable {
-            content
+        Group {
+            if !removable {
+                content
+            }
         }
     }
 }
