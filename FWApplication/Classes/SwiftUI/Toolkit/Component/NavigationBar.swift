@@ -18,17 +18,14 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
         var leading: Leading?
         var center: Center?
         var trailing: Trailing?
-        var largeTrailingAlignment: VerticalAlignment?
-        var displayMode: NavigationBarItem.TitleDisplayMode?
         
-        var hasMovedToParentOnce: Bool = false
-        var isVisible: Bool = false
+        private var movedToParent: Bool = false
         
         override func willMove(toParent parent: UIViewController?) {
-            if !hasMovedToParentOnce {
-                updateNavigationBar(viewController: parent?.navigationController?.visibleViewController)
+            if !movedToParent {
+                movedToParent = true
                 
-                hasMovedToParentOnce = true
+                updateNavigationBar(viewController: parent?.navigationController?.visibleViewController)
             }
             
             super.willMove(toParent: parent)
@@ -41,7 +38,7 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
         }
         
         override func viewDidAppear(_ animated: Bool) {
-            isVisible = true
+            super.viewDidAppear(animated)
             
             updateNavigationBar(viewController: parent?.navigationController?.visibleViewController
             )
@@ -50,28 +47,11 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
         override func viewDidDisappear(_ animated: Bool) {
             super.viewDidDisappear(animated)
             
-            isVisible = false
-            
             updateNavigationBar(viewController: parent?.navigationController?.visibleViewController)
         }
         
         func updateNavigationBar(viewController: UIViewController?) {
-            guard let parent = viewController else {
-                return
-            }
-            
-            if let displayMode = displayMode {
-                switch displayMode {
-                    case .automatic:
-                        parent.navigationItem.largeTitleDisplayMode = .automatic
-                    case .inline:
-                        parent.navigationItem.largeTitleDisplayMode = .never
-                    case .large:
-                        parent.navigationItem.largeTitleDisplayMode = .always
-                    @unknown default:
-                        parent.navigationItem.largeTitleDisplayMode = .automatic
-                }
-            }
+            guard let parent = viewController else { return }
             
             if let leading = leading {
                 if !(leading is EmptyView) {
@@ -122,18 +102,15 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
     let leading: Leading
     let center: Center
     let trailing: Trailing
-    let displayMode: NavigationBarItem.TitleDisplayMode?
     
     init(
         leading: Leading,
         center: Center,
-        trailing: Trailing,
-        displayMode: NavigationBarItem.TitleDisplayMode?
+        trailing: Trailing
     ) {
         self.leading = leading
         self.center = center
         self.trailing = trailing
-        self.displayMode = displayMode
     }
     
     func makeUIViewController(context: Context) -> UIViewControllerType {
@@ -141,7 +118,6 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
     }
     
     func updateUIViewController(_ viewController: UIViewControllerType, context: Context) {
-        viewController.displayMode = displayMode
         viewController.leading = leading
         viewController.center = center
         viewController.trailing = trailing
@@ -150,8 +126,6 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
     }
     
     static func dismantleUIViewController(_ uiViewController: UIViewControllerType, coordinator: Coordinator) {
-        uiViewController.largeTrailingAlignment = nil
-        
         uiViewController.updateNavigationBar(viewController: uiViewController.navigationController?.topViewController)
     }
 }
@@ -175,54 +149,46 @@ extension View {
     public func navigationBarItems<Leading: View, Center: View, Trailing: View>(
         leading: Leading,
         center: Center,
-        trailing: Trailing,
-        displayMode: NavigationBarItem.TitleDisplayMode? = .automatic
+        trailing: Trailing
     ) -> some View {
         background(
             NavigationBarConfigurator(
                 leading: leading,
                 center: center,
-                trailing: trailing,
-                displayMode: displayMode
+                trailing: trailing
             )
         )
     }
         
     public func navigationBarItems<Leading: View, Center: View>(
         leading: Leading,
-        center: Center,
-        displayMode: NavigationBarItem.TitleDisplayMode = .automatic
+        center: Center
     ) -> some View {
         navigationBarItems(
             leading: leading,
             center: center,
-            trailing: EmptyView(),
-            displayMode: displayMode
+            trailing: EmptyView()
         )
     }
     
     public func navigationBarTitleView<V: View>(
-        _ center: V,
-        displayMode: NavigationBarItem.TitleDisplayMode
+        _ center: V
     ) -> some View {
         navigationBarItems(
             leading: EmptyView(),
             center: center,
-            trailing: EmptyView(),
-            displayMode: displayMode
+            trailing: EmptyView()
         )
     }
     
     public func navigationBarItems<Center: View, Trailing: View>(
         center: Center,
-        trailing: Trailing,
-        displayMode: NavigationBarItem.TitleDisplayMode = .automatic
+        trailing: Trailing
     ) -> some View {
         navigationBarItems(
             leading: EmptyView(),
             center: center,
-            trailing: trailing,
-            displayMode: displayMode
+            trailing: trailing
         )
     }
     
