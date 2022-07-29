@@ -56,7 +56,7 @@
             view.fw_layoutChain.center();
         }
         view.annular = rowData == 0 ? YES : NO;
-        [self mockProgress:^(double progress, BOOL finished) {
+        [TestViewController mockProgress:^(double progress, BOOL finished) {
             view.progress = progress;
         }];
         return cell;
@@ -118,7 +118,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     if (indexPath.section == 0) {
         FWProgressView *view = [cell viewWithTag:100];
-        [self mockProgress:^(double progress, BOOL finished) {
+        [TestViewController mockProgress:^(double progress, BOOL finished) {
             view.progress = progress;
         }];
         return;

@@ -99,7 +99,7 @@
 - (void)onProgress
 {
     FWWeakifySelf();
-    [self mockProgress:^(double progress, BOOL finished) {
+    [TestViewController mockProgress:^(double progress, BOOL finished) {
         FWStrongifySelf();
         if (!finished) {
             [self fw_showProgressWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100] progress:progress];
@@ -122,7 +122,7 @@
 - (void)onProgressWindow
 {
     FWWeakifySelf();
-    [self mockProgress:^(double progress, BOOL finished) {
+    [TestViewController mockProgress:^(double progress, BOOL finished) {
         FWStrongifySelf();
         if (!finished) {
             [self.view.window fw_showLoadingWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100]];

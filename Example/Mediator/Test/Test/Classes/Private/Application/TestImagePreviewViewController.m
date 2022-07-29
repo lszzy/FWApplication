@@ -201,7 +201,7 @@
     
     if (self.mockProgress) {
         FWWeakifySelf();
-        [self mockProgress:^(double progress, BOOL finished) {
+        [TestViewController mockProgress:^(double progress, BOOL finished) {
             FWStrongifySelf();
             if (zoomImageView.reusedIdentifier.fw_safeInteger != index) return;
             
