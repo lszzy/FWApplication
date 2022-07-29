@@ -74,7 +74,7 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
             }
             
             if let leading = leading {
-                if !(leading is SwiftUI.EmptyView) {
+                if !(leading is EmptyView) {
                     if parent.navigationItem.leftBarButtonItem == nil {
                         parent.navigationItem.leftBarButtonItem = .init(customView: HostingView(rootView: leading))
                     } else if let view = parent.navigationItem.leftBarButtonItem?.customView as? HostingView<Leading> {
@@ -88,7 +88,7 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
             }
             
             if let center = center {
-                if !(center is SwiftUI.EmptyView) {
+                if !(center is EmptyView) {
                     if let view = parent.navigationItem.titleView as? HostingView<Center> {
                         view.rootView = center
                     } else {
@@ -100,7 +100,7 @@ struct NavigationBarConfigurator<Leading: View, Center: View, Trailing: View>: U
             }
             
             if let trailing = trailing {
-                if !(trailing is SwiftUI.EmptyView) {
+                if !(trailing is EmptyView) {
                     if parent.navigationItem.rightBarButtonItem == nil {
                         parent.navigationItem.rightBarButtonItem = .init(customView: HostingView(rootView: trailing))
                     } else if let view = parent.navigationItem.rightBarButtonItem?.customView as? HostingView<Trailing> {
