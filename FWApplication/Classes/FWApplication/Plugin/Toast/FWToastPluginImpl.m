@@ -33,7 +33,7 @@
     return self;
 }
 
-- (void)showLoadingWithAttributedText:(NSAttributedString *)attributedText inView:(UIView *)view
+- (void)showLoadingWithAttributedText:(NSAttributedString *)attributedText cancelBlock:(void (^)(void))cancelBlock inView:(UIView *)view
 {
     NSAttributedString *loadingText = attributedText;
     if (!loadingText && self.defaultLoadingText) {
@@ -45,6 +45,20 @@
         [toastView invalidateTimer];
         [view bringSubviewToFront:toastView];
         toastView.attributedTitle = loadingText;
+        
+        [toastView fw_removeAllTouchBlocks];
+        if (cancelBlock) {
+            __weak __typeof__(self) self_weak_ = self;
+            [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
+                __typeof__(self) self = self_weak_;
+                [self hideLoading:view];
+                if (cancelBlock) cancelBlock();
+            }];
+        }
+        
+        if (self.reuseBlock) {
+            self.reuseBlock(toastView);
+        }
         return;
     }
     
@@ -53,6 +67,15 @@
     toastView.attributedTitle = loadingText;
     [view addSubview:toastView];
     [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
+    
+    if (cancelBlock) {
+        __weak __typeof__(self) self_weak_ = self;
+        [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
+            __typeof__(self) self = self_weak_;
+            [self hideLoading:view];
+            if (cancelBlock) cancelBlock();
+        }];
+    }
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -66,7 +89,7 @@
     if (toastView) [toastView hide];
 }
 
-- (void)showProgressWithAttributedText:(NSAttributedString *)attributedText progress:(CGFloat)progress inView:(UIView *)view
+- (void)showProgressWithAttributedText:(NSAttributedString *)attributedText progress:(CGFloat)progress cancelBlock:(void (^)(void))cancelBlock inView:(UIView *)view
 {
     NSAttributedString *progressText = attributedText;
     if (!progressText && self.defaultProgressText) {
@@ -79,6 +102,20 @@
         [view bringSubviewToFront:toastView];
         toastView.attributedTitle = progressText;
         toastView.progress = progress;
+        
+        [toastView fw_removeAllTouchBlocks];
+        if (cancelBlock) {
+            __weak __typeof__(self) self_weak_ = self;
+            [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
+                __typeof__(self) self = self_weak_;
+                [self hideProgress:view];
+                if (cancelBlock) cancelBlock();
+            }];
+        }
+        
+        if (self.reuseBlock) {
+            self.reuseBlock(toastView);
+        }
         return;
     }
     
@@ -88,6 +125,15 @@
     toastView.progress = progress;
     [view addSubview:toastView];
     [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
+    
+    if (cancelBlock) {
+        __weak __typeof__(self) self_weak_ = self;
+        [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
+            __typeof__(self) self = self_weak_;
+            [self hideProgress:view];
+            if (cancelBlock) cancelBlock();
+        }];
+    }
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -101,7 +147,7 @@
     if (toastView) [toastView hide];
 }
 
-- (void)showMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion inView:(UIView *)view
+- (void)showMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(void (^)(void))completion inView:(UIView *)view
 {
     NSAttributedString *messageText = attributedText;
     if (!messageText && self.defaultMessageText) {
@@ -115,7 +161,7 @@
     
     toastView = [[FWToastView alloc] initWithType:FWToastViewTypeText];
     toastView.tag = 2013;
-    toastView.userInteractionEnabled = completion ? YES : NO;
+    toastView.userInteractionEnabled = !interactive;
     toastView.attributedTitle = messageText;
     [view addSubview:toastView];
     [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];

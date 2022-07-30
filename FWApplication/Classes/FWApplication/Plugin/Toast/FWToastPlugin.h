@@ -28,20 +28,20 @@ NS_SWIFT_NAME(ToastPlugin)
 
 @optional
 
-/// 显示加载吐司，需手工隐藏
-- (void)showLoadingWithAttributedText:(nullable NSAttributedString *)attributedText inView:(UIView *)view;
+/// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之
+- (void)showLoadingWithAttributedText:(nullable NSAttributedString *)attributedText cancelBlock:(nullable void (^)(void))cancelBlock inView:(UIView *)view;
 
 /// 隐藏加载吐司
 - (void)hideLoading:(UIView *)view;
 
-/// 显示进度条吐司，需手工隐藏
-- (void)showProgressWithAttributedText:(nullable NSAttributedString *)attributedText progress:(CGFloat)progress inView:(UIView *)view;
+/// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之
+- (void)showProgressWithAttributedText:(nullable NSAttributedString *)attributedText progress:(CGFloat)progress cancelBlock:(nullable void (^)(void))cancelBlock inView:(UIView *)view;
 
 /// 隐藏进度条吐司
 - (void)hideProgress:(UIView *)view;
 
-/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调
-- (void)showMessageWithAttributedText:(nullable NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion inView:(UIView *)view;
+/// 显示指定样式消息吐司，可设置自动隐藏和允许交互，自动隐藏完成后回调
+- (void)showMessageWithAttributedText:(nullable NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(nullable void (^)(void))completion inView:(UIView *)view;
 
 /// 隐藏消息吐司
 - (void)hideMessage:(UIView *)view;
@@ -63,11 +63,17 @@ NS_SWIFT_NAME(ToastPlugin)
 /// 显示加载吐司，需手工隐藏，支持String和AttributedString
 - (void)fw_showLoadingWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
 
+/// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
+- (void)fw_showLoadingWithText:(nullable id)text cancelBlock:(nullable void (^)(void))cancelBlock NS_REFINED_FOR_SWIFT;
+
 /// 隐藏加载吐司
 - (void)fw_hideLoading NS_REFINED_FOR_SWIFT;
 
 /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
 - (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress NS_REFINED_FOR_SWIFT;
+
+/// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
+- (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress cancelBlock:(nullable void (^)(void))cancelBlock NS_REFINED_FOR_SWIFT;
 
 /// 隐藏进度条吐司
 - (void)fw_hideProgress NS_REFINED_FOR_SWIFT;
@@ -81,8 +87,8 @@ NS_SWIFT_NAME(ToastPlugin)
 /// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
 - (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
-/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+/// 显示指定样式消息吐司，可设置自动隐藏和允许交互，自动隐藏完成后回调，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 /// 隐藏消息吐司
 - (void)fw_hideMessage NS_REFINED_FOR_SWIFT;
@@ -104,11 +110,17 @@ NS_SWIFT_NAME(ToastPlugin)
 /// 显示加载吐司，需手工隐藏，支持String和AttributedString
 - (void)fw_showLoadingWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
 
+/// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
+- (void)fw_showLoadingWithText:(nullable id)text cancelBlock:(nullable void (^)(void))cancelBlock NS_REFINED_FOR_SWIFT;
+
 /// 隐藏加载吐司
 - (void)fw_hideLoading NS_REFINED_FOR_SWIFT;
 
 /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
 - (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress NS_REFINED_FOR_SWIFT;
+
+/// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
+- (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress cancelBlock:(nullable void (^)(void))cancelBlock NS_REFINED_FOR_SWIFT;
 
 /// 隐藏进度条吐司
 - (void)fw_hideProgress NS_REFINED_FOR_SWIFT;
@@ -122,8 +134,8 @@ NS_SWIFT_NAME(ToastPlugin)
 /// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
 - (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
-/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+/// 显示指定样式消息吐司，可设置自动隐藏和允许交互，自动隐藏完成后回调，支持String和AttributedString
+- (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 /// 隐藏消息吐司
 - (void)fw_hideMessage NS_REFINED_FOR_SWIFT;
@@ -142,11 +154,17 @@ NS_SWIFT_NAME(ToastPlugin)
 /// 显示加载吐司，需手工隐藏，支持String和AttributedString
 + (void)fw_showLoadingWithText:(nullable id)text NS_REFINED_FOR_SWIFT;
 
+/// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
++ (void)fw_showLoadingWithText:(nullable id)text cancelBlock:(nullable void (^)(void))cancelBlock NS_REFINED_FOR_SWIFT;
+
 /// 隐藏加载吐司
 + (void)fw_hideLoading NS_REFINED_FOR_SWIFT;
 
 /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
 + (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress NS_REFINED_FOR_SWIFT;
+
+/// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
++ (void)fw_showProgressWithText:(nullable id)text progress:(CGFloat)progress cancelBlock:(nullable void (^)(void))cancelBlock NS_REFINED_FOR_SWIFT;
 
 /// 隐藏进度条吐司
 + (void)fw_hideProgress NS_REFINED_FOR_SWIFT;
@@ -160,8 +178,8 @@ NS_SWIFT_NAME(ToastPlugin)
 /// 显示指定样式消息吐司，自动隐藏，自动隐藏完成后回调，支持String和AttributedString
 + (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
-/// 显示指定样式消息吐司，可设置自动隐藏，自动隐藏完成后回调，支持String和AttributedString
-+ (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+/// 显示指定样式消息吐司，可设置自动隐藏和允许交互，自动隐藏完成后回调，支持String和AttributedString
++ (void)fw_showMessageWithText:(nullable id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
 /// 隐藏消息吐司
 + (void)fw_hideMessage NS_REFINED_FOR_SWIFT;

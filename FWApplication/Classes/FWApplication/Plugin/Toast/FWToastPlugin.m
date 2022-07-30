@@ -46,12 +46,17 @@
 
 - (void)fw_showLoadingWithText:(id)text
 {
+    [self fw_showLoadingWithText:text cancelBlock:nil];
+}
+
+- (void)fw_showLoadingWithText:(id)text cancelBlock:(void (^)(void))cancelBlock
+{
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
     id<FWToastPlugin> plugin = self.fw_toastPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(showLoadingWithAttributedText:inView:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(showLoadingWithAttributedText:cancelBlock:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin showLoadingWithAttributedText:attributedText inView:self];
+    [plugin showLoadingWithAttributedText:attributedText cancelBlock:cancelBlock inView:self];
 }
 
 - (void)fw_hideLoading
@@ -65,12 +70,17 @@
 
 - (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
+    [self fw_showProgressWithText:text progress:progress cancelBlock:nil];
+}
+
+- (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress cancelBlock:(void (^)(void))cancelBlock
+{
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
     id<FWToastPlugin> plugin = self.fw_toastPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(showProgressWithAttributedText:progress:inView:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(showProgressWithAttributedText:progress:cancelBlock:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin showProgressWithAttributedText:attributedText progress:progress inView:self];
+    [plugin showProgressWithAttributedText:attributedText progress:progress cancelBlock:cancelBlock inView:self];
 }
 
 - (void)fw_hideProgress
@@ -94,17 +104,17 @@
 
 - (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style completion:(void (^)(void))completion
 {
-    [self fw_showMessageWithText:text style:style autoHide:YES completion:completion];
+    [self fw_showMessageWithText:text style:style autoHide:YES interactive:completion ? NO : YES completion:completion];
 }
 
-- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(void (^)(void))completion
 {
     NSAttributedString *attributedText = [text isKindOfClass:[NSString class]] ? [[NSAttributedString alloc] initWithString:text] : text;
     id<FWToastPlugin> plugin = self.fw_toastPlugin;
-    if (!plugin || ![plugin respondsToSelector:@selector(showMessageWithAttributedText:style:autoHide:completion:inView:)]) {
+    if (!plugin || ![plugin respondsToSelector:@selector(showMessageWithAttributedText:style:autoHide:interactive:completion:inView:)]) {
         plugin = FWToastPluginImpl.sharedInstance;
     }
-    [plugin showMessageWithAttributedText:attributedText style:style autoHide:autoHide completion:completion inView:self];
+    [plugin showMessageWithAttributedText:attributedText style:style autoHide:autoHide interactive:interactive completion:completion inView:self];
 }
 
 - (void)fw_hideMessage
@@ -154,6 +164,12 @@
     [view fw_showLoadingWithText:text];
 }
 
+- (void)fw_showLoadingWithText:(id)text cancelBlock:(void (^)(void))cancelBlock
+{
+    UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
+    [view fw_showLoadingWithText:text cancelBlock:cancelBlock];
+}
+
 - (void)fw_hideLoading
 {
     UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
@@ -164,6 +180,12 @@
 {
     UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
     [view fw_showProgressWithText:text progress:progress];
+}
+
+- (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress cancelBlock:(void (^)(void))cancelBlock
+{
+    UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
+    [view fw_showProgressWithText:text progress:progress cancelBlock:cancelBlock];
 }
 
 - (void)fw_hideProgress
@@ -190,10 +212,10 @@
     [view fw_showMessageWithText:text style:style completion:completion];
 }
 
-- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
+- (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(void (^)(void))completion
 {
     UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
-    [view fw_showMessageWithText:text style:style autoHide:autoHide completion:completion];
+    [view fw_showMessageWithText:text style:style autoHide:autoHide interactive:interactive completion:completion];
 }
 
 - (void)fw_hideMessage
@@ -226,6 +248,11 @@
     [UIWindow.fw_mainWindow fw_showLoadingWithText:text];
 }
 
++ (void)fw_showLoadingWithText:(id)text cancelBlock:(void (^)(void))cancelBlock
+{
+    [UIWindow.fw_mainWindow fw_showLoadingWithText:text cancelBlock:cancelBlock];
+}
+
 + (void)fw_hideLoading
 {
     [UIWindow.fw_mainWindow fw_hideLoading];
@@ -234,6 +261,11 @@
 + (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
     [UIWindow.fw_mainWindow fw_showProgressWithText:text progress:progress];
+}
+
++ (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress cancelBlock:(void (^)(void))cancelBlock
+{
+    [UIWindow.fw_mainWindow fw_showProgressWithText:text progress:progress cancelBlock:cancelBlock];
 }
 
 + (void)fw_hideProgress
@@ -256,9 +288,9 @@
     [UIWindow.fw_mainWindow fw_showMessageWithText:text style:style completion:completion];
 }
 
-+ (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide completion:(void (^)(void))completion
++ (void)fw_showMessageWithText:(id)text style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(void (^)(void))completion
 {
-    [UIWindow.fw_mainWindow fw_showMessageWithText:text style:style autoHide:autoHide completion:completion];
+    [UIWindow.fw_mainWindow fw_showMessageWithText:text style:style autoHide:autoHide interactive:interactive completion:completion];
 }
 
 + (void)fw_hideMessage

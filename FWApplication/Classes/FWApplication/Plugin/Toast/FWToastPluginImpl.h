@@ -27,6 +27,8 @@ NS_SWIFT_NAME(ToastPluginImpl)
 @property (nonatomic, assign) NSTimeInterval delayTime;
 /// 吐司自定义句柄，show方法自动调用
 @property (nonatomic, copy, nullable) void (^customBlock)(FWToastView *toastView);
+/// 吐司重用句柄，show方法重用时自动调用
+@property (nonatomic, copy, nullable) void (^reuseBlock)(FWToastView *toastView);
 
 /// 默认加载吐司文本句柄
 @property (nonatomic, copy, nullable) NSAttributedString * _Nullable (^defaultLoadingText)(void);
