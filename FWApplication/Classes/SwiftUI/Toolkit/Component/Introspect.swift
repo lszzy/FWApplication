@@ -332,18 +332,6 @@ public enum TargetViewSelector {
     }
 }
 
-/// Allows to safely access an array element by index
-/// Usage: array[safe: 2]
-private extension Array {
-    subscript(safe index: Int) -> Element? {
-        guard index >= 0, index < endIndex else {
-            return nil
-        }
-
-        return self[index]
-    }
-}
-
 // MARK: - UIKitIntrospectionViewController
 /// Introspection UIViewController that is inserted alongside the target view controller.
 @available(iOS 13.0, tvOS 13.0, macOS 10.15.0, *)
@@ -538,13 +526,6 @@ extension View {
         ))
     }
     
-    /// Finds a `UINavigationBar` from any view embedded in a `SwiftUI.NavigationView`.
-    public func introspectNavigationBar(customize: @escaping (UINavigationBar) -> ()) -> some View {
-        return introspectNavigationController { navigationController in
-            customize(navigationController.navigationBar)
-        }
-    }
-    
     /// Finds a `UITableView` from a `SwiftUI.List`, or `SwiftUI.List` child.
     public func introspectTableView(customize: @escaping (UITableView) -> ()) -> some View {
         introspect(selector: TargetViewSelector.ancestorOrSiblingContaining, customize: customize)
@@ -624,6 +605,13 @@ extension View {
     @available(tvOS, unavailable)
     public func introspectColorWell(customize: @escaping (UIColorWell) -> ()) -> some View {
         introspect(selector: TargetViewSelector.siblingContaining, customize: customize)
+    }
+    
+    /// Finds a `UINavigationBar` from any view embedded in a `SwiftUI.NavigationView`.
+    public func introspectNavigationBar(customize: @escaping (UINavigationBar) -> ()) -> some View {
+        return introspectNavigationController { navigationController in
+            customize(navigationController.navigationBar)
+        }
     }
 }
 
