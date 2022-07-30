@@ -448,13 +448,10 @@ public struct UIKitIntrospectionView<TargetViewType: UIView>: UIViewRepresentabl
 // MARK: - ViewExtensions
 @available(iOS 13.0, tvOS 13.0, macOS 10.15.0, *)
 extension View {
+    
     public func inject<SomeView>(_ view: SomeView) -> some View where SomeView: View {
         overlay(view.frame(width: 0, height: 0))
     }
-}
-
-@available(iOS 13.0, tvOS 13.0, macOS 10.15.0, *)
-extension View {
     
     /// Finds a `TargetView` from a `SwiftUI.View`
     public func introspect<TargetView: UIView>(
@@ -605,13 +602,6 @@ extension View {
     @available(tvOS, unavailable)
     public func introspectColorWell(customize: @escaping (UIColorWell) -> ()) -> some View {
         introspect(selector: TargetViewSelector.siblingContaining, customize: customize)
-    }
-    
-    /// Finds a `UINavigationBar` from any view embedded in a `SwiftUI.NavigationView`.
-    public func introspectNavigationBar(customize: @escaping (UINavigationBar) -> ()) -> some View {
-        return introspectNavigationController { navigationController in
-            customize(navigationController.navigationBar)
-        }
     }
 }
 

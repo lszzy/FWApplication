@@ -132,9 +132,9 @@
             toastView.indicatorView = view;
         };
         self.tableView.hidden = YES;
-        [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] inView:self.view];
+        [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] cancelBlock:nil inView:self.view];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] inView:self.view];
+            [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] cancelBlock:nil inView:self.view];
         });
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [toastPlugin hideLoading:self.view];
@@ -150,9 +150,9 @@
         toastView.indicatorView = [[FWIndicatorView alloc] initWithType:type];
     };
     self.tableView.hidden = YES;
-    [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] inView:self.view];
+    [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Loading..."] cancelBlock:nil inView:self.view];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] inView:self.view];
+        [toastPlugin showLoadingWithAttributedText:[[NSAttributedString alloc] initWithString:@"Authenticating..."] cancelBlock:nil inView:self.view];
     });
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [toastPlugin hideLoading:self.view];
