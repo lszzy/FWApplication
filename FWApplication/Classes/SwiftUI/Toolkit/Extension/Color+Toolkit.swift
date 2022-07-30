@@ -109,6 +109,9 @@ extension Color {
         guard let base = _base?.value else {
             return nil
         }
+        if let uiColor = base as? UIColor {
+            return uiColor
+        }
         
         if String(describing: type(of: base)) == "NamedColor" {
             let baseMirror = Mirror(reflecting: base)
