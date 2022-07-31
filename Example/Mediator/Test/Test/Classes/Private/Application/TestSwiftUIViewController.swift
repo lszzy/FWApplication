@@ -65,26 +65,32 @@ struct TestSwiftUIView: View {
     @Environment(\.viewContext) var viewContext: ViewContext
     
     @State var isEmpty: Bool = false
+    @State var topSize: CGSize = .zero
     
     @State var buttonRemovable: Bool = false
     @State var buttonVisible: Bool = true
     
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
-            HStack(alignment: .center, spacing: 50) {
-                ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
-                    .placeholder(TestBundle.imageNamed("test.gif"))
-                    .contentMode(.scaleAspectFill)
-                    .clipped()
-                    .cornerRadius(50)
-                    .frame(width: 100, height: 100)
+            VStack {
+                HStack(alignment: .center, spacing: 50) {
+                    ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+                        .placeholder(TestBundle.imageNamed("test.gif"))
+                        .contentMode(.scaleAspectFill)
+                        .clipped()
+                        .cornerRadius(50)
+                        .frame(width: 100, height: 100)
+                    
+                    WebImageView("http://kvm.wuyong.site/images/images/animation.png")
+                        .resizable()
+                        .clipped()
+                        .frame(width: 100, height: 100)
+                }
                 
-                WebImageView("http://kvm.wuyong.site/images/images/animation.png")
-                    .resizable()
-                    .clipped()
-                    .frame(width: 100, height: 100)
+                Text("width: \(Int(topSize.width)) height: \(Int(topSize.height))")
             }
             .padding(.top, 16)
+            .captureSize(in: $topSize)
             
             HStack(alignment: .center, spacing: 16) {
                 Button {
