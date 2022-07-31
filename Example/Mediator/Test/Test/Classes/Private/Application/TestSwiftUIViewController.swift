@@ -86,126 +86,126 @@ struct TestSwiftUIView: View {
     @State var showingMessage: Bool = false
     
     var body: some View {
-        VStack(alignment: .center, spacing: 16) {
-            VStack {
-                HStack(alignment: .center, spacing: 50) {
-                    ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
-                        .placeholder(TestBundle.imageNamed("test.gif"))
-                        .contentMode(.scaleAspectFill)
-                        .clipped()
-                        .cornerRadius(50)
-                        .frame(width: 100, height: 100)
-                    
-                    WebImageView("http://kvm.wuyong.site/images/images/animation.png")
-                        .resizable()
-                        .clipped()
-                        .frame(width: 100, height: 100)
-                }
-                
-                Text("width: \(Int(topSize.width)) height: \(Int(topSize.height))")
-            }
-            .padding(.top, 16)
-            .captureSize(in: $topSize)
-            
-            HStack(alignment: .center, spacing: 16) {
-                Button {
-                    viewContext.viewController?.fw.close()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Close")
-                        Spacer()
-                    }
-                }
-                .frame(width: (FW.screenWidth - 64) / 3, height: 40)
-                .border(Color.gray, cornerRadius: 20)
-                
-                Button {
-                    buttonVisible.toggle()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Visible")
-                        Spacer()
-                    }
-                }
-                .frame(width: (FW.screenWidth - 64) / 3, height: 40)
-                .border(Color.gray, cornerRadius: 20)
-                .removable(buttonRemovable)
-                
-                Button {
-                    buttonRemovable.toggle()
-                } label: {
-                    HStack {
-                        Spacer()
-                        Text("Removable")
-                        Spacer()
-                    }
-                }
-                .frame(width: (FW.screenWidth - 64) / 3, height: 40)
-                .border(Color.gray, cornerRadius: 20)
-                .visible(buttonVisible)
-            }
-            
-            GeometryReader { proxy in
-                List {
+        GeometryReader { proxy in
+            List {
+                VStack(alignment: .center, spacing: 16) {
                     Text("contentOffset: \(Int(contentOffset.y))")
-                        .captureContentOffset(proxy: proxy)
                     
-                    Button("Open Router") {
-                        Router.openURL("https://www.baidu.com")
-                    }
-                    
-                    Button("Push SwiftUI") {
-                        let viewController = TestSwiftUIViewController()
-                        UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
-                    }
-                    
-                    Button("Push HostingController") {
-                        let viewController = SwiftUIViewController()
-                        viewContext.viewController?.fw.open(viewController)
-                    }
-                    
-                    Button("Present HostingController") {
-                        let viewController = SwiftUIViewController()
-                        viewContext.viewController?.present(viewController, animated: true)
-                    }
-                    
-                    Button("Show Alert") {
-                        showingAlert = true
-                    }
-                    
-                    Button("Show Loading") {
-                        showingLoading = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                            showingLoading = false
+                    VStack {
+                        HStack(alignment: .center, spacing: 50) {
+                            ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+                                .placeholder(TestBundle.imageNamed("test.gif"))
+                                .contentMode(.scaleAspectFill)
+                                .clipped()
+                                .cornerRadius(50)
+                                .frame(width: 100, height: 100)
+                            
+                            WebImageView("http://kvm.wuyong.site/images/images/animation.png")
+                                .resizable()
+                                .clipped()
+                                .frame(width: 100, height: 100)
                         }
+                        
+                        Text("width: \(Int(topSize.width)) height: \(Int(topSize.height))")
                     }
+                    .padding(.top, 16)
+                    .captureSize(in: $topSize)
                     
-                    Button("Show Progress") {
-                        showingProgress = true
-                    }
-                    
-                    Button("Show Message") {
-                        showingMessage = true
-                    }
-                    
-                    Button("Show Empty") {
-                        showingEmpty = true
+                    HStack(alignment: .center, spacing: 16) {
+                        Button {
+                            viewContext.viewController?.fw.close()
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("Close")
+                                Spacer()
+                            }
+                        }
+                        .frame(width: (FW.screenWidth - 64) / 3, height: 40)
+                        .border(Color.gray, cornerRadius: 20)
+                        
+                        Button {
+                            buttonVisible.toggle()
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("Visible")
+                                Spacer()
+                            }
+                        }
+                        .frame(width: (FW.screenWidth - 64) / 3, height: 40)
+                        .border(Color.gray, cornerRadius: 20)
+                        .removable(buttonRemovable)
+                        
+                        Button {
+                            buttonRemovable.toggle()
+                        } label: {
+                            HStack {
+                                Spacer()
+                                Text("Removable")
+                                Spacer()
+                            }
+                        }
+                        .frame(width: (FW.screenWidth - 64) / 3, height: 40)
+                        .border(Color.gray, cornerRadius: 20)
+                        .visible(buttonVisible)
                     }
                 }
-                .captureContentOffset(in: $contentOffset)
-                .introspectTableView { tableView in
-                    tableView.fw.setRefreshing {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            tableView.fw.endRefreshing()
-                        }
+                .captureContentOffset(proxy: proxy)
+                
+                Button("Open Router") {
+                    Router.openURL("https://www.baidu.com")
+                }
+                
+                Button("Push SwiftUI") {
+                    let viewController = TestSwiftUIViewController()
+                    UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
+                }
+                
+                Button("Push HostingController") {
+                    let viewController = SwiftUIViewController()
+                    viewContext.viewController?.fw.open(viewController)
+                }
+                
+                Button("Present HostingController") {
+                    let viewController = SwiftUIViewController()
+                    viewContext.viewController?.present(viewController, animated: true)
+                }
+                
+                Button("Show Alert") {
+                    showingAlert = true
+                }
+                
+                Button("Show Loading") {
+                    showingLoading = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        showingLoading = false
                     }
-                    
-                    tableView.fw.setLoading {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            tableView.fw.endLoading()
-                        }
+                }
+                
+                Button("Show Progress") {
+                    showingProgress = true
+                }
+                
+                Button("Show Message") {
+                    showingMessage = true
+                }
+                
+                Button("Show Empty") {
+                    showingEmpty = true
+                }
+            }
+            .captureContentOffset(in: $contentOffset)
+            .introspectTableView { tableView in
+                tableView.fw.setRefreshing {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        tableView.fw.endRefreshing()
+                    }
+                }
+                
+                tableView.fw.setLoading {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        tableView.fw.endLoading()
                     }
                 }
             }
