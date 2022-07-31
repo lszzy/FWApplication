@@ -113,40 +113,6 @@ public struct NavigationBarConfiguration {
 @available(iOS 13.0, *)
 extension View {
     
-    /// 配置当前视图控制器
-    public func viewControllerConfigure(
-        _ configuration: @escaping (UIViewController) -> ()
-    ) -> some View {
-        return introspectViewController { introspectionController in
-            let viewController = introspectionController.navigationController?.topViewController
-            configuration(viewController ?? introspectionController)
-        }
-    }
-    
-    /// 配置当前导航栏
-    public func navigationBarConfigure(
-        _ configuration: NavigationBarConfiguration
-    ) -> some View {
-        return viewControllerConfigure { viewController in
-            configuration.configure(viewController: viewController)
-        }
-    }
-    
-    /// 配置导航栏左侧、标题、右侧按钮和背景，兼容AnyView和UIKit对象
-    public func navigationBarConfigure(
-        leading: Any?,
-        title: Any?,
-        trailing: Any? = nil,
-        background: Any? = nil
-    ) -> some View {
-        return navigationBarConfigure(NavigationBarConfiguration(
-            leading: leading,
-            title: title,
-            trailing: trailing,
-            background: background
-        ))
-    }
-    
     /// 配置导航栏SwiftUI左侧、标题、右侧视图和背景
     public func navigationBarConfigure<Leading: View, Title: View, Trailing: View>(
         leading: Leading,
@@ -197,6 +163,49 @@ extension View {
             trailing: AnyView(trailing),
             background: background
         ))
+    }
+    
+    /// 配置导航栏左侧、标题、右侧按钮和背景，兼容AnyView和UIKit对象
+    public func navigationBarConfigure(
+        leading: Any?,
+        title: Any?,
+        trailing: Any? = nil,
+        background: Any? = nil
+    ) -> some View {
+        return navigationBarConfigure(NavigationBarConfiguration(
+            leading: leading,
+            title: title,
+            trailing: trailing,
+            background: background
+        ))
+    }
+    
+    /// 配置当前导航栏
+    public func navigationBarConfigure(
+        _ configuration: NavigationBarConfiguration
+    ) -> some View {
+        return viewControllerConfigure { viewController in
+            configuration.configure(viewController: viewController)
+        }
+    }
+    
+    /// 配置当前视图控制器
+    public func viewControllerConfigure(
+        _ configuration: @escaping (UIViewController) -> ()
+    ) -> some View {
+        /*
+        return introspectViewController { introspectController in
+            let viewController = introspectController.navigationController?.topViewController
+            configuration(viewController ?? introspectController)
+        }*/
+        
+        return introspect(selector: { introspectView in
+            return Introspect.findHostingView(from: introspectView)
+        }) { hostingView in
+            guard let hostingController = hostingView.fw.viewController else { return }
+            let viewController = hostingController.navigationController?.topViewController
+            configuration(viewController ?? hostingController)
+        }
     }
     
 }
