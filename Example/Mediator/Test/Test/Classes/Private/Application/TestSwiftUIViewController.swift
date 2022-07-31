@@ -19,9 +19,7 @@ class SwiftUIViewController: HostingController {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
         navigationItem.hidesBackButton = true
-        if mode == 2 {
-            fw.navigationBarHidden = true
-        } else {
+        if mode != 2 {
             fw.navigationBarHidden = [true, false].randomElement()!
         }
         
