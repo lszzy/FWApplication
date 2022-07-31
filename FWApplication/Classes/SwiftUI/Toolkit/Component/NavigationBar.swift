@@ -14,10 +14,7 @@ import FWApplication
 import FWApplicationCompatible
 #endif
 
-// MARK: - NavigationBarConfiguration
 /// 导航栏配置，兼容AnyView和UIKit对象
-///
-/// [SwiftUIX](https://github.com/SwiftUIX/SwiftUIX)
 @available(iOS 13.0, *)
 public struct NavigationBarConfiguration {
     public var leading: Any?
@@ -45,142 +42,107 @@ public struct NavigationBarConfiguration {
         self.appearance = appearance
         self.customize = customize
     }
-}
-
-// MARK: - NavigationBarConfigurator
-@available(iOS 13.0, *)
-struct NavigationBarConfigurator: UIViewControllerRepresentable {
-    // MARK: - Private
-    class UIViewControllerType: UIViewController {
-        var configuration: NavigationBarConfiguration?
-        private var movedToParent: Bool = false
-        
-        override func willMove(toParent parent: UIViewController?) {
-            if !movedToParent {
-                movedToParent = true
-                updateNavigationBar(viewController: parent?.navigationController?.visibleViewController)
+    
+    public func configure(
+        viewController: UIViewController
+    ) {
+        if let leading = leading as? AnyView {
+            if viewController.navigationItem.leftBarButtonItem == nil {
+                viewController.navigationItem.leftBarButtonItem = .init(customView: HostingView(rootView: leading))
+            } else if let view = viewController.navigationItem.leftBarButtonItem?.customView as? HostingView<AnyView> {
+                view.rootView = leading
+            } else {
+                viewController.navigationItem.leftBarButtonItem?.customView = HostingView(rootView: leading)
             }
-            super.willMove(toParent: parent)
+        } else if let leading = leading {
+            viewController.fw.leftBarItem = leading
         }
         
-        override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
-            updateNavigationBar(viewController: parent?.navigationController?.visibleViewController)
+        if let title = title as? AnyView {
+            if let view = viewController.navigationItem.titleView as? HostingView<AnyView> {
+                view.rootView = title
+            } else {
+                viewController.navigationItem.titleView = HostingView(rootView: title)
+            }
+        } else if let title = title {
+            if let titleView = title as? UIView {
+                viewController.navigationItem.titleView = titleView
+            } else if let titleString = title as? String {
+                viewController.navigationItem.title = titleString
+            }
         }
         
-        override func viewDidAppear(_ animated: Bool) {
-            super.viewDidAppear(animated)
-            updateNavigationBar(viewController: parent?.navigationController?.visibleViewController
-            )
+        if let trailing = trailing as? AnyView {
+            if viewController.navigationItem.rightBarButtonItem == nil {
+                viewController.navigationItem.rightBarButtonItem = .init(customView: HostingView(rootView: trailing))
+            } else if let view = viewController.navigationItem.rightBarButtonItem?.customView as? HostingView<AnyView> {
+                view.rootView = trailing
+            } else {
+                viewController.navigationItem.rightBarButtonItem?.customView = HostingView(rootView: trailing)
+            }
+        } else if let trailing = trailing {
+            viewController.fw.rightBarItem = trailing
         }
         
-        override func viewDidDisappear(_ animated: Bool) {
-            super.viewDidDisappear(animated)
-            updateNavigationBar(viewController: parent?.navigationController?.visibleViewController)
+        viewController.navigationItem.leftBarButtonItem?.customView?.sizeToFit()
+        viewController.navigationItem.titleView?.sizeToFit()
+        viewController.navigationItem.rightBarButtonItem?.customView?.sizeToFit()
+        
+        if let appearance = appearance {
+            viewController.fw.navigationBarAppearance = appearance()
+        } else if let style = style {
+            viewController.fw.navigationBarStyle = style
+        } else if let background = background {
+            let appearance = NavigationBarAppearance()
+            if let color = background as? Color {
+                appearance.backgroundColor = color.toUIColor()
+            } else if let uiColor = background as? UIColor {
+                appearance.backgroundColor = uiColor
+            } else if let image = background as? UIImage {
+                appearance.backgroundImage = image
+            } else if let transparent = background as? Bool {
+                appearance.backgroundTransparent = transparent
+            }
+            viewController.fw.navigationBarAppearance = appearance
         }
         
-        func updateNavigationBar(viewController: UIViewController?) {
-            guard let parent = viewController else { return }
-            
-            if let leading = configuration?.leading as? AnyView {
-                if parent.navigationItem.leftBarButtonItem == nil {
-                    parent.navigationItem.leftBarButtonItem = .init(customView: HostingView(rootView: leading))
-                } else if let view = parent.navigationItem.leftBarButtonItem?.customView as? HostingView<AnyView> {
-                    view.rootView = leading
-                } else {
-                    parent.navigationItem.leftBarButtonItem?.customView = HostingView(rootView: leading)
-                }
-            } else if let leading = configuration?.leading {
-                parent.fw.leftBarItem = leading
-            }
-            
-            if let title = configuration?.title as? AnyView {
-                if let view = parent.navigationItem.titleView as? HostingView<AnyView> {
-                    view.rootView = title
-                } else {
-                    parent.navigationItem.titleView = HostingView(rootView: title)
-                }
-            } else if let title = configuration?.title {
-                if let titleView = title as? UIView {
-                    parent.navigationItem.titleView = titleView
-                } else if let titleString = title as? String {
-                    parent.navigationItem.title = titleString
-                }
-            }
-            
-            if let trailing = configuration?.trailing as? AnyView {
-                if parent.navigationItem.rightBarButtonItem == nil {
-                    parent.navigationItem.rightBarButtonItem = .init(customView: HostingView(rootView: trailing))
-                } else if let view = parent.navigationItem.rightBarButtonItem?.customView as? HostingView<AnyView> {
-                    view.rootView = trailing
-                } else {
-                    parent.navigationItem.rightBarButtonItem?.customView = HostingView(rootView: trailing)
-                }
-            } else if let trailing = configuration?.trailing {
-                parent.fw.rightBarItem = trailing
-            }
-            
-            parent.navigationItem.leftBarButtonItem?.customView?.sizeToFit()
-            parent.navigationItem.titleView?.sizeToFit()
-            parent.navigationItem.rightBarButtonItem?.customView?.sizeToFit()
-            
-            if let appearance = configuration?.appearance {
-                parent.fw.navigationBarAppearance = appearance()
-            } else if let style = configuration?.style {
-                parent.fw.navigationBarStyle = style
-            } else if let color = configuration?.background as? Color {
-                parent.navigationController?.navigationBar.fw.backgroundColor = color.toUIColor()
-            } else if let uiColor = configuration?.background as? UIColor {
-                parent.navigationController?.navigationBar.fw.backgroundColor = uiColor
-            }
-            
-            configuration?.customize?(parent)
-        }
-    }
-    
-    // MARK: - Lifecycle
-    let configuration: NavigationBarConfiguration?
-    
-    init(configuration: NavigationBarConfiguration?) {
-        self.configuration = configuration
-    }
-    
-    // MARK: - UIViewControllerRepresentable
-    func makeUIViewController(context: Context) -> UIViewControllerType {
-        .init()
-    }
-    
-    func updateUIViewController(_ viewController: UIViewControllerType, context: Context) {
-        viewController.configuration = configuration
-        viewController.updateNavigationBar(viewController: viewController.navigationController?.topViewController)
-    }
-    
-    static func dismantleUIViewController(_ uiViewController: UIViewControllerType, coordinator: Coordinator) {
-        uiViewController.updateNavigationBar(viewController: uiViewController.navigationController?.topViewController)
+        customize?(viewController)
     }
 }
 
-// MARK: - View+NavigationBar
 @available(iOS 13.0, *)
 extension View {
     
-    /// 配置导航栏，兼容AnyView和UIKit对象
+    /// 配置当前视图控制器
+    public func viewControllerConfigure(
+        _ configuration: @escaping (UIViewController) -> ()
+    ) -> some View {
+        return introspect { introspectView in
+            return Introspect.findHostingView(from: introspectView)
+        } customize: { hostingView in
+            if let viewController = hostingView.fw.viewController?.navigationController?.topViewController {
+                configuration(viewController)
+            }
+        }
+    }
+    
+    /// 配置当前导航栏
     public func navigationBarConfigure(
         _ configuration: NavigationBarConfiguration
     ) -> some View {
-        background(
-            NavigationBarConfigurator(configuration: configuration)
-        )
+        return viewControllerConfigure { viewController in
+            configuration.configure(viewController: viewController)
+        }
     }
     
-    /// 配置导航栏通用左侧、标题、右侧内容和可选背景
+    /// 配置导航栏左侧、标题、右侧按钮和背景，兼容AnyView和UIKit对象
     public func navigationBarConfigure(
         leading: Any?,
         title: Any?,
         trailing: Any? = nil,
         background: Any? = nil
     ) -> some View {
-        navigationBarConfigure(NavigationBarConfiguration(
+        return navigationBarConfigure(NavigationBarConfiguration(
             leading: leading,
             title: title,
             trailing: trailing,
@@ -188,14 +150,14 @@ extension View {
         ))
     }
     
-    /// 配置导航栏SwiftUI左侧、标题、右侧视图和可选背景色
+    /// 配置导航栏SwiftUI左侧、标题、右侧视图和背景
     public func navigationBarConfigure<Leading: View, Title: View, Trailing: View>(
         leading: Leading,
         title: Title,
         trailing: Trailing,
         background: Color? = nil
     ) -> some View {
-        navigationBarConfigure(NavigationBarConfiguration(
+        return navigationBarConfigure(NavigationBarConfiguration(
             leading: AnyView(leading),
             title: AnyView(title),
             trailing: AnyView(trailing),
@@ -203,37 +165,37 @@ extension View {
         ))
     }
         
-    /// 配置导航栏SwiftUI左侧、标题视图和可选背景色
+    /// 配置导航栏SwiftUI左侧、标题视图和背景
     public func navigationBarConfigure<Leading: View, Title: View>(
         leading: Leading,
         title: Title,
         background: Color? = nil
     ) -> some View {
-        navigationBarConfigure(NavigationBarConfiguration(
+        return navigationBarConfigure(NavigationBarConfiguration(
             leading: AnyView(leading),
             title: AnyView(title),
             background: background
         ))
     }
     
-    /// 配置导航栏SwiftUI标题视图和可选背景色
+    /// 配置导航栏SwiftUI标题视图和背景
     public func navigationBarConfigure<Title: View>(
         title: Title,
         background: Color? = nil
     ) -> some View {
-        navigationBarConfigure(NavigationBarConfiguration(
+        return navigationBarConfigure(NavigationBarConfiguration(
             title: AnyView(title),
             background: background
         ))
     }
     
-    /// 配置导航栏SwiftUI标题、右侧视图和可选背景色
+    /// 配置导航栏SwiftUI标题、右侧视图和背景
     public func navigationBarConfigure<Title: View, Trailing: View>(
         title: Title,
         trailing: Trailing,
         background: Color? = nil
     ) -> some View {
-        navigationBarConfigure(NavigationBarConfiguration(
+        return navigationBarConfigure(NavigationBarConfiguration(
             title: AnyView(title),
             trailing: AnyView(trailing),
             background: background

@@ -13,18 +13,15 @@ import Core
 @available(iOS 13.0, *)
 class SwiftUIViewController: HostingController {
     
-    var hidesNavbar = false
-    
     override func setupSubviews() {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
-        fw.navigationBarHidden = true
+        navigationItem.hidesBackButton = true
+        fw.navigationBarHidden = [true, false].randomElement()!
         
         rootView = TestSwiftUIView()
-            .viewContext(self, userInfo: ["hidesNavbar": hidesNavbar])
-            .navigationBarHidden(hidesNavbar)
-            .navigationBarBackButtonHidden(true)
-            .navigationBarItems(
+            .viewContext(self)
+            .navigationBarConfigure(
                 leading: Button(action: {
                     UIWindow.fw.close()
                 }, label: {
@@ -34,7 +31,7 @@ class SwiftUIViewController: HostingController {
                         Spacer()
                     }
                 }),
-                center: Text("SwiftUIViewController"),
+                title: Text("SwiftUIViewController"),
                 background: Color(UIColor.fw.randomColor)
             )
             .eraseToAnyView()
@@ -45,24 +42,15 @@ class SwiftUIViewController: HostingController {
 @available(iOS 13.0, *)
 class TestSwiftUIViewController: TestViewController {
     
-    var hidesNavbar = false
-    
     override func renderView() {
-        fw.navigationBarHidden = hidesNavbar
+        fw.navigationBarHidden = [true, false].randomElement()!
         
         let hostingView = TestSwiftUIView()
-            .viewContext(self, userInfo: ["hidesNavbar": hidesNavbar])
-            .navigationBarItems(
-                leading: Button(action: { [weak self] in
-                    self?.fw.close()
-                }, label: {
-                    HStack {
-                        Spacer()
-                        Image(uiImage: Icon.backImage?.fw.image(tintColor: Theme.textColor) ?? UIImage())
-                        Spacer()
-                    }
-                }),
-                center: Text("TestSwiftUIViewController")
+            .viewContext(self)
+            .navigationBarConfigure(
+                leading: Icon.backImage,
+                title: "TestSwiftUIViewController",
+                background: UIColor.fw.randomColor
             )
             .wrappedHostingView()
         view.addSubview(hostingView)
@@ -133,16 +121,12 @@ struct TestSwiftUIView: View {
                 
                 Button("Open SwiftUI") {
                     let viewController = TestSwiftUIViewController()
-                    let userInfo = viewContext.userInfo ?? [:]
-                    viewController.hidesNavbar = !userInfo["hidesNavbar"].safeBool
-                    Router.push(viewController, animated: true)
+                    UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
                 }
                 
                 Button("Open HostingController") {
                     let viewController = SwiftUIViewController()
-                    let userInfo = viewContext.userInfo ?? [:]
-                    viewController.hidesNavbar = !userInfo["hidesNavbar"].safeBool
-                    UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
+                    viewContext.viewController?.fw.open(viewController)
                 }
                 
                 Button("Show Alert") {
