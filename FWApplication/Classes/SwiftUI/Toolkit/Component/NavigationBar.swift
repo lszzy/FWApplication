@@ -189,7 +189,7 @@ extension View {
         }
     }
     
-    /// 配置当前视图控制器
+    /// 配置当前顶部视图控制器
     public func viewControllerConfigure(
         _ configuration: @escaping (UIViewController) -> ()
     ) -> some View {
@@ -206,6 +206,28 @@ extension View {
             let viewController = hostingController.navigationController?.topViewController
             configuration(viewController ?? hostingController)
         }
+    }
+    
+    /// 配置当前SwiftUI视图对应UIView。仅适用于有对应UIView的视图(如Text等)，不支持Layer视图(如VStack等)
+    public func hostingViewConfigure(
+        _ configuration: @escaping (UIView) -> ()
+    ) -> some View {
+        return introspect(selector: { introspectView in
+            guard let viewHost = Introspect.findViewHost(from: introspectView) else {
+                return nil
+            }
+            
+            guard let superview = viewHost.superview,
+                  let entryIndex = superview.subviews.firstIndex(of: viewHost),
+                  entryIndex > 0 else {
+                return nil
+            }
+            
+            for subview in superview.subviews[0 ..< entryIndex].reversed() {
+                return subview
+            }
+            return nil
+        }, customize: configuration)
     }
     
 }
