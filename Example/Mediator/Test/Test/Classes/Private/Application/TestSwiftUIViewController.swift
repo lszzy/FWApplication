@@ -74,6 +74,7 @@ struct TestSwiftUIView: View {
     
     @State var isEmpty: Bool = false
     @State var topSize: CGSize = .zero
+    @State var contentOffset: CGPoint = .zero
     
     @State var buttonRemovable: Bool = false
     @State var buttonVisible: Bool = true
@@ -146,59 +147,65 @@ struct TestSwiftUIView: View {
                 .visible(buttonVisible)
             }
             
-            List {
-                Button("Open Router") {
-                    Router.openURL("https://www.baidu.com")
-                }
-                
-                Button("Push SwiftUI") {
-                    let viewController = TestSwiftUIViewController()
-                    UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
-                }
-                
-                Button("Push HostingController") {
-                    let viewController = SwiftUIViewController()
-                    viewContext.viewController?.fw.open(viewController)
-                }
-                
-                Button("Present HostingController") {
-                    let viewController = SwiftUIViewController()
-                    viewContext.viewController?.present(viewController, animated: true)
-                }
-                
-                Button("Show Alert") {
-                    showingAlert = true
-                }
-                
-                Button("Show Loading") {
-                    showingLoading = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        showingLoading = false
+            GeometryReader { proxy in
+                List {
+                    Text("contentOffset: \(Int(contentOffset.y))")
+                        .captureContentOffset(proxy: proxy)
+                    
+                    Button("Open Router") {
+                        Router.openURL("https://www.baidu.com")
+                    }
+                    
+                    Button("Push SwiftUI") {
+                        let viewController = TestSwiftUIViewController()
+                        UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
+                    }
+                    
+                    Button("Push HostingController") {
+                        let viewController = SwiftUIViewController()
+                        viewContext.viewController?.fw.open(viewController)
+                    }
+                    
+                    Button("Present HostingController") {
+                        let viewController = SwiftUIViewController()
+                        viewContext.viewController?.present(viewController, animated: true)
+                    }
+                    
+                    Button("Show Alert") {
+                        showingAlert = true
+                    }
+                    
+                    Button("Show Loading") {
+                        showingLoading = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            showingLoading = false
+                        }
+                    }
+                    
+                    Button("Show Progress") {
+                        showingProgress = true
+                    }
+                    
+                    Button("Show Message") {
+                        showingMessage = true
+                    }
+                    
+                    Button("Show Empty") {
+                        showingEmpty = true
                     }
                 }
-                
-                Button("Show Progress") {
-                    showingProgress = true
-                }
-                
-                Button("Show Message") {
-                    showingMessage = true
-                }
-                
-                Button("Show Empty") {
-                    showingEmpty = true
-                }
-            }
-            .introspectTableView { tableView in
-                tableView.fw.setRefreshing {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        tableView.fw.endRefreshing()
+                .captureContentOffset(in: $contentOffset)
+                .introspectTableView { tableView in
+                    tableView.fw.setRefreshing {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            tableView.fw.endRefreshing()
+                        }
                     }
-                }
-                
-                tableView.fw.setLoading {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                        tableView.fw.endLoading()
+                    
+                    tableView.fw.setLoading {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            tableView.fw.endLoading()
+                        }
                     }
                 }
             }

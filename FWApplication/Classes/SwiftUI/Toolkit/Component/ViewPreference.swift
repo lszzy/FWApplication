@@ -69,23 +69,40 @@ extension View {
         .preference(key: ViewSizePreferenceKey.self, value: nil)
     }
     
-    /// 捕获当前滚动视图内容偏移
-    public func captureContentOffset<S: View>(in binding: Binding<CGPoint>, scrollView: @escaping (AnyView) -> S) -> some View {
-        GeometryReader { outsideProxy in
-            scrollView(AnyView(
-                ZStack {
-                    GeometryReader { insideProxy in
-                        Color.clear.preference(
-                            key: ViewContentOffsetPreferenceKey.self,
-                            value: ViewContentOffsetPreferenceKey.contentOffset(insideProxy: insideProxy, outsideProxy: outsideProxy)
-                        )
-                    }
-                    self
-                }
-            ))
-            .onPreferenceChange(ViewContentOffsetPreferenceKey.self, perform: { value in
-                binding.wrappedValue = value ?? .zero
-            })
+    /// 捕获当前滚动视图内容偏移，需滚动视图调用，且用GeometryReader包裹滚动视图
+    ///
+    /// 使用示例：
+    /// GeometryReader { proxy in
+    ///     List { ... }
+    ///     .captureContentOffset(in: $contentOffsets)
+    /// }
+    public func captureContentOffset(in binding: Binding<CGPoint>) -> some View {
+        self.onPreferenceChange(ViewContentOffsetPreferenceKey.self, perform: { value in
+            binding.wrappedValue = value ?? .zero
+        })
+    }
+    
+    /// 捕获当前滚动视图内容偏移，需滚动视图第一个子视图调用
+    ///
+    /// 使用示例：
+    /// GeometryReader { proxy in
+    ///     List {
+    ///       Cell
+    ///       .captureContentOffset(proxy: proxy)
+    ///
+    ///       ...
+    ///     }
+    ///     .captureContentOffset(in: $contentOffsets)
+    /// }
+    public func captureContentOffset(proxy outsideProxy: GeometryProxy) -> some View {
+        ZStack {
+            GeometryReader { insideProxy in
+                Color.clear.preference(
+                    key: ViewContentOffsetPreferenceKey.self,
+                    value: ViewContentOffsetPreferenceKey.contentOffset(insideProxy: insideProxy, outsideProxy: outsideProxy)
+                )
+            }
+            self
         }
     }
     
