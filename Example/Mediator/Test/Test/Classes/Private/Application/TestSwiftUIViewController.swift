@@ -78,6 +78,12 @@ struct TestSwiftUIView: View {
     @State var buttonRemovable: Bool = false
     @State var buttonVisible: Bool = true
     
+    @State var showingAlert: Bool = false
+    @State var showingEmpty: Bool = false
+    @State var showingLoading: Bool = false
+    @State var showingProgress: Bool = false
+    @State var showingMessage: Bool = false
+    
     var body: some View {
         VStack(alignment: .center, spacing: 16) {
             VStack {
@@ -161,36 +167,26 @@ struct TestSwiftUIView: View {
                 }
                 
                 Button("Show Alert") {
-                    viewContext.viewController?.fw.showAlert(title: "我是标题", message: "我是内容")
+                    showingAlert = true
                 }
                 
                 Button("Show Loading") {
-                    viewContext.viewController?.fw.showLoading()
+                    showingLoading = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        viewContext.viewController?.fw.hideLoading()
+                        showingLoading = false
                     }
                 }
                 
                 Button("Show Progress") {
-                    TestViewController.mockProgress { progress, finished in
-                        if finished {
-                            viewContext.viewController?.fw.hideProgress()
-                        } else {
-                            viewContext.viewController?.fw.showProgress(progress, text: "上传中(\(Int(progress * 100)))")
-                        }
-                    }
+                    showingProgress = true
                 }
                 
                 Button("Show Message") {
-                    viewContext.viewController?.fw.showMessage(text: "我是提示信息")
+                    showingMessage = true
                 }
                 
                 Button("Show Empty") {
-                    isEmpty = true
-                    viewContext.viewController?.fw.showEmptyView(text: "我是标题", detail: "我是详细信息", image: UIImage.fw.appIconImage(), action: "刷新", block: { _ in
-                        viewContext.viewController?.fw.hideEmptyView()
-                        isEmpty = false
-                    })
+                    showingEmpty = true
                 }
             }
             .introspectTableView { tableView in
@@ -207,7 +203,30 @@ struct TestSwiftUIView: View {
                 }
             }
         }
-        .hidden(isEmpty)
+        .removable(isEmpty)
+        .showAlert($showingAlert) { viewController in
+            viewController.fw.showAlert(title: "我是标题", message: "我是内容")
+        }
+        .showEmpty(showingEmpty) { viewController in
+            isEmpty = true
+            viewController.fw.showEmptyView(text: "我是标题", detail: "我是详细信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息", image: UIImage.fw.appIconImage(), action: "刷新") { _ in
+                showingEmpty = false
+                isEmpty = false
+            }
+        }
+        .showLoading(showingLoading)
+        .showProgress(showingProgress, customize: { viewController in
+            TestViewController.mockProgress { progress, finished in
+                if finished {
+                    showingProgress = false
+                } else {
+                    viewController.fw.showProgress(progress, text: "上传中(\(Int(progress * 100)))")
+                }
+            }
+        })
+        .showMessage($showingMessage, customize: { viewController in
+            viewController.fw.showMessage(text: "我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息")
+        })
     }
     
 }
