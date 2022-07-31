@@ -68,6 +68,15 @@
     [plugin hideLoading:self];
 }
 
+- (BOOL)fw_isShowingLoading
+{
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
+    if (!plugin || ![plugin respondsToSelector:@selector(isShowingLoading:)]) {
+        plugin = FWToastPluginImpl.sharedInstance;
+    }
+    return [plugin isShowingLoading:self];
+}
+
 - (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
     [self fw_showProgressWithText:text progress:progress cancelBlock:nil];
@@ -90,6 +99,15 @@
         plugin = FWToastPluginImpl.sharedInstance;
     }
     [plugin hideProgress:self];
+}
+
+- (BOOL)fw_isShowingProgress
+{
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
+    if (!plugin || ![plugin respondsToSelector:@selector(isShowingProgress:)]) {
+        plugin = FWToastPluginImpl.sharedInstance;
+    }
+    return [plugin isShowingProgress:self];
 }
 
 - (void)fw_showMessageWithText:(id)text
@@ -124,6 +142,15 @@
         plugin = FWToastPluginImpl.sharedInstance;
     }
     [plugin hideMessage:self];
+}
+
+- (BOOL)fw_isShowingMessage
+{
+    id<FWToastPlugin> plugin = self.fw_toastPlugin;
+    if (!plugin || ![plugin respondsToSelector:@selector(isShowingMessage:)]) {
+        plugin = FWToastPluginImpl.sharedInstance;
+    }
+    return [plugin isShowingMessage:self];
 }
 
 @end
@@ -176,6 +203,12 @@
     [view fw_hideLoading];
 }
 
+- (BOOL)fw_isShowingLoading
+{
+    UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
+    return [view fw_isShowingLoading];
+}
+
 - (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
     UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
@@ -192,6 +225,12 @@
 {
     UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
     [view fw_hideProgress];
+}
+
+- (BOOL)fw_isShowingProgress
+{
+    UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
+    return [view fw_isShowingProgress];
 }
 
 - (void)fw_showMessageWithText:(id)text
@@ -222,6 +261,12 @@
 {
     UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
     [view fw_hideMessage];
+}
+
+- (BOOL)fw_isShowingMessage
+{
+    UIView *view = self.fw_toastInWindow ? UIWindow.fw_mainWindow : self.view;
+    return [view fw_isShowingMessage];
 }
 
 @end
@@ -258,6 +303,11 @@
     [UIWindow.fw_mainWindow fw_hideLoading];
 }
 
++ (BOOL)fw_isShowingLoading
+{
+    return [UIWindow.fw_mainWindow fw_isShowingLoading];
+}
+
 + (void)fw_showProgressWithText:(id)text progress:(CGFloat)progress
 {
     [UIWindow.fw_mainWindow fw_showProgressWithText:text progress:progress];
@@ -271,6 +321,11 @@
 + (void)fw_hideProgress
 {
     [UIWindow.fw_mainWindow fw_hideProgress];
+}
+
++ (BOOL)fw_isShowingProgress
+{
+    return [UIWindow.fw_mainWindow fw_isShowingProgress];
 }
 
 + (void)fw_showMessageWithText:(id)text
@@ -296,6 +351,11 @@
 + (void)fw_hideMessage
 {
     [UIWindow.fw_mainWindow fw_hideMessage];
+}
+
++ (BOOL)fw_isShowingMessage
+{
+    return [UIWindow.fw_mainWindow fw_isShowingMessage];
 }
 
 @end

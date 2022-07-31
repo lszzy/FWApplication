@@ -89,6 +89,12 @@
     if (toastView) [toastView hide];
 }
 
+- (BOOL)isShowingLoading:(UIView *)view
+{
+    FWToastView *toastView = [view viewWithTag:2011];
+    return toastView ? YES : NO;
+}
+
 - (void)showProgressWithAttributedText:(NSAttributedString *)attributedText progress:(CGFloat)progress cancelBlock:(void (^)(void))cancelBlock inView:(UIView *)view
 {
     NSAttributedString *progressText = attributedText;
@@ -147,6 +153,12 @@
     if (toastView) [toastView hide];
 }
 
+- (BOOL)isShowingProgress:(UIView *)view
+{
+    FWToastView *toastView = [view viewWithTag:2012];
+    return toastView ? YES : NO;
+}
+
 - (void)showMessageWithAttributedText:(NSAttributedString *)attributedText style:(FWToastStyle)style autoHide:(BOOL)autoHide interactive:(BOOL)interactive completion:(void (^)(void))completion inView:(UIView *)view
 {
     NSAttributedString *messageText = attributedText;
@@ -180,6 +192,12 @@
 {
     FWToastView *toastView = [view viewWithTag:2013];
     if (toastView) [toastView hide];
+}
+
+- (BOOL)isShowingMessage:(UIView *)view
+{
+    FWToastView *toastView = [view viewWithTag:2013];
+    return toastView ? YES : NO;
 }
 
 @end

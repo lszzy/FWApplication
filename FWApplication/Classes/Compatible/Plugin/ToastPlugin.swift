@@ -39,6 +39,11 @@ extension Wrapper where Base: UIView {
     public func hideLoading() {
         base.__fw_hideLoading()
     }
+    
+    /// 是否正在显示加载吐司
+    public var isShowingLoading: Bool {
+        return base.__fw_isShowingLoading
+    }
 
     /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
     public func showProgress(_ progress: CGFloat, text: Any? = nil) {
@@ -53,6 +58,11 @@ extension Wrapper where Base: UIView {
     /// 隐藏进度条吐司
     public func hideProgress() {
         base.__fw_hideProgress()
+    }
+    
+    /// 是否正在显示进度条吐司
+    public var isShowingProgress: Bool {
+        return base.__fw_isShowingProgress
     }
 
     /// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
@@ -73,6 +83,11 @@ extension Wrapper where Base: UIView {
     /// 隐藏消息吐司
     public func hideMessage() {
         base.__fw_hideMessage()
+    }
+    
+    /// 是否正在显示消息吐司
+    public var isShowingMessage: Bool {
+        return base.__fw_isShowingMessage
     }
     
 }
@@ -105,6 +120,10 @@ extension Wrapper where Base: UIViewController {
     public func hideLoading() {
         base.__fw_hideLoading()
     }
+    
+    public var isShowingLoading: Bool {
+        return base.__fw_isShowingLoading
+    }
 
     /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
     public func showProgress(_ progress: CGFloat, text: Any? = nil) {
@@ -119,6 +138,11 @@ extension Wrapper where Base: UIViewController {
     /// 隐藏进度条吐司
     public func hideProgress() {
         base.__fw_hideProgress()
+    }
+    
+    /// 是否正在显示进度条吐司
+    public var isShowingProgress: Bool {
+        return base.__fw_isShowingProgress
     }
 
     /// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
@@ -139,6 +163,11 @@ extension Wrapper where Base: UIViewController {
     /// 隐藏消息吐司
     public func hideMessage() {
         base.__fw_hideMessage()
+    }
+    
+    /// 是否正在显示消息吐司
+    public var isShowingMessage: Bool {
+        return base.__fw_isShowingMessage
     }
     
 }
@@ -165,6 +194,10 @@ extension Wrapper where Base: UIWindow {
     public static func hideLoading() {
         Base.__fw_hideLoading()
     }
+    
+    public static var isShowingLoading: Bool {
+        return Base.__fw_isShowingLoading
+    }
 
     /// 显示进度条吐司，需手工隐藏，支持String和AttributedString
     public static func showProgress(_ progress: CGFloat, text: Any? = nil) {
@@ -179,6 +212,11 @@ extension Wrapper where Base: UIWindow {
     /// 隐藏进度条吐司
     public static func hideProgress() {
         Base.__fw_hideProgress()
+    }
+    
+    /// 是否正在显示进度条吐司
+    public static var isShowingProgress: Bool {
+        return Base.__fw_isShowingProgress
     }
 
     /// 显示指定样式消息吐司，自动隐藏，支持String和AttributedString
@@ -199,6 +237,11 @@ extension Wrapper where Base: UIWindow {
     /// 隐藏消息吐司
     public static func hideMessage() {
         Base.__fw_hideMessage()
+    }
+    
+    /// 是否正在显示消息吐司
+    public static var isShowingMessage: Bool {
+        return Base.__fw_isShowingMessage
     }
     
 }
