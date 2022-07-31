@@ -8,6 +8,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
+// MARK: - ViewPreferenceKey
 /// 通用视图配置Key类
 @available(iOS 13.0, *)
 open class ViewPreferenceKey<T: Equatable>: PreferenceKey {
@@ -26,8 +27,22 @@ open class ViewPreferenceKey<T: Equatable>: PreferenceKey {
 }
 
 @available(iOS 13.0, *)
-private final class ViewSizePreferenceKey<T: View>: ViewPreferenceKey<CGSize> {}
+private final class ViewSizePreferenceKey: ViewPreferenceKey<CGSize> {}
 
+@available(iOS 13.0, *)
+private final class ViewContentOffsetPreferenceKey: ViewPreferenceKey<CGPoint> {
+    static func contentOffset(
+        insideProxy: GeometryProxy,
+        outsideProxy: GeometryProxy
+    ) -> CGPoint {
+        return CGPoint(
+            x: outsideProxy.frame(in: .global).minX - insideProxy.frame(in: .global).minX,
+            y: outsideProxy.frame(in: .global).minY - insideProxy.frame(in: .global).minY
+        )
+    }
+}
+
+// MARK: - View+ViewPreferenceKey
 @available(iOS 13.0, *)
 extension View {
     
@@ -36,7 +51,7 @@ extension View {
         overlay(
             GeometryReader { proxy in
                 Color.clear.preference(
-                    key: ViewSizePreferenceKey<Self>.self,
+                    key: ViewSizePreferenceKey.self,
                     value: proxy.size
                 )
                 .onAppear {
@@ -46,12 +61,32 @@ extension View {
                 }
             }
         )
-        .onPreferenceChange(ViewSizePreferenceKey<Self>.self) { size in
+        .onPreferenceChange(ViewSizePreferenceKey.self) { size in
             if let size = size, binding.wrappedValue != size {
                 binding.wrappedValue = size
             }
         }
-        .preference(key: ViewSizePreferenceKey<Self>.self, value: nil)
+        .preference(key: ViewSizePreferenceKey.self, value: nil)
+    }
+    
+    /// 捕获当前滚动视图内容偏移
+    public func captureContentOffset<S: View>(in binding: Binding<CGPoint>, scrollView: @escaping (AnyView) -> S) -> some View {
+        GeometryReader { outsideProxy in
+            scrollView(AnyView(
+                ZStack {
+                    GeometryReader { insideProxy in
+                        Color.clear.preference(
+                            key: ViewContentOffsetPreferenceKey.self,
+                            value: ViewContentOffsetPreferenceKey.contentOffset(insideProxy: insideProxy, outsideProxy: outsideProxy)
+                        )
+                    }
+                    self
+                }
+            ))
+            .onPreferenceChange(ViewContentOffsetPreferenceKey.self, perform: { value in
+                binding.wrappedValue = value ?? .zero
+            })
+        }
     }
     
 }
