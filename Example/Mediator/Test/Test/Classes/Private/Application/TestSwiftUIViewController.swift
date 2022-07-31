@@ -13,14 +13,24 @@ import Core
 @available(iOS 13.0, *)
 class SwiftUIViewController: HostingController {
     
+    var mode: Int = [0, 1, 2].randomElement()!
+    
     override func setupSubviews() {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
         navigationItem.hidesBackButton = true
-        fw.navigationBarHidden = [true, false].randomElement()!
+        if mode == 2 {
+            fw.navigationBarHidden = true
+        } else {
+            fw.navigationBarHidden = [true, false].randomElement()!
+        }
         
         rootView = TestSwiftUIView()
             .viewContext(self)
+            .then(mode == 2, body: { view in
+                view.navigationBarBackButtonHidden(true)
+                    .navigationBarHidden([true, false].randomElement()!)
+            })
             .navigationBarConfigure(
                 leading: Button(action: {
                     UIWindow.fw.close()
@@ -31,7 +41,7 @@ class SwiftUIViewController: HostingController {
                         Spacer()
                     }
                 }),
-                title: Text("SwiftUIViewController"),
+                title: Text("SwiftUIViewController - \(mode)"),
                 background: Color(UIColor.fw.randomColor)
             )
             .eraseToAnyView()

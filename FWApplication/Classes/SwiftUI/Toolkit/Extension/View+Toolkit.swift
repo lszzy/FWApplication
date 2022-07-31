@@ -112,6 +112,15 @@ extension View {
         }
     }
     
+    /// 条件成立时执行下一步
+    public func then<T: View>(_ condition: Bool, body: (Self) -> T) -> some View {
+        if condition {
+            return AnyView(body(self))
+        } else {
+            return AnyView(self)
+        }
+    }
+    
     /// 配置当前对象
     public func configure(_ body: (inout Self) -> Void) -> Self {
         var result = self
