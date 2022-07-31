@@ -117,12 +117,9 @@ extension View {
     public func viewControllerConfigure(
         _ configuration: @escaping (UIViewController) -> ()
     ) -> some View {
-        return introspect { introspectView in
-            return Introspect.findHostingView(from: introspectView)
-        } customize: { hostingView in
-            if let viewController = hostingView.fw.viewController?.navigationController?.topViewController {
-                configuration(viewController)
-            }
+        return introspectViewController { introspectionController in
+            let viewController = introspectionController.navigationController?.topViewController
+            configuration(viewController ?? introspectionController)
         }
     }
     

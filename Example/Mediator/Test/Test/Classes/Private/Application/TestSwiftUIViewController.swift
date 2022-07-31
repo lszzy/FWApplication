@@ -88,6 +88,18 @@ struct TestSwiftUIView: View {
             
             HStack(alignment: .center, spacing: 16) {
                 Button {
+                    viewContext.viewController?.fw.close()
+                } label: {
+                    HStack {
+                        Spacer()
+                        Text("Close")
+                        Spacer()
+                    }
+                }
+                .frame(width: (FW.screenWidth - 64) / 3, height: 40)
+                .border(Color.gray, cornerRadius: 20)
+                
+                Button {
                     buttonVisible.toggle()
                 } label: {
                     HStack {
@@ -96,7 +108,7 @@ struct TestSwiftUIView: View {
                         Spacer()
                     }
                 }
-                .frame(width: (FW.screenWidth - 48) / 2, height: 40)
+                .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                 .border(Color.gray, cornerRadius: 20)
                 .removable(buttonRemovable)
                 
@@ -109,7 +121,7 @@ struct TestSwiftUIView: View {
                         Spacer()
                     }
                 }
-                .frame(width: (FW.screenWidth - 48) / 2, height: 40)
+                .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                 .border(Color.gray, cornerRadius: 20)
                 .visible(buttonVisible)
             }
@@ -119,14 +131,19 @@ struct TestSwiftUIView: View {
                     Router.openURL("https://www.baidu.com")
                 }
                 
-                Button("Open SwiftUI") {
+                Button("Push SwiftUI") {
                     let viewController = TestSwiftUIViewController()
                     UIWindow.fw.topNavigationController?.pushViewController(viewController, animated: true)
                 }
                 
-                Button("Open HostingController") {
+                Button("Push HostingController") {
                     let viewController = SwiftUIViewController()
                     viewContext.viewController?.fw.open(viewController)
+                }
+                
+                Button("Present HostingController") {
+                    let viewController = SwiftUIViewController()
+                    viewContext.viewController?.present(viewController, animated: true)
                 }
                 
                 Button("Show Alert") {
