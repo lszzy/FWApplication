@@ -248,6 +248,11 @@ extension Wrapper where Base: UIViewController {
         base.__fw_hideAlert(animated, completion: completion)
     }
     
+    /// 判断是否正在显示弹出框
+    public var isShowingAlert: Bool {
+        return base.__fw_isShowingAlert
+    }
+    
 }
 
 extension Wrapper where Base: UIView {
@@ -478,6 +483,11 @@ extension Wrapper where Base: UIView {
         completion: (() -> Void)? = nil
     ) {
         base.__fw_hideAlert(animated, completion: completion)
+    }
+    
+    /// 判断是否正在显示弹出框
+    public var isShowingAlert: Bool {
+        return base.__fw_isShowingAlert
     }
     
 }

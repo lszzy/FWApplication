@@ -290,6 +290,16 @@
     [alertPlugin viewController:self hideAlert:animated completion:completion];
 }
 
+- (BOOL)fw_isShowingAlert
+{
+    // 优先调用插件，不存在时使用默认
+    id<FWAlertPlugin> alertPlugin = self.fw_alertPlugin;
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(isShowingAlert:)]) {
+        alertPlugin = FWAlertPluginImpl.sharedInstance;
+    }
+    return [alertPlugin isShowingAlert:self];
+}
+
 @end
 
 #pragma mark - UIView+FWAlertPlugin
@@ -549,6 +559,13 @@
     UIViewController *ctrl = self.fw_viewController;
     if (!ctrl) ctrl = UIWindow.fw_mainWindow.rootViewController;
     [ctrl fw_hideAlert:animated completion:completion];
+}
+
+- (BOOL)fw_isShowingAlert
+{
+    UIViewController *ctrl = self.fw_viewController;
+    if (!ctrl) ctrl = UIWindow.fw_mainWindow.rootViewController;
+    return [ctrl fw_isShowingAlert];
 }
 
 @end
