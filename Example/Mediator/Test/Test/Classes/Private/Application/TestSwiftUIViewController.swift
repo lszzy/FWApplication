@@ -17,7 +17,7 @@ class TestSwiftUIViewController: TestViewController, TestSwiftUIViewDelegate {
     override func renderView() {
         fw.navigationBarHidden = [true, false].randomElement()!
         
-        let hostingView = TestSwiftUIContent()
+        let hostingView = TestSwiftUIContent(model: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
             .configure { $0.delegate = self }
             .viewContext(self)
             .navigationBarConfigure(
@@ -49,27 +49,32 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     // MARK: - Accessor
     var mode: Int = [0, 1, 2].randomElement()!
     
+    var model: String?
+    
+    var error: String?
+    
     // MARK: - Subviews
     var stateView: some View {
         StateView { view in
             LoadingPluginView()
-                .onAppear {
-                    view.state = .loading
+                .onAppear { [weak self] in
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         let success = [true, false].randomElement()!
                         if success {
+                            self?.model = "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif"
                             view.state = .success
                         } else {
+                            self?.error = "出错啦!"
                             view.state = .failure
                         }
                     }
                 }
         } content: { view in
-            TestSwiftUIContent()
+            TestSwiftUIContent(model: self.model)
                 .configure { $0.delegate = self }
         } failure: { view in
             Button("出错啦") {
-                view.state = .success
+                view.state = .loading
             }
         }
     }
@@ -120,6 +125,8 @@ struct TestSwiftUIContent: View {
     
     @Environment(\.viewContext) var viewContext: ViewContext
     
+    var model: String?
+    
     weak var delegate: (NSObject & TestSwiftUIViewDelegate)?
     
     @State var topSize: CGSize = .zero
@@ -135,6 +142,10 @@ struct TestSwiftUIContent: View {
     @State var showingProgress: Bool = false
     @State var progressValue: CGFloat = 0
     
+    init(model: String?) {
+        self.model = model
+    }
+    
     var body: some View {
         GeometryReader { proxy in
             List {
@@ -143,7 +154,7 @@ struct TestSwiftUIContent: View {
                     
                     VStack {
                         HStack(alignment: .center, spacing: 50) {
-                            ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+                            ImageView(url: model)
                                 .placeholder(TestBundle.imageNamed("test.gif"))
                                 .contentMode(.scaleAspectFill)
                                 .clipped()
