@@ -40,7 +40,7 @@
         loadingText = self.defaultLoadingText();
     }
     
-    FWToastView *toastView = [view viewWithTag:2011];
+    FWToastView *toastView = [view fw_subviewWithTag:2011];
     if (toastView) {
         [toastView invalidateTimer];
         [view bringSubviewToFront:toastView];
@@ -85,13 +85,13 @@
 
 - (void)hideLoading:(UIView *)view
 {
-    FWToastView *toastView = [view viewWithTag:2011];
+    FWToastView *toastView = [view fw_subviewWithTag:2011];
     if (toastView) [toastView hide];
 }
 
 - (BOOL)isShowingLoading:(UIView *)view
 {
-    FWToastView *toastView = [view viewWithTag:2011];
+    FWToastView *toastView = [view fw_subviewWithTag:2011];
     return toastView ? YES : NO;
 }
 
@@ -102,7 +102,7 @@
         progressText = self.defaultProgressText();
     }
     
-    FWToastView *toastView = [view viewWithTag:2012];
+    FWToastView *toastView = [view fw_subviewWithTag:2012];
     if (toastView) {
         [toastView invalidateTimer];
         [view bringSubviewToFront:toastView];
@@ -149,13 +149,13 @@
 
 - (void)hideProgress:(UIView *)view
 {
-    FWToastView *toastView = [view viewWithTag:2012];
+    FWToastView *toastView = [view fw_subviewWithTag:2012];
     if (toastView) [toastView hide];
 }
 
 - (BOOL)isShowingProgress:(UIView *)view
 {
-    FWToastView *toastView = [view viewWithTag:2012];
+    FWToastView *toastView = [view fw_subviewWithTag:2012];
     return toastView ? YES : NO;
 }
 
@@ -167,7 +167,7 @@
     }
     if (messageText.length < 1) return;
     
-    FWToastView *toastView = [view viewWithTag:2013];
+    FWToastView *toastView = [view fw_subviewWithTag:2013];
     BOOL fadeAnimated = self.fadeAnimated && !toastView;
     if (toastView) [toastView hide];
     
@@ -190,13 +190,13 @@
 
 - (void)hideMessage:(UIView *)view
 {
-    FWToastView *toastView = [view viewWithTag:2013];
+    FWToastView *toastView = [view fw_subviewWithTag:2013];
     if (toastView) [toastView hide];
 }
 
 - (BOOL)isShowingMessage:(UIView *)view
 {
-    FWToastView *toastView = [view viewWithTag:2013];
+    FWToastView *toastView = [view fw_subviewWithTag:2013];
     return toastView ? YES : NO;
 }
 

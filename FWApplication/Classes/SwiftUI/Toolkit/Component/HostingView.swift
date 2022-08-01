@@ -112,12 +112,34 @@ public enum ViewState: Int {
 @available(iOS 13.0, *)
 public struct StateView<Ready: View, Loading: View, Content: View, Failure: View>: View {
     
-    @State public var state: ViewState = .ready
+    @State public var state: ViewState
     
     @ViewBuilder var ready: (Self) -> Ready
     @ViewBuilder var loading: (Self) -> Loading
     @ViewBuilder var content: (Self) -> Content
     @ViewBuilder var failure: (Self) -> Failure
+    
+    public init(
+        @ViewBuilder content: @escaping (Self) -> Content
+    ) where Ready == EmptyView, Loading == EmptyView, Failure == EmptyView {
+        self.ready = { _ in EmptyView() }
+        self.loading = { _ in EmptyView() }
+        self.content = content
+        self.failure = { _ in EmptyView() }
+        self.state = .success
+    }
+    
+    public init(
+        @ViewBuilder loading: @escaping (Self) -> Loading,
+        @ViewBuilder content: @escaping (Self) -> Content,
+        @ViewBuilder failure: @escaping (Self) -> Failure
+    ) where Ready == EmptyView {
+        self.ready = { _ in EmptyView() }
+        self.loading = loading
+        self.content = content
+        self.failure = failure
+        self.state = .loading
+    }
     
     public init(
         @ViewBuilder ready: @escaping (Self) -> Ready,
@@ -129,6 +151,7 @@ public struct StateView<Ready: View, Loading: View, Content: View, Failure: View
         self.loading = loading
         self.content = content
         self.failure = failure
+        self.state = .ready
     }
     
     public var body: some View {

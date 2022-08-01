@@ -52,7 +52,7 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     // MARK: - Subviews
     var stateView: some View {
         StateView { view in
-            InvisibleView()
+            LoadingView()
                 .onAppear {
                     view.state = .loading
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -64,8 +64,6 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
                         }
                     }
                 }
-        } loading: { view in
-            LoadingView()
         } content: { view in
             TestSwiftUIContent()
                 .configure { $0.delegate = self }
