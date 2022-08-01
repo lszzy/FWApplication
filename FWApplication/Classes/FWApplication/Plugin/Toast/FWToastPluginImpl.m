@@ -109,16 +109,6 @@
         toastView.attributedTitle = progressText;
         toastView.progress = progress;
         
-        [toastView fw_removeAllTouchBlocks];
-        if (cancelBlock) {
-            __weak __typeof__(self) self_weak_ = self;
-            [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
-                __typeof__(self) self = self_weak_;
-                [self hideProgress:view];
-                if (cancelBlock) cancelBlock();
-            }];
-        }
-        
         if (self.reuseBlock) {
             self.reuseBlock(toastView);
         }

@@ -52,7 +52,7 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     // MARK: - Subviews
     var stateView: some View {
         StateView { view in
-            LoadingView()
+            LoadingPluginView()
                 .onAppear {
                     view.state = .loading
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -122,7 +122,6 @@ struct TestSwiftUIContent: View {
     
     weak var delegate: (NSObject & TestSwiftUIViewDelegate)?
     
-    @State var isEmpty: Bool = false
     @State var topSize: CGSize = .zero
     @State var contentOffset: CGPoint = .zero
     
@@ -130,10 +129,11 @@ struct TestSwiftUIContent: View {
     @State var buttonVisible: Bool = true
     
     @State var showingAlert: Bool = false
+    @State var showingToast: Bool = false
     @State var showingEmpty: Bool = false
     @State var showingLoading: Bool = false
     @State var showingProgress: Bool = false
-    @State var showingMessage: Bool = false
+    @State var progressValue: CGFloat = 0
     
     var body: some View {
         GeometryReader { proxy in
@@ -228,6 +228,10 @@ struct TestSwiftUIContent: View {
                     showingAlert = true
                 }
                 
+                Button("Show Toast") {
+                    showingToast = true
+                }
+                
                 Button("Show Loading") {
                     showingLoading = true
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
@@ -237,10 +241,13 @@ struct TestSwiftUIContent: View {
                 
                 Button("Show Progress") {
                     showingProgress = true
-                }
-                
-                Button("Show Message") {
-                    showingMessage = true
+                    TestViewController.mockProgress { progress, finished in
+                        if finished {
+                            showingProgress = false
+                        } else {
+                            progressValue = progress
+                        }
+                    }
                 }
                 
                 Button("Show Empty") {
@@ -262,29 +269,33 @@ struct TestSwiftUIContent: View {
                 }
             }
         }
-        .removable(isEmpty)
+        .removable(showingEmpty)
         .showAlert($showingAlert) { viewController in
             viewController.fw.showAlert(title: "我是标题", message: "我是内容")
         }
-        .showEmpty(showingEmpty) { viewController in
-            isEmpty = true
-            viewController.fw.showEmptyView(text: "我是标题", detail: "我是详细信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息", image: UIImage.fw.appIconImage(), action: "刷新") { _ in
-                showingEmpty = false
-                isEmpty = false
-            }
-        }
-        .showLoading(showingLoading)
-        .showProgress(showingProgress, customize: { viewController in
-            TestViewController.mockProgress { progress, finished in
-                if finished {
-                    showingProgress = false
-                } else {
-                    viewController.fw.showProgress(progress, text: "上传中(\(Int(progress * 100)))")
-                }
-            }
-        })
-        .showMessage($showingMessage, customize: { viewController in
+        .showToast($showingToast, customize: { viewController in
             viewController.fw.showMessage(text: "我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息")
+        })
+        .showEmptyView(showingEmpty, builder: {
+            EmptyPluginView()
+                .text("我是标题")
+                .detail("我是详细信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息我是提示信息")
+                .image(UIImage.fw.appIconImage())
+                .action("刷新") { _ in
+                    showingEmpty = false
+                }
+        })
+        .showLoadingView(showingLoading, builder: {
+            LoadingPluginView()
+                .onCancel {
+                    showingLoading = false
+                }
+        })
+        .showProgressView(showingProgress, builder: {
+            ProgressPluginView($progressValue)
+                .textFormatter { progress in
+                    "上传中(\(Int(progress * 100)))"
+                }
         })
     }
     

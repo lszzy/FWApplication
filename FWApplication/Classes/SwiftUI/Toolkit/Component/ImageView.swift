@@ -35,28 +35,28 @@ public struct ImageView: UIViewRepresentable {
     }
     
     /// 设置网络图片URL
-    public func url(_ url: Any?) -> ImageView {
+    public func url(_ url: Any?) -> Self {
         var result = self
         result.url = url
         return result
     }
     
     /// 设置网络图片加载选项
-    public func options(_ options: WebImageOptions) -> ImageView {
+    public func options(_ options: WebImageOptions) -> Self {
         var result = self
         result.options = options
         return result
     }
     
     /// 设置本地占位图片
-    public func placeholder(_ placeholder: UIImage?) -> ImageView {
+    public func placeholder(_ placeholder: UIImage?) -> Self {
         var result = self
         result.placeholder = placeholder
         return result
     }
     
     /// 设置图片显示内容模式，默认scaleAspectFill
-    public func contentMode(_ contentMode: UIView.ContentMode) -> ImageView {
+    public func contentMode(_ contentMode: UIView.ContentMode) -> Self {
         var result = self
         result.contentMode = contentMode
         return result

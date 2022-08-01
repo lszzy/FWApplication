@@ -31,7 +31,7 @@ extension Wrapper where Base: UIView {
     }
     
     /// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
-    public func showLoading(text: Any? = nil, cancel: @escaping () -> Void) {
+    public func showLoading(text: Any?, cancel: (() -> Void)?) {
         base.__fw_showLoading(withText: text, cancel: cancel)
     }
 
@@ -51,7 +51,7 @@ extension Wrapper where Base: UIView {
     }
     
     /// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
-    public func showProgress(_ progress: CGFloat, text: Any? = nil, cancel: @escaping () -> Void) {
+    public func showProgress(_ progress: CGFloat, text: Any?, cancel: (() -> Void)?) {
         base.__fw_showProgress(withText: text, progress: progress, cancel: cancel)
     }
 
@@ -112,7 +112,7 @@ extension Wrapper where Base: UIViewController {
     }
     
     /// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
-    public func showLoading(text: Any? = nil, cancel: @escaping () -> Void) {
+    public func showLoading(text: Any?, cancel: (() -> Void)?) {
         base.__fw_showLoading(withText: text, cancel: cancel)
     }
 
@@ -131,7 +131,7 @@ extension Wrapper where Base: UIViewController {
     }
     
     /// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
-    public func showProgress(_ progress: CGFloat, text: Any? = nil, cancel: @escaping () -> Void) {
+    public func showProgress(_ progress: CGFloat, text: Any?, cancel: (() -> Void)?) {
         base.__fw_showProgress(withText: text, progress: progress, cancel: cancel)
     }
 
@@ -186,7 +186,7 @@ extension Wrapper where Base: UIWindow {
     }
     
     /// 显示加载吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
-    public static func showLoading(text: Any? = nil, cancel: @escaping () -> Void) {
+    public static func showLoading(text: Any?, cancel: (() -> Void)?) {
         Base.__fw_showLoading(withText: text, cancel: cancel)
     }
 
@@ -205,7 +205,7 @@ extension Wrapper where Base: UIWindow {
     }
     
     /// 显示进度条吐司，默认需手工隐藏，指定cancelBlock时会自动隐藏并调用之，支持String和AttributedString
-    public static func showProgress(_ progress: CGFloat, text: Any? = nil, cancel: @escaping () -> Void) {
+    public static func showProgress(_ progress: CGFloat, text: Any?, cancel: (() -> Void)?) {
         Base.__fw_showProgress(withText: text, progress: progress, cancel: cancel)
     }
 

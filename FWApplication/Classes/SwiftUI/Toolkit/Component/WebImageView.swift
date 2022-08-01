@@ -54,46 +54,46 @@ public struct WebImageView: View {
         }
     }
     
-    public func placeholder<Content: View>(@ViewBuilder _ builder: () -> Content) -> WebImageView {
+    public func placeholder<Content: View>(@ViewBuilder _ builder: () -> Content) -> Self {
         var result = self
         result.placeholder = AnyView(builder())
         return result
     }
     
-    public func cancelOnDisappear(_ flag: Bool) -> WebImageView {
+    public func cancelOnDisappear(_ flag: Bool) -> Self {
         var result = self
         result.cancelOnDisappear = flag
         return result
     }
     
-    public func configure(_ block: @escaping (Image) -> Image) -> WebImageView {
+    public func configure(_ block: @escaping (Image) -> Image) -> Self {
         var result = self
         result.configurations.append(block)
         return result
     }
     
-    public func resizable(capInsets: EdgeInsets = EdgeInsets(), resizingMode: Image.ResizingMode = .stretch) -> WebImageView {
+    public func resizable(capInsets: EdgeInsets = EdgeInsets(), resizingMode: Image.ResizingMode = .stretch) -> Self {
         configure { $0.resizable(capInsets: capInsets, resizingMode: resizingMode) }
     }
     
-    public func renderingMode(_ renderingMode: Image.TemplateRenderingMode?) -> WebImageView {
+    public func renderingMode(_ renderingMode: Image.TemplateRenderingMode?) -> Self {
         configure { $0.renderingMode(renderingMode) }
     }
     
-    public func interpolation(_ interpolation: Image.Interpolation) -> WebImageView {
+    public func interpolation(_ interpolation: Image.Interpolation) -> Self {
         configure { $0.interpolation(interpolation) }
     }
     
-    public func antialiased(_ isAntialiased: Bool) -> WebImageView {
+    public func antialiased(_ isAntialiased: Bool) -> Self {
         configure { $0.antialiased(isAntialiased) }
     }
     
-    public func onCompletion(perform action: ((UIImage?, Error?) -> Void)?) -> WebImageView {
+    public func onCompletion(perform action: ((UIImage?, Error?) -> Void)?) -> Self {
         binder.onCompletion(perform: action)
         return self
     }
     
-    public func onProgress(perform action: ((Double) -> Void)?) -> WebImageView {
+    public func onProgress(perform action: ((Double) -> Void)?) -> Self {
         binder.onProgress(perform: action)
         return self
     }
