@@ -214,10 +214,17 @@ struct TestSwiftUIContent: View {
                 }
                 .captureContentOffset(proxy: proxy)
                 
-                Button("Open Router") {
+                Button {
                     delegate?.openWeb(completion: {
                         showingEmpty = true
                     })
+                } label: {
+                    ViewWrapper {
+                        Text("Open Router")
+                            .wrappedHostingView()
+                    }
+                    .frame(height: 44)
+                    .background(Color.green)
                 }
                 
                 Button("Push SwiftUI") {
