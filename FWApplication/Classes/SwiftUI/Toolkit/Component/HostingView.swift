@@ -98,19 +98,71 @@ open class HostingView<Content: View>: UIView {
     
 }
 
+// MARK: - StateView
+/// SwiftUI视图状态枚举
+@available(iOS 13.0, *)
+public enum ViewState: Int {
+    case ready = 0
+    case loading = 1
+    case success = 2
+    case failure = 3
+}
+
+/// SwiftUI状态视图
+@available(iOS 13.0, *)
+public struct StateView<Ready: View, Loading: View, Content: View, Failure: View>: View {
+    
+    @State public var state: ViewState = .ready
+    
+    @ViewBuilder var ready: (Binding<ViewState>) -> Ready
+    @ViewBuilder var loading: (Binding<ViewState>) -> Loading
+    @ViewBuilder var content: (Binding<ViewState>) -> Content
+    @ViewBuilder var failure: (Binding<ViewState>) -> Failure
+    
+    public init(
+        @ViewBuilder ready: @escaping (Binding<ViewState>) -> Ready,
+        @ViewBuilder loading: @escaping (Binding<ViewState>) -> Loading,
+        @ViewBuilder content: @escaping (Binding<ViewState>) -> Content,
+        @ViewBuilder failure: @escaping (Binding<ViewState>) -> Failure
+    ) {
+        self.ready = ready
+        self.loading = loading
+        self.content = content
+        self.failure = failure
+    }
+    
+    public var body: some View {
+        Group {
+            switch state {
+            case .ready:
+                ready($state)
+            case .loading:
+                loading($state)
+            case .success:
+                content($state)
+            case .failure:
+                failure($state)
+            }
+        }
+    }
+    
+}
+
 // MARK: - HostingController
-/// SwiftUI控制器包装类
+/// SwiftUI控制器包装类，可将View事件用delegate代理到VC实现解耦
 @available(iOS 13.0, *)
 open class HostingController: UIHostingController<AnyView> {
     
     // MARK: - Lifecyecle
     public init() {
         super.init(rootView: AnyView(EmptyView()))
+        setupNavbar()
         setupSubviews()
     }
     
     @MainActor required dynamic public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder, rootView: AnyView(EmptyView()))
+        setupNavbar()
         setupSubviews()
     }
     
@@ -120,10 +172,12 @@ open class HostingController: UIHostingController<AnyView> {
     }
     #endif
     
-    // MARK: - Subviews
-    open func setupSubviews() {
-        // 初始化子视图，子类重写
-    }
+    // MARK: - Setup
+    /// 初始化导航栏，子类重写
+    open func setupNavbar() {}
+    
+    /// 初始化子视图，子类重写，可结合StateView实现状态机
+    open func setupSubviews() {}
     
 }
 

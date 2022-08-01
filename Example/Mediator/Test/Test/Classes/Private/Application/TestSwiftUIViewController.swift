@@ -10,20 +10,72 @@ import SwiftUI
 import FWApplication
 import Core
 
+// 继承UIViewController
+@available(iOS 13.0, *)
+class TestSwiftUIViewController: TestViewController {
+    
+    override func renderView() {
+        fw.navigationBarHidden = [true, false].randomElement()!
+        
+        let hostingView = TestSwiftUIContent()
+            .viewContext(self)
+            .navigationBarConfigure(
+                leading: Icon.backImage,
+                title: "TestSwiftUIViewController",
+                background: UIColor.fw.randomColor
+            )
+            .wrappedHostingView()
+        view.addSubview(hostingView)
+        hostingView.fw.layoutChain.edges()
+    }
+    
+}
+
+// 继承HostingController
 @available(iOS 13.0, *)
 class SwiftUIViewController: HostingController {
     
+    // MARK: - Accessor
     var mode: Int = [0, 1, 2].randomElement()!
     
-    override func setupSubviews() {
+    // MARK: - Subviews
+    var stateView: some View {
+        StateView { state in
+            InvisibleView()
+                .onAppear {
+                    state.wrappedValue = .loading
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        let success = [true, false].randomElement()!
+                        if success {
+                            state.wrappedValue = .success
+                        } else {
+                            state.wrappedValue = .failure
+                        }
+                    }
+                }
+        } loading: { state in
+            LoadingView()
+        } content: { state in
+            TestSwiftUIContent()
+        } failure: { state in
+            Button("出错啦") {
+                state.wrappedValue = .success
+            }
+        }
+    }
+    
+    // MARK: - Lifecycle
+    override func setupNavbar() {
         hidesBottomBarWhenPushed = true
         extendedLayoutIncludesOpaqueBars = true
         navigationItem.hidesBackButton = true
         if mode != 2 {
             fw.navigationBarHidden = [true, false].randomElement()!
         }
-        
-        rootView = TestSwiftUIView()
+    }
+    
+    override func setupSubviews() {
+        rootView = stateView
             .viewContext(self)
             .then(mode == 2, body: { view in
                 view.navigationBarBackButtonHidden(true)
@@ -48,27 +100,7 @@ class SwiftUIViewController: HostingController {
 }
 
 @available(iOS 13.0, *)
-class TestSwiftUIViewController: TestViewController {
-    
-    override func renderView() {
-        fw.navigationBarHidden = [true, false].randomElement()!
-        
-        let hostingView = TestSwiftUIView()
-            .viewContext(self)
-            .navigationBarConfigure(
-                leading: Icon.backImage,
-                title: "TestSwiftUIViewController",
-                background: UIColor.fw.randomColor
-            )
-            .wrappedHostingView()
-        view.addSubview(hostingView)
-        hostingView.fw.layoutChain.edges()
-    }
-    
-}
-
-@available(iOS 13.0, *)
-struct TestSwiftUIView: View {
+struct TestSwiftUIContent: View {
     
     @Environment(\.viewContext) var viewContext: ViewContext
     
