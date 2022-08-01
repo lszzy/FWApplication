@@ -12,12 +12,13 @@ import Core
 
 // 继承UIViewController
 @available(iOS 13.0, *)
-class TestSwiftUIViewController: TestViewController {
+class TestSwiftUIViewController: TestViewController, TestSwiftUIViewDelegate {
     
     override func renderView() {
         fw.navigationBarHidden = [true, false].randomElement()!
         
         let hostingView = TestSwiftUIContent()
+            .configure { $0.delegate = self }
             .viewContext(self)
             .navigationBarConfigure(
                 leading: Icon.backImage,
@@ -29,37 +30,48 @@ class TestSwiftUIViewController: TestViewController {
         hostingView.fw.layoutChain.edges()
     }
     
+    // MARK: - TestSwiftUIViewDelegate
+    func openWeb(completion: @escaping () -> Void) {
+        Router.openURL("https://www.baidu.com")
+        completion()
+    }
+    
+}
+
+protocol TestSwiftUIViewDelegate {
+    func openWeb(completion: @escaping () -> Void)
 }
 
 // 继承HostingController
 @available(iOS 13.0, *)
-class SwiftUIViewController: HostingController {
+class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     
     // MARK: - Accessor
     var mode: Int = [0, 1, 2].randomElement()!
     
     // MARK: - Subviews
     var stateView: some View {
-        StateView { state in
+        StateView { view in
             InvisibleView()
                 .onAppear {
-                    state.wrappedValue = .loading
+                    view.state = .loading
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         let success = [true, false].randomElement()!
                         if success {
-                            state.wrappedValue = .success
+                            view.state = .success
                         } else {
-                            state.wrappedValue = .failure
+                            view.state = .failure
                         }
                     }
                 }
-        } loading: { state in
+        } loading: { view in
             LoadingView()
-        } content: { state in
+        } content: { view in
             TestSwiftUIContent()
-        } failure: { state in
+                .configure { $0.delegate = self }
+        } failure: { view in
             Button("出错啦") {
-                state.wrappedValue = .success
+                view.state = .success
             }
         }
     }
@@ -97,12 +109,20 @@ class SwiftUIViewController: HostingController {
             .eraseToAnyView()
     }
     
+    // MARK: - TestSwiftUIViewDelegate
+    func openWeb(completion: @escaping () -> Void) {
+        Router.openURL("https://www.baidu.com")
+        completion()
+    }
+    
 }
 
 @available(iOS 13.0, *)
 struct TestSwiftUIContent: View {
     
     @Environment(\.viewContext) var viewContext: ViewContext
+    
+    weak var delegate: (NSObject & TestSwiftUIViewDelegate)?
     
     @State var isEmpty: Bool = false
     @State var topSize: CGSize = .zero
@@ -186,7 +206,9 @@ struct TestSwiftUIContent: View {
                 .captureContentOffset(proxy: proxy)
                 
                 Button("Open Router") {
-                    Router.openURL("https://www.baidu.com")
+                    delegate?.openWeb(completion: {
+                        showingEmpty = true
+                    })
                 }
                 
                 Button("Push SwiftUI") {

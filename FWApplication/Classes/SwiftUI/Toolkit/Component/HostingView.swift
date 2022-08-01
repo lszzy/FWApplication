@@ -114,16 +114,16 @@ public struct StateView<Ready: View, Loading: View, Content: View, Failure: View
     
     @State public var state: ViewState = .ready
     
-    @ViewBuilder var ready: (Binding<ViewState>) -> Ready
-    @ViewBuilder var loading: (Binding<ViewState>) -> Loading
-    @ViewBuilder var content: (Binding<ViewState>) -> Content
-    @ViewBuilder var failure: (Binding<ViewState>) -> Failure
+    @ViewBuilder var ready: (Self) -> Ready
+    @ViewBuilder var loading: (Self) -> Loading
+    @ViewBuilder var content: (Self) -> Content
+    @ViewBuilder var failure: (Self) -> Failure
     
     public init(
-        @ViewBuilder ready: @escaping (Binding<ViewState>) -> Ready,
-        @ViewBuilder loading: @escaping (Binding<ViewState>) -> Loading,
-        @ViewBuilder content: @escaping (Binding<ViewState>) -> Content,
-        @ViewBuilder failure: @escaping (Binding<ViewState>) -> Failure
+        @ViewBuilder ready: @escaping (Self) -> Ready,
+        @ViewBuilder loading: @escaping (Self) -> Loading,
+        @ViewBuilder content: @escaping (Self) -> Content,
+        @ViewBuilder failure: @escaping (Self) -> Failure
     ) {
         self.ready = ready
         self.loading = loading
@@ -135,13 +135,13 @@ public struct StateView<Ready: View, Loading: View, Content: View, Failure: View
         Group {
             switch state {
             case .ready:
-                ready($state)
+                ready(self)
             case .loading:
-                loading($state)
+                loading(self)
             case .success:
-                content($state)
+                content(self)
             case .failure:
-                failure($state)
+                failure(self)
             }
         }
     }

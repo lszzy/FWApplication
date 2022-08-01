@@ -193,18 +193,22 @@ extension View {
     public func viewControllerConfigure(
         _ configuration: @escaping (UIViewController) -> ()
     ) -> some View {
-        /*
-        return introspectViewController { introspectController in
-            let viewController = introspectController.navigationController?.topViewController
-            configuration(viewController ?? introspectController)
-        }*/
-        
         return introspect(selector: { introspectView in
             return Introspect.findHostingView(from: introspectView)
         }) { hostingView in
-            guard let hostingController = hostingView.fw.viewController else { return }
-            let viewController = hostingController.navigationController?.topViewController
-            configuration(viewController ?? hostingController)
+            guard let hostingController = hostingView.fw.viewController else {
+                return
+            }
+            
+            if let visibleController = hostingController.navigationController?.visibleViewController {
+                guard hostingView.isDescendant(of: visibleController.view) else {
+                    return
+                }
+                
+                configuration(visibleController)
+            } else {
+                configuration(hostingController)
+            }
         }
     }
     
@@ -226,6 +230,7 @@ extension View {
             for subview in superview.subviews[0 ..< entryIndex].reversed() {
                 return subview
             }
+            
             return nil
         }, customize: configuration)
     }
