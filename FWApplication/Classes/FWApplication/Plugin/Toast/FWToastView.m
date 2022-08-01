@@ -26,9 +26,16 @@
 
 @implementation FWToastView
 
+#pragma mark - Lifecycle
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    return [self initWithType:FWToastViewTypeCustom];
+    self = [super initWithFrame:frame];
+    if (self) {
+        _type = FWToastViewTypeCustom;
+        [self setupSubviews];
+    }
+    return self;
 }
 
 - (instancetype)initWithType:(FWToastViewType)type
@@ -36,31 +43,30 @@
     self = [super initWithFrame:CGRectZero];
     if (self) {
         _type = type;
-        _contentBackgroundColor = [UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0];
-        _contentMarginInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-        _contentInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-        _contentSpacing = 5.f;
-        _contentCornerRadius = 5.f;
-        _verticalOffset = -30;
-        _indicatorColor = [UIColor whiteColor];
-        if (type == FWToastViewTypeProgress) {
-            _indicatorSize = CGSizeMake(37.f, 37.f);
-        } else {
-            _indicatorSize = CGSizeZero;
-        }
-        _titleFont = [UIFont systemFontOfSize:16];
-        _titleColor = [UIColor whiteColor];
-        
-        self.backgroundColor = [UIColor clearColor];
-        self.userInteractionEnabled = YES;
-        
-        [self setupTypeView];
+        [self setupSubviews];
     }
     return self;
 }
 
-- (void)setupTypeView
+- (void)setupSubviews
 {
+    _contentBackgroundColor = [UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0];
+    _contentMarginInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
+    _contentInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
+    _contentSpacing = 5.f;
+    _contentCornerRadius = 5.f;
+    _verticalOffset = -30;
+    _indicatorColor = [UIColor whiteColor];
+    if (self.type == FWToastViewTypeProgress) {
+        _indicatorSize = CGSizeMake(37.f, 37.f);
+    } else {
+        _indicatorSize = CGSizeZero;
+    }
+    _titleFont = [UIFont systemFontOfSize:16];
+    _titleColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
+    self.userInteractionEnabled = YES;
+    
     _contentView = [[UIView alloc] init];
     _contentView.userInteractionEnabled = NO;
     _contentView.layer.masksToBounds = YES;
@@ -99,7 +105,7 @@
     }
 }
 
-- (void)updateTypeView
+- (void)updateLayout
 {
     self.contentView.backgroundColor = self.contentBackgroundColor;
     self.contentView.layer.cornerRadius = self.contentCornerRadius;
@@ -183,6 +189,8 @@
     }
 }
 
+#pragma mark - Accessor
+
 - (void)setAttributedTitle:(NSAttributedString *)attributedTitle
 {
     _attributedTitle = attributedTitle;
@@ -225,7 +233,7 @@
 
 - (void)showAnimated:(BOOL)animated
 {
-    [self updateTypeView];
+    [self updateLayout];
     
     if (animated) {
         self.alpha = 0;
