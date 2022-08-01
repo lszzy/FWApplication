@@ -26,23 +26,10 @@ open class ViewPreferenceKey<T: Equatable>: PreferenceKey {
     }
 }
 
+// MARK: - ViewSizePreferenceKey
 @available(iOS 13.0, *)
 private final class ViewSizePreferenceKey: ViewPreferenceKey<CGSize> {}
 
-@available(iOS 13.0, *)
-private final class ViewContentOffsetPreferenceKey: ViewPreferenceKey<CGPoint> {
-    static func contentOffset(
-        insideProxy: GeometryProxy,
-        outsideProxy: GeometryProxy
-    ) -> CGPoint {
-        return CGPoint(
-            x: outsideProxy.frame(in: .global).minX - insideProxy.frame(in: .global).minX,
-            y: outsideProxy.frame(in: .global).minY - insideProxy.frame(in: .global).minY
-        )
-    }
-}
-
-// MARK: - View+ViewPreferenceKey
 @available(iOS 13.0, *)
 extension View {
     
@@ -68,6 +55,15 @@ extension View {
         }
         .preference(key: ViewSizePreferenceKey.self, value: nil)
     }
+    
+}
+
+// MARK: - ViewContentOffsetPreferenceKey
+@available(iOS 13.0, *)
+private final class ViewContentOffsetPreferenceKey: ViewPreferenceKey<CGPoint> {}
+
+@available(iOS 13.0, *)
+extension View {
     
     /// 捕获当前滚动视图内容偏移，需滚动视图调用，且用GeometryReader包裹滚动视图
     ///
@@ -95,12 +91,18 @@ extension View {
     ///     .captureContentOffset(in: $contentOffsets)
     /// }
     public func captureContentOffset(proxy outsideProxy: GeometryProxy) -> some View {
-        ZStack {
+        let outsideFrame = outsideProxy.frame(in: .global)
+        
+        return ZStack {
             GeometryReader { insideProxy in
                 Color.clear.preference(
                     key: ViewContentOffsetPreferenceKey.self,
-                    value: ViewContentOffsetPreferenceKey.contentOffset(insideProxy: insideProxy, outsideProxy: outsideProxy)
+                    value: CGPoint(
+                        x: outsideFrame.minX - insideProxy.frame(in: .global).minX,
+                        y: outsideFrame.minY - insideProxy.frame(in: .global).minY
+                    )
                 )
+                .frame(width: 0, height: 0)
             }
             self
         }

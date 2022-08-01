@@ -14,11 +14,16 @@ public struct ViewContext {
     
     public weak var viewController: UIViewController?
     
-    public var userInfo: [AnyHashable: Any]?
+    public weak var view: UIView? {
+        return viewController?.view
+    }
     
-    public init(_ viewController: UIViewController?, userInfo: [AnyHashable: Any]? = nil) {
+    public weak var navigationController: UINavigationController? {
+        return viewController?.navigationController
+    }
+    
+    public init(_ viewController: UIViewController?) {
         self.viewController = viewController
-        self.userInfo = userInfo
     }
     
 }
@@ -45,14 +50,14 @@ extension EnvironmentValues {
 extension View {
     
     /// 设置视图上下文
-    public func viewContext(_ viewController: UIViewController?, userInfo: [AnyHashable: Any]? = nil) -> some View {
-        return environment(\.viewContext, ViewContext(viewController, userInfo: userInfo))
+    public func viewContext(_ viewController: UIViewController?) -> some View {
+        return environment(\.viewContext, ViewContext(viewController))
     }
     
     /// 快速包装视图到上下文控制器
-    public func wrappedContextController(userInfo: [AnyHashable: Any]? = nil) -> UIHostingController<AnyView> {
+    public func wrappedContextController() -> UIHostingController<AnyView> {
         let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
-        hostingController.rootView = AnyView(viewContext(hostingController, userInfo: userInfo))
+        hostingController.rootView = AnyView(viewContext(hostingController))
         return hostingController
     }
     
