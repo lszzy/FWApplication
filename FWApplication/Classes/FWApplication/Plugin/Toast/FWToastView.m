@@ -21,14 +21,22 @@
 @property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic, strong) NSTimer *hideTimer;
+@property (nonatomic, assign) BOOL touchEnabled;
 
 @end
 
 @implementation FWToastView
 
+#pragma mark - Lifecycle
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    return [self initWithType:FWToastViewTypeCustom];
+    self = [super initWithFrame:frame];
+    if (self) {
+        _type = FWToastViewTypeCustom;
+        [self setupSubviews];
+    }
+    return self;
 }
 
 - (instancetype)initWithType:(FWToastViewType)type
@@ -36,31 +44,30 @@
     self = [super initWithFrame:CGRectZero];
     if (self) {
         _type = type;
-        _contentBackgroundColor = [UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0];
-        _contentMarginInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-        _contentInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
-        _contentSpacing = 5.f;
-        _contentCornerRadius = 5.f;
-        _verticalOffset = -30;
-        _indicatorColor = [UIColor whiteColor];
-        if (type == FWToastViewTypeProgress) {
-            _indicatorSize = CGSizeMake(37.f, 37.f);
-        } else {
-            _indicatorSize = CGSizeZero;
-        }
-        _titleFont = [UIFont systemFontOfSize:16];
-        _titleColor = [UIColor whiteColor];
-        
-        self.backgroundColor = [UIColor clearColor];
-        self.userInteractionEnabled = YES;
-        
-        [self setupTypeView];
+        [self setupSubviews];
     }
     return self;
 }
 
-- (void)setupTypeView
+- (void)setupSubviews
 {
+    _contentBackgroundColor = [UIColor colorWithRed:64/255.0 green:64/255.0 blue:64/255.0 alpha:1.0];
+    _contentMarginInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
+    _contentInsets = UIEdgeInsetsMake(10.f, 10.f, 10.f, 10.f);
+    _contentSpacing = 5.f;
+    _contentCornerRadius = 5.f;
+    _verticalOffset = -30;
+    _indicatorColor = [UIColor whiteColor];
+    if (self.type == FWToastViewTypeProgress) {
+        _indicatorSize = CGSizeMake(37.f, 37.f);
+    } else {
+        _indicatorSize = CGSizeZero;
+    }
+    _titleFont = [UIFont systemFontOfSize:16];
+    _titleColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
+    self.userInteractionEnabled = YES;
+    
     _contentView = [[UIView alloc] init];
     _contentView.userInteractionEnabled = NO;
     _contentView.layer.masksToBounds = YES;
@@ -99,17 +106,10 @@
     }
 }
 
-- (void)updateTypeView
+- (void)updateLayout
 {
     self.contentView.backgroundColor = self.contentBackgroundColor;
     self.contentView.layer.cornerRadius = self.contentCornerRadius;
-    [self.contentView fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
-    [self.contentView fw_alignAxisToSuperview:NSLayoutAttributeCenterY withOffset:self.verticalOffset];
-    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentMarginInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentMarginInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentMarginInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
-    [self.contentView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentMarginInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
-    
     self.titleLabel.font = self.titleFont;
     self.titleLabel.textColor = self.titleColor;
     self.titleLabel.attributedText = self.attributedTitle;
@@ -143,50 +143,100 @@
         }
     }
     
-    if (!self.firstView) {
-        [self.titleLabel fw_pinEdgesToSuperviewWithInsets:self.contentInsets];
-        return;
-    }
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
     
-    if (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) {
-        [self.firstView fw_setDimensionsToSize:self.indicatorSize];
-    }
     if (self.firstView && [self.firstView respondsToSelector:@selector(startAnimating)]) {
         [(UIView<FWIndicatorViewPlugin> *)self.firstView startAnimating];
     }
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
     
-    if (self.horizontalAlignment) {
-        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left];
-        [self.firstView fw_alignAxisToSuperview:NSLayoutAttributeCenterY];
-        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right];
-        [self.titleLabel fw_alignAxisToSuperview:NSLayoutAttributeCenterY];
-        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom relation:NSLayoutRelationGreaterThanOrEqual];
-        self.titleLabel.fw_autoCollapse = YES;
-        NSLayoutConstraint *collapseConstraint = [self.titleLabel fw_pinEdge:NSLayoutAttributeLeft toEdge:NSLayoutAttributeRight ofView:self.firstView withOffset:self.contentSpacing];
-        [self.titleLabel fw_addCollapseConstraint:collapseConstraint];
-    // 上下布局
+    // contentView默认垂直居中于toastView
+    CGSize contentViewSize = [self contentViewSize];
+    if (CGSizeEqualToSize(contentViewSize, CGSizeZero)) return;
+    self.contentView.frame = CGRectMake((CGRectGetWidth(self.bounds) - self.contentMarginInsets.left - self.contentMarginInsets.right - contentViewSize.width) / 2.0 + self.contentMarginInsets.left, (CGRectGetHeight(self.bounds) - self.contentMarginInsets.top - self.contentMarginInsets.bottom - contentViewSize.height) / 2.0 + self.contentMarginInsets.top + self.verticalOffset, contentViewSize.width, contentViewSize.height);
+    
+    // 如果contentView要比toastView高，则置顶展示
+    if (CGRectGetHeight(self.contentView.bounds) > CGRectGetHeight(self.bounds)) {
+        CGRect frame = self.contentView.frame;
+        frame.origin.y = 0;
+        self.contentView.frame = frame;
+    }
+    
+    if (self.firstView) {
+        if (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) {
+            self.firstView.frame = CGRectMake(self.firstView.frame.origin.x, self.firstView.frame.origin.y, self.indicatorSize.width, self.indicatorSize.height);
+        } else {
+            [self.firstView sizeToFit];
+        }
+    }
+    
+    if (!self.horizontalAlignment) {
+        CGFloat originY = self.contentInsets.top;
+        if (self.firstView) {
+            CGRect frame = self.firstView.frame;
+            frame.origin = CGPointMake((contentViewSize.width - self.contentInsets.left - self.contentInsets.right - frame.size.width) / 2.0 + self.contentInsets.left, originY);
+            self.firstView.frame = frame;
+            originY = CGRectGetMaxY(self.firstView.frame);
+        }
+        
+        CGFloat maxTitleWidth = contentViewSize.width - self.contentInsets.left - self.contentInsets.right;
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxTitleWidth, CGFLOAT_MAX)];
+        self.titleLabel.frame = CGRectMake((maxTitleWidth - titleLabelSize.width) / 2.0 + self.contentInsets.left, originY + (self.firstView.frame.size.height > 0 && titleLabelSize.height > 0 ? self.contentSpacing : 0), titleLabelSize.width, titleLabelSize.height);
     } else {
-        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeTop withInset:self.contentInsets.top];
-        [self.firstView fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
-        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.firstView fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeBottom withInset:self.contentInsets.bottom];
-        [self.titleLabel fw_alignAxisToSuperview:NSLayoutAttributeCenterX];
-        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeLeft withInset:self.contentInsets.left relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.titleLabel fw_pinEdgeToSuperview:NSLayoutAttributeRight withInset:self.contentInsets.right relation:NSLayoutRelationGreaterThanOrEqual];
-        self.titleLabel.fw_autoCollapse = YES;
-        NSLayoutConstraint *collapseConstraint = [self.titleLabel fw_pinEdge:NSLayoutAttributeTop toEdge:NSLayoutAttributeBottom ofView:self.firstView withOffset:self.contentSpacing];
-        [self.titleLabel fw_addCollapseConstraint:collapseConstraint];
+        CGFloat originX = self.contentInsets.left;
+        if (self.firstView) {
+            CGRect frame = self.firstView.frame;
+            frame.origin = CGPointMake(originX, (contentViewSize.height - self.contentInsets.top - self.contentInsets.bottom - frame.size.height) / 2.0 + self.contentInsets.top);
+            self.firstView.frame = frame;
+            originX = CGRectGetMaxX(self.firstView.frame);
+        }
+        
+        CGFloat maxTitleWidth = contentViewSize.width - self.contentInsets.left - self.contentInsets.right - self.firstView.frame.size.width - (self.firstView.frame.size.width > 0 ? self.contentSpacing : 0);
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxTitleWidth, CGFLOAT_MAX)];
+        self.titleLabel.frame = CGRectMake(originX + (self.firstView.frame.size.width > 0 && titleLabelSize.width > 0 ? self.contentSpacing : 0), (contentViewSize.height - self.contentInsets.top - self.contentInsets.bottom - titleLabelSize.height) / 2.0 + self.contentInsets.top, titleLabelSize.width, titleLabelSize.height);
     }
 }
+
+- (CGSize)contentViewSize
+{
+    if (CGSizeEqualToSize(self.bounds.size, CGSizeZero)) return CGSizeZero;
+    
+    CGFloat contentWidth = self.contentInsets.left + self.contentInsets.right;
+    CGFloat contentHeight = self.contentInsets.top + self.contentInsets.bottom;
+    CGFloat maxContentWidth = self.bounds.size.width - self.contentMarginInsets.left - self.contentMarginInsets.right - self.contentInsets.left - self.contentInsets.right;
+    
+    CGSize firstViewSize = CGSizeZero;
+    if (self.firstView) firstViewSize = (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) ? self.indicatorSize : [self.firstView sizeThatFits:CGSizeMake(maxContentWidth, CGFLOAT_MAX)];
+    
+    if (!self.horizontalAlignment) {
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxContentWidth, CGFLOAT_MAX)];
+        
+        contentWidth += MAX(firstViewSize.width, titleLabelSize.width);
+        contentHeight += firstViewSize.height + titleLabelSize.height;
+        if (firstViewSize.height > 0 && titleLabelSize.height > 0) contentHeight += self.contentSpacing;
+        return CGSizeMake(contentWidth, contentHeight);
+    } else {
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxContentWidth - firstViewSize.width - (firstViewSize.width > 0 ? self.contentSpacing : 0), CGFLOAT_MAX)];
+        
+        contentWidth += firstViewSize.width + titleLabelSize.width;
+        if (firstViewSize.width > 0 && titleLabelSize.width > 0) contentWidth += self.contentSpacing;
+        contentHeight += MAX(firstViewSize.height, titleLabelSize.height);
+        return CGSizeMake(contentWidth, contentHeight);
+    }
+}
+
+#pragma mark - Accessor
 
 - (void)setAttributedTitle:(NSAttributedString *)attributedTitle
 {
     _attributedTitle = attributedTitle;
     self.titleLabel.attributedText = attributedTitle;
+    [self setNeedsLayout];
 }
 
 - (void)setProgress:(CGFloat)progress
@@ -196,6 +246,7 @@
     if (progressView && [progressView respondsToSelector:@selector(setProgress:)]) {
         [(UIView<FWProgressViewPlugin> *)progressView setProgress:progress];
     }
+    [self setNeedsLayout];
 }
 
 - (void)setIndicatorView:(UIView<FWIndicatorViewPlugin> *)indicatorView
@@ -205,6 +256,7 @@
     _indicatorView = indicatorView;
     _indicatorView.userInteractionEnabled = NO;
     [self.contentView addSubview:_indicatorView];
+    [self setNeedsLayout];
 }
 
 - (void)setProgressView:(UIView<FWProgressViewPlugin> *)progressView
@@ -214,6 +266,26 @@
     _progressView = progressView;
     _progressView.userInteractionEnabled = NO;
     [self.contentView addSubview:_progressView];
+    [self setNeedsLayout];
+}
+
+- (void)setCancelBlock:(void (^)(void))cancelBlock
+{
+    _cancelBlock = cancelBlock;
+    if (cancelBlock && !self.touchEnabled) {
+        self.touchEnabled = YES;
+        
+        __weak __typeof__(self) self_weak_ = self;
+        self.contentView.userInteractionEnabled = YES;
+        [self.contentView fw_addTapGestureWithBlock:^(id sender) {
+            __typeof__(self) self = self_weak_;
+            void (^cancelBlock)(void) = self.cancelBlock;
+            if (cancelBlock) {
+                [self hide];
+                cancelBlock();
+            }
+        }];
+    }
 }
 
 #pragma mark - Public
@@ -225,7 +297,7 @@
 
 - (void)showAnimated:(BOOL)animated
 {
-    [self updateTypeView];
+    [self updateLayout];
     
     if (animated) {
         self.alpha = 0;

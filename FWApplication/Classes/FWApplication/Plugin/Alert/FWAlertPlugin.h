@@ -56,6 +56,9 @@ NS_SWIFT_NAME(AlertPlugin)
              hideAlert:(BOOL)animated
             completion:(nullable void (^)(void))completion;
 
+/// 判断是否正在显示弹出框插件方法，默认查找UIAlertController|FWAlertController
+- (BOOL)isShowingAlert:(UIViewController *)viewController;
+
 @end
 
 #pragma mark - UIViewController+FWAlertPlugin
@@ -296,6 +299,9 @@ NS_SWIFT_NAME(AlertPlugin)
 - (void)fw_hideAlert:(BOOL)animated
           completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
 
+/// 判断是否正在显示弹出框
+@property (nonatomic, assign, readonly) BOOL fw_isShowingAlert NS_REFINED_FOR_SWIFT;
+
 @end
 
 #pragma mark - UIView+FWAlertPlugin
@@ -532,6 +538,9 @@ NS_SWIFT_NAME(AlertPlugin)
  */
 - (void)fw_hideAlert:(BOOL)animated
           completion:(nullable void (^)(void))completion NS_REFINED_FOR_SWIFT;
+
+/// 判断是否正在显示弹出框
+@property (nonatomic, assign, readonly) BOOL fw_isShowingAlert NS_REFINED_FOR_SWIFT;
 
 @end
 

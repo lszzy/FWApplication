@@ -52,7 +52,7 @@
     }
     NSString *emptyMoreAction = actions.count > 1 ? [actions objectAtIndex:1] : nil;
     
-    FWEmptyView *emptyView = [view viewWithTag:2021];
+    FWEmptyView *emptyView = [view fw_subviewWithTag:2021];
     BOOL fadeAnimated = self.fadeAnimated && !emptyView;
     if (emptyView) { [emptyView removeFromSuperview]; }
     
@@ -83,7 +83,7 @@
 
 - (void)hideEmptyView:(UIView *)view
 {
-    UIView *emptyView = [view viewWithTag:2021];
+    UIView *emptyView = [view fw_subviewWithTag:2021];
     if (!emptyView) return;
     
     if ([emptyView.superview isKindOfClass:[FWScrollOverlayView class]]) {
@@ -97,7 +97,7 @@
 
 - (BOOL)hasEmptyView:(UIView *)view
 {
-    UIView *emptyView = [view viewWithTag:2021];
+    UIView *emptyView = [view fw_subviewWithTag:2021];
     return emptyView != nil ? YES : NO;
 }
 

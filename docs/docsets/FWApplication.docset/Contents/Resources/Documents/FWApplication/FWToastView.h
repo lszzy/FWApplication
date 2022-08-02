@@ -50,6 +50,8 @@ NS_SWIFT_NAME(ToastView)
 /// 标题标签，都存在，有内容时才显示
 @property (nonatomic, readonly) UILabel *titleLabel;
 
+/// 获取内容视图尺寸，需bounds存在时才有值
+@property (nonatomic, assign, readonly) CGSize contentViewSize;
 /// 内容背景色，默认#404040
 @property (nonatomic, strong) UIColor *contentBackgroundColor UI_APPEARANCE_SELECTOR;
 /// 内容视图最小外间距，默认{10, 10, 10, 10}
@@ -79,6 +81,8 @@ NS_SWIFT_NAME(ToastView)
 @property (nonatomic, copy, nullable) NSAttributedString *attributedTitle;
 /// 当前指示器进度值，范围0~1，仅Progress生效
 @property (nonatomic, assign) CGFloat progress;
+/// 手工点击取消时触发的句柄，默认nil不可点击取消
+@property (nonatomic, copy, nullable) void (^cancelBlock)(void);
 
 /// 初始化指定类型指示器
 - (instancetype)initWithType:(FWToastViewType)type;

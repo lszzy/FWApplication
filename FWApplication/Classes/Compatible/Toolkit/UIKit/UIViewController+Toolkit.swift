@@ -37,13 +37,13 @@ extension Wrapper where Base: UIViewController {
     }
 
     /// 添加子控制器到当前视图，解决不能触发viewWillAppear等的bug
-    public func addChildViewController(_ viewController: UIViewController) {
-        base.__fw_addChildViewController(viewController)
+    public func addChildViewController(_ viewController: UIViewController, layout: ((UIView) -> Void)? = nil) {
+        base.__fw_addChildViewController(viewController, in: nil, layout: layout)
     }
 
     /// 添加子控制器到指定视图，解决不能触发viewWillAppear等的bug
-    public func addChildViewController(_ viewController: UIViewController, in view: UIView) {
-        base.__fw_addChildViewController(viewController, in: view)
+    public func addChildViewController(_ viewController: UIViewController, in view: UIView?, layout: ((UIView) -> Void)? = nil) {
+        base.__fw_addChildViewController(viewController, in: view, layout: layout)
     }
 
     // MARK: - Previous

@@ -394,6 +394,22 @@
              hideAlert:(BOOL)animated
             completion:(void (^)(void))completion
 {
+    UIViewController *alertController = [self showingAlertController:viewController];
+    if (alertController) {
+        [alertController.presentingViewController dismissViewControllerAnimated:animated completion:completion];
+    } else {
+        if (completion) completion();
+    }
+}
+
+- (BOOL)isShowingAlert:(UIViewController *)viewController
+{
+    UIViewController *alertController = [self showingAlertController:viewController];
+    return alertController ? YES : NO;
+}
+
+- (UIViewController *)showingAlertController:(UIViewController *)viewController
+{
     UIViewController *alertController = nil;
     NSArray<Class> *alertClasses = self.customAlertClasses.count > 0 ? self.customAlertClasses : @[UIAlertController.class, FWAlertController.class];
     
@@ -408,11 +424,7 @@
         presentedController = presentedController.presentedViewController;
     }
     
-    if (alertController) {
-        [alertController.presentingViewController dismissViewControllerAnimated:animated completion:completion];
-    } else {
-        if (completion) completion();
-    }
+    return alertController;
 }
 
 @end

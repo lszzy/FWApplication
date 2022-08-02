@@ -161,6 +161,10 @@ NSString *const FWRequestValidationErrorDomain = @"site.wuyong.request.validatio
     [self start];
 }
 
+- (void)startWithCompletion:(FWRequestCompletionBlock)completion {
+    [self startWithCompletionBlockWithSuccess:completion failure:completion];
+}
+
 #pragma mark - Subclass Override
 
 - (BOOL)responseMockValidator {

@@ -2146,9 +2146,9 @@ static NSString * const kImageOrUnknownCellIdentifier = @"imageorunknown";
     };
     
     [self addChildViewController:albumController];
-    [albumController didMoveToParentViewController:self];
     albumController.view.hidden = YES;
     [self.view addSubview:albumController.view];
+    [albumController didMoveToParentViewController:self];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleAlbumButtonClick:)];
     [albumController.backgroundView addGestureRecognizer:tapGesture];

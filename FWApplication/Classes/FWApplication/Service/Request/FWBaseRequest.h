@@ -273,6 +273,9 @@ NS_SWIFT_NAME(BaseRequest)
 - (void)startWithCompletionBlockWithSuccess:(nullable FWRequestCompletionBlock)success
                                     failure:(nullable FWRequestCompletionBlock)failure;
 
+///  Convenience method to start the request with completion block.
+- (void)startWithCompletion:(nullable FWRequestCompletionBlock)completion;
+
 
 #pragma mark - Subclass Override
 ///=============================================================================

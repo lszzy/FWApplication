@@ -40,6 +40,44 @@
 
 @end
 
+#pragma mark - UINavigationBar+FWStyle
+
+@implementation UINavigationBar (FWStyle)
+
+- (void)fw_applyBarAppearance:(FWNavigationBarAppearance *)appearance
+{
+    if (appearance.isTranslucent != self.fw_isTranslucent) {
+        self.fw_isTranslucent = appearance.isTranslucent;
+    }
+    if (appearance.backgroundTransparent) {
+        self.fw_backgroundTransparent = appearance.backgroundTransparent;
+    } else if (appearance.backgroundImage) {
+        self.fw_backgroundImage = appearance.backgroundImage;
+    } else if (appearance.backgroundColor) {
+        self.fw_backgroundColor = appearance.backgroundColor;
+    }
+    if (appearance.shadowImage) {
+        self.fw_shadowImage = appearance.shadowImage;
+    } else if (appearance.shadowColor) {
+        self.fw_shadowColor = appearance.shadowColor;
+    } else {
+        self.fw_shadowColor = nil;
+    }
+    if (appearance.foregroundColor) self.fw_foregroundColor = appearance.foregroundColor;
+    if (appearance.titleAttributes) self.fw_titleAttributes = appearance.titleAttributes;
+    if (appearance.buttonAttributes) self.fw_buttonAttributes = appearance.buttonAttributes;
+    if (appearance.backImage) self.fw_backImage = appearance.backImage;
+    if (appearance.appearanceBlock) appearance.appearanceBlock(self);
+}
+
+- (void)fw_applyBarStyle:(FWNavigationBarStyle)style
+{
+    FWNavigationBarAppearance *appearance = [FWNavigationBarAppearance appearanceForStyle:style];
+    if (appearance) [self fw_applyBarAppearance:appearance];
+}
+
+@end
+
 #pragma mark - UIViewController+FWStyle
 
 @implementation UIViewController (FWStyle)
@@ -144,6 +182,16 @@
     }
 }
 
+- (BOOL)fw_allowsChildNavigation
+{
+    return [objc_getAssociatedObject(self, @selector(fw_allowsChildNavigation)) boolValue];
+}
+
+- (void)setFw_allowsChildNavigation:(BOOL)allowsChildNavigation
+{
+    objc_setAssociatedObject(self, @selector(fw_allowsChildNavigation), @(allowsChildNavigation), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (FWNavigationBarAppearance *)fw_currentNavigationBarAppearance
 {
     // 1. 检查VC是否自定义appearance
@@ -168,9 +216,9 @@
 
 - (void)fw_updateNavigationBarStyle:(BOOL)animated
 {
-    // 含有导航栏且不是child控制器且不是导航栏控制器时才处理
-    if (!self.navigationController || self.fw_isChild ||
-        [self isKindOfClass:[UINavigationController class]]) return;
+    // 含有导航栏且不是导航栏控制器，如果是child控制器且允许修改时才处理
+    if (!self.navigationController || [self isKindOfClass:[UINavigationController class]]) return;
+    if (self.fw_isChild && !self.fw_allowsChildNavigation) return;
     
     // fwNavigationBarHidden设置即生效，动态切换导航栏不突兀，一般在viewWillAppear:中调用
     NSNumber *hidden = objc_getAssociatedObject(self, @selector(fw_navigationBarHidden));
@@ -178,31 +226,21 @@
         [self.navigationController setNavigationBarHidden:hidden.boolValue animated:animated];
     }
     
-    // 获取当前用于显示的appearance
+    // 获取当前用于显示的appearance，未设置时不处理
     FWNavigationBarAppearance *appearance = [self fw_currentNavigationBarAppearance];
     if (!appearance) return;
-    UINavigationBar *navigationBar = self.navigationController.navigationBar;
-    if (appearance.isTranslucent != navigationBar.fw_isTranslucent) {
-        navigationBar.fw_isTranslucent = appearance.isTranslucent;
+    
+    // 配合导航栏appearance初始化返回按钮或左侧按钮
+    if (appearance.backImage) self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage new] style:UIBarButtonItemStylePlain target:nil action:nil];
+    if (appearance.leftBackImage && objc_getAssociatedObject(self, _cmd) == nil) {
+        objc_setAssociatedObject(self, _cmd, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (self.navigationController.childViewControllers.count > 1) {
+            self.fw_leftBarItem = appearance.leftBackImage;
+        }
     }
-    if (appearance.backgroundTransparent) {
-        navigationBar.fw_backgroundTransparent = appearance.backgroundTransparent;
-    } else if (appearance.backgroundImage) {
-        navigationBar.fw_backgroundImage = appearance.backgroundImage;
-    } else if (appearance.backgroundColor) {
-        navigationBar.fw_backgroundColor = appearance.backgroundColor;
-    }
-    if (appearance.shadowImage) {
-        navigationBar.fw_shadowImage = appearance.shadowImage;
-    } else if (appearance.shadowColor) {
-        navigationBar.fw_shadowColor = appearance.shadowColor;
-    } else {
-        navigationBar.fw_shadowColor = nil;
-    }
-    if (appearance.foregroundColor) navigationBar.fw_foregroundColor = appearance.foregroundColor;
-    if (appearance.titleAttributes) navigationBar.fw_titleAttributes = appearance.titleAttributes;
-    if (appearance.buttonAttributes) navigationBar.fw_buttonAttributes = appearance.buttonAttributes;
-    if (appearance.appearanceBlock) appearance.appearanceBlock(navigationBar);
+    
+    // 应用当前导航栏appearance
+    [self.navigationController.navigationBar fw_applyBarAppearance:appearance];
 }
 
 - (BOOL)fw_tabBarHidden

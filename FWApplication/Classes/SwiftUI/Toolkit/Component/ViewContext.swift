@@ -14,27 +14,29 @@ public struct ViewContext {
     
     public weak var viewController: UIViewController?
     
-    public var userInfo: [AnyHashable: Any]?
-    
-    public init(_ viewController: UIViewController?, userInfo: [AnyHashable: Any]? = nil) {
-        self.viewController = viewController
-        self.userInfo = userInfo
+    public weak var view: UIView? {
+        return viewController?.view
     }
     
-}
-
-/// 视图上下文Key
-@available(iOS 13.0, *)
-public struct ViewContextKey: EnvironmentKey {
+    public weak var navigationController: UINavigationController? {
+        return viewController?.navigationController
+    }
     
-    public static var defaultValue: ViewContext {
-        return ViewContext(nil)
+    public init(_ viewController: UIViewController?) {
+        self.viewController = viewController
     }
     
 }
 
 @available(iOS 13.0, *)
 extension EnvironmentValues {
+    
+    /// 视图上下文Key
+    private struct ViewContextKey: EnvironmentKey {
+        static var defaultValue: ViewContext {
+            return ViewContext(nil)
+        }
+    }
     
     /// 访问视图上下文
     public var viewContext: ViewContext {
@@ -48,8 +50,27 @@ extension EnvironmentValues {
 extension View {
     
     /// 设置视图上下文
-    public func viewContext(_ viewController: UIViewController?, userInfo: [AnyHashable: Any]? = nil) -> some View {
-        return environment(\.viewContext, ViewContext(viewController, userInfo: userInfo))
+    public func viewContext(_ viewController: UIViewController?) -> some View {
+        return environment(\.viewContext, ViewContext(viewController))
+    }
+    
+    /// 快速包装视图到上下文控制器
+    public func wrappedContextController() -> UIHostingController<AnyView> {
+        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        hostingController.rootView = AnyView(viewContext(hostingController))
+        return hostingController
+    }
+    
+}
+
+@available(iOS 13.0, *)
+extension UIHostingController where Content == AnyView {
+    
+    /// 快速创建视图上下文控制器
+    public static func contextController<T: View>(@ViewBuilder _ builder: () -> T) -> UIHostingController<AnyView> {
+        let hostingController = UIHostingController(rootView: AnyView(EmptyView()))
+        hostingController.rootView = AnyView(builder().viewContext(hostingController))
+        return hostingController
     }
     
 }

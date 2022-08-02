@@ -107,6 +107,11 @@
         [alertController addAction:cancelAction];
     }
     
+    // 点击背景
+    if (self.dimmingTriggerCancel) {
+        alertController.dismissCompletion = cancelBlock;
+    }
+    
     // 添加首选按钮
     if (alertController.alertAppearance.preferredActionBlock && alertController.actions.count > 0) {
         FWAlertAction *preferredAction = alertController.alertAppearance.preferredActionBlock(alertController);
@@ -158,6 +163,11 @@
         [alertController addAction:cancelAction];
     }
     
+    // 点击背景
+    if (self.dimmingTriggerCancel) {
+        alertController.dismissCompletion = cancelBlock;
+    }
+    
     // 添加首选按钮
     if (currentIndex >= 0 && alertController.actions.count > currentIndex) {
         alertController.preferredAction = alertController.actions[currentIndex];
@@ -205,6 +215,11 @@
             if (cancelBlock) cancelBlock();
         }];
         [alertController addAction:cancelAction];
+    }
+    
+    // 点击背景
+    if (self.dimmingTriggerCancel) {
+        alertController.dismissCompletion = cancelBlock;
     }
     
     // 添加首选按钮

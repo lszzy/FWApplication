@@ -42,16 +42,21 @@ static UIModalPresentationStyle fwStaticModalPresentationStyle = UIModalPresenta
 
 - (void)fw_addChildViewController:(UIViewController *)viewController
 {
-    [self fw_addChildViewController:viewController inView:self.view];
+    [self fw_addChildViewController:viewController inView:nil layout:nil];
 }
 
-- (void)fw_addChildViewController:(UIViewController *)viewController inView:(UIView *)view
+- (void)fw_addChildViewController:(UIViewController *)viewController inView:(UIView *)view layout:(__attribute__((noescape)) void (^)(UIView *))layout
 {
     [self addChildViewController:viewController];
+    UIView *superview = view ?: self.view;
+    [superview addSubview:viewController.view];
+    if (layout != nil) {
+        layout(viewController.view);
+    } else {
+        // viewController.view.frame = superview.bounds;
+        [viewController.view fw_pinEdgesToSuperview];
+    }
     [viewController didMoveToParentViewController:self];
-    [view addSubview:viewController.view];
-    // viewController.view.frame = view.bounds;
-    [viewController.view fw_pinEdgesToSuperview];
 }
 
 #pragma mark - Previous

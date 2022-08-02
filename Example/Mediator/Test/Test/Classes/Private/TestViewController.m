@@ -13,7 +13,7 @@
 
 FWDealloc();
 
-- (void)mockProgress:(void (^)(double, BOOL))block
++ (void)mockProgress:(void (^)(double, BOOL))block
 {
     block(0, NO);
     dispatch_async(dispatch_get_global_queue(0, 0), ^{

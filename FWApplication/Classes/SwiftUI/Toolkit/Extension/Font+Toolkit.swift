@@ -13,10 +13,7 @@ import FWFrameworkCompatible
 #endif
 
 @available(iOS 13.0, *)
-extension Font: WrapperCompatible {}
-
-@available(iOS 13.0, *)
-extension Wrapper where Base == Font {
+extension Font {
     
     /// 全局自定义字体句柄，优先调用
     public static var fontBlock: ((CGFloat, Font.Weight) -> Font)?

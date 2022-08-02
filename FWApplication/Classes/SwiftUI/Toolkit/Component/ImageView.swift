@@ -14,6 +14,7 @@ import FWApplication
 import FWApplicationCompatible
 #endif
 
+// MARK: - ImageView
 /// 图片视图，支持网络图片和动图
 @available(iOS 13.0, *)
 public struct ImageView: UIViewRepresentable {
@@ -34,81 +35,106 @@ public struct ImageView: UIViewRepresentable {
     }
     
     /// 设置网络图片URL
-    public func url(_ url: Any?) -> ImageView {
+    public func url(_ url: Any?) -> Self {
         var result = self
         result.url = url
         return result
     }
     
     /// 设置网络图片加载选项
-    public func options(_ options: WebImageOptions) -> ImageView {
+    public func options(_ options: WebImageOptions) -> Self {
         var result = self
         result.options = options
         return result
     }
     
     /// 设置本地占位图片
-    public func placeholder(_ placeholder: UIImage?) -> ImageView {
+    public func placeholder(_ placeholder: UIImage?) -> Self {
         var result = self
         result.placeholder = placeholder
         return result
     }
     
     /// 设置图片显示内容模式，默认scaleAspectFill
-    public func contentMode(_ contentMode: UIView.ContentMode) -> ImageView {
+    public func contentMode(_ contentMode: UIView.ContentMode) -> Self {
         var result = self
         result.contentMode = contentMode
         return result
     }
     
     // MARK: - UIViewRepresentable
-    public typealias UIViewType = ImageViewWrapper
+    public typealias UIViewType = ResizableView<UIImageView>
     
-    public func makeUIView(context: Context) -> ImageViewWrapper {
-        let imageView = ImageViewWrapper()
-        imageView.wrapped.contentMode = contentMode
-        imageView.wrapped.fw.setImage(url: url, placeholderImage: placeholder, options: options, context: nil, completion: nil)
+    public func makeUIView(context: Context) -> ResizableView<UIImageView> {
+        let imageView = ResizableView(UIImageView.fw.animatedImageView())
+        imageView.content.contentMode = contentMode
+        imageView.content.fw.setImage(url: url, placeholderImage: placeholder, options: options, context: nil, completion: nil)
         return imageView
     }
     
-    public func updateUIView(_ imageView: ImageViewWrapper, context: Context) {
-        imageView.wrapped.contentMode = contentMode
+    public func updateUIView(_ imageView: ResizableView<UIImageView>, context: Context) {
+        imageView.content.contentMode = contentMode
     }
     
-    public static func dismantleUIView(_ imageView: ImageViewWrapper, coordinator: ()) {
-        imageView.wrapped.fw.cancelImageRequest()
+    public static func dismantleUIView(_ imageView: ResizableView<UIImageView>, coordinator: ()) {
+        imageView.content.fw.cancelImageRequest()
     }
     
 }
 
-/// 图片视图包装器，解决frame尺寸变为图片尺寸问题
+// MARK: - ResizableView
+/// 可调整大小的视图包装器，解决frame尺寸变为图片尺寸等问题
 @available(iOS 13.0, *)
-public class ImageViewWrapper : UIView {
+public class ResizableView<Content: UIView>: UIView {
     
-    var wrapped = UIImageView.fw.animatedImageView()
-    var resizable = true
+    public var content: Content
+    public var resizable = true
     
-    public override init(frame: CGRect) {
+    public init(_ content: Content, frame: CGRect = .zero) {
+        self.content = content
         super.init(frame: frame)
-        addSubview(wrapped)
+        addSubview(content)
     }
     
-    public required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        addSubview(wrapped)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     public override func layoutSubviews() {
         super.layoutSubviews()
-        wrapped.frame = self.bounds
+        content.frame = self.bounds
+    }
+    
+    public override var frame: CGRect {
+        didSet { invalidateIntrinsicContentSize() }
+    }
+    
+    public override var bounds: CGRect {
+        didSet { invalidateIntrinsicContentSize() }
     }
     
     public override var intrinsicContentSize: CGSize {
-        if resizable {
-            return super.intrinsicContentSize
-        } else {
-            return wrapped.intrinsicContentSize
-        }
+        return resizable ? super.intrinsicContentSize : content.intrinsicContentSize
+    }
+    
+    public override func sizeThatFits(_ size: CGSize) -> CGSize {
+        return resizable ? super.intrinsicContentSize : content.intrinsicContentSize
+    }
+    
+}
+
+// MARK: - InvisibleView
+/// 不可见视图，当某个场景EmptyView不生效时可使用InvisibleView替代，比如EmptyView不触发onAppear
+@available(iOS 13.0, *)
+public struct InvisibleView: View {
+    
+    public init() {}
+    
+    public var body: some View {
+        Color.clear
+            .frame(width: 0, height: 0)
+            .allowsHitTesting(false)
+            .accessibility(hidden: true)
     }
     
 }

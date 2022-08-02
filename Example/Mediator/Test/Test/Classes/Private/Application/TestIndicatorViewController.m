@@ -24,10 +24,10 @@
 {
     [self.tableData addObjectsFromArray:@[
                                          @[@"无文本", @"onIndicator"],
-                                         @[@"有文本", @"onIndicator2"],
+                                         @[@"有文本(可取消)", @"onIndicator2"],
                                          @[@"文本太长", @"onIndicator3"],
                                          @[@"加载动画", @"onLoading"],
-                                         @[@"进度动画", @"onProgress"],
+                                         @[@"进度动画(可取消)", @"onProgress"],
                                          @[@"加载动画(window)", @"onLoadingWindow"],
                                          @[@"加载进度动画(window)", @"onProgressWindow"],
                                          @[@"单行吐司(可点击)", @"onToast"],
@@ -74,8 +74,17 @@
 
 - (void)onIndicator2
 {
-    [self fw_showLoading];
+    static BOOL isCancelled = NO;
+    FWWeakifySelf();
+    isCancelled = NO;
+    [self fw_showLoadingWithText:nil cancelBlock:^{
+        isCancelled = YES;
+        FWStrongifySelf();
+        [self fw_showMessageWithText:@"已取消"];
+    }];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (isCancelled) return;
+        FWStrongifySelf();
         [self fw_hideLoading];
     });
 }
@@ -98,11 +107,18 @@
 
 - (void)onProgress
 {
+    static BOOL isCancelled = NO;
     FWWeakifySelf();
-    [self mockProgress:^(double progress, BOOL finished) {
+    isCancelled = NO;
+    [TestViewController mockProgress:^(double progress, BOOL finished) {
+        if (isCancelled) return;
         FWStrongifySelf();
         if (!finished) {
-            [self fw_showProgressWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100] progress:progress];
+            [self fw_showProgressWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100] progress:progress cancelBlock:^{
+                isCancelled = YES;
+                FWStrongifySelf();
+                [self fw_showMessageWithText:@"已取消"];
+            }];
         } else {
             [self fw_hideProgress];
         }
@@ -122,7 +138,7 @@
 - (void)onProgressWindow
 {
     FWWeakifySelf();
-    [self mockProgress:^(double progress, BOOL finished) {
+    [TestViewController mockProgress:^(double progress, BOOL finished) {
         FWStrongifySelf();
         if (!finished) {
             [self.view.window fw_showLoadingWithText:[NSString stringWithFormat:@"上传中(%.0f%%)", progress * 100]];

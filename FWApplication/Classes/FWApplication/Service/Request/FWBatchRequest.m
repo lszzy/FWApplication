@@ -81,6 +81,10 @@
     [self start];
 }
 
+- (void)startWithCompletion:(void (^)(FWBatchRequest *))completion {
+    [self startWithCompletionBlockWithSuccess:completion failure:completion];
+}
+
 - (void)setCompletionBlockWithSuccess:(void (^)(FWBatchRequest *batchRequest))success
                               failure:(void (^)(FWBatchRequest *batchRequest))failure {
     self.successCompletionBlock = success;

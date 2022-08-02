@@ -332,18 +332,6 @@ public enum TargetViewSelector {
     }
 }
 
-/// Allows to safely access an array element by index
-/// Usage: array[safe: 2]
-private extension Array {
-    subscript(safe index: Int) -> Element? {
-        guard index >= 0, index < endIndex else {
-            return nil
-        }
-
-        return self[index]
-    }
-}
-
 // MARK: - UIKitIntrospectionViewController
 /// Introspection UIViewController that is inserted alongside the target view controller.
 @available(iOS 13.0, tvOS 13.0, macOS 10.15.0, *)
@@ -460,13 +448,10 @@ public struct UIKitIntrospectionView<TargetViewType: UIView>: UIViewRepresentabl
 // MARK: - ViewExtensions
 @available(iOS 13.0, tvOS 13.0, macOS 10.15.0, *)
 extension View {
+    
     public func inject<SomeView>(_ view: SomeView) -> some View where SomeView: View {
         overlay(view.frame(width: 0, height: 0))
     }
-}
-
-@available(iOS 13.0, tvOS 13.0, macOS 10.15.0, *)
-extension View {
     
     /// Finds a `TargetView` from a `SwiftUI.View`
     public func introspect<TargetView: UIView>(

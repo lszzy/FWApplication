@@ -2306,7 +2306,7 @@ UIEdgeInsets UIEdgeInsetsAddEdgeInsets(UIEdgeInsets i1,UIEdgeInsets i2) {
 - (void)tapOverlayView {
     FWAlertController *alertController = (FWAlertController *)self.presentedViewController;
     if (alertController.tapBackgroundViewDismiss) {
-        [alertController dismissViewControllerAnimated:YES completion:^{}];
+        [alertController dismissViewControllerAnimated:YES completion:alertController.dismissCompletion];
     }
 }
 

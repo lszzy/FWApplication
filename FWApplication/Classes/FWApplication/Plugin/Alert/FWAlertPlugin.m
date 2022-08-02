@@ -190,9 +190,9 @@
     // 处理取消按钮，Alert多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
         if (actions.count > 0) {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton(UIAlertControllerStyleAlert) : FWAppBundle.cancelButton;
         } else {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton(UIAlertControllerStyleAlert) : FWAppBundle.closeButton;
         }
     }
     
@@ -265,9 +265,9 @@
     // 处理取消按钮，Sheet多按钮时默认取消，单按钮时默认关闭
     if (!cancel) {
         if (actions.count > 0) {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton() : FWAppBundle.cancelButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCancelButton ? FWAlertPluginImpl.sharedInstance.defaultCancelButton(UIAlertControllerStyleActionSheet) : FWAppBundle.cancelButton;
         } else {
-            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton() : FWAppBundle.closeButton;
+            cancel = FWAlertPluginImpl.sharedInstance.defaultCloseButton ? FWAlertPluginImpl.sharedInstance.defaultCloseButton(UIAlertControllerStyleActionSheet) : FWAppBundle.closeButton;
         }
     }
     
@@ -288,6 +288,16 @@
         alertPlugin = FWAlertPluginImpl.sharedInstance;
     }
     [alertPlugin viewController:self hideAlert:animated completion:completion];
+}
+
+- (BOOL)fw_isShowingAlert
+{
+    // 优先调用插件，不存在时使用默认
+    id<FWAlertPlugin> alertPlugin = self.fw_alertPlugin;
+    if (!alertPlugin || ![alertPlugin respondsToSelector:@selector(isShowingAlert:)]) {
+        alertPlugin = FWAlertPluginImpl.sharedInstance;
+    }
+    return [alertPlugin isShowingAlert:self];
 }
 
 @end
@@ -549,6 +559,13 @@
     UIViewController *ctrl = self.fw_viewController;
     if (!ctrl) ctrl = UIWindow.fw_mainWindow.rootViewController;
     [ctrl fw_hideAlert:animated completion:completion];
+}
+
+- (BOOL)fw_isShowingAlert
+{
+    UIViewController *ctrl = self.fw_viewController;
+    if (!ctrl) ctrl = UIWindow.fw_mainWindow.rootViewController;
+    return [ctrl fw_isShowingAlert];
 }
 
 @end

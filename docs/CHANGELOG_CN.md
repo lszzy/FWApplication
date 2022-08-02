@@ -1,5 +1,19 @@
 # 更新日志
 
+## [3.8.0] - 2022-08-02
+
+### Added
+* 新增大量SwiftUI基础组件，方便开发
+* 新增监听View大小和滚动视图contentOffset方法
+* 新增View获取所在控制器方法
+* 新增Introspect组件和下拉刷新组件
+* 新增View配置导航栏方法，和UIKit通用
+* 新增PluginView用于加载视图规范插件，和UIKit通用
+* 新增HostingView用于装载View为UIView
+* 新增StateView状态机视图
+* 新增HostingController控制器，和UIKit通用
+* 兼容FWFramework 3.8.0版本
+
 ## [3.7.0] - 2022-07-27
 
 ### Added
