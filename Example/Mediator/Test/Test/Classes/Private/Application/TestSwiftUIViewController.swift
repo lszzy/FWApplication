@@ -42,6 +42,11 @@ protocol TestSwiftUIViewDelegate {
     func openWeb(completion: @escaping () -> Void)
 }
 
+@available(iOS 13.0, *)
+class TestSwiftUIModel: ViewModel {
+    @Published var isEnglish: Bool = true
+}
+
 // 继承HostingController
 @available(iOS 13.0, *)
 class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
@@ -123,6 +128,8 @@ struct TestSwiftUIContent: View {
     
     @Environment(\.viewContext) var viewContext: ViewContext
     
+    @ObservedObject var viewModel: TestSwiftUIModel = TestSwiftUIModel()
+    
     var model: String?
     
     weak var delegate: (NSObject & TestSwiftUIViewDelegate)?
@@ -185,6 +192,7 @@ struct TestSwiftUIContent: View {
                                 Spacer()
                             }
                         }
+                        .buttonStyle(BorderlessButtonStyle())
                         .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                         .border(Color.gray, cornerRadius: 20)
                         
@@ -197,6 +205,7 @@ struct TestSwiftUIContent: View {
                                 Spacer()
                             }
                         }
+                        .buttonStyle(BorderlessButtonStyle())
                         .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                         .border(Color.gray, cornerRadius: 20)
                         .removable(buttonRemovable)
@@ -213,6 +222,7 @@ struct TestSwiftUIContent: View {
                         .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                         .border(Color.gray, cornerRadius: 20)
                         .visible(buttonVisible)
+                        .buttonStyle(BorderlessButtonStyle())
                     }
                 }
                 
@@ -244,12 +254,16 @@ struct TestSwiftUIContent: View {
                     viewContext.viewController?.present(viewController, animated: true)
                 }
                 
-                Button("Show Alert") {
-                    showingAlert = true
-                }
-                
-                Button("Show Toast") {
-                    showingToast = true
+                ForEach(["Show Alert", "Show Toast", "Show Empty"], id: \.self) { title in
+                    Button(title) {
+                        if title == "Show Alert" {
+                            showingAlert = true
+                        } else if title == "Show Toast" {
+                            showingToast = true
+                        } else {
+                            showingEmpty = true
+                        }
+                    }
                 }
                 
                 Button("Show Loading") {
@@ -270,8 +284,8 @@ struct TestSwiftUIContent: View {
                     }
                 }
                 
-                Button("Show Empty") {
-                    showingEmpty = true
+                Button(viewModel.isEnglish ? "Language" : "多语言") {
+                    viewModel.isEnglish = !viewModel.isEnglish
                 }
             }
             .listStyle(.plain)
