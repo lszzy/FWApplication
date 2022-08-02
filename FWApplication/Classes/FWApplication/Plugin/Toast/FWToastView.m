@@ -167,22 +167,39 @@
         self.contentView.frame = frame;
     }
     
-    CGFloat originY = self.contentInsets.top;
     if (self.firstView) {
         if (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) {
             self.firstView.frame = CGRectMake(self.firstView.frame.origin.x, self.firstView.frame.origin.y, self.indicatorSize.width, self.indicatorSize.height);
         } else {
             [self.firstView sizeToFit];
         }
-        CGRect frame = self.firstView.frame;
-        frame.origin = CGPointMake((contentViewSize.width - self.contentInsets.left - self.contentInsets.right - frame.size.width) / 2.0 + self.contentInsets.left, originY);
-        self.firstView.frame = frame;
-        originY = CGRectGetMaxY(self.firstView.frame);
     }
     
-    CGFloat maxTitleWidth = contentViewSize.width - self.contentInsets.left - self.contentInsets.right;
-    CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxTitleWidth, CGFLOAT_MAX)];
-    self.titleLabel.frame = CGRectMake((maxTitleWidth - titleLabelSize.width) / 2.0 + self.contentInsets.left, originY + (self.firstView.frame.size.height > 0 && titleLabelSize.height > 0 ? self.contentSpacing : 0), titleLabelSize.width, titleLabelSize.height);
+    if (!self.horizontalAlignment) {
+        CGFloat originY = self.contentInsets.top;
+        if (self.firstView) {
+            CGRect frame = self.firstView.frame;
+            frame.origin = CGPointMake((contentViewSize.width - self.contentInsets.left - self.contentInsets.right - frame.size.width) / 2.0 + self.contentInsets.left, originY);
+            self.firstView.frame = frame;
+            originY = CGRectGetMaxY(self.firstView.frame);
+        }
+        
+        CGFloat maxTitleWidth = contentViewSize.width - self.contentInsets.left - self.contentInsets.right;
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxTitleWidth, CGFLOAT_MAX)];
+        self.titleLabel.frame = CGRectMake((maxTitleWidth - titleLabelSize.width) / 2.0 + self.contentInsets.left, originY + (self.firstView.frame.size.height > 0 && titleLabelSize.height > 0 ? self.contentSpacing : 0), titleLabelSize.width, titleLabelSize.height);
+    } else {
+        CGFloat originX = self.contentInsets.left;
+        if (self.firstView) {
+            CGRect frame = self.firstView.frame;
+            frame.origin = CGPointMake(originX, (contentViewSize.height - self.contentInsets.top - self.contentInsets.bottom - frame.size.height) / 2.0 + self.contentInsets.top);
+            self.firstView.frame = frame;
+            originX = CGRectGetMaxX(self.firstView.frame);
+        }
+        
+        CGFloat maxTitleWidth = contentViewSize.width - self.contentInsets.left - self.contentInsets.right - self.firstView.frame.size.width - (self.firstView.frame.size.width > 0 ? self.contentSpacing : 0);
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxTitleWidth, CGFLOAT_MAX)];
+        self.titleLabel.frame = CGRectMake(originX + (self.firstView.frame.size.width > 0 && titleLabelSize.width > 0 ? self.contentSpacing : 0), (contentViewSize.height - self.contentInsets.top - self.contentInsets.bottom - titleLabelSize.height) / 2.0 + self.contentInsets.top, titleLabelSize.width, titleLabelSize.height);
+    }
 }
 
 - (CGSize)contentViewSize
@@ -195,12 +212,22 @@
     
     CGSize firstViewSize = CGSizeZero;
     if (self.firstView) firstViewSize = (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) ? self.indicatorSize : [self.firstView sizeThatFits:CGSizeMake(maxContentWidth, CGFLOAT_MAX)];
-    CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxContentWidth, CGFLOAT_MAX)];
     
-    contentWidth += MAX(firstViewSize.width, titleLabelSize.width);
-    contentHeight += firstViewSize.height + titleLabelSize.height;
-    if (firstViewSize.height > 0 && titleLabelSize.height > 0) contentHeight += self.contentSpacing;
-    return CGSizeMake(contentWidth, contentHeight);
+    if (!self.horizontalAlignment) {
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxContentWidth, CGFLOAT_MAX)];
+        
+        contentWidth += MAX(firstViewSize.width, titleLabelSize.width);
+        contentHeight += firstViewSize.height + titleLabelSize.height;
+        if (firstViewSize.height > 0 && titleLabelSize.height > 0) contentHeight += self.contentSpacing;
+        return CGSizeMake(contentWidth, contentHeight);
+    } else {
+        CGSize titleLabelSize = [self.titleLabel sizeThatFits:CGSizeMake(maxContentWidth - firstViewSize.width - (firstViewSize.width > 0 ? self.contentSpacing : 0), CGFLOAT_MAX)];
+        
+        contentWidth += firstViewSize.width + titleLabelSize.width;
+        if (firstViewSize.width > 0 && titleLabelSize.width > 0) contentWidth += self.contentSpacing;
+        contentHeight += MAX(firstViewSize.height, titleLabelSize.height);
+        return CGSizeMake(contentWidth, contentHeight);
+    }
 }
 
 #pragma mark - Accessor
