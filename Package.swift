@@ -25,7 +25,7 @@ let package = Package(
             targets: ["FWApplication", "FWApplicationLottie"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/lszzy/FWFramework.git", from: "3.7.0"),
+        .package(url: "https://github.com/lszzy/FWFramework.git", from: "3.8.0"),
         .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.9.0"),
         .package(url: "https://github.com/airbnb/lottie-ios.git", from: "3.2.0"),
     ],

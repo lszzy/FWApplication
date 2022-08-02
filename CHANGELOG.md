@@ -1,5 +1,19 @@
 # Changelog
 
+## [3.8.0] - 2022-08-02
+
+### Added
+* Added a large number of SwiftUI basic components to facilitate development
+* Added methods to monitor View size and scroll view contentOffset
+* Added a method to get the controller where View is located
+* Added Introspect component and pull-down refresh component
+* Added View configuration navigation bar method, which is common to UIKit
+* Added PluginView for loading view specification plugins, common to UIKit
+* Added HostingView for loading View as UIView
+* Added StateView state machine view
+* Added HostingController controller, common to UIKit
+* Compatible with FWFramework 3.8.0 version
+
 ## [3.7.0] - 2022-07-27
 
 ### Added
