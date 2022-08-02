@@ -57,23 +57,21 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     var stateView: some View {
         StateView { view in
             LoadingPluginView()
-                .onAppear { [weak self] in
+                .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         let success = [true, false].randomElement()!
                         if success {
-                            self?.model = "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif"
-                            view.state = .success
+                            view.state = .success("https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
                         } else {
-                            self?.error = "出错啦!"
-                            view.state = .failure
+                            view.state = .failure(NSError(domain: "Test", code: 0, userInfo: [NSLocalizedDescriptionKey: "出错啦!"]))
                         }
                     }
                 }
-        } content: { view in
-            TestSwiftUIContent(model: self.model)
+        } content: { view, model in
+            TestSwiftUIContent(model: model as? String)
                 .configure { $0.delegate = self }
-        } failure: { view in
-            Button("出错啦") {
+        } failure: { view, error in
+            Button(error?.localizedDescription ?? "") {
                 view.state = .loading
             }
         }

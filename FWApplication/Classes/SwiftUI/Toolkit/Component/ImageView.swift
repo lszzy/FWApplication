@@ -124,7 +124,7 @@ public class ResizableView<Content: UIView>: UIView {
 }
 
 // MARK: - InvisibleView
-/// 不可见视图，当某个场景EmptyView不生效时可使用InvisibleView替代
+/// 不可见视图，当某个场景EmptyView不生效时可使用InvisibleView替代，比如EmptyView不触发onAppear
 @available(iOS 13.0, *)
 public struct InvisibleView: View {
     

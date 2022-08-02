@@ -102,57 +102,60 @@ open class HostingView<Content: View>: UIView {
 // MARK: - StateView
 /// SwiftUI视图状态枚举
 @available(iOS 13.0, *)
-public enum ViewState: Int {
-    case ready = 0
-    case loading = 1
-    case success = 2
-    case failure = 3
+public enum ViewState {
+    case ready
+    case loading
+    case success(Any? = nil)
+    case failure(Error? = nil)
 }
 
 /// SwiftUI状态视图
 @available(iOS 13.0, *)
 public struct StateView<Ready: View, Loading: View, Content: View, Failure: View>: View {
     
-    @State public var state: ViewState
+    @State public var state: ViewState = .ready
     
     @ViewBuilder var ready: (Self) -> Ready
     @ViewBuilder var loading: (Self) -> Loading
-    @ViewBuilder var content: (Self) -> Content
-    @ViewBuilder var failure: (Self) -> Failure
+    @ViewBuilder var content: (Self, Any?) -> Content
+    @ViewBuilder var failure: (Self, Error?) -> Failure
     
     public init(
-        @ViewBuilder content: @escaping (Self) -> Content
-    ) where Ready == EmptyView, Loading == EmptyView, Failure == EmptyView {
-        self.ready = { _ in EmptyView() }
-        self.loading = { _ in EmptyView() }
+        @ViewBuilder content: @escaping (Self, Any?) -> Content
+    ) where Ready == AnyView, Loading == AnyView, Failure == AnyView {
+        self.ready = { $0.transition(to: .success()) }
+        self.loading = { $0.transition(to: .success()) }
         self.content = content
-        self.failure = { _ in EmptyView() }
-        self.state = .success
+        self.failure = { stateView, _ in stateView.transition(to: .success()) }
     }
     
     public init(
         @ViewBuilder loading: @escaping (Self) -> Loading,
-        @ViewBuilder content: @escaping (Self) -> Content,
-        @ViewBuilder failure: @escaping (Self) -> Failure
-    ) where Ready == EmptyView {
-        self.ready = { _ in EmptyView() }
+        @ViewBuilder content: @escaping (Self, Any?) -> Content,
+        @ViewBuilder failure: @escaping (Self, Error?) -> Failure
+    ) where Ready == AnyView {
+        self.ready = { $0.transition(to: .loading) }
         self.loading = loading
         self.content = content
         self.failure = failure
-        self.state = .loading
     }
     
     public init(
         @ViewBuilder ready: @escaping (Self) -> Ready,
         @ViewBuilder loading: @escaping (Self) -> Loading,
-        @ViewBuilder content: @escaping (Self) -> Content,
-        @ViewBuilder failure: @escaping (Self) -> Failure
+        @ViewBuilder content: @escaping (Self, Any?) -> Content,
+        @ViewBuilder failure: @escaping (Self, Error?) -> Failure
     ) {
         self.ready = ready
         self.loading = loading
         self.content = content
         self.failure = failure
-        self.state = .ready
+    }
+    
+    private func transition(to newState: ViewState) -> AnyView {
+        InvisibleView()
+            .onAppear { state = newState }
+            .eraseToAnyView()
     }
     
     public var body: some View {
@@ -162,10 +165,10 @@ public struct StateView<Ready: View, Loading: View, Content: View, Failure: View
                 ready(self)
             case .loading:
                 loading(self)
-            case .success:
-                content(self)
-            case .failure:
-                failure(self)
+            case .success(let model):
+                content(self, model)
+            case .failure(let error):
+                failure(self, error)
             }
         }
     }
