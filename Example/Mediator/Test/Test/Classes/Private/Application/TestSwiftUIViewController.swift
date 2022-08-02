@@ -17,9 +17,11 @@ class TestSwiftUIViewController: TestViewController, TestSwiftUIViewDelegate {
     override func renderView() {
         fw.navigationBarHidden = [true, false].randomElement()!
         
-        let hostingView = TestSwiftUIContent(model: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+        let hostingView = TestSwiftUIContent()
             .configure { $0.delegate = self }
-            .viewContext(self)
+            .viewContext(self, userInfo: [
+                "color": Color.green
+            ])
             .navigationBarConfigure(
                 leading: Icon.backImage,
                 title: "TestSwiftUIViewController",
@@ -45,6 +47,10 @@ protocol TestSwiftUIViewDelegate {
 @available(iOS 13.0, *)
 class TestSwiftUIModel: ViewModel {
     @Published var isEnglish: Bool = true
+    
+    init(isEnglish: Bool = true) {
+        self.isEnglish = isEnglish
+    }
 }
 
 // 继承HostingController
@@ -66,14 +72,14 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         let success = [true, false].randomElement()!
                         if success {
-                            view.state = .success("https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+                            view.state = .success()
                         } else {
                             view.state = .failure(NSError(domain: "Test", code: 0, userInfo: [NSLocalizedDescriptionKey: "出错啦!"]))
                         }
                     }
                 }
         } content: { view, model in
-            TestSwiftUIContent(model: model as? String)
+            TestSwiftUIContent()
                 .configure { $0.delegate = self }
         } failure: { view, error in
             Button(error?.localizedDescription ?? "") {
@@ -130,8 +136,6 @@ struct TestSwiftUIContent: View {
     
     @ObservedObject var viewModel: TestSwiftUIModel = TestSwiftUIModel()
     
-    var model: String?
-    
     weak var delegate: (NSObject & TestSwiftUIViewDelegate)?
     
     @State var topSize: CGSize = .zero
@@ -147,10 +151,6 @@ struct TestSwiftUIContent: View {
     @State var showingProgress: Bool = false
     @State var progressValue: CGFloat = 0
     
-    init(model: String?) {
-        self.model = model
-    }
-    
     var body: some View {
         GeometryReader { proxy in
             List {
@@ -164,7 +164,7 @@ struct TestSwiftUIContent: View {
                     
                     VStack {
                         HStack(alignment: .center, spacing: 50) {
-                            ImageView(url: model)
+                            ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
                                 .placeholder(TestBundle.imageNamed("test.gif"))
                                 .contentMode(.scaleAspectFill)
                                 .clipped()
@@ -228,7 +228,7 @@ struct TestSwiftUIContent: View {
                 
                 Button {
                     delegate?.openWeb(completion: {
-                        showingEmpty = true
+                        print("Open Router Completed")
                     })
                 } label: {
                     ViewWrapper {
@@ -236,7 +236,7 @@ struct TestSwiftUIContent: View {
                             .wrappedHostingView()
                     }
                     .frame(height: 44)
-                    .background(Color.green)
+                    .background(viewContext.userInfo?["color"] as? Color ?? .yellow)
                 }
                 
                 Button("Push SwiftUI") {

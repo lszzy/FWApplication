@@ -22,8 +22,11 @@ public struct ViewContext {
         return viewController?.navigationController
     }
     
-    public init(_ viewController: UIViewController?) {
+    public var userInfo: [AnyHashable: Any]?
+    
+    public init(_ viewController: UIViewController?, userInfo: [AnyHashable: Any]? = nil) {
         self.viewController = viewController
+        self.userInfo = userInfo
     }
     
 }
@@ -50,8 +53,8 @@ extension EnvironmentValues {
 extension View {
     
     /// 设置视图上下文
-    public func viewContext(_ viewController: UIViewController?) -> some View {
-        return environment(\.viewContext, ViewContext(viewController))
+    public func viewContext(_ viewController: UIViewController?, userInfo: [AnyHashable: Any]? = nil) -> some View {
+        return environment(\.viewContext, ViewContext(viewController, userInfo: userInfo))
     }
     
     /// 快速包装视图到上下文控制器
