@@ -21,6 +21,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 
 @property (nonatomic, strong) NSTimer *hideTimer;
+@property (nonatomic, assign) BOOL touchEnabled;
 
 @end
 
@@ -222,6 +223,24 @@
     _progressView = progressView;
     _progressView.userInteractionEnabled = NO;
     [self.contentView addSubview:_progressView];
+}
+
+- (void)setCancelBlock:(void (^)(void))cancelBlock
+{
+    _cancelBlock = cancelBlock;
+    if (cancelBlock && !self.touchEnabled) {
+        self.touchEnabled = YES;
+        
+        __weak __typeof__(self) self_weak_ = self;
+        [self fw_addTouchBlock:^(id  _Nonnull sender) {
+            __typeof__(self) self = self_weak_;
+            void (^cancelBlock)(void) = self.cancelBlock;
+            if (cancelBlock) {
+                [self hide];
+                cancelBlock();
+            }
+        }];
+    }
 }
 
 #pragma mark - Public

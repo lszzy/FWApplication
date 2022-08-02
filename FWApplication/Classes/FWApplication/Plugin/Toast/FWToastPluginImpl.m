@@ -45,16 +45,7 @@
         [toastView invalidateTimer];
         [view bringSubviewToFront:toastView];
         toastView.attributedTitle = loadingText;
-        
-        [toastView fw_removeAllTouchBlocks];
-        if (cancelBlock) {
-            __weak __typeof__(self) self_weak_ = self;
-            [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
-                __typeof__(self) self = self_weak_;
-                [self hideLoading:view];
-                if (cancelBlock) cancelBlock();
-            }];
-        }
+        toastView.cancelBlock = cancelBlock;
         
         if (self.reuseBlock) {
             self.reuseBlock(toastView);
@@ -65,17 +56,9 @@
     toastView = [[FWToastView alloc] initWithType:FWToastViewTypeIndicator];
     toastView.tag = 2011;
     toastView.attributedTitle = loadingText;
+    toastView.cancelBlock = cancelBlock;
     [view addSubview:toastView];
     [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
-    
-    if (cancelBlock) {
-        __weak __typeof__(self) self_weak_ = self;
-        [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
-            __typeof__(self) self = self_weak_;
-            [self hideLoading:view];
-            if (cancelBlock) cancelBlock();
-        }];
-    }
     
     if (self.customBlock) {
         self.customBlock(toastView);
@@ -108,6 +91,7 @@
         [view bringSubviewToFront:toastView];
         toastView.attributedTitle = progressText;
         toastView.progress = progress;
+        toastView.cancelBlock = cancelBlock;
         
         if (self.reuseBlock) {
             self.reuseBlock(toastView);
@@ -119,17 +103,9 @@
     toastView.tag = 2012;
     toastView.attributedTitle = progressText;
     toastView.progress = progress;
+    toastView.cancelBlock = cancelBlock;
     [view addSubview:toastView];
     [toastView fw_pinEdgesToSuperviewWithInsets:view.fw_toastInsets];
-    
-    if (cancelBlock) {
-        __weak __typeof__(self) self_weak_ = self;
-        [toastView fw_addTouchBlock:^(id  _Nonnull sender) {
-            __typeof__(self) self = self_weak_;
-            [self hideProgress:view];
-            if (cancelBlock) cancelBlock();
-        }];
-    }
     
     if (self.customBlock) {
         self.customBlock(toastView);

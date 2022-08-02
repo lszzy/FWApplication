@@ -79,6 +79,8 @@ NS_SWIFT_NAME(ToastView)
 @property (nonatomic, copy, nullable) NSAttributedString *attributedTitle;
 /// 当前指示器进度值，范围0~1，仅Progress生效
 @property (nonatomic, assign) CGFloat progress;
+/// 手工点击取消时触发的句柄，默认nil不可点击取消
+@property (nonatomic, copy, nullable) void (^cancelBlock)(void);
 
 /// 初始化指定类型指示器
 - (instancetype)initWithType:(FWToastViewType)type;
