@@ -312,7 +312,7 @@ struct TestSwiftUIContent: View {
         .showProgressView(showingProgress, builder: {
             ProgressPluginView($progressValue)
                 .textFormatter { progress in
-                    "上传中(\(Int(progress * 100)))"
+                    "上传中(\(Int(progress * 100))%)"
                 }
         })
     }

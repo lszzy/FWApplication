@@ -169,7 +169,11 @@
     
     CGFloat originY = self.contentInsets.top;
     if (self.firstView) {
-        [self.firstView sizeToFit];
+        if (self.indicatorSize.width > 0 && self.indicatorSize.height > 0) {
+            self.firstView.frame = CGRectMake(self.firstView.frame.origin.x, self.firstView.frame.origin.y, self.indicatorSize.width, self.indicatorSize.height);
+        } else {
+            [self.firstView sizeToFit];
+        }
         CGRect frame = self.firstView.frame;
         frame.origin = CGPointMake((contentViewSize.width - self.contentInsets.left - self.contentInsets.right - frame.size.width) / 2.0 + self.contentInsets.left, originY);
         self.firstView.frame = frame;
@@ -245,7 +249,8 @@
         self.touchEnabled = YES;
         
         __weak __typeof__(self) self_weak_ = self;
-        [self fw_addTouchBlock:^(id  _Nonnull sender) {
+        self.contentView.userInteractionEnabled = YES;
+        [self.contentView fw_addTapGestureWithBlock:^(id sender) {
             __typeof__(self) self = self_weak_;
             void (^cancelBlock)(void) = self.cancelBlock;
             if (cancelBlock) {
