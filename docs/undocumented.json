@@ -393,6 +393,20 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/ToastPlugin.swift",
+      "line": 124,
+      "symbol": "Wrapper.isShowingLoading",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Plugin/ToastPlugin.swift",
+      "line": 198,
+      "symbol": "Wrapper.isShowingLoading",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/Compatible/Service/Media/VideoPlayer.swift",
       "line": 18,
       "symbol": "VideoPlayerDelegate.playerReady(_:)",
@@ -2647,31 +2661,192 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 20,
+      "symbol": "HostingView.rootView",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 56,
+      "symbol": "HostingView.init(rootView:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 66,
+      "symbol": "HostingView.init(coder:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 70,
+      "symbol": "HostingView.willMove(toSuperview:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 77,
+      "symbol": "HostingView.didMoveToSuperview()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 84,
+      "symbol": "HostingView.frame",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 88,
+      "symbol": "HostingView.bounds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 92,
+      "symbol": "HostingView.intrinsicContentSize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 96,
+      "symbol": "HostingView.sizeThatFits(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 106,
+      "symbol": "ViewState.ready",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 107,
+      "symbol": "ViewState.loading",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 108,
+      "symbol": "ViewState.success(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 109,
+      "symbol": "ViewState.failure(_:)",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 116,
+      "symbol": "StateView.state",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 123,
+      "symbol": "StateView.init(content:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 132,
+      "symbol": "StateView.init(loading:content:failure:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 143,
+      "symbol": "StateView.init(ready:loading:content:failure:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/HostingView.swift",
+      "line": 184,
+      "symbol": "HostingController.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 90,
+      "symbol": "ResizableView.content",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
       "line": 91,
-      "symbol": "ImageViewWrapper.init(frame:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
-      "line": 96,
-      "symbol": "ImageViewWrapper.init(coder:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
-      "line": 101,
-      "symbol": "ImageViewWrapper.layoutSubviews()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
-      "line": 106,
-      "symbol": "ImageViewWrapper.intrinsicContentSize",
+      "symbol": "ResizableView.resizable",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 93,
+      "symbol": "ResizableView.init(_:frame:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 103,
+      "symbol": "ResizableView.layoutSubviews()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 108,
+      "symbol": "ResizableView.frame",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 112,
+      "symbol": "ResizableView.bounds",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 116,
+      "symbol": "ResizableView.intrinsicContentSize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 120,
+      "symbol": "ResizableView.sizeThatFits(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ImageView.swift",
+      "line": 131,
+      "symbol": "InvisibleView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -2732,22 +2907,260 @@
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Introspect.swift",
-      "line": 369,
+      "line": 357,
       "symbol": "UIKitIntrospectionViewController.init(selector:customize:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Introspect.swift",
-      "line": 428,
+      "line": 416,
       "symbol": "UIKitIntrospectionView.init(selector:customize:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Introspect.swift",
-      "line": 463,
+      "line": 452,
       "symbol": "View.inject(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 20,
+      "symbol": "NavigationBarConfiguration.leading",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 21,
+      "symbol": "NavigationBarConfiguration.title",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 22,
+      "symbol": "NavigationBarConfiguration.trailing",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 23,
+      "symbol": "NavigationBarConfiguration.background",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 24,
+      "symbol": "NavigationBarConfiguration.style",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 25,
+      "symbol": "NavigationBarConfiguration.appearance",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 26,
+      "symbol": "NavigationBarConfiguration.customize",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 28,
+      "symbol": "NavigationBarConfiguration.init(leading:title:trailing:background:style:appearance:customize:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/NavigationBar.swift",
+      "line": 46,
+      "symbol": "NavigationBarConfiguration.configure(viewController:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 23,
+      "symbol": "LoadingPluginView.init(text:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 27,
+      "symbol": "LoadingPluginView.text(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 33,
+      "symbol": "LoadingPluginView.onCancel(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 66,
+      "symbol": "ProgressPluginView.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 70,
+      "symbol": "ProgressPluginView.textFormatter(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 76,
+      "symbol": "ProgressPluginView.onCancel(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 112,
+      "symbol": "EmptyPluginView.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 114,
+      "symbol": "EmptyPluginView.text(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 120,
+      "symbol": "EmptyPluginView.detail(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 126,
+      "symbol": "EmptyPluginView.image(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 132,
+      "symbol": "EmptyPluginView.loading(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 138,
+      "symbol": "EmptyPluginView.action(_:block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/PluginView.swift",
+      "line": 155,
+      "symbol": "EmptyPluginView.actions(_:block:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 17,
+      "symbol": "RefreshHeader",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 20,
+      "symbol": "RefreshFooter",
+      "symbol_kind": "source.lang.swift.decl.typealias",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 26,
+      "symbol": "Refresh.Header",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 33,
+      "symbol": "Refresh.Header.init(refreshing:action:label:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 44,
+      "symbol": "Refresh.Header",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 128,
+      "symbol": "Refresh.Footer",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 138,
+      "symbol": "Refresh.Footer.init(refreshing:action:label:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 149,
+      "symbol": "Refresh.Footer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 151,
+      "symbol": "Refresh.Footer.noMore(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 157,
+      "symbol": "Refresh.Footer.preload(offset:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 165,
+      "symbol": "Refresh.Footer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/Refresh.swift",
+      "line": 252,
+      "symbol": "ScrollView.enableRefresh(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -2761,127 +3174,190 @@
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ViewContext.swift",
       "line": 17,
-      "symbol": "ViewContext.userInfo",
+      "symbol": "ViewContext.view",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ViewContext.swift",
-      "line": 19,
-      "symbol": "ViewContext.init(_:userInfo:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
-      "line": 15,
-      "symbol": "WebImage.binder",
+      "line": 21,
+      "symbol": "ViewContext.navigationController",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/ViewContext.swift",
+      "line": 25,
+      "symbol": "ViewContext.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
+      "line": 15,
+      "symbol": "WebImageView.binder",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 21,
-      "symbol": "WebImage.init(_:isLoaded:)",
+      "symbol": "WebImageView.init(_:isLoaded:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 57,
-      "symbol": "WebImage.placeholder(_:)",
+      "symbol": "WebImageView.placeholder(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 63,
-      "symbol": "WebImage.cancelOnDisappear(_:)",
+      "symbol": "WebImageView.cancelOnDisappear(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 69,
-      "symbol": "WebImage.configure(_:)",
+      "symbol": "WebImageView.configure(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 75,
-      "symbol": "WebImage.resizable(capInsets:resizingMode:)",
+      "symbol": "WebImageView.resizable(capInsets:resizingMode:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 79,
-      "symbol": "WebImage.renderingMode(_:)",
+      "symbol": "WebImageView.renderingMode(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 83,
-      "symbol": "WebImage.interpolation(_:)",
+      "symbol": "WebImageView.interpolation(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 87,
-      "symbol": "WebImage.antialiased(_:)",
+      "symbol": "WebImageView.antialiased(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 91,
-      "symbol": "WebImage.onCompletion(perform:)",
+      "symbol": "WebImageView.onCompletion(perform:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 96,
-      "symbol": "WebImage.onProgress(perform:)",
+      "symbol": "WebImageView.onProgress(perform:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 104,
-      "symbol": "WebImage.ImageBinder",
+      "symbol": "WebImageView.ImageBinder",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
-      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImage.swift",
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Component/WebImageView.swift",
       "line": 140,
-      "symbol": "WebImage.ImageBinder.cancel()",
+      "symbol": "WebImageView.ImageBinder.cancel()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/Binding+Toolkit.swift",
+      "line": 15,
+      "symbol": "Binding.onSet(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/Binding+Toolkit.swift",
+      "line": 22,
+      "symbol": "Binding.onChange(perform:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/Binding+Toolkit.swift",
+      "line": 36,
+      "symbol": "Binding.onChange(toggle:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/Binding+Toolkit.swift",
+      "line": 42,
+      "symbol": "Binding.withDefaultValue(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/EdgeInsets+Toolkit.swift",
+      "line": 13,
+      "symbol": "EdgeInsets.zero",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/EdgeInsets+Toolkit.swift",
+      "line": 15,
+      "symbol": "EdgeInsets.init(_:_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/View+Toolkit.swift",
-      "line": 16,
+      "line": 20,
       "symbol": "LineShape.axes",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/View+Toolkit.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "RoundedCornerShape.radius",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/View+Toolkit.swift",
-      "line": 35,
+      "line": 39,
       "symbol": "RoundedCornerShape.corners",
       "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/View+Toolkit.swift",
+      "line": 51,
+      "symbol": "RemovableModifier.removable",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Volumes/Data/Work/Github/lszzy/FWApplication/FWApplication/Classes/SwiftUI/Toolkit/Extension/View+Toolkit.swift",
+      "line": 53,
+      "symbol": "RemovableModifier.init(removable:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
@@ -4566,35 +5042,35 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 182,
+      "line": 176,
       "symbol": "UIFont(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 210,
+      "line": 204,
       "symbol": "UIImage(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 303,
+      "line": 297,
       "symbol": "UIImage(FWToolkit).+fw_saveVideo:withCompletion:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 309,
+      "line": 303,
       "symbol": "UIView(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWToolkit.h",
-      "line": 367,
+      "line": 361,
       "symbol": "UIViewController(FWToolkit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -4615,77 +5091,77 @@
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 94,
+      "line": 97,
       "symbol": "UILabel(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 130,
+      "line": 133,
       "symbol": "UIButton(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 166,
+      "line": 169,
       "symbol": "UIScrollView(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 202,
+      "line": 205,
       "symbol": "UIPageControl(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 211,
+      "line": 214,
       "symbol": "UISlider(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 223,
+      "line": 226,
       "symbol": "UISwitch(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 232,
+      "line": 235,
       "symbol": "UITextField(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 259,
+      "line": 262,
       "symbol": "UITextView(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 286,
+      "line": 289,
       "symbol": "UITableViewCell(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 301,
+      "line": 304,
       "symbol": "UICollectionViewCell(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
     },
     {
       "file": "Example/build/Release-iphoneos/FWFramework/FWFramework.framework/Headers/FWUIKit.h",
-      "line": 313,
+      "line": 316,
       "symbol": "UIViewController(FWUIKit)",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.category",
       "warning": "undocumented"
@@ -5154,91 +5630,91 @@
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 197,
+      "line": 200,
       "symbol": "FWAlertController.delegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 199,
+      "line": 202,
       "symbol": "FWAlertController.preferredStyle",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 200,
+      "line": 203,
       "symbol": "FWAlertController.animationType",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.property",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 206,
+      "line": 209,
       "symbol": "FWAlertController.-customSpacingAfterAction:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 212,
+      "line": 215,
       "symbol": "FWAlertController.-insertComponentView:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 264,
+      "line": 267,
       "symbol": "FWAlertControllerDelegate",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.protocol",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 266,
+      "line": 269,
       "symbol": "FWAlertControllerDelegate.-willPresentAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 267,
+      "line": 270,
       "symbol": "FWAlertControllerDelegate.-didPresentAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 268,
+      "line": 271,
       "symbol": "FWAlertControllerDelegate.-willDismissAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 269,
+      "line": 272,
       "symbol": "FWAlertControllerDelegate.-didDismissAlertController:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 273,
+      "line": 276,
       "symbol": "FWAlertPresentationController",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 277,
+      "line": 280,
       "symbol": "FWAlertAnimation",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "docs/FWApplication/FWAlertController.h",
-      "line": 278,
+      "line": 281,
       "symbol": "FWAlertAnimation.+animationIsPresenting:",
       "symbol_kind": "sourcekitten.source.lang.objc.decl.method.class",
       "warning": "undocumented"

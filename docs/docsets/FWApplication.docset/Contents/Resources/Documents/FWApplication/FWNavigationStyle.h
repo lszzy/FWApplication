@@ -40,6 +40,10 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 @property (nullable, nonatomic, strong) UIColor *shadowColor;
 /// 阴影图片，后设置生效，默认nil
 @property (nullable, nonatomic, strong) UIImage *shadowImage;
+/// 返回按钮图片，自动配合VC导航栏样式生效，默认nil
+@property (nullable, nonatomic, strong) UIImage *backImage;
+/// 左侧返回按钮图片，自动配合VC导航栏样式生效，默认nil
+@property (nullable, nonatomic, strong) UIImage *leftBackImage;
 
 /// 自定义句柄，最后调用，可自定义样式，默认nil
 @property (nullable, nonatomic, copy) void (^appearanceBlock)(UINavigationBar *navigationBar);
@@ -48,6 +52,21 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 + (nullable FWNavigationBarAppearance *)appearanceForStyle:(FWNavigationBarStyle)style;
 /// 设置style对应全局appearance对象
 + (void)setAppearance:(nullable FWNavigationBarAppearance *)appearance forStyle:(FWNavigationBarStyle)style;
+
+@end
+
+#pragma mark - UINavigationBar+FWStyle
+
+/**
+ 导航栏应用样式配置分类
+ */
+@interface UINavigationBar (FWStyle)
+
+/// 应用指定导航栏配置
+- (void)fw_applyBarAppearance:(FWNavigationBarAppearance *)appearance NS_REFINED_FOR_SWIFT;
+
+/// 应用指定导航栏样式
+- (void)fw_applyBarStyle:(FWNavigationBarStyle)style NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -76,6 +95,9 @@ NS_SWIFT_NAME(NavigationBarAppearance)
 
 /// 动态隐藏导航栏，如果当前已经viewWillAppear:时立即执行
 - (void)fw_setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated NS_REFINED_FOR_SWIFT;
+
+/// 是否允许child控制器修改导航栏样式，默认NO
+@property (nonatomic, assign) BOOL fw_allowsChildNavigation NS_REFINED_FOR_SWIFT;
 
 /// 标签栏是否隐藏，默认为NO，立即生效。如果tabBar一直存在，则用tabBar包裹navBar；如果tabBar只存在主界面，则用navBar包裹tabBar
 @property (nonatomic, assign) BOOL fw_tabBarHidden NS_REFINED_FOR_SWIFT;
