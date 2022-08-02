@@ -249,6 +249,16 @@ extension Refresh.FooterUpdateKey: EnvironmentKey {
 @available(iOS 13.0, *)
 extension ScrollView {
     
+    // 启用刷新，添加到首尾即可
+    public func enableRefresh(_ enable: Bool = true) -> some View {
+        modifier(Refresh.Modifier(enable: enable))
+    }
+}
+
+@available(iOS 13.0, *)
+extension List {
+    
+    // 启用刷新，添加到Header|Footer即可
     public func enableRefresh(_ enable: Bool = true) -> some View {
         modifier(Refresh.Modifier(enable: enable))
     }
@@ -258,7 +268,7 @@ extension ScrollView {
 @available(iOS 13.0, *)
 extension Refresh {
     
-    struct Modifier {
+    public struct Modifier {
         let isEnabled: Bool
         
         @State private var id: Int = 0
@@ -269,7 +279,7 @@ extension Refresh {
         @State private var footerUpdate: FooterUpdateKey.Value
         @State private var footerPreviousRefreshAt: Date?
         
-        init(enable: Bool) {
+        public init(enable: Bool) {
             isEnabled = enable
             _headerUpdate = State(initialValue: .init(enable: enable))
             _footerUpdate = State(initialValue: .init(enable: enable))
@@ -282,7 +292,7 @@ extension Refresh {
 @available(iOS 13.0, *)
 extension Refresh.Modifier: ViewModifier {
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         return GeometryReader { proxy in
             content
                 .environment(\.refreshHeaderUpdate, self.headerUpdate)

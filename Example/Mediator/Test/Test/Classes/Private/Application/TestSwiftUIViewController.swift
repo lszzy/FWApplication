@@ -148,7 +148,12 @@ struct TestSwiftUIContent: View {
         GeometryReader { proxy in
             List {
                 VStack(alignment: .center, spacing: 16) {
-                    Text("contentOffset: \(Int(contentOffset.y))")
+                    ZStack {
+                        InvisibleView()
+                            .captureContentOffset(proxy: proxy)
+                        
+                        Text("contentOffset: \(Int(contentOffset.y))")
+                    }
                     
                     VStack {
                         HStack(alignment: .center, spacing: 50) {
@@ -210,7 +215,6 @@ struct TestSwiftUIContent: View {
                         .visible(buttonVisible)
                     }
                 }
-                .captureContentOffset(proxy: proxy)
                 
                 Button {
                     delegate?.openWeb(completion: {
@@ -270,6 +274,7 @@ struct TestSwiftUIContent: View {
                     showingEmpty = true
                 }
             }
+            .listStyle(.plain)
             .captureContentOffset(in: $contentOffset)
             .introspectTableView { tableView in
                 tableView.fw.setRefreshing {
@@ -308,10 +313,8 @@ struct TestSwiftUIContent: View {
                 }
         })
         .showProgressView(showingProgress, builder: {
-            ProgressPluginView($progressValue)
-                .textFormatter { progress in
-                    "上传中(\(Int(progress * 100))%)"
-                }
+            ProgressPluginView(progressValue)
+                .text("上传中(\(Int(progressValue * 100))%)")
         })
     }
     
