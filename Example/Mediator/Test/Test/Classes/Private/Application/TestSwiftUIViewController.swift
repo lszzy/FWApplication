@@ -60,8 +60,6 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     // MARK: - Accessor
     var mode: Int = [0, 1, 2].randomElement()!
     
-    var model: String?
-    
     var error: String?
     
     // MARK: - Subviews
@@ -78,7 +76,7 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
                         }
                     }
                 }
-        } content: { view, model in
+        } content: { view, _ in
             TestSwiftUIContent()
                 .configure { $0.delegate = self }
         } failure: { view, error in
@@ -140,6 +138,7 @@ struct TestSwiftUIContent: View {
     
     @State var topSize: CGSize = .zero
     @State var contentOffset: CGPoint = .zero
+    @State var shouldRefresh: Bool = false
     
     @State var buttonRemovable: Bool = false
     @State var buttonVisible: Bool = true
@@ -228,7 +227,9 @@ struct TestSwiftUIContent: View {
                 
                 Button {
                     delegate?.openWeb(completion: {
-                        print("Open Router Completed")
+                        viewContext.object = "Object"
+                        viewContext.userInfo = ["color": Color(UIColor.fw.randomColor)]
+                        viewContext.send()
                     })
                 } label: {
                     ViewWrapper {
@@ -330,6 +331,20 @@ struct TestSwiftUIContent: View {
             ProgressPluginView(progressValue)
                 .text("上传中(\(Int(progressValue * 100))%)")
         })
+        .transformViewContext(transform: { viewContext in
+            DispatchQueue.main.async {
+                print("viewController: \(String(describing: viewContext.viewController))")
+                print("hostingView: \(String(describing: viewContext.hostingView))")
+                print("rootView: \(String(describing: viewContext.rootView))")
+            }
+        })
+        .onReceive(viewContext.subject) { context in
+            print("userInfo: \(String(describing: context.userInfo))")
+            shouldRefresh = !shouldRefresh
+        }
+        .onReceive(viewContext.$object) { object in
+            print("object: \(String(describing: object))")
+        }
     }
     
 }
