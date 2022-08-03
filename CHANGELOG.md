@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.8.1] - 2022-08-03
+
+### Changed
+* Optimize PluginView progress bar view
+* Optimize ViewContext to support subscribing to object and userInfo
+* Optimize SwiftUI module directory structure
+
 ## [3.8.0] - 2022-08-02
 
 ### Added
