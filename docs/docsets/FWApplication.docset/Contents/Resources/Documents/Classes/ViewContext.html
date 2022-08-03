@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ViewContext Structure Reference</title>
+    <title>ViewContext Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -13,11 +13,11 @@
     <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a name="//apple_ref/swift/Struct/ViewContext" class="dashAnchor"></a>
-    <a title="ViewContext Structure Reference"></a>
+    <a name="//apple_ref/swift/Class/ViewContext" class="dashAnchor"></a>
+    <a title="ViewContext Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">FWApplication 3.8.0 Docs</a> (67% documented)</p>
+        <p><a href="../index.html">FWApplication 3.8.1 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="../search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -29,7 +29,7 @@
       <p id="breadcrumbs">
         <a href="../index.html">FWApplication Reference</a>
         <img id="carat" src="../img/carat.png" alt=""/>
-        ViewContext Structure Reference
+        ViewContext Class Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -1187,6 +1187,12 @@
                 <a href="../Classes/VideoPlayerView.html">VideoPlayerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/ViewContext.html">ViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ViewModel.html">ViewModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/ViewPreferenceKey.html">ViewPreferenceKey</a>
               </li>
             </ul>
@@ -1807,6 +1813,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/Refresh/Footer.html">– Footer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Refresh/Modifier.html">– Modifier</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Enums/SkeletonAnimationDirection.html">SkeletonAnimationDirection</a>
@@ -2462,6 +2471,9 @@
                 <a href="../Extensions/Font.html">Font</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Extensions/List.html">List</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Extensions/ScrollView.html">ScrollView</a>
               </li>
               <li class="nav-group-task">
@@ -2542,9 +2554,6 @@
                 <a href="../Structs/UIKitIntrospectionViewController.html">UIKitIntrospectionViewController</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Structs/ViewContext.html">ViewContext</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Structs/ViewControllerWrapper.html">ViewControllerWrapper</a>
               </li>
               <li class="nav-group-task">
@@ -2579,7 +2588,7 @@
                 <div class="language">
                   
                   <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">struct</span> <span class="kt">ViewContext</span></code></pre>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">ViewContext</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
 
                 </div>
               </div>
@@ -2588,13 +2597,22 @@
           </section>
           <section class="section task-group-section">
             <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ViewController"></a>
+                <a name="//apple_ref/swift/Section/ViewController" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/ViewController"></a>
+                  <h3 class="section-name"><span>ViewController</span>
+</h3>
+                </div>
+              </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:13FWApplication11ViewContextV14viewControllerSo06UIViewE0CSgvp"></a>
+                    <a name="/s:13FWApplication11ViewContextC14viewControllerSo06UIViewE0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/viewController" class="dashAnchor"></a>
-                    <a class="token" href="#/s:13FWApplication11ViewContextV14viewControllerSo06UIViewE0CSgvp">viewController</a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC14viewControllerSo06UIViewE0CSgvp">viewController</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2602,7 +2620,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>当前视图控制器</p>
 
                       </div>
                       <div class="declaration">
@@ -2619,36 +2637,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:13FWApplication11ViewContextV4viewSo6UIViewCSgvp"></a>
-                    <a name="//apple_ref/swift/Property/view" class="dashAnchor"></a>
-                    <a class="token" href="#/s:13FWApplication11ViewContextV4viewSo6UIViewCSgvp">view</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">view</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:13FWApplication11ViewContextV20navigationControllerSo012UINavigationE0CSgvp"></a>
+                    <a name="/s:13FWApplication11ViewContextC20navigationControllerSo012UINavigationE0CSgvp"></a>
                     <a name="//apple_ref/swift/Property/navigationController" class="dashAnchor"></a>
-                    <a class="token" href="#/s:13FWApplication11ViewContextV20navigationControllerSo012UINavigationE0CSgvp">navigationController</a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC20navigationControllerSo012UINavigationE0CSgvp">navigationController</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2656,7 +2647,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>获取当前导航栏控制器</p>
 
                       </div>
                       <div class="declaration">
@@ -2673,9 +2664,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:13FWApplication11ViewContextVyACSo16UIViewControllerCSgcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:13FWApplication11ViewContextVyACSo16UIViewControllerCSgcfc">init(_:<wbr>)</a>
+                    <a name="/s:13FWApplication11ViewContextC07hostingB0So6UIViewCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/hostingView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC07hostingB0So6UIViewCSgvp">hostingView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -2683,14 +2674,229 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>获取当前UIView根视图</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">hostingView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication11ViewContextC04rootB07SwiftUI03AnyB0VSgvp"></a>
+                    <a name="//apple_ref/swift/Property/rootView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC04rootB07SwiftUI03AnyB0VSgvp">rootView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>获取当前AnyView根视图</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">rootView</span><span class="p">:</span> <span class="kt">AnyView</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Object"></a>
+                <a name="//apple_ref/swift/Section/Object" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Object"></a>
+                  <h3 class="section-name"><span>Object</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication11ViewContextC6objectypSgvp"></a>
+                    <a name="//apple_ref/swift/Property/object" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC6objectypSgvp">object</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>自定义对象，自动广播，订阅方式：onReceive(viewContext.$object)</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@Published</span>
+<span class="kd">public</span> <span class="k">var</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UserInfo"></a>
+                <a name="//apple_ref/swift/Section/UserInfo" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/UserInfo"></a>
+                  <h3 class="section-name"><span>UserInfo</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication11ViewContextC8userInfoSDys11AnyHashableVypGSgvp"></a>
+                    <a name="//apple_ref/swift/Property/userInfo" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC8userInfoSDys11AnyHashableVypGSgvp">userInfo</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>自定义用户信息，可初始化时设置，也可修改后手动广播</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Subject"></a>
+                <a name="//apple_ref/swift/Section/Subject" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Subject"></a>
+                  <h3 class="section-name"><span>Subject</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication11ViewContextC7subject7Combine18PassthroughSubjectCyACs5NeverOGvp"></a>
+                    <a name="//apple_ref/swift/Property/subject" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC7subject7Combine18PassthroughSubjectCyACs5NeverOGvp">subject</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>上下文Subject，可订阅，需手工触发send发送广播</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">subject</span><span class="p">:</span> <span class="kt">PassthroughSubject</span><span class="o">&lt;</span><span class="kt">ViewContext</span><span class="p">,</span> <span class="kt">Never</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication11ViewContextC4sendyyF"></a>
+                    <a name="//apple_ref/swift/Method/send()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC4sendyyF">send()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>手动发送广播，一般修改userInfo后调用</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">send</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Lifecycle"></a>
+                <a name="//apple_ref/swift/Section/Lifecycle" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Lifecycle"></a>
+                  <h3 class="section-name"><span>Lifecycle</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication11ViewContextC_6object8userInfoACSo16UIViewControllerCSg_ypSgSDys11AnyHashableVypGSgtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:object:userInfo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC_6object8userInfoACSo16UIViewControllerCSg_ypSgSDys11AnyHashableVypGSgtcfc">init(_:<wbr>object:<wbr>userInfo:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>初始化方法，可指定视图控制器、自定义对象和用户信息</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">viewController</span><span class="p">:</span> <span class="kt">UIViewController</span><span class="p">?,</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">AnyHashable</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -2702,7 +2908,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-08-02)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-08-03)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>

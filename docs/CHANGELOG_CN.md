@@ -1,5 +1,12 @@
 # 更新日志
 
+## [3.8.1] - 2022-08-03
+
+### Changed
+* 优化PluginView进度条视图
+* 优化ViewContext支持订阅object和userInfo
+* 优化SwiftUI模块目录结构
+
 ## [3.8.0] - 2022-08-02
 
 ### Added
