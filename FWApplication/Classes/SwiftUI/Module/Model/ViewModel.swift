@@ -8,7 +8,7 @@
 #if canImport(SwiftUI)
 import SwiftUI
 
-/// ViewModel基类
+/// ViewModel基类，被View持有(Controller和View都视为View层)，负责处理数据并通知View，兼容UIKit使用
 ///
 /// @State: 内部值传递，赋值时会触发View刷新
 /// @Binding: 外部引用传递，实现向外传递引用

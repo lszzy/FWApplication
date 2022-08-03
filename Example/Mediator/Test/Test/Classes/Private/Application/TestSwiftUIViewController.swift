@@ -7,6 +7,7 @@
 
 #if canImport(SwiftUI)
 import SwiftUI
+import Combine
 import FWApplication
 import Core
 
@@ -48,8 +49,18 @@ protocol TestSwiftUIViewDelegate {
 class TestSwiftUIModel: ViewModel {
     @Published var isEnglish: Bool = true
     
+    @Published var items: [String] = []
+    
+    // 数据改变时调用editSubject.send(self)通知视图刷新
+    var editPublisher: AnyPublisher<String, Never> { editSubject.eraseToAnyPublisher() }
+    private let editSubject = PassthroughSubject<String, Never>()
+    
     init(isEnglish: Bool = true) {
         self.isEnglish = isEnglish
+    }
+    
+    func reloadData() {
+        // 请求数据，并修改items，通知View刷新
     }
 }
 
