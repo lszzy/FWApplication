@@ -59,17 +59,23 @@ public struct LoadingPluginView: UIViewRepresentable {
 @available(iOS 13.0, *)
 public struct ProgressPluginView: UIViewRepresentable {
     
-    var progress: Binding<CGFloat>
-    var textFormatter: ((CGFloat) -> Any?)?
+    var progress: CGFloat?
+    var text: Any?
     var cancelBlock: (() -> Void)?
     
-    public init(_ progress: Binding<CGFloat>) {
+    public init(_ progress: CGFloat? = nil) {
         self.progress = progress
     }
     
-    public func textFormatter(_ formatter: ((CGFloat) -> Any?)?) -> Self {
+    public func progress(_ progress: CGFloat?) -> Self {
         var result = self
-        result.textFormatter = formatter
+        result.progress = progress
+        return result
+    }
+    
+    public func text(_ text: Any?) -> Self {
+        var result = self
+        result.text = text
         return result
     }
     
@@ -84,12 +90,18 @@ public struct ProgressPluginView: UIViewRepresentable {
     
     public func makeUIView(context: Context) -> UIView {
         let uiView = UIView()
-        uiView.fw.showProgress(progress.wrappedValue, text: textFormatter?(progress.wrappedValue), cancel: cancelBlock)
+        if let progress = progress {
+            uiView.fw.showProgress(progress, text: text, cancel: cancelBlock)
+        }
         return uiView
     }
     
     public func updateUIView(_ uiView: UIView, context: Context) {
-        uiView.fw.showProgress(progress.wrappedValue, text: textFormatter?(progress.wrappedValue), cancel: cancelBlock)
+        if let progress = progress {
+            uiView.fw.showProgress(progress, text: text, cancel: cancelBlock)
+        } else {
+            uiView.fw.hideProgress()
+        }
     }
     
     public static func dismantleUIView(_ uiView: UIView, coordinator: ()) {

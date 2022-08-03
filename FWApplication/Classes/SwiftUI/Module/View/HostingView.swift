@@ -99,112 +99,19 @@ open class HostingView<Content: View>: UIView {
     
 }
 
-// MARK: - StateView
-/// SwiftUI视图状态枚举
+// MARK: - InvisibleView
+/// 不可见视图，当某个场景EmptyView不生效时可使用InvisibleView替代，比如EmptyView不触发onAppear
 @available(iOS 13.0, *)
-public enum ViewState {
-    case ready
-    case loading
-    case success(Any? = nil)
-    case failure(Error? = nil)
-}
-
-/// SwiftUI状态视图
-@available(iOS 13.0, *)
-public struct StateView<Ready: View, Loading: View, Content: View, Failure: View>: View {
+public struct InvisibleView: View {
     
-    @State public var state: ViewState = .ready
-    
-    @ViewBuilder var ready: (Self) -> Ready
-    @ViewBuilder var loading: (Self) -> Loading
-    @ViewBuilder var content: (Self, Any?) -> Content
-    @ViewBuilder var failure: (Self, Error?) -> Failure
-    
-    public init(
-        @ViewBuilder content: @escaping (Self, Any?) -> Content
-    ) where Ready == AnyView, Loading == AnyView, Failure == AnyView {
-        self.ready = { $0.transition(to: .success()) }
-        self.loading = { $0.transition(to: .success()) }
-        self.content = content
-        self.failure = { stateView, _ in stateView.transition(to: .success()) }
-    }
-    
-    public init(
-        @ViewBuilder loading: @escaping (Self) -> Loading,
-        @ViewBuilder content: @escaping (Self, Any?) -> Content,
-        @ViewBuilder failure: @escaping (Self, Error?) -> Failure
-    ) where Ready == AnyView {
-        self.ready = { $0.transition(to: .loading) }
-        self.loading = loading
-        self.content = content
-        self.failure = failure
-    }
-    
-    public init(
-        @ViewBuilder ready: @escaping (Self) -> Ready,
-        @ViewBuilder loading: @escaping (Self) -> Loading,
-        @ViewBuilder content: @escaping (Self, Any?) -> Content,
-        @ViewBuilder failure: @escaping (Self, Error?) -> Failure
-    ) {
-        self.ready = ready
-        self.loading = loading
-        self.content = content
-        self.failure = failure
-    }
-    
-    private func transition(to newState: ViewState) -> AnyView {
-        InvisibleView()
-            .onAppear { state = newState }
-            .eraseToAnyView()
-    }
+    public init() {}
     
     public var body: some View {
-        Group {
-            switch state {
-            case .ready:
-                ready(self)
-            case .loading:
-                loading(self)
-            case .success(let model):
-                content(self, model)
-            case .failure(let error):
-                failure(self, error)
-            }
-        }
+        Color.clear
+            .frame(width: 0, height: 0)
+            .allowsHitTesting(false)
+            .accessibility(hidden: true)
     }
-    
-}
-
-// MARK: - HostingController
-/// SwiftUI控制器包装类，可将View事件用delegate代理到VC实现解耦
-@available(iOS 13.0, *)
-open class HostingController: UIHostingController<AnyView> {
-    
-    // MARK: - Lifecyecle
-    public init() {
-        super.init(rootView: AnyView(EmptyView()))
-        setupNavbar()
-        setupSubviews()
-    }
-    
-    @MainActor required dynamic public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder, rootView: AnyView(EmptyView()))
-        setupNavbar()
-        setupSubviews()
-    }
-    
-    #if DEBUG
-    deinit {
-        NSLog("%@ did dealloc", NSStringFromClass(self.classForCoder))
-    }
-    #endif
-    
-    // MARK: - Setup
-    /// 初始化导航栏，子类重写
-    open func setupNavbar() {}
-    
-    /// 初始化子视图，子类重写，可结合StateView实现状态机
-    open func setupSubviews() {}
     
 }
 

@@ -17,9 +17,11 @@ class TestSwiftUIViewController: TestViewController, TestSwiftUIViewDelegate {
     override func renderView() {
         fw.navigationBarHidden = [true, false].randomElement()!
         
-        let hostingView = TestSwiftUIContent(model: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+        let hostingView = TestSwiftUIContent()
             .configure { $0.delegate = self }
-            .viewContext(self)
+            .viewContext(self, userInfo: [
+                "color": Color.green
+            ])
             .navigationBarConfigure(
                 leading: Icon.backImage,
                 title: "TestSwiftUIViewController",
@@ -42,14 +44,21 @@ protocol TestSwiftUIViewDelegate {
     func openWeb(completion: @escaping () -> Void)
 }
 
+@available(iOS 13.0, *)
+class TestSwiftUIModel: ViewModel {
+    @Published var isEnglish: Bool = true
+    
+    init(isEnglish: Bool = true) {
+        self.isEnglish = isEnglish
+    }
+}
+
 // 继承HostingController
 @available(iOS 13.0, *)
 class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
     
     // MARK: - Accessor
     var mode: Int = [0, 1, 2].randomElement()!
-    
-    var model: String?
     
     var error: String?
     
@@ -61,14 +70,14 @@ class SwiftUIViewController: HostingController, TestSwiftUIViewDelegate {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                         let success = [true, false].randomElement()!
                         if success {
-                            view.state = .success("https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
+                            view.state = .success()
                         } else {
                             view.state = .failure(NSError(domain: "Test", code: 0, userInfo: [NSLocalizedDescriptionKey: "出错啦!"]))
                         }
                     }
                 }
-        } content: { view, model in
-            TestSwiftUIContent(model: model as? String)
+        } content: { view, _ in
+            TestSwiftUIContent()
                 .configure { $0.delegate = self }
         } failure: { view, error in
             Button(error?.localizedDescription ?? "") {
@@ -123,12 +132,13 @@ struct TestSwiftUIContent: View {
     
     @Environment(\.viewContext) var viewContext: ViewContext
     
-    var model: String?
+    @ObservedObject var viewModel: TestSwiftUIModel = TestSwiftUIModel()
     
     weak var delegate: (NSObject & TestSwiftUIViewDelegate)?
     
     @State var topSize: CGSize = .zero
     @State var contentOffset: CGPoint = .zero
+    @State var shouldRefresh: Bool = false
     
     @State var buttonRemovable: Bool = false
     @State var buttonVisible: Bool = true
@@ -140,19 +150,20 @@ struct TestSwiftUIContent: View {
     @State var showingProgress: Bool = false
     @State var progressValue: CGFloat = 0
     
-    init(model: String?) {
-        self.model = model
-    }
-    
     var body: some View {
         GeometryReader { proxy in
             List {
                 VStack(alignment: .center, spacing: 16) {
-                    Text("contentOffset: \(Int(contentOffset.y))")
+                    ZStack {
+                        InvisibleView()
+                            .captureContentOffset(proxy: proxy)
+                        
+                        Text("contentOffset: \(Int(contentOffset.y))")
+                    }
                     
                     VStack {
                         HStack(alignment: .center, spacing: 50) {
-                            ImageView(url: model)
+                            ImageView(url: "https://ww4.sinaimg.cn/bmiddle/eaeb7349jw1ewbhiu69i2g20b4069e86.gif")
                                 .placeholder(TestBundle.imageNamed("test.gif"))
                                 .contentMode(.scaleAspectFill)
                                 .clipped()
@@ -180,6 +191,7 @@ struct TestSwiftUIContent: View {
                                 Spacer()
                             }
                         }
+                        .buttonStyle(BorderlessButtonStyle())
                         .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                         .border(Color.gray, cornerRadius: 20)
                         
@@ -192,6 +204,7 @@ struct TestSwiftUIContent: View {
                                 Spacer()
                             }
                         }
+                        .buttonStyle(BorderlessButtonStyle())
                         .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                         .border(Color.gray, cornerRadius: 20)
                         .removable(buttonRemovable)
@@ -208,13 +221,15 @@ struct TestSwiftUIContent: View {
                         .frame(width: (FW.screenWidth - 64) / 3, height: 40)
                         .border(Color.gray, cornerRadius: 20)
                         .visible(buttonVisible)
+                        .buttonStyle(BorderlessButtonStyle())
                     }
                 }
-                .captureContentOffset(proxy: proxy)
                 
                 Button {
                     delegate?.openWeb(completion: {
-                        showingEmpty = true
+                        viewContext.object = "Object"
+                        viewContext.userInfo = ["color": Color(UIColor.fw.randomColor)]
+                        viewContext.send()
                     })
                 } label: {
                     ViewWrapper {
@@ -222,7 +237,7 @@ struct TestSwiftUIContent: View {
                             .wrappedHostingView()
                     }
                     .frame(height: 44)
-                    .background(Color.green)
+                    .background(viewContext.userInfo?["color"] as? Color ?? .yellow)
                 }
                 
                 Button("Push SwiftUI") {
@@ -240,12 +255,16 @@ struct TestSwiftUIContent: View {
                     viewContext.viewController?.present(viewController, animated: true)
                 }
                 
-                Button("Show Alert") {
-                    showingAlert = true
-                }
-                
-                Button("Show Toast") {
-                    showingToast = true
+                ForEach(["Show Alert", "Show Toast", "Show Empty"], id: \.self) { title in
+                    Button(title) {
+                        if title == "Show Alert" {
+                            showingAlert = true
+                        } else if title == "Show Toast" {
+                            showingToast = true
+                        } else {
+                            showingEmpty = true
+                        }
+                    }
                 }
                 
                 Button("Show Loading") {
@@ -266,10 +285,11 @@ struct TestSwiftUIContent: View {
                     }
                 }
                 
-                Button("Show Empty") {
-                    showingEmpty = true
+                Button(viewModel.isEnglish ? "Language" : "多语言") {
+                    viewModel.isEnglish = !viewModel.isEnglish
                 }
             }
+            .listStyle(.plain)
             .captureContentOffset(in: $contentOffset)
             .introspectTableView { tableView in
                 tableView.fw.setRefreshing {
@@ -308,11 +328,23 @@ struct TestSwiftUIContent: View {
                 }
         })
         .showProgressView(showingProgress, builder: {
-            ProgressPluginView($progressValue)
-                .textFormatter { progress in
-                    "上传中(\(Int(progress * 100))%)"
-                }
+            ProgressPluginView(progressValue)
+                .text("上传中(\(Int(progressValue * 100))%)")
         })
+        .transformViewContext(transform: { viewContext in
+            DispatchQueue.main.async {
+                print("viewController: \(String(describing: viewContext.viewController))")
+                print("hostingView: \(String(describing: viewContext.hostingView))")
+                print("rootView: \(String(describing: viewContext.rootView))")
+            }
+        })
+        .onReceive(viewContext.subject) { context in
+            print("userInfo: \(String(describing: context.userInfo))")
+            shouldRefresh = !shouldRefresh
+        }
+        .onReceive(viewContext.$object) { object in
+            print("object: \(String(describing: object))")
+        }
     }
     
 }

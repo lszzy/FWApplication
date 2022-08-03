@@ -58,6 +58,8 @@ public struct RemovableModifier: ViewModifier {
         Group {
             if !removable {
                 content
+            } else {
+                EmptyView()
             }
         }
     }

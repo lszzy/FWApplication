@@ -17,7 +17,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">FWApplication 3.8.0 Docs</a> (67% documented)</p>
+        <p><a href="index.html">FWApplication 3.8.1 Docs</a> (67% documented)</p>
         <div class="header-right">
           <form role="search" action="search.json">
             <input type="text" placeholder="Search documentation" data-typeahead>
@@ -1187,6 +1187,12 @@
                 <a href="Classes/VideoPlayerView.html">VideoPlayerView</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/ViewContext.html">ViewContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/ViewModel.html">ViewModel</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/ViewPreferenceKey.html">ViewPreferenceKey</a>
               </li>
             </ul>
@@ -1807,6 +1813,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Enums/Refresh/Footer.html">– Footer</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Refresh/Modifier.html">– Modifier</a>
               </li>
               <li class="nav-group-task">
                 <a href="Enums/SkeletonAnimationDirection.html">SkeletonAnimationDirection</a>
@@ -2462,6 +2471,9 @@
                 <a href="Extensions/Font.html">Font</a>
               </li>
               <li class="nav-group-task">
+                <a href="Extensions/List.html">List</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Extensions/ScrollView.html">ScrollView</a>
               </li>
               <li class="nav-group-task">
@@ -2540,9 +2552,6 @@
               </li>
               <li class="nav-group-task">
                 <a href="Structs/UIKitIntrospectionViewController.html">UIKitIntrospectionViewController</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/ViewContext.html">ViewContext</a>
               </li>
               <li class="nav-group-task">
                 <a href="Structs/ViewControllerWrapper.html">ViewControllerWrapper</a>
@@ -12905,6 +12914,84 @@ MARK: UITabBarItem properties
             </div>
             <div class="task-group">
               <div class="task-name-container">
+                <a name="/HostingController"></a>
+                <a name="//apple_ref/swift/Section/HostingController" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/HostingController"></a>
+                  <h3 class="section-name"><span>HostingController</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication17HostingControllerC"></a>
+                    <a name="//apple_ref/swift/Class/HostingController" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication17HostingControllerC">HostingController</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>SwiftUI控制器包装类，可将View事件用delegate代理到VC实现解耦</p>
+
+                        <a href="Classes/HostingController.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">HostingController</span> <span class="p">:</span> <span class="kt">UIHostingController</span><span class="o">&lt;</span><span class="kt">AnyView</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication9ViewModelC"></a>
+                    <a name="//apple_ref/swift/Class/ViewModel" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication9ViewModelC">ViewModel</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>ViewModel基类</p>
+
+<p>@State: 内部值传递，赋值时会触发View刷新
+@Binding: 外部引用传递，实现向外传递引用
+@ObservableObject: 可被订阅的对象，属性标记@Published时生效
+@ObservedObject: View订阅监听，收到通知时刷新View，不被View持有，随时可能被销毁，适合外部数据
+@EnvironmentObject: 全局环境对象，使用environmentObject方法绑定，View及其子层级可直接读取
+@StateObject: View引用对象，生命周期和View保持一致，刷新时数据会保持直到View被销毁</p>
+
+                        <a href="Classes/ViewModel.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">open</span> <span class="kd">class</span> <span class="kt">ViewModel</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
                 <a name="/HostingView"></a>
                 <a name="//apple_ref/swift/Section/HostingView" class="dashAnchor"></a>
                 <div class="section-name-container">
@@ -12945,25 +13032,12 @@ MARK: UITabBarItem properties
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/HostingController"></a>
-                <a name="//apple_ref/swift/Section/HostingController" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/HostingController"></a>
-                  <h3 class="section-name"><span>HostingController</span>
-</h3>
-                </div>
-              </div>
-              <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:13FWApplication17HostingControllerC"></a>
-                    <a name="//apple_ref/swift/Class/HostingController" class="dashAnchor"></a>
-                    <a class="token" href="#/s:13FWApplication17HostingControllerC">HostingController</a>
+                    <a name="/s:13FWApplication11ViewContextC"></a>
+                    <a name="//apple_ref/swift/Class/ViewContext" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication11ViewContextC">ViewContext</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -12971,58 +13045,16 @@ MARK: UITabBarItem properties
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>SwiftUI控制器包装类，可将View事件用delegate代理到VC实现解耦</p>
+                        <p>视图上下文</p>
 
-                        <a href="Classes/HostingController.html" class="slightly-smaller">See more</a>
+                        <a href="Classes/ViewContext.html" class="slightly-smaller">See more</a>
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
-<span class="kd">open</span> <span class="kd">class</span> <span class="kt">HostingController</span> <span class="p">:</span> <span class="kt">UIHostingController</span><span class="o">&lt;</span><span class="kt">AnyView</span><span class="o">&gt;</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/ResizableView"></a>
-                <a name="//apple_ref/swift/Section/ResizableView" class="dashAnchor"></a>
-                <div class="section-name-container">
-                  <a class="section-name-link" href="#/ResizableView"></a>
-                  <h3 class="section-name"><span>ResizableView</span>
-</h3>
-                </div>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:13FWApplication13ResizableViewC"></a>
-                    <a name="//apple_ref/swift/Class/ResizableView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:13FWApplication13ResizableViewC">ResizableView</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>可调整大小的视图包装器，解决frame尺寸变为图片尺寸等问题</p>
-
-                        <a href="Classes/ResizableView.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="kt">ResizableView</span><span class="o">&lt;</span><span class="kt">Content</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">UIView</span> <span class="k">where</span> <span class="kt">Content</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">ViewContext</span> <span class="p">:</span> <span class="kt">ObservableObject</span></code></pre>
 
                         </div>
                       </div>
@@ -13155,10 +13187,52 @@ MARK: UITabBarItem properties
                 </li>
               </ul>
             </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/ResizableView"></a>
+                <a name="//apple_ref/swift/Section/ResizableView" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/ResizableView"></a>
+                  <h3 class="section-name"><span>ResizableView</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13FWApplication13ResizableViewC"></a>
+                    <a name="//apple_ref/swift/Class/ResizableView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13FWApplication13ResizableViewC">ResizableView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>可调整大小的视图包装器，解决frame尺寸变为图片尺寸等问题</p>
+
+                        <a href="Classes/ResizableView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="kt">ResizableView</span><span class="o">&lt;</span><span class="kt">Content</span><span class="o">&gt;</span> <span class="p">:</span> <span class="kt">UIView</span> <span class="k">where</span> <span class="kt">Content</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-08-02)</p>
+          <p>&copy; 2022 <a class="link" href="http://wuyong.site" target="_blank" rel="external noopener">Wu Yong</a>. All rights reserved. (Last updated: 2022-08-03)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
