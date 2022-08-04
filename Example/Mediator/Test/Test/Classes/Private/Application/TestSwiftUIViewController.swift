@@ -47,6 +47,7 @@ protocol TestSwiftUIViewDelegate {
 
 @available(iOS 13.0, *)
 class TestSwiftUIModel: ViewModel {
+    // View中可通过$viewModel.isEnglish获取Binding<Bool>
     @Published var isEnglish: Bool = true
     
     @Published var items: [String] = []
