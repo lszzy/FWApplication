@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.8.2] - 2022-08-10
+
+### Fixed
+* Fix EmptyPluginView not calling update
+
 ## [3.8.1] - 2022-08-03
 
 ### Changed
