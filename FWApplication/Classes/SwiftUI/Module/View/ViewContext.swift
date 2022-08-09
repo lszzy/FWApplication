@@ -98,6 +98,7 @@ extension View {
     /// 如果要监听上下文变化，可使用如下方式：
     /// 1. onReceive(viewContext.subject)
     /// 2. onReceive(viewContext.$object)
+    /// 3. viewContext.$object.receive(on: RunLoop.main)
     public func transformViewContext(transform: @escaping (ViewContext) -> Void) -> some View {
         transformEnvironment(\.viewContext) { viewContext in
             transform(viewContext)

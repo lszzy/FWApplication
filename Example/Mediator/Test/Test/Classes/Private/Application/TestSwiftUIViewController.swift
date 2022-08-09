@@ -7,6 +7,8 @@
 
 #if canImport(SwiftUI)
 import SwiftUI
+import Combine
+import FWFramework
 import FWApplication
 import Core
 
@@ -46,10 +48,21 @@ protocol TestSwiftUIViewDelegate {
 
 @available(iOS 13.0, *)
 class TestSwiftUIModel: ViewModel {
+    // View中可通过$viewModel.isEnglish获取Binding<Bool>
     @Published var isEnglish: Bool = true
+    
+    @Published var items: [String] = []
+    
+    // 数据改变时调用editSubject.send(self)通知视图刷新
+    var editPublisher: AnyPublisher<String, Never> { editSubject.eraseToAnyPublisher() }
+    private let editSubject = PassthroughSubject<String, Never>()
     
     init(isEnglish: Bool = true) {
         self.isEnglish = isEnglish
+    }
+    
+    func reloadData() {
+        // 请求数据，并修改items，通知View刷新
     }
 }
 
@@ -139,6 +152,8 @@ struct TestSwiftUIContent: View {
     @State var topSize: CGSize = .zero
     @State var contentOffset: CGPoint = .zero
     @State var shouldRefresh: Bool = false
+    
+    @State var moreItems: [String] = []
     
     @State var buttonRemovable: Bool = false
     @State var buttonVisible: Bool = true
@@ -288,19 +303,37 @@ struct TestSwiftUIContent: View {
                 Button(viewModel.isEnglish ? "Language" : "多语言") {
                     viewModel.isEnglish = !viewModel.isEnglish
                 }
+                
+                ForEach(moreItems, id: \.self) { title in
+                    Button {
+                        Router.openURL(title)
+                    } label: {
+                        Text(title)
+                    }
+                }
             }
             .listStyle(.plain)
             .captureContentOffset(in: $contentOffset)
             .introspectTableView { tableView in
+                if tableView.fw.tempObject != nil { return }
+                tableView.fw.tempObject = true
+                
+                tableView.fw.resetGroupedStyle()
+                
                 tableView.fw.setRefreshing {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         tableView.fw.endRefreshing()
+                        moreItems = []
                     }
                 }
                 
                 tableView.fw.setLoading {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         tableView.fw.endLoading()
+                        tableView.fw.shouldLoading = moreItems.count < 5
+                        var newItems = moreItems
+                        newItems.append("http://www.baidu.com")
+                        moreItems = newItems
                     }
                 }
             }

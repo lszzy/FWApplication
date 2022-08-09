@@ -46,7 +46,7 @@ public struct LoadingPluginView: UIViewRepresentable {
     }
     
     public func updateUIView(_ uiView: UIView, context: Context) {
-        
+        uiView.fw.showLoading(text: text, cancel: cancelBlock)
     }
     
     public static func dismantleUIView(_ uiView: UIView, coordinator: ()) {
@@ -181,7 +181,7 @@ public struct EmptyPluginView: UIViewRepresentable {
     }
     
     public func updateUIView(_ uiView: UIView, context: Context) {
-        
+        uiView.fw.showEmptyView(text: text, detail: detail, image: image, loading: loading, actions: actions, block: block)
     }
     
     public static func dismantleUIView(_ uiView: UIView, coordinator: ()) {
