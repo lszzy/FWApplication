@@ -6,6 +6,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/lszzy/FWApplication)
 
 # [FWFramework](https://github.com/lszzy/FWFramework)
+**本仓库已迁移合并至FWFramework最新4.0.0+版本，后续不再单独维护，请移步[FWFramework](https://github.com/lszzy/FWFramework)。**
 
 # [English](https://github.com/lszzy/FWApplication/blob/main/README.md)
 
